@@ -1,0 +1,1264 @@
+{
+  "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "fixes_head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "scratch": "/workspace/admission-real-1h9wpv25",
+  "phases": [
+    {
+      "phase": "main-checkout",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/workspace/admission-real-1h9wpv25/main-checkout",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 0,
+      "wall_start": 1791554718.1945593,
+      "limit_seconds": 600,
+      "wall_seconds": 1.8692792279998685,
+      "wall_end": 1791554720.0643494
+    },
+    {
+      "phase": "main-cohere",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/workspace/admission-real-1h9wpv25/main-checkout/cohere",
+        "7945d102a6c18dd36adf9114a758ce646e8b2359"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "status": 0,
+      "wall_start": 1791554720.0688405,
+      "limit_seconds": 600,
+      "wall_seconds": 0.5151874820003286,
+      "wall_end": 1791554720.5842078
+    },
+    {
+      "phase": "main-typescript",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/workspace/admission-real-1h9wpv25/main-checkout/cohere/TypeScript",
+        "d92d9bfee114c80be2c375d72edae966176e3a4f"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "status": 0,
+      "wall_start": 1791554720.5845752,
+      "limit_seconds": 600,
+      "wall_seconds": 2.57006394300015,
+      "wall_end": 1791554723.1551535
+    },
+    {
+      "phase": "main-cold-build",
+      "command": [
+        "go",
+        "build",
+        "-p",
+        "4",
+        "-o",
+        "/workspace/admission-real-1h9wpv25/main-adamic",
+        "./cmd/adamic"
+      ],
+      "cwd": "/workspace/admission-real-1h9wpv25/main-checkout",
+      "status": 0,
+      "wall_start": 1791554723.1561005,
+      "limit_seconds": 900,
+      "wall_seconds": 163.788112577,
+      "wall_end": 1791554886.9446404
+    },
+    {
+      "phase": "main-manifest",
+      "command": [
+        "python3",
+        "cloud/admission-corpus/manifest.py",
+        "--sha",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 0,
+      "wall_start": 1791554886.9450543,
+      "limit_seconds": 60,
+      "wall_seconds": 0.21479935800016392,
+      "wall_end": 1791554887.160523
+    },
+    {
+      "phase": "main-admission",
+      "command": [
+        "/tmp/admission-real-tool",
+        "--base",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf",
+        "--head",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf",
+        "--base-binary",
+        "/workspace/admission-real-1h9wpv25/observe-base-main.commands",
+        "--head-binary",
+        "/workspace/admission-real-1h9wpv25/observe-head-main.commands",
+        "--manifest",
+        "/workspace/adamic/review/compiler/admission-delta/runs/main.execution-manifest.json",
+        "--json"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 1,
+      "wall_start": 1791554887.1648612,
+      "limit_seconds": 1800,
+      "wall_seconds": 235.97867429300004,
+      "wall_end": 1791555123.143728
+    },
+    {
+      "phase": "fixes-checkout",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/workspace/admission-real-1h9wpv25/fixes-checkout",
+        "ced32bf9b1f410b8be07f078adb78365a20a9f5b"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 0,
+      "wall_start": 1791555123.1527328,
+      "limit_seconds": 600,
+      "wall_seconds": 3.425663990999965,
+      "wall_end": 1791555126.5789793
+    },
+    {
+      "phase": "fixes-cohere",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/workspace/admission-real-1h9wpv25/fixes-checkout/cohere",
+        "7945d102a6c18dd36adf9114a758ce646e8b2359"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "status": 0,
+      "wall_start": 1791555126.5842886,
+      "limit_seconds": 600,
+      "wall_seconds": 0.8163378889998967,
+      "wall_end": 1791555127.4012415
+    },
+    {
+      "phase": "fixes-typescript",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/workspace/admission-real-1h9wpv25/fixes-checkout/cohere/TypeScript",
+        "d92d9bfee114c80be2c375d72edae966176e3a4f"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "status": 0,
+      "wall_start": 1791555127.4020872,
+      "limit_seconds": 600,
+      "wall_seconds": 2.222446075999869,
+      "wall_end": 1791555129.6251411
+    },
+    {
+      "phase": "fixes-cold-build",
+      "command": [
+        "go",
+        "build",
+        "-p",
+        "4",
+        "-o",
+        "/workspace/admission-real-1h9wpv25/fixes-adamic",
+        "./cmd/adamic"
+      ],
+      "cwd": "/workspace/admission-real-1h9wpv25/fixes-checkout",
+      "status": 0,
+      "wall_start": 1791555129.6266992,
+      "limit_seconds": 900,
+      "wall_seconds": 163.27038482900025,
+      "wall_end": 1791555292.8977027
+    },
+    {
+      "phase": "fixes-manifest",
+      "command": [
+        "python3",
+        "cloud/admission-corpus/manifest.py",
+        "--sha",
+        "ced32bf9b1f410b8be07f078adb78365a20a9f5b"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 0,
+      "wall_start": 1791555292.8988066,
+      "limit_seconds": 60,
+      "wall_seconds": 0.21479116899990913,
+      "wall_end": 1791555293.1142554
+    },
+    {
+      "phase": "fixes-admission",
+      "command": [
+        "/tmp/admission-real-tool",
+        "--base",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf",
+        "--head",
+        "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+        "--base-binary",
+        "/workspace/admission-real-1h9wpv25/observe-base-fixes.commands",
+        "--head-binary",
+        "/workspace/admission-real-1h9wpv25/observe-head-fixes.commands",
+        "--manifest",
+        "/workspace/adamic/review/compiler/admission-delta/runs/fixes.execution-manifest.json",
+        "--json",
+        "--budget",
+        "60"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 1,
+      "wall_start": 1791555293.1185348,
+      "limit_seconds": 1800,
+      "wall_seconds": 238.10247882799968,
+      "wall_end": 1791555531.2215972
+    }
+  ],
+  "runs": {
+    "main": {
+      "exit": 1,
+      "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+      "head": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+      "verdict": "fail",
+      "admitted": 0,
+      "sampled": 0,
+      "omitted": 0,
+      "classification": {
+        "commands": 1822,
+        "command_wall_sum_seconds": 128.12229824066162,
+        "wall_span_seconds": 233.99683785438538
+      },
+      "backend_builds": {
+        "commands": 0,
+        "command_wall_sum_seconds": 0,
+        "wall_span_seconds": 0
+      },
+      "runtime_phase_wall_seconds": 4.91e-07,
+      "classes": {
+        "refused-by-both": 62,
+        "accepted-by-both": 833,
+        "compiler-error": 16,
+        "compiler-timeout": 5
+      },
+      "corpora": {
+        "witnesses": 2,
+        "fixtures": 801,
+        "gaps": 107,
+        "review": 6,
+        "fuzz": 0
+      },
+      "disagreements": [],
+      "compiler_errors": [
+        {
+          "path": "internal/oracle/testdata/closure_convention_host24.a",
+          "blob": "2ea7112eb62040d7841094c126d29e622fa14494",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_bom.a",
+          "blob": "9b5507db173eb4ee63dc2e5eeb73f3af12a8713f",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_crypto.a",
+          "blob": "a821c80d79aaf7c5ec43e0be09f7d670e08452bb",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_digest_twice.a",
+          "blob": "919f81b3246cd0b2e21ad5f7e768270b2a15dad6",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_encodings.a",
+          "blob": "678b9eca1c2c1c2e5f1b4768072a18b67ffdf19a",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_finalized.a",
+          "blob": "d9df9b4c07fbe4a821e5dd1a4fd418e752cd3833",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_input.a",
+          "blob": "c1ccd6837871a3c69e49e6b22a764a5cb5db67c4",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_random.a",
+          "blob": "653e27d9f63aaf193cba6d402c8c601c31783510",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_utf16.a",
+          "blob": "0dd5e9d7a2be3515e3357c05dd2dbb9f6d718947",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_utf8.a",
+          "blob": "8f9120a435fb674da7ecbb76d583b733a08d787e",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_writes.a",
+          "blob": "35d9daa74262f2fe45e31cf14e4c9b26f2b08a04",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_close.a",
+          "blob": "c47a53cce6132a8c1a5d97e210d126b0ffaaa6c4",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_mkdir.a",
+          "blob": "90b22b7093658dc4d6da759e100dec51e50ddf13",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_write_buffer.a",
+          "blob": "3717cc56e7c7c0308a23c1823efd9cf01cc96c5d",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_write_file.a",
+          "blob": "96ad27cc40fae96ee3a9b40189a24cd8c7e65d8c",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/unknown_narrowing_host.a",
+          "blob": "2e7f73b3396c77186da3fc654d527e16a342cab2",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/css/gaps/printer_boundaries.ts",
+          "blob": "2c64353164ca9a868c115156b61d1bacfc28fbaf",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/deepBinary.ts",
+          "blob": "f1a106944a4c17bb76891fbdb1aa28e9c352ac2d",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/emptyGenerics.ts",
+          "blob": "9aa2653a643dcb61f86a265793800fdcf6f92ae0",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/portParserRecovery.ts",
+          "blob": "af7f5095579566c6144fab64ae83bae184c5cdb2",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/typeMemberInitializer.ts",
+          "blob": "a238f15dcad280184e3008014015f9fe663e598e",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        }
+      ]
+    },
+    "fixes": {
+      "exit": 1,
+      "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+      "head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+      "verdict": "fail",
+      "admitted": 0,
+      "sampled": 0,
+      "omitted": 0,
+      "classification": {
+        "commands": 1830,
+        "command_wall_sum_seconds": 130.22240805625916,
+        "wall_span_seconds": 236.16378211975098
+      },
+      "backend_builds": {
+        "commands": 0,
+        "command_wall_sum_seconds": 0,
+        "wall_span_seconds": 0
+      },
+      "runtime_phase_wall_seconds": 4.91e-07,
+      "classes": {
+        "refused-by-both": 62,
+        "accepted-by-both": 837,
+        "compiler-error": 16,
+        "compiler-timeout": 5
+      },
+      "corpora": {
+        "witnesses": 2,
+        "fixtures": 801,
+        "gaps": 107,
+        "review": 10,
+        "fuzz": 0
+      },
+      "disagreements": [],
+      "compiler_errors": [
+        {
+          "path": "internal/oracle/testdata/closure_convention_host24.a",
+          "blob": "2ea7112eb62040d7841094c126d29e622fa14494",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_bom.a",
+          "blob": "9b5507db173eb4ee63dc2e5eeb73f3af12a8713f",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_crypto.a",
+          "blob": "a821c80d79aaf7c5ec43e0be09f7d670e08452bb",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_digest_twice.a",
+          "blob": "919f81b3246cd0b2e21ad5f7e768270b2a15dad6",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_encodings.a",
+          "blob": "678b9eca1c2c1c2e5f1b4768072a18b67ffdf19a",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_finalized.a",
+          "blob": "d9df9b4c07fbe4a821e5dd1a4fd418e752cd3833",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_input.a",
+          "blob": "c1ccd6837871a3c69e49e6b22a764a5cb5db67c4",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_random.a",
+          "blob": "653e27d9f63aaf193cba6d402c8c601c31783510",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_utf16.a",
+          "blob": "0dd5e9d7a2be3515e3357c05dd2dbb9f6d718947",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_utf8.a",
+          "blob": "8f9120a435fb674da7ecbb76d583b733a08d787e",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_writes.a",
+          "blob": "35d9daa74262f2fe45e31cf14e4c9b26f2b08a04",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_close.a",
+          "blob": "c47a53cce6132a8c1a5d97e210d126b0ffaaa6c4",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_mkdir.a",
+          "blob": "90b22b7093658dc4d6da759e100dec51e50ddf13",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_write_buffer.a",
+          "blob": "3717cc56e7c7c0308a23c1823efd9cf01cc96c5d",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_write_file.a",
+          "blob": "96ad27cc40fae96ee3a9b40189a24cd8c7e65d8c",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "internal/oracle/testdata/unknown_narrowing_host.a",
+          "blob": "2e7f73b3396c77186da3fc654d527e16a342cab2",
+          "corpus": "fixtures",
+          "class": "compiler-error",
+          "base_compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "compile": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/css/gaps/printer_boundaries.ts",
+          "blob": "2c64353164ca9a868c115156b61d1bacfc28fbaf",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/deepBinary.ts",
+          "blob": "f1a106944a4c17bb76891fbdb1aa28e9c352ac2d",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/emptyGenerics.ts",
+          "blob": "9aa2653a643dcb61f86a265793800fdcf6f92ae0",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/portParserRecovery.ts",
+          "blob": "af7f5095579566c6144fab64ae83bae184c5cdb2",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/typeMemberInitializer.ts",
+          "blob": "a238f15dcad280184e3008014015f9fe663e598e",
+          "corpus": "gaps",
+          "class": "compiler-timeout",
+          "base_compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "compile": {
+            "exit": -1,
+            "stdout": "",
+            "stderr": "",
+            "error": "timeout"
+          },
+          "node": null,
+          "javascript": null,
+          "native": null,
+          "agree": null,
+          "sampled": false
+        }
+      ]
+    }
+  },
+  "generator": {
+    "revision": "85144830a99aa1353011562703da4f4a68da2730",
+    "path": "cloud/admission-corpus/manifest.py",
+    "blob": "220f6496b4c491bbfe23cec5ed3b9b3a6d378544",
+    "exists_at_requested_heads": false
+  },
+  "method": "Real compiler revisions built in isolated checkouts with separately empty GOCACHE directories, then supplied to the unchanged tool for phase instrumentation. Generated corpus entries are unmodified; execution manifests clear only absent-at-head generator metadata. Original generated manifests are preserved.",
+  "main_cache": {
+    "path": "/workspace/admission-real-1h9wpv25/main-cold-cache",
+    "entries_before_build": 0
+  },
+  "fixes_cache": {
+    "path": "/workspace/admission-real-1h9wpv25/fixes-cold-cache",
+    "entries_before_build": 0
+  },
+  "main_binary_sha256": "d647eb3b1d7d51e13d3fc00366ae5e3b3bc6b7831973bc3ad4f28f615f6c42ba",
+  "main_build_revision": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "main_cohere_revision": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "main_typescript_revision": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "main_tracked_source_changes": [],
+  "fixes_binary_sha256": "c64a06a920764d10a2481d11d20d640ffe15b294ce0e26e12982b726f0366fd3",
+  "fixes_build_revision": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "fixes_cohere_revision": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "fixes_typescript_revision": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "fixes_tracked_source_changes": [],
+  "new_review_programs": [
+    {
+      "path": "review/compiler/fx5-every-refusal/initial-literal-layout.a",
+      "base_compile_exit": 0,
+      "head_compile_exit": 0,
+      "class": "accepted-by-both"
+    },
+    {
+      "path": "review/compiler/fx5-literal-fix/all-number.a",
+      "base_compile_exit": 0,
+      "head_compile_exit": 0,
+      "class": "accepted-by-both"
+    },
+    {
+      "path": "review/compiler/fx5-literal-fix/nested-number.a",
+      "base_compile_exit": 0,
+      "head_compile_exit": 0,
+      "class": "accepted-by-both"
+    },
+    {
+      "path": "review/compiler/fx5-literal-refusal/all-number.a",
+      "base_compile_exit": 0,
+      "head_compile_exit": 0,
+      "class": "accepted-by-both"
+    }
+  ],
+  "refusal_commit_ancestry": {
+    "e49ae19e": {
+      "main": false,
+      "fixes": true
+    },
+    "5f466b83": {
+      "main": false,
+      "fixes": true
+    }
+  },
+  "remote_tips_at_final_fetch": {
+    "main": "76c59c81e8617cea1892a01841494895927a712c",
+    "fixes": "ced32bf9b1f410b8be07f078adb78365a20a9f5b"
+  }
+}

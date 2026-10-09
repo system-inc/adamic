@@ -1,0 +1,11 @@
+main-checkout: exit 0, wall 1.87 s
+main-cohere: exit 0, wall 1.419 s
+main-typescript: exit -9, wall 127.568 s
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/admission-delta/runs/run-real.py", line 102, in <module>
+    base_binary=compiler('main',BASE)
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/admission-delta/runs/run-real.py", line 52, in compiler
+    assert phase(label+'-typescript', ['git','-c','protocol.file.allow=always','-c','submodule.TypeScript.url='+str(ROOT/'cohere/TypeScript'),'submodule','update','--init','TypeScript'], cwd=tree/'cohere') == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,72 @@
+{
+  "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "fixes_head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "scratch": "/tmp/adamic-gate/admission-real-6zsy29yl",
+  "phases": [
+    {
+      "phase": "main-checkout",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/tmp/adamic-gate/admission-real-6zsy29yl/main-checkout",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 0,
+      "wall_start": 1791554404.5739079,
+      "limit_seconds": 600,
+      "wall_seconds": 1.8698150939999323,
+      "wall_end": 1791554406.443885
+    },
+    {
+      "phase": "main-cohere",
+      "command": [
+        "git",
+        "-c",
+        "protocol.file.allow=always",
+        "-c",
+        "submodule.cohere.url=/workspace/adamic/cohere",
+        "submodule",
+        "update",
+        "--init",
+        "cohere"
+      ],
+      "cwd": "/tmp/adamic-gate/admission-real-6zsy29yl/main-checkout",
+      "status": 0,
+      "wall_start": 1791554406.4442785,
+      "limit_seconds": 600,
+      "wall_seconds": 1.4192912819999037,
+      "wall_end": 1791554407.864063
+    },
+    {
+      "phase": "main-typescript",
+      "command": [
+        "git",
+        "-c",
+        "protocol.file.allow=always",
+        "-c",
+        "submodule.TypeScript.url=/workspace/adamic/cohere/TypeScript",
+        "submodule",
+        "update",
+        "--init",
+        "TypeScript"
+      ],
+      "cwd": "/tmp/adamic-gate/admission-real-6zsy29yl/main-checkout/cohere",
+      "status": -9,
+      "wall_start": 1791554407.8645058,
+      "limit_seconds": 600,
+      "wall_seconds": 127.56776329099989,
+      "wall_end": 1791554535.4327836
+    }
+  ],
+  "runs": {},
+  "generator": {
+    "revision": "85144830a99aa1353011562703da4f4a68da2730",
+    "path": "cloud/admission-corpus/manifest.py",
+    "blob": "220f6496b4c491bbfe23cec5ed3b9b3a6d378544",
+    "exists_at_requested_heads": false
+  },
+  "method": "Real compiler revisions built in isolated checkouts with separately empty GOCACHE directories, then supplied to the unchanged tool for phase instrumentation. Generated corpus entries are unmodified; execution manifests clear only absent-at-head generator metadata. Original generated manifests are preserved."
+}

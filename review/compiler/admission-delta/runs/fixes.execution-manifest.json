@@ -1,0 +1,3732 @@
+{
+  "sha": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "generator": "",
+  "corpora": [
+    {
+      "name": "witnesses",
+      "patterns": [
+        "review/admission-corpus/witnesses/*.a"
+      ],
+      "programs": [
+        {
+          "path": "review/admission-corpus/witnesses/captured-loop.a",
+          "blob": "fa6123d0b4d20f388b2476bbc784b10034532443"
+        },
+        {
+          "path": "review/admission-corpus/witnesses/checked-view-boolean.a",
+          "blob": "de96137be0981bbef303fab3e346f960d04b3fc9"
+        }
+      ]
+    },
+    {
+      "name": "fixtures",
+      "patterns": [
+        "internal/oracle/testdata/*.a",
+        "internal/load/testdata/0.1/compile/*.ts",
+        "internal/load/testdata/0.1/compile/*/main.ts",
+        "internal/flow/testdata/*.a"
+      ],
+      "programs": [
+        {
+          "path": "internal/flow/testdata/joins.a",
+          "blob": "32cc2b3e447b6b2b4013ac87b5cf7ab62c9dbc2f"
+        },
+        {
+          "path": "internal/flow/testdata/mutations.a",
+          "blob": "9b132fdeda627cba59c5a728979c8659641549b6"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/01_hello.ts",
+          "blob": "974f7c06a24b6e031f30ad50444a5d5db79d30d3"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+          "blob": "b35700b0d5b45d5ca830a08e46f729156a9fdf81"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/03_shapes.ts",
+          "blob": "a4b750f0cf5a2f2f7f01499ab8e8ea61a31bef13"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/04_closures.ts",
+          "blob": "983819144f5578e8ce70ada032be183f9f4d7c48"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/05_wordcount.ts",
+          "blob": "403dd118422e4664d3b23d20ee70d7d8ceb1d638"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/06_stack.ts",
+          "blob": "644483552490165de7c176d8589aa1ed6d2cf884"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/07_modules/main.ts",
+          "blob": "07cf3ed5c3f9bbbe43bd7ecd52f48436b22e3b1b"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/08_results.ts",
+          "blob": "4eca7fb182ee954d64ff69aff0002987d60841a4"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/09_tree.ts",
+          "blob": "581444d9c5f7ce676a5b8efc688f1c795632c679"
+        },
+        {
+          "path": "internal/load/testdata/0.1/compile/10_unicode.ts",
+          "blob": "b4adb3b46b8af6675eee2bfa17d80f71bb4ea3c8"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+          "blob": "df12bddf47f0c0a5b01829b0708ed55a8a743456"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_coalesce.a",
+          "blob": "baee1655af57dc76b8e2ef1a4bac1b5f74856a7a"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_conditional.a",
+          "blob": "6a0b9913f8013384c6a8a977350d2f18fdc0abf1"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_element.a",
+          "blob": "0d9fab3cce7d5bb45128207d3a34e9774e6e4e7a"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_element_method.a",
+          "blob": "047305352e11b588a13a309d71f7360c15cc6fac"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_element_plain.a",
+          "blob": "153f630b3c85c3b036c98262e6ef1879176e4d0f"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_numparam.a",
+          "blob": "62c74a5f67e2b878503a8c3e1dee08e2d4074e60"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_optional.a",
+          "blob": "708a0585ea11eb00b29747469ec49caee5261a3b"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_param.a",
+          "blob": "d16341fc4a356ba83982ec583e80263b48cea2ca"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_paren.a",
+          "blob": "b6b4da3c4367d0c933dccb0e3e48d43c9201a168"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_template.a",
+          "blob": "d4039b858e2898dcd40ad227e9898efe3721bac5"
+        },
+        {
+          "path": "internal/oracle/testdata/047cb0d_n_typeof.a",
+          "blob": "9ac28fdf80b38777e638deef415f6cd04639bcac"
+        },
+        {
+          "path": "internal/oracle/testdata/93122fa_s1.a",
+          "blob": "4dc899db6175ba8ec05ab13df945a42c9d3d8553"
+        },
+        {
+          "path": "internal/oracle/testdata/93122fa_s2.a",
+          "blob": "9945316ed23cc9bb617167452ecff54b12f8fafc"
+        },
+        {
+          "path": "internal/oracle/testdata/adversarial_exits.a",
+          "blob": "19b909d36fbb1d1e0e27b95d65a055b57270b3d3"
+        },
+        {
+          "path": "internal/oracle/testdata/adversarial_iteration.a",
+          "blob": "9e5e10e913b944b85273815a1445418c2da1d997"
+        },
+        {
+          "path": "internal/oracle/testdata/adversarial_order.a",
+          "blob": "9388bcf4d30407c3fc7e591f02eae8541644802d"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments.a",
+          "blob": "81c231a51986bd6e5c40ab228e56228d7e72e588"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length.a",
+          "blob": "c606b01ca22d46c069226b69d1acaeeebc7a3d2b"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_callbacks.a",
+          "blob": "824cf6dec7df1b4e8021ef405af027fa0580f142"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_extended.a",
+          "blob": "5a6fbce7185a7cced9b797b95598e8dd6a7912f9"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_method.a",
+          "blob": "ac42776ff2d05812744b1cbea07a300c5249a7c7"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_no_reader.a",
+          "blob": "0c3cf8b7f0f56b4320956deb7236996c94ab6ecd"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_reduce_left.a",
+          "blob": "cc504f8c286e3346971edd8f35c8411436009619"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_spread.a",
+          "blob": "340a5feaea17fa363a03931a877398af266625ca"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_static.a",
+          "blob": "ef6bc3956c4574a6d8b03f7dce90d9e2a82a52a4"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_static_constructor.a",
+          "blob": "48ccd582cf2b4b8a962c1de609e1bdf58d72c5e3"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_unrelated_type.a",
+          "blob": "9950d445668898e11d32902149cde98b8db4d7dc"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_value.a",
+          "blob": "b862e42f4ba2bdd4fd76364e58be7eb7a3c80d88"
+        },
+        {
+          "path": "internal/oracle/testdata/arguments_length_value_count.a",
+          "blob": "e8dc6ea3487c9b1561974038ef181e67b8df5ba7"
+        },
+        {
+          "path": "internal/oracle/testdata/array_from.a",
+          "blob": "d7d346dfae73ca6ef37fa4139253e7dc50fdbf4b"
+        },
+        {
+          "path": "internal/oracle/testdata/array_from_length.a",
+          "blob": "faddbb58c89e2a93a4a830995427f61edb009499"
+        },
+        {
+          "path": "internal/oracle/testdata/array_from_undefined.a",
+          "blob": "07d8821c09fc310cc9300b29f7b5059efb5b85f8"
+        },
+        {
+          "path": "internal/oracle/testdata/array_literal_empty_first.a",
+          "blob": "ab59354a9590e23cc50657cafb269dff3e6dc8f4"
+        },
+        {
+          "path": "internal/oracle/testdata/array_literal_empty_last.a",
+          "blob": "2156d4b23947b98c46fcac85f5ad4108d4252621"
+        },
+        {
+          "path": "internal/oracle/testdata/array_literal_empty_typed.a",
+          "blob": "41d24b2ad7f419299b020547428f883efe340aaf"
+        },
+        {
+          "path": "internal/oracle/testdata/array_literal_empty_union.a",
+          "blob": "9faf3441ea7908dc0c8176b01ffc9d5c0a29c56a"
+        },
+        {
+          "path": "internal/oracle/testdata/ascii_scan.a",
+          "blob": "187e6e1d9bf8baef674a01d083cd48d8aa6dba6a"
+        },
+        {
+          "path": "internal/oracle/testdata/bitwise.a",
+          "blob": "ba1add629947547cebe761921dd58494753dc249"
+        },
+        {
+          "path": "internal/oracle/testdata/bitwise_sweep.a",
+          "blob": "a21791c89a0db0e2ca5b85a01dbd886bb0290254"
+        },
+        {
+          "path": "internal/oracle/testdata/booleans.a",
+          "blob": "198475f41944c73de07bef8f43e6f8e6bcadcead"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_argument.a",
+          "blob": "48a7661721556f91024ef4471dfd663f3c2c4850"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_capture.a",
+          "blob": "0a66d5a90e703f843b68c91b18667116cce66f26"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_bounded.a",
+          "blob": "ca1ac83c5830fd8823da4fd1077c29547a8e7e30"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_callbacks.a",
+          "blob": "a667f33793798140f8b08a43bff708272cb52275"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_depths.a",
+          "blob": "ca4f06c62455a33e55167098100c5c9196fa6f48"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_exclusions.a",
+          "blob": "ef31c822f9c30a6023e6926c4b1c6a7ee7407879"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_finally.a",
+          "blob": "bdd0c796318464f4b467cb8edfa3fdfee61a4c3f"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_guards.a",
+          "blob": "a6097f21b8434371e767f76b4f45e9d9f4d32c48"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_method.a",
+          "blob": "9273b76150d448800a7c70e5a457885b5c911bab"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_parents.a",
+          "blob": "2d5b59faf9659405f27ee37dd1a621a9526f4132"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_return.a",
+          "blob": "ead46e47737b2d68729993c0bb30e0b249270883"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_scope.a",
+          "blob": "5a120dc41c52ec120a961a2153f731c917d5114d"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_spread.a",
+          "blob": "351689104aa49de45f4f2b3634761905a6afb51a"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_coverage_values.a",
+          "blob": "d3db028e5f6cfc473e0e18219585ab1830a0ced3"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_listener.a",
+          "blob": "547cf6ec4aac33d63d044dc8a71540a4ffc27432"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_override.a",
+          "blob": "49ae766b73ae12982b77aebe1fccce0652581e8e"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_reassigned.a",
+          "blob": "9a2f81601ddcd30308b7608c5c072596eb524b06"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_store.a",
+          "blob": "7d15c0c2f425a7af1abd914f9fae696059b6fbc6"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_unknown.a",
+          "blob": "e4f58c06ed1ad9ab2f938c135fc56a19eaacf143"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_walk.a",
+          "blob": "90697fb2613ee86eebc615e02657e4d4fb26e0fa"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_chain_write.a",
+          "blob": "9961b8ebb6f7cab0e60a08e49e888fe11a5e069d"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_defined_lent.a",
+          "blob": "c46fa267ac4441fb3b899b7952dd665d7279829c"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_defined_lent_field.a",
+          "blob": "46d61fab6b267814307497ccbf73bd342696f5ad"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_element.a",
+          "blob": "507f3d4cf1760b55fa514416b25369c775f80cbb"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_element_super_move.a",
+          "blob": "2f1a75c93bc0037881e741b81114775b52bde7c6"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_element_throw.a",
+          "blob": "10c6c093c62c372560973cee785bc50d7dc91d14"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_element_virtual_move.a",
+          "blob": "b94b502b938e25fd72bc7e9b0c93f142a5f06d23"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_element_virtual_store.a",
+          "blob": "df9c6d9515369cb98311dd4546947ccf2ad2e02e"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_global_call.a",
+          "blob": "bb3b1e4f7d29514430be0921e7cd66f7cc4f1aab"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_loop.a",
+          "blob": "95533f3e40b868b077a4cad1bc21f5859c473c07"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_loop_calls.a",
+          "blob": "c4585c440f4608e80d4460c2efadddc17a377897"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_map_overwrite.a",
+          "blob": "249dd372714e47b50be33b10c800ebcede6f87ba"
+        },
+        {
+          "path": "internal/oracle/testdata/borrow_reassigned.a",
+          "blob": "a303dd424099356c76ba7a6f3a19899cf93ee2bf"
+        },
+        {
+          "path": "internal/oracle/testdata/call_targets_closure.a",
+          "blob": "c372e146c86c12a5329f74bbc91302d1d2bb0337"
+        },
+        {
+          "path": "internal/oracle/testdata/call_targets_element.a",
+          "blob": "c7e0e1c6e8cd16ff9621529cea14c1533082a8a5"
+        },
+        {
+          "path": "internal/oracle/testdata/call_targets_region.a",
+          "blob": "c98ccef7c496d2ce10838dbb89e3d5859fe14e50"
+        },
+        {
+          "path": "internal/oracle/testdata/call_targets_reuse.a",
+          "blob": "20b6363a070b9b81c510130e6a14d6aa26fad49a"
+        },
+        {
+          "path": "internal/oracle/testdata/call_targets_sort.a",
+          "blob": "9a470f1e082fc005e487446fd43fdef13faa71d7"
+        },
+        {
+          "path": "internal/oracle/testdata/case_mapping.a",
+          "blob": "3db5a7fe97e0a552940078c3371f6138164c85b2"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_class.a",
+          "blob": "02c44729ab474c33cc50fd05cd6965c8ed504934"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_class_fails.a",
+          "blob": "5ea7a4e50f9aebd305431797efddf6ec80cea8ca"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_class_generic_fails.a",
+          "blob": "f3115303c64574f328115422eb4e389656170340"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_class_union_fails.a",
+          "blob": "31f6ef32d53baa066ac899b8e28e0e7e54f0c0e1"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_const.a",
+          "blob": "73244e316623dc5331797da1fce3ec7445d943f6"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_const_numeric_fails.a",
+          "blob": "121039ff51c68b5e00d585b5eb5c0772907f2539"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_const_string_fails.a",
+          "blob": "ccda79b89621497ffea0e912fc05b5129d408276"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_numeric.a",
+          "blob": "93a8f2eafd27b40e22e7458eacb3f9dbb1f4cf75"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_numeric_fails.a",
+          "blob": "6ebb8043b1b92691a62ced120529aa2f433544f8"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_string.a",
+          "blob": "908bd5a202e8090f151fb7873ca6190cfbaa14c8"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_enum_string_fails.a",
+          "blob": "fb2fff14d8ad83e275ccb992cdd2802c221c66c1"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_fails.a",
+          "blob": "6cce6663bf3ce80b0eef4c8a75ed5d6ca4d1d96f"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_operand_once.a",
+          "blob": "4ed21eab0f132035b2c74b37e1ddc36699dda5bf"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_subunion_const_numeric_fails.a",
+          "blob": "01b6bd212805dd6f248ab5e85e42b109e824ed4f"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_subunion_const_string_fails.a",
+          "blob": "20a1ca8de96f042343327a6a521a5d81314fb5f1"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_subunion_fails.a",
+          "blob": "7e6fc3833441c2aa4c6990d1276bebe078fdc47f"
+        },
+        {
+          "path": "internal/oracle/testdata/cast_subunion_string_fails.a",
+          "blob": "b41ae3989f673929f5eaa05c74f28b89e9f1f63e"
+        },
+        {
+          "path": "internal/oracle/testdata/casts.a",
+          "blob": "6f32e641b930d81f007892817a6267a7c652877c"
+        },
+        {
+          "path": "internal/oracle/testdata/census_append_overload.a",
+          "blob": "a0a226dd1e1f0c1b4bd694437c6afea2c5081d6e"
+        },
+        {
+          "path": "internal/oracle/testdata/census_boolean_dead_branch.a",
+          "blob": "30e80e4813cb5c4c11766c40041f14fe3c6312c5"
+        },
+        {
+          "path": "internal/oracle/testdata/census_boolean_negation.a",
+          "blob": "b19dea224570d8d5fc1af5f5fab82ffca78a093d"
+        },
+        {
+          "path": "internal/oracle/testdata/census_boolean_operators.a",
+          "blob": "3584a171ba7252b20e2ffc1681511c5707bc34cb"
+        },
+        {
+          "path": "internal/oracle/testdata/census_boolean_sieve.a",
+          "blob": "6031d9343777d44f3773fd728749d606fda59514"
+        },
+        {
+          "path": "internal/oracle/testdata/census_never_rest_marker.a",
+          "blob": "7f087bc800851413bc6fd08cd3de3a0830461efd"
+        },
+        {
+          "path": "internal/oracle/testdata/census_optional_values_forms.a",
+          "blob": "8fa921bc942d4b299c5e11e74cfb315d0475c1b0"
+        },
+        {
+          "path": "internal/oracle/testdata/census_optional_values_padding.a",
+          "blob": "90be1fab5ed6bcc26f4f5d2afa06f5c2e230a85f"
+        },
+        {
+          "path": "internal/oracle/testdata/census_optional_values_receivers.a",
+          "blob": "5da71bd650a8b0d12ebdb0502b662340f01ff90d"
+        },
+        {
+          "path": "internal/oracle/testdata/census_optional_values_system.a",
+          "blob": "ce813b2b6218045c4e903df157fe885534ccdc71"
+        },
+        {
+          "path": "internal/oracle/testdata/census_overload_binders.a",
+          "blob": "e8ef295c0f152e96e8b2bd27507f40f1c90f9561"
+        },
+        {
+          "path": "internal/oracle/testdata/census_overload_contracts.a",
+          "blob": "91665260ab73cfc85e6326316650824b39e7b917"
+        },
+        {
+          "path": "internal/oracle/testdata/census_overload_lie.a",
+          "blob": "6962f790b4c51c331ff9823f15997f48cf82c783"
+        },
+        {
+          "path": "internal/oracle/testdata/census_predicate_marker.a",
+          "blob": "d67917d392000d653c668c0493c1ef617f2e259d"
+        },
+        {
+          "path": "internal/oracle/testdata/census_predicate_marker_live.a",
+          "blob": "e342c5ca432ec7fdccf4e0db3bb960c6a4164928"
+        },
+        {
+          "path": "internal/oracle/testdata/census_small_boolean.a",
+          "blob": "e1019f5643521391c25c8e3bd7660248951baadd"
+        },
+        {
+          "path": "internal/oracle/testdata/census_small_overload.a",
+          "blob": "2a32e018d2dfc2bfc08e657b96cefe7bd0d5eaa4"
+        },
+        {
+          "path": "internal/oracle/testdata/census_small_rest.a",
+          "blob": "e74316fb96cbd49ce2d1c135c905c9513184ede7"
+        },
+        {
+          "path": "internal/oracle/testdata/census_unary_numeric.a",
+          "blob": "cb0d703cf987b82e1d2162a2c13c0f57773cce93"
+        },
+        {
+          "path": "internal/oracle/testdata/census_unary_truthiness.a",
+          "blob": "42aa8f9ab26d93fc111560599f48f1b4a12d6cb9"
+        },
+        {
+          "path": "internal/oracle/testdata/class_as_interface.a",
+          "blob": "8ba26cef781dd867b4929e1eba123480fa346222"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_accessors.a",
+          "blob": "97097b802f768e2a031713cc2e137b2585ff812f"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_distinct.a",
+          "blob": "2be504fe1d054b2edefac3e1a6633f3c2e97585a"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_private.a",
+          "blob": "a87fd538f3eb299b9e53515fa64b47feaf92ee58"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_retained.a",
+          "blob": "f318a58e2882655118ae276b09789fe56426015a"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_static.a",
+          "blob": "7b8a21fa8e87c3191a637cbd555e1cf939967073"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_static_private.a",
+          "blob": "2f3a3be8d1c403ef6c914f5bfca4b06647786fec"
+        },
+        {
+          "path": "internal/oracle/testdata/class_features_twice.a",
+          "blob": "28286bcfe708d525c356e888be2d4b01fbf6ba06"
+        },
+        {
+          "path": "internal/oracle/testdata/class_identity.a",
+          "blob": "34575965fd0af2dd6291b074ea15b0c9a90f9c5f"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance.a",
+          "blob": "7cfc8397efe5fa04ff1e5be1304733806ac5630b"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance_conditional.a",
+          "blob": "276080d7297a9447c3ca52a262af6498fb5db7c1"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance_exceptions.a",
+          "blob": "3b32d52b9733300900b2d7d6e9ba3cf360e7b2df"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance_generic.a",
+          "blob": "f45528889e58fc83a93ec1aa0487875e97d31d49"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance_interface.a",
+          "blob": "d3565c4e683d6de200f97949dbed366051a1c6cd"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance_memory.a",
+          "blob": "15a0c0fd9965cb0f28858f3a39413cf2bb4380a7"
+        },
+        {
+          "path": "internal/oracle/testdata/class_inheritance_order.a",
+          "blob": "f67dcbbdc0dc8eacf65301f27b02902c3d83c63f"
+        },
+        {
+          "path": "internal/oracle/testdata/class_instance_key_consume.a",
+          "blob": "ed4fefe7798e6fc60ad83aa1f291885d24c32b73"
+        },
+        {
+          "path": "internal/oracle/testdata/class_instance_key_region.a",
+          "blob": "9e11f4b684f207748372bbbc372fa49cd168d4e6"
+        },
+        {
+          "path": "internal/oracle/testdata/class_instance_key_region_alias.a",
+          "blob": "eccd63a0fc878e226f6da459110dd898565989ef"
+        },
+        {
+          "path": "internal/oracle/testdata/class_instance_key_throw.a",
+          "blob": "28262b35366f3216864531858465fc9e6ebaeb1b"
+        },
+        {
+          "path": "internal/oracle/testdata/class_layouts.a",
+          "blob": "12baba669f64a998cb2a23188c003176b0f34798"
+        },
+        {
+          "path": "internal/oracle/testdata/class_oct6_deep.a",
+          "blob": "b4493b148925bd365e511f1c9d51923b6b2744d6"
+        },
+        {
+          "path": "internal/oracle/testdata/class_oct6_parameters.a",
+          "blob": "3602d045f2fe7030310e8d70937cd46583471e75"
+        },
+        {
+          "path": "internal/oracle/testdata/class_oct6_release.a",
+          "blob": "6d618016318baff61da3ff2d54aa44a95f9193e4"
+        },
+        {
+          "path": "internal/oracle/testdata/class_oct6_subclass_holder.a",
+          "blob": "18dc976e4817b1cce4a21daae9e812494338470e"
+        },
+        {
+          "path": "internal/oracle/testdata/class_private_generic.a",
+          "blob": "088d71528d6fcac345dc145cd91e6b60f38fcfa0"
+        },
+        {
+          "path": "internal/oracle/testdata/class_private_members.a",
+          "blob": "c605cecc17c6857ac0f5a8bdc18d14bb3fd1f563"
+        },
+        {
+          "path": "internal/oracle/testdata/class_super_closure.a",
+          "blob": "8da465c1dcf011caccd3e33473f06f7f0320950b"
+        },
+        {
+          "path": "internal/oracle/testdata/classes.a",
+          "blob": "a5d1d92fb4a9d80119be7706219d7c5fc4cf67da"
+        },
+        {
+          "path": "internal/oracle/testdata/clock_generic_returns_t_01.a",
+          "blob": "a9850dd7e3c96944b5f639fd516a2bdd29251eca"
+        },
+        {
+          "path": "internal/oracle/testdata/closure_convention_host24.a",
+          "blob": "2ea7112eb62040d7841094c126d29e622fa14494"
+        },
+        {
+          "path": "internal/oracle/testdata/closure_convention_nested.a",
+          "blob": "50d65440e7e28f53253b1161fdc1a5692e32f41d"
+        },
+        {
+          "path": "internal/oracle/testdata/closure_convention_plain.a",
+          "blob": "681b987ce2620e0e5c9abf0215694158d3b6f80c"
+        },
+        {
+          "path": "internal/oracle/testdata/closure_convention_receiver_rest.a",
+          "blob": "523ec1890e94ca27726eeea64c21f6ccb31e8e3c"
+        },
+        {
+          "path": "internal/oracle/testdata/closure_convention_regexp_count.a",
+          "blob": "470ea529955be91ae517e35548e9949a65ca08e3"
+        },
+        {
+          "path": "internal/oracle/testdata/closures.a",
+          "blob": "e68e7722958c744fcb31431c065fa102a0fc11c8"
+        },
+        {
+          "path": "internal/oracle/testdata/closures_throw.a",
+          "blob": "7720c028a778f251658b13f8664042065242fe73"
+        },
+        {
+          "path": "internal/oracle/testdata/closures_throw_uncaught.a",
+          "blob": "ed3198845858b4c652f502887262bf1290fc84b8"
+        },
+        {
+          "path": "internal/oracle/testdata/collections.a",
+          "blob": "9cc83f28a1b38a74909ca8fa69a0eeeb553a7570"
+        },
+        {
+          "path": "internal/oracle/testdata/concat_too_long.a",
+          "blob": "3fdf5c03907844ef08d3ee77dbed76b9cc943e0b"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_array.a",
+          "blob": "3914c3ef70d801d9a09a3bb4698c13ab595bce72"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_evaluation.a",
+          "blob": "cb6db7251b43a4ce42014ec076a09b7c2e3b353e"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_function.a",
+          "blob": "39348c21cb349e10de5e11fd1357c96ffe6ceb44"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_ledger78.a",
+          "blob": "3cdf7b2156c337ceffe40484f1a1b284a26df9f0"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_null.a",
+          "blob": "7eebc11dc321e1700e5139a00a3d25b3f4b786b7"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_number.a",
+          "blob": "2e03a1e3ee19f73ca56365609af59873a3c64c2a"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_object.a",
+          "blob": "3f2d9e1ffe9d9df058ae4ac0d982eb64d017c7d1"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_optional_boolean.a",
+          "blob": "70cdf332c90b12933a0a2b30fed79f1acaef303e"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_optional_number.a",
+          "blob": "8b7f42c6af10c967ac18da7059404256f1b8ae4d"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_optional_reference.a",
+          "blob": "f8c82e9800f724061e2f48369cba143fdf98f378"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_optional_string.a",
+          "blob": "65caf019ef6f5edb75408a4ef9edc90e8aca1728"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_sites.a",
+          "blob": "dc6c582d5a1bb525e1724c0d4bc9bf037644533d"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_string.a",
+          "blob": "bb6b89c56c2c9c9050943812490bda6be766a457"
+        },
+        {
+          "path": "internal/oracle/testdata/conditions_union.a",
+          "blob": "f8efb18030a748e620cb72a60cc10b518b0aa2a2"
+        },
+        {
+          "path": "internal/oracle/testdata/dead_zone.a",
+          "blob": "cbede6c8564fce6a6e40d4cda92a94b71bbaea55"
+        },
+        {
+          "path": "internal/oracle/testdata/debugger_fail.a",
+          "blob": "feade550ed0f5d871b0436f544a073ee365f4274"
+        },
+        {
+          "path": "internal/oracle/testdata/declared_later.a",
+          "blob": "3d42918a535775ccdd37d3444155b03f18d07c0c"
+        },
+        {
+          "path": "internal/oracle/testdata/defaults.a",
+          "blob": "b29b976981f126555533afd6b0a7d63bb9229bed"
+        },
+        {
+          "path": "internal/oracle/testdata/devirt_borrow_doc_claim.a",
+          "blob": "66f655c489efaac45ae7d7787fc15c7a20ff709f"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize.a",
+          "blob": "daf24975d3e8d4d8f1eace40afdcd048f6dc423c"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_abstract.a",
+          "blob": "26e8eb38e181a6e3a9375b1abaaf6f70425f9ec7"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_accessors.a",
+          "blob": "5fc0cbf7b58edcf2fc9fa4ed8f017473fc0f0641"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_factory.a",
+          "blob": "c71f2aaa80d5a97042d1fcd068741f0ea4b8fa93"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_function_field.a",
+          "blob": "9f7c306ae09801343d89c7c74737c830af7f543b"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_generic.a",
+          "blob": "a8aa86f7df6893212345978da4d74b37adc906de"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_interfaces.a",
+          "blob": "97f4f54db96953698fa196097d160fb3063267c3"
+        },
+        {
+          "path": "internal/oracle/testdata/devirtualize_receivers.a",
+          "blob": "a59e9e431fe8cabd8aada156d2d11e3d63b30fa5"
+        },
+        {
+          "path": "internal/oracle/testdata/doubly_linked.a",
+          "blob": "72c750803466624510b7e1d37d6b0385019419a5"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+          "blob": "dfa69240640612d291caf322fbedf093b2ecfc28"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+          "blob": "48c2dfda8b15993b5fca2b76f2f9e376d75278cd"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+          "blob": "7bebc57bc7a8e0cb4c88bfce84b02cd040c0abe8"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_f1_field_present.a",
+          "blob": "bd330783576f7800f2acf979bae0126dfb3a9952"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_f2_union_narrow_call.a",
+          "blob": "a7eea4971c81fcfb9f23620b1d740c20649d7217"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a",
+          "blob": "be4ebaab7a72d85829b9a7450cf8f89907c177ce"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+          "blob": "82bc4b55e32560eb7c5a8867a74c67d04d123429"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_u02_optional_absent.a",
+          "blob": "89c1a1a48f6c60ee50b2ffcb388e3b26df96319f"
+        },
+        {
+          "path": "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a",
+          "blob": "6e4a07d2a5eafc0a158992c2d2e449ccf54da319"
+        },
+        {
+          "path": "internal/oracle/testdata/effects.a",
+          "blob": "fd379cadec1c823d4ea4a5697cbff1c3f6b54beb"
+        },
+        {
+          "path": "internal/oracle/testdata/element_access_boolean.a",
+          "blob": "301b8dec0da792ed623559ffca9b71dfb1b02640"
+        },
+        {
+          "path": "internal/oracle/testdata/element_access_optional.a",
+          "blob": "6067639cc5dc439d6ae8d98146927f3ee0f7e94f"
+        },
+        {
+          "path": "internal/oracle/testdata/element_access_presence.a",
+          "blob": "aaa74219cc4dd26c956187265101bcf2399b92fa"
+        },
+        {
+          "path": "internal/oracle/testdata/element_access_reads.a",
+          "blob": "4bfcf4946be4b13fa1ba4dc59c8b2d9fb5c3047e"
+        },
+        {
+          "path": "internal/oracle/testdata/element_access_tuple.a",
+          "blob": "7dc892b9da6bddadb72168bcae40ff70c2f6a627"
+        },
+        {
+          "path": "internal/oracle/testdata/empty-path.a",
+          "blob": "1e104a72665ed540b308586ae19be1c6760ca025"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_checked_boolean.a",
+          "blob": "f56a213846c587596dea86f16ceb31164136b0ec"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_checked_boxed.a",
+          "blob": "2c715e3b59d00dead774cb6d59cc0264b3597ff0"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_checked_fit.a",
+          "blob": "b1de75b1e79919b0b2fa6f44f2ea1be2679417e4"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_checked_literal.a",
+          "blob": "c127338429de8fec5c7327decd3fbe4992993036"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_checked_misfit.a",
+          "blob": "2ea93696f1453d864e5912af5ad1ae6ddaa3a9b6"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_proven.a",
+          "blob": "1df4f056630270429913b25be44873d1fea53dc5"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_proven_import.a",
+          "blob": "e6e192213cc86cc811a58b9119904f1ab1421ed4"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_proven_import_source.a",
+          "blob": "03db9a25ecaedc759b498ad9e36853b5d2441859"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_record_alias.a",
+          "blob": "f493c9439030217b398935d72dad96e033f2fa1d"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_record_misfit.a",
+          "blob": "01b10d305113d345cbd1233035f13661594a42fd"
+        },
+        {
+          "path": "internal/oracle/testdata/entries_scanner.a",
+          "blob": "55d5574bc62d3910003b29d14fdee46d74950432"
+        },
+        {
+          "path": "internal/oracle/testdata/enums.a",
+          "blob": "8204b16763194ca79bb3fe9a2a6ea0560a487758"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_const.a",
+          "blob": "2af67920b417c303fecef5f1ba33004b40119013"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_flags.a",
+          "blob": "5fe9b9d55c063e49698726e8526ca077dd557e91"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_flags_never_default.a",
+          "blob": "72a8cce2bd705023e683d9d65aa6f89783201a91"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_names.a",
+          "blob": "303935424a3a00a354bfcdedc357664a1867cc05"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open.a",
+          "blob": "86db431059f6bd2c2e1d1d7dd4d880c5fabefa40"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_members.a",
+          "blob": "063e7961e13467c72ad35729bf8a0729bd5d027d"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never.a",
+          "blob": "bc06e0abe13e164c5ef44a15837cf4cc8000a175"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never_field.a",
+          "blob": "503cba8a91a6a493c52abd7539e6a61f639ed3ba"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never_if.a",
+          "blob": "e5fc97a93400fbc616e8f8e78fbbc7354f7ea242"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never_implicit.a",
+          "blob": "b7fa233a961101c0103d447f6d44c28f4dd08026"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never_index.a",
+          "blob": "0e7e70c1514eb38f4216e496427a062165fdc639"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never_return.a",
+          "blob": "ffb18ed5139a826907a341ada67592f9325ea121"
+        },
+        {
+          "path": "internal/oracle/testdata/enums_open_never_update.a",
+          "blob": "5b39bd03239f7a3f7c8f119643663acf7679b0d2"
+        },
+        {
+          "path": "internal/oracle/testdata/exceptions.a",
+          "blob": "da63e60dbbcfb8a5f35f4b21ca1acd3ca3093655"
+        },
+        {
+          "path": "internal/oracle/testdata/exceptions_empty.a",
+          "blob": "9bd9165437a4ddc21c3ab6209512c7dd4f618a2d"
+        },
+        {
+          "path": "internal/oracle/testdata/exceptions_uncaught.a",
+          "blob": "a417c4baa9d09b6e8f6bbd4a0e3ef99c190a7000"
+        },
+        {
+          "path": "internal/oracle/testdata/fallthrough_exceptions.a",
+          "blob": "21aedf76be475d4ef8f241c4962b412e08c96730"
+        },
+        {
+          "path": "internal/oracle/testdata/fallthrough_labels.a",
+          "blob": "33710bf0d24ad8b4a2f8526d68495e1ce448a564"
+        },
+        {
+          "path": "internal/oracle/testdata/fallthrough_nested.a",
+          "blob": "b90a0561f71044774c3e02a8e4c02f2ad0914c54"
+        },
+        {
+          "path": "internal/oracle/testdata/fallthrough_ownership.a",
+          "blob": "7a7e1d14918b95919d1856259a756542660f6dc6"
+        },
+        {
+          "path": "internal/oracle/testdata/fallthrough_probe.a",
+          "blob": "85cd3cda59efd4351870683d074fa0e3bba9d67d"
+        },
+        {
+          "path": "internal/oracle/testdata/field_access_paths.a",
+          "blob": "6fe7774cbc598f920fb49233038385387a254e91"
+        },
+        {
+          "path": "internal/oracle/testdata/field_write_paths.a",
+          "blob": "d6fe53342b7d035a4db50c8236baa13539186874"
+        },
+        {
+          "path": "internal/oracle/testdata/fill_length.a",
+          "blob": "0e4661f04ddc1e968f04fd4e3e33185f1a4f3c2b"
+        },
+        {
+          "path": "internal/oracle/testdata/fills.a",
+          "blob": "8f53b7616608f7f688da1e0ca282044631cf4658"
+        },
+        {
+          "path": "internal/oracle/testdata/finally_leaves.a",
+          "blob": "e263e27b2bd26a1870e25f58ad1b81a8f38c2fa8"
+        },
+        {
+          "path": "internal/oracle/testdata/find_index_shrinks.a",
+          "blob": "e61588651bde7c98d94e55b67b81c2156c58e8a3"
+        },
+        {
+          "path": "internal/oracle/testdata/find_shrinks.a",
+          "blob": "d74f7a082fa8a454c01987e784de22cfef5dea43"
+        },
+        {
+          "path": "internal/oracle/testdata/fresh_calls.a",
+          "blob": "e940b474afa13dfc87bed075782a9d955e6d3c7e"
+        },
+        {
+          "path": "internal/oracle/testdata/fresh_parser.a",
+          "blob": "eeb6afe0360bf3e93c71d79756d81c24507ee966"
+        },
+        {
+          "path": "internal/oracle/testdata/fresh_writes.a",
+          "blob": "54c3ece12b5d640c5217a9b29fa05c92c91d4244"
+        },
+        {
+          "path": "internal/oracle/testdata/from_code_point_fails.a",
+          "blob": "939e5fd28c3f97b8a2c5e353af47c133ea941797"
+        },
+        {
+          "path": "internal/oracle/testdata/from_codes.a",
+          "blob": "af15549a29075b39694af094add911cf22320a60"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_array.a",
+          "blob": "75f8d615bd8fd700c3fc5ab68e28edd952c09205"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_boundary.a",
+          "blob": "e97b209eda79e8472479b0bd6acff1e71fe314fc"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_chain.a",
+          "blob": "3fbf1ccd0b36e0be7ddf2af19cb4acdbf89c9198"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_diagnostic.a",
+          "blob": "df0ce08d7c2882832f47a3baa340af822f2be062"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_options.a",
+          "blob": "38b6a8a7fcddc3f83d6f4e07859a86397c0c653a"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_return.a",
+          "blob": "c16996dbe4638b0c2f20d5ebc1464519f6ce7925"
+        },
+        {
+          "path": "internal/oracle/testdata/function_values_signature.a",
+          "blob": "8fe3937165134210d77d6f4c3b365d9ba41c18dc"
+        },
+        {
+          "path": "internal/oracle/testdata/functions.a",
+          "blob": "f89ae900802de3c0db4e68c25c2a0e5566068652"
+        },
+        {
+          "path": "internal/oracle/testdata/gaps.a",
+          "blob": "04f9ed2931c5f9328ddc11b66dbb799db37ea1d9"
+        },
+        {
+          "path": "internal/oracle/testdata/generic_functions.a",
+          "blob": "26f9c66064043fb3dc5952a85f0800106fe6522e"
+        },
+        {
+          "path": "internal/oracle/testdata/generic_instance_key_typeof.a",
+          "blob": "d86f7fa3ddd913616c9dc0cb36c468a1043b1a6e"
+        },
+        {
+          "path": "internal/oracle/testdata/generic_method_return.a",
+          "blob": "716165fedf11594c5020f7cd15d06d0b0f2aaea0"
+        },
+        {
+          "path": "internal/oracle/testdata/generic_values.a",
+          "blob": "38fe5b4c858a3347bbd743cf431db6aa70918eba"
+        },
+        {
+          "path": "internal/oracle/testdata/has_own.a",
+          "blob": "678aebdce93a93d537d946e0caf0df0bf052a15d"
+        },
+        {
+          "path": "internal/oracle/testdata/host_array_predicate.a",
+          "blob": "5b0d80aad159fd6fd951f40d8cdfd1cd0815eb7f"
+        },
+        {
+          "path": "internal/oracle/testdata/host_array_unknown_predicate.a",
+          "blob": "1a3909d90046e3cff5d3ea020716e6ae430da9fa"
+        },
+        {
+          "path": "internal/oracle/testdata/host_empty_object_slots.a",
+          "blob": "7c9d787df95d0e044432f8157b48e45e59895ddf"
+        },
+        {
+          "path": "internal/oracle/testdata/host_map_generic_union.a",
+          "blob": "e2514c8269d844899e432c566a258d8208ebdf64"
+        },
+        {
+          "path": "internal/oracle/testdata/host_map_iterator_probe.a",
+          "blob": "574be34ceabc5e5eb02fa8cc19a4f66ad12f7937"
+        },
+        {
+          "path": "internal/oracle/testdata/host_map_iterator_union.a",
+          "blob": "3b651a2a36c3be0d9a4a0fcd93d2a98b2a1eee55"
+        },
+        {
+          "path": "internal/oracle/testdata/host_map_union.a",
+          "blob": "8d81a3f648fc881c1cae5a326479069661d94759"
+        },
+        {
+          "path": "internal/oracle/testdata/host_never_branches.a",
+          "blob": "e636afd8558f58b15f29d854fc9afe1281efa318"
+        },
+        {
+          "path": "internal/oracle/testdata/host_optional_intrinsic.a",
+          "blob": "a25bd5a872b3dd2b0988c44f6483047e68e63b06"
+        },
+        {
+          "path": "internal/oracle/testdata/host_rest_union.a",
+          "blob": "28da51bf5a58788a7e54cc3b931cf1819213bc61"
+        },
+        {
+          "path": "internal/oracle/testdata/host_scanner_never.a",
+          "blob": "f5c11a9ded59a93fede9c9864eb19fdfb64dc3d0"
+        },
+        {
+          "path": "internal/oracle/testdata/host_undefined_value.a",
+          "blob": "f19027b5a514d9dc939a6ee597d9120a9029c279"
+        },
+        {
+          "path": "internal/oracle/testdata/host_unknown_error_code.a",
+          "blob": "087c245105eeca77e6ed69b57db13745a1478462"
+        },
+        {
+          "path": "internal/oracle/testdata/host_void_method.a",
+          "blob": "c10348a5ac092fd015fae3a5a9a1cfaa65d33d40"
+        },
+        {
+          "path": "internal/oracle/testdata/implicit_returns.a",
+          "blob": "92def7cef2984fba2d8d7ad8476a7ea356bd6a10"
+        },
+        {
+          "path": "internal/oracle/testdata/indexing.a",
+          "blob": "da7867a39b3857cdf881225ca64ab8403e05f17b"
+        },
+        {
+          "path": "internal/oracle/testdata/inherited_static_field_read.a",
+          "blob": "4f3c23eb5c85f35ae14484a00263bd974077a3d8"
+        },
+        {
+          "path": "internal/oracle/testdata/input_spread_local.a",
+          "blob": "f9088f9c5e7e108c081b7c1d061001d53213f4fb"
+        },
+        {
+          "path": "internal/oracle/testdata/input_spread_ordinary.a",
+          "blob": "7e0afff786c41f1d436bf1867ce798d3895d50b0"
+        },
+        {
+          "path": "internal/oracle/testdata/integer_format.a",
+          "blob": "2ac2a5fa63cef1fbad3d5d40b3a69ca486af3816"
+        },
+        {
+          "path": "internal/oracle/testdata/interleaved.a",
+          "blob": "5c49435820dca76577ec95dc22746b30ab365447"
+        },
+        {
+          "path": "internal/oracle/testdata/invariance_readonly.a",
+          "blob": "b0bfdbbe1a51f24803feda18f963d41b15326d63"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_escapes.a",
+          "blob": "2527c6d81ca4d79db7922466605352101e0ffba5"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_indent.a",
+          "blob": "2568783d92755fd970c2e8a19f444742bc142f4d"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_keys.a",
+          "blob": "14c9031d107f8d82e2af5069fc21995491030175"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_numbers.a",
+          "blob": "63d8227d38306ebfd33f91d3f0d48ce5736b0f75"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_options.a",
+          "blob": "931ad7515be7d4c1aed024c7ba78502251a02cab"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_replacer.a",
+          "blob": "b3e852928cbb505ee11a72ca5fd5a72756d9c7fe"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_scalars.a",
+          "blob": "a9318fc544136d477a23b2421a3ebf3884c6c00d"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_undefined.a",
+          "blob": "141cde65ac89ba8e21dda0dd3160a11d55a105b7"
+        },
+        {
+          "path": "internal/oracle/testdata/json_stringify_values.a",
+          "blob": "07fd5912a8f5276a29b552e4d0b8b92580e073fe"
+        },
+        {
+          "path": "internal/oracle/testdata/killed_after_output.a",
+          "blob": "7edfb7d252cf36843215b74fd28fd70c3b76fd03"
+        },
+        {
+          "path": "internal/oracle/testdata/large_output.a",
+          "blob": "14ea0f94c926b00323629ab19dc0c24326d28180"
+        },
+        {
+          "path": "internal/oracle/testdata/lent_reads.a",
+          "blob": "ab5232b5103d8158046b4ba66c88ac0d842ff71d"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_copy.a",
+          "blob": "b77c8f2f39f7e2c1f4926cb85fcf97527f3fd325"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_copy_within.a",
+          "blob": "60da0effeb9ce8f9866c4d4b7f83ef09ac20c9ec"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_find_last.a",
+          "blob": "fa9ec1f6180c06f647ea8b00d0c38aa7e94b40a7"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_flat.a",
+          "blob": "a7c3ded217418e16b44a1c26b52809d6410a1114"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_flat_map.a",
+          "blob": "26d97fa04dfa58e847eb98efa31791ba8f09d18e"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_iterators.a",
+          "blob": "972d4f7f8bfa68c40761997b2922e7972c17879d"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_join.a",
+          "blob": "f2857dda210d63661843bc2ce241bf42c5a1ccdc"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_metadata.a",
+          "blob": "b511a0f8d11b73e95abb281e8b2d95e563aeec2c"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_search.a",
+          "blob": "756bb6169fea55f61a4d0870b56fdc70647fb6fb"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_spliced.a",
+          "blob": "f75b9d9bcae035f7eb3adbb90d87321d5f4816f9"
+        },
+        {
+          "path": "internal/oracle/testdata/library_array_with.a",
+          "blob": "58b809460ab7f6d7bcb8016e45c9119aaccafe0e"
+        },
+        {
+          "path": "internal/oracle/testdata/library_fnexpr_loops.a",
+          "blob": "b2ef644054da4cee6d859d5b2460496a327091cb"
+        },
+        {
+          "path": "internal/oracle/testdata/library_fnexpr_recurse.a",
+          "blob": "c1bde19010cae530ad97311dd0df12bfc904d035"
+        },
+        {
+          "path": "internal/oracle/testdata/library_fnexpr_store.a",
+          "blob": "fbe7c4a71b1f2f3ebd43da6e26bbe9b5623b6a93"
+        },
+        {
+          "path": "internal/oracle/testdata/library_for_in.a",
+          "blob": "ee4ea0349ea13e860174a9b75fdeb3b06c99ddcd"
+        },
+        {
+          "path": "internal/oracle/testdata/library_for_in_keys.a",
+          "blob": "03e48af7c72518e102f8fc13c3b301b9164c90e4"
+        },
+        {
+          "path": "internal/oracle/testdata/library_for_in_live.a",
+          "blob": "e8fdb4af0bb196ea79fbe1aed192eef412120d35"
+        },
+        {
+          "path": "internal/oracle/testdata/library_function_expressions.a",
+          "blob": "ffbb1b15a19cca8a01221dc46572bd242566274c"
+        },
+        {
+          "path": "internal/oracle/testdata/library_globals.a",
+          "blob": "9d6224493d625fc81c5f3931070ac3fc23574089"
+        },
+        {
+          "path": "internal/oracle/testdata/library_globals_typeof.a",
+          "blob": "b7c0fbe310c0f978bfd06795f2805b40c3119e80"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set.a",
+          "blob": "cd1a87a7c0940c6b2678b2a026d72b14d454d8aa"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_construct.a",
+          "blob": "ce7fd3747f32656cc8669272a2544a0ba27dfcbe"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_group_by.a",
+          "blob": "57ae04ca8f9bc34a4cd0e7fdfe981c58ce03de49"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_groupby_keys.a",
+          "blob": "684556510a34aea96c47593634618dfaeda8de03"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_iterator_exhausted.a",
+          "blob": "3ac07727d8fd46d7e7736f5861efa16141d423c4"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_iterator_number_hash.a",
+          "blob": "c393d2673306b85d7cb9d2f3af4bd3246c13c495"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_iterators.a",
+          "blob": "226e8e50c8a3e05d571a8592a7316e90b83a442d"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_keys.a",
+          "blob": "a55874fcd8d6329538b7836d2901603385ca0761"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_next.a",
+          "blob": "6ad4f7440d9c68387fe657481a02e98b89564586"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_setops.a",
+          "blob": "21edb4eb5c78850d6e96ff1ecea2b39a6317145a"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_visit.a",
+          "blob": "23406a56a33b281d4b67a2f2e1ea4ea1117d72b0"
+        },
+        {
+          "path": "internal/oracle/testdata/library_map_set_zeros.a",
+          "blob": "5f25c03ea0036b2e62e8e31d0ac02278a68d0bed"
+        },
+        {
+          "path": "internal/oracle/testdata/library_math_number_convert.a",
+          "blob": "d5966f48665475a05402e48c50acbafb227317ac"
+        },
+        {
+          "path": "internal/oracle/testdata/library_math_number_math.a",
+          "blob": "1001cea8f67431aa7bb08b070044ed82d5dbbed7"
+        },
+        {
+          "path": "internal/oracle/testdata/library_math_number_prototype.a",
+          "blob": "71f57682a6c1bc3232245744cf527c2ff0cf63f8"
+        },
+        {
+          "path": "internal/oracle/testdata/library_method_values.a",
+          "blob": "bcc5d14108e565e0354ed3a25481f0f43c208d6c"
+        },
+        {
+          "path": "internal/oracle/testdata/library_method_values_dead_zone.a",
+          "blob": "6156a27315643dbdbca1ea7b55e31d34f063a1dc"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_assign.a",
+          "blob": "d35014ba4eedb8881abf927a012732e9d1ae2ebd"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_assign_fields.a",
+          "blob": "a00a97a9b3a5044203035165b263c3cd870d4dad"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_freeze.a",
+          "blob": "32e05ec9b74c5c20ad21f4a9a17fd18217a334c1"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_freeze_alias.a",
+          "blob": "3d7b3de55fb641433f8508ab3e03bb0524759d6a"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_freeze_assign.a",
+          "blob": "f2e496b4091a9a627d97c11449d2043dae5baaee"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_freeze_write.a",
+          "blob": "f2082810c7cab99d570ded270cf8e5f3ee1d1762"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_has_own.a",
+          "blob": "59e03a93688c1938bedd84ddda1e37f6544afae6"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_is.a",
+          "blob": "4f40c74cfcdafa506ba49bd7a72964e6eeb156b0"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_keys.a",
+          "blob": "d3209099717dad73e3fd77225120d7be06349d30"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_order.a",
+          "blob": "4d7b3a5dc0301795cef4ec17c4439a369c90dbff"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_own.a",
+          "blob": "13e731f9bfe35f44109cd9c92be46c1bb8aad539"
+        },
+        {
+          "path": "internal/oracle/testdata/library_object_same.a",
+          "blob": "c9bdc323e899239af5f616d81219e10294578fe4"
+        },
+        {
+          "path": "internal/oracle/testdata/library_string_conversion.a",
+          "blob": "93fd30c755c81add3d0e65d6d6da76395eeadf80"
+        },
+        {
+          "path": "internal/oracle/testdata/library_string_existing.a",
+          "blob": "ace913fa89ff9d2747d539ec3e98fe4aeaf11124"
+        },
+        {
+          "path": "internal/oracle/testdata/library_string_indices.a",
+          "blob": "3252cfa4cc27f147f95d90343f2813aa90288560"
+        },
+        {
+          "path": "internal/oracle/testdata/library_string_prototype.a",
+          "blob": "7a3e5cdbde93fba18b1ba5f0cc5f323003d6da48"
+        },
+        {
+          "path": "internal/oracle/testdata/library_string_raw.a",
+          "blob": "32a5b37bd941128ff959ca70d71dde4acf46af03"
+        },
+        {
+          "path": "internal/oracle/testdata/lint_runtime_equal_headers.a",
+          "blob": "31ed38f32d30cfc20d442ff22df911af2c905bab"
+        },
+        {
+          "path": "internal/oracle/testdata/lint_runtime_release_chain.a",
+          "blob": "5bd1d885fda4c0b834d4ed59e23c72558ba6c03f"
+        },
+        {
+          "path": "internal/oracle/testdata/lint_runtime_release_shared.a",
+          "blob": "c88244a47ec3a38cdd6acbb1ae5c40d62bafa2e5"
+        },
+        {
+          "path": "internal/oracle/testdata/lint_runtime_search_boundaries.a",
+          "blob": "72cb27bab1eade15f695b783676ea134de5543dc"
+        },
+        {
+          "path": "internal/oracle/testdata/lint_runtime_search_calls.a",
+          "blob": "5a3f2bb0f850e693c8de8f7bc9771ce364342d04"
+        },
+        {
+          "path": "internal/oracle/testdata/literal_optional_shapes.a",
+          "blob": "8f2ae4104231d5a0a40342a5a682bc338ba80464"
+        },
+        {
+          "path": "internal/oracle/testdata/local_console.a",
+          "blob": "dd7ec6fd1f00e27bf87be7bed67a928e26aa4020"
+        },
+        {
+          "path": "internal/oracle/testdata/logical_and_reference_maybe.a",
+          "blob": "2566cce33b11902c26b58068457013b1b86183f9"
+        },
+        {
+          "path": "internal/oracle/testdata/lone_surrogates.a",
+          "blob": "7258a47a37055a9be3c7961cd33ccb941ac80c18"
+        },
+        {
+          "path": "internal/oracle/testdata/long_chain.a",
+          "blob": "ae2dc40484ff90f2ee783bb727f592f636aa50b3"
+        },
+        {
+          "path": "internal/oracle/testdata/long_literals.a",
+          "blob": "e62c011e6b0c7fcb9f1f2c6dce899ce09710b3dd"
+        },
+        {
+          "path": "internal/oracle/testdata/loops.a",
+          "blob": "4710287f980411a4fb6f95fc3951910ef8ca7b5b"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_arrays.a",
+          "blob": "274781204f59fd62a318ee9502c129eb99fae4cc"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_closures.a",
+          "blob": "2ab5bc0b9ba1837a15dd4272ca2b63125718ef0a"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_fnexpr.a",
+          "blob": "6ed3ba34fee382b17c8117ea5ab8121ea6030314"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_keep.a",
+          "blob": "fcd3e36a8f1abc5d3999184ace8d5e7ccdd38f01"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_keys.a",
+          "blob": "ee9a966dc888aedea115a7da2c3a764f51761d73"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_named_closures.a",
+          "blob": "0162ef3f8ae0d1acfac425fd201bc58ed4904ed6"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_named_keys.a",
+          "blob": "9dc131f4a8d9d252d903db9b192e7d5ea1a21b90"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_named_more.a",
+          "blob": "a42104000cdb8aba6c2719fa86268729b8846c19"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_named_numbers.a",
+          "blob": "4d46ebb007f4c111640abd3894783bffcab0b236"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_named_objects.a",
+          "blob": "f898d96cc7aad2467fb7afba1030fa317110fd3a"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_numbers.a",
+          "blob": "8fcf763be7de6248991d045db346328161e45056"
+        },
+        {
+          "path": "internal/oracle/testdata/map_foreach_objects.a",
+          "blob": "951f2f330f2744e3f1fc5ab1c2a6fc952029e1de"
+        },
+        {
+          "path": "internal/oracle/testdata/map_iteration.a",
+          "blob": "70eba4fe5cb4d4f7993218b31cc52fa30cbddaa8"
+        },
+        {
+          "path": "internal/oracle/testdata/map_shrinks.a",
+          "blob": "be67355d492bbad6bc77ff0e75901978191af6a2"
+        },
+        {
+          "path": "internal/oracle/testdata/map_zero_keys.a",
+          "blob": "bbd43947c653c6867797d6414b08db54253ac43b"
+        },
+        {
+          "path": "internal/oracle/testdata/maps_and_text.a",
+          "blob": "afa2f9eca2bc2972323171ad38536bbf68c35a52"
+        },
+        {
+          "path": "internal/oracle/testdata/maybe_boolean_panic.a",
+          "blob": "18b37208009a61c1b3396b78655ad91aa7d5afcf"
+        },
+        {
+          "path": "internal/oracle/testdata/maybe_booleans.a",
+          "blob": "a698a33c331d7e2c336154d5e7858fc62a38f36b"
+        },
+        {
+          "path": "internal/oracle/testdata/maybe_collections.a",
+          "blob": "ac36ddcb24020de017eac32d5a59666bcb382d0d"
+        },
+        {
+          "path": "internal/oracle/testdata/maybe_number_slots.a",
+          "blob": "722eea6804e17971930f0d563eef8d1b7a88a969"
+        },
+        {
+          "path": "internal/oracle/testdata/maybe_numbers.a",
+          "blob": "b5d6a72e1268f483f56ddd42b2abd08d656512de"
+        },
+        {
+          "path": "internal/oracle/testdata/method_closures.a",
+          "blob": "40a35f0f8c454336a046865c57206d824c2622b5"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_alias_order.a",
+          "blob": "f2c29a9257c9988ad62b6f0c0794a751eddd4162"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_array_mutations.a",
+          "blob": "5ac116e0228326b5a5315cfe7a7e42bacad6860a"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_array_values.a",
+          "blob": "b7c08b6d46e21540366496237f34981a843b5f39"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_bound_strings.a",
+          "blob": "d0cebd51efdab3ca8c5d36b8265f521a5df51596"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_codes.a",
+          "blob": "95e81ccb710337a5ae2bc24b095f1998413d7e6c"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_conversions.a",
+          "blob": "9d5346f959059fb7b00a6b308e7d49a13233d6e3"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_empty_alias_tdz.a",
+          "blob": "4c620fc92d52a64b7f81349766053ee5932972cd"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_format_failure.a",
+          "blob": "6b25567a038ac4e231d24791396bd652cb037dfa"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_map_parsers.a",
+          "blob": "89d95c297b80ded1c34244ff075bb0a6491036fd"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_map_strings.a",
+          "blob": "97bd0a01fb95783944cbc673a602e15c85f9b9f0"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_math.a",
+          "blob": "7613ee54d1f2a131748a2ee7b6c4176ed68a6ee8"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_number_formats.a",
+          "blob": "8a894d5b478c75da76addba291f90067538ce463"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_number_statics.a",
+          "blob": "6e28b5fa62982050581971c226831db4fc1a242a"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_object_descriptors.a",
+          "blob": "52e2947476a1cbced23b535244d31b2ab1c8f99e"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_object_statics.a",
+          "blob": "bf58f440b90e3698a4de27a10dbdb10851b44f5f"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_object_tags.a",
+          "blob": "aa53c0908ea214be203536c2181b373178d0836b"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_receiver_order.a",
+          "blob": "8bb8f900dd6fa7d377b4f1f0741f44862c70c969"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_at.a",
+          "blob": "a059589def077f654734a564c67f34c3153b6429"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_charat.a",
+          "blob": "48c3c631b3c2f1aca41524dc3344dbe202e6d4de"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_charcodeat.a",
+          "blob": "e46607531277e090a3b2fddd08730b0678a626e8"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_codepointat.a",
+          "blob": "6d503cecd6f6c235b215deeb816c51245385f1d2"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_concat.a",
+          "blob": "733d0e3f2f7093f3e56fa9cc7f8c6fe02df35ec6"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_endswith.a",
+          "blob": "70b29c65bc3a35e7d793dab7587db7e31cc4f4c7"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_includes.a",
+          "blob": "5100ae4f3c2f606daacbb6c275dc63ce857a6997"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_indexof.a",
+          "blob": "74cb848865789beb306f03bb6d697ed19dbd676a"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_lastindexof.a",
+          "blob": "e529f52c1a5f6a1322af77898e96e76e27ce05b7"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_normalize.a",
+          "blob": "c6b19a1d5acce46c0f0f150ed7106e7880bc3ffe"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_overloads.a",
+          "blob": "8fa52dedada026bc23316d3d0c2fa11cbf13f444"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_padend.a",
+          "blob": "3fccc52a49afeaa15af1e44ff68df924d65a9495"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_padstart.a",
+          "blob": "3aa133f6b66fba9c261bf3cb612b5f78f4b2106e"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_repeat.a",
+          "blob": "e5eddee82ad9401e0b89dd2da72b25cda864d8e8"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_slice.a",
+          "blob": "a9a5836fa47718050a2415da6738823e5b2881fd"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_startswith.a",
+          "blob": "1b6d00b5852bd07fd566b0d864328400c262ed36"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_substring.a",
+          "blob": "286aaa6cff211244902d70e112b9403744ec1969"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_tolowercase.a",
+          "blob": "38d911b076b9e8643b8a91c48f102442027bd33d"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_tostring.a",
+          "blob": "df4120ab649c99842db367777616cfc5c0cac9b4"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_touppercase.a",
+          "blob": "2065fd0f1b74d335d84922f7c5b793312156c710"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_trim.a",
+          "blob": "792f749a29761e88978c6583cdc65233da9f3115"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_trimend.a",
+          "blob": "79f1280a2ad710f0ba878b89a5dd147c45161e29"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_trimstart.a",
+          "blob": "8be8321642405925f2f7b8a1c8ab6f0140b0c179"
+        },
+        {
+          "path": "internal/oracle/testdata/method_coverage_string_valueof.a",
+          "blob": "6c59382d8a00a2af2cfeff5bd0ef18a1ede50f07"
+        },
+        {
+          "path": "internal/oracle/testdata/move_throw.a",
+          "blob": "30f4dbd83441eb25ee2d30c79bc039c37a004556"
+        },
+        {
+          "path": "internal/oracle/testdata/named_function_values.a",
+          "blob": "23d6c5cd753940102f2f29379b914f52787085a4"
+        },
+        {
+          "path": "internal/oracle/testdata/namespace_callable_properties.a",
+          "blob": "6e4d89bbbed647d666524a409d52c3faaea79dd6"
+        },
+        {
+          "path": "internal/oracle/testdata/namespace_class_registration.a",
+          "blob": "917000cd219f28ba17cbf0c25b093c649c547efb"
+        },
+        {
+          "path": "internal/oracle/testdata/namespace_method_receiver.a",
+          "blob": "fbb73fed81b4563ab9918291fd3eef2aaabc3093"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces.a",
+          "blob": "65309392c15afe0c4dbe9d129c1651af8b34ae21"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_call_cycle.a",
+          "blob": "1f7abc870fe8805241808d0814af633c343e6861"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_call_graph.a",
+          "blob": "80a7271b328f6957e9c97dd7ee027d059c2a91fa"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_debug_probe.a",
+          "blob": "5ccebc7c4b96e44f0835152cf82b7b5cbe08b298"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_debug_state.a",
+          "blob": "685c6e436cdeb955cfa495d896b73263319ebedb"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_map_before.a",
+          "blob": "cd80b1ae5bfb40ef2e59a6f75d8f957870ce6a39"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_nested.a",
+          "blob": "5c53106b82d5c3a6e01725dd6bd19889ad33f31c"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_observed_narrowing.a",
+          "blob": "413fb97c478409e4d6711cf473d70f1345afe613"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_parser_body.a",
+          "blob": "02935b7f7623d7eb33bafa559eac2b46186c8dea"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_parser_enums.a",
+          "blob": "cc406da8093510b82d47ac38ef1f0eb371214029"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_parser_factory.a",
+          "blob": "708b873e24889d1a80e7adbe619051e504be5476"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_parser_state.a",
+          "blob": "68fe1b492e9a86f7dc1b6a4ec79007bafe40df09"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_repeated_var.a",
+          "blob": "f74cd6327f3a530beab2bb4e51e3c7915efa04d3"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_safe_initialization.a",
+          "blob": "cfb47feaf1acc3417b4e9d241daad206b36bad95"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_unknown_before.a",
+          "blob": "bb4565e7f75b10f58a5f04c71dbfc08684fd2393"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_unknown_enum_before.a",
+          "blob": "899a3ab7d4c839ba4eebae2bf55b8c585656eadb"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_unknown_function_before.a",
+          "blob": "6a877b453d8a496f88abafab446c3caedc299508"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_unknown_void_before.a",
+          "blob": "7d052d8f9f7b14324bedb02e04db90aa04a39d6a"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_unknown_write_before.a",
+          "blob": "c6aac7d3c2f0dc06fbd7ce6472055373218ac1ee"
+        },
+        {
+          "path": "internal/oracle/testdata/namespaces_unready.a",
+          "blob": "2780d840100fba418783e5900b55752daab318f3"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_compared.a",
+          "blob": "ace8044bdcba232b2cc5c04d1bd15ca6a85b660d"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_fields.a",
+          "blob": "cdb6a0e8ffb7bde3006d2ab00ad7472f297d0e5a"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_methods.a",
+          "blob": "fe85dea77bdf45234e160aa6c0e13116aa47eaad"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_numbers.a",
+          "blob": "98176d2e38e6580099b8b344cde06e0a864513ea"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_reads.a",
+          "blob": "6f70e859f20ae623c6d76922cf75562ee2557d25"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_union_valid.a",
+          "blob": "97dd6d5ad3f3ef3a46a166c65905f54a54c48ffc"
+        },
+        {
+          "path": "internal/oracle/testdata/narrowed_writes.a",
+          "blob": "7bead1db1270033601bc9c1448d1df838d5bae4f"
+        },
+        {
+          "path": "internal/oracle/testdata/native-arguments-length-value.a",
+          "blob": "39429aeb03dbbff096d4bdae4e536a18eb661b62"
+        },
+        {
+          "path": "internal/oracle/testdata/navigation.a",
+          "blob": "fbcb1f39642208f7790133fd1c4c5b9d351e2316"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_base_writes.a",
+          "blob": "98a10bd3aa7ac94fc32acc5f12a0af7448652315"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_collection_fields.a",
+          "blob": "852b4384171480d17260c94bf9ad907e0496d402"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_field_values.a",
+          "blob": "ee6b365f3478e8000ce258bfb2958b2b14497163"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_narrowed_receiver.a",
+          "blob": "3242b99459643f90b8c6b9c345e16e91b29238ff"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_optional_references.a",
+          "blob": "626cc00994736f370f97d7c7dfbf8a72b533c935"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_runtime_fields.a",
+          "blob": "6d3d1dc26cff0f51979e355b5314eef0ef801efc"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_slot_kinds.a",
+          "blob": "5f0eb15c0fee5632372962a16adecb085f44b80d"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_spread_fields.a",
+          "blob": "efde828a825d8ec844d8e47ab767eadcadc174a8"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_static_collision.a",
+          "blob": "503e589f6f19c8324c6c87d3da4fd92076e8f1dd"
+        },
+        {
+          "path": "internal/oracle/testdata/nbody_write_read_order.a",
+          "blob": "2cd2473d8b03ce78d66f0ee37e2430ad861a6bc8"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_array.a",
+          "blob": "0ead228f33446b89251ef42b202bb296bd14cb0b"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_assignment_return.a",
+          "blob": "c0bc8c269e22b4632071e27c2dbf4c7c5a326dde"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_callback_escaped.a",
+          "blob": "7412d3a1ef912b6787f3f1a245b8403be7aecc63"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_callback_late_capture.a",
+          "blob": "6d46b078f1c60eb5ef4525405fede2303e1d0730"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_callback_levels.a",
+          "blob": "158fe63cb849bedd6daf9b1fcdca9775621ef5fb"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_callback_recursive.a",
+          "blob": "2225310ca2b01d2d5bf1e3e74c184c29b2b54c27"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_captures.a",
+          "blob": "b07c07ef5aa03ba414126887d9e94190ae1f852d"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_destructured.a",
+          "blob": "76e94a2368861fd7e03faae08770c4edd66d0e82"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_destructured_tdz.a",
+          "blob": "0e9a26641afd813740eda742971017c5cf7b0c47"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_generic_capture.a",
+          "blob": "7ff63e492976e4c83d7adb1f4762c41f661e4338"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_hoisting.a",
+          "blob": "ba5044ff7ee0987c93b7d2223818e848c213f068"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_minimal.a",
+          "blob": "bbf99fcf3cde06e104552106e67572d96c3ace13"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_mixed.a",
+          "blob": "b605e6322c2548d20a98fe11648417053e36149d"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_mutual.a",
+          "blob": "43126522ed07c6d57c0c2e18afafef89c9d6fc6e"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_owned_parameter.a",
+          "blob": "0f0121214050fd5fe9db76bec805e185f6a513d6"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_pattern_parameter.a",
+          "blob": "44845abc46aaf3237e4c0a804c5db1a58eae94ae"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_reduced_parameter_escaped.a",
+          "blob": "da4f6191a330664f0abe8967b4434e158376491e"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_reduced_parameter_unreachable.a",
+          "blob": "c8a379debbc2785208730842dbc6f1349c012894"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_reduced_parameter_unused.a",
+          "blob": "a71b4505c6832ed8f9a1a0b28e3e29b464cfc4fe"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_reference_identity.a",
+          "blob": "95b9f3fc92d04130d8d45dcfe522899f83564a71"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_returned.a",
+          "blob": "67cee03b0d9c14521b02e68c6e9ffeba5950e0e6"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_tdz.a",
+          "blob": "1e7fe5d16f45e55b5c118bfda0dae93adf616db5"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_tdz_write.a",
+          "blob": "aa7f3f140f7def18867cd115942b31aebdb52a05"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_three_levels.a",
+          "blob": "7673d2472130357ef5cfdc4d88c083e7dfd7c8d3"
+        },
+        {
+          "path": "internal/oracle/testdata/nested_weak.a",
+          "blob": "2d42249e4c22af05bee88476969e939d2f6f221c"
+        },
+        {
+          "path": "internal/oracle/testdata/new_expression_class_cache_capture_notyet.a",
+          "blob": "07d78da21a477414f3b2f386620cbdd60a910dbe"
+        },
+        {
+          "path": "internal/oracle/testdata/new_expression_class_cache_local.a",
+          "blob": "488af27246feb06f58b9f3c5f78c5b8b233f414e"
+        },
+        {
+          "path": "internal/oracle/testdata/new_expression_class_cache_or.a",
+          "blob": "a7e6269e26780674db44dd923bff22714c4048bd"
+        },
+        {
+          "path": "internal/oracle/testdata/new_expression_class_value.a",
+          "blob": "234cd92cdbb318709c288fb7b7a8df798b9eaa96"
+        },
+        {
+          "path": "internal/oracle/testdata/new_expression_uint16.a",
+          "blob": "57c1f2854b3e32fbc61bfbdf46a2e9586ef2941e"
+        },
+        {
+          "path": "internal/oracle/testdata/new_expression_uint16_notyet.a",
+          "blob": "c8f4ac9c5a6f7cfec6a0f1e623f79a0091e5d796"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_bom.a",
+          "blob": "9b5507db173eb4ee63dc2e5eeb73f3af12a8713f"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_crypto.a",
+          "blob": "a821c80d79aaf7c5ec43e0be09f7d670e08452bb"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_digest_twice.a",
+          "blob": "919f81b3246cd0b2e21ad5f7e768270b2a15dad6"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_encodings.a",
+          "blob": "678b9eca1c2c1c2e5f1b4768072a18b67ffdf19a"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_finalized.a",
+          "blob": "d9df9b4c07fbe4a821e5dd1a4fd418e752cd3833"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_input.a",
+          "blob": "c1ccd6837871a3c69e49e6b22a764a5cb5db67c4"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_random.a",
+          "blob": "653e27d9f63aaf193cba6d402c8c601c31783510"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_utf16.a",
+          "blob": "0dd5e9d7a2be3515e3357c05dd2dbb9f6d718947"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_utf8.a",
+          "blob": "8f9120a435fb674da7ecbb76d583b733a08d787e"
+        },
+        {
+          "path": "internal/oracle/testdata/node_buffer_writes.a",
+          "blob": "35d9daa74262f2fe45e31cf14e4c9b26f2b08a04"
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_close.a",
+          "blob": "c47a53cce6132a8c1a5d97e210d126b0ffaaa6c4"
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_date.a",
+          "blob": "89a287d2f78c1e63378e91883a9bc867c3656ccf"
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_mkdir.a",
+          "blob": "90b22b7093658dc4d6da759e100dec51e50ddf13"
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_write_buffer.a",
+          "blob": "3717cc56e7c7c0308a23c1823efd9cf01cc96c5d"
+        },
+        {
+          "path": "internal/oracle/testdata/node_fs_file_write_file.a",
+          "blob": "96ad27cc40fae96ee3a9b40189a24cd8c7e65d8c"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_possible_read.a",
+          "blob": "2694742ccc8805103655ec2b3b159377c39376b3"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_possible_typeerror.a",
+          "blob": "b36e3ffb4b0bc06e43c9b812d48aa5a56b337831"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_argument.a",
+          "blob": "ae89b147269d7836501cb975725d488cd9416121"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_checked.a",
+          "blob": "3efbdcaf48adc61c9e739dd5d8fb622fde1abccc"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_comparison.a",
+          "blob": "b086f0f6900f5da529a7404cc6bf0a78b364bfa2"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_conditional.a",
+          "blob": "7a1655d398975e75c5ce99ae3ae5029e18eaa487"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_default.a",
+          "blob": "6b1fcbb7d19aff8181cc3ac17d72fcd218e9776b"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_element.a",
+          "blob": "860f916db10af5b664693aa66d75c28893811255"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_expression.a",
+          "blob": "94397f1da13201de46c438efa89a0e5c76d0bc65"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_logical.a",
+          "blob": "21151f4aedef55b97db670440fd0d1ee90c270fb"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_null.a",
+          "blob": "334674e354533da78c958c8fc6aae1505ebee752"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_return.a",
+          "blob": "d546da4c007f0d4b8c2f203e1c27ebc3accc2f34"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_spread.a",
+          "blob": "4716a8bb7e5aa656216b3b0146a78e6c7e508103"
+        },
+        {
+          "path": "internal/oracle/testdata/non_null_refuse_undefined.a",
+          "blob": "ae89b147269d7836501cb975725d488cd9416121"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize.a",
+          "blob": "8290da8bc75d786b727cdb76e8cbeefab524042b"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_coverage_cache.a",
+          "blob": "45c082c236d2074b9ca84c4539900b7a1734defb"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_coverage_limit.a",
+          "blob": "84a5b077ed10a73a3374b4dac8092720a55bc15c"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_coverage_long.a",
+          "blob": "fd12a6a8de0a4579de71d724bf6d90fb10fadc98"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_coverage_quick.a",
+          "blob": "0c92ec48e97d789d5178d80eb4410117aa24ee46"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_coverage_repeat.a",
+          "blob": "62d4315d305c17ba25940802aacde944fc4c4476"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_coverage_stream.a",
+          "blob": "b2fa1f32e9eb8dcf51f8febbb495b1c3f41d783b"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_form.a",
+          "blob": "e288a6ecb56404b3fcac086acd572e1c35a88ca7"
+        },
+        {
+          "path": "internal/oracle/testdata/normalize_long_marks.a",
+          "blob": "2ad7049d088aac96438ffa7b7857af6994b00ee6"
+        },
+        {
+          "path": "internal/oracle/testdata/notyet_library_object_entries_const.a",
+          "blob": "951c3f14b6f941a299d5858db2f5c4c4a7826dc5"
+        },
+        {
+          "path": "internal/oracle/testdata/notyet_library_regex_callback.a",
+          "blob": "879d074ce913e54106f2968cb9bc3ba5531e9173"
+        },
+        {
+          "path": "internal/oracle/testdata/notyet_library_regex_offset.a",
+          "blob": "06d185fd21d792068018c9bd32839c01c314c5d5"
+        },
+        {
+          "path": "internal/oracle/testdata/notyet_library_string_bounds.a",
+          "blob": "48edf02db5dce401d5041b5c69b7db9573c013c2"
+        },
+        {
+          "path": "internal/oracle/testdata/number_edges.a",
+          "blob": "bd655ae89bdd788e6fa7caad95006be7be4b8e04"
+        },
+        {
+          "path": "internal/oracle/testdata/number_formats.a",
+          "blob": "e014c155eeae8dc35588e8571d5abdd4bbe8fe70"
+        },
+        {
+          "path": "internal/oracle/testdata/number_parsing.a",
+          "blob": "3134c6563578f966f713a60d01e8e85d0f243dd9"
+        },
+        {
+          "path": "internal/oracle/testdata/numbers.a",
+          "blob": "ee0bc92b294cab45c092849a0b1dd3b25aebe974"
+        },
+        {
+          "path": "internal/oracle/testdata/object_prototype.a",
+          "blob": "4ae8a8c2e83baf7a7358c8ee0252d417f3d281c0"
+        },
+        {
+          "path": "internal/oracle/testdata/objects.a",
+          "blob": "9f6dd03b4f08b2fb701686496be075d92ad7d45b"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_boolean.a",
+          "blob": "e8b0ebdd9fc52bc2329e5373ba151ac1d3298389"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_defaults.a",
+          "blob": "bb63e99c30eccaccd509a7ec5e9f630fb5ca0fd1"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_methods.a",
+          "blob": "a07203ae50f82d08e62648f5d3020f1eb213daa6"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_number.a",
+          "blob": "1251f807e785c6d618e04ca71c3786d9e83e3388"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_object.a",
+          "blob": "ea088b65886db968f4009b2d7bcc837e895fc4a1"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_reader.a",
+          "blob": "45d5ccdf6d96cb9d3e7b5fba1c3bf07ed6c49fae"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_reader_direct.a",
+          "blob": "ccce3aa9899709374518b414e7c64aba50557e52"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_reader_override.a",
+          "blob": "efc7a99df4787acada6d049305ef6b03436d563c"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_reader_string.a",
+          "blob": "33290da885db39483093a6d10ba435577b3182fe"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_scanner.a",
+          "blob": "b12d2cafbe2b9ef5964ff699319c04fcfabc4563"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_scanner_explicit.a",
+          "blob": "610a7dc9f4cb5dedf7a1967877feb032e82e4553"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_scanner_required.a",
+          "blob": "0c715bce8c011611d8c2e9f197ce639531c78f9c"
+        },
+        {
+          "path": "internal/oracle/testdata/omitted_string.a",
+          "blob": "66a5bfbd56262c6d096a3de5e30fd4d83348f4c2"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_class_method.a",
+          "blob": "63a5a1058d8a2d2a0e17dfbb270aacd6fbe2422b"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_indexing_array.a",
+          "blob": "e1fefa9d8e343c5dc941a88b574512d58b4e9fdf"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_indexing_chain.a",
+          "blob": "8a6be80c722778c5d2c8d8facf164aa7f86fd4fe"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_indexing_map.a",
+          "blob": "c97d6c3e5cc514d48a16a751aee1fe92c42a175b"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_indexing_string.a",
+          "blob": "3efe4ea1a73cd5bc49fa4df6d1f261f07d9fb8b3"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_indexing_string_gap.a",
+          "blob": "b7caa8ac6a9a072ac43f1a8a89f1850ba4ab12b2"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_indexing_typed_array.a",
+          "blob": "0de72d1bd095b030414374edd07141a2de10a8eb"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_numbers.a",
+          "blob": "d955b661df8f51a0367695b8da3f585fa628c24b"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_strings.a",
+          "blob": "603a5a178d36039a60b11a89458cb9000a48266a"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_widening_class.a",
+          "blob": "d7cc9950a3836c204d17713da27b5080c3320c6b"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_widening_declared.a",
+          "blob": "4de28b66188f155b6185dca2fbf2898a78d3ca80"
+        },
+        {
+          "path": "internal/oracle/testdata/optional_widening_fresh.a",
+          "blob": "4c173d7d10327e62b180823be20fd447ef774cca"
+        },
+        {
+          "path": "internal/oracle/testdata/output_then_panic.a",
+          "blob": "cc62afe957bdae52081c781476b25c5130f8b45d"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_ancestor_directory.a",
+          "blob": "c9e926492804eee4bdf216745ca709b4c0075f51"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_array_to_map.a",
+          "blob": "014aaf1504bb732257d876df7cb1f078c9bf5a8a"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_array_to_multimap.a",
+          "blob": "88d8e39f389bcfebc52d2f1a5f07d7af94d3664a"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_array_to_numeric_map.a",
+          "blob": "2eac0572566eab0048f0abbfccc822f96d4e1a12"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_inference_contracts.a",
+          "blob": "f4599f46e3e2be0af69d90c28cbdcc9d57343347"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_leading_comment_range.a",
+          "blob": "501cf8b71c8f4b412bfe36d49bb0aff3e5cdf7d2"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_mutate_map.a",
+          "blob": "86752d5bf03adbb14eea62ebda91bc5623eff07e"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+          "blob": "6a02d5b8017afadfdc94cf36f0d1e7bc26d91ec8"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_original_node.a",
+          "blob": "f1a654455d329721c53e0c70b6497d4c02610f59"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_resolve_type_names.a",
+          "blob": "baf360750824e068deb1ed0f233cebb4a2e0119c"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_sort_deduplicate.a",
+          "blob": "72f4b3fb5df7a105cad24c028de3d91fe7a69d5d"
+        },
+        {
+          "path": "internal/oracle/testdata/overload_trailing_comment_range.a",
+          "blob": "1aaba26823894d9b7ab5cc466bedfae57748aeb7"
+        },
+        {
+          "path": "internal/oracle/testdata/override_same_representation.a",
+          "blob": "b66268a718469c2518b9cfcdf770823c9d5efdde"
+        },
+        {
+          "path": "internal/oracle/testdata/pad_too_long.a",
+          "blob": "26383749a1891307ec6323c8e787a6856b51e438"
+        },
+        {
+          "path": "internal/oracle/testdata/panic.a",
+          "blob": "b096ef3d6b8be48ad224794a061fa93b64b41717"
+        },
+        {
+          "path": "internal/oracle/testdata/panic_in_try.a",
+          "blob": "af0c906b4041c72f19791f0bfd5354599f0062a1"
+        },
+        {
+          "path": "internal/oracle/testdata/param_assigned_in_try.a",
+          "blob": "1ef875fcb60056889137d79434022c493a19f975"
+        },
+        {
+          "path": "internal/oracle/testdata/parameter_properties.a",
+          "blob": "a2da572c58245b2a39a39607a3afb85b2cc19e86"
+        },
+        {
+          "path": "internal/oracle/testdata/parameter_properties_kinds.a",
+          "blob": "a49740249bd0e2a93e8fd79381a4a7a830d7a2ba"
+        },
+        {
+          "path": "internal/oracle/testdata/parameter_properties_levels.a",
+          "blob": "49544ced3c546469d46f02f2117f446fb7622b72"
+        },
+        {
+          "path": "internal/oracle/testdata/parameter_properties_ownership.a",
+          "blob": "74288867da6896304f4b13b39e01d66ac6b46fc5"
+        },
+        {
+          "path": "internal/oracle/testdata/params_namespaces_callbacks.a",
+          "blob": "be4235ecb4c656dea544c6fdc7ab3998fe3a17d2"
+        },
+        {
+          "path": "internal/oracle/testdata/params_namespaces_dotted.a",
+          "blob": "fee5a6c55da005fd79711c598c7f622f3d79c2c3"
+        },
+        {
+          "path": "internal/oracle/testdata/params_namespaces_order.a",
+          "blob": "a2ddf3484bc4652cfbfcb8c54cc0c81ff99d2678"
+        },
+        {
+          "path": "internal/oracle/testdata/params_namespaces_overrides.a",
+          "blob": "2a26109b0aef72ff1d0bc05a83003b8891ba6193"
+        },
+        {
+          "path": "internal/oracle/testdata/params_namespaces_types.a",
+          "blob": "8e9d42e156e49c14ca6cbbdd02e49fb14939ba82"
+        },
+        {
+          "path": "internal/oracle/testdata/params_namespaces_values.a",
+          "blob": "743de830adc73b520b30f0e536e377097d0ddea0"
+        },
+        {
+          "path": "internal/oracle/testdata/pow_fractional.a",
+          "blob": "dde9c0d55af140c611c2060bbcaeb0c7dbf9ed50"
+        },
+        {
+          "path": "internal/oracle/testdata/power_of_two_string.a",
+          "blob": "e4c798f0af5a6967e12917fa04a72c7aea0c2454"
+        },
+        {
+          "path": "internal/oracle/testdata/precision_range.a",
+          "blob": "5b026e9dc974d429b5e5aaf04c2645ba189de3e1"
+        },
+        {
+          "path": "internal/oracle/testdata/prompt_then_read.a",
+          "blob": "dc2b6b431908d50a606f779d4c24c7286ebb6175"
+        },
+        {
+          "path": "internal/oracle/testdata/proven_assertions.a",
+          "blob": "e6b8eac0d67af57e6c0f3d828b6fa4d52a410915"
+        },
+        {
+          "path": "internal/oracle/testdata/proven_class_guards.a",
+          "blob": "3751b645e960fb39e1b5e78001aa26b2d2c02c66"
+        },
+        {
+          "path": "internal/oracle/testdata/proven_guards.a",
+          "blob": "324cc5e99b1d06249a6683955e0cd2979ccbfada"
+        },
+        {
+          "path": "internal/oracle/testdata/proven_satisfies.a",
+          "blob": "cfe8c9a91268adcf2684ee37fc3c269ad7b61be5"
+        },
+        {
+          "path": "internal/oracle/testdata/proven_upcasts.a",
+          "blob": "45a5a31617371cd2a3f8a1bea1757ef90068726a"
+        },
+        {
+          "path": "internal/oracle/testdata/radix_range.a",
+          "blob": "18102698b31daa0eecc0f1a72e80240f9fd21634"
+        },
+        {
+          "path": "internal/oracle/testdata/radixes.a",
+          "blob": "dae95dd332af3f853bca4e20478adf1d510cd796"
+        },
+        {
+          "path": "internal/oracle/testdata/read_arguments.a",
+          "blob": "3761c77f677fe10a830c97bd0b27a3e17762e024"
+        },
+        {
+          "path": "internal/oracle/testdata/read_files.a",
+          "blob": "0fa033a1d4d56c7ee12484db172b29dc13ea9707"
+        },
+        {
+          "path": "internal/oracle/testdata/read_order.a",
+          "blob": "b449592533773c5af09b9567f4cc9b44388b933c"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp.a",
+          "blob": "d6efeea6cb1a2d8b2522c34d3de3c2f3e0143063"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_cycle_closures.a",
+          "blob": "66d936cb2fee4f3f0737cfa32fed9c1d76af2d9f"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_cycle_collections.a",
+          "blob": "4277498ede5021cb5bbdf86bd62989fceaac6fbc"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_cycle_fields.a",
+          "blob": "dabb58c8c8afa637a78ebc8dfde2a023a10ddb5c"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_cycle_weak.a",
+          "blob": "e9dc299ecfc465ae245abe41ad7d1dc3bdc751b8"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_exec.a",
+          "blob": "c9ff4356c03d20e784804b009420086186575f26"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_match.a",
+          "blob": "4cee3fbf2b6664ab31ab55e61c6289a81bca3135"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_matchall_nonglobal.a",
+          "blob": "372e22f5dd07af22d086ab1ec511ca12207990f1"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_null_narrowed.a",
+          "blob": "6c20b610212cfa73c264dd72e26dae750c5526df"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_replace.a",
+          "blob": "c938e711aa541e47e7999c2ca4c8bc0d09e38316"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+          "blob": "e0f7bc720d3f76f1e03fa21e8547f427d2c8ebec"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_search.a",
+          "blob": "d534a71c5da1273c4854ea5e487264a0c515c77a"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_split.a",
+          "blob": "f64410671464d24f597c9fda09a344b7b855a6c6"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_split_pair_pattern.a",
+          "blob": "534c21a130190921a9e5c0ae96ee02548a6874fa"
+        },
+        {
+          "path": "internal/oracle/testdata/regexp_unicode.a",
+          "blob": "e1f29e9587a4e52bfaa2534a1b54e93f894f7765"
+        },
+        {
+          "path": "internal/oracle/testdata/regions.a",
+          "blob": "0423448613fb84995f923dcb5158a9f50ac47db4"
+        },
+        {
+          "path": "internal/oracle/testdata/regions_constructor_capture.a",
+          "blob": "da4d0c2d281803a86cccfcc1f1d0d4a42024bf22"
+        },
+        {
+          "path": "internal/oracle/testdata/regions_throw.a",
+          "blob": "bd3f8965500cb3dee71172472847a78d9bcd7080"
+        },
+        {
+          "path": "internal/oracle/testdata/replace_all_large.a",
+          "blob": "8ee8c08e8fb0f8c9daf0a33af5840a6f5acb0695"
+        },
+        {
+          "path": "internal/oracle/testdata/representation_clock_source.a",
+          "blob": "63cbc170f0201eab9acf8db391f8adf06e32a027"
+        },
+        {
+          "path": "internal/oracle/testdata/return_panic.a",
+          "blob": "af9b00ca98359edcb022d9fa2dbeb0838ca43142"
+        },
+        {
+          "path": "internal/oracle/testdata/return_panic_fires.a",
+          "blob": "3d6b5d7aaae156b508cd6a6c0969fe6b882619b7"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse.a",
+          "blob": "c28e86ff6bc738e2c47b90171c9b752e1c0c95d3"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_arrays.a",
+          "blob": "2ef8f3905b3735902e045af4ee9d46086e51351b"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_foreach_global.a",
+          "blob": "8e6ff9b5d2f48b3d7ef7fece931fc7e0e6e7e42e"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_forward.a",
+          "blob": "885f6afd9ec00525a7e3f64a2a9b696fedf21154"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_global_sibling.a",
+          "blob": "cb887a79e073fc53b157514663003de7e1c156bf"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_lent_global.a",
+          "blob": "f5fffa6aab186ede58c8cedae1e698ac729fdb5c"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_narrowed.a",
+          "blob": "e361b0c4286b0e107ad562bb33410ec757b42da0"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_spread_method.a",
+          "blob": "be031a717e0cc4483050a4947694a5c1fc589411"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_spread_method_alias.a",
+          "blob": "5853826f2919830e20fad185a8e4b5348f71cda9"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_throw.a",
+          "blob": "9a43617e93907cbf3e19aba26109f79bc925a837"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_weak_after_reuse.a",
+          "blob": "5b39d7c6bf6e41ded28509b6b01460e04d753e07"
+        },
+        {
+          "path": "internal/oracle/testdata/reuse_weak_during_spread.a",
+          "blob": "b6fed94cb0a33249e15337274d6410b03b188122"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_accessor.a",
+          "blob": "795bcb7b6e1ea2ab851406e1961f135540f8067f"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_bound_method.a",
+          "blob": "1e1e4cc4973aeb04c079b20da87a4c2a5b38184a"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_callbacks.a",
+          "blob": "a7666904050080296e14a75ed8b52318c85f2e69"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_recursive.a",
+          "blob": "c82b7e4ba119f02b0adef470c4536a261b8f0af8"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_sort_values.a",
+          "blob": "56996b74de42d841c0c2eeb0afab1c328d853f11"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_try_loop.a",
+          "blob": "e3fc2ff474f3c6764ba4245faf7adf6f54edb033"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_unknown.a",
+          "blob": "4af0deea5cfba2df3ed10a7309c13e78d59ad68e"
+        },
+        {
+          "path": "internal/oracle/testdata/route_targets_virtual_fresh.a",
+          "blob": "c0e2a48106cf5594048b9ff39fa79d3bab1291bb"
+        },
+        {
+          "path": "internal/oracle/testdata/runtime_last_index_of.a",
+          "blob": "cdf82bf25d4314dfc17d7e7eea810f39af7cb772"
+        },
+        {
+          "path": "internal/oracle/testdata/scanner_nested_overload.a",
+          "blob": "58e23739c346ead785c02f74f586a09a3317087e"
+        },
+        {
+          "path": "internal/oracle/testdata/search_from.a",
+          "blob": "be1a4cc4be8df71d7c2dd799f632bd66db92df42"
+        },
+        {
+          "path": "internal/oracle/testdata/search_from_sweep.a",
+          "blob": "da3141250c91e6d965d0b9859129e38e2c6e0762"
+        },
+        {
+          "path": "internal/oracle/testdata/search_halves.a",
+          "blob": "9af7f30d93665b766ba1d76e77e0b9b146c38603"
+        },
+        {
+          "path": "internal/oracle/testdata/searches.a",
+          "blob": "80d517ff1cb042c85b634bd018ee8fb0217d0a47"
+        },
+        {
+          "path": "internal/oracle/testdata/self_assignments.a",
+          "blob": "99b45e850b587b0dd387c9afe72737d4d5e1d56c"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_arrays.a",
+          "blob": "faf3387f1e69535716a463f7aa5c82cf7283493b"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_closures.a",
+          "blob": "17c2c58f5fa78177deb6cd8036724d21b117c363"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_fnexpr.a",
+          "blob": "61c41c785a789ba45637f1677c70c247cbbaf897"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_keep.a",
+          "blob": "3c5dc677742ca507cbee4c57ec0adb81e7a8a0cb"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_keys.a",
+          "blob": "83d1c298b896844203304166bbd63facbda66dfa"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_named_closures.a",
+          "blob": "9307c6763f570aae36b128bc092c5977e894fc48"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_named_keys.a",
+          "blob": "9b7580f3c9d68587fcc510545059c865202b65e7"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_named_more.a",
+          "blob": "d37cae1368992bd69d0959f086057488b5a7d9f1"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_named_objects.a",
+          "blob": "c9d8a49b3b332cdc884b02238f17d0260911d604"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_numbers.a",
+          "blob": "61d2a8505ac2fcb5bee19d531294df3d694c4701"
+        },
+        {
+          "path": "internal/oracle/testdata/set_foreach_objects.a",
+          "blob": "079e47d35eb4facee134ab59bbf4a52c6da0c26c"
+        },
+        {
+          "path": "internal/oracle/testdata/set_maybe_numbers.a",
+          "blob": "edad31182f1a4f10a5baee68a5b9fc193b07bcb2"
+        },
+        {
+          "path": "internal/oracle/testdata/set_undefined.a",
+          "blob": "efac5321988d97027fbd98d88c982145dfa4749a"
+        },
+        {
+          "path": "internal/oracle/testdata/sets.a",
+          "blob": "59e3641bec6a380b9640b260a05d3ba63885b073"
+        },
+        {
+          "path": "internal/oracle/testdata/shadowing.a",
+          "blob": "eb0d6e66d4f010635cdd9d6473713af29d897740"
+        },
+        {
+          "path": "internal/oracle/testdata/shared_slice_append.a",
+          "blob": "cb59a4b9e6ffd3b1a23c0f1a7c5429dbcb4c6224"
+        },
+        {
+          "path": "internal/oracle/testdata/shared_slices.a",
+          "blob": "4e3f85a45c9b9cd4262152e37b570522d5cdbb14"
+        },
+        {
+          "path": "internal/oracle/testdata/size_class_churn.a",
+          "blob": "3ad3216d357caa64abad2b0c526b0d8bc70604ec"
+        },
+        {
+          "path": "internal/oracle/testdata/sort_releases.a",
+          "blob": "22d05b77e1505b6821ba515166cf4c0c5ecf0d2e"
+        },
+        {
+          "path": "internal/oracle/testdata/sort_top_level.a",
+          "blob": "a8d2c1f3a75d8e86caf592c0a4e4505c01c2a49c"
+        },
+        {
+          "path": "internal/oracle/testdata/sorting.a",
+          "blob": "739971bacb2f14a10d26be846668d00d68fb515e"
+        },
+        {
+          "path": "internal/oracle/testdata/sorts.a",
+          "blob": "656e3e8fa7352bcf883652f52ed2cbd8f54d1ba6"
+        },
+        {
+          "path": "internal/oracle/testdata/splice_empty.a",
+          "blob": "525f527f385c838f79af560b488dcada4fd88aa4"
+        },
+        {
+          "path": "internal/oracle/testdata/splices.a",
+          "blob": "a094b379c6643e20c562639e37dde5c0683c5113"
+        },
+        {
+          "path": "internal/oracle/testdata/spread_calls.a",
+          "blob": "64277eb8f86c0368f8bc35c13c11023991645a0c"
+        },
+        {
+          "path": "internal/oracle/testdata/spread_snapshot.a",
+          "blob": "28e1cf1bed446540563c3942bb832d7f5487c0f7"
+        },
+        {
+          "path": "internal/oracle/testdata/spread_undefined.a",
+          "blob": "5329ab1b8d71cff4c03783b2cdbe42ce9d11d3da"
+        },
+        {
+          "path": "internal/oracle/testdata/spreads.a",
+          "blob": "8d30fbeb2702963843d442bcd1e2d844f81788bc"
+        },
+        {
+          "path": "internal/oracle/testdata/stack_forever.a",
+          "blob": "0fb20e278b7c1aa896b29897a46489a14309068f"
+        },
+        {
+          "path": "internal/oracle/testdata/stack_over.a",
+          "blob": "a5eb7f4e58c04c62c31c4f5c57433c96c1b1345b"
+        },
+        {
+          "path": "internal/oracle/testdata/stack_overflow.a",
+          "blob": "8e90cd5ce0ade67ef9e78ab831ff968d03b87f22"
+        },
+        {
+          "path": "internal/oracle/testdata/stack_tail_call.a",
+          "blob": "1030000a0ec55348c46f8086d96ffc607638b540"
+        },
+        {
+          "path": "internal/oracle/testdata/statements_small_parameters.a",
+          "blob": "b18a353f4b11fa02f5a0724cee7b69d1b70f6d8f"
+        },
+        {
+          "path": "internal/oracle/testdata/statements_small_prefix.a",
+          "blob": "7fcd9e9967cc2ee4b4962ffa8a36f7cd46b7be8b"
+        },
+        {
+          "path": "internal/oracle/testdata/statements_small_throw.a",
+          "blob": "1e107ba711b51f8b481a6843e0bc3f72ff9e2b8a"
+        },
+        {
+          "path": "internal/oracle/testdata/status_of_stdout.a",
+          "blob": "8fde88b4096d1474ff5b071b23c19c3a0fc19667"
+        },
+        {
+          "path": "internal/oracle/testdata/string_append.a",
+          "blob": "bc962a8e9b7183c4c09024b98b5e58f3d364b12b"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_boundaries.a",
+          "blob": "5b12320a25c03309e6f17fcfd7eeae6f0b382ea3"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_cached_reads.a",
+          "blob": "7b7001889d6dca956a6d5a607ace7c40e0e1de46"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_caches.a",
+          "blob": "16e21fcd49a10fc5d91e8a33297451bb3c9bf094"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_calls.a",
+          "blob": "72aefdc496c2e9f1372ee0e923efe197d1ef6b89"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_join.a",
+          "blob": "258ea8465ce6f687128268bdf04edf2e182370a1"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_padding.a",
+          "blob": "75203a355b12771e65b3c094fe93b7d8db80dafc"
+        },
+        {
+          "path": "internal/oracle/testdata/string_build_repeat.a",
+          "blob": "20dc85c20c5a1e46371e705a78de557004010200"
+        },
+        {
+          "path": "internal/oracle/testdata/string_index.a",
+          "blob": "ba22785930a61041143f0135ff351927e0302319"
+        },
+        {
+          "path": "internal/oracle/testdata/string_limits.a",
+          "blob": "7931b0cf0a8058f0164b10a973acc44d306fc10a"
+        },
+        {
+          "path": "internal/oracle/testdata/string_positions.a",
+          "blob": "6b50bad65cf186a2bcd41b8e8972a1af4e423acc"
+        },
+        {
+          "path": "internal/oracle/testdata/string_too_long.a",
+          "blob": "244eb4d57876264b628015e419c0b88a3595ff5a"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_calls.a",
+          "blob": "be6f793c2ceef7c153bda5296637660d88cb4ea0"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_characters.a",
+          "blob": "09f71b44d25a81aae36f6010bd0648cba9475b5d"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_holders.a",
+          "blob": "e09858b367312b2e059b3891edb5b90af79d684c"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_lifetime.a",
+          "blob": "a7f6fcf4213e59d77f22327deccca040caeedf6a"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_loops.a",
+          "blob": "8532df75fe94e6f8a42c0f821342f375b2488b14"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_methods.a",
+          "blob": "f9863d7bc8238078f4af71f2475a35fa844cd6bc"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_policy.a",
+          "blob": "d904ea68cb6adac91a6777130b5b83e6087276e4"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_surrogates.a",
+          "blob": "2ee7299a5d636b941f2a07e7f9c62f308e34c7b8"
+        },
+        {
+          "path": "internal/oracle/testdata/string_views_throw.a",
+          "blob": "440446212dc835abdb32721d9bcca385934e21a2"
+        },
+        {
+          "path": "internal/oracle/testdata/strings.a",
+          "blob": "f643a818e14ff76d7ec499f8744cc384391fe01a"
+        },
+        {
+          "path": "internal/oracle/testdata/strings_more.a",
+          "blob": "3dbcc09081b7e0f66f0c562190fd8c53f55d7742"
+        },
+        {
+          "path": "internal/oracle/testdata/structural_statics_generic.a",
+          "blob": "555396cf8edb9da62dab277ab09a4cdcc4b497f6"
+        },
+        {
+          "path": "internal/oracle/testdata/structural_statics_inherited.a",
+          "blob": "e5031bd59ace8541c39afe93dc356e07a9f6f0f3"
+        },
+        {
+          "path": "internal/oracle/testdata/structural_statics_instance.a",
+          "blob": "6699130ab36bf4e995837fbbb032a3f06d07d429"
+        },
+        {
+          "path": "internal/oracle/testdata/structural_statics_mixed.a",
+          "blob": "e3900799a321c1d0695cd6b839001d112a6a997b"
+        },
+        {
+          "path": "internal/oracle/testdata/structural_statics_optional.a",
+          "blob": "21af769dd91d1d9a24f2b02031ac97295ae84f4d"
+        },
+        {
+          "path": "internal/oracle/testdata/structural_statics_static.a",
+          "blob": "fd581bb6accac82970eaf8d92de1fddf2aa52870"
+        },
+        {
+          "path": "internal/oracle/testdata/switch_empty_neighbors.a",
+          "blob": "5cfe3b5fee98b486a3501ec65ba70532a5610c1f"
+        },
+        {
+          "path": "internal/oracle/testdata/syntax_module_declarations.a",
+          "blob": "8215d0f2c3fe910b7fcf5bdc2c62dab65e4a6e3e"
+        },
+        {
+          "path": "internal/oracle/testdata/syntax_substr.a",
+          "blob": "4bdcbb84ff6ad93d6d9364bb463c7e819b07d1c3"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_comma.a",
+          "blob": "b4fd4b86c4e5b228f47bf06854e8f7ff87ef03f4"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_labels.a",
+          "blob": "96fe6428df710dc4b5ca2f1a0107f4bf83a7930a"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_logical_assignment.a",
+          "blob": "788c5905d5933de67fff32b525eb8720cd9701d2"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_optional_join.a",
+          "blob": "a768a3112dcf30320cb3963f35dae4112d6ce29f"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_stage3_representations.a",
+          "blob": "9d4f841b23464a5203a42e949ed84cf2d6339a3a"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_truthiness.a",
+          "blob": "f6612af1f06ac8174ebda17eeaca44708f2ee462"
+        },
+        {
+          "path": "internal/oracle/testdata/taste_void.a",
+          "blob": "878e5e371a07996f51b074a86efd7fb75eb5fc0e"
+        },
+        {
+          "path": "internal/oracle/testdata/throw_global_move.a",
+          "blob": "46ccb4cce95bb1fe398539ed7676045b5e136ff4"
+        },
+        {
+          "path": "internal/oracle/testdata/throw_in_writes.a",
+          "blob": "6b391f69c3f8a0ab8e4b3c640764d3d2d1c03301"
+        },
+        {
+          "path": "internal/oracle/testdata/throw_keeps_old_value.a",
+          "blob": "983d8dfb6cbf4ea86a17d3af209d1345e9941591"
+        },
+        {
+          "path": "internal/oracle/testdata/throw_keeps_old_value_variants.a",
+          "blob": "cdbfbb42a0c97033bb12a62f0ee258830f245346"
+        },
+        {
+          "path": "internal/oracle/testdata/timsort.a",
+          "blob": "bf9f6c45889f1f8c678546ec1703f0d864712abb"
+        },
+        {
+          "path": "internal/oracle/testdata/trig_reduction.a",
+          "blob": "97529086de70d5c66cdb852ad4eff202fc674d32"
+        },
+        {
+          "path": "internal/oracle/testdata/try_assignments.a",
+          "blob": "b93b8aa4acffe261f7cc6f6d235a2401c1aa58c9"
+        },
+        {
+          "path": "internal/oracle/testdata/tuple_values.a",
+          "blob": "353cfd1fa4babfe540b7151cb45a73c47ca2b07d"
+        },
+        {
+          "path": "internal/oracle/testdata/tuples_kept.a",
+          "blob": "c829abf123b754e585d4faab824460011b747888"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_float64array.a",
+          "blob": "532d0c6477b25fd097c26f7783e57f20c442e510"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_int32array.a",
+          "blob": "5ffaac9e5b05b33ca462732a92d87d95a1883477"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_order.a",
+          "blob": "ef9b4675a4db27d0225a89f1595c0ddeb6a5074f"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_primes.a",
+          "blob": "7cf2d353612070fe28a32a552a51bb99b195d33f"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_primes_large.a",
+          "blob": "2484e42d181bb91c723522a3c0900f4a78ba88e6"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_stats.a",
+          "blob": "8607c71d971eece2544b554f8c5409d38350b471"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_stop.a",
+          "blob": "2f6bdd5af3efc7e641a07083a21336fa2ba2996a"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_uint8array.a",
+          "blob": "024156c0188c4d1e5ac4d756dac9b5d892689c1f"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_views.a",
+          "blob": "ae4d73bcede9c748b80f5e06b0c3e0e60beab31c"
+        },
+        {
+          "path": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+          "blob": "3f7382e8f3ef904db116cc0bce0423e28db859b4"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_dispatch.a",
+          "blob": "6bffe3f37eb7e3625a3fced3b754514740914be9"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_null.a",
+          "blob": "ee7494751a59e867fa0571662f499be495ff44c9"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_null_compare.a",
+          "blob": "858f86fd3896bae90735929a9155245ae89b5d9f"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_null_roll.a",
+          "blob": "e6b36891389bf6c7c01bc16ddd7cbd7761e1b9cc"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_null_slots.a",
+          "blob": "2fc4b701967d3e09d4501fc06c29262b064f0ea8"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_null_switch.a",
+          "blob": "efdceb5b545c25320249845ad05fbc6715d1dfbd"
+        },
+        {
+          "path": "internal/oracle/testdata/typeof_string_literal.a",
+          "blob": "4f2a40f215e97ae6e8169aab2e0a96208d27c263"
+        },
+        {
+          "path": "internal/oracle/testdata/undefined_elements.a",
+          "blob": "db0f0b81050071b804c223a330f08d1bcddf292a"
+        },
+        {
+          "path": "internal/oracle/testdata/undefined_keys.a",
+          "blob": "8d6e7dc22a38e98a06fefdb63890cb5a140b80de"
+        },
+        {
+          "path": "internal/oracle/testdata/undefined_references.a",
+          "blob": "9f880aef98d0288c09132c0580e28f7b601f78aa"
+        },
+        {
+          "path": "internal/oracle/testdata/undefined_strings.a",
+          "blob": "7d4014feeb0e761b3b53efe2244590535b785a8a"
+        },
+        {
+          "path": "internal/oracle/testdata/unions.a",
+          "blob": "eae2131b6f74eba1a3309b06bec93cd4126d86b9"
+        },
+        {
+          "path": "internal/oracle/testdata/unknown_narrowing.a",
+          "blob": "6932458ed28a9ed7a745beb6e2b0dcc41bb31c4a"
+        },
+        {
+          "path": "internal/oracle/testdata/unknown_narrowing_host.a",
+          "blob": "2e7f73b3396c77186da3fc654d527e16a342cab2"
+        },
+        {
+          "path": "internal/oracle/testdata/unused_parameters.a",
+          "blob": "100b54bf947f6651afa37b864b8c22bb3b208607"
+        },
+        {
+          "path": "internal/oracle/testdata/updates.a",
+          "blob": "4f440e2587207a74f34e0df2e1474b486c4116d3"
+        },
+        {
+          "path": "internal/oracle/testdata/user_iterators.a",
+          "blob": "f7fbac3d28f91427b3278c1c1a8372a7cf25ba0b"
+        },
+        {
+          "path": "internal/oracle/testdata/user_iterators_rest_tdz.a",
+          "blob": "08f9ca58583fe5d9f4241cca309f8d9a0544e7d7"
+        },
+        {
+          "path": "internal/oracle/testdata/utf8_sweep.a",
+          "blob": "2e96e744a4cadc1a2ba20166cd7eaec448429fc8"
+        },
+        {
+          "path": "internal/oracle/testdata/utf8_view.a",
+          "blob": "57f7a7c82a59d6dc3e8b2c07c68625b89bff276f"
+        },
+        {
+          "path": "internal/oracle/testdata/utf8_view_fails.a",
+          "blob": "e34c51881e0e50951d6ce44490ad280f73c0c1c5"
+        },
+        {
+          "path": "internal/oracle/testdata/visits.a",
+          "blob": "10fef20df4891e688b481eaa8ff46aa98ce66340"
+        },
+        {
+          "path": "internal/oracle/testdata/walk.a",
+          "blob": "0378ca0024df38c6b4a103a4f65912ccf64efbc0"
+        },
+        {
+          "path": "internal/oracle/testdata/weak_narrowed.a",
+          "blob": "9ec422b095f92034338532268912f87c1562cb77"
+        },
+        {
+          "path": "internal/oracle/testdata/weak_parent.a",
+          "blob": "4c7b75d1aab74e9824a278d2fccb9c47aa965b9f"
+        },
+        {
+          "path": "internal/oracle/testdata/write_after_shrink.a",
+          "blob": "2d66f99a1a743bf4283b162197da2a09be049a1e"
+        },
+        {
+          "path": "internal/oracle/testdata/write_files.a",
+          "blob": "4ffa2b979da9acee87be7d18471cebebf0bce396"
+        },
+        {
+          "path": "internal/oracle/testdata/write_stderr_order.a",
+          "blob": "37f5cf4c0ce2eaf8d1ef0753df0853261d83bc76"
+        },
+        {
+          "path": "internal/oracle/testdata/write_stdout_order.a",
+          "blob": "016f3d0ef9ef46cb99fd385d3ff15bb8a0859791"
+        },
+        {
+          "path": "internal/oracle/testdata/writes.a",
+          "blob": "f1387f2212f279e739b955b8c6a549b340f1a7fa"
+        },
+        {
+          "path": "internal/oracle/testdata/writes_in_try.a",
+          "blob": "3b7a294f79de5bbbc293aadee7e7aaed912e4d62"
+        },
+        {
+          "path": "internal/oracle/testdata/writes_past_end.a",
+          "blob": "2b94608730d2d9fc222eb3e636b3ab15cf96e306"
+        }
+      ]
+    },
+    {
+      "name": "gaps",
+      "patterns": [
+        "stage1/*/gaps/*.ts",
+        "stage1/*/*/gaps/*.ts",
+        "stage1/*/*/gaps/*.a",
+        "stage1/*/gaps/*.a"
+      ],
+      "programs": [
+        {
+          "path": "stage1/cohere/css/gaps/1_regex_and_value_tree.ts",
+          "blob": "d2032a6daae94e179162af717327e3cf6591ecf0"
+        },
+        {
+          "path": "stage1/cohere/css/gaps/2_array_shift.ts",
+          "blob": "c9cfd75b8fef085bee115762b93dbb5cb690d56c"
+        },
+        {
+          "path": "stage1/cohere/css/gaps/3_optional_boolean_condition.ts",
+          "blob": "3710baa0ab4baf87a207f27347eb7a5dadb17dc2"
+        },
+        {
+          "path": "stage1/cohere/css/gaps/4_empty_array_union.ts",
+          "blob": "7a553d22e9d1655464a00fcd286c721fd780b713"
+        },
+        {
+          "path": "stage1/cohere/css/gaps/5_repeat_in_try.ts",
+          "blob": "1a817dfff328a96b32f1b47ff668f76073ec95ca"
+        },
+        {
+          "path": "stage1/cohere/css/gaps/6_printer_regex_tree.ts",
+          "blob": "95fc9b09c8c3db54606197e0b7db889e6c67b4ae"
+        },
+        {
+          "path": "stage1/cohere/css/gaps/printer_boundaries.ts",
+          "blob": "2c64353164ca9a868c115156b61d1bacfc28fbaf"
+        },
+        {
+          "path": "stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+          "blob": "669bffc568571494c19b0557eebf203c90784aee"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/cookedSurrogate.ts",
+          "blob": "c541526d51d43d13aaf639c11e937bb039925737"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/crlf.ts",
+          "blob": "9fe6145d35891b6b6a2b6c86cf67e1e87ed7448e"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/deepBinary.ts",
+          "blob": "f1a106944a4c17bb76891fbdb1aa28e9c352ac2d"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/emptyGenerics.ts",
+          "blob": "9aa2653a643dcb61f86a265793800fdcf6f92ae0"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/interfaceDefault.ts",
+          "blob": "d2a4042dc7d901b14b9e584c6b566b431395c6e6"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/interfaceTypeMethod.ts",
+          "blob": "7cf7681e0ae5d9fee2a0948b49cdce819d1d9f5f"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/lineSeparator.ts",
+          "blob": "00ee95ff2b48f3046952556713ddf2f3bcd1faf0"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/methodReplacement.ts",
+          "blob": "0da7f620dc16e3a0af1d66aaf8cf5bb9f6fc79c1"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/nbsp.ts",
+          "blob": "d76548f338ca85e9caa6b9f0e9d17c870ac7b47a"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/parserRecovery.ts",
+          "blob": "c74fa666a024eeed5ea368d42f6e5147496b26d8"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/portParserRecovery.ts",
+          "blob": "af7f5095579566c6144fab64ae83bae184c5cdb2"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/postfixValue.ts",
+          "blob": "af38bfe9dcc03e4deaf74a4c8d221226d8fcfc10"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/rawInput.ts",
+          "blob": "b201b822cff764e6ee2ba752ae9646f5ac767e26"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/typeMemberInitializer.ts",
+          "blob": "a238f15dcad280184e3008014015f9fe663e598e"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/1_from_char_code.ts",
+          "blob": "cb0a236684bd1bec2dff5fca5a1713da5a5a2cfa"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/2_bitwise.ts",
+          "blob": "887961d68d4a03c841e88945862d3fdad6b262bf"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/3_later_function.ts",
+          "blob": "73b49e380d66c69e584878aaef8c25f753cdba65"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/3_later_method.ts",
+          "blob": "d144f8b6b2e73ca698dd2b8026b0a9dfb8933491"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/4_function_value.ts",
+          "blob": "4f1f826a1705166b8aea265fecf7c1c7d3bec6ec"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/5_array_from.ts",
+          "blob": "251dbf71c855eb52ab69051d99c3e81551f8fa79"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/6_boolean_element.ts",
+          "blob": "e273ea90141e1c6a3e7ebc8dc2d085ce44735bc8"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/7_maybe_number_compared.ts",
+          "blob": "7cdccc5094b48fee976183b398c7918fe0725a62"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/8_tuple_value.ts",
+          "blob": "b00a13a5159c8eeb1ec2d5cf3509b64bea3bc196"
+        },
+        {
+          "path": "stage1/cohere/gitignore/gaps/9_return_panic.ts",
+          "blob": "730717f72486abdc5f450aeb2c282137a14e3e79"
+        },
+        {
+          "path": "stage1/cohere/graphql/gaps/1_throwing_function_value.ts",
+          "blob": "8bfa977061c240886a35bde35eec056f867a6c2a"
+        },
+        {
+          "path": "stage1/cohere/graphql/gaps/2_error_made_elsewhere.ts",
+          "blob": "d694733875a706e16d4e8911f38d77069e7ceaa1"
+        },
+        {
+          "path": "stage1/cohere/json/gaps/emptyFallback.ts",
+          "blob": "da50e2735faf0416f5dbb6c00182c69bb01ea43f"
+        },
+        {
+          "path": "stage1/cohere/json/gaps/multiplePush.ts",
+          "blob": "ffb9c87912f90d635e98e4c2d9e3d530604b60dd"
+        },
+        {
+          "path": "stage1/cohere/json/gaps/repeatInTry.ts",
+          "blob": "fb6c4be48be22a87258ad09e3c3d7e94c109047c"
+        },
+        {
+          "path": "stage1/cohere/lint/gaps/1_nested_constructor.ts",
+          "blob": "830cc7f0f046afe0bdce1c24ecb40e7d89afc904"
+        },
+        {
+          "path": "stage1/cohere/lint/gaps/2_optional_index.ts",
+          "blob": "1d6c310fda14a5a049479c956f345c7957fc5cd0"
+        },
+        {
+          "path": "stage1/cohere/lint/gaps/3_numeric_or.ts",
+          "blob": "d2bb51b09e5f6b112f9296e68a0eddd497c2ef50"
+        },
+        {
+          "path": "stage1/cohere/lint/gaps/4_last_index_position.ts",
+          "blob": "296b7846b7ef9e0b2d068bae90d51715c9f0d058"
+        },
+        {
+          "path": "stage1/cohere/lint/gaps/5_parser_recovery.ts",
+          "blob": "99096418e5981cfde30a85fa8555c3a4d2e7dda9"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/10_multiple_push.ts",
+          "blob": "a77c65d04835d487789470dfbcc511d314a30461"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/11_function_expression.ts",
+          "blob": "4162c7f2e6912029edcfcf8a4e39ca35fc40baef"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/12_conditional_empty_array.ts",
+          "blob": "3295095e5084de8598a84d30b21ddf05bb4883b5"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/13_array_growth.ts",
+          "blob": "4f9485487b469637b52592aab9405c1598482a7d"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/14_missing_path_key.ts",
+          "blob": "3aada206e21bd78f6ed7a0bcac455b84950616ec"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/15_string_or.ts",
+          "blob": "8d1b047fc967d8c5c34567e74c9b779ee23933e1"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/16_array_shift.ts",
+          "blob": "393eaba8c23c448d59b2134f4cbf044b63505516"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/17_long_optional_chain.ts",
+          "blob": "586e86d9a5523152e6320eae45b603a27a0482d5"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/1_recursive_state.ts",
+          "blob": "a0dff79777d022d70eb373057e5ec05e9e5948e5"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/2_state_arrow_cycle.ts",
+          "blob": "9a8ce2874904a402db5b72c280ca75a65bb74723"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/3_recursive_callable.ts",
+          "blob": "7cbcc9fd15b965a96042cde762a5ea14e58e139d"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/4_structural_ranges.ts",
+          "blob": "c08dce82b9832e8fdcfe239c90bbe69dbd3a38d0"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/5_conditional_panic.ts",
+          "blob": "102e21872ba8c959ea250282b08570821024296f"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/6_uninitialized_optional_string.ts",
+          "blob": "7fdf8311487cd633e6c38a7702d436466ed4790e"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/7_postfix_property.ts",
+          "blob": "4a18814f7597a18bea4762adec7d542a23e696b7"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/8_generic_callback_result.ts",
+          "blob": "dd563fb6f950d332d312a77c6405bd3ad5c43d0b"
+        },
+        {
+          "path": "stage1/cohere/markdownblocks/gaps/9_mixed_path_names.ts",
+          "blob": "f9b1b6b86e9bae82fd01cd2d62c09817af0217d5"
+        },
+        {
+          "path": "stage1/cohere/markdowninline/gaps/1_delimiter_expression.ts",
+          "blob": "1727d6c9138766b9607a0b1417596e0acd0ffddf"
+        },
+        {
+          "path": "stage1/cohere/mediaquery/gaps/1_generic_parameter.ts",
+          "blob": "1fbc846db8fc4cc77cbb41a04fd3967ecbe8ca3b"
+        },
+        {
+          "path": "stage1/cohere/mediaquery/gaps/1_generic_return.ts",
+          "blob": "98c9bd484ed95847e154ef9ed27c1333fa130c18"
+        },
+        {
+          "path": "stage1/cohere/mediaquery/gaps/2_return_undefined.ts",
+          "blob": "fb415f1dd1e5a95be66df1383094b7cb0ca05c88"
+        },
+        {
+          "path": "stage1/cohere/mediaquery/gaps/3_optional_chaining_array.ts",
+          "blob": "b7d5664f6cedd95933b79c05e255ce2faa00ab2d"
+        },
+        {
+          "path": "stage1/cohere/mediaquery/gaps/4_mutable_child_array.ts",
+          "blob": "5b35964a6f536449e3a41337413eb892fa4e74a5"
+        },
+        {
+          "path": "stage1/cohere/mediaquery/gaps/5_local_children_array.ts",
+          "blob": "1c6e558e480ae71b3a00e27fe2de55cca2ceda93"
+        },
+        {
+          "path": "stage1/cohere/selector/gaps/1_multiple_push.ts",
+          "blob": "6478b4bf9bac38103de91f81d48b59074ed2a391"
+        },
+        {
+          "path": "stage1/cohere/selector/gaps/2_mixed_field.ts",
+          "blob": "3653ff87f88d545a4e7cb32e51a34dafcc421650"
+        },
+        {
+          "path": "stage1/cohere/selector/gaps/3_optional_boolean.ts",
+          "blob": "f512d6d7b7faff3158f489a126e83b3b029c4f5e"
+        },
+        {
+          "path": "stage1/cohere/selector/gaps/4_array_from_iterator.ts",
+          "blob": "d9d3ef2691f040f532d6f3f200b3a190e45cca5e"
+        },
+        {
+          "path": "stage1/cohere/selector/gaps/5_conditional_panic.ts",
+          "blob": "6760d95d675c090249e722ffe2332c18b54ef1ca"
+        },
+        {
+          "path": "stage1/cohere/selector/gaps/6_undefined_case.ts",
+          "blob": "8a1cacfd6fc71af97bc806480faa224307800675"
+        },
+        {
+          "path": "stage1/cohere/static_single_assignment/gaps/1_block_arrow_returning_class.ts",
+          "blob": "2b87516360391e5f587136df0f0dce5e03fa14f6"
+        },
+        {
+          "path": "stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts",
+          "blob": "267b8afc2ab329927b68d26f839f01aab127f7da"
+        },
+        {
+          "path": "stage1/cohere/suppression/gaps/1_mutual_recursion.ts",
+          "blob": "a0c479b83a18f6b0e75ec6055d5f634193e51174"
+        },
+        {
+          "path": "stage1/cohere/suppression/gaps/2_return_undefined_array.ts",
+          "blob": "4e5ec952866b7e1a42ef704a31b24da6e321cf25"
+        },
+        {
+          "path": "stage1/cohere/tsprinter/gaps/defaultSort.ts",
+          "blob": "e7fdd5d6cb92aa705e79b8d245c2b5b7d0c481e3"
+        },
+        {
+          "path": "stage1/cohere/tsprinter/gaps/prefixUpdateValue.ts",
+          "blob": "bce2f04a217e0ced6cf73237b504e7e0cb7372e1"
+        },
+        {
+          "path": "stage1/cohere/values/gaps/1_index_of_position.ts",
+          "blob": "ad875b50770fb7d96f6112df5a350217569a6e79"
+        },
+        {
+          "path": "stage1/cohere/values/gaps/2_boolean_or_undefined_field.ts",
+          "blob": "ee693e76978893ec8d15d2ec6bc18933e45ae391"
+        },
+        {
+          "path": "stage1/cohere/values/gaps/3_case_constant.ts",
+          "blob": "3fb540e58f58acc2315d300175a52437ebec0557"
+        },
+        {
+          "path": "stage1/cohere/values/gaps/4_private_method.ts",
+          "blob": "2dc348f2920a9f061aa80f6bf9fb58fd4ab79729"
+        },
+        {
+          "path": "stage1/cohere/values/gaps/5_empty_array_default.ts",
+          "blob": "9f9af1d4f92c8763ad155ef707e42fbbdddcf773"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/arenaNodeRead.ts",
+          "blob": "163fd2934e9739528cdd15c639e4aa11efb24488"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/assignmentValue.ts",
+          "blob": "d96abd14758466a319f1f75909b0824d478aca5e"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/dynamicCase.ts",
+          "blob": "4b8187225836975c80dbcaf1868238584cd267e5"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/emptyAlternative.ts",
+          "blob": "5756a2440d97264661a0bc37213cd7917ef3ab08"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/multiplePush.ts",
+          "blob": "51b95f980b3d7527ded16ede80b1139c93bc7f2a"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/negativeCase.ts",
+          "blob": "950a54cbae2ce7358d6d10ff247d547abd5b122e"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/numericMapLookup.ts",
+          "blob": "37533d6b3df58db6ffe2f5ae48879e1e484c2469"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/prefixIncrement.ts",
+          "blob": "4b45686700f3c6c541c0901bba6ea1869e4934d7"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/sharedSliceAppend.ts",
+          "blob": "28951b1060508e9511d55ed7c751736a828e9025"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/stringFallback.ts",
+          "blob": "4c159d4ed5bf5b15811bcae1135e55c52f2e864d"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/stringPresence.ts",
+          "blob": "bdb83da2e736ebdf0bc4cdd7a0b3aad2ffc8d0d0"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/stringUnitScan.ts",
+          "blob": "26b2726e6a2973d5024578cb312ed595c57ac939"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/structuralPosition.ts",
+          "blob": "ac132b24683b0e457590c1d98eff1e4dd32d6181"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/valueConjunction.ts",
+          "blob": "45594304c150f248a471c4e5c98ff766486d4c66"
+        },
+        {
+          "path": "stage1/cohere/yaml/gaps/valuePresence.ts",
+          "blob": "6fc6005248ff98110c19bee80e64d4b48696a64e"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/1_strong_ast_parent.ts",
+          "blob": "1657b509b2d15bd470a79f90f9ade9edd7bd4484"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/2_push_spread.ts",
+          "blob": "5098ab49e8760db9e2c7af9c97c256796a9d55f5"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/3_import_cycle.ts",
+          "blob": "000592105efdb5f5508b544a4491a3106bb11f99"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/3_import_cycle_peer.ts",
+          "blob": "4099a21407cc09e4438128380fc0d8eda4ad27ed"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/4_class_interface_method.ts",
+          "blob": "b3655c5462e9daf4fb670cc5ac10fa4ec05f89c7"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/5_optional_function_value.ts",
+          "blob": "4e1968eeaa268c354798323144e992d839d7d941"
+        },
+        {
+          "path": "stage1/typescript/parser/gaps/6_conditional_empty_array.ts",
+          "blob": "fc4341e407678e95b6ca4cdcc18effc61d53e131"
+        },
+        {
+          "path": "stage1/typescript/scanner/gaps/1_push.ts",
+          "blob": "8c900b50962f269179ce6c44a4b9d5c785c94b52"
+        },
+        {
+          "path": "stage1/typescript/scanner/gaps/2_bigint.ts",
+          "blob": "e203330c2a5c660dcf8f053618fc2badc60214fb"
+        }
+      ]
+    },
+    {
+      "name": "review",
+      "patterns": [
+        "review/*/*.a",
+        "review/*/*/*.a"
+      ],
+      "programs": [
+        {
+          "path": "review/compiler/empty-else-guard/survivor-switch.a",
+          "blob": "d94b53c7b5977a80d4fcef0b5ce1784df17bae0e"
+        },
+        {
+          "path": "review/compiler/fx5-every-refusal/initial-literal-layout.a",
+          "blob": "8840a655338bd0650e66a24570b58d10bc4cb4dd"
+        },
+        {
+          "path": "review/compiler/fx5-literal-fix/all-number.a",
+          "blob": "ace95da5c4df915f8964d4018232f8f9b891fbaf"
+        },
+        {
+          "path": "review/compiler/fx5-literal-fix/nested-number.a",
+          "blob": "d0e558952f50011d8ccce3ded2e1c5c6b8a864d5"
+        },
+        {
+          "path": "review/compiler/fx5-literal-refusal/all-number.a",
+          "blob": "207a9e4b0437ef892e6d160a014d67311295307a"
+        },
+        {
+          "path": "review/oct6/class_oct6_construction.a",
+          "blob": "56f05f3e36e9ce77a16107d3aeefa6cc90ce1fb3"
+        },
+        {
+          "path": "review/optional-indexing/map-shape.a",
+          "blob": "52e52f651a281ba3f227543529746b5c8f23d939"
+        },
+        {
+          "path": "review/optional-indexing/numeric-string-key.a",
+          "blob": "0cdf1811a3ad4d534f25d6b08f51c00be7e870d8"
+        },
+        {
+          "path": "review/optional-indexing/sparse-array.a",
+          "blob": "e9147f712117e88184ba7bbc20d3b838097ab781"
+        },
+        {
+          "path": "review/unknown-narrowing/require_pending.a",
+          "blob": "6ac80b0a3762e10638fdd0ed17bb1a3603377b76"
+        }
+      ]
+    },
+    {
+      "name": "fuzz",
+      "patterns": [
+        "internal/fuzz/corpus/*.a"
+      ],
+      "programs": []
+    }
+  ]
+}
