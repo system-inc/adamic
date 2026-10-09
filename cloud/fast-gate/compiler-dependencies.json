@@ -1,15 +1,6 @@
 {
   "version": 1,
   "packages": {
-    "": [
-      "internal/load",
-      "internal/lower",
-      "internal/native",
-      "internal/javascript",
-      "internal/ir",
-      "internal/flow",
-      "cmd/adamic"
-    ],
     "stage1/cohere/arena": [
       "internal/load",
       "internal/lower",
