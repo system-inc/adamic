@@ -1,0 +1,11 @@
+internal/buildcache/buildcache.go
+internal/buildcache/buildcache_test.go
+internal/buildcache/gobuild.go
+internal/buildcache/gobuild_test.go
+internal/buildcache/store.go
+internal/buildcache/store_test.go
+internal/buildcache/testdata/hello/main.go
+internal/buildcache/testdata/include/greeting.h
+internal/buildcache/testdata/overlay/one.go.txt
+internal/buildcache/testdata/overlay/two.go.txt
+internal/buildcache/testdata/withc/main.go
