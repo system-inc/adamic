@@ -82,6 +82,42 @@ class RedSort(unittest.TestCase):
                 self.assertEqual(result['infra'], [])
                 self.assertEqual(result['candidate_reds'], 1)
 
+    def test_silent_build_is_infra(self):
+        rows = [dict(unit='build', exit=1, output=''),
+                dict(unit='a-check-build', exit=-9, output=''),
+                dict(unit='tests', status='failed', detail=
+                     'go test -c ./internal/native exited 1\n'),
+                dict(unit='native compile', exit=1, command=['go', 'test', '-c', './internal/native'],
+                     seconds=115.6, cold_miss=True)]
+        for row in rows:
+            with self.subTest(row=row):
+                result = sort.sort_reds(record(row), record())
+                self.assertEqual(len(result['infra']), 1)
+                self.assertEqual(result['candidate_reds'], 0)
+        # The unledgered stream failure has this shape in run.py's record.
+        result = sort.sort_reds(record(failure={'step': 'tests', 'detail':
+            'go test -c ./internal/native exited 1\n'}), record())
+        self.assertEqual(len(result['infra']), 1)
+
+    def test_build_diagnostics_remain_candidate(self):
+        for output in ('internal/native/native.go:12:3: undefined: answer',
+                       'native.go:12: syntax error', 'FAIL\tinternal/native [build failed]',
+                       '--- FAIL: TestAnswer (0.00s)'):
+            with self.subTest(output=output):
+                result = sort.sort_reds(record(dict(unit='build', exit=1, output=output)), record())
+                self.assertEqual(result['infra'], [])
+                self.assertEqual(result['candidate_reds'], 1)
+
+    def test_silent_exit_needs_build_and_nonzero_evidence(self):
+        for row in (dict(unit='build', exit=0, action='fail'),
+                    dict(unit='build', status='failed'),
+                    dict(unit='tests', exit=1, command='go test ./internal/native'),
+                    dict(unit='other', exit=1, output='')):
+            with self.subTest(row=row):
+                result = sort.sort_reds(record(row), record())
+                self.assertEqual(result['infra'], [])
+                self.assertEqual(result['candidate_reds'], 1)
+
     def test_unreported_unit_is_infra(self):
         result = sort.sort_reds(record(unit(action=None, status='not run')), record())
         self.assertEqual(len(result['infra']), 1)
