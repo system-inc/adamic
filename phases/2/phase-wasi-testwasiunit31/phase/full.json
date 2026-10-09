@@ -1,0 +1,131 @@
+{
+  "sha": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "base_name": "main",
+  "tools_sha": "26226fdfaa36d9cf633ddc26546e78381bf82fd5",
+  "machine": {
+    "hostname": "80c0c63b303d",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 1.0,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 0.9,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "TestWASIUnit31",
+  "wasi_units": [
+    {
+      "name": "TestWASIUnit31",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "-timeout",
+        "3h",
+        "-p",
+        "1",
+        "-parallel",
+        "1",
+        "-skip",
+        "^TestProduct_",
+        "-run",
+        "^TestWASIUnit31$",
+        "./internal/native"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/loom-units/loom-unit-1655333006/workspace/loom-out/phase/wasi-units/00-jjdvpyfs",
+      "exit": 0,
+      "ok": true,
+      "test": "TestWASIUnit31",
+      "unexpected": [],
+      "passed": true,
+      "wall_seconds": 34.101527,
+      "over_budget": true
+    }
+  ],
+  "wasi_unit_count": 1,
+  "wasi_unit_budget_seconds": 30,
+  "wasi_slowest_unit_seconds": 34.101527,
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "80c0c63b303d",
+    "cpus": 5,
+    "load": [
+      0.9,
+      2.1,
+      1.8
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit31",
+      "seconds": 18.53,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit31/internal/native/wasm/io.a",
+      "seconds": 0.28,
+      "action": "pass",
+      "product": false
+    }
+  ],
+  "wall_seconds": 34.1,
+  "steps_seconds": {
+    "wasi": 34.102
+  },
+  "pass": 2,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "wasi"
+  ],
+  "stages_exit": {
+    "wasi": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

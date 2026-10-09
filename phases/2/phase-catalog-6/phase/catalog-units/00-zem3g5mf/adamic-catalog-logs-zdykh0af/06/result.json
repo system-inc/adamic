@@ -1,0 +1,18 @@
+{
+  "number": 6,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "worktree": "/tmp/loom-units/loom-unit-70804753/workspace/loom-out/phase/catalog-units/00-zem3g5mf/adamic-catalog-worktree-1klxzm8r/entry-06",
+  "setup_seconds": 16.52968411100028,
+  "ok": true,
+  "check_seconds": 352.33002545699946,
+  "cleanup_seconds": 0.3892584800005352,
+  "wall_seconds": 370.83824218300015,
+  "load_before": "0.04 1.00 1.11 1/205 66829",
+  "load_after": "1.08 1.03 1.08 1/209 69036",
+  "messages": [
+    "06 constructor-capture-region: applies-and-fails-as-recorded",
+    "06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "06 wall=370.838s setup=16.530s check=352.330s cleanup=0.389s load=0.04 1.00 1.11 1/205 66829 -> 1.08 1.03 1.08 1/209 69036"
+  ]
+}

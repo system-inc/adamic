@@ -1,0 +1,9 @@
+11 refuse-definite-assignment wall=385.667s
+target ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2
+logs /tmp/loom-units/loom-unit-2777196098/workspace/loom-out/phase/catalog-units/00-t2abapc5/adamic-catalog-logs-wreprx33
+build flags: commit=ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+11 refuse-definite-assignment: applies-and-fails-as-recorded
+11 made against=d772b5c990de4304de990e723835f19ebb613641
+11 wall=385.593s setup=15.131s check=368.698s cleanup=0.492s load=0.08 0.20 0.48 1/670 611085 -> 1.08 0.80 0.67 1/676 612085
+total wall=385.618s load=0.08 0.20 0.48 1/669 611076 -> 1.08 0.80 0.67 1/675 612085

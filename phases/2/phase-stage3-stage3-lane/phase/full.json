@@ -1,0 +1,94 @@
+{
+  "sha": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "base_name": "main",
+  "tools_sha": "26226fdfaa36d9cf633ddc26546e78381bf82fd5",
+  "machine": {
+    "hostname": "955608a0ce86",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 0.4,
+      "cores": 5
+    },
+    "first_failure": {
+      "load_1m": 1.7,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 1.7,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "stage3-lane",
+  "stage3_exits": {
+    "stage3-lane": 1
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "955608a0ce86",
+    "cpus": 5,
+    "load": [
+      1.7,
+      3.3,
+      4.5
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [],
+  "wall_seconds": 2218.8,
+  "steps_seconds": {
+    "stage3": 2218.6
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "stage3",
+    "detail": "stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)\nFAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}\nstage3-lane, last lines:\n/tmp/adamic-stage3-lane\ntest counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}\nreporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}\nfailed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/largeControlFlowGraph.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/largeControlFlowGraph.ts\"', '\nnumber of reported failure titles: expected 1, observed 7\nFAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}",
+    "after_seconds": 2218.6,
+    "under_load": false
+  },
+  "planned_stages": [
+    "stage3"
+  ],
+  "stages_exit": {
+    "stage3": 1
+  },
+  "cancelled_after_first_failure": true,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

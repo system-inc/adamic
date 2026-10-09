@@ -1,0 +1,17 @@
+{
+  "number": 14,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "ok": true,
+  "setup_seconds": 0,
+  "check_seconds": 0,
+  "cleanup_seconds": 0,
+  "wall_seconds": 0.0001886750005724025,
+  "load_before": "0.03 0.16 0.29 1/184 31970",
+  "load_after": "0.03 0.16 0.29 1/184 31970",
+  "messages": [
+    "14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)",
+    "14 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "14 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=0.03 0.16 0.29 1/184 31970 -> 0.03 0.16 0.29 1/184 31970"
+  ]
+}

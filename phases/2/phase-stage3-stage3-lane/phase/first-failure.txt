@@ -1,0 +1,10 @@
+stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+stage3-lane, last lines:
+/tmp/adamic-stage3-lane
+test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/largeControlFlowGraph.ts "before all" hook for "Correct errors for tests/cases/compiler/largeControlFlowGraph.ts"', '
+number of reported failure titles: expected 1, observed 7
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+(box load 1.7 on 5 cores at first failure)

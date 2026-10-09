@@ -1,0 +1,12 @@
+FIRST FAILURE (stage3, at 2218.6 s):
+stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+stage3-lane, last lines:
+/tmp/adamic-stage3-lane
+test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/largeControlFlowGraph.ts "before all" hook for "Correct errors for tests/cases/compiler/largeControlFlowGraph.ts"', '
+number of reported failure titles: expected 1, observed 7
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106345, 'failing': 7, 'pending': 0}
+(box load 1.7 on 5 cores at first failure)
+red: ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2 full gate, first failure at stage3 after 2218.6 s, cancelled after first failure (stage3=2218.6s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.4 on 5 cores at start, load 1.7 on 5 cores at first failure, load 1.7 on 5 cores at end), 0 fail, 0 pass
