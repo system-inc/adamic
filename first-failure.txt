@@ -1,0 +1,28 @@
+FIRST FAILURE (tests, at 31.0 s):
+github.com/system-inc/adamic/stage1/cohere/json TestJSONGrain30Union
+=== RUN   TestJSONGrain30Union
+=== PAUSE TestJSONGrain30Union
+=== CONT  TestJSONGrain30Union
+    grain30_json_test.go:239: full corpus: 3897 cases before gate sampling
+    grain30_json_test.go:239: corpus repository: 2803 tracked JSON files; checked against Git HEAD
+    grain30_json_test.go:239: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    grain30_json_test.go:239: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    grain30_json_test.go:239: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    grain30_json_test.go:239: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    grain30_json_test.go:239: gate-sample: TestJSONGrain30Union 126/3863 files, stride 32, offset 2
+    grain30_json_test.go:239: shard union: 159 cases exactly once across 128 parent buckets
+    grain30_json_test.go:296: 001: exact union of 3 cases across [TestPortMatchesGoCohere_001_000 TestPortMatchesGoCohere_001_001 TestPortMatchesGoCohere_001_002]
+    grain30_json_test.go:320: planted "cohere/docs/data/examples/nexus/consistency-no-long-line-comment.json" caught only by TestPortMatchesGoCohere_001_000
+    grain30_json_test.go:320: planted "generated/10/probe.json" caught only by TestPortMatchesGoCohere_001_001
+    grain30_json_test.go:320: planted "cohere/docs/data/examples/nexus/consistency-no-long-line-comment.json" caught only by TestPortMatchesGoCohere_001_002
+    grain30_json_test.go:296: 004: exact union of 2 cases across [TestPortMatchesGoCohere_004_000 TestPortMatchesGoCohere_004_001]
+    grain30_json_test.go:320: planted "stage3/performance/evidence/results/raw/001_varianceCantBeStrictWhileStructureIsnt/node-run-08.command.json" caught only by TestPortMatchesGoCohere_004_000
+    grain30_json_test.go:320: planted "stage1/cohere/lint/rules/prefer-destructuring/testdata/renamed.options.json" caught only by TestPortMatchesGoCohere_004_001
+    grain30_json_test.go:296: 061: exact union of 1 cases across [TestPortMatchesGoCohere_061_000 TestPortMatchesGoCohere_061_001 TestPortMatchesGoCohere_061_002]
+    grain30_json_test.go:320: planted "cohere/policy/messages/consistency-require-type-suffix.json" caught only by TestPortMatchesGoCohere_061_000
+    grain30_json_test.go:320: planted "cohere/policy/messages/consistency-require-type-suffix.json" caught only by TestPortMatchesGoCohere_061_002
+    grain30_json_test.go:296: 110: exact union of 0 cases across [TestPortMatchesGoCohere_110_000 TestPortMatchesGoCohere_110_001 TestPortMatchesGoCohere_110_002]
+    grain30_json_test.go:328: missing comparison owner survived
+--- FAIL: TestJSONGrain30Union (0.93s)
+
+(box load 28.7 on 64 cores at first failure)
