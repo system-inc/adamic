@@ -1,0 +1,14 @@
+=== RUN   TestV4ExistingExplicitMethodReceiver
+=== PAUSE TestV4ExistingExplicitMethodReceiver
+=== CONT  TestV4ExistingExplicitMethodReceiver
+    checked_views_v4_method_receiver_test.go:14: gate cache node miss
+    checked_views_v4_method_receiver_test.go:14: gate cache node miss
+    checked_views_v4_method_receiver_test.go:14: guard mutant admitted in native: exit 0 output "7:99\n11\n"
+    checked_views_v4_method_receiver_test.go:14: guard mutant admitted in sanitized: exit 0 output "7:99\n11\n"
+    checked_views_v4_method_receiver_test.go:14: guard mutant admitted in javascript: exit 0 output "7:99\n11\n"
+--- PASS: TestV4ExistingExplicitMethodReceiver (1.31s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.360s

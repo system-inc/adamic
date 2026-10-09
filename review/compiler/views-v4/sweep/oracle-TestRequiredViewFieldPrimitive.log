@@ -1,0 +1,64 @@
+=== RUN   TestRequiredViewFieldPrimitive
+=== PAUSE TestRequiredViewFieldPrimitive
+=== CONT  TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldPrimitive/number
+=== PAUSE TestRequiredViewFieldPrimitive/number
+=== RUN   TestRequiredViewFieldPrimitive/boolean
+=== PAUSE TestRequiredViewFieldPrimitive/boolean
+=== RUN   TestRequiredViewFieldPrimitive/string
+=== PAUSE TestRequiredViewFieldPrimitive/string
+=== RUN   TestRequiredViewFieldPrimitive/wrong_string
+=== PAUSE TestRequiredViewFieldPrimitive/wrong_string
+=== RUN   TestRequiredViewFieldPrimitive/missing
+=== PAUSE TestRequiredViewFieldPrimitive/missing
+=== RUN   TestRequiredViewFieldPrimitive/uninitialized
+=== PAUSE TestRequiredViewFieldPrimitive/uninitialized
+=== RUN   TestRequiredViewFieldPrimitive/wrong_type
+=== PAUSE TestRequiredViewFieldPrimitive/wrong_type
+=== CONT  TestRequiredViewFieldPrimitive/number
+=== CONT  TestRequiredViewFieldPrimitive/missing
+=== CONT  TestRequiredViewFieldPrimitive/wrong_string
+=== CONT  TestRequiredViewFieldPrimitive/boolean
+=== CONT  TestRequiredViewFieldPrimitive/string
+=== NAME  TestRequiredViewFieldPrimitive/missing
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/wrong_string
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/number
+    view_fields_test.go:56: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/string
+    view_fields_test.go:56: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/boolean
+    view_fields_test.go:56: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/string
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/number
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/boolean
+    view_fields_test.go:60: gate cache node miss
+=== CONT  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:60: gate cache node miss
+=== CONT  TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:60: gate cache node miss
+    view_fields_test.go:70: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:70: gate cache node miss
+    view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C
+    view_fields_test.go:82: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:87: drop initialization tracking mutant caught by pinned exit/message
+--- PASS: TestRequiredViewFieldPrimitive (0.00s)
+    --- PASS: TestRequiredViewFieldPrimitive/missing (1.05s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_string (1.06s)
+    --- PASS: TestRequiredViewFieldPrimitive/boolean (1.56s)
+    --- PASS: TestRequiredViewFieldPrimitive/number (1.64s)
+    --- PASS: TestRequiredViewFieldPrimitive/string (1.65s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_type (1.11s)
+    --- PASS: TestRequiredViewFieldPrimitive/uninitialized (1.51s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=13
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.580s

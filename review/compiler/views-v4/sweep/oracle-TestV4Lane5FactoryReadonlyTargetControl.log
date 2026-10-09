@@ -1,0 +1,7 @@
+=== RUN   TestV4Lane5FactoryReadonlyTargetControl
+=== PAUSE TestV4Lane5FactoryReadonlyTargetControl
+=== CONT  TestV4Lane5FactoryReadonlyTargetControl
+    checked_views_v4_lane5_test.go:189: awaits compiler/views-v4: runtime-checkable higher-order callable parameter contracts
+--- SKIP: TestV4Lane5FactoryReadonlyTargetControl (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.009s

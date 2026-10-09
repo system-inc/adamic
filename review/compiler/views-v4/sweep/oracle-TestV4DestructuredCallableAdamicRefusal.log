@@ -1,0 +1,10 @@
+=== RUN   TestV4DestructuredCallableAdamicRefusal
+=== PAUSE TestV4DestructuredCallableAdamicRefusal
+=== CONT  TestV4DestructuredCallableAdamicRefusal
+    checked_views_v4_destructured_test.go:60: gate cache node miss
+--- PASS: TestV4DestructuredCallableAdamicRefusal (0.21s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.221s

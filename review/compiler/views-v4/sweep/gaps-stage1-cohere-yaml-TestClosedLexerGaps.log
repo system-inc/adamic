@@ -1,0 +1,18 @@
+=== RUN   TestClosedLexerGaps
+=== RUN   TestClosedLexerGaps/assignmentValue.ts
+=== RUN   TestClosedLexerGaps/dynamicCase.ts
+=== RUN   TestClosedLexerGaps/negativeCase.ts
+=== RUN   TestClosedLexerGaps/stringFallback.ts
+=== RUN   TestClosedLexerGaps/valueConjunction.ts
+=== RUN   TestClosedLexerGaps/prefixIncrement.ts
+=== RUN   TestClosedLexerGaps/emptyAlternative.ts
+--- PASS: TestClosedLexerGaps (2.59s)
+    --- PASS: TestClosedLexerGaps/assignmentValue.ts (0.33s)
+    --- PASS: TestClosedLexerGaps/dynamicCase.ts (0.36s)
+    --- PASS: TestClosedLexerGaps/negativeCase.ts (0.38s)
+    --- PASS: TestClosedLexerGaps/stringFallback.ts (0.35s)
+    --- PASS: TestClosedLexerGaps/valueConjunction.ts (0.40s)
+    --- PASS: TestClosedLexerGaps/prefixIncrement.ts (0.39s)
+    --- PASS: TestClosedLexerGaps/emptyAlternative.ts (0.38s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	2.600s

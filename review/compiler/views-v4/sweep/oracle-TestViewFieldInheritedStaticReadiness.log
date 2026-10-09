@@ -1,0 +1,11 @@
+=== RUN   TestViewFieldInheritedStaticReadiness
+=== PAUSE TestViewFieldInheritedStaticReadiness
+=== CONT  TestViewFieldInheritedStaticReadiness
+    view_fields_test.go:157: gate cache node miss
+    view_fields_test.go:157: gate cache node miss
+--- PASS: TestViewFieldInheritedStaticReadiness (0.95s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.991s
