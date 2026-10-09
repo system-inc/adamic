@@ -1,0 +1,1 @@
+{"command": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .", "returncode": 1, "wall_seconds": 46.37466995200157}

@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -361,7 +361,7 @@
+ 				return nil, err
+ 			}
+ 		}
+-	} else if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) || lowered == nil {
++	} else if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) && lowered == nil {
+ 		var err error
+ 		if lowered, err = l.instantiate(declaration, receiverType, callee); err != nil {
+ 			return nil, err

@@ -1,0 +1,11 @@
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -373,7 +373,7 @@
+ 	walk(node, func(node any) bool {
+ 		switch node.(type) {
+ 		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach:
+-			calls = true
++			calls = false
+ 		}
+ 		return true
+ 	})

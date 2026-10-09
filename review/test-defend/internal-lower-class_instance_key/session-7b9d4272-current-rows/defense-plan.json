@@ -1,0 +1,20 @@
+[
+  [
+    "D1",
+    "internal/lower/readiness.go",
+    "calls = true",
+    "calls = false"
+  ],
+  [
+    "D2",
+    "internal/lower/class.go",
+    ") || lowered == nil {",
+    ") && lowered == nil {"
+  ],
+  [
+    "D3",
+    "internal/lower/class_features.go",
+    "fresh := argument.Kind == ast.KindObjectLiteralExpression",
+    "fresh := false"
+  ]
+]

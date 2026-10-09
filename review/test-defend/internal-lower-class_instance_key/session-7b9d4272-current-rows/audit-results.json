@@ -1,0 +1,468 @@
+[
+  {
+    "test": "TestClassArgumentsUseCheckerIdentity",
+    "package": "internal/lower",
+    "file": "internal/lower/class_instance_key_test.go:5",
+    "seconds": 0.22,
+    "oracle": "Self-written class-instantiation counts for checker-equivalent and distinct arguments. Counts do not verify class contents or native behavior.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12 class_instance_key_test.go:33: got 0 class instantiations, want 1",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritanceGenericMonomorphizations",
+      "TestGenericFunctionPolymorphicRecursionIsRefused"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassArgumentsUseCheckerIdentity$; class_instance_key_test.go:33: got 0 class instantiations, want 1",
+    "matrix_rows": [
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01Shapes",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestNestedEmptyArrayElementKinds",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestClassWrongOutputIteratorReceiver",
+    "package": "internal/lower",
+    "file": "internal/lower/class_wrong_output_test.go:9",
+    "seconds": 0.169,
+    "oracle": "Self-written iterator-receiver refusal label plus accepted unchanged-protocol controls. Does not execute iterator output.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04 class_wrong_output_test.go:24: unsafe protocol accepted: for (const value of new ScaledIterator()) { console.log(`${value}`); break; }: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_wrong_output_test.go:24: unsafe protocol accepted: for (const value of new ScaledIterator()) { console.log(`${value}`); break; }: <nil>",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "package": "internal/lower",
+    "file": "internal/lower/class_wrong_output_test.go:37",
+    "seconds": 0.037,
+    "oracle": "Self-written acceptance expectation for an explicit string-key copy. Checks only absence of an error.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M19"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M19 class_wrong_output_test.go:45: explicit string-key copy refused: /tmp/adamic-gate/TestClassWrongOutputKeysRepair4132599371/001/main.a:1:16: stage 0 can't lower record allocation outside scalar storage yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesPrivateStorage"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [],
+    "subsumer_seconds": 0.053,
+    "vacuous": true,
+    "bounded": true,
+    "evidence": "ADAMIC_MUTANT=M19 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M19 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_wrong_output_test.go:45: explicit string-key copy refused: /tmp/adamic-gate/TestClassWrongOutputKeysRepair4132599371/001/main.a:1:16: stage 0 can't lower record allocation outside scalar storage yet",
+    "matrix_rows": [
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01Shapes",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestNestedEmptyArrayElementKinds",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestClassWrongOutputPrivateRepair",
+    "package": "internal/lower",
+    "file": "internal/lower/class_wrong_output_test.go:49",
+    "seconds": 0.036,
+    "oracle": "Self-written acceptance expectation for instance delegation of private storage. Checks only absence of an error.",
+    "oracle_kind": "self",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14 class_wrong_output_test.go:53: instance delegation refused: /tmp/adamic-gate/TestClassWrongOutputPrivateRepair2181356568/001/main.a:1:60: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [],
+    "subsumer_seconds": 0.111,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_wrong_output_test.go:53: instance delegation refused: /tmp/adamic-gate/TestClassWrongOutputPrivateRepair2181356568/001/main.a:1:60: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestClockGenericReturnsT01Shapes",
+    "package": "internal/lower",
+    "file": "internal/lower/clock_generic_returns_t_01_test.go:14",
+    "seconds": 0.121,
+    "oracle": "Self-written shape acceptance and NotYet/Refused stop expectations. Unsupported subcases accept either stop type and can pass on a different later refusal.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "M09 clock_generic_returns_t_01_test.go:40: want unsupported shape stop, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; clock_generic_returns_t_01_test.go:40: want unsupported shape stop, got <nil>",
+    "vacuous_subcases": [
+      "nested_readonly_fields"
+    ],
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+    "package": "internal/lower",
+    "file": "internal/lower/clock_generic_returns_t_01_test.go:60",
+    "seconds": 0.062,
+    "oracle": "Self-written NotYet expectation for branded primitive results. Does not check the reason or representation and can pass on a different later NotYet.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "M10 (supplemental): panic: runtime error: invalid memory address or nil pointer dereference; stack clock_generic_returns_t_01_test.go:66",
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClockGenericReturnsT01DeclinesBrandedPrimitives$; panic: runtime error: invalid memory address or nil pointer dereference; stack clock_generic_returns_t_01_test.go:66",
+    "supplemental_kills": [
+      "M10"
+    ],
+    "cannot_judge_reason": "The only meaningful challenge to the branded type-argument guard removed condition terms, outside the fixed menu. It is supplemental. No admissible mutation meaningfully challenged that guard; no worthy verdict rests on M10.",
+    "matrix_rows": [
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01Shapes",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestNestedEmptyArrayElementKinds",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsNullBeforeBody",
+    "package": "internal/lower",
+    "file": "internal/lower/clock_generic_returns_t_01_test.go:76",
+    "seconds": 0.035,
+    "oracle": "Self-written direct signature-proof expectation known=false for distinct null and undefined. Does not require a positive control.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M07 clock_generic_returns_t_01_test.go:100: null and undefined admitted with one representation: 4",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; clock_generic_returns_t_01_test.go:100: null and undefined admitted with one representation: 4",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+    "package": "internal/lower",
+    "file": "internal/lower/clock_generic_returns_t_01_test.go:114",
+    "seconds": 0.036,
+    "oracle": "Self-written direct signature-proof expectation known=false for an index signature. Does not require a positive control.",
+    "oracle_kind": "self",
+    "kills": [
+      "M08"
+    ],
+    "unique_kills": [
+      "M08"
+    ],
+    "last_proven_fail": "M08 clock_generic_returns_t_01_test.go:138: indexed object admitted by the finite-shape proof: 4",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; clock_generic_returns_t_01_test.go:138: indexed object admitted by the finite-shape proof: 4",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestDefiniteAssignmentUsesReadiness",
+    "package": "internal/lower",
+    "file": "internal/lower/definite_assignment_test.go:8",
+    "seconds": 0.109,
+    "oracle": "Self-written counts of nonempty readiness tags on IR reads/properties. Does not verify tag text or runtime readiness behavior.",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12 definite_assignment_test.go:42: 0 checked reads, want 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestReadinessElisionRequiresDominatingAssignment"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.382,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestDefiniteAssignmentUsesReadiness$; definite_assignment_test.go:42: 0 checked reads, want 1",
+    "matrix_rows": [
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01Shapes",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestNestedEmptyArrayElementKinds",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestDefiniteAssignmentSoundNeighbors",
+    "package": "internal/lower",
+    "file": "internal/lower/definite_assignment_test.go:47",
+    "seconds": 0.111,
+    "oracle": "Self-written acceptance expectation for sound initialized neighbors and prose mentioning ts-ignore. Checks only absence of an error.",
+    "oracle_kind": "self",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14 definite_assignment_test.go:57: sound neighbor: /tmp/adamic-gate/TestDefiniteAssignmentSoundNeighbors1620298715/003/main.a:1:40: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassWrongOutputPrivateRepair"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [],
+    "subsumer_seconds": 0.036,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; definite_assignment_test.go:57: sound neighbor: /tmp/adamic-gate/TestDefiniteAssignmentSoundNeighbors1620298715/003/main.a:1:40: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestNestedEmptyArrayElementKinds",
+    "package": "internal/lower",
+    "file": "internal/lower/empty_literal_test.go:9",
+    "seconds": 0.112,
+    "oracle": "Self-written IR element kinds and presence of an empty literal. Union case permits Number or String, rather than one exact layout.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M15",
+      "M16"
+    ],
+    "unique_kills": [
+      "M16"
+    ],
+    "last_proven_fail": "M16 empty_literal_test.go:26: /tmp/adamic-gate/TestNestedEmptyArrayElementKindsstrings888584698/001/main.a:1:16: stage 0 can't lower an array of never yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; empty_literal_test.go:26: /tmp/adamic-gate/TestNestedEmptyArrayElementKindsstrings888584698/001/main.a:1:16: stage 0 can't lower an array of never yet",
+    "matrix_rows": [
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01Shapes",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestNestedEmptyArrayElementKinds",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestEmptyLiteralGenericReturnUsesSamePath",
+    "package": "internal/lower",
+    "file": "internal/lower/empty_literal_test.go:46",
+    "seconds": 0.038,
+    "oracle": "Self-written exact multiset of Number and Object generic empty-return IR element kinds.",
+    "oracle_kind": "self",
+    "kills": [
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15 empty_literal_test.go:52: /tmp/adamic-gate/TestEmptyLiteralGenericReturnUsesSamePath789301906/001/main.a:1:35: stage 0 can't lower an array of never yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNestedEmptyArrayElementKinds"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.112,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; empty_literal_test.go:52: /tmp/adamic-gate/TestEmptyLiteralGenericReturnUsesSamePath789301906/001/main.a:1:35: stage 0 can't lower an array of never yet",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestEntriesAllocationProof",
+    "package": "internal/lower",
+    "file": "internal/lower/entries_provenance_test.go:11",
+    "seconds": 0.13,
+    "oracle": "Self-written allocation-proof/Checked bits and exactly one entries call in IR. Does not execute enumeration output.",
+    "oracle_kind": "self",
+    "kills": [
+      "M17",
+      "M18",
+      "M19"
+    ],
+    "unique_kills": [
+      "M17",
+      "M18"
+    ],
+    "last_proven_fail": "M19 entries_provenance_test.go:35: proven=true, checked=true",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M19 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M19 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; entries_provenance_test.go:35: proven=true, checked=true",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestEntriesRecordBoundaries",
+    "package": "internal/lower",
+    "file": "internal/lower/entries_provenance_test.go:52",
+    "seconds": 0.067,
+    "oracle": "Self-written NotYet type plus specific reason substrings for three record boundaries.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M19",
+      "M20"
+    ],
+    "unique_kills": [
+      "M20"
+    ],
+    "last_proven_fail": "M20 entries_provenance_test.go:64: want explicit NotYet \"closed const literal origin\", got /tmp/adamic-gate/TestEntriesRecordBoundariesclosed_const_literal_origin3602173433/001/main.a:1:51: stage 0 can't lower an indexed mutation without a proven allocation origin yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u030/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; entries_provenance_test.go:64: want explicit NotYet \"closed const literal origin\", got /tmp/adamic-gate/TestEntriesRecordBoundariesclosed_const_literal_origin3602173433/001/main.a:1:51: stage 0 can't lower an indexed mutation without a proven allocation origin yet",
+    "matrix_rows": [
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01Shapes",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestNestedEmptyArrayElementKinds",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "subsumption_mutants": null
+  }
+]

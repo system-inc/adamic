@@ -1,0 +1,81 @@
+[
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesPrivateStorage"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/class_features.go:83",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/class_features.go:83",
+        "change": "Change fresh-object classification to false, disabling the explicit-copy exemption.",
+        "rows_failed": [
+          "TestClassWrongOutputKeysRepair"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_wrong_output_test.go:42: Lower refused acceptance row: /tmp/adamic-gate/TestClassWrongOutputKeysRepair1648862599/001/main.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys"
+  },
+  {
+    "test": "TestClassWrongOutputPrivateRepair",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class.go:364",
+        "change": "Change the external-receiver instantiation condition from OR to AND.",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/class_static.go:202",
+        "change": "Change the static-method receiver parameter from thisLocal(function) to -1.",
+        "rows_failed": [
+          "TestClassWrongOutputPrivateRepair",
+          "TestPrivateAndPublicStaticsAgreeWithNode"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/class_static.go:177",
+        "change": "Off-by-one the static dispatch table function index: function to function - 1.",
+        "rows_failed": [
+          "TestClassWrongOutputPrivateRepair",
+          "TestPrivateAndPublicStaticsAgreeWithNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_wrong_output_test.go:48: JavaScript backend stdout = \"\", source Node = \"s1\\n\""
+  },
+  {
+    "test": "TestDefiniteAssignmentUsesReadiness",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestReadinessElisionRequiresDominatingAssignment"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/readiness.go:376",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/readiness.go:376",
+        "change": "Change call detection result from true to false; calls no longer invalidate field readiness facts.",
+        "rows_failed": [
+          "TestDefiniteAssignmentUsesReadiness"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; definite_assignment_test.go:51: 0 checked reads, want 1"
+  }
+]
