@@ -33,14 +33,16 @@ record still says NotYet or Refused, so a gap closure cannot hide wrong output.
 
 TestPrepareFixtureOracleHook prepares a missing oracle test binary before the
 parallel fixture workers; TestFixtures also prepares on demand when run alone.
-Both share sync.Once within one package process. The named preparation unit uses `build-hook.py --prepare`.
+Both share sync.Once within one package process. The named preparation unit
+uses `build-hook.py --prepare`.
 The build tier may use that same command to prefetch it.
 Its key covers effective Go dependency file lists and contents, embedded runtime
 inputs, module/workspace manifests, compiler/linker bytes and Go flags. Tests fetch
 the content-addressed binary and verify its SHA-256. The input-key lock ensures
 that concurrent cold units build it once; warm units do not rebuild. A corrupt
 prepared binary fails loudly rather than being executed, and a failed build
-reports its complete build log in the test failure. `ADAMIC_STAGE3_BUILD_STORE` selects the product store. The store is local;
+reports its complete build log in the test failure.
+`ADAMIC_STAGE3_BUILD_STORE` selects the product store. The store is local;
 no remote artifact service is configured by this change.
 
 Native checks invoke its small exported
@@ -155,3 +157,7 @@ The output directory must be new. `cases.json` is the independent assignment
 list; `proof.json`, `results.json` and individual logs retain the coverage,
 mutant and timing evidence. No fixture source or recorded status is changed in
 the repository. No fixture was added, so oracle counts.md is unchanged.
+
+The fresh-box automatic preparation fix and its cold/mutant measurements are in
+[SELF-PREPARE-REPORT.md](SELF-PREPARE-REPORT.md). TestPrepareFixtureOracleHook is
+a separate gate unit; ordinary package tests need no manual --prepare step.

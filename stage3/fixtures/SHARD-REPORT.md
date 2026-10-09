@@ -4,6 +4,11 @@ Branch: codex/test-split-stage3-packages; fixture commit: 723acbcf233643cdada9ac
 Fixture mismatch and meter/census dispatch mutants fail only their assigned shards; product and selector guards catch mutants.
 Limits: apply and upstream lane exceed 30 s in other workers' territory; pre-existing probe failures remain; native fixture compilation stays in the hook.
 
+Update, October 9: fixture tests now prepare missing products automatically.
+[The self-preparation report](SELF-PREPARE-REPORT.md) supersedes the earlier
+manual-preparation requirement and includes current-main cold compiler timings.
+
+
 ## Measurement context
 
 Linux, Go 1.27.1, Node 24.19.0, clang 20.1.8. nproc=5;
