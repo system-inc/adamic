@@ -1,0 +1,10 @@
+Measurements on origin/main a467d1a1; cgroup CPU quota 4.
+Serial Go compile, initially empty shared GOCACHE:
+lint wall=160.834 user=480.411 sys=57.865
+tsprinter wall=8.064 user=11.748 sys=2.945
+markdownblocks wall=6.492 user=12.319 sys=1.729
+
+Product results so far:
+{"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementReleaseNative", "wall": 79.64058822599998, "exit": 0}
+
+One-product-at-a-time measurement is in progress. No test changes.
