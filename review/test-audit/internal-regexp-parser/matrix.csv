@@ -1,0 +1,13 @@
+mutant,eligible,TestMatcherAgreement family,TestMatcherStepLimit,TestMatcherPropertyProviderStrings,TestMatcherProviderSnapshot,TestMatcherStepLimitBoundary,TestMatcherOct6Mutants,TestMatcherOct6LoopsNode,TestNodeAgreement,TestParse,TestFlags,TestQuantifierBounds,TestSharedCanonicalize
+M1,True,pass,pass,pass,pass,pass,pass,pass,fail,pass,fail,pass,pass
+M2,True,pass,pass,pass,pass,pass,pass,pass,fail,pass,fail,pass,pass
+M3,True,fail,pass,pass,pass,pass,pass,pass,fail,fail,pass,pass,pass
+M4,True,fail,pass,pass,pass,pass,witness-precondition-fail,fail,pass,pass,pass,fail,pass
+M5,True,fail,pass,pass,pass,pass,pass,pass,fail,fail,pass,pass,pass
+M6,False,fail,pass,pass,pass,pass,pass,pass,fail,fail,pass,pass,pass
+M7,True,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass
+M8,True,fail,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass
+M9,True,fail,pass,pass,pass,pass,pass,pass,pass,fail,pass,pass,pass
+M10,True,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,fail
+M11,True,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,fail
+M12,True,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,pass,fail

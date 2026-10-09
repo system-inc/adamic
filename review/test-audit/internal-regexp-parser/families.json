@@ -1,0 +1,24 @@
+{
+  "TestMatcherAgreement family": [
+    "TestMatcherNodeControls",
+    "TestMatcherRandomNode",
+    "TestMatcherTest262Executions",
+    "TestMatcherCanonicalizeNode",
+    "TestMatcherUTF16PatternsNode",
+    "TestMatcherOct6Node"
+  ],
+  "separate": [
+    "TestMatcherStepLimit",
+    "TestMatcherPropertyProviderStrings",
+    "TestMatcherProviderSnapshot",
+    "TestMatcherStepLimitBoundary",
+    "TestMatcherOct6Mutants",
+    "TestMatcherOct6LoopsNode",
+    "TestNodeAgreement",
+    "TestParse",
+    "TestFlags",
+    "TestQuantifierBounds",
+    "TestSharedCanonicalize"
+  ],
+  "reason": "Six corpus builders feed the same compareExecutionCases checker. Test262 selects stored expected results, the others run Node. Distinct custom checks, the stateful loop checker and the witness remain separate."
+}

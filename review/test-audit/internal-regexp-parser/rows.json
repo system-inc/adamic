@@ -1,0 +1,231 @@
+[
+  {
+    "test": "TestParse",
+    "package": "internal/regexp",
+    "file": "internal/regexp/parser_test.go",
+    "seconds": 0.004,
+    "oracle": "Handwritten valid/invalid cases. Only error presence is checked, not AST or diagnostic reason; 13 positive cases pass the empty Parse answer.",
+    "oracle_kind": "self",
+    "kills": [
+      "M3",
+      "M5",
+      "M9"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M9: parser_test.go:27: Parse(\"[^[\\\\q{ab|a}]&&[a]]\",\"v\") error=regexp: cannot negate a class containing strings at byte 18, want valid=true",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherAgreement family"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 1.504,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestMatcherAgreement family",
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize"
+    ],
+    "evidence": "ADAMIC_MUTANT=M9 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M9 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > review/test-audit/internal-regexp-parser/M9.log 2>&1; parser_test.go:27: Parse(\"[^[\\\\q{ab|a}]&&[a]]\",\"v\") error=regexp: cannot negate a class containing strings at byte 18, want valid=true",
+    "eligible_mutants": 11,
+    "subsumption_kills": 3,
+    "vacuous_subcases": [
+      {
+        "pattern": "[^[\\q{ab|a}]&&[a]]",
+        "flags": "v"
+      },
+      {
+        "pattern": "[🌍-🌎]",
+        "flags": "u"
+      },
+      {
+        "pattern": "[a-🌍]",
+        "flags": ""
+      },
+      {
+        "pattern": "[[]",
+        "flags": ""
+      },
+      {
+        "pattern": "(?:a|b)+?",
+        "flags": "gi"
+      },
+      {
+        "pattern": "(?<word>\\p{Letter}+)\\k<word>",
+        "flags": "u"
+      },
+      {
+        "pattern": "(?<=a)b(?<!c)",
+        "flags": ""
+      },
+      {
+        "pattern": "[[a-z]&&[^aeiou]]",
+        "flags": "v"
+      },
+      {
+        "pattern": "[\\q{ab|cd}]",
+        "flags": "v"
+      },
+      {
+        "pattern": "(a)\\1",
+        "flags": "u"
+      },
+      {
+        "pattern": "a{2,2}",
+        "flags": ""
+      },
+      {
+        "pattern": "\\0\\cA\\p{sc=Latn}",
+        "flags": "u"
+      },
+      {
+        "pattern": "\\8",
+        "flags": ""
+      }
+    ],
+    "supplemental_kills": [
+      "M6"
+    ]
+  },
+  {
+    "test": "TestFlags",
+    "package": "internal/regexp",
+    "file": "internal/regexp/parser_test.go",
+    "seconds": 0.004,
+    "oracle": "Handwritten invalid flags uu, uv and z. Only error presence is checked, not diagnostic reason.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: parser_test.go:36: flags \"uv\" accepted",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeAgreement"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.41,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestMatcherAgreement family",
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > review/test-audit/internal-regexp-parser/M2.log 2>&1; parser_test.go:36: flags \"uv\" accepted",
+    "eligible_mutants": 11,
+    "subsumption_kills": 2
+  },
+  {
+    "test": "TestQuantifierBounds",
+    "package": "internal/regexp",
+    "file": "internal/regexp/parser_test.go",
+    "seconds": 0.003,
+    "oracle": "Handwritten AST fields: Min=2, Max=4, Greedy=false for a{2,4}?.",
+    "oracle_kind": "self",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x24facfb56540), Min:2, Max:4, Greedy:true}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherOct6LoopsNode"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.13,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestMatcherAgreement family",
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > review/test-audit/internal-regexp-parser/M4.log 2>&1; parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x24facfb56540), Min:2, Max:4, Greedy:true}",
+    "eligible_mutants": 11,
+    "subsumption_kills": 1
+  },
+  {
+    "test": "TestSharedCanonicalize",
+    "package": "internal/regexp",
+    "file": "internal/regexp/properties_test.go",
+    "seconds": 0.036,
+    "oracle": "Internal generated regexp simpleCaseFold and legacyUppercase tables, derived from Unicode 17, decide expected values. Exact numeric agreement across all code points and BMP units; no independent authority value checked. Shared data provenance can conceal common errors.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "last_proven_fail": "M12: properties_test.go:19: Unicode U+0100: shared=100 local=101",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestMatcherAgreement family",
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > review/test-audit/internal-regexp-parser/M12.log 2>&1; properties_test.go:19: Unicode U+0100: shared=100 local=101",
+    "eligible_mutants": 11,
+    "subsumption_kills": 3
+  }
+]

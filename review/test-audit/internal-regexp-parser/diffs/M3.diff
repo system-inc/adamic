@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -322,7 +322,7 @@
+ 			p.pos = start
+ 			return nil, p.fail("incomplete quantifier")
+ 		}
+-		if max != nil && min.Cmp(max) > 0 {
++		if max != nil && min.Cmp(max) >= 0 {
+ 			return nil, p.failAt(start, "quantifier range out of order")
+ 		}
+ 	}

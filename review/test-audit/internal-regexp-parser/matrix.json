@@ -1,0 +1,337 @@
+[
+  {
+    "id": "M1",
+    "eligible": true,
+    "raw_results": {
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherNodeControls": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestParse": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "fail",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestNodeAgreement": "fail",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherRandomNode": "pass",
+      "TestMatcherTest262Executions": "pass"
+    },
+    "failed_rows": [
+      "TestNodeAgreement",
+      "TestFlags"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M2",
+    "eligible": true,
+    "raw_results": {
+      "TestParse": "pass",
+      "TestMatcherNodeControls": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "fail",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestNodeAgreement": "fail",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherTest262Executions": "pass",
+      "TestMatcherRandomNode": "pass"
+    },
+    "failed_rows": [
+      "TestNodeAgreement",
+      "TestFlags"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M3",
+    "eligible": true,
+    "raw_results": {
+      "TestParse": "fail",
+      "TestMatcherNodeControls": "fail",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherOct6Node": "fail",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestNodeAgreement": "fail",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherRandomNode": "pass",
+      "TestMatcherTest262Executions": "fail"
+    },
+    "failed_rows": [
+      "TestMatcherAgreement family",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M4",
+    "eligible": true,
+    "raw_results": {
+      "TestParse": "pass",
+      "TestMatcherNodeControls": "fail",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherOct6Mutants": "fail",
+      "TestMatcherUTF16PatternsNode": "fail",
+      "TestQuantifierBounds": "fail",
+      "TestMatcherOct6Node": "fail",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherOct6LoopsNode": "fail",
+      "TestFlags": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestNodeAgreement": "pass",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherTest262Executions": "fail",
+      "TestMatcherRandomNode": "fail"
+    },
+    "failed_rows": [
+      "TestMatcherAgreement family",
+      "TestMatcherOct6LoopsNode",
+      "TestQuantifierBounds"
+    ],
+    "witness_preconditions": [
+      "TestMatcherOct6Mutants"
+    ]
+  },
+  {
+    "id": "M5",
+    "eligible": true,
+    "raw_results": {
+      "TestMatcherNodeControls": "fail",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestParse": "fail",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestNodeAgreement": "fail",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherTest262Executions": "fail",
+      "TestMatcherRandomNode": "pass"
+    },
+    "failed_rows": [
+      "TestMatcherAgreement family",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M6",
+    "eligible": false,
+    "raw_results": {
+      "TestMatcherNodeControls": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestParse": "fail",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestMatcherRandomNode": "fail",
+      "TestNodeAgreement": "fail",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherTest262Executions": "pass"
+    },
+    "failed_rows": [
+      "TestMatcherAgreement family",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M7",
+    "eligible": true,
+    "raw_results": {
+      "TestFlags": "pass",
+      "TestParse": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherNodeControls": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestNodeAgreement": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherTest262Executions": "pass",
+      "TestMatcherRandomNode": "pass"
+    },
+    "failed_rows": [],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M8",
+    "eligible": true,
+    "raw_results": {
+      "TestParse": "pass",
+      "TestMatcherNodeControls": "fail",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestFlags": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestNodeAgreement": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherTest262Executions": "fail",
+      "TestMatcherRandomNode": "pass"
+    },
+    "failed_rows": [
+      "TestMatcherAgreement family"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M9",
+    "eligible": true,
+    "raw_results": {
+      "TestQuantifierBounds": "pass",
+      "TestParse": "fail",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherNodeControls": "fail",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestFlags": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestNodeAgreement": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestSharedCanonicalize": "pass",
+      "TestMatcherRandomNode": "pass",
+      "TestMatcherTest262Executions": "pass"
+    },
+    "failed_rows": [
+      "TestMatcherAgreement family",
+      "TestParse"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M10",
+    "eligible": true,
+    "raw_results": {
+      "TestParse": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestSharedCanonicalize": "fail",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherNodeControls": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestFlags": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestNodeAgreement": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestMatcherTest262Executions": "pass",
+      "TestMatcherRandomNode": "pass"
+    },
+    "failed_rows": [
+      "TestSharedCanonicalize"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M11",
+    "eligible": true,
+    "raw_results": {
+      "TestParse": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "pass",
+      "TestMatcherNodeControls": "pass",
+      "TestSharedCanonicalize": "fail",
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestNodeAgreement": "pass",
+      "TestMatcherTest262Executions": "pass",
+      "TestMatcherRandomNode": "pass"
+    },
+    "failed_rows": [
+      "TestSharedCanonicalize"
+    ],
+    "witness_preconditions": []
+  },
+  {
+    "id": "M12",
+    "eligible": true,
+    "raw_results": {
+      "TestMatcherUTF16PatternsNode": "pass",
+      "TestMatcherStepLimit": "pass",
+      "TestMatcherNodeControls": "pass",
+      "TestMatcherProviderSnapshot": "pass",
+      "TestMatcherOct6Mutants": "pass",
+      "TestParse": "pass",
+      "TestQuantifierBounds": "pass",
+      "TestFlags": "pass",
+      "TestSharedCanonicalize": "fail",
+      "TestMatcherPropertyProviderStrings": "pass",
+      "TestMatcherOct6LoopsNode": "pass",
+      "TestMatcherOct6Node": "pass",
+      "TestMatcherStepLimitBoundary": "pass",
+      "TestMatcherCanonicalizeNode": "pass",
+      "TestNodeAgreement": "pass",
+      "TestMatcherRandomNode": "pass",
+      "TestMatcherTest262Executions": "pass"
+    },
+    "failed_rows": [
+      "TestSharedCanonicalize"
+    ],
+    "witness_preconditions": []
+  }
+]

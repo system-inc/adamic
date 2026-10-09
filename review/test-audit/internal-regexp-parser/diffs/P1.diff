@@ -1,0 +1,34 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -21,30 +21,7 @@
+ 
+ // Parse parses pattern and flags according to ECMAScript 2025.
+ func Parse(pattern, flags string) (*Pattern, error) {
+-	f, err := parseFlags(flags)
+-	if err != nil {
+-		return nil, err
+-	}
+-	p := &parser{source: pattern, flags: f, names: make(map[string]bool)}
+-	// Decimal escapes depend on the total capture count, including captures to
+-	// their right. Count them without interpreting pattern contents first.
+-	p.captureCount, p.hasNamedCapture = countCaptures(pattern)
+-	body, err := p.disjunction(0)
+-	if err != nil {
+-		return nil, err
+-	}
+-	if !p.done() {
+-		return nil, p.fail("unexpected character")
+-	}
+-	for name := range p.namedReferences {
+-		if !p.names[name] {
+-			return nil, p.failAt(p.namedReferences[name], "unknown capture name")
+-		}
+-	}
+-	if err := validateDuplicateNames(body); err != nil {
+-		return nil, err
+-	}
+-	return &Pattern{Flags: f, Body: body}, nil
++	return nil, nil
+ }
+ 
+ // ParseUTF16 preserves JavaScript pattern strings, including lone surrogates.

@@ -1,0 +1,99 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/regexp/parser.go",
+    "line": 88,
+    "old": "seen[c] = true",
+    "new": "seen[c] = false",
+    "kind": "change constant: stop tracking duplicate flags"
+  },
+  {
+    "id": "M2",
+    "file": "internal/regexp/parser.go",
+    "line": 110,
+    "old": "\tif f.Unicode && f.UnicodeSets {\n\t\treturn f, &SyntaxError{0, \"u and v flags are mutually exclusive\"}\n\t}\n",
+    "new": "",
+    "kind": "drop the whole u/v exclusion if statement"
+  },
+  {
+    "id": "M3",
+    "file": "internal/regexp/parser.go",
+    "line": 325,
+    "old": "min.Cmp(max) > 0",
+    "new": "min.Cmp(max) >= 0",
+    "kind": "off-by-one quantifier range comparison"
+  },
+  {
+    "id": "M4",
+    "file": "internal/regexp/parser.go",
+    "line": 329,
+    "old": "greedy := !p.take('?')",
+    "new": "greedy := p.take('?')",
+    "kind": "flip greediness"
+  },
+  {
+    "id": "M5",
+    "file": "internal/regexp/parser.go",
+    "line": 561,
+    "old": "if c.Value > right.Value {",
+    "new": "if c.Value < right.Value {",
+    "kind": "flip class range comparison"
+  },
+  {
+    "id": "M6",
+    "file": "internal/regexp/parser.go",
+    "line": 254,
+    "old": "if !p.flags.Unicode && !p.flags.UnicodeSets && (kind == PositiveLookahead || kind == NegativeLookahead) {",
+    "new": "if kind == PositiveLookahead || kind == NegativeLookahead {",
+    "kind": "supplemental: remove two condition operands, outside the strict menu; excluded from verdicts",
+    "supplemental": true
+  },
+  {
+    "id": "M7",
+    "file": "internal/regexp/parser.go",
+    "line": 927,
+    "old": "\t\t\tn++",
+    "new": "\t\t\tn += 2",
+    "kind": "change capture count increment constant"
+  },
+  {
+    "id": "M8",
+    "file": "internal/regexp/parser.go",
+    "line": 429,
+    "old": "value := p.peek() % 32",
+    "new": "value := p.peek() % 31",
+    "kind": "change control escape modulus constant"
+  },
+  {
+    "id": "M9",
+    "file": "internal/regexp/parser.go",
+    "line": 617,
+    "old": "return classMayContainStrings(expression.Left) && classMayContainStrings(expression.Right)",
+    "new": "return classMayContainStrings(expression.Left) || classMayContainStrings(expression.Right)",
+    "kind": "flip intersection condition"
+  },
+  {
+    "id": "M10",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 15,
+    "old": "return unicodeFold[i][0] >= cp",
+    "new": "return unicodeFold[i][0] > cp",
+    "kind": "off-by-one Unicode search bound"
+  },
+  {
+    "id": "M11",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 54,
+    "old": "return legacyFold[index][1]",
+    "new": "return legacyFold[index][0]",
+    "kind": "change legacy fold column constant"
+  },
+  {
+    "id": "M12",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 11,
+    "old": "codePoint > 0x10FFFF",
+    "new": "codePoint > 0xFF",
+    "kind": "change Unicode range constant"
+  }
+]

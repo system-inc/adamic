@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -558,7 +558,7 @@
+ 			}
+ 			return nil, p.fail("invalid character class range")
+ 		}
+-		if c.Value > right.Value {
++		if c.Value < right.Value {
+ 			return nil, p.fail("invalid character class range")
+ 		}
+ 		return &ClassRange{From: c, To: right}, nil

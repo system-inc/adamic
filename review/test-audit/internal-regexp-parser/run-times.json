@@ -1,0 +1,74 @@
+[
+  {
+    "id": "M1",
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.2423918790000243
+  },
+  {
+    "id": "M2",
+    "command": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.3331672950007487
+  },
+  {
+    "id": "M3",
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.904487155999959
+  },
+  {
+    "id": "M4",
+    "command": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.2633903810001357
+  },
+  {
+    "id": "M5",
+    "command": "ADAMIC_MUTANT=M5 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M5 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.0578062719996524
+  },
+  {
+    "id": "M6",
+    "command": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 1.9100299920000907
+  },
+  {
+    "id": "M7",
+    "command": "ADAMIC_MUTANT=M7 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M7 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 0,
+    "wall_seconds": 2.2735167100008766
+  },
+  {
+    "id": "M8",
+    "command": "ADAMIC_MUTANT=M8 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M8 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.198948885000391
+  },
+  {
+    "id": "M9",
+    "command": "ADAMIC_MUTANT=M9 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M9 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.216111562000151
+  },
+  {
+    "id": "M10",
+    "command": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.215960429000006
+  },
+  {
+    "id": "M11",
+    "command": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 2.105164453000725
+  },
+  {
+    "id": "M12",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u074/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "exit": 1,
+    "wall_seconds": 1.9137468929993702
+  }
+]

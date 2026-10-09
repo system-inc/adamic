@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -426,7 +426,7 @@
+ 	}
+ 	if c == 'c' {
+ 		if !p.done() && (p.peek() >= 'a' && p.peek() <= 'z' || p.peek() >= 'A' && p.peek() <= 'Z' || inClass && !p.flags.Unicode && !p.flags.UnicodeSets && (p.peek() >= '0' && p.peek() <= '9' || p.peek() == '_')) {
+-			value := p.peek() % 32
++			value := p.peek() % 31
+ 			p.pos++
+ 			return &Character{Value: rune(value), Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+ 		}

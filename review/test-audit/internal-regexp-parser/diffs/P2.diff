@@ -1,0 +1,19 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -8,15 +8,7 @@
+ // is Turkic; neither is used. A code point with no such mapping returns itself,
+ // and so does an argument that is not a code point.
+ func CanonicalizeUnicode(codePoint rune) rune {
+-	if codePoint < 0 || codePoint > 0x10FFFF {
+-		return codePoint
+-	}
+-	cp := uint32(codePoint)
+-	index := sort.Search(len(unicodeFold), func(i int) bool { return unicodeFold[i][0] >= cp })
+-	if index < len(unicodeFold) && unicodeFold[index][0] == cp {
+-		return rune(unicodeFold[index][1])
+-	}
+-	return codePoint
++	return 0
+ }
+ 
+ // UnicodeEquivalents is every code point that CanonicalizeUnicode maps to the

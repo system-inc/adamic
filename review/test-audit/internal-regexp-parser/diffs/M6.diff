@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -251,7 +251,7 @@
+ 		return nil, false, p.fail("unterminated group")
+ 	}
+ 	q := kind == Capturing || kind == NonCapturing
+-	if !p.flags.Unicode && !p.flags.UnicodeSets && (kind == PositiveLookahead || kind == NegativeLookahead) {
++	if kind == PositiveLookahead || kind == NegativeLookahead {
+ 		q = true
+ 	}
+ 	return &Group{Kind: kind, Name: name, Body: body, Enable: enable, Disable: disable}, q, nil

@@ -1,0 +1,9 @@
+package main
+import (
+ "fmt"
+ regexp "github.com/system-inc/adamic/internal/regexp"
+)
+func main() {
+ _, err := regexp.Parse(`(a)\2`, "u")
+ fmt.Printf("Parse(%q,%q): accepted=%t error=%v\n", `(a)\2`, "u", err == nil, err)
+}

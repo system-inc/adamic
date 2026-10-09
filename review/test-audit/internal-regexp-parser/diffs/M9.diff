@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -614,7 +614,7 @@
+ 			}
+ 		}
+ 	case *ClassIntersection:
+-		return classMayContainStrings(expression.Left) && classMayContainStrings(expression.Right)
++		return classMayContainStrings(expression.Left) || classMayContainStrings(expression.Right)
+ 	case *ClassSubtraction:
+ 		return classMayContainStrings(expression.Left)
+ 	}

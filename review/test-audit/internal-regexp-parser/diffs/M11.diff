@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -51,7 +51,7 @@
+ func CanonicalizeLegacy(codeUnit uint16) uint16 {
+ 	index := sort.Search(len(legacyFold), func(i int) bool { return legacyFold[i][0] >= codeUnit })
+ 	if index < len(legacyFold) && legacyFold[index][0] == codeUnit {
+-		return legacyFold[index][1]
++		return legacyFold[index][0]
+ 	}
+ 	return codeUnit
+ }
