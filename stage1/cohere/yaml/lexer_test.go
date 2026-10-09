@@ -176,7 +176,7 @@ func firstDifference(a, b []byte) string {
 	return fmt.Sprintf("lengths %d and %d", len(a), len(b))
 }
 
-// Not parallel: ADAMIC_YAML_ARTIFACTS lexer files.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestLexerMatchesGo(t *testing.T) {
 	cases, files, count := lexCases(t)
 	expected := goLexer(t, cases)
@@ -221,7 +221,7 @@ func TestLexerMatchesGo(t *testing.T) {
 	t.Logf("%d repository files; %d complete/chunked cases; %d answer bytes: Go, native, Node source, emitted JavaScript, yaml 2.9.0 identical", files, count, len(expected))
 }
 
-// Not parallel: ADAMIC_YAML_ARTIFACTS go-lexer file.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestLexerMutants(t *testing.T) {
 	cases, _, _ := lexCases(t)
 	expected := goLexer(t, cases)
@@ -236,8 +236,8 @@ func TestLexerMutants(t *testing.T) {
 		{"cached NUL becomes space", "units.push(String.fromCodePoint(code))", "units.push(String.fromCodePoint(code === 0 ? 32 : code))"},
 		{"numeric whitespace excludes space", "return unit === -1 || unit === 32 || unit === 10 || unit === 13 || unit === 9;", "return unit === -1 || unit === 31 || unit === 10 || unit === 13 || unit === 9;"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "lex_main.ts"} {
 				source, err := os.ReadFile(file)

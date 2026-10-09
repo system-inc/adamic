@@ -15,6 +15,7 @@ import (
 )
 
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
+// Not parallel: TestMain owns the shared temporary directory and registry initialization.
 func TestMain(m *testing.M) {
 	if _, err := registry.Generate("."); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -34,6 +35,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestRegistrationMutant(t *testing.T) {
+	t.Parallel()
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
@@ -53,6 +55,7 @@ func TestRegistrationMutant(t *testing.T) {
 	}
 }
 
+// Not parallel: initializes the shared immutable hook fixtures before the parallel shards.
 func TestFactoryHooks(t *testing.T) {
 	factoryHooksProducts(t)
 }
@@ -131,6 +134,7 @@ func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []s
 }
 
 func TestNestedOutsideModuleCopy(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	original := `import { written } from '../../../../typescript/parser/nodes.ts';
 console.log(written('copied'));

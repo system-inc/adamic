@@ -95,7 +95,7 @@ func formatCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
-// Not parallel: ADAMIC_YAML_ARTIFACTS format files and fixed /tmp/stage1-yaml-format diagnostic paths.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-format-* diagnostic files.
 func TestFormatterMatchesGo(t *testing.T) {
 	cases, files, count := formatCases(t)
 	expected := goFormat(t, cases)
@@ -208,7 +208,7 @@ func TestBundledParserDifference(t *testing.T) {
 	t.Logf("%s", actual)
 }
 
-// Not parallel: fileDriverOnce/fileDriverShared setup, the build cache directory, and ADAMIC_YAML_ARTIFACTS format files.
+// Not parallel: initializes process-wide fileDriverShared build products before parallel shards.
 func TestFileDriver(t *testing.T) {
 	fileDriverGet(t)
 }

@@ -138,6 +138,7 @@ func TestPredicateCallbackContracts(t *testing.T) {
 }
 
 func TestEveryNeedsCallbackEffects(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("testdata/predicates/every_alias.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -161,6 +162,7 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 }
 
 func TestPredicateOverloadCallback(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("testdata/predicates/overload_callback.a")
 	if err != nil {
 		t.Fatal(err)
@@ -235,6 +237,7 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 }
 
 func TestPredicateUsesBelongToEachCall(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "separate.a")
 	source := `function some<T>(xs: readonly T[] | undefined): xs is readonly T[];
 function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefined && xs.length > 0; }

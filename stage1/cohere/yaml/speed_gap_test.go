@@ -14,8 +14,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSpeedCostProbes(t *testing.T) {
-	t.Parallel()
 	input := filepath.Join(t.TempDir(), "units.txt")
 	if err := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); err != nil {
 		t.Fatal(err)
@@ -30,8 +30,8 @@ func TestSpeedCostProbes(t *testing.T) {
 		{"arenaNodeRead.ts", "accessor", "direct", "57600000000\n"},
 		{"numericMapLookup.ts", "integer", "fractional", "1702000\n"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
 			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
 			if err != nil {
 				t.Fatal(err)

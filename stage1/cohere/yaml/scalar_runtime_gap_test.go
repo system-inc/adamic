@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSharedSliceAppendMatchesNode(t *testing.T) {
 	t.Parallel()
 	entry, err := filepath.Abs("gaps/sharedSliceAppend.ts")

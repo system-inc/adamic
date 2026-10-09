@@ -13,6 +13,7 @@ func acceptanceGrammar() []string {
 	}
 }
 func TestAcceptanceGrammar(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, acceptanceGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
@@ -25,6 +26,7 @@ func TestAcceptanceGrammar(t *testing.T) {
 	t.Logf("%d acceptance grammar cases, %d identical canonical bytes", len(acceptanceGrammar()), len(want))
 }
 func TestAcceptanceDiagnostics(t *testing.T) {
+	t.Parallel()
 	sources := []string{"++await 42;", "++delete foo.bar;", "--ANY1--;", "type T = A | () => B;", "new obj?.member();", "import { 'a' } from 'm';", "import A from 'm' assert {type:'json'};", "super<T>();"}
 	list := manifest(t, sources)
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
@@ -45,6 +47,7 @@ func TestAcceptanceDiagnostics(t *testing.T) {
 	t.Logf("%d Go refusals explicitly refused before deadline on all builds", len(sources))
 }
 func TestAcceptanceDiagnosticControl(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, []string{"++await 42;"})
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
 	if !strings.Contains(statuses, `"status":"error"`) {

@@ -73,16 +73,16 @@ func TestStructuralPositionRefusal(t *testing.T) {
 	t.Log(err)
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestClosedStringPresenceGap(t *testing.T) {
-	t.Parallel()
 	closedGap(t, "gaps/stringPresence.ts", "false\n")
 }
 
 // TestClosedLexerGaps keeps the lexer gaps compiler/area-next closed: each proving program now lowers, and
 // must print what Node prints from native under the sanitizers and from emitted JavaScript. The port's
 // workarounds for them still stand; retiring each one is its own change against the corpus.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestClosedLexerGaps(t *testing.T) {
-	t.Parallel()
 	for _, gap := range []struct{ file, output string }{
 		{"assignmentValue.ts", "1\n"},
 		{"dynamicCase.ts", "1\n"},
@@ -92,8 +92,8 @@ func TestClosedLexerGaps(t *testing.T) {
 		{"prefixIncrement.ts", "1\n"},
 		{"emptyAlternative.ts", "1\n"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(gap.file, func(t *testing.T) {
-			t.Parallel()
 			closedGap(t, filepath.Join("gaps", gap.file), gap.output)
 		})
 	}
@@ -148,7 +148,7 @@ func closedGap(t *testing.T, file, output string) {
 	}
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestClosedValuePresenceGap(t *testing.T) {
-	t.Parallel()
 	closedGap(t, "gaps/valuePresence.ts", "false\n")
 }

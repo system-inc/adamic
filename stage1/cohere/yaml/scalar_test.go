@@ -100,7 +100,7 @@ func goScalars(t *testing.T, cases string) []byte {
 	}
 	return expected
 }
-// Not parallel: ADAMIC_YAML_ARTIFACTS scalar files and fixed /tmp/stage1-yaml-scalars diagnostic paths.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-scalars-* diagnostic files.
 func TestScalarsMatchGo(t *testing.T) {
 	cases, files, count := scalarCases(t)
 	expected := goScalars(t, cases)
@@ -150,7 +150,7 @@ func TestScalarsMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d scalar answer bytes identical on all five sides", files, count, len(expected))
 }
 
-// Not parallel: ADAMIC_YAML_ARTIFACTS scalar files.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestScalarMutants(t *testing.T) {
 	cases, _, _ := scalarCases(t)
 	expected := goScalars(t, cases)
@@ -163,8 +163,8 @@ func TestScalarMutants(t *testing.T) {
 		{"strip becomes clip", "else if(chomp !== '-') result.value += '\\n';", "else if(chomp !== '?') result.value += '\\n';"},
 		{"flow line break stops folding", "let separator = ' ';\n    let position = first + 1;", "let separator = '\\n';\n    let position = first + 1;"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "scalar.ts", "scalarText.ts", "scalarResolution.ts", "composeError.ts", "newlineFold.ts", "blockLine.ts", "scalar_main.ts"} {
 				source, err := os.ReadFile(file)
