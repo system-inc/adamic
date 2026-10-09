@@ -15,6 +15,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -256,6 +257,15 @@ func TestWitnessScriptKindPlantedFailure(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 2 * time.Second
 	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key)
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
