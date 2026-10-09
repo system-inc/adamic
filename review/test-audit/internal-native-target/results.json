@@ -102,7 +102,7 @@
       "PFeatureFlags"
     ],
     "subsumer_seconds": null,
-    "vacuous": true,
+    "vacuous": false,
     "bounded": true,
     "matrix_rows": [
       "TestWASITargetFlags",
@@ -116,7 +116,8 @@
       "TestViewMixedUnionUnknownAndUnavailable"
     ],
     "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u054/cache/W01 ADAMIC_MUTANT=W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$ > W01.log 2>&1; W01: tsgo_features_test.go:68: main.c compiled without its feature flags, so this test no longer covers the include order",
-    "origin_failure_reference": "internal/native/tsgo_features_test.go:65; scratch W01 inserted three lines, so its log reports :68"
+    "origin_failure_reference": "internal/native/tsgo_features_test.go:65; scratch W01 inserted three lines, so its log reports :68",
+    "probe_scope_note": "PTSFlags and PFeatureFlags probe its tested entries. Flags only prepares its negative control; PFlags passing that control is not a vacuity verdict for this witness."
   },
   {
     "test": "TestTypedArrayRuntime",

@@ -534,3 +534,5 @@ No survivors remain among the 17 valid production mutants. Not covered: the time
 W01 failure source maps to origin/main tsgo_features_test.go:65; the permitted scratch guard shifts its logged line to 68.
 
 CLI correction: original M10 is supplemental and excluded from verdicts; M10c removes line markers using valid separate clang options. Its standalone diff passes Go vet, and its bounded run failed only TestUnitSystemHeaderProvenance. The correction was chosen from clang option validity, not from a desired test outcome. M10c build/run wall 7.532900074999816 s; binary 1.26 s. Table row M10 is historical; M10c at units.go:300 changes `"-E", unit.name` to `"-E", "-P", unit.name`, failing only HeaderProvenance.
+
+The witness passes PFlags because Flags prepares its intentionally broken negative control. Its tested entries are tsgoFlags and featureFlags, whose empty probes fail; witness vacuity is false.
