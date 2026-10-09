@@ -2,11 +2,6 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
-	"fmt"
-	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -25,129 +20,33 @@ const testTokenizerEventsShards = 512
 // leaves headroom without moving existing cases when repository files grow.
 // Shards 000–002 additionally retain the three full-corpus mutant checks.
 func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
-	setupStarted := time.Now()
-	defer func() { t.Logf("setup before shards: %.3fs", time.Since(setupStarted).Seconds()) }()
-	// Keep the group in the serial phase. A parallel parent retaining its
-	// memory reservation while its children wait can block other admissions.
+	setup := tokenizerEventReady(t)
 	configureMarkdownMemory(t)
 	markdownMemory.acquire(4)
-	t.Cleanup(func() { markdownMemory.release(4) })
-	root, inputs, names, files := tokenizerEventLiveEnumeration(t)
+	defer markdownMemory.release(4)
+	ctx, finish := malformedEventsDeadline(t, t.Name())
+	defer finish()
+	inputs, names, files := setup.inputs, setup.names, setup.files
 	mutants := []struct{ name, from, to string }{
 		{"event rollback", "while(this.events.length > info.from) this.events.pop();", "while(this.events.length > info.from + 2) this.events.pop();"},
 		{"virtual serialization", "if(!expandTabs && atTab) continue;", "if(expandTabs && atTab) continue;"},
 		{"restored construct", "this.construct = info.construct;", "this.construct = 8;"},
 	}
-	keys := tokenizerEventKeys(names)
-	shards := tokenizerEventShards(keys)
+	shards := setup.shards
 	if len(shards) != testTokenizerEventsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
 	}
-	validateTokenizerEventUnion(t, len(inputs), shards)
 	selected := tokenizerEventSelection(t)
-	dir := t.TempDir()
-	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, numericBatch(inputs))
-	fullCases, fullNames := cases, names
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_chunks/main.go")
-	driver, err := filepath.Abs("testdata/events_go.go")
-	if err != nil {
-		t.Fatal(err)
+	fullNames, fullWant, answers := names, setup.fullWant, setup.answers
+	fullCases := ""
+	if unit < 3 {
+		fullCases = filepath.Join(t.TempDir(), "full-cases.txt")
+		write(t, fullCases, setup.fullBatch)
 	}
-	bridge, err := filepath.Abs("testdata/events_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	transportBridge, err := filepath.Abs("testdata/events_transport.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_chunks.go"): bridge, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_event_transport.go"): transportBridge}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-chunks")
-	// Inputs: the pinned cohere tree and these three overlay files; Go's
-	// toolchain and the build flags below. No persistent package cache.
-	tokenizerEventProduct(t, tokenizerEventBuildInputs{
-		Name: "Go oracle", Files: []string{cohere, driver, bridge, transportBridge},
-		Flags: []string{"build", "-overlay=overlay.json"}, Toolchain: runtime.Version(),
-	}, dir, func(dir string) error {
-		build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-chunks"), mainPath)
-		build.Dir = cohere
-		output, err := combinedOutput(build)
-		if err != nil {
-			return fmt.Errorf("Go events %w %s", err, output)
-		}
-		return nil
-	})
-	fullWant := execute(t, nil, goBinary, fullCases)
-	clean(t, "full Go mutant oracle", fullWant)
-	answers := bytes.Split(bytes.TrimSuffix(fullWant.stdout, []byte("\n")), []byte("\n"))
-	if len(answers) != len(inputs) {
-		t.Fatalf("Go oracle rows %d, want %d", len(answers), len(inputs))
-	}
-	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
-	if fork == "" {
-		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
-	}
-	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	equal(t, "pinned bundle", installed, pinned)
-	main, err := filepath.Abs("testdata/events_probe.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	// Inputs: main and its transitive TypeScript imports, pinned checker,
-	// lowering implementation and toolchain. Emit both backends once.
-	var program *ir.Program
-	var source string
-	backend := filepath.Join(dir, "backend.mjs")
-	tokenizerEventProduct(t, tokenizerEventBuildInputs{
-		Name: "lowered program and backends", Files: []string{main, "codec.ts", "inputChunks.ts", "tokenizerEvents.ts", "tokenArena.ts", filepath.Join(root, "internal/load"), filepath.Join(root, "internal/lower"), filepath.Join(root, "internal/native"), filepath.Join(root, "internal/javascript"), filepath.Join(cohere, "TypeScript")},
-		Toolchain: runtime.Version(),
-	}, dir, func(dir string) error {
-		var err error
-		program, err = loweredResult(main)
-		if err != nil {
-			return err
-		}
-		source = native.C(program)
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(source), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(dir, "backend.mjs"), []byte(javascript.JavaScript(program)), 0644)
-	})
-	clangVersion := execute(t, nil, "clang", "--version")
-	clean(t, "clang version", clangVersion)
-	toolchain := strings.SplitN(string(clangVersion.stdout), "\n", 2)[0]
-	binary, fast := filepath.Join(dir, "sanitized"), filepath.Join(dir, "release")
-	// Inputs: emitted C, embedded runtime, native.Flags for each mode,
-	// and the configured clang toolchain. Compile once before any shards.
-	tokenizerEventProduct(t, tokenizerEventBuildInputs{
-		Name: "sanitized native", Files: []string{filepath.Join(dir, "program.c"), filepath.Join(root, "internal/native/runtime")},
-		Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: toolchain,
-	}, dir, func(dir string) error {
-		return native.Build(source, filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
-	})
-	tokenizerEventProduct(t, tokenizerEventBuildInputs{
-		Name: "release native", Files: []string{filepath.Join(dir, "program.c"), filepath.Join(root, "internal/native/runtime")},
-		Flags: native.Flags(native.Options{}), Toolchain: toolchain,
-	}, dir, func(dir string) error {
-		return native.Build(source, filepath.Join(dir, "release"), native.Options{})
-	})
-	// Share four process slots across the whole group, including mutants.
-	// Per-shard pools oversubscribe a four-CPU instance when shards overlap.
-	slots := make(chan struct{}, 4)
+	fork := setup.fork
+	main, backend, goBinary := setup.products.main, setup.products.backend, setup.products.goBinary
+	binary, fast := setup.products.sanitized, setup.products.release
+	slots := setup.slots
 	runMutant := func(t *testing.T, mutant int) {
 		m := mutants[mutant]
 		t.Logf("mutant: %s; all %d case ids", m.name, len(inputs))
@@ -172,7 +71,7 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 		}
 		slots <- struct{}{}
 		defer func() { <-slots }()
-		result := onNode(t, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
+		result := malformedEventsNode(t, ctx, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
 		clean(t, m.name, result)
 		if bytes.Equal(result.stdout, want.stdout) {
 			t.Fatal("survived")
@@ -238,8 +137,9 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 			}
 			if runtime.GOOS == "linux" {
 				checks = append(checks, check{"leaks", binary, []string{cases}, []string{"ASAN_OPTIONS=detect_leaks=1"}, 1})
-			} else if report := leaks(t, program, binary, cases); report != "" {
-				t.Fatal(report)
+			} else {
+				report := malformedEventsExecute(t, ctx, nil, "leaks", "--atExit", "--", fast, cases)
+				clean(t, "leaks", report)
 			}
 			// Independent sides share read-only products and case transport. Four
 			// shared process slots bound the group on a four-CPU instance.
@@ -257,7 +157,7 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 					started := time.Now()
 					var results []run
 					for repeat := 0; repeat < side.repeats; repeat++ {
-						result, err := executeResult(t, side.environment, side.command, side.args...)
+						result, err := pilotExecuteResult(ctx, side.environment, side.command, side.args...)
 						if err != nil {
 							return checked{}, err
 						}

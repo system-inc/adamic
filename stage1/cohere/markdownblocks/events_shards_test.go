@@ -8,7 +8,6 @@ import (
 	"strconv"
 	"strings"
 	"testing"
-	"time"
 )
 
 // A case's index is local to its path/generated name, never its list position.
@@ -104,24 +103,6 @@ func tokenizerEventDifference(shard, side string, want, got []byte, rows []int) 
 		}
 	}
 	return fmt.Errorf("%s: %s disagreement in output framing or extra rows", shard, side)
-}
-
-// The shared buildcache helper is absent on this base. This is deliberately a
-// single-run builder, with no package cache. Each caller declares its inputs
-// beside a func(dir string) error that writes its product inside dir.
-type tokenizerEventBuildInputs struct {
-	Name         string
-	Files, Flags []string
-	Toolchain    string
-}
-
-func tokenizerEventProduct(t *testing.T, inputs tokenizerEventBuildInputs, dir string, build func(string) error) {
-	t.Helper()
-	started := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("build cold %s: %.3fs; toolchain %s", inputs.Name, time.Since(started).Seconds(), inputs.Toolchain)
 }
 
 func TestTokenizerEventShardUnion(t *testing.T) {

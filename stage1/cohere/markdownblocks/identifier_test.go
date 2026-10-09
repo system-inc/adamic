@@ -2,54 +2,36 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"unicode"
 )
 
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestMdastIdentifierScalars(t *testing.T) {
-	parallelMarkdownMemory(t, 4)
-	root, e := filepath.Abs(repository)
-	if e != nil {
-		t.Fatal(e)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_identifier/main.go")
-	driver, e := filepath.Abs("testdata/identifier_go.go")
-	if e != nil {
-		t.Fatal(e)
-	}
-	overlay, e := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver}})
-	if e != nil {
-		t.Fatal(e)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-identifier")
-	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-	build.Dir = cohere
-	if output, e := combinedOutput(build); e != nil {
-		t.Fatalf("Go identifier %v %s", e, output)
-	}
-	truth := execute(t, nil, goBinary)
+	t.Parallel()
+	products := identifierProductsReady(t)
+	configureMarkdownMemory(t)
+	markdownMemory.acquire(4)
+	defer markdownMemory.release(4)
+	ctx, finish := malformedEventsDeadline(t, t.Name())
+	defer finish()
+	goBinary, main, binary := products.goBinary, products.main, products.sanitized
+	truth := malformedEventsExecute(t, ctx, nil, goBinary)
 	clean(t, "actual Go NormalizeIdentifier", truth)
-	main, e := filepath.Abs("testdata/identifier_probe.ts")
-	if e != nil {
-		t.Fatal(e)
-	}
-	program := lowered(t, main)
-	answer, binary := natively(t, program)
-	for _, side := range []run{answer, onNode(t, main), onJavaScriptBackend(t, program)} {
+	answer := malformedEventsExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	for _, side := range []run{answer, malformedEventsNode(t, ctx, main), malformedEventsNode(t, ctx, products.backend)} {
 		clean(t, "identifier scalar oracle", side)
 		equal(t, "identifier scalar oracle", side.stdout, truth.stdout)
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if runtime.GOOS == "darwin" {
+		report := malformedEventsExecute(t, ctx, nil, "leaks", "--atExit", "--", products.release)
+		clean(t, "identifier leaks", report)
+	} else {
+		report := malformedEventsExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+		clean(t, "identifier leaks", report)
 	}
 	scratch := t.TempDir()
 	if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
@@ -68,7 +50,7 @@ func TestMdastIdentifierScalars(t *testing.T) {
 		}
 		write(t, filepath.Join(scratch, file), data)
 	}
-	mutant := onNode(t, filepath.Join(scratch, "testdata/identifier_probe.ts"))
+	mutant := malformedEventsNode(t, ctx, filepath.Join(scratch, "testdata/identifier_probe.ts"))
 	clean(t, "case table mutant", mutant)
 	if bytes.Equal(mutant.stdout, truth.stdout) {
 		t.Fatal("case table mutant survived")

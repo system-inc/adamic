@@ -82,6 +82,10 @@ func malformedEventsSetupTimer(t *testing.T) func() {
 // Cache the lowered backend products together, so checking/lowering and code
 // generation happen once before any shard starts. No IR serialization is needed.
 func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (string, string) {
+	return malformedEventsBuildProduct(t, ctx, main, false)
+}
+
+func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:      "markdownblocks-malformed-events-lowered",
@@ -98,6 +102,9 @@ func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (st
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
+	if lowerOnly {
+		return "", filepath.Join(loweredDir, "program.mjs")
+	}
 	options := native.Options{Sanitize: true}
 	inputs.Name = "markdownblocks-malformed-events-native"
 	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
@@ -226,12 +233,12 @@ func malformedEventsRun(t *testing.T) {
 }
 
 // Preparation (including the cache lock) completes before a shard's case clock
-// starts. The named setup test exercises this same independently bounded unit;
+// starts. The named setup test exercises the same preparation without a deadline;
 // filtered shard runs can also fetch it without charging setup to their cases.
 func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
 	t.Helper()
 	malformedEventsOnce.Do(func() {
-		ctx, finish := malformedEventsDeadline(t, "TestMdastMalformedEvents_Setup")
+		ctx, finish := markdownLayoutSetupContext(t.Context())
 		defer finish()
 		defer malformedEventsSetupTimer(t)()
 		configureMarkdownMemory(t)
@@ -242,36 +249,7 @@ func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
 			t.Fatal(e)
 		}
 		cohere := filepath.Join(root, "cohere")
-		goDir := buildcache.Product(t, buildcache.Inputs{
-			Name:      "markdownblocks-malformed-events-go-errors",
-			Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
-			Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
-			Toolchain: []string{buildcache.Tool("go", "version")},
-		}, func(dir string) error {
-			mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
-			replace := map[string]string{}
-			for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
-				source, err := filepath.Abs(p.source)
-				if err != nil {
-					return err
-				}
-				replace[p.target] = source
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": replace})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
-			command.Dir = cohere
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go errors: %w\n%s", err, output)
-			}
-			return nil
-		})
+		goDir := malformedEventsGoProduct(t, ctx, root)
 		goBinary := filepath.Join(goDir, "go-errors")
 		fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 		if fork == "" {
@@ -291,7 +269,7 @@ func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
 	return malformedEventsShared
 }
 
-// One 90-second hard deadline per setup unit or shard, not one per child.
+// One 90-second hard deadline per shard, after shared setup.
 func malformedEventsDeadline(t *testing.T, name string) (context.Context, func()) {
 	t.Helper()
 	started := time.Now()
@@ -365,4 +343,39 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 		return fmt.Errorf("native build: %w\n%s", err, result)
 	}
 	return nil
+}
+
+func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) string {
+	t.Helper()
+	cohere := filepath.Join(root, "cohere")
+	return buildcache.Product(t, buildcache.Inputs{
+		Name:      "markdownblocks-malformed-events-go-errors",
+		Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
+		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
+		Toolchain: []string{buildcache.Tool("go", "version")},
+	}, func(dir string) error {
+		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
+		replace := map[string]string{}
+		for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
+			source, err := filepath.Abs(p.source)
+			if err != nil {
+				return err
+			}
+			replace[p.target] = source
+		}
+		overlay, err := json.Marshal(map[string]any{"Replace": replace})
+		if err != nil {
+			return err
+		}
+		overlayPath := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+			return err
+		}
+		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
+		command.Dir = cohere
+		if output, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("Go errors: %w\n%s", err, output)
+		}
+		return nil
+	})
 }
