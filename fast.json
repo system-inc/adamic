@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "unit",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "56722f0662e474a37d4325ea0337a743fa5c3122",
+  "branch": "devtools/split-test262",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "56722f0662e474a37d4325ea0337a743fa5c3122",
+  "gated": "c5f3375611346913af79128e1ad6cc5af1b82fa8",
+  "unplanned_packages_not_run": 55
+}
