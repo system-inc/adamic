@@ -175,6 +175,9 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 }
 
 adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
+	if (value != NULL && value->kind == adamic_kind_closure && strcmp(name, "length") == 0) {
+		return adamic_box_number((double)((adamic_closure *)value)->source_length);
+	}
 	if (value == NULL || value == &adamic_null) {
 		adamic_panic("dynamic property read on null or undefined", sizeof "dynamic property read on null or undefined" - 1);
 	}

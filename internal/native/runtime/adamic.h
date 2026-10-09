@@ -118,6 +118,7 @@ struct adamic_closure {
  bool receiver;
 #endif
 	size_t count;
+	size_t source_length;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_environment *canonical_owner;
 	adamic_closure *canonical_previous;
