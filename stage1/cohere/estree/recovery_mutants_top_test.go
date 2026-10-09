@@ -1,13 +1,16 @@
 package estree
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 )
 
 // ADAMIC_TEST_SHARD=i/n selects top-level shards whose index modulo n is i.
@@ -159,7 +162,18 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 		t.Fatal(err)
 	}
 	planted := recoveryMutations[0].name
-	command := exec.Command(executable, "-test.v", "-test.timeout=75s", "-test.run=^TestRecoveryMutants_[0-9]{3}$")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, executable, "-test.v", "-test.timeout=75s", "-test.run=^TestRecoveryMutants_[0-9]{3}$")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	for _, entry := range os.Environ() {
 		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_RECOVERY_MUTANT_SURVIVOR=") {
 			command.Env = append(command.Env, entry)
@@ -167,6 +181,9 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 	}
 	command.Env = append(command.Env, "ADAMIC_RECOVERY_MUTANT_SURVIVOR="+planted)
 	output, err := command.CombinedOutput()
+	if ctx.Err() != nil {
+		t.Fatalf("planted survivor subprocess cooked: %v", ctx.Err())
+	}
 	owner := fmt.Sprintf("TestRecoveryMutants_%03d", recoveryMutantOwner(planted))
 	prefix := "--- FAIL: TestRecoveryMutants_"
 	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), "--- FAIL: "+owner+" ") || !strings.Contains(string(output), "mutant survived") {
