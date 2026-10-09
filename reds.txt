@@ -1,0 +1,11 @@
+run adamic-verify-20261009T102943-4d2cd5c3: void, 6484 tests in 14 units, 1 failed, 1 units broken, 0 killed over budget
+BROKEN tests-04-r1: no results (exited false, last output "loom-runner: still running after 300 s")
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestEveryTestIsParallelOrSaysWhy (tests-06)
+    parallel_test.go:93: checked 25148 top-level tests; 49 fail the parallel rule
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange0
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange1
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange2
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange3
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange4
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange5
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go	TestCanonicalizeUnicodeNodeRange6
