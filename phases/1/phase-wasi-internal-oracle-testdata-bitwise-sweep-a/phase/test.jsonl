@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T03:43:35.910747412Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T03:43:35.917811021Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI"}
+{"Time":"2026-10-09T03:43:35.917869579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Output":"=== RUN   TestWASI\n","OutputType":"frame"}
+{"Time":"2026-10-09T03:43:41.540611361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Output":"    wasm_test.go:72: strict C11 runtime: 60 translation units compiled\n"}
+{"Time":"2026-10-09T03:43:52.10884443Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/internal/oracle/testdata/bitwise_sweep.a"}
+{"Time":"2026-10-09T03:43:52.108882808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/internal/oracle/testdata/bitwise_sweep.a","Output":"=== RUN   TestWASI/internal/oracle/testdata/bitwise_sweep.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T03:43:55.325353431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/internal/oracle/testdata/bitwise_sweep.a","Output":"--- PASS: TestWASI/internal/oracle/testdata/bitwise_sweep.a (3.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T03:43:55.32570365Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI/internal/oracle/testdata/bitwise_sweep.a","Elapsed":3.22}
+{"Time":"2026-10-09T03:43:55.325835879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Output":"    wasm_test.go:141: WASI oracle: 1/35 equivalent\n"}
+{"Time":"2026-10-09T03:43:55.328396407Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Output":"--- PASS: TestWASI (19.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T03:43:55.328427554Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASI","Elapsed":19.41}
+{"Time":"2026-10-09T03:43:55.328469377Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T03:43:55.336615246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t19.426s\n"}
+{"Time":"2026-10-09T03:43:55.336656398Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":19.426}

@@ -1,0 +1,62 @@
+{
+ "sha": "9b36a0a6826a53fcb005503f4806dfb2d13cc73c",
+ "base": "9b36a0a6826a53fcb005503f4806dfb2d13cc73c",
+ "tools_sha": "03accfc6595e9588667438543ddfb72f18a9cabf",
+ "runner": "pool",
+ "finished": true,
+ "verdict": "void",
+ "fail": 9,
+ "pass": 11701,
+ "skip": 52,
+ "build_ok": true,
+ "vet_ok": true,
+ "uncached_tests": true,
+ "packages": "all",
+ "wall_seconds": 1054.0,
+ "steps_seconds": {
+  "coverage": 0.0,
+  "tools": 0.0,
+  "build": 30.2,
+  "vet": 20.3,
+  "tests": 935.0,
+  "wasi": 133.847,
+  "stage3": 650.2,
+  "catalog": 391.761,
+  "determinism": 3.7,
+  "census": 6.7
+ },
+ "stages_exit": {
+  "coverage": 0,
+  "tools": 0,
+  "build": 0,
+  "vet": 0,
+  "tests": 1,
+  "wasi": 0,
+  "stage3": 0,
+  "catalog": 0,
+  "determinism": 0,
+  "census": 0
+ },
+ "planned_stages": [
+  "coverage",
+  "tools",
+  "build",
+  "vet",
+  "tests",
+  "wasi",
+  "stage3",
+  "catalog",
+  "determinism",
+  "census"
+ ],
+ "failure": null,
+ "runs": [
+  "adamic-gate-pilot-20261009T033801-a4bf6c8c",
+  "adamic-gate-phases-20261009T033801-cbb68cd2",
+  "adamic-gate-census-20261009T040011-ea27087e"
+ ],
+ "replaced_units": {
+  "replaced": [],
+  "why_red_was_rerun": null
+ }
+}

@@ -1,0 +1,26 @@
+{
+  "target": "9b36a0a6826a53fcb005503f4806dfb2d13cc73c",
+  "jobs": 1,
+  "total_wall_seconds": 0.01640122800017707,
+  "load_before": "1.49 1.93 2.36 1/182 32275",
+  "load_after": "1.49 1.93 2.36 1/182 32284",
+  "entries": [
+    {
+      "number": 13,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "9b36a0a6826a53fcb005503f4806dfb2d13cc73c",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 0.000128669000332593,
+      "load_before": "1.49 1.93 2.36 1/183 32284",
+      "load_after": "1.49 1.93 2.36 1/183 32284",
+      "messages": [
+        "13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)",
+        "13 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "13 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=1.49 1.93 2.36 1/183 32284 -> 1.49 1.93 2.36 1/183 32284"
+      ]
+    }
+  ]
+}

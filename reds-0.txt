@@ -1,0 +1,33 @@
+run adamic-gate-pilot-20261009T033801-a4bf6c8c: void, 12040 tests in 200 units, 8 failed, 3 units broken, 0 killed over budget
+BROKEN tests-129: no results (exited true, last output "loom-pilot: checkout of 9b36a0a6826a53fcb005503f4806dfb2d13cc73c failed")
+BROKEN tests-171: no results (exited true, last output "loom-pilot: checkout of 9b36a0a6826a53fcb005503f4806dfb2d13cc73c failed")
+BROKEN tests-199: no results (exited true, last output "loom-pilot: checkout of 9b36a0a6826a53fcb005503f4806dfb2d13cc73c failed")
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-003 (tests-01)
+    expressions_test.go:155: Prettier: 2417 cases; 0 exact upstream text differences, 2 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2417 cases; 0 exact upstream text differences, 2 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 37.207s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-018 (tests-01)
+    expressions_test.go:155: Prettier: 2712 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2712 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 31.096s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-027 (tests-01)
+    expressions_test.go:155: Prettier: 2723 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2723 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 34.035s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-043 (tests-01)
+    expressions_test.go:155: Prettier: 2725 cases; 0 exact upstream text differences, 1 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2725 cases; 0 exact upstream text differences, 1 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 30.394s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-044 (tests-01)
+    expressions_test.go:155: Prettier: 2725 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2725 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 31.517s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/markdowninline (package) (tests-48)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdowninline	156.286s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdowninline	156.488s
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterAsGoCohere/shard-001 (tests-172)
+    shards_test.go:303: mode narrow, cases 0..3563
+    shards_test.go:300: invalid test unit: 33.884s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterAsGoCohere/shard-003 (tests-172)
+    shards_test.go:303: mode tabs, cases 0..3563
+    shards_test.go:300: invalid test unit: 36.540s exceeds 30s
