@@ -1,0 +1,35 @@
+Auto-merging cmd/adamic/checks.go
+Auto-merging internal/flow/build.go
+Auto-merging internal/ir/ir.go
+CONFLICT (content): Merge conflict in internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+CONFLICT (content): Merge conflict in internal/javascript/javascript.go
+Auto-merging internal/lower/class_inheritance.go
+CONFLICT (content): Merge conflict in internal/lower/class_inheritance.go
+Auto-merging internal/lower/exceptions.go
+CONFLICT (content): Merge conflict in internal/lower/exceptions.go
+Auto-merging internal/lower/expression.go
+CONFLICT (content): Merge conflict in internal/lower/expression.go
+Auto-merging internal/lower/locals.go
+Auto-merging internal/lower/lower_test.go
+CONFLICT (content): Merge conflict in internal/lower/lower_test.go
+Auto-merging internal/lower/modules.go
+Auto-merging internal/lower/object.go
+CONFLICT (content): Merge conflict in internal/lower/object.go
+Auto-merging internal/lower/refusals.go
+CONFLICT (content): Merge conflict in internal/lower/refusals.go
+Auto-merging internal/lower/typed_arrays.go
+Auto-merging internal/lower/unknown.go
+Auto-merging internal/native/emit_branches.go
+Auto-merging internal/native/emit_objects.go
+CONFLICT (content): Merge conflict in internal/native/emit_objects.go
+Auto-merging internal/native/emit_slots.go
+Auto-merging internal/native/library_object.go
+Auto-merging internal/native/runtime/adamic.h
+Auto-merging internal/native/runtime/node_fs_file.c
+CONFLICT (modify/delete): internal/native/runtime/node_process.c deleted in HEAD and modified in origin/codex/stricter-options-next.  Version origin/codex/stricter-options-next of internal/native/runtime/node_process.c left in tree.
+CONFLICT (modify/delete): internal/native/runtime/parallel.c deleted in HEAD and modified in origin/codex/stricter-options-next.  Version origin/codex/stricter-options-next of internal/native/runtime/parallel.c left in tree.
+Auto-merging internal/native/runtime/union.c
+Auto-merging internal/oracle/counts.md
+CONFLICT (content): Merge conflict in internal/oracle/counts.md
+Automatic merge failed; fix conflicts and then commit the result.

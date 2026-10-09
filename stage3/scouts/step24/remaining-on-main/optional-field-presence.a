@@ -1,0 +1,5 @@
+// a-check: type error TS2375
+interface Host { read?: () => string }
+const read: (() => string) | undefined = undefined;
+const host: Host = { read };
+console.log(Object.hasOwn(host, 'read') ? 'present' : 'absent');
