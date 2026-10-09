@@ -507,6 +507,9 @@ func TestThreePortMutantsAreCaught(t *testing.T) {
 	}
 }
 
+const testAdditionalJSONBoundariesShards = 5
+
+// ADAMIC_TEST_SHARD=i/n selects ordinal modulo n; unset runs every shard.
 func TestAdditionalJSONBoundaries(t *testing.T) {
 	t.Parallel()
 	texts := []string{
@@ -528,33 +531,85 @@ func TestAdditionalJSONBoundaries(t *testing.T) {
 			cases = append(cases, textCase{fmt.Sprintf("boundary/%d/%s", index, name), text})
 		}
 	}
-	answers, _ := cohereAnswers(t, cases, false)
-	input, expected := protocol(cases, answers)
-	path := filepath.Join(t.TempDir(), "cases.txt")
-	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
-		path = filepath.Join(artifacts, "boundary.txt")
-		writeJSON(t, filepath.Join(artifacts, "boundary.json"), cases)
-		writeJSON(t, filepath.Join(artifacts, "boundary-go.json"), answers)
+	shards := jsonPortShards(cases)
+	if len(shards) != testAdditionalJSONBoundariesShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testAdditionalJSONBoundariesShards)
 	}
-	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
 	}
-	source := portDirectory(t, nil)
-	entry := filepath.Join(source, "main.ts")
-	result := onNode(t, entry, "--cases", path)
-	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
-		os.WriteFile(filepath.Join(artifacts, "boundary-node.txt"), result.stdout, 0644)
+	index, count, err := jsonPortSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if err != nil {
+		t.Fatal(err)
 	}
-	compare(t, "Node boundaries", result, expected, cases)
-	if os.Getenv("ADAMIC_JSON_NODE_ONLY") != "" {
-		t.Skip("debug Node only")
+	products := jsonPreparePort(t, runtime.GOOS == "darwin", true)
+	references := make([][]answer, len(shards))
+	for ordinal, shard := range shards {
+		if ordinal%count != index {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+			t.Parallel()
+			items := cases[shard.start:shard.end]
+			answers := jsonOracleAnswers(t, products.oracle, items)
+			references[ordinal] = answers
+			input, expected := protocol(items, answers)
+			path := filepath.Join(t.TempDir(), "cases.txt")
+			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+				t.Fatal(err)
+			}
+			node := onNode(t, products.entry, "--cases", path)
+			compare(t, t.Name()+" Node boundaries", node, expected, items)
+			var environment []string
+			if runtime.GOOS == "linux" {
+				environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+			}
+			compare(t, t.Name()+" sanitized boundaries", execute(t, environment, products.sanitized, "--cases", path), expected, items)
+			switch runtime.GOOS {
+			case "linux":
+				compare(t, t.Name()+" LeakSanitizer boundaries", execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, "--cases", path), expected, items)
+			case "darwin":
+				result := execute(t, nil, "leaks", "--atExit", "--", products.release, "--cases", path)
+				if result.exitCode != 0 {
+					t.Fatalf("%s leaks: %s", t.Name(), result.stdout)
+				}
+			default:
+				t.Fatalf("no leak check for %s", runtime.GOOS)
+			}
+			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
+				directory := filepath.Join(artifacts, "boundaries", fmt.Sprintf("shard-%03d", ordinal))
+				if err := os.MkdirAll(directory, 0755); err != nil {
+					t.Fatal(err)
+				}
+				writeJSON(t, filepath.Join(directory, "cases.json"), items)
+				writeJSON(t, filepath.Join(directory, "go.json"), answers)
+				if err := os.WriteFile(filepath.Join(directory, "node.txt"), node.stdout, 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			t.Logf("case range [%d:%d]; %d cases", shard.start, shard.end, len(items))
+		})
 	}
-	program := lowered(t, entry)
-	result, binary := natively(t, program, "--cases", path)
-	compare(t, "native boundaries", result, expected, cases)
-	if report := leaks(t, program, binary, "--cases", path); report != "" {
-		t.Fatal(report)
-	}
+	t.Cleanup(func() {
+		if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" && count == 1 {
+			var answers []answer
+			for _, reference := range references {
+				if reference == nil {
+					return
+				}
+				answers = append(answers, reference...)
+			}
+			input, expected := protocol(cases, answers)
+			writeJSON(t, filepath.Join(artifacts, "boundary.json"), cases)
+			writeJSON(t, filepath.Join(artifacts, "boundary-go.json"), answers)
+			for name, text := range map[string]string{"boundary.txt": input, "boundary-node.txt": expected} {
+				if err := os.WriteFile(filepath.Join(artifacts, name), []byte(text), 0644); err != nil {
+					t.Error(err)
+				}
+			}
+		}
+	})
+	t.Logf("exact union: %d cases", len(cases))
 }
 
 func buildGoDriver(t *testing.T) string {

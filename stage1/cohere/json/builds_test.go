@@ -83,7 +83,7 @@ func jsonClangToolchain() ([]string, error) {
 func jsonGoOracleInputs(toolchain []string) jsonBuildInputs {
 	flags := []string{"go", "build", "-overlay=<dir>/overlay.json", "-o=<dir>/go-cohere", "./command/formatter_comparison"}
 	flags = append(flags, jsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT", "GOCACHE", "GOMODCACHE", "GOWORK", "GOPATH", "GOENV", "GOROOT", "GO386", "GOARM", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS")...)
-	return jsonBuildInputs{Name: "json Go oracle", Files: []string{"cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
+	return jsonBuildInputs{Name: "json Go oracle", Files: []string{"go.work", "go.mod", "go.sum", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
 }
 
 // buildJSONGoOracle writes the driver and overlay only into its product directory.
