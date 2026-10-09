@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:33:03.302800497Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:33:03.351971183Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud"}
+{"Time":"2026-10-09T17:33:03.352062711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"=== RUN   TestEnumLimitsStayLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:03.352105197Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"=== PAUSE TestEnumLimitsStayLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:03.352109055Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud"}
+{"Time":"2026-10-09T17:33:03.352113961Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud"}
+{"Time":"2026-10-09T17:33:03.352116684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"=== CONT  TestEnumLimitsStayLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:04.142592543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"--- PASS: TestEnumLimitsStayLoud (0.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:04.142647923Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Elapsed":0.79}
+{"Time":"2026-10-09T17:33:04.142676934Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:04.145440115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.810s\n"}
+{"Time":"2026-10-09T17:33:04.14547345Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.843}

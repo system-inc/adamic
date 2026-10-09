@@ -1,0 +1,6942 @@
+[
+  {
+    "prefix": "TestAM",
+    "names": [
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestAM",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 31.522,
+    "events": [
+      {
+        "Time": "2026-10-09T17:30:52.905650497Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-09T17:30:54.881585623Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMethodReadAsAValueIsRefused",
+        "Elapsed": 0.09
+      }
+    ]
+  },
+  {
+    "prefix": "TestAT",
+    "names": [
+      "TestATupleSeenAsAnArrayIsNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestAT",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 23.746,
+    "events": [
+      {
+        "Time": "2026-10-09T17:30:47.13833505Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestATupleSeenAsAnArrayIsNotYet",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestAV",
+    "names": [
+      "TestAViewThatCantWriteIsNotRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestAV",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 19.819,
+    "events": [
+      {
+        "Time": "2026-10-09T17:31:06.941665802Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestAb",
+    "names": [
+      "TestAbfe962OverrideDefaultAddedRefusesNativeSignature"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestAb",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 12.149,
+    "events": [
+      {
+        "Time": "2026-10-09T17:31:07.061394948Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+        "Elapsed": 0.37
+      }
+    ]
+  },
+  {
+    "prefix": "TestAd",
+    "names": [
+      "TestAdamicNullishAssertionsAreRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestAd",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 16.407,
+    "events": [
+      {
+        "Time": "2026-10-09T17:31:23.351177991Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestArgumentsLengthRea",
+    "names": [
+      "TestArgumentsLengthReadNeighbors",
+      "TestArgumentsLengthReadKeepsReaderFact"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestArgumentsLengthRea",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 14.198,
+    "events": [
+      {
+        "Time": "2026-10-09T17:31:21.267174468Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArgumentsLengthReadKeepsReaderFact",
+        "Elapsed": 0.26
+      },
+      {
+        "Time": "2026-10-09T17:31:21.267288384Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArgumentsLengthReadNeighbors",
+        "Elapsed": 1.12
+      }
+    ]
+  },
+  {
+    "prefix": "TestArgumentsLengthRef",
+    "names": [
+      "TestArgumentsLengthRefusals",
+      "TestArgumentsLengthRefusalFixtures"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestArgumentsLengthRef",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 10.1,
+    "events": [
+      {
+        "Time": "2026-10-09T17:31:29.799311448Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArgumentsLengthRefusalFixtures",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:31:31.362698369Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArgumentsLengthRefusals",
+        "Elapsed": 3.26
+      }
+    ]
+  },
+  {
+    "prefix": "TestArrayPredicateC",
+    "names": [
+      "TestArrayPredicateCannotInventAnElementContract",
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestArrayPredicateC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 8.37,
+    "events": [
+      {
+        "Time": "2026-10-09T17:31:31.733904665Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArrayPredicateCoexistsWithUnknownReflection",
+        "Elapsed": 1.01
+      },
+      {
+        "Time": "2026-10-09T17:31:31.733970578Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArrayPredicateCannotInventAnElementContract",
+        "Elapsed": 1.44
+      }
+    ]
+  },
+  {
+    "prefix": "TestArrayPredicateD",
+    "names": [
+      "TestArrayPredicateDoesNotMisclassifyNativeTuples"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestArrayPredicateD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.641,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:16.880874215Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+        "Elapsed": 0.23
+      }
+    ]
+  },
+  {
+    "prefix": "TestArrayPredicateP",
+    "names": [
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestArrayPredicateP",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.227,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:16.490725187Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestArrayPredicatePreservesDeclaredElementContract",
+        "Elapsed": 0.47
+      }
+    ]
+  },
+  {
+    "prefix": "TestAs",
+    "names": [
+      "TestAsyncGeneratorsAreRefusedEvenWithoutYield"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestAs",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.451,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:20.936281542Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAsyncGeneratorsAreRefusedEvenWithoutYield",
+        "Elapsed": 0.33
+      }
+    ]
+  },
+  {
+    "prefix": "TestCa",
+    "names": [
+      "TestCallableNamespaceLimitsStayLoud",
+      "TestCallableNamespaceReceiverStaysLoud"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCa",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.911,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:21.587135766Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-09T17:38:21.791563795Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusB",
+    "names": [
+      "TestCensusBooleanDeadBranch"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.098,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:25.05692085Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusBooleanDeadBranch",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusM",
+    "names": [
+      "TestCensusMarkerResultIsAssignable",
+      "TestCensusMarkerZeroCallIsNotAssumedSafe"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusM",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.591,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:26.37334148Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-09T17:38:26.373400586Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusMarkerResultIsAssignable",
+        "Elapsed": 0.23
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusO",
+    "names": [
+      "TestCensusOverloadBinderGuards",
+      "TestCensusOverloadReturnProof",
+      "TestCensusOverloadRelation"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusO",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.707,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:30.555918261Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusOverloadReturnProof",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-09T17:38:30.689820139Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusOverloadBinderGuards",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-09T17:38:30.696166353Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusOverloadRelation",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusPredicateI",
+    "names": [
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusPredicateI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.203,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:31.563639684Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusPredicateInteractionEscapes",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:38:31.563723266Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusPredicateInteractionBoundary",
+        "Elapsed": 0.41
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusPredicateM",
+    "names": [
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusPredicateM",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.144,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:35.867492595Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusPredicateMarkerCallStaysNotYet",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-09T17:38:35.867570152Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+        "Elapsed": 0.53
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusR",
+    "names": [
+      "TestCensusRestMutableElements"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.708,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:36.297029641Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusRestMutableElements",
+        "Elapsed": 0.09
+      }
+    ]
+  },
+  {
+    "prefix": "TestCensusS",
+    "names": [
+      "TestCensusSmallFiniteKeyRead"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCensusS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.151,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:41.045427313Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCensusSmallFiniteKeyRead",
+        "Elapsed": 0.18
+      }
+    ]
+  },
+  {
+    "prefix": "TestCh",
+    "names": [
+      "TestCheckedCastProofAndElision",
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCh",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.933,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:41.750868014Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCheckedCastProofAndElision",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:38:42.175318753Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCheckPragmasAreRefused",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T17:38:42.175350806Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCheckPragmaNeighborsCompile",
+        "Elapsed": 1.16
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassA",
+    "names": [
+      "TestClassArgumentsUseCheckerIdentity"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.051,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:47.076146647Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassArgumentsUseCheckerIdentity",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesA",
+    "names": [
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesAccessorCaptureCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.154,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:47.374154517Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesAccessorCaptureCycle",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-09T17:38:47.374285994Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesAccessorRefusals",
+        "Elapsed": 0.43
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesN",
+    "names": [
+      "TestClassFeaturesNarrowedAccessor"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.115,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:52.205851672Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesNarrowedAccessor",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesP",
+    "names": [
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesP",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.754,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:52.101917676Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesPrivateChecker",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-09T17:38:52.104645259Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesPrivateStorage",
+        "Elapsed": 0.2
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesR",
+    "names": [
+      "TestClassFeaturesReadonlyChecker"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.236,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:58.39157124Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesReadonlyChecker",
+        "Elapsed": 0.68
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticD",
+    "names": [
+      "TestClassFeaturesStaticDeclarationsExecute"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesStaticD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.552,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:56.758744402Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesStaticDeclarationsExecute",
+        "Elapsed": 0.22
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticI",
+    "names": [
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesStaticI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.595,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:01.321372252Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesStaticInterfaceCycle",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticP",
+    "names": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesStaticP",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.256,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:16.066645642Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesStaticParentCycle",
+        "Elapsed": 0.38
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticS",
+    "names": [
+      "TestClassFeaturesStaticSoundness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassFeaturesStaticS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 11.449,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:21.392785776Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesStaticSoundness",
+        "Elapsed": 2.71
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassS",
+    "names": [
+      "TestClassStaticInitializerCallIsEmitted",
+      "TestClassStaticSideEffectMatchesNode"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 8.832,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:24.957231259Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassStaticInitializerCallIsEmitted",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-09T17:32:24.957311057Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassStaticSideEffectMatchesNode",
+        "Elapsed": 0.69
+      }
+    ]
+  },
+  {
+    "prefix": "TestClassW",
+    "names": [
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClassW",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.077,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:25.224661618Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassWrongOutputPrivateRepair",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-09T17:32:25.478719853Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassWrongOutputKeysRepair",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-09T17:32:25.478814501Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassWrongOutputIteratorReceiver",
+        "Elapsed": 0.42
+      }
+    ]
+  },
+  {
+    "prefix": "TestClockGenericReturnsT01D",
+    "names": [
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClockGenericReturnsT01D",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.742,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:27.681864506Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestClockGenericReturnsT01R",
+    "names": [
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClockGenericReturnsT01R",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.493,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:27.989655029Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClockGenericReturnsT01RejectsNullBeforeBody",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:32:27.989735228Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestClockGenericReturnsT01S",
+    "names": [
+      "TestClockGenericReturnsT01Shapes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClockGenericReturnsT01S",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.273,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:30.95274159Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClockGenericReturnsT01Shapes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestClos",
+    "names": [
+      "TestClosedFrameInputRejectsMutation"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestClos",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.284,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:30.251254449Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClosedFrameInputRejectsMutation",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestCond",
+    "names": [
+      "TestConditionAssertionAdmission"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCond",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.61,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:32.849844233Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestConditionAssertionAdmission",
+        "Elapsed": 0.05
+      }
+    ]
+  },
+  {
+    "prefix": "TestCons",
+    "names": [
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestConstEnumErasesRuntimeObject",
+      "TestConsoleLowersToWriteLine"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestCons",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.683,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:33.641027487Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestConstEnumErasesRuntimeObject",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T17:32:33.65213891Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestConsoleLowersToWriteLine",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T17:32:33.652182062Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestConstructorCacheOneArgumentRemainsNotYet",
+        "Elapsed": 0.16
+      }
+    ]
+  },
+  {
+    "prefix": "TestDeb",
+    "names": [
+      "TestDebugNamespaceMergedCapabilities"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestDeb",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.055,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:35.943710987Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestDebugNamespaceMergedCapabilities",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestDefa",
+    "names": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestDefa",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.018,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:36.263091409Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+        "Elapsed": 0.22
+      },
+      {
+        "Time": "2026-10-09T17:32:36.650974767Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestDefaultTaggedInterfaceAdmission",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestDefi",
+    "names": [
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestDefi",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.483,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:39.403521634Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestDefiniteAssignmentUsesReadiness",
+        "Elapsed": 0.27
+      },
+      {
+        "Time": "2026-10-09T17:32:39.403571365Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestDefiniteAssignmentSoundNeighbors",
+        "Elapsed": 0.28
+      }
+    ]
+  },
+  {
+    "prefix": "TestDes",
+    "names": [
+      "TestDestructuredMethodsCannotLoadOwnSlots"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestDes",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.709,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:39.349090164Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestDestructuredMethodsCannotLoadOwnSlots",
+        "Elapsed": 0.32
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence0",
+    "names": [
+      "TestEEPPresence0"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence0",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.339,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:42.691452773Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence0",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence1",
+    "names": [
+      "TestEEPPresence1"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence1",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.126,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:41.54088206Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence1",
+        "Elapsed": 0.05
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence2",
+    "names": [
+      "TestEEPPresence2"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence2",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.632,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:44.189434683Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence2",
+        "Elapsed": 0.05
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence3",
+    "names": [
+      "TestEEPPresence3"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence3",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.527,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:45.213932124Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence3",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence4",
+    "names": [
+      "TestEEPPresence4"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence4",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.486,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:46.667477486Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence4",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence5",
+    "names": [
+      "TestEEPPresence5"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence5",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.385,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:47.634080328Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence5",
+        "Elapsed": 0.04
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence6",
+    "names": [
+      "TestEEPPresence6"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresence6",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.462,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:52.099563058Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresence6",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestEEPPresenceS",
+    "names": [
+      "TestEEPPresenceSupported"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEEPPresenceS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.708,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:53.338440346Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEEPPresenceSupported",
+        "Elapsed": 0.13
+      }
+    ]
+  },
+  {
+    "prefix": "TestEm",
+    "names": [
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEm",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.147,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:56.273245161Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEmptyLiteralGenericReturnUsesSamePath",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T17:32:56.273338063Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+        "Elapsed": 0.16
+      }
+    ]
+  },
+  {
+    "prefix": "TestEnt",
+    "names": [
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEnt",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.893,
+    "events": [
+      {
+        "Time": "2026-10-09T17:32:58.205273111Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEntriesAllocationProof",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:32:58.205399662Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEntriesRecordBoundaries",
+        "Elapsed": 0.02
+      }
+    ]
+  },
+  {
+    "prefix": "TestEnumI",
+    "names": [
+      "TestEnumInitializationReach",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumIdentityAcrossModules"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEnumI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.241,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:03.099614064Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumIdentityAcrossModules",
+        "Elapsed": 0.33
+      },
+      {
+        "Time": "2026-10-09T17:33:03.160351117Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumInitializationGraphMemo",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:33:03.482377063Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumInitializationReach",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "prefix": "TestEnumL",
+    "names": [
+      "TestEnumLimitsStayLoud"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEnumL",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.942,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:04.142647923Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumLimitsStayLoud",
+        "Elapsed": 0.79
+      }
+    ]
+  },
+  {
+    "prefix": "TestEnumN",
+    "names": [
+      "TestEnumNeverDefault",
+      "TestEnumNameEnumeration",
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEnumN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.958,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:07.450125419Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumNameEnumeration",
+        "Elapsed": 0.23
+      },
+      {
+        "Time": "2026-10-09T17:33:07.450377614Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumNamespaceSharedCycle",
+        "Elapsed": 0.28
+      },
+      {
+        "Time": "2026-10-09T17:33:07.450401013Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumNeverDefault",
+        "Elapsed": 0.28
+      }
+    ]
+  },
+  {
+    "prefix": "TestEnumS",
+    "names": [
+      "TestEnumSlotViews",
+      "TestEnumSwitchExhaustiveness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEnumS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.057,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:09.175683639Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSwitchExhaustiveness",
+        "Elapsed": 1.07
+      },
+      {
+        "Time": "2026-10-09T17:33:09.213630152Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestEv",
+    "names": [
+      "TestEveryNeedsCallbackEffects"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestEv",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.717,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:11.188325399Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEveryNeedsCallbackEffects",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumA",
+    "names": [
+      "TestFlagEnumAliasBoundaries"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestFlagEnumA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.547,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:12.75661108Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFlagEnumAliasBoundaries",
+        "Elapsed": 0.76
+      }
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumI",
+    "names": [
+      "TestFlagEnumInlineIteration"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestFlagEnumI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.298,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:15.455344398Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFlagEnumInlineIteration",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumL",
+    "names": [
+      "TestFlagEnumLiteralSpellings"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestFlagEnumL",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.617,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:16.355313808Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFlagEnumLiteralSpellings",
+        "Elapsed": 0.09
+      }
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumM",
+    "names": [
+      "TestFlagEnumMemberAliases"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestFlagEnumM",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.646,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:22.105422411Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFlagEnumMemberAliases",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "prefix": "TestFlagEnums",
+    "names": [
+      "TestFlagEnumsOpen",
+      "TestFlagEnumsDomain"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestFlagEnums",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.897,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:22.991891135Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFlagEnumsOpen",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:33:23.253853217Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFlagEnumsDomain",
+        "Elapsed": 0.02
+      }
+    ]
+  },
+  {
+    "prefix": "TestFu",
+    "names": [
+      "TestFunctionValueUnionViewsStayNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestFu",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.051,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:28.171737941Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestFunctionValueUnionViewsStayNotYet",
+        "Elapsed": 1.3
+      }
+    ]
+  },
+  {
+    "prefix": "TestGeneratorD",
+    "names": [
+      "TestGeneratorDestructuredParameterCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 14.095,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:37.347091473Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorDestructuredParameterCycle",
+        "Elapsed": 0.22
+      }
+    ]
+  },
+  {
+    "prefix": "TestGeneratorE",
+    "names": [
+      "TestGeneratorEmptyBodyUsesOwnedFrame"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorE",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 11.191,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:39.347171743Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorEmptyBodyUsesOwnedFrame",
+        "Elapsed": 0.16
+      }
+    ]
+  },
+  {
+    "prefix": "TestGeneratorN",
+    "names": [
+      "TestGeneratorNextPromiseNeedsResumeProof",
+      "TestGeneratorNestedFrameCaptureRemainsExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.798,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:42.156000683Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorNestedFrameCaptureRemainsExplicit",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-09T17:33:42.156068368Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorNextPromiseNeedsResumeProof",
+        "Elapsed": 0.2
+      }
+    ]
+  },
+  {
+    "prefix": "TestGeneratorO",
+    "names": [
+      "TestGeneratorOpaqueReceiverRemainsExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorO",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.688,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:44.040550684Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorOpaqueReceiverRemainsExplicit",
+        "Elapsed": 0.18
+      }
+    ]
+  },
+  {
+    "prefix": "TestGeneratorP",
+    "names": [
+      "TestGeneratorPrimitiveThrowRemainsExplicit",
+      "TestGeneratorProtocolReplacementRemainsExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorP",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.198,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:49.360733657Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorProtocolReplacementRemainsExplicit",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-09T17:33:49.360819279Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGeneratorPrimitiveThrowRemainsExplicit",
+        "Elapsed": 0.22
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsC",
+    "names": [
+      "TestGenericBodyRelationsCensus"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericBodyRelationsC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.998,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:51.069450571Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericBodyRelationsCensus",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsI",
+    "names": [
+      "TestGenericBodyRelationsIndexedReturnMapper"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericBodyRelationsI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.15,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:53.508433416Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericBodyRelationsIndexedReturnMapper",
+        "Elapsed": 0.05
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsR",
+    "names": [
+      "TestGenericBodyRelationsRefuse",
+      "TestGenericBodyRelationsReadonlyBound"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericBodyRelationsR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.71,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:54.271597728Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericBodyRelationsReadonlyBound",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-09T17:33:55.766741371Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericBodyRelationsRefuse",
+        "Elapsed": 1.62
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsT",
+    "names": [
+      "TestGenericBodyRelationsThisRead"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericBodyRelationsT",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.688,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:56.194639927Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericBodyRelationsThisRead",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsW",
+    "names": [
+      "TestGenericBodyRelationsWitness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericBodyRelationsW",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.628,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:59.379049465Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericBodyRelationsWitness",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericF",
+    "names": [
+      "TestGenericFunctionPolymorphicRecursionIsRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericF",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.014,
+    "events": [
+      {
+        "Time": "2026-10-09T17:33:59.228459002Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericFunctionPolymorphicRecursionIsRefused",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericI",
+    "names": [
+      "TestGenericIteratorViewsPreserveNativeArguments"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.588,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:01.826378548Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericIteratorViewsPreserveNativeArguments",
+        "Elapsed": 0.04
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericJ",
+    "names": [
+      "TestGenericJSONUnionArrayIsNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericJ",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.59,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:01.991008904Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericJSONUnionArrayIsNotYet",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "prefix": "TestGenericU",
+    "names": [
+      "TestGenericUnionFixtureHasSeparateInstances"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestGenericU",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.202,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:08.020987301Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestGenericUnionFixtureHasSeparateInstances",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestInd",
+    "names": [
+      "TestIndirectPredicateOverloadIsPending"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInd",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.137,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:06.082060547Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIndirectPredicateOverloadIsPending",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceA",
+    "names": [
+      "TestInheritanceAllowsSoundOverrides"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.562,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:09.691229642Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceAllowsSoundOverrides",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceC",
+    "names": [
+      "TestInheritanceCycleFinderIncludesInheritedFields",
+      "TestInheritanceConditionalThisRules"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.688,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:10.682345736Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceCycleFinderIncludesInheritedFields",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:34:10.682428402Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceConditionalThisRules",
+        "Elapsed": 0.17
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceD",
+    "names": [
+      "TestInheritanceDerivedFieldOrder"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.18,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:12.836591891Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceDerivedFieldOrder",
+        "Elapsed": 0.18
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericF",
+    "names": [
+      "TestInheritanceGenericFactoryLayouts"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceGenericF",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.324,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:17.005592011Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceGenericFactoryLayouts",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericM",
+    "names": [
+      "TestInheritanceGenericMonomorphizations"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceGenericM",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.803,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:18.666182922Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceGenericMonomorphizations",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericN",
+    "names": [
+      "TestInheritanceGenericNominalConstraints"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceGenericN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.041,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:24.049807331Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceGenericNominalConstraints",
+        "Elapsed": 0.54
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericS",
+    "names": [
+      "TestInheritanceGenericSoundness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceGenericS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 8.853,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:27.472317437Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceGenericSoundness",
+        "Elapsed": 0.81
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericV",
+    "names": [
+      "TestInheritanceGenericViewsKeepNominalArguments"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceGenericV",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 12.254,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:36.300736439Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceGenericViewsKeepNominalArguments",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceH",
+    "names": [
+      "TestInheritanceHasClassIdentity"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceH",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.395,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:32.866820447Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceHasClassIdentity",
+        "Elapsed": 0.26
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceK",
+    "names": [
+      "TestInheritanceKeepsCheckerConstructorRules",
+      "TestInheritanceKeepsNominalTupleDestructuring"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceK",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.87,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:37.790676678Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceKeepsCheckerConstructorRules",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:34:37.790835768Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceKeepsNominalTupleDestructuring",
+        "Elapsed": 0.18
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceN",
+    "names": [
+      "TestInheritanceNativeSignatureNeighbors",
+      "TestInheritanceNativeSignatureLimits"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.383,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:39.685126418Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceNativeSignatureNeighbors",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:34:39.699166792Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceNativeSignatureLimits",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesF",
+    "names": [
+      "TestInheritanceRefusesFalseNominalViews"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceRefusesF",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.788,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:40.586495434Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceRefusesFalseNominalViews",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesG",
+    "names": [
+      "TestInheritanceRefusesGrowingGenericClasses"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceRefusesG",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.705,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:42.406242093Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceRefusesGrowingGenericClasses",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesT",
+    "names": [
+      "TestInheritanceRefusesThisBeforeSuperReturns"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceRefusesT",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.49,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:43.036189332Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceRefusesThisBeforeSuperReturns",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesU",
+    "names": [
+      "TestInheritanceRefusesUnsoundOverrides"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceRefusesU",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.701,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:45.099232894Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceRefusesUnsoundOverrides",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRej",
+    "names": [
+      "TestInheritanceRejectsUnsupportedConstructorShapes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceRej",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.545,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:45.602376098Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestInheritanceV",
+    "names": [
+      "TestInheritanceVoidBooleanOverrideReason"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInheritanceV",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.099,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:48.189477843Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceVoidBooleanOverrideReason",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestInherite",
+    "names": [
+      "TestInheritedLibraryReadsNeverLoadOwnFields"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInherite",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 11.27,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:56.835731441Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "prefix": "TestInp",
+    "names": [
+      "TestInputSpreadArgumentsAreNotYet",
+      "TestInputSpreadCoverage"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestInp",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.246,
+    "events": [
+      {
+        "Time": "2026-10-09T17:34:55.183415861Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInputSpreadCoverage",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:34:55.45115821Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInputSpreadArgumentsAreNotYet",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "prefix": "TestIs",
+    "names": [
+      "TestIsPrototypeOfReadsExplainThePrototypeRefusal"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIs",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.771,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:00.173499727Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+        "Elapsed": 0.39
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorB",
+    "names": [
+      "TestIteratorBuiltInStorageViewsArePending"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.148,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:03.037045057Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorBuiltInStorageViewsArePending",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorD",
+    "names": [
+      "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "TestIteratorDescriptorReasons",
+      "TestIteratorDeclaredNextHasNoRuntimeMethod"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.533,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:04.70735071Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorDescriptorReasons",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-09T17:35:04.761005475Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+        "Elapsed": 0.22
+      },
+      {
+        "Time": "2026-10-09T17:35:04.761060043Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorDeclaredNextHasNoRuntimeMethod",
+        "Elapsed": 0.27
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorG",
+    "names": [
+      "TestIteratorGapsAreExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorG",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.151,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:07.084450111Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorGapsAreExplicit",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorM",
+    "names": [
+      "TestIteratorMapperIndexHasNumberRepresentation"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorM",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.46,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:11.223938743Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorMapperIndexHasNumberRepresentation",
+        "Elapsed": 0.05
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorO",
+    "names": [
+      "TestIteratorOptionalCloseResultMustBeObject"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorO",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.707,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:12.854005101Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorOptionalCloseResultMustBeObject",
+        "Elapsed": 0.04
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorS",
+    "names": [
+      "TestIteratorSymbolKeysAreNotStringKeys"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.847,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:14.06767882Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorSymbolKeysAreNotStringKeys",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestIteratorV",
+    "names": [
+      "TestIteratorViewsDispatchHiddenReturn",
+      "TestIteratorViewsDispatchReceivers"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestIteratorV",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.32,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:17.196658759Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorViewsDispatchReceivers",
+        "Elapsed": 0.23
+      },
+      {
+        "Time": "2026-10-09T17:35:17.196720299Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestIteratorViewsDispatchHiddenReturn",
+        "Elapsed": 0.24
+      }
+    ]
+  },
+  {
+    "prefix": "TestLibraryL",
+    "names": [
+      "TestLibraryLanguageBoundaries"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestLibraryL",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.146,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:18.215406352Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryLanguageBoundaries",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestLibraryMa",
+    "names": [
+      "TestLibraryMapSetGapsStayRefused",
+      "TestLibraryMapSetIteratorCopyTypesRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestLibraryMa",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.958,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:21.118240415Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryMapSetGapsStayRefused",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:35:21.118324075Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryMapSetIteratorCopyTypesRefused",
+        "Elapsed": 0.53
+      }
+    ]
+  },
+  {
+    "prefix": "TestLibraryMe",
+    "names": [
+      "TestLibraryMethodValues",
+      "TestLibraryMethodValueBoundaries",
+      "TestLibraryMethodValueSafety"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestLibraryMe",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.141,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:21.939223882Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryMethodValueBoundaries",
+        "Elapsed": 1.33
+      },
+      {
+        "Time": "2026-10-09T17:35:22.355084256Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryMethodValueSafety",
+        "Elapsed": 1.72
+      },
+      {
+        "Time": "2026-10-09T17:35:22.355150424Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryMethodValues",
+        "Elapsed": 1.77
+      }
+    ]
+  },
+  {
+    "prefix": "TestLibraryR",
+    "names": [
+      "TestLibraryRegexOffsetRequiresNoCaptures"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestLibraryR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.487,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:25.618030299Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryRegexOffsetRequiresNoCaptures",
+        "Elapsed": 0.28
+      }
+    ]
+  },
+  {
+    "prefix": "TestLibraryS",
+    "names": [
+      "TestLibraryStringRefusals"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestLibraryS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.555,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:26.875724433Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLibraryStringRefusals",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestLit",
+    "names": [
+      "TestLiteralMethodCapturesCannotMakeCycles",
+      "TestLiteralMethodViewsDoNotLoseThis"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestLit",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.81,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:32.425197379Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLiteralMethodCapturesCannotMakeCycles",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T17:35:32.425951781Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLiteralMethodViewsDoNotLoseThis",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestMis",
+    "names": [
+      "TestMissingBindingSymbolHasStructuredLocation"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMis",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.113,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:33.999698187Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractF",
+    "names": [
+      "TestMixedUnionContractFailureDoesNotCertifyRetry"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMixedUnionContractF",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 13.311,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:45.757002611Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+        "Elapsed": 0.28
+      }
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractG",
+    "names": [
+      "TestMixedUnionContractGraph"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMixedUnionContractG",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 8.756,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:42.749354786Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMixedUnionContractGraph",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractP",
+    "names": [
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMixedUnionContractP",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.358,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:50.11701308Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMixedUnionContractPhantomVoidIsUndefined",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:35:50.11708587Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractR",
+    "names": [
+      "TestMixedUnionContractRecursiveMember"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMixedUnionContractR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.462,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:50.206887479Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMixedUnionContractRecursiveMember",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractU",
+    "names": [
+      "TestMixedUnionContractUnknownMemberFails"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMixedUnionContractU",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.02,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:55.143128327Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMixedUnionContractUnknownMemberFails",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestMo",
+    "names": [
+      "TestModuleNamespaceLimitsStayLoud",
+      "TestModuleNamespaceInitializedReadProof"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestMo",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.578,
+    "events": [
+      {
+        "Time": "2026-10-09T17:35:55.356842438Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceInitializedReadProof",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-09T17:35:55.779549336Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceA",
+    "names": [
+      "TestNamespaceAmbientHostInitialization",
+      "TestNamespaceAmbientContextsDoNotExecute"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 8.061,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:02.508538186Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-09T17:36:03.219002269Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Elapsed": 2.45
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceCa",
+    "names": [
+      "TestNamespaceCallGraphLinearWork",
+      "TestNamespaceCallGraphCycleUnion"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceCa",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.965,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:01.608848853Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Elapsed": 0.23
+      },
+      {
+        "Time": "2026-10-09T17:36:01.764905368Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork",
+        "Elapsed": 0.42
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceCl",
+    "names": [
+      "TestNamespaceClassEarlyConstructionStaysLoud",
+      "TestNamespaceClosedCallGraphEdges"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceCl",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.588,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:05.333923658Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Elapsed": 0.23
+      },
+      {
+        "Time": "2026-10-09T17:36:05.334143787Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClosedCallGraphEdges",
+        "Elapsed": 0.68
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceE",
+    "names": [
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceE",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.859,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:07.074369805Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Elapsed": 0.13
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceI",
+    "names": [
+      "TestNamespaceInitializationReachability"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.83,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:09.194946307Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceInitializationReachability",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceL",
+    "names": [
+      "TestNamespaceLimitsStayLoud"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceL",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.697,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:10.751259089Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceLimitsStayLoud",
+        "Elapsed": 0.82
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceR",
+    "names": [
+      "TestNamespaceReceiverArrowInheritsScope",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceReturnedAssignmentLimits"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.009,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:12.149315943Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-09T17:36:12.194743932Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverRefusal",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T17:36:12.19479728Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReturnedAssignmentLimits",
+        "Elapsed": 0.18
+      }
+    ]
+  },
+  {
+    "prefix": "TestNamespaceT",
+    "names": [
+      "TestNamespaceTypesErase"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceT",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.205,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:14.958600655Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceTypesErase",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestNestedB",
+    "names": [
+      "TestNestedBodylessDeclarationsAreLoud"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNestedB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.103,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:17.293098758Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedBodylessDeclarationsAreLoud",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestNestedC",
+    "names": [
+      "TestNestedCapturedParametersAreOwned",
+      "TestNestedCallbackCycleIsRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNestedC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.113,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:20.064358766Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedCapturedParametersAreOwned",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:36:20.064437193Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedCallbackCycleIsRefused",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestNestedE",
+    "names": [
+      "TestNestedEmptyArrayElementKinds",
+      "TestNestedEnvironmentHasOneAllocationSite",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNestedE",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.4,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:20.581863644Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+        "Elapsed": 0.37
+      },
+      {
+        "Time": "2026-10-09T17:36:20.684647476Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedEnvironmentHasOneAllocationSite",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T17:36:20.684788652Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedEmptyArrayElementKinds",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestNestedF",
+    "names": [
+      "TestNestedFunctionGapsAreLoud",
+      "TestNestedFunctionCycleIsRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNestedF",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.948,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:22.966759204Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedFunctionCycleIsRefused",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:36:23.023141953Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedFunctionGapsAreLoud",
+        "Elapsed": 0.19
+      }
+    ]
+  },
+  {
+    "prefix": "TestNestedR",
+    "names": [
+      "TestNestedRebindingNotYet",
+      "TestNestedRestIsSupported"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNestedR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.983,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:23.70002388Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedRestIsSupported",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:36:23.700085286Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedRebindingNotYet",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeB",
+    "names": [
+      "TestNodeBufferRefusals"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.22,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:29.20715541Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeBufferRefusals",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileB",
+    "names": [
+      "TestNodeFSFileBufferBorrow"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.935,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:27.587272288Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileBufferBorrow",
+        "Elapsed": 0.89
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileD",
+    "names": [
+      "TestNodeFSFileDoesNotAuthorizeMutableWidening"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.751,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:31.349505055Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+        "Elapsed": 0.38
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileK",
+    "names": [
+      "TestNodeFSFileKeepsDetachedMethodRefusal"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileK",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.881,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:32.13336126Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileKeepsDetachedMethodRefusal",
+        "Elapsed": 0.43
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileN",
+    "names": [
+      "TestNodeFSFileNamespaceImport"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.996,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:34.359069026Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileNamespaceImport",
+        "Elapsed": 0.4
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileO",
+    "names": [
+      "TestNodeFSFileOptionsBorrow"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileO",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.294,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:35.452880605Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileOptionsBorrow",
+        "Elapsed": 0.73
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileQ",
+    "names": [
+      "TestNodeFSFileQualifiedErrorType"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileQ",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.002,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:37.374412202Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileQualifiedErrorType",
+        "Elapsed": 0.48
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileR",
+    "names": [
+      "TestNodeFSFileRefusesOptionEffects",
+      "TestNodeFSFileRefusesVoidValues",
+      "TestNodeFSFileRefusesPinnedUnsupportedOverloads"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.58,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:39.334055775Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileRefusesOptionEffects",
+        "Elapsed": 1.53
+      },
+      {
+        "Time": "2026-10-09T17:36:39.399523102Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileRefusesVoidValues",
+        "Elapsed": 1.62
+      },
+      {
+        "Time": "2026-10-09T17:36:39.960196415Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileS",
+    "names": [
+      "TestNodeFSFileScratchOptionsBorrow",
+      "TestNodeFSFileScratchOverloadsAreNamed"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeFSFileS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.615,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:41.980227417Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileScratchOptionsBorrow",
+        "Elapsed": 1.16
+      },
+      {
+        "Time": "2026-10-09T17:36:41.980307453Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileScratchOverloadsAreNamed",
+        "Elapsed": 1.49
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeLibraryD",
+    "names": [
+      "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+      "TestNodeLibraryDistinguishesReceiverOwners"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeLibraryD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.401,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:44.421873762Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeLibraryDistinguishesReceiverOwners",
+        "Elapsed": 0.85
+      },
+      {
+        "Time": "2026-10-09T17:36:44.421962625Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+        "Elapsed": 1.4
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeLibraryN",
+    "names": [
+      "TestNodeLibraryNamesUnimplementedMembers"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeLibraryN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 7.187,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:49.070463098Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeLibraryNamesUnimplementedMembers",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestNodeLibraryQ",
+    "names": [
+      "TestNodeLibraryQualifiedTypeAssertion"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNodeLibraryQ",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.294,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:50.68690584Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeLibraryQualifiedTypeAssertion",
+        "Elapsed": 0.6
+      }
+    ]
+  },
+  {
+    "prefix": "TestNon",
+    "names": [
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestNonNullAssertionOnPresentTypeIsErased"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNon",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.426,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:52.592490398Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNonNullAssertionOnPresentTypeIsErased",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:36:52.592516549Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNonNullAssertionLowersToNullishPanic",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestNul",
+    "names": [
+      "TestNullishPrototypeReadsAreRejectedByChecker"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNul",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.568,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:54.266662277Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNullishPrototypeReadsAreRejectedByChecker",
+        "Elapsed": 1.28
+      }
+    ]
+  },
+  {
+    "prefix": "TestNum",
+    "names": [
+      "TestNumericEnumsAreOpen",
+      "TestNumericEnumNeverProof",
+      "TestNumericEnumLiteralPromises"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestNum",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.866,
+    "events": [
+      {
+        "Time": "2026-10-09T17:36:57.06263248Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNumericEnumNeverProof",
+        "Elapsed": 1
+      },
+      {
+        "Time": "2026-10-09T17:36:57.100763216Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNumericEnumLiteralPromises",
+        "Elapsed": 1.08
+      },
+      {
+        "Time": "2026-10-09T17:36:57.46596633Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNumericEnumsAreOpen",
+        "Elapsed": 1.49
+      }
+    ]
+  },
+  {
+    "prefix": "TestOb",
+    "names": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestObjectHasOwnInterface"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOb",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.389,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:00.104723082Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestObjectHasOwnInterface",
+        "Elapsed": 0.26
+      },
+      {
+        "Time": "2026-10-09T17:37:00.292083702Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestObjectUnprovenShapesStayNotYet",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:37:00.661818295Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestObjectRefusalsExplainSoundness",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalA",
+    "names": [
+      "TestOptionalAssignHiddenKeys"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.802,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:01.286011583Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalAssignHiddenKeys",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalD",
+    "names": [
+      "TestOptionalDeletionRequiresPlainStorage"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.099,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:03.781146081Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalDeletionRequiresPlainStorage",
+        "Elapsed": 0.42
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalF",
+    "names": [
+      "TestOptionalFunctionValueRelation"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalF",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.1,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:04.35117669Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalFunctionValueRelation",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalI",
+    "names": [
+      "TestOptionalIndexingMapShapeRefused",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalI",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 1,
+    "seconds": 4.746,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:08.268913347Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalIndexingKeepsIndexSignaturesRefused",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-09T17:37:08.320308789Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalIndexingMapShapeRefused",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-09T17:37:08.518655249Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+        "Elapsed": 0.41
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningA",
+    "names": [
+      "TestOptionalWideningAllowed"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.742,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:08.100349481Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningAllowed",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningC",
+    "names": [
+      "TestOptionalWideningCensus"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.866,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:11.976575679Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningCensus",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningR",
+    "names": [
+      "TestOptionalWideningRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.161,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:14.603691247Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningS",
+    "names": [
+      "TestOptionalWideningSpreadOverwrite"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.263,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:17.226441287Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningSpreadOverwrite",
+        "Elapsed": 0.05
+      }
+    ]
+  },
+  {
+    "prefix": "TestOr",
+    "names": [
+      "TestOriginalCycleLedger"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.897,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:17.584265975Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOriginalCycleLedger",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestOverl",
+    "names": [
+      "TestOverloadedShorthandFunctionValueStaysNotYet",
+      "TestOverloadInferenceWitnesses"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOverl",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.13,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:22.344513906Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOverloadInferenceWitnesses",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:37:22.344555465Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestOverr",
+    "names": [
+      "TestOverrideOptionalNumberRefusesNativeSignature",
+      "TestOverrideOptionalRefusesNativeSignature"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOverr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.66,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:22.222125335Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOverrideOptionalNumberRefusesNativeSignature",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:37:22.222240641Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOverrideOptionalRefusesNativeSignature",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestPara",
+    "names": [
+      "TestParameterPropertiesSoundness",
+      "TestParameterPropertyCheckerContracts",
+      "TestParameterPropertyCallbackReceiver"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPara",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.338,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:25.175728364Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParameterPropertyCallbackReceiver",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T17:37:25.439087971Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParameterPropertyCheckerContracts",
+        "Elapsed": 0.44
+      },
+      {
+        "Time": "2026-10-09T17:37:25.580790971Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParameterPropertiesSoundness",
+        "Elapsed": 0.61
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryB",
+    "names": [
+      "TestParserFactoryBindingHoisting"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.536,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:24.889335034Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionA",
+    "names": [
+      "TestParserFactoryCompletionAlias"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionA",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.045,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:27.936914864Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionAlias",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionB",
+    "names": [
+      "TestParserFactoryCompletionBeforeReturn",
+      "TestParserFactoryCompletionBothBranches",
+      "TestParserFactoryCompletionBeforeEscape"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.784,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:28.334028355Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionBeforeEscape",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-09T17:37:28.342038379Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionBothBranches",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-09T17:37:28.34670861Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionBeforeReturn",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionC",
+    "names": [
+      "TestParserFactoryCompletionCaptured"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.487,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:30.4413986Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionCaptured",
+        "Elapsed": 0.04
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionE",
+    "names": [
+      "TestParserFactoryCompletionEarlyReturn"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionE",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.589,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:30.922018588Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionEarlyReturn",
+        "Elapsed": 0.06
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionL",
+    "names": [
+      "TestParserFactoryCompletionLoopMayNotRun"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionL",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.917,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:33.334612485Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionLoopMayNotRun",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionO",
+    "names": [
+      "TestParserFactoryCompletionOneBranch"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionO",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.077,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:34.000911736Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionOneBranch",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionS",
+    "names": [
+      "TestParserFactoryCompletionShortCircuit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.073,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:37.430404937Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionShortCircuit",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionW",
+    "names": [
+      "TestParserFactoryCompletionWrongPayloadAssertion"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryCompletionW",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.22,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:38.224748707Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionWrongPayloadAssertion",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryR",
+    "names": [
+      "TestParserFactoryReadBeforeCompletion"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.08,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:41.476969019Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryReadBeforeCompletion",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestParserN",
+    "names": [
+      "TestParserNodeArrayLayout",
+      "TestParserNodeArrayPresence",
+      "TestParserNodeArraySchemaFailsClosed"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestParserN",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.069,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:42.301582701Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserNodeArrayLayout",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:37:42.301612088Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserNodeArrayPresence",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:37:42.301636876Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserNodeArraySchemaFailsClosed",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryAl",
+    "names": [
+      "TestPlaceholderTypedBoundaryAliasReset"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryAl",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.871,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:45.359332714Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryAliasReset",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryAr",
+    "names": [
+      "TestPlaceholderTypedBoundaryArgument",
+      "TestPlaceholderTypedBoundaryArrayElement"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryAr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.931,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:46.24461984Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryArgument",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T17:37:46.244952809Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryArrayElement",
+        "Elapsed": 0.17
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryAs",
+    "names": [
+      "TestPlaceholderTypedBoundaryAssignmentResult"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryAs",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.187,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:49.520914935Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryAssignmentResult",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryC",
+    "names": [
+      "TestPlaceholderTypedBoundaryCall"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.834,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:50.068050065Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryCall",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryD",
+    "names": [
+      "TestPlaceholderTypedBoundaryDominatingWrite"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryD",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.058,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:53.610891776Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryDominatingWrite",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryE",
+    "names": [
+      "TestPlaceholderTypedBoundaryElementWrite"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryE",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.992,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:54.038770275Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryElementWrite",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryOp",
+    "names": [
+      "TestPlaceholderTypedBoundaryOptionalArrayElement",
+      "TestPlaceholderTypedBoundaryOptionalReceiver",
+      "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryOp",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.252,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:57.842836178Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-09T17:37:57.856624097Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOptionalReceiver",
+        "Elapsed": 0.25
+      },
+      {
+        "Time": "2026-10-09T17:37:57.856665901Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOptionalArrayElement",
+        "Elapsed": 0.27
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryOr",
+    "names": [
+      "TestPlaceholderTypedBoundaryOrdinaryField"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryOr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.261,
+    "events": [
+      {
+        "Time": "2026-10-09T17:37:57.315725251Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOrdinaryField",
+        "Elapsed": 0.11
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryP",
+    "names": [
+      "TestPlaceholderTypedBoundaryProperty",
+      "TestPlaceholderTypedBoundaryPresence",
+      "TestPlaceholderTypedBoundaryPlaceholderFieldCopy"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryP",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.38,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:01.6749683Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryProperty",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T17:38:01.69005318Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryPresence",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-09T17:38:01.690092679Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryPlaceholderFieldCopy",
+        "Elapsed": 0.22
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryR",
+    "names": [
+      "TestPlaceholderTypedBoundaryReturnAssignment",
+      "TestPlaceholderTypedBoundaryReturn"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryR",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.032,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:01.903248224Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryReturn",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-09T17:38:01.903662213Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryReturnAssignment",
+        "Elapsed": 0.19
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryS",
+    "names": [
+      "TestPlaceholderTypedBoundarySavedCopy",
+      "TestPlaceholderTypedBoundarySavedAfterWrite"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.878,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:05.582871709Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundarySavedCopy",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T17:38:05.582943239Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundarySavedAfterWrite",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryT",
+    "names": [
+      "TestPlaceholderTypedBoundaryTypedLocal"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderTypedBoundaryT",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.324,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:06.233931513Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryTypedLocal",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderW",
+    "names": [
+      "TestPlaceholderWeakSlotStaysNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderW",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.771,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:09.364469418Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderWeakSlotStaysNotYet",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "prefix": "TestPredicateB",
+    "names": [
+      "TestPredicateBodyProof",
+      "TestPredicateBodiesAreProven"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPredicateB",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.096,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:11.290682614Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateBodyProof",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:38:11.290745847Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateBodiesAreProven",
+        "Elapsed": 1.48
+      }
+    ]
+  },
+  {
+    "prefix": "TestPredicateC",
+    "names": [
+      "TestPredicateCallbackContracts"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPredicateC",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.21,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:15.536970865Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateCallbackContracts",
+        "Elapsed": 0.77
+      }
+    ]
+  },
+  {
+    "prefix": "TestPredicateO",
+    "names": [
+      "TestPredicateOverloadRuntime",
+      "TestPredicateOverloadCallback"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPredicateO",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 22.032,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:18.053577759Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateOverloadCallback",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-09T17:38:33.362111882Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateOverloadRuntime",
+        "Elapsed": 16.56
+      }
+    ]
+  },
+  {
+    "prefix": "TestPredicateS",
+    "names": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPredicateS",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.064,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:20.647131285Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateSummaryParameterIndex",
+        "Elapsed": 0.35
+      }
+    ]
+  },
+  {
+    "prefix": "TestPredicateU",
+    "names": [
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPredicateU",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.758,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:25.614661315Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateUsesBelongToEachCall",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T17:38:27.347241962Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPredicateUseRegions",
+        "Elapsed": 1.91
+      }
+    ]
+  },
+  {
+    "prefix": "TestPri",
+    "names": [
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestPri",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.72,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:32.061859249Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPrimitiveAdmittingSlotsUseBoxes",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "prefix": "TestProt",
+    "names": [
+      "TestPrototypeMethodsAreRefusedWithReasons",
+      "TestPrototypeHazardsBehindObjectViewsAreNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestProt",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.749,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:37.866787419Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPrototypeMethodsAreRefusedWithReasons",
+        "Elapsed": 1.32
+      },
+      {
+        "Time": "2026-10-09T17:38:37.866887502Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+        "Elapsed": 1.52
+      }
+    ]
+  },
+  {
+    "prefix": "TestProv",
+    "names": [
+      "TestProvenRelationsRefuse",
+      "TestProvenRelationsErase"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestProv",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.869,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:39.191538919Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:38:39.191558682Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsErase",
+        "Elapsed": 0.7
+      }
+    ]
+  },
+  {
+    "prefix": "TestRea",
+    "names": [
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestReadinessElisionRequiresDominatingAssignment"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestRea",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.251,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:44.061916824Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:38:44.061923955Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+        "Elapsed": 0.85
+      }
+    ]
+  },
+  {
+    "prefix": "TestReg",
+    "names": [
+      "TestRegExpNativeRefusals",
+      "TestRegExpSourceNode"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestReg",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 6.132,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:45.361755556Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestRegExpSourceNode",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T17:38:45.361887926Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestRegExpNativeRefusals",
+        "Elapsed": 0.45
+      }
+    ]
+  },
+  {
+    "prefix": "TestRep",
+    "names": [
+      "TestRepresentedMethodReplacementIsNotYet",
+      "TestRepresentationClockSourceCheckedTypes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestRep",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.5,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:49.571844958Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestRepresentationClockSourceCheckedTypes",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-09T17:38:49.571936961Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestRepresentedMethodReplacementIsNotYet",
+        "Elapsed": 0.17
+      }
+    ]
+  },
+  {
+    "prefix": "TestStep18C",
+    "names": [
+      "TestStep18CallableReceiverContract"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestStep18C",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.4,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:50.754114719Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestStep18CallableReceiverContract",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "prefix": "TestStep18D",
+    "names": [
+      "TestStep18DetachedCallableOrigins"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestStep18D",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.811,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:53.411257075Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestStep18DetachedCallableOrigins",
+        "Elapsed": 0.3
+      }
+    ]
+  },
+  {
+    "prefix": "TestStep18O",
+    "names": [
+      "TestStep18OptionalCallableBoundaries"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestStep18O",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.418,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:56.143837913Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestStep18OptionalCallableBoundaries",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestStep18U",
+    "names": [
+      "TestStep18UnknownDetachedCallable"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestStep18U",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.489,
+    "events": [
+      {
+        "Time": "2026-10-09T17:38:57.892691453Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestStep18UnknownDetachedCallable",
+        "Elapsed": 0.13
+      }
+    ]
+  },
+  {
+    "prefix": "TestStep2",
+    "names": [
+      "TestStep21LibraryAdmission"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestStep2",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 5.244,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:01.410759096Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestStep21LibraryAdmission",
+        "Elapsed": 0.9
+      }
+    ]
+  },
+  {
+    "prefix": "TestStr",
+    "names": [
+      "TestStringEnumsStayClosed"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestStr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.021,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:01.919335031Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestStringEnumsStayClosed",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "prefix": "TestSu",
+    "names": [
+      "TestSuppressionDirectivesAreRefused",
+      "TestSuppressionDirectiveSoundNeighbors"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestSu",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.089,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:05.487346351Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestSuppressionDirectiveSoundNeighbors",
+        "Elapsed": 1.09
+      },
+      {
+        "Time": "2026-10-09T17:39:05.487560507Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestSuppressionDirectivesAreRefused",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "prefix": "TestTa",
+    "names": [
+      "TestTasteRepresentationLimitsStayExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestTa",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.671,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:05.606007397Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTasteRepresentationLimitsStayExplicit",
+        "Elapsed": 0.61
+      }
+    ]
+  },
+  {
+    "prefix": "TestTr",
+    "names": [
+      "TestTracingNamespaceEscapeLowers"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestTr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 2.594,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:08.112879086Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTracingNamespaceEscapeLowers",
+        "Elapsed": 0.09
+      }
+    ]
+  },
+  {
+    "prefix": "TestTs",
+    "names": [
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestTscNamespaceDeclarationShapes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestTs",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.954,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:09.399150082Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTsgoHonorsNoCheckInAdamicFiles",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-09T17:39:09.556437884Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes",
+        "Elapsed": 0.13
+      }
+    ]
+  },
+  {
+    "prefix": "TestTy",
+    "names": [
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestTy",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.561,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:11.279389413Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTypedArrayViewsCannotChangeRepresentation",
+        "Elapsed": 0.39
+      },
+      {
+        "Time": "2026-10-09T17:39:11.650940773Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTypedArraysLower",
+        "Elapsed": 0.4
+      },
+      {
+        "Time": "2026-10-09T17:39:11.651017077Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTypedArrayGaps",
+        "Elapsed": 0.78
+      }
+    ]
+  },
+  {
+    "prefix": "TestUnc",
+    "names": [
+      "TestUncheckableCastsStayRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUnc",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.155,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:13.70205248Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUncheckableCastsStayRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestUnd",
+    "names": [
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUnd",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 1,
+    "seconds": 8.012,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:19.699237099Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks",
+        "Elapsed": 4.47
+      }
+    ]
+  },
+  {
+    "prefix": "TestUnk",
+    "names": [
+      "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+      "TestUnknownReflectionRefusals",
+      "TestUnknownAbsentSpreadPresence"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUnk",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.776,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:16.943130097Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUnknownAbsentSpreadPresence",
+        "Elapsed": 0.4
+      },
+      {
+        "Time": "2026-10-09T17:39:16.955780154Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+        "Elapsed": 0.41
+      },
+      {
+        "Time": "2026-10-09T17:39:17.443318095Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUnknownReflectionRefusals",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "prefix": "TestUnp",
+    "names": [
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUnp",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.723,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:21.203157941Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUnprovenPredicateReturnsAreRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestUnr",
+    "names": [
+      "TestUnrepresentedPrototypeCallsAreNotYet"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUnr",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.059,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:23.717773685Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUnrepresentedPrototypeCallsAreNotYet",
+        "Elapsed": 0.6
+      }
+    ]
+  },
+  {
+    "prefix": "TestUnt",
+    "names": [
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUnt",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.267,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:24.496169579Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUntaggedViewMemberTags",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:39:24.496195471Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUntaggedViewStructuralFallback",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "prefix": "TestV",
+    "names": [
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestV",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 3.63,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:27.320508829Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestViewObjectContractsAreAvailableToEraser",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-09T17:39:27.320750806Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestViewObjectWritesNeedSourceCertificate",
+        "Elapsed": 0.22
+      }
+    ]
+  },
+  {
+    "prefix": "TestW",
+    "names": [
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestW",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 4.797,
+    "events": [
+      {
+        "Time": "2026-10-09T17:39:28.617082627Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T17:39:29.267417611Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+        "Elapsed": 0
+      }
+    ]
+  }
+]

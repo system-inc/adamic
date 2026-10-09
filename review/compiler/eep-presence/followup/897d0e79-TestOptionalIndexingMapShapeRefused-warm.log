@@ -1,0 +1,8 @@
+=== RUN   TestOptionalIndexingMapShapeRefused
+=== PAUSE TestOptionalIndexingMapShapeRefused
+=== CONT  TestOptionalIndexingMapShapeRefused
+    optional_indexing_boundary_test.go:18: got <nil>, want structural Map receiver boundary
+--- FAIL: TestOptionalIndexingMapShapeRefused (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.154s
+FAIL
