@@ -1,0 +1,10 @@
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestLiteralMethodSignatureViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodSignatureViewsDoNotLoseThis
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+=== CONT  TestLiteralMethodSignatureViewsDoNotLoseThis
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (0.17s)
+--- PASS: TestLiteralMethodSignatureViewsDoNotLoseThis (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.181s

@@ -1,0 +1,8 @@
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+    iteration_test.go:97: JavaScript backend stdout = "", source Node = "1\n"
+--- FAIL: TestLiteralMethodViewsDoNotLoseThis (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.136s
+FAIL

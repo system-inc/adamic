@@ -1,0 +1,8 @@
+=== RUN   TestLiteralMethodSignatureViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodSignatureViewsDoNotLoseThis
+=== CONT  TestLiteralMethodSignatureViewsDoNotLoseThis
+    iteration_test.go:102: JavaScript backend stdout = "2\n", source Node = "1\n"
+--- FAIL: TestLiteralMethodSignatureViewsDoNotLoseThis (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.149s
+FAIL
