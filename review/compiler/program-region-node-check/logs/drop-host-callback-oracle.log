@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionHost14AgreesWithNode
+=== PAUSE TestProgramRegionHost14AgreesWithNode
+=== CONT  TestProgramRegionHost14AgreesWithNode
+    program_region_host_witness_test.go:14: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestProgramRegionHost14AgreesWithNode (0.28s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.294s
+FAIL

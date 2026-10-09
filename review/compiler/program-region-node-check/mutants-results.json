@@ -1,0 +1,107 @@
+[
+  {
+    "mutant": "drop-Node",
+    "caught": false,
+    "expected_caught": false,
+    "exit": 0,
+    "seconds": 8.97358065500157,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check/drop-Node.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionHost14MemberSites$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-NodeArray",
+    "caught": false,
+    "expected_caught": false,
+    "exit": 0,
+    "seconds": 8.672204813999997,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check/drop-NodeArray.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionHost14MemberSites$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-host-callback-cell",
+    "caught": true,
+    "expected_caught": true,
+    "exit": 1,
+    "seconds": 8.433845410996582,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check/drop-host-callback-cell.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionHost14MemberSites$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "select-acyclic-type",
+    "caught": true,
+    "expected_caught": true,
+    "exit": 1,
+    "seconds": 16.612691428003018,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check/select-acyclic-type.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionScoutParseSelectionEmpty$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-contextual-closure-adoption",
+    "caught": true,
+    "expected_caught": true,
+    "exit": 1,
+    "test_seconds": 1.25,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check/drop-contextual-closure-adoption.json",
+      "./internal/oracle",
+      "-run",
+      "^TestProgramRegionHost14AgreesWithNode$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  }
+]
