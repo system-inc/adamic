@@ -1,0 +1,11 @@
+--- a/internal/lower/library_regex_callback_shape.go
++++ b/internal/lower/library_regex_callback_shape.go
+@@ -55,7 +55,7 @@
+ 				}
+ 			}
+ 		case *regex.Group:
+-			return n.Kind != regex.Capturing && present(n.Body)
++			return n.Kind == regex.Capturing && present(n.Body)
+ 		case *regex.Quantifier:
+ 			return present(n.Atom)
+ 		}

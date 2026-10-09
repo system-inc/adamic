@@ -1,0 +1,11 @@
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -26,7 +26,7 @@
+ }
+ 
+ func (r *Refused) Error() string {
+-	return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %s", r.Where, r.What, r.Fix)
++	return fmt.Sprintf("%s: Adamic 0.1 accepts %s; %s", r.Where, r.What, r.Fix)
+ }
+ 
+ func (l *lowering) notYet(node *ast.Node, what string) error {

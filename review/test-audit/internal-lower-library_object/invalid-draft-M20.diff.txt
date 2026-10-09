@@ -1,0 +1,11 @@
+--- a/internal/lower/prelude.go
++++ b/internal/lower/prelude.go
+@@ -25,7 +25,7 @@
+ 	if value.Type() != ir.String {
+ 		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
+ 	}
+-	return ir.WriteLine{Stream: stream, Value: l.spelled(arguments[0], value)}, nil
++	return ir.WriteLine{Stream: ir.Stdout, Value: l.spelled(arguments[0], value)}, nil
+ }
+ 
+ // isPanicCall reports whether an expression is a call to the prelude's panic, which never returns.

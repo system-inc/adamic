@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -26,7 +26,7 @@
+ 	case "groupBy":
+ 		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
+ 	}
+-	count := 1
++	count := 2
+ 	if name == "is" || name == "hasOwn" {
+ 		count = 2
+ 	}

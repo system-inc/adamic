@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/u036-audit.py", line 51, in <module>
+    if v['status']!=0:raise RuntimeError(mid+' standalone vet failed')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: M20 standalone vet failed

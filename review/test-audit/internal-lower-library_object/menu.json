@@ -1,0 +1,178 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/library_object.go",
+    "line": 17,
+    "before": "Fix: reason",
+    "after": "Fix: \"\"",
+    "kind": "mutant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/library_object.go",
+    "line": 29,
+    "before": "count := 1",
+    "after": "count := 2",
+    "kind": "mutant"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/library_object.go",
+    "line": 197,
+    "before": "if depth > 16 {",
+    "after": "if depth > 0 {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/library_object.go",
+    "line": 92,
+    "before": "!l.hasProperty(written[0], key.Text())",
+    "after": "l.hasProperty(written[0], key.Text())",
+    "kind": "mutant"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/library_object.go",
+    "line": 27,
+    "before": "Object.groupBy's partial record",
+    "after": "Object.collectBy's partial record",
+    "kind": "mutant"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/library_object.go",
+    "line": 230,
+    "before": "declaration.Parent.Flags&ast.NodeFlagsConst == 0",
+    "after": "declaration.Parent.Flags&ast.NodeFlagsConst != 0",
+    "kind": "mutant"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/library_regex_callback_shape.go",
+    "line": 58,
+    "before": "n.Kind != regex.Capturing",
+    "after": "n.Kind == regex.Capturing",
+    "kind": "mutant"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/library_regex_callback_shape.go",
+    "line": 13,
+    "before": "if depth > 32 {",
+    "after": "if depth > 0 {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/library_regex_callback_shape.go",
+    "line": 32,
+    "before": "declaration.Parent.Flags&ast.NodeFlagsConst == 0",
+    "after": "declaration.Parent.Flags&ast.NodeFlagsConst != 0",
+    "kind": "mutant"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/invariance.go",
+    "line": 211,
+    "before": "mutable := !l.isLibraryType(to, \"ReadonlyArray\", \"ReadonlyMap\", \"ReadonlySet\")",
+    "after": "mutable := l.isLibraryType(to, \"ReadonlyArray\", \"ReadonlyMap\", \"ReadonlySet\")",
+    "kind": "mutant"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/invariance.go",
+    "line": 181,
+    "before": "if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {",
+    "after": "if !fresh && l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/invariance.go",
+    "line": 593,
+    "before": "return l.checker.IsArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), \"ReadonlyArray\")",
+    "after": "return false",
+    "kind": "mutant"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/refusals.go",
+    "line": 183,
+    "before": "if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node)",
+    "after": "if node.Kind == ast.KindPropertyAccessExpression && called(node) && !l.libraryNumberBoundMethod(node)",
+    "kind": "mutant"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/prelude.go",
+    "line": 72,
+    "before": "return ir.Stderr, nil",
+    "after": "return ir.Stdout, nil",
+    "kind": "mutant"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/diagnostics.go",
+    "line": 29,
+    "before": "%s: Adamic 0.1 refuses %s; %s",
+    "after": "%s: Adamic 0.1 accepts %s; %s",
+    "kind": "mutant"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/diagnostics.go",
+    "line": 17,
+    "before": "%s: stage 0 can't lower %s yet",
+    "after": "%s: stage 0 can't lower %s now",
+    "kind": "mutant"
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/object.go",
+    "line": 2078,
+    "before": "if value == nil || target == nil || value == target || depth > 4 {",
+    "after": "if value == nil || target == nil || value == target || depth > 0 {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/statements.go",
+    "line": 68,
+    "before": "return nil, l.notYet(node, \"a class inside a function\")",
+    "after": "return nil, l.notYet(node, \"a nested class\")",
+    "kind": "mutant"
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/library_object.go",
+    "line": 241,
+    "before": "call.Method == \"freeze\"",
+    "after": "call.Method != \"freeze\"",
+    "kind": "mutant"
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/prelude.go",
+    "line": 17,
+    "before": "if len(arguments) != 1 {",
+    "after": "if len(arguments) == 1 {",
+    "kind": "mutant"
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "before": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "after": "return nil, nil",
+    "kind": "probe"
+  },
+  {
+    "id": "P02",
+    "file": "internal/lower/library_regex_callback_shape.go",
+    "line": 12,
+    "before": "func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {",
+    "after": "return false",
+    "kind": "probe"
+  }
+]

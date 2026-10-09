@@ -1,0 +1,11 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -590,7 +590,7 @@
+ 		}
+ 		switch method {
+ 		case "slice", "filter", "map", "concat":
+-			return l.checker.IsArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
++			return false
+ 		}
+ 	}
+ 	return false

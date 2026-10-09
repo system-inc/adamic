@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -194,7 +194,7 @@
+ // exactObject proves there are no hidden fields and no synthetic absent slots. An explicit type
+ // annotation, alias, spread or call would need a separate proof and is deliberately not guessed.
+ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+-	if depth > 16 {
++	if depth > 0 {
+ 		return false
+ 	}
+ 	node = ast.SkipParentheses(node)

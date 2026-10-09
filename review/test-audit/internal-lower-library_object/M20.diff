@@ -1,0 +1,11 @@
+--- a/internal/lower/prelude.go
++++ b/internal/lower/prelude.go
+@@ -14,7 +14,7 @@
+ 		return nil, err
+ 	}
+ 	arguments := call.AsCallExpression().Arguments.Nodes
+-	if len(arguments) != 1 {
++	if len(arguments) == 1 {
+ 		// The prelude declares one parameter, so the checker has already refused any other count.
+ 		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with other than one string argument")
+ 	}

@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -2075,7 +2075,7 @@
+ // function taking arrays called with tuples). A tuple is held as an object of its elements, so array
+ // code would read it as something it isn't; until a tuple can be one, it's refused there.
+ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool {
+-	if value == nil || target == nil || value == target || depth > 4 {
++	if value == nil || target == nil || value == target || depth > 0 {
+ 		return false
+ 	}
+ 	if target.Flags()&checker.TypeFlagsUnion != 0 {

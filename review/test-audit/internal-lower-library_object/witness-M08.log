@@ -1,0 +1,5 @@
+const freeze: success, main=2 functions=0
+grouping diagnostic: *lower.NotYet /tmp/adamic-gate/u036-witness-3491888608/main.a:1:1: stage 0 can't lower Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop) yet
+immutable regex offset: success, main=2 functions=1
+nested tuple array: *lower.NotYet /tmp/adamic-gate/u036-witness-3491888608/main.a:1:59: stage 0 can't lower a readonly [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet
+typed tuple field: *lower.NotYet /tmp/adamic-gate/u036-witness-3491888608/main.a:1:132: stage 0 can't lower a readonly [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet

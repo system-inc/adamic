@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T10:32:55.954488115Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:32:55.96241211Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine"}
+{"Time":"2026-10-09T10:32:55.962470713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"=== RUN   TestConsoleLowersToWriteLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:32:55.962492108Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"=== PAUSE TestConsoleLowersToWriteLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:32:55.962494088Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine"}
+{"Time":"2026-10-09T10:32:55.962499129Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine"}
+{"Time":"2026-10-09T10:32:55.962500755Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"=== CONT  TestConsoleLowersToWriteLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:32:55.995124353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"--- FAIL: TestConsoleLowersToWriteLine (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:32:55.99733239Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:32:55.997373553Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x160 pc=0xc53baa]\n"}
+{"Time":"2026-10-09T10:32:55.997377795Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\n"}
+{"Time":"2026-10-09T10:32:55.997381213Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T10:32:55.99738597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"testing.tRunner.func1.2({0x1ce96e8, 0x1df6600})\n"}
+{"Time":"2026-10-09T10:32:55.997389736Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:32:55.99739228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:32:55.997395149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:32:55.997398038Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"panic({0x1ce96e8?, 0x1df6600?})\n"}
+{"Time":"2026-10-09T10:32:55.997401837Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:32:55.997404573Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"github.com/system-inc/adamic/internal/lower.TestConsoleLowersToWriteLine(0x1c2fd770ed88)\n"}
+{"Time":"2026-10-09T10:32:55.997407567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\t/workspace/adamic/internal/lower/lower_test.go:39 +0x18a\n"}
+{"Time":"2026-10-09T10:32:55.997417861Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"testing.tRunner(0x1c2fd770ed88, 0x1d94618)\n"}
+{"Time":"2026-10-09T10:32:55.997423814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:32:55.997426262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:32:55.997428444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:32:55.99768339Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConsoleLowersToWriteLine","Elapsed":0.03}
+{"Time":"2026-10-09T10:32:55.997756992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.043s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:32:55.997766176Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.043}

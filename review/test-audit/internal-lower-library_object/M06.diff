@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -227,7 +227,7 @@
+ 		return false
+ 	}
+ 	variable := declaration.AsVariableDeclaration()
+-	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
++	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+ 		return false
+ 	}
+ 	return l.exactObject(variable.Initializer, depth+1)

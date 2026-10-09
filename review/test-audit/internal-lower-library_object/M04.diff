@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -89,7 +89,7 @@
+ 		switch name {
+ 		case "hasOwn":
+ 			key := ast.SkipParentheses(written[1])
+-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
++			if key.Kind != ast.KindStringLiteral || l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
+ 				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
+ 			}
+ 			keyValue, err := l.expression(key)

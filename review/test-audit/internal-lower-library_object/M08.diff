@@ -1,0 +1,11 @@
+--- a/internal/lower/library_regex_callback_shape.go
++++ b/internal/lower/library_regex_callback_shape.go
+@@ -10,7 +10,7 @@
+ // Offset and input follow every capture. Prove zero captures from immutable producers,
+ // rather than assuming the callback's declared parameter types describe the regex.
+ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+-	if depth > 32 {
++	if depth > 0 {
+ 		return false
+ 	}
+ 	node = ast.SkipParentheses(node)

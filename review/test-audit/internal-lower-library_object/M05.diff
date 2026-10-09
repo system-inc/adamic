@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -24,7 +24,7 @@
+ 	case "fromEntries":
+ 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
+ 	case "groupBy":
+-		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
++		return nil, true, l.notYet(node, "Object.collectBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
+ 	}
+ 	count := 1
+ 	if name == "is" || name == "hasOwn" {

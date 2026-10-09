@@ -1,0 +1,304 @@
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..fc16c134 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -4,6 +4,7 @@ package lower
+ import (
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"os"
+ 	"strings"
+ )
+ 
+@@ -14,6 +15,9 @@ type NotYet struct {
+ }
+ 
+ func (n *NotYet) Error() string {
++	if os.Getenv("ADAMIC_MUTANT") == "M16" {
++		return fmt.Sprintf("%s: stage 0 can't lower %s now", n.Where, n.What)
++	}
+ 	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
+ }
+ 
+@@ -26,6 +30,9 @@ type Refused struct {
+ }
+ 
+ func (r *Refused) Error() string {
++	if os.Getenv("ADAMIC_MUTANT") == "M15" {
++		return fmt.Sprintf("%s: Adamic 0.1 accepts %s; %s", r.Where, r.What, r.Fix)
++	}
+ 	return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %s", r.Where, r.What, r.Fix)
+ }
+ 
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 877ae171..36f61dad 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -4,6 +4,7 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ )
+ 
+ // Mutable locations are invariant in 0.1 (docs/0.1.md, adamic/invariant-mutable): tsc relates an
+@@ -178,7 +179,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip
+ 			}
+ 			continue
+ 		}
+-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
++		if (os.Getenv("ADAMIC_MUTANT") == "M11" && (!fresh && l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside))) || ((os.Getenv("ADAMIC_MUTANT") != "M11") && (!fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside))) {
+ 			// tsc ignores readonly when it relates properties, so a readonly field, which may hold
+ 			// something narrower than its type says (it's covariant), can be seen as a writable one,
+ 			// and the wider type written into it. Only the identical type, which this walk never
+@@ -209,6 +210,9 @@ func (l *lowering) generic(proven *checker.Type) bool {
+ // to's, each a slot to can write unless it's read only.
+ func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+ 	mutable := !l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
++	if os.Getenv("ADAMIC_MUTANT") == "M10" {
++		mutable = l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
++	}
+ 	return l.widenedArguments(from, to, mutable, visited)
+ }
+ 
+@@ -590,6 +594,9 @@ func (l *lowering) freshValue(node *ast.Node) bool {
+ 		}
+ 		switch method {
+ 		case "slice", "filter", "map", "concat":
++			if os.Getenv("ADAMIC_MUTANT") == "M12" {
++				return false
++			}
+ 			return l.checker.IsArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
+ 		}
+ 	}
+diff --git a/internal/lower/library_object.go b/internal/lower/library_object.go
+index 3a2b5a8d..31da2eae 100644
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++	"os"
+ 	"strings"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -14,6 +15,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
+ 
+ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+ 	refused := func(reason string) (ir.Expression, bool, error) {
++		if os.Getenv("ADAMIC_MUTANT") == "M01" {
++			return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: ""}
++		}
+ 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
+ 	}
+ 	switch name {
+@@ -24,9 +28,15 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
+ 	case "fromEntries":
+ 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
+ 	case "groupBy":
++		if os.Getenv("ADAMIC_MUTANT") == "M05" {
++			return nil, true, l.notYet(node, "Object.collectBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
++		}
+ 		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
+ 	}
+ 	count := 1
++	if os.Getenv("ADAMIC_MUTANT") == "M02" {
++		count = 2
++	}
+ 	if name == "is" || name == "hasOwn" {
+ 		count = 2
+ 	}
+@@ -89,7 +99,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
+ 		switch name {
+ 		case "hasOwn":
+ 			key := ast.SkipParentheses(written[1])
+-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
++			if (os.Getenv("ADAMIC_MUTANT") == "M04" && (key.Kind != ast.KindStringLiteral || l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#')) || ((os.Getenv("ADAMIC_MUTANT") != "M04") && (key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#')) {
+ 				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
+ 			}
+ 			keyValue, err := l.expression(key)
+@@ -194,7 +204,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
+ // exactObject proves there are no hidden fields and no synthetic absent slots. An explicit type
+ // annotation, alias, spread or call would need a separate proof and is deliberately not guessed.
+ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+-	if depth > 16 {
++	if (os.Getenv("ADAMIC_MUTANT") == "M03" && (depth > 0)) || ((os.Getenv("ADAMIC_MUTANT") != "M03") && (depth > 16)) {
+ 		return false
+ 	}
+ 	node = ast.SkipParentheses(node)
+@@ -227,7 +237,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+ 		return false
+ 	}
+ 	variable := declaration.AsVariableDeclaration()
+-	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
++	if (os.Getenv("ADAMIC_MUTANT") == "M06" && (variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst != 0)) || ((os.Getenv("ADAMIC_MUTANT") != "M06") && (variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0)) {
+ 		return false
+ 	}
+ 	return l.exactObject(variable.Initializer, depth+1)
+@@ -238,7 +248,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+ func (l *lowering) objectCanFreeze() bool {
+ 	found := false
+ 	walk(l.result.Main, func(node any) bool {
+-		if call, ok := node.(ir.ObjectCall); ok && call.Method == "freeze" {
++		if call, ok := node.(ir.ObjectCall); (os.Getenv("ADAMIC_MUTANT") == "M19" && (ok && call.Method != "freeze")) || ((os.Getenv("ADAMIC_MUTANT") != "M19") && (ok && call.Method == "freeze")) {
+ 			found = true
+ 		}
+ 		return !found
+diff --git a/internal/lower/library_regex_callback_shape.go b/internal/lower/library_regex_callback_shape.go
+index cd276a43..a4fc3ba9 100644
+--- a/internal/lower/library_regex_callback_shape.go
++++ b/internal/lower/library_regex_callback_shape.go
+@@ -4,13 +4,17 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	regex "github.com/system-inc/adamic/internal/regexp"
++	"os"
+ 	"strings"
+ )
+ 
+ // Offset and input follow every capture. Prove zero captures from immutable producers,
+ // rather than assuming the callback's declared parameter types describe the regex.
+ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+-	if depth > 32 {
++	if os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return false
++	}
++	if (os.Getenv("ADAMIC_MUTANT") == "M08" && (depth > 0)) || ((os.Getenv("ADAMIC_MUTANT") != "M08") && (depth > 32)) {
+ 		return false
+ 	}
+ 	node = ast.SkipParentheses(node)
+@@ -29,7 +33,7 @@ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+ 			return false
+ 		}
+ 		declaration := symbol.Declarations[0]
+-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || declaration.AsVariableDeclaration().Initializer == nil {
++		if (os.Getenv("ADAMIC_MUTANT") == "M09" && (declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst != 0 || declaration.AsVariableDeclaration().Initializer == nil)) || ((os.Getenv("ADAMIC_MUTANT") != "M09") && (declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || declaration.AsVariableDeclaration().Initializer == nil)) {
+ 			return false
+ 		}
+ 		return l.regexCallbackNoCaptures(declaration.AsVariableDeclaration().Initializer, depth+1)
+@@ -55,6 +59,9 @@ func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+ 				}
+ 			}
+ 		case *regex.Group:
++			if os.Getenv("ADAMIC_MUTANT") == "M07" {
++				return n.Kind == regex.Capturing && present(n.Body)
++			}
+ 			return n.Kind != regex.Capturing && present(n.Body)
+ 		case *regex.Quantifier:
+ 			return present(n.Atom)
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..a382ecf0 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..e822692c 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -3,6 +3,7 @@ package lower
+ import (
+ 	"fmt"
+ 	"math"
++	"os"
+ 	"strconv"
+ 	"strings"
+ 
+@@ -2075,7 +2076,7 @@ func (l *lowering) spreadNumbers(call *ast.Node) (ir.Expression, error) {
+ // function taking arrays called with tuples). A tuple is held as an object of its elements, so array
+ // code would read it as something it isn't; until a tuple can be one, it's refused there.
+ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool {
+-	if value == nil || target == nil || value == target || depth > 4 {
++	if (os.Getenv("ADAMIC_MUTANT") == "M17" && (value == nil || target == nil || value == target || depth > 0)) || ((os.Getenv("ADAMIC_MUTANT") != "M17") && (value == nil || target == nil || value == target || depth > 4)) {
+ 		return false
+ 	}
+ 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+diff --git a/internal/lower/prelude.go b/internal/lower/prelude.go
+index d2e3a228..565cd5cd 100644
+--- a/internal/lower/prelude.go
++++ b/internal/lower/prelude.go
+@@ -5,6 +5,7 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ )
+ 
+ // console lowers console.log and console.error with one string.
+@@ -14,7 +15,7 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
+ 		return nil, err
+ 	}
+ 	arguments := call.AsCallExpression().Arguments.Nodes
+-	if len(arguments) != 1 {
++	if (os.Getenv("ADAMIC_MUTANT") == "M20" && (len(arguments) == 1)) || ((os.Getenv("ADAMIC_MUTANT") != "M20") && (len(arguments) != 1)) {
+ 		// The prelude declares one parameter, so the checker has already refused any other count.
+ 		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with other than one string argument")
+ 	}
+@@ -69,6 +70,9 @@ func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
+ 	case "log":
+ 		return ir.Stdout, nil
+ 	case "error":
++		if os.Getenv("ADAMIC_MUTANT") == "M14" {
++			return ir.Stdout, nil
++		}
+ 		return ir.Stderr, nil
+ 	}
+ 	return 0, l.notYet(callee, "console."+callee.Name().Text())
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index e9909dfa..b4a9e19b 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"fmt"
++	"os"
+ 	"strings"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -180,7 +181,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 				}
+ 			}
+ 		}
+-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) {
++		if (os.Getenv("ADAMIC_MUTANT") == "M13" && (node.Kind == ast.KindPropertyAccessExpression && called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node))) || ((os.Getenv("ADAMIC_MUTANT") != "M13") && (node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node))) {
+ 			// A method read as a value loses its object: this is undefined when it's called.
+ 			access := node.AsPropertyAccessExpression()
+ 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
+diff --git a/internal/lower/statements.go b/internal/lower/statements.go
+index 7fb91a2a..6df724ca 100644
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -3,6 +3,7 @@ package lower
+ 
+ import (
+ 	"errors"
++	"os"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+@@ -65,6 +66,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
+ 		return l.enumDeclaration(node)
+ 	case ast.KindClassDeclaration:
+ 		if l.function != nil {
++			if os.Getenv("ADAMIC_MUTANT") == "M18" {
++				return nil, l.notYet(node, "a nested class")
++			}
+ 			return nil, l.notYet(node, "a class inside a function")
+ 		}
+ 		return l.staticDeclaration(node)

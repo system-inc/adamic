@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -238,7 +238,7 @@
+ func (l *lowering) objectCanFreeze() bool {
+ 	found := false
+ 	walk(l.result.Main, func(node any) bool {
+-		if call, ok := node.(ir.ObjectCall); ok && call.Method == "freeze" {
++		if call, ok := node.(ir.ObjectCall); ok && call.Method != "freeze" {
+ 			found = true
+ 		}
+ 		return !found

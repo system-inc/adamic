@@ -1,0 +1,11 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -178,7 +178,7 @@
+ 			}
+ 			continue
+ 		}
+-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
++		if !fresh && l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
+ 			// tsc ignores readonly when it relates properties, so a readonly field, which may hold
+ 			// something narrower than its type says (it's covariant), can be seen as a writable one,
+ 			// and the wider type written into it. Only the identical type, which this walk never

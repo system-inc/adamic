@@ -1,0 +1,454 @@
+{
+  "timing-TestObjectRefusalsExplainSoundness-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectRefusalsExplainSoundness$'",
+    "status": 0,
+    "wall": 2.3832692080000015
+  },
+  "timing-TestObjectRefusalsExplainSoundness-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectRefusalsExplainSoundness$'",
+    "status": 0,
+    "wall": 2.2597419740000078
+  },
+  "timing-TestObjectRefusalsExplainSoundness-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectRefusalsExplainSoundness$'",
+    "status": 0,
+    "wall": 1.8736073840000245
+  },
+  "timing-TestObjectUnprovenShapesStayNotYet-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectUnprovenShapesStayNotYet$'",
+    "status": 0,
+    "wall": 1.718172002999836
+  },
+  "timing-TestObjectUnprovenShapesStayNotYet-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectUnprovenShapesStayNotYet$'",
+    "status": 0,
+    "wall": 1.943408723000175
+  },
+  "timing-TestObjectUnprovenShapesStayNotYet-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectUnprovenShapesStayNotYet$'",
+    "status": 0,
+    "wall": 1.6733310879999408
+  },
+  "timing-TestLibraryRegexOffsetRequiresNoCaptures-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryRegexOffsetRequiresNoCaptures$'",
+    "status": 0,
+    "wall": 1.8414179809999496
+  },
+  "timing-TestLibraryRegexOffsetRequiresNoCaptures-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryRegexOffsetRequiresNoCaptures$'",
+    "status": 0,
+    "wall": 1.6818485160001728
+  },
+  "timing-TestLibraryRegexOffsetRequiresNoCaptures-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryRegexOffsetRequiresNoCaptures$'",
+    "status": 0,
+    "wall": 1.6916030659999706
+  },
+  "timing-TestLibraryStringRefusals-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryStringRefusals$'",
+    "status": 0,
+    "wall": 1.7691244989998722
+  },
+  "timing-TestLibraryStringRefusals-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryStringRefusals$'",
+    "status": 0,
+    "wall": 1.7634144029998424
+  },
+  "timing-TestLibraryStringRefusals-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryStringRefusals$'",
+    "status": 0,
+    "wall": 1.7969115140001577
+  },
+  "timing-TestConsoleLowersToWriteLine-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestConsoleLowersToWriteLine$'",
+    "status": 0,
+    "wall": 1.697888871000032
+  },
+  "timing-TestConsoleLowersToWriteLine-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestConsoleLowersToWriteLine$'",
+    "status": 0,
+    "wall": 1.6320052429998668
+  },
+  "timing-TestConsoleLowersToWriteLine-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestConsoleLowersToWriteLine$'",
+    "status": 0,
+    "wall": 1.6390962160000981
+  },
+  "timing-TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$'",
+    "status": 0,
+    "wall": 2.3582227570000214
+  },
+  "timing-TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$'",
+    "status": 0,
+    "wall": 2.095878642000116
+  },
+  "timing-TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$'",
+    "status": 0,
+    "wall": 2.1458377060000657
+  },
+  "timing-TestWhatZeroOneRefusesIsRefusedWithAFix-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatZeroOneRefusesIsRefusedWithAFix$'",
+    "status": 0,
+    "wall": 2.1471419240001524
+  },
+  "timing-TestWhatZeroOneRefusesIsRefusedWithAFix-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatZeroOneRefusesIsRefusedWithAFix$'",
+    "status": 0,
+    "wall": 2.0304119739998896
+  },
+  "timing-TestWhatZeroOneRefusesIsRefusedWithAFix-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatZeroOneRefusesIsRefusedWithAFix$'",
+    "status": 0,
+    "wall": 2.0649972740000067
+  },
+  "timing-TestAMutableLocationSeenWiderIsRefused-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAMutableLocationSeenWiderIsRefused$'",
+    "status": 0,
+    "wall": 2.0997159870000814
+  },
+  "timing-TestAMutableLocationSeenWiderIsRefused-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAMutableLocationSeenWiderIsRefused$'",
+    "status": 0,
+    "wall": 2.113314097000057
+  },
+  "timing-TestAMutableLocationSeenWiderIsRefused-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAMutableLocationSeenWiderIsRefused$'",
+    "status": 0,
+    "wall": 2.170104798000011
+  },
+  "timing-TestAViewThatCantWriteIsNotRefused-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAViewThatCantWriteIsNotRefused$'",
+    "status": 0,
+    "wall": 1.956958689999965
+  },
+  "timing-TestAViewThatCantWriteIsNotRefused-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAViewThatCantWriteIsNotRefused$'",
+    "status": 0,
+    "wall": 2.0099836179999784
+  },
+  "timing-TestAViewThatCantWriteIsNotRefused-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAViewThatCantWriteIsNotRefused$'",
+    "status": 0,
+    "wall": 1.9999863329999243
+  },
+  "timing-TestATupleSeenAsAnArrayIsNotYet-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestATupleSeenAsAnArrayIsNotYet$'",
+    "status": 0,
+    "wall": 1.866345397999794
+  },
+  "timing-TestATupleSeenAsAnArrayIsNotYet-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestATupleSeenAsAnArrayIsNotYet$'",
+    "status": 0,
+    "wall": 1.815092335999907
+  },
+  "timing-TestATupleSeenAsAnArrayIsNotYet-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestATupleSeenAsAnArrayIsNotYet$'",
+    "status": 0,
+    "wall": 1.8357382749998123
+  },
+  "timing-TestAMethodReadAsAValueIsRefused-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAMethodReadAsAValueIsRefused$'",
+    "status": 0,
+    "wall": 1.8217041600000812
+  },
+  "timing-TestAMethodReadAsAValueIsRefused-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAMethodReadAsAValueIsRefused$'",
+    "status": 0,
+    "wall": 1.7389056539998364
+  },
+  "timing-TestAMethodReadAsAValueIsRefused-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run '^TestAMethodReadAsAValueIsRefused$'",
+    "status": 0,
+    "wall": 1.7628284079999048
+  },
+  "M01-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.5971566729999722
+  },
+  "M02-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4697034559999338
+  },
+  "M03-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4674892710002041
+  },
+  "M04-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4448779800000011
+  },
+  "M05-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.441798062999851
+  },
+  "M06-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.46524504500007424
+  },
+  "M07-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4439470899999378
+  },
+  "M08-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.45315424199998233
+  },
+  "M09-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.44563991700010774
+  },
+  "M10-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4786942009998256
+  },
+  "M11-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4485477240000364
+  },
+  "M12-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4597649080001247
+  },
+  "M13-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.45043790500017167
+  },
+  "M14-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.44262787099978596
+  },
+  "M15-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4525627230000282
+  },
+  "M16-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4567968619999192
+  },
+  "M17-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.45749519700007113
+  },
+  "M18-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.43719224200003737
+  },
+  "M19-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4598018140000022
+  },
+  "M20-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.5006445770000028
+  },
+  "switch-vet": {
+    "command": "gofmt -w internal/lower/library_object.go internal/lower/library_regex_callback_shape.go internal/lower/invariance.go internal/lower/refusals.go internal/lower/prelude.go internal/lower/diagnostics.go internal/lower/object.go internal/lower/statements.go internal/lower/lower.go && timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.46899939199988694
+  },
+  "M01": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 34.561674365000044
+  },
+  "M02": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 29.488604699000007
+  },
+  "M03": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 29.360426578999977
+  },
+  "M04": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 31.252454087999922
+  },
+  "M05": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 0,
+    "wall": 28.708703745000093
+  },
+  "M06": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 28.17565735900007
+  },
+  "M07": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 36.3130817440001
+  },
+  "M08": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 0,
+    "wall": 29.070605523999802
+  },
+  "M09": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 30.11355179499992
+  },
+  "M10": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 30.58033506699985
+  },
+  "M11": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 27.832707352999932
+  },
+  "M12": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 31.879860735999955
+  },
+  "M13": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 36.94703125499973
+  },
+  "M14": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 42.90379457999961
+  },
+  "M15": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 45.99783387499974
+  },
+  "M16": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 43.26162302099965
+  },
+  "M17": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 0,
+    "wall": 42.50623163
+  },
+  "M18": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 43.81851901200025
+  },
+  "M19": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 33.96060704699994,
+    "cache": "/tmp/u036/cache/M19-corrected",
+    "standalone": true
+  },
+  "M20": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 28.247206069000185
+  },
+  "P01": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 1.7299147640001138
+  },
+  "P01-TestObjectRefusalsExplainSoundness": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectRefusalsExplainSoundness$'",
+    "status": 1,
+    "wall": 1.8491901450001933
+  },
+  "P01-TestObjectUnprovenShapesStayNotYet": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestObjectUnprovenShapesStayNotYet$'",
+    "status": 1,
+    "wall": 1.683357710999644
+  },
+  "P01-TestLibraryRegexOffsetRequiresNoCaptures": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryRegexOffsetRequiresNoCaptures$'",
+    "status": 0,
+    "wall": 1.6850734800000282
+  },
+  "P01-TestLibraryStringRefusals": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestLibraryStringRefusals$'",
+    "status": 1,
+    "wall": 1.7538419820002673
+  },
+  "P01-TestConsoleLowersToWriteLine": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestConsoleLowersToWriteLine$'",
+    "status": 1,
+    "wall": 1.670067736999954
+  },
+  "P01-TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$'",
+    "status": 1,
+    "wall": 2.2293087530001685
+  },
+  "P01-TestWhatZeroOneRefusesIsRefusedWithAFix": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestWhatZeroOneRefusesIsRefusedWithAFix$'",
+    "status": 1,
+    "wall": 2.1956885629997487
+  },
+  "P01-TestAMutableLocationSeenWiderIsRefused": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAMutableLocationSeenWiderIsRefused$'",
+    "status": 1,
+    "wall": 2.1295290979996935
+  },
+  "P01-TestAViewThatCantWriteIsNotRefused": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAViewThatCantWriteIsNotRefused$'",
+    "status": 0,
+    "wall": 2.0087925839998206
+  },
+  "P01-TestATupleSeenAsAnArrayIsNotYet": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestATupleSeenAsAnArrayIsNotYet$'",
+    "status": 1,
+    "wall": 1.8228768399999353
+  },
+  "P01-TestAMethodReadAsAValueIsRefused": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAMethodReadAsAValueIsRefused$'",
+    "status": 1,
+    "wall": 1.7865324880003755
+  },
+  "P02": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 0,
+    "wall": 28.345045178999953
+  },
+  "M19-two-occurrences": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "status": 1,
+    "wall": 44.20448938199979
+  },
+  "P01-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.5103021770000851
+  },
+  "P02-vet": {
+    "command": "timeout 120 go vet ./internal/lower/",
+    "status": 0,
+    "wall": 0.4455464339998798
+  }
+}

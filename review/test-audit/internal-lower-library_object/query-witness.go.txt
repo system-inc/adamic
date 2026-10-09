@@ -1,0 +1,36 @@
+package lower
+
+import (
+ "context"
+ "fmt"
+ "os"
+ "path/filepath"
+ "testing"
+
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/system-inc/adamic/internal/load"
+)
+
+// Observation only: no expected-answer comparison and no mutation of existing tests.
+func TestU036QueryWitness(t *testing.T) {
+ source := "const pattern = /a/; const value: {readonly field: readonly [number, number]} = {field:[1,2]}; const target: {readonly field: readonly number[]} = {field:[]}; pattern;"
+ path:=filepath.Join(t.TempDir(),"main.a")
+ if err:=os.WriteFile(path,[]byte(source),0600);err!=nil{t.Fatal(err)}
+ program,err:=load.Load([]string{path});if err!=nil{t.Fatal(err)}
+ c,release:=program.Checker(context.Background(),program.Files()[0]);defer release()
+ l:=&lowering{program:program,checker:c}
+ var from,to *checker.Type
+ var pattern *ast.Node
+ var visit ast.Visitor
+ visit=func(n *ast.Node)bool {
+  if n.Kind==ast.KindVariableDeclaration {
+   switch n.Name().Text(){case "value":from=c.GetTypeAtLocation(n.Name());case "target":to=c.GetTypeAtLocation(n.Name())}
+  }
+  if n.Kind==ast.KindExpressionStatement && n.AsExpressionStatement().Expression.Kind==ast.KindIdentifier {pattern=n.AsExpressionStatement().Expression}
+  return n.ForEachChild(visit)
+ }
+ program.Files()[0].ForEachChild(visit)
+ fmt.Printf("const regex capture-free proof: %t\n",l.regexCallbackNoCaptures(pattern,0))
+ fmt.Printf("nested tuple-to-array query: %t\n",l.tupleWhereArrayGoes(from,to,0))
+}

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -14,7 +14,7 @@
+ 
+ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+ 	refused := func(reason string) (ir.Expression, bool, error) {
+-		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
++		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: ""}
+ 	}
+ 	switch name {
+ 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":

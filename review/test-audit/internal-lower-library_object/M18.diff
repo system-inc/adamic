@@ -1,0 +1,11 @@
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -65,7 +65,7 @@
+ 		return l.enumDeclaration(node)
+ 	case ast.KindClassDeclaration:
+ 		if l.function != nil {
+-			return nil, l.notYet(node, "a class inside a function")
++			return nil, l.notYet(node, "a nested class")
+ 		}
+ 		return l.staticDeclaration(node)
+ 	case ast.KindReturnStatement:

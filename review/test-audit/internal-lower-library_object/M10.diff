@@ -1,0 +1,11 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -208,7 +208,7 @@
+ // widenedElements walks an array's, a tuple's, a map's or a set's type arguments in from against
+ // to's, each a slot to can write unless it's read only.
+ func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+-	mutable := !l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
++	mutable := l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
+ 	return l.widenedArguments(from, to, mutable, visited)
+ }
+ 

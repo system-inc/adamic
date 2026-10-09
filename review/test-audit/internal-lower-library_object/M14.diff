@@ -1,0 +1,11 @@
+--- a/internal/lower/prelude.go
++++ b/internal/lower/prelude.go
+@@ -69,7 +69,7 @@
+ 	case "log":
+ 		return ir.Stdout, nil
+ 	case "error":
+-		return ir.Stderr, nil
++		return ir.Stdout, nil
+ 	}
+ 	return 0, l.notYet(callee, "console."+callee.Name().Text())
+ }
