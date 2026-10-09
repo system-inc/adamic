@@ -1,0 +1,72 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "go",
+      "build",
+      "./..."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/..."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-count=1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRuntimeFeatureMismatch$|^TestRuntimeFeatureSets$|^TestSplitTSGoRuntimeFeatures$|^TestSplitTSGoAgrees$|^TestTSGoBuildSeesTheProgramsFeatures$",
+      "-count=1",
+      "-timeout",
+      "20m",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "tools",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "./cmd/adamic-test262",
+      "-run",
+      "^TestFuzzerUsesProgramsFeatures$|^TestRunnerFeatureMismatchStopsAtLink$|^TestFuzzerSharesRuntimeLibrary$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "markdown",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^TestNativeMutantUsesProgramsFeatures$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0
+  }
+]
