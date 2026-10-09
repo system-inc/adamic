@@ -121,6 +121,13 @@ class VerdictTests(unittest.TestCase):
         self.assertIn("on Loom's side pool, Go tests only.", text)
         self.assertNotIn('side pool', self.send('codex/compiler-x', self.red)[0][1])
 
+    def test_a_red_at_merge_says_why_and_what_fixes_it(self):
+        log = ('fast gate: %s against main %s, tools x, on pool, class P\n'
+               "red: %s fast gate on Loom's side pool, first failure at merge after 0.0 s (conflicts with main 163086eb6986 in a/b_test.go c.go)\n") % (SHA, 'c' * 40, SHA)
+        text = self.send('codex/compiler-x', log)[0][1]
+        self.assertIn('red at merge before any test ran: it conflicts with main 163086eb6986 in a/b_test.go c.go. Merge main and push again', text)
+        self.assertNotIn('Go tests only', text)
+
     def test_no_all_caps_word_survives(self):
         log = self.red.replace('TestOwnershipShapes', 'TestJSONShapes')
         self.assertIn('Testjsonshapes', self.send('codex/compiler-x', log)[0][1])

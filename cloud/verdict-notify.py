@@ -169,7 +169,11 @@ def message(branch, sha, log, early=None):
     parts = ['Fast gate %s%s: %s %s' % (verdict, ' at its first failure (the complete run goes on)' if early is not None else '', branch, sha[:12])]
     if base:
         parts.append(' against %s %s' % (base.group(1), base.group(2)))
-    if verdict == 'red':
+    merge = re.search(r'first failure at merge after [\d.]+ s \((conflicts with [^)]*)\)', rest) if verdict == 'red' else None
+    if merge:
+        # Gated merged onto main's tip (#11ymb02): a conflict is red before any test runs, and only a merge of main fixes it.
+        parts.append(', red at merge before any test ran: it %s. Merge main and push again' % merge.group(1))
+    elif verdict == 'red':
         first = re.search(r'^FIRST FAILURE \((\S+?),[^\n]*\n(.*)$', text, re.M)
         if first:
             test = first.group(2).strip()
@@ -187,7 +191,7 @@ def message(branch, sha, log, early=None):
         took = re.search(r'fast gate in ([\d.]+ s)', rest)
         if took:
             parts.append(' in %s' % took.group(1))
-    if "Loom's side pool" in rest:
+    if "Loom's side pool" in rest and not merge:
         # The pool runs the Go tests only (#xt96xyp): the page says what the verdict covers.
         parts.append(" on Loom's side pool, Go tests only")
     parts.append('.')
