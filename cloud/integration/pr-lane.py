@@ -34,6 +34,10 @@ def run(*arguments):
     return subprocess.run(arguments, capture_output=True, text=True)
 
 
+def comment(number, body):
+    run("gh", "api", "-X", "POST", f"repos/{repository}/issues/{number}/comments", "-f", f"body={body}")
+
+
 def audit():
     # Every commit GitHub made on main's first-parent line since the last audit, checked by the lane's rule.
     run("git", "fetch", "-q", "origin", "main")
@@ -58,13 +62,16 @@ def audit():
 audit()
 
 
-listed = run("gh", "pr", "list", "--repo", repository, "--base", "main", "--state", "open", "--json", "number,headRefName,headRefOid,title,isDraft")
+# GitHub's REST API, not GraphQL: dozens of pull requests an hour spent the account's GraphQL limit on
+# Oct 9, and gh pr list and gh pr comment both draw on it. REST has its own.
+listed = run("gh", "api", "--paginate", f"repos/{repository}/pulls?state=open&base=main&per_page=100",
+             "--jq", ".[] | {number, draft, headRefName: .head.ref, sha: .head.sha, title}")
 if listed.returncode != 0:
-    sys.exit(f"gh pr list failed: {listed.stderr.strip()}")
-for pullRequest in json.loads(listed.stdout):
-    if pullRequest["isDraft"]:
+    sys.exit(f"listing pull requests failed: {listed.stderr.strip()}")
+for pullRequest in [json.loads(line) for line in listed.stdout.splitlines() if line.strip()]:
+    if pullRequest["draft"]:
         continue
-    number, sha = pullRequest["number"], pullRequest["headRefOid"]
+    number, sha = pullRequest["number"], pullRequest["sha"]
     refused = os.path.join(state, f"refused-{number}-{sha[:12]}")
     if os.path.exists(refused):
         continue
@@ -75,7 +82,7 @@ for pullRequest in json.loads(listed.stdout):
         handle.write(pushed.stdout + pushed.stderr)
     if pushed.returncode == 0:
         landed = [line for line in pushed.stdout.splitlines() if line.startswith("Pushed main")]
-        run("gh", "pr", "comment", str(number), "--repo", repository, "--body", f"Landed by integration's test-only lane: {landed[0] if landed else sha}")
+        comment(number, f"Landed by integration's test-only lane: {landed[0] if landed else sha}")
         print(f"landed #{number} {sha[:8]}")
         continue
     output = pushed.stdout + pushed.stderr
@@ -87,7 +94,7 @@ for pullRequest in json.loads(listed.stdout):
         print(f"raced #{number} {sha[:8]}, retrying next run")
         continue
     reason = (pushed.stderr.strip() or pushed.stdout.strip()).splitlines()[-1:]
-    run("gh", "pr", "comment", str(number), "--repo", repository, "--body",
+    comment(number,
         f"Not landed: integration's test-only lane takes only tests, testdata, review evidence, shard tables and the ruled stage 3 harness, and push-main said: {reason[0] if reason else 'no output'}. Push a fix to the branch and it's tried again, or send the branch to @system_adamic_integration for a gate.")
     open(refused, "w").close()
     print(f"refused #{number} {sha[:8]}: {reason[0] if reason else 'no output'}")
