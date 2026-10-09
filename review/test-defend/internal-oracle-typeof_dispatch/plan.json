@@ -1,0 +1,15 @@
+{
+  "D1": {
+    "cut": "JavaScript checkedViewField numeric receiver emission",
+    "oracle": "unchanged source Node counter output 7/1",
+    "menu": "change constant format template",
+    "change": "numeric receiver evaluation duplicated using indexed format operands"
+  },
+  "D2": {
+    "cut": "Lower recordNonNullCheck for static class field initializer",
+    "oracle": "inserted-check count >0, eager panic pin and backend agreement",
+    "menu": "return early",
+    "change": "skip recording for static property declaration assertions"
+  },
+  "matrix": "current checked-view, interface, non-null, readiness and nearby witness rows; bulk source/count fixtures replayed separately where reached"
+}

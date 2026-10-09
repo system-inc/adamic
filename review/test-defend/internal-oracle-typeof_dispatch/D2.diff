@@ -1,0 +1,14 @@
+diff --git a/internal/lower/non_null.go b/internal/lower/non_null.go
+index 33415dc4..03092fdd 100644
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -107,6 +107,9 @@ func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+ }
+ 
+ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
++	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(node.Parent, ast.ModifierFlagsStatic) {
++		return
++	}
+ 	counts := &l.result.NonNullChecks
+ 	if proven {
+ 		counts.Proven++

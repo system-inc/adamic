@@ -1,0 +1,46 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/non_null.go",
+    "old": "\" is null or undefined\"",
+    "new": "\" is absent\"",
+    "kind": "change constant",
+    "change": "change non-null assertion diagnostic suffix",
+    "lines": [
+      96
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "internal/native/view_fields.go",
+    "old": "cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))",
+    "new": "cString(property.View), e.cache(), property.Of, cString(name), cString(property.Name))",
+    "kind": "swap arguments",
+    "change": "swap checked-field lookup name and diagnostic name",
+    "lines": [
+      31
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "internal/javascript/view_fields.go",
+    "old": "e.values(property.ViewAllowed))",
+    "new": "\"\")",
+    "kind": "change option",
+    "change": "drop ordinary checked-field literal restrictions",
+    "lines": [
+      22
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "internal/native/emit_branches.go",
+    "old": "present = \"false\"",
+    "new": "present = \"true\"",
+    "kind": "change constant",
+    "change": "treat literal undefined/null as present in coalescing",
+    "lines": [
+      146
+    ]
+  }
+]

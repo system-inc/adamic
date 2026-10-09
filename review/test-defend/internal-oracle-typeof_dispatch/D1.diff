@@ -1,0 +1,11 @@
+diff --git a/internal/javascript/view_fields.go b/internal/javascript/view_fields.go
+index df6f632d..b402e748 100644
+--- a/internal/javascript/view_fields.go
++++ b/internal/javascript/view_fields.go
+@@ -19,5 +19,5 @@ func (e *emitter) checkedViewField(property ir.Property) string {
+ 	if expected == "" {
+ 		expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[property.Of]
+ 	}
+-	return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(property.Object), quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed))
++	return fmt.Sprintf("(%[4]d === 1 && %[1]s, adamicViewField(%[1]s, %[2]s, %[3]s, %[4]d, %[5]s, [%[6]s]))", e.value(property.Object), quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed))
+ }

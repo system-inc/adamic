@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T16:38:44.400161099Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T16:38:44.411611993Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T16:38:44.411701748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== RUN   TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:44.411747938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== PAUSE TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:44.411750672Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T16:38:44.411755409Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T16:38:44.411757312Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== CONT  TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:44.442763119Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"    view_fields_test.go:157: migrated fixture lost its inserted non-null check\n","OutputType":"error"}
+{"Time":"2026-10-09T16:38:44.442846124Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"--- FAIL: TestViewFieldInheritedStaticReadiness (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:44.442859865Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Elapsed":0.03}
+{"Time":"2026-10-09T16:38:44.442881067Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:44.444429645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.044s\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:44.444450577Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.044}

@@ -1,0 +1,70 @@
+{
+  "base": "09fe4b54913753188a9357982bfd47cdf36ef97c",
+  "rows": [
+    "TestTypeOfConstructorMutant",
+    "TestTypeOfStringLiteralMutant",
+    "TestTypeOfNullMutant",
+    "TestTypeOfNullSlotPresenceMutant",
+    "TestUnknownNarrowingMutants",
+    "TestRequiredViewFieldPrimitive",
+    "TestRequiredViewFieldOperandOnce",
+    "TestDefaultTaggedSourceViews",
+    "TestWASIShardUnion",
+    "TestWASIShardPlantedDisagreement",
+    "TestWASIShardPlantedFixture",
+    "TestViewFieldReadiness family"
+  ],
+  "test_functions": [
+    "TestTypeOfConstructorMutant",
+    "TestTypeOfStringLiteralMutant",
+    "TestTypeOfNullMutant",
+    "TestTypeOfNullSlotPresenceMutant",
+    "TestUnknownNarrowingMutants",
+    "TestRequiredViewFieldPrimitive",
+    "TestRequiredViewFieldOperandOnce",
+    "TestNarrowedFieldUsesSharedReadiness",
+    "TestViewFieldInheritedStaticReadiness",
+    "TestDefaultTaggedSourceViews",
+    "TestWASIShardUnion",
+    "TestWASIShardPlantedDisagreement",
+    "TestWASIShardPlantedFixture"
+  ],
+  "raw_failures": {
+    "M1": [
+      "TestViewFieldInheritedStaticReadiness",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "M2": [
+      "TestRequiredViewFieldOperandOnce",
+      "TestRequiredViewFieldPrimitive",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "M3": [
+      "TestDefaultTaggedSourceViews"
+    ],
+    "M4": [
+      "TestDefaultTaggedSourceViews",
+      "TestNarrowedFieldUsesSharedReadiness"
+    ]
+  },
+  "production_row_failures": {
+    "M1": [
+      "TestDefaultTaggedSourceViews",
+      "TestViewFieldReadiness family"
+    ],
+    "M2": [
+      "TestRequiredViewFieldOperandOnce",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "M3": [
+      "TestDefaultTaggedSourceViews"
+    ],
+    "M4": [
+      "TestDefaultTaggedSourceViews",
+      "TestViewFieldReadiness family"
+    ]
+  },
+  "witness_production_failures_excluded": true,
+  "outside_rows": "unknown"
+}

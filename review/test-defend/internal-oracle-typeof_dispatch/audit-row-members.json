@@ -1,0 +1,39 @@
+{
+  "TestTypeOfConstructorMutant": [
+    "TestTypeOfConstructorMutant"
+  ],
+  "TestTypeOfStringLiteralMutant": [
+    "TestTypeOfStringLiteralMutant"
+  ],
+  "TestTypeOfNullMutant": [
+    "TestTypeOfNullMutant"
+  ],
+  "TestTypeOfNullSlotPresenceMutant": [
+    "TestTypeOfNullSlotPresenceMutant"
+  ],
+  "TestUnknownNarrowingMutants": [
+    "TestUnknownNarrowingMutants"
+  ],
+  "TestRequiredViewFieldPrimitive": [
+    "TestRequiredViewFieldPrimitive"
+  ],
+  "TestRequiredViewFieldOperandOnce": [
+    "TestRequiredViewFieldOperandOnce"
+  ],
+  "TestDefaultTaggedSourceViews": [
+    "TestDefaultTaggedSourceViews"
+  ],
+  "TestWASIShardUnion": [
+    "TestWASIShardUnion"
+  ],
+  "TestWASIShardPlantedDisagreement": [
+    "TestWASIShardPlantedDisagreement"
+  ],
+  "TestWASIShardPlantedFixture": [
+    "TestWASIShardPlantedFixture"
+  ],
+  "TestViewFieldReadiness family": [
+    "TestNarrowedFieldUsesSharedReadiness",
+    "TestViewFieldInheritedStaticReadiness"
+  ]
+}
