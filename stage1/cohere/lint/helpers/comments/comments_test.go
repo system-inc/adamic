@@ -87,7 +87,7 @@ func oracle(t *testing.T) string {
 	return binary
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestCommentsMatchCohere(t *testing.T) {
 	path, _ := filepath.Abs("testdata/witnesses.json")
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
@@ -100,7 +100,7 @@ func TestCommentsMatchCohere(t *testing.T) {
 
 // The inventory assumes a common AST adapter. This comparison isolates that
 // contract from the separate stage-1 parser, using Go's actual traversal spans.
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestConsumerCommentHelpers(t *testing.T) {
 	original, _ := filepath.Abs("testdata/consumers.json")
 	goOracle := oracle(t)
@@ -117,7 +117,7 @@ func TestConsumerCommentHelpers(t *testing.T) {
 	t.Logf("Go, Node and sanitized native agree on %d consumer output lines with the stated AST adapter", bytes.Count(want, []byte("\n")))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestJsxParserGapIsExplicit(t *testing.T) {
 	data, err := os.ReadFile("testdata/parser-gaps.json")
 	if err != nil {
@@ -162,7 +162,7 @@ func TestJsxParserGapIsExplicit(t *testing.T) {
 
 // Removing the TSX adapter guard must compile and accept the known wrong parse,
 // rather than merely crashing on one of the other unsupported JSX forms.
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestJsxAdapterGuardMutant(t *testing.T) {
 	directory := t.TempDir()
 	for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {

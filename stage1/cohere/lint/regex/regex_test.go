@@ -63,7 +63,7 @@ func firstRow(a, b []byte) int {
 	return 0
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime cache.
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestFixedPatterns(t *testing.T) {
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")

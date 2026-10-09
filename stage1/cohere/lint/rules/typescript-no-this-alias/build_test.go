@@ -12,7 +12,7 @@ import (
 )
 
 // Compile the standalone owned profile in isolated scratch space on every gate.
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestCompileProfiles(t *testing.T) {
 	entry, err := filepath.Abs("profile.a")
 	if err != nil {
