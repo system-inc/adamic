@@ -1,0 +1,11 @@
+--- a/internal/lower/program_region_selection.go
++++ b/internal/lower/program_region_selection.go
+@@ -202,7 +202,7 @@
+ 		// when they are absent from the declared data fields.
+ 		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.programContainer(node.proven) {
+ 			for _, property := range f.l.checker.GetPropertiesOfType(node.proven) {
+-				if accessorSymbol(property) || f.isFunction(f.l.checker.GetTypeOfSymbol(property)) {
++				if accessorSymbol(property) {
+ 					return true
+ 				}
+ 			}

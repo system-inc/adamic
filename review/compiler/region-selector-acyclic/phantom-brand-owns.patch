@@ -1,0 +1,12 @@
+--- a/internal/lower/program_region_selection.go
++++ b/internal/lower/program_region_selection.go
+@@ -145,9 +145,6 @@
+ 	active := map[*checker.Type]bool{}
+ 	var member func(*checker.Type) bool
+ 	member = func(value *checker.Type) bool {
+-		if programScalarValue(value) {
+-			return false
+-		}
+ 		if active[value] {
+ 			return false
+ 		}

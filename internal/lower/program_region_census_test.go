@@ -279,7 +279,7 @@ func programRegionCensus(t *testing.T, indexed bool) {
 			}
 			if membership != expected {
 				why += "; differs from compiler reading (" + expected + "); provisional structural SCC selection"
-				t.Logf("compiler reading differs: %s got %s want %s (%s)", row[0], membership, expected, declared)
+				t.Errorf("compiler reading differs: %s got %s want %s (%s)", row[0], membership, expected, declared)
 			}
 		}
 		if err := writer.Write([]string{row[0], declared, membership, why, slotType}); err != nil {

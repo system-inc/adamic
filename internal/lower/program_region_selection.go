@@ -145,6 +145,9 @@ func (f *cycleFinder) programContainerMember(proven *checker.Type, selected map[
 	active := map[*checker.Type]bool{}
 	var member func(*checker.Type) bool
 	member = func(value *checker.Type) bool {
+		if programScalarValue(value) {
+			return false
+		}
 		if active[value] {
 			return false
 		}
@@ -166,9 +169,72 @@ func (f *cycleFinder) programContainerMember(proven *checker.Type, selected map[
 			}
 			return false
 		}
-		return !f.template(value) && !f.weak(value) && selected[cycleNode{proven: value}]
+		return !f.template(value) && !f.weak(value) && selected[cycleNode{proven: value}] && f.programOwnedCycle(value)
 	}
 	return member(proven)
+}
+
+// Structural views can place scalar records in a graph SCC. A container must
+// also have an owning path to recursive storage; views alone are not backlinks.
+// Unknown generic payloads and callable storage keep the conservative selection.
+func (f *cycleFinder) programOwnedCycle(proven *checker.Type) bool {
+	active, done := map[cycleNode]bool{}, map[cycleNode]bool{}
+	var visit func(cycleNode) bool
+	visit = func(node cycleNode) bool {
+		if active[node] {
+			return true
+		}
+		if done[node] {
+			return false
+		}
+		if node.proven != nil {
+			if programScalarValue(node.proven) {
+				return false
+			}
+			if f.weak(node.proven) {
+				return false
+			}
+			if f.template(node.proven) || node.proven.Flags()&checker.TypeFlagsUnknown != 0 || f.isFunction(node.proven) {
+				return true
+			}
+		}
+		// Interface methods and accessors can hide captures behind a view even
+		// when they are absent from the declared data fields.
+		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.programContainer(node.proven) {
+			for _, property := range f.l.checker.GetPropertiesOfType(node.proven) {
+				if accessorSymbol(property) || f.isFunction(f.l.checker.GetTypeOfSymbol(property)) {
+					return true
+				}
+			}
+		}
+		active[node] = true
+		for _, owned := range f.programOwningLinks(node) {
+			if visit(owned) {
+				return true
+			}
+		}
+		delete(active, node)
+		done[node] = true
+		return false
+	}
+	return visit(cycleNode{proven: proven})
+}
+
+// A primitive intersection is still primitive storage. In particular, numeric
+// serialization IDs may carry a phantom brand whose declared field is any.
+// That field is not an owned slot in the runtime number.
+func programScalarValue(proven *checker.Type) bool {
+	if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0 {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if programScalarValue(part) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // Empty-literal never[] views must not connect scalar scratch arrays/maps to a

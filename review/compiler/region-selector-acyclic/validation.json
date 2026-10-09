@@ -1,0 +1,29 @@
+{
+  "base": "52252d5a8ab0e0f977b98b7826bde79420643a99",
+  "census": {
+    "records": 1685,
+    "members": 1590,
+    "counted": 95,
+    "unresolved": 0,
+    "waiting": 77,
+    "removed_containers": 9,
+    "changed_declarations": 0
+  },
+  "tests": {
+    "lower_program": 18.251,
+    "oracle_program": 30.154,
+    "native_program": 63.429,
+    "counts": 198.562,
+    "call_target_readers": 40.44,
+    "payloads": 0.11,
+    "restored_indexed_census": 8.03,
+    "restored_pairwise_census": 15.84,
+    "node_projection": 0.18
+  },
+  "compiler_mutants_caught": 5,
+  "runtime_mutants_caught": 4,
+  "count_rows_changed": 0,
+  "new_fixtures": 0,
+  "vet": "passed",
+  "early_test_build_limits": 124
+}
