@@ -7,6 +7,7 @@ import (
 )
 
 func TestCallableNamespaceLimitsStayLoud(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
 		{"escape", "function f(){} namespace f {export const x=1;} const alias=f;", "callable namespace object"},
 		{"reflection", "function f(){} namespace f {export const x=1;} console.log(Object.keys(f).join(' '));", "callable namespace object"},
@@ -16,6 +17,7 @@ func TestCallableNamespaceLimitsStayLoud(t *testing.T) {
 		{"early", "function f(){} function h(){return f.x;} const value=h(); namespace f {export const x=1;}", "namespace read before runtime initialization"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, probe.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
@@ -26,6 +28,7 @@ func TestCallableNamespaceLimitsStayLoud(t *testing.T) {
 }
 
 func TestCallableNamespaceReceiverStaysLoud(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, "function f(this:{x:number}):number{return this.x;} namespace f {export const x=1;}")
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "different receivers") {

@@ -12,6 +12,7 @@ function identifier(node: Node): Identifier { return node as Identifier; }
 
 // Malformed constructions are admitted; their fields are checked when read.
 func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ name, source, reason string }{
 		{"complete", `const node: Node = { kind: 'identifier', pos: 0, name: 'ok' } as Identifier; console.log(identifier(node).name);`, ""},
 		{"missing payload", `const node: Node = { kind: 'identifier', pos: 0 }; console.log(identifier(node).name ?? 'missing');`, ""},
@@ -30,6 +31,7 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 		{"forged payload", `const name = 42 as unknown as string; console.log(identifier({ kind: 'identifier', pos: 0, name } as Identifier).name);`, "cast the runtime can't check"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, interfaceCastSource+test.source)
 			if test.reason == "" {
 				if err != nil {
@@ -44,6 +46,7 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 
 // Default admission has no environment switch.
 func TestDefaultTaggedInterfaceNeedsNoFlag(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, interfaceCastSource+`console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`)
 	if err != nil {
 		t.Fatalf("default admission: %v", err)
