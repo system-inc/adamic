@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -189,7 +189,7 @@
+ 		return nil, err
+ 	}
+ 	done := l.checker.GetPropertyOfType(step, "done")
+-	if done == nil || done.Flags&ast.SymbolFlagsOptional != 0 {
++	if done == nil || done.Flags&ast.SymbolFlagsOptional == 0 {
+ 		return nil, l.notYet(where, "an iterator result without a required boolean done field")
+ 	}
+ 	if of, known := l.representation(l.checker.GetTypeOfSymbol(done)); !known || of != ir.Boolean {
