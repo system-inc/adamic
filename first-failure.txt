@@ -1,0 +1,73 @@
+FIRST FAILURE (products, at 110.2 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_facts_cost_native
+ome/ahra/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x114b5c5e00c0, {0x114b5c6c0800, 0x200, 0x200})
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/home/ahra/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x114b5c91a0e8, {0x114b5c6c0800?, 0x114b5c873d68?, 0x0?})
+	/home/ahra/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x114b5c9174d0, {0x20cf038, 0x114b5c91a0e8})
+	/home/ahra/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x20cf158, 0x114b5c9174d0}, {0x20cf038, 0x114b5c91a0e8}, {0x0, 0x0, 0x0})
+	/home/ahra/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/home/ahra/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x114b5c91a0e8?, {0x20cf158?, 0x114b5c9174d0?})
+	/home/ahra/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x114b5c91a0e8, {0x20cf158, 0x114b5c9174d0})
+	/home/ahra/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x20cf158, 0x114b5c9174d0}, {0x20cf0b8, 0x114b5c91a0e8}, {0x0, 0x0, 0x0})
+	/home/ahra/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/home/ahra/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x114b5c816380?)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 35
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 25 [IO wait]:
+internal/poll.runtime_pollWait(0x7865b4358400, 0x72)
+	/home/ahra/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x114b5c49c280?, 0x114b5c87c000?, 0x0)
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x114b5c49c280, {0x114b5c87c000, 0x1300, 0x1300})
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+net.(*netFD).Read(0x114b5c49c280, {0x114b5c87c000?, 0x82?, 0x114b5c8299d8?})
+	/home/ahra/adamic-tools/go/src/net/fd_posix.go:68 +0x25
+net.(*conn).Read(0x114b5c468048, {0x114b5c87c000?, 0x114b5c829a00?, 0x0?})
+	/home/ahra/adamic-tools/go/src/net/net.go:196 +0x45
+crypto/tls.(*Conn).readFromUntil(0x114b5c78a008, {0x20d1638, 0x114b5c468048}, 0x114b5c829c20?)
+	/home/ahra/adamic-tools/go/src/crypto/tls/conn.go:820 +0xf4
+crypto/tls.(*Conn).readRecordOrCCS(0x114b5c78a008, 0x0)
+	/home/ahra/adamic-tools/go/src/crypto/tls/conn.go:626 +0x3fb
+crypto/tls.(*Conn).readRecord(...)
+	/home/ahra/adamic-tools/go/src/crypto/tls/conn.go:588
+crypto/tls.(*Conn).Read(0x114b5c78a008, {0x114b5c623000, 0x1000, 0x7865b41b7a00?})
+	/home/ahra/adamic-tools/go/src/crypto/tls/conn.go:1392 +0x148
+bufio.(*Reader).Read(0x114b5c8fdda0, {0x114b5c6f6044, 0x9, 0x720acd?})
+	/home/ahra/adamic-tools/go/src/bufio/bufio.go:245 +0x193
+io.ReadAtLeast({0x20cf518, 0x114b5c8fdda0}, {0x114b5c6f6044, 0x9, 0x9}, 0x9)
+	/home/ahra/adamic-tools/go/src/io/io.go:335 +0x83
+io.ReadFull(...)
+	/home/ahra/adamic-tools/go/src/io/io.go:354
+net/http/internal/http2.readFrameHeader({0x114b5c6f6044, 0x9, 0x1980?}, {0x20cf518?, 0x114b5c8fdda0?})
+	/home/ahra/adamic-tools/go/src/net/http/internal/http2/frame.go:252 +0x65
+net/http/internal/http2.(*Framer).ReadFrameHeader(0x114b5c6f6000)
+	/home/ahra/adamic-tools/go/src/net/http/internal/http2/frame.go:525 +0x67
+net/http/internal/http2.(*Framer).ReadFrame(0x114b5c6f6000)
+	/home/ahra/adamic-tools/go/src/net/http/internal/http2/frame.go:584 +0x18
+net/http/internal/http2.(*clientConnReadLoop).run(0x114b5c829fa8)
+	/home/ahra/adamic-tools/go/src/net/http/internal/http2/transport.go:2047 +0xdb
+net/http/internal/http2.(*ClientConn).readLoop(0x114b5c816380)
+	/home/ahra/adamic-tools/go/src/net/http/internal/http2/transport.go:1913 +0x52
+created by net/http/internal/http2.(*Transport).newClientConn in goroutine 24
+	/home/ahra/adamic-tools/go/src/net/http/internal/http2/transport.go:703 +0xda7
+
+(box load 22.7 on 64 cores at first failure)
+red: 88bd168f82e3d552120aaf84a9424a60028e6a49 fast gate, first failure at products after 110.2 s (coverage=0.0s tools=0.1s vet=3.1s smoke=13.7s determinism=17.4s build=23.9s products=112.1s tests=112.2s; 19 units over 30 s (1382 s, 0 on the burn-down, 0 drifted over); products over 30 s, listed not red: product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_record 90.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_native_asan 90.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_facts_cost_native 90.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_query_cost_native 90.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_binding_slot 90.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_scope_containment 90.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_first_binding 90.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native 85.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_missing_binding 84.3 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_checker 83.4 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native_asan 83.4 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_checker_asan 82.0 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_suite 64.7 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_suite_asan 55.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_stage0 49.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_six_oracle 46.7 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_type_symbol_archive 41.0 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_facts_cost_go 38.3 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_type_symbol_native 37.1 s; box load 19.5 on 64 cores at start, load 22.7 on 64 cores at first failure, load 21.7 on 64 cores at end; deferred to full gate: 0 tests; branch cloud/land-stack-floor1-88bd168f, session none), 7 fail, 64 pass
+stopped: superseded by cloud/land-stack-floor1-a6387274 a6387274d45017c17d2a4d23e6a4b171ab01db63
