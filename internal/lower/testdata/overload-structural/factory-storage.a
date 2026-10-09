@@ -1,0 +1,8 @@
+// a-check: refused result.value
+interface Result<T> { readonly value: T; }
+interface Other { readonly other: boolean; }
+const shared: Result<number> = { value: 7 };
+function narrowResult(): Result<number> { return shared; }
+function evaluate(): Result<number | string>;
+function evaluate(): Result<number | string> | Other { return narrowResult(); }
+console.log(`${evaluate().value}`);

@@ -1,0 +1,12 @@
+--- FAIL: TestFixtures (27.51s)
+    --- FAIL: TestFixtures/cycles (0.03s)
+        --- FAIL: TestFixtures/cycles/06_import_order_mutant/main.a (1.78s)
+            --- FAIL: TestFixtures/cycles/06_import_order_mutant/main.a/stage0 (0.00s)
+                fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet}
+        --- FAIL: TestFixtures/cycles/05_safe_load_read/main.a (2.49s)
+            --- FAIL: TestFixtures/cycles/05_safe_load_read/main.a/stage0 (0.00s)
+                fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet}
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	154.233s
+ok  	github.com/system-inc/adamic/internal/flow	368.155s
+FAIL

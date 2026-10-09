@@ -1,0 +1,11 @@
+interface Node { readonly name: string; }
+function visit<TNode extends Node>(node: TNode): TNode { return node; }
+const original = { name: 'node', extra: 7 };
+const seen = visit(original);
+console.log(`${seen === original}:${seen.extra}:${seen.name}`);
+function length<TNode extends { readonly length: number }>(node: TNode): number { return node.length; }
+console.log(`${length('abc')}:${length([1, 2])}`);
+// TNode occurs only in an object field, so inference leaves it unmapped.
+// Its constraint proves the read; the runtime tag retains the actual node.
+function name<TNode extends Node>(holder: { readonly node: TNode }): string { return holder.node.name; }
+console.log(name({ node: original }));

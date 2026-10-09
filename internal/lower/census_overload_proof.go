@@ -134,6 +134,9 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 				return false
 			}
 		}
+		if expression.Kind == ast.KindCallExpression && l.overloadReturnCall(expression, promised) {
+			return true
+		}
 		if predicateEffects(expression) {
 			return false
 		}
