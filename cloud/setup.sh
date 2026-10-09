@@ -171,6 +171,22 @@ if "$wasiSDK"; then
  step "wasi sdk ready ($wasiDirectory)"
 fi
 
+# Bootstrap without the hook: the cache program cannot cache its own build. Older branches and
+# bootstrap failures still warm Go's local cache, so a shared-cache outage never blocks setup.
+unset GOCACHEPROG
+gocacheprog=off
+if [ "${ADAMIC_GOCACHE_OFF:-0}" = 1 ]; then
+	step "shared cache off (ADAMIC_GOCACHE_OFF=1)"
+elif [ ! -d "$repository/cmd/adamic-gocacheprog" ]; then
+	step "shared cache off (cmd/adamic-gocacheprog absent)"
+elif (cd "$repository" && env -u GOCACHEPROG go build -o "$tools/bin/adamic-gocacheprog" ./cmd/adamic-gocacheprog) > "$run/gocacheprog.log" 2>&1; then
+	export GOCACHEPROG="$tools/bin/adamic-gocacheprog"
+	gocacheprog=on
+	step "shared cache ready"
+else
+	step "shared cache off (adamic-gocacheprog build failed; see $run/gocacheprog.log)"
+fi
+
 # One file every shell sources: the agent's shell in Codex is a different session from this one.
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
@@ -179,6 +195,13 @@ export GOPROXY="https://proxy.golang.org|direct"
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
+# Persist only a successful bootstrap; recheck opt-out and branch presence in later shells.
+# Credentials stay in the caller's environment: cloud setup never grants cache write trust.
+printf 'unset GOCACHEPROG\n' >> "$tools/env.sh"
+if [ "$gocacheprog" = on ]; then
+	printf 'if [ "${ADAMIC_GOCACHE_OFF:-0}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
+		"$repository/cmd/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" >> "$tools/env.sh"
+fi
 if "$wasiSDK"; then
  printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
 fi
@@ -222,7 +245,7 @@ step "build cache warm"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
-echo "setup: build-flags commit=$(git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(go version) clang=$(clang --version | head -n 1) node=$(node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests load-before=$loadBefore load-after=$(cat /proc/loadavg)"
+echo "setup: build-flags commit=$(git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(go version) clang=$(clang --version | head -n 1) node=$(node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gocacheprog=$gocacheprog load-before=$loadBefore load-after=$(cat /proc/loadavg)"
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"
