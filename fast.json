@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "unit",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "7e9abfd31097eeb43d88839a1f09a300fdbe92e5",
+  "branch": "codex/step32-entry-stops",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "7e9abfd31097eeb43d88839a1f09a300fdbe92e5",
+  "gated": "a7515279961b154314566a0986207f67c69a92a1",
+  "unplanned_packages_not_run": 53
+}
