@@ -18,7 +18,7 @@ func sourceExpression(node *ast.Node) string {
 // Only direct initializer syntax reserves an uninitialized slot. Assignments, returns,
 // and assertions outside initializer positions continue to use the nullish check.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
-	if node == nil {
+	if node == nil || l.checkedAssertionSource(node) {
 		return false
 	}
 	node = ast.SkipParentheses(node)
@@ -54,6 +54,26 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
 	finishWriteContracts(program)
+	// A record's named fields live in a counted table, not inline slots.
+	// Retain their representation checks even through a narrower parameter view.
+	if program.CheckedFields == nil {
+		program.CheckedFields = map[string]bool{}
+	}
+	markRecord := func(node any) bool {
+		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Record {
+			for _, field := range literal.Fields {
+				program.CheckedFields[field.Name] = true
+			}
+		}
+		if set, ok := node.(ir.SetProperty); ok && set.Record {
+			program.CheckedFields[set.Name] = true
+		}
+		return true
+	}
+	walk(program.Main, markRecord)
+	for _, function := range program.Functions {
+		walk(function.Body, markRecord)
+	}
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {
@@ -361,6 +381,11 @@ func readinessCalls(instruction *flow.Instruction) bool {
 // assertionInitializer recognizes syntax only; its operand is evaluated at the declaration.
 func assertionInitializer(node *ast.Node) bool {
 	return node != nil && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
+}
+
+// TypeScript assertions are eager checks, including in storage initializers.
+func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
+	return assertionInitializer(node) && !l.checkedAssertionSource(node)
 }
 
 func assertionVarList(list *ast.Node) bool {

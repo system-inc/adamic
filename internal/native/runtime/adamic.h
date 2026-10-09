@@ -570,6 +570,8 @@ typedef adamic_object adamic_record;
 typedef adamic_object adamic_record_iterator;
 
 adamic_record *adamic_record_new(bool reference_values);
+bool adamic_record_is(const adamic_object *object);
+adamic_value adamic_record_view(const adamic_record *, const char *, unsigned char, const char *, const char *);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);

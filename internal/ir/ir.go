@@ -26,6 +26,7 @@ type Program struct {
 	WriteChecks     []WriteCheck
 	// WriteContracts retain allocation declarations and their directional type proofs.
 	WriteContracts []*FieldContract
+	NonNullChecks  NonNullCheckCounts
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -82,6 +83,17 @@ type PredicateCallCheck struct {
 
 type PredicateDirectionCheck struct {
 	Direction, Status, Reason string
+}
+
+// NonNullCheckCounts records proven assertions and inserted nullish checks.
+type NonNullCheckCounts struct {
+	Proven, Checked int
+	Sites           []NonNullCheck
+}
+
+type NonNullCheck struct {
+	Where, Expression string
+	Proven            bool
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -248,6 +260,12 @@ type Local struct {
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
 
+	// NamespaceState stays unready until assigned when its type excludes undefined.
+	NamespaceState bool
+
+	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
+	NamespaceVar bool
+
 	// Function is the function that declares it, -1 for the module's top level.
 	Function int
 
@@ -375,7 +393,9 @@ type (
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
 		// ContractType is the allocation declaration, even when a later source view is broader.
-		ContractType    int
+		ContractType int
+		// Record uses counted own-key storage when indexed aliases can add fields.
+		Record          bool
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -615,6 +635,7 @@ type (
 		Array, Index Expression
 		Element      Type
 		Relative     bool
+		Optional     bool // array?.[index], skipping the index when the receiver is missing
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
@@ -1191,6 +1212,7 @@ type (
 		// WriteOrigin lets final allocation contracts protect aliases lowered earlier.
 		WriteOrigin   WriteCheck
 		WriteType     int
+		Record        bool // write into counted own-key storage
 		Uninitialized bool
 		Object        Expression
 		Name          string

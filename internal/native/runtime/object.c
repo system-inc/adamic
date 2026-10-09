@@ -18,6 +18,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 }
 
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
+	if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = adamic_object_new(shape);
 	for (size_t position = 0; position < shape->count; position++) {
@@ -41,6 +42,7 @@ adamic_object *adamic_object_copy(const adamic_object *source) { return adamic_o
 // adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
 // prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
 bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+	if (adamic_record_is(object)) return adamic_record_has_own(object, name);
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
 		size_t length = strlen(field);
@@ -160,6 +162,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
 // checked before reading any union member, including before following a possible reference.
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+	if (object != NULL && adamic_record_is(object)) return adamic_record_view(object, name, wanted, type, expression);
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
 	unsigned char actual = adamic_object_field_types(owner)[cache->index];

@@ -1,0 +1,15 @@
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/landable-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc
+git fetch origin > /tmp/landable-fetch.log 2>&1
+git merge origin/main > /tmp/landable-merge.log 2>&1
+# Nine content conflicts resolved. Runtime shape initializers completed.
+# Buffer overload pairing and discarded void results repaired after counts failures.
+go test ./internal/oracle ./cmd/adamic ./internal/lower ./internal/native -run 'TestCheckedWider|TestCheckedViewsNext|TestCheckedSignature|TestOptionalFunctionValueRelation|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusOverload|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestCheckedFlowContainerContractMutants|TestCheckedEmit|TestExplainCheckedWritesOutput|TestProvenRelations|TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestRuntimeFieldLayoutsAreIncluded|TestUniformFieldsMatchNode|TestCEndsInNewline|TestNativeAgreesWithNode/internal/oracle/testdata/(node_buffer_bom|collections|visits|set_foreach|map_foreach)' -count=1 -timeout 15m > /tmp/landable-focus-ready.log 2>&1
+python3 stage3/checked-writes/a-check.py --out /tmp/landable-a-check-delivery > /tmp/landable-acheck-delivery.log 2>&1
+go test ./stage3/fixtures -count=1 -timeout 15m > /tmp/landable-fixtures-delivery.log 2>&1
+go test ./stage1/... -run 'Gap|Gaps|Probes' -count=1 -timeout 15m > /tmp/landable-stage1-delivery.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 15m -args -update-counts > /tmp/landable-counts-ready.log 2>&1
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/landable-census-delivery.log > /tmp/landable-census-delivery-command.log 2>&1
+git diff --check

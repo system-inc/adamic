@@ -93,3 +93,42 @@ func (l *lowering) checkedMutableIdentity(from, to *checker.Type) bool {
 	keys, value := mapped.ConstraintType(), mapped.TemplateType()
 	return keys != nil && keys.Flags()&checker.TypeFlagsIndex != 0 && keys.AsIndexType().Target() == to && value != nil && value.Flags()&checker.TypeFlagsIndexedAccess != 0 && value.AsIndexedAccessType().ObjectType() == to && value.AsIndexedAccessType().IndexType() == mapped.TypeParameter()
 }
+
+// Compare one overload without assuming another overload accepts its arguments.
+func (l *lowering) checkedSignatureWidening(producing, receiving *checker.Signature, visited map[[2]*checker.Type]bool) *widening {
+	if l.censusNeverRestSignature(receiving) {
+		if l.censusDiscardedMarkerPredicate(producing, receiving) {
+			return nil
+		}
+		source, target := l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving)
+		if !l.checker.IsTypeAssignableTo(source, target) {
+			return &widening{source: source, target: target}
+		}
+		return l.widened(source, target, visited)
+	}
+	producing, receiving = l.checkedSignaturePair(producing, receiving)
+	fromParameters, toParameters := producing.Parameters(), receiving.Parameters()
+	for index, parameter := range fromParameters {
+		takes := l.censusCallableParameterType(parameter)
+		given := l.checker.GetUndefinedType()
+		if index < len(toParameters) {
+			given = l.censusCallableParameterType(toParameters[index])
+		}
+		if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
+			return &widening{source: takes, target: given, parameter: true}
+		}
+		if found := l.widened(given, takes, visited); found != nil {
+			return found
+		}
+	}
+	source, target := l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving)
+	// A void callback discards its result. It does not expose a writable slot
+	// or a value typed void to its caller.
+	if target.Flags() == checker.TypeFlagsVoid {
+		return nil
+	}
+	if !l.enumAssignable(source, target) || !l.checker.IsTypeAssignableTo(source, target) {
+		return &widening{source: source, target: target}
+	}
+	return l.widened(source, target, visited)
+}

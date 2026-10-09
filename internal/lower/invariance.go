@@ -113,40 +113,27 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
-		// A function receives each overload's arguments and exposes its result
-		// through that overload. Every receiving signature must be walked.
+		// Every receiving overload needs one producing overload that proves its
+		// complete argument and result relation. A failed candidate must not
+		// leave visited pairs that make a later candidate appear proven.
 		for _, receiving := range toSignatures {
-			producing := fromSignatures[0]
-			if l.censusNeverRestSignature(receiving) {
-				if l.censusDiscardedMarkerPredicate(producing, receiving) {
-					continue
+			var first *widening
+			for _, producing := range fromSignatures {
+				candidate := make(map[[2]*checker.Type]bool, len(visited))
+				for pair, seen := range visited {
+					candidate[pair] = seen
 				}
-				source, target := l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving)
-				if !l.checker.IsTypeAssignableTo(source, target) {
-					return &widening{source: source, target: target}
+				found := l.checkedSignatureWidening(producing, receiving, candidate)
+				if found == nil {
+					first = nil
+					break
 				}
-				if found := l.widened(source, target, visited); found != nil {
-					return found
-				}
-				continue
-			}
-			producing, receiving = l.checkedSignaturePair(producing, receiving)
-			fromParameters, toParameters := producing.Parameters(), receiving.Parameters()
-			for index, parameter := range fromParameters {
-				takes := l.censusCallableParameterType(parameter)
-				given := l.checker.GetUndefinedType()
-				if index < len(toParameters) {
-					given = l.censusCallableParameterType(toParameters[index])
-				}
-				if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
-					return &widening{source: takes, target: given, parameter: true}
-				}
-				if found := l.widened(given, takes, visited); found != nil {
-					return found
+				if first == nil {
+					first = found
 				}
 			}
-			if found := l.widened(l.checker.GetReturnTypeOfSignature(producing), l.checker.GetReturnTypeOfSignature(receiving), visited); found != nil {
-				return found
+			if first != nil {
+				return first
 			}
 		}
 		return nil
@@ -422,7 +409,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		l.typeMapper = l.checkedSiteMapper(node)
 	}
 	defer func() { l.typeMapper = outerMapper }()
-	if l.nodeFSFileReadOnlyArgument(node) {
+	if l.nodeFSFileReadOnlyArgument(node) || l.regexCallbackIntrinsicView(node) {
 		return nil
 	}
 	var own, contextual *checker.Type

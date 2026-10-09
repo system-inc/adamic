@@ -20,6 +20,9 @@ var updateCounts = flag.Bool("update-counts", false, "rewrite counts.md with the
 // countsPath is the checked-in table of every fixture's counts.
 const countsPath = "counts.md"
 
+// Extra counters register source witnesses that need an explicit frontend adapter.
+var additionalFixtureCounts []func(*testing.T) []string
+
 const countsHeader = `# Counts
 
 Every oracle fixture, input fixtures included, built counted (` + "`adamic build --count`" + `, runtime/count.h) and run once. Counts are deterministic, so a
@@ -138,7 +141,7 @@ func TestCountsAreRecorded(t *testing.T) {
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
-			if !fixture.lowers || uncounted[fixture.path] {
+			if !fixture.lowers || uncounted[fixture.path] || refusedAdamicNonNullFixture(fixture.path) {
 				continue
 			}
 			t.Run(fixture.path, func(t *testing.T) {
@@ -174,6 +177,9 @@ func TestCountsAreRecorded(t *testing.T) {
 	}
 	rows = append(rows, interfaceCastCounts(t)...)
 	rows = append(rows, checkedWriteCounts(t)...)
+	for _, count := range additionalFixtureCounts {
+		rows = append(rows, count(t)...)
+	}
 	var table strings.Builder
 	table.WriteString(countsHeader)
 	for _, row := range rows {

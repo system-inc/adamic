@@ -81,3 +81,29 @@ const receiver: Receiver = producer;
 		t.Fatalf("second receiving overload was not refused: %v", err)
 	}
 }
+
+func TestCheckedSignatureProducingOverloads(t *testing.T) {
+	_, err := lowerSource(t, `interface Producer {
+ handle(value: string): string;
+ handle(value: number): number;
+}
+interface Receiver {
+ handle(value: number): number;
+ handle(value: string): string;
+}
+function read(producer: Producer): void {
+ const receiver: Receiver = producer;
+ console.log(receiver.handle(1).toString());
+}
+`)
+	if err != nil {
+		t.Fatalf("safe producing overload was not selected: %v", err)
+	}
+}
+
+func TestCheckedSignatureDiscardedResult(t *testing.T) {
+	_, err := lowerSource(t, `const visit: (value: number) => void = (value: number): string => value.toString(); visit(1);`)
+	if err != nil {
+		t.Fatalf("a void callback result was treated as a stored slot: %v", err)
+	}
+}
