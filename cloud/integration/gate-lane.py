@@ -13,7 +13,7 @@ The candidates file, one line per landing (integration's to edit: a cut adds its
 
 usage (launchd com.adamic.gate-lane runs it every minute, from the merge tree): cloud/integration/gate-lane.py
 """
-import datetime, json, os, subprocess, sys
+import datetime, json, os, subprocess, sys, time
 
 directory = os.path.dirname(os.path.abspath(__file__))
 candidates = os.environ.get("GATE_LANE_CANDIDATES", os.path.expanduser("~/.adamic-integration/candidates"))
@@ -23,18 +23,51 @@ ahra = os.environ.get("GATE_LANE_AHRA", "cd ~/Projects/ahra && ahra")
 
 
 def git(*arguments):
-    return subprocess.run(["git", *arguments], capture_output=True, text=True).stdout.strip()
+    return subprocess.run(["git", *arguments], capture_output=True, text=True, timeout=25).stdout.strip()
+
+
+remoteRecords = []
+candidateCount = 0
+fetchedCount = 0
+
+
+def prepare(shas):
+    """Snapshot remote refs once; fetch changed records and gate merges together."""
+    global remoteRecords, fetchedCount
+    remote = [line.split("\t") for line in git(
+        "ls-remote", "origin", "refs/heads/gate-logs/*", "refs/gate-merges/*").splitlines() if "\t" in line]
+    # Merge objects are not available yet, so include their record prefixes before
+    # resolving which candidate is their second parent locally.
+    prefixes = {sha[:12] for sha in shas}
+    prefixes.update(sha[:12] for sha in git(
+        "for-each-ref", "refs/gate-merges", "--format=%(objectname)").splitlines())
+    prefixes.update(oid[:12] for oid, ref in remote if ref.startswith("refs/gate-merges/"))
+    local = dict(line.split(" ", 1)[::-1] for line in git(
+        "for-each-ref", "refs/remotes/origin/gate-logs", "--format=%(objectname) %(refname)").splitlines())
+    refspecs = []
+    remoteRecords = []
+    for oid, ref in remote:
+        if ref.startswith("refs/gate-merges/"):
+            refspecs.append("+%s:%s" % (ref, ref))
+        elif ref.split("/")[3] in prefixes and ref.rsplit("/", 1)[1] in ("fast", "fast-phases", "full-main"):
+            name = ref.removeprefix("refs/heads/")
+            remoteRecords.append(name)
+            destination = "refs/remotes/origin/" + name
+            if local.get(destination) != oid:
+                refspecs.append("+%s:%s" % (ref, destination))
+    fetchedCount = len(refspecs)
+    if refspecs:
+        git("fetch", "-q", "--no-tags", "origin", *refspecs)
 
 
 def records(sha):
     """The newest finished record set of sha: (stamp, 'full', ref) or (stamp, 'fast', ref, phases ref or None), or None."""
-    refs = [line.split("\t")[1].removeprefix("refs/heads/") for line in git("ls-remote", "origin", "refs/heads/gate-logs/%s/*" % sha[:12]).splitlines() if "\t" in line]
+    refs = [ref for ref in remoteRecords if ref.startswith("gate-logs/%s/" % sha[:12])]
     finished = {}
     for ref in refs:
         kind = ref.rsplit("/", 1)[1]
         if kind not in ("fast", "fast-phases", "full-main"):
             continue
-        git("fetch", "-q", "origin", "+refs/heads/%s:refs/remotes/origin/%s" % (ref, ref))
         status = git("show", "origin/%s:status.txt" % ref).split("\n")[0]
         if status.startswith(("green", "red")):
             finished[ref] = kind
@@ -51,7 +84,6 @@ def records(sha):
 def gateMerges(sha):
     """The shas Loom gated in sha's place: a candidate behind main's tip is gated as a merge onto it, kept at
     refs/gate-merges/<merge sha> with main as first parent and the candidate as second, and that merge is what lands."""
-    git("fetch", "-q", "origin", "+refs/gate-merges/*:refs/gate-merges/*")
     merges = []
     for line in git("for-each-ref", "refs/gate-merges", "--format=%(objectname) %(parent)").splitlines():
         fields = line.split()
@@ -74,7 +106,7 @@ def post(task, text):
     import tempfile
     with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as handle:
         handle.write(text)
-    ran = subprocess.run("%s tasks comment %s --role Agent --text-file %s" % (ahra, task, handle.name), shell=True, text=True, capture_output=True)
+    ran = subprocess.run("%s tasks comment %s --role Agent --text-file %s" % (ahra, task, handle.name), shell=True, text=True, capture_output=True, timeout=25)
     os.unlink(handle.name)
     if ran.returncode != 0 or "Comment added" not in ran.stdout + ran.stderr:
         print("could not post on %s: %s" % (task, (ran.stdout + ran.stderr).strip()[-300:]), flush=True)
@@ -93,8 +125,13 @@ def main():
     told = set(open(seen).read().split("\n")) if os.path.exists(seen) else set()
     if not os.path.exists(candidates):
         return
+    lines = open(candidates).read().splitlines()
+    valid = [line for line in lines if len(line.split("\t")) >= 3 and not line.startswith("#")]
+    global candidateCount
+    candidateCount = len(valid)
+    prepare([line.split("\t")[1] for line in valid])
     landed = set()
-    for line in open(candidates).read().splitlines():
+    for line in lines:
         fields = line.split("\t")
         if len(fields) < 3 or line.startswith("#"):
             continue
@@ -121,7 +158,7 @@ def main():
         # A gate merge names its candidate, so the landing and the task read which commit came in.
         label = gated[:8] if gated == sha else "%s (gate merge of %s)" % (gated[:8], sha[:8])
         published = git("log", "-1", "--format=%cI", "origin/" + found[1])
-        ran = subprocess.run(["bash", pushMain, *arguments, gated, "%s (gate lane)" % branch], capture_output=True, text=True)
+        ran = subprocess.run(["bash", pushMain, *arguments, gated, "%s (gate lane)" % branch], capture_output=True, text=True, timeout=25)
         now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         if ran.returncode == 0:
             pushed = [l for l in ran.stdout.splitlines() if l.startswith("Pushed main")]
@@ -141,4 +178,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    started = time.monotonic()
+    try:
+        main()
+    finally:
+        print("gate-lane: %d candidates, %d refs fetched, %.3f s" %
+              (candidateCount, fetchedCount, time.monotonic() - started), flush=True)

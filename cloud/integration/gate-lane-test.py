@@ -5,15 +5,15 @@ and waits on a hold (#43kay4z).
 
 usage: python3 cloud/integration/gate-lane-test.py
 """
-import os, subprocess, tempfile, unittest
+import os, subprocess, tempfile, unittest, shutil, time
 from pathlib import Path
 
-script = Path(__file__).with_name('gate-lane.py')
+script = Path(os.environ.get('GATE_LANE_SCRIPT', Path(__file__).with_name('gate-lane.py')))
 
 
 def git(directory, *arguments):
     return subprocess.run(['git', '-C', str(directory), '-c', 'user.name=t', '-c', 'user.email=t@t', *arguments],
-                          check=True, capture_output=True, text=True).stdout.strip()
+                          check=True, capture_output=True, text=True, timeout=25).stdout.strip()
 
 
 class GateLaneTests(unittest.TestCase):
@@ -44,8 +44,8 @@ class GateLaneTests(unittest.TestCase):
         index = str(tree) + '.index'
         environment = dict(os.environ, GIT_INDEX_FILE=index)
         gitDirectory = git(self.repository, 'rev-parse', '--absolute-git-dir')
-        subprocess.run(['git', '--git-dir', gitDirectory, '--work-tree', str(tree), 'add', '-A', '.'], env=environment, check=True)
-        written = subprocess.run(['git', '--git-dir', gitDirectory, 'write-tree'], env=environment, check=True, capture_output=True, text=True).stdout.strip()
+        subprocess.run(['git', '--git-dir', gitDirectory, '--work-tree', str(tree), 'add', '-A', '.'], env=environment, check=True, timeout=25)
+        written = subprocess.run(['git', '--git-dir', gitDirectory, 'write-tree'], env=environment, check=True, capture_output=True, text=True, timeout=25).stdout.strip()
         commit = git(self.repository, 'commit-tree', written, '-m', 'record')
         git(self.repository, 'push', '-q', 'origin', '%s:refs/heads/gate-logs/%s/%s/%s' % (commit, sha[:12], stamp, kind))
 
@@ -75,9 +75,54 @@ class GateLaneTests(unittest.TestCase):
         poster.write_text('#!/usr/bin/env bash\nfile=""; while [ $# -gt 0 ]; do [ "$1" = --text-file ] && file=$2; shift; done\n'
                           'cat "$file" >> %s; echo >> %s; echo "Comment added"\n' % (self.posts, self.posts))
         poster.chmod(0o755)
-        return subprocess.run(['python3', str(script)], cwd=self.repository, capture_output=True, text=True,
+        return subprocess.run(['python3', str(script)], cwd=self.repository, capture_output=True, text=True, timeout=30,
                               env=dict(os.environ, GATE_LANE_CANDIDATES=str(self.candidates), GATE_LANE_STATE=str(self.root / 'state'),
                                        GATE_LANE_PUSH_MAIN=str(fake), GATE_LANE_AHRA=str(poster)))
+
+    def test_network_calls_are_batched(self):
+        shas = [self.sha]
+        for number in range(2):
+            (self.repository / 'a.txt').write_text(str(number))
+            git(self.repository, 'add', '.')
+            git(self.repository, 'commit', '-qm', 'another candidate')
+            shas.append(git(self.repository, 'rev-parse', 'HEAD'))
+        for sha in shas:
+            for stamp in ('20261009T100000Z', '20261009T110000Z'):
+                for kind in ('fast', 'fast-phases', 'full-main'):
+                    self.record(stamp, kind, 'green: finished', sha)
+        for ref in git(self.repository, 'for-each-ref', 'refs/remotes/origin/gate-logs', '--format=%(refname)').splitlines():
+            git(self.repository, 'update-ref', '-d', ref)
+        self.candidates.write_text(''.join('cloud/land-%d\t%s\ttask%d\t\n' % (i, sha, i)
+                                           for i, sha in enumerate(shas)))
+        wrapper = self.root / 'bin'
+        wrapper.mkdir()
+        network = self.root / 'network'
+        real = shutil.which('git')
+        (wrapper / 'git').write_text('#!/usr/bin/env python3\nimport os, subprocess, sys\n'
+            'if sys.argv[1] in ("ls-remote", "fetch"):\n'
+            '    with open(%r, "a") as log: log.write(sys.argv[1] + "\\n")\n'
+            'sys.exit(subprocess.run([%r, *sys.argv[1:]], timeout=25).returncode)\n' % (str(network), real))
+        (wrapper / 'git').chmod(0o755)
+        previous = os.environ['PATH']
+        try:
+            os.environ['PATH'] = str(wrapper) + os.pathsep + previous
+            started = time.monotonic()
+            ran = self.run_lane(3)
+            elapsed = time.monotonic() - started
+            self.assertEqual(ran.returncode, 0, ran.stderr)
+            print('scratch run: %.3f s; %s' % (elapsed, ran.stdout.strip()))
+            calls = network.read_text().splitlines()
+            self.assertLessEqual(calls.count('ls-remote'), 1, calls)
+            self.assertLessEqual(calls.count('fetch'), 1, calls)
+            self.assertEqual(calls.count('fetch'), 1, calls)
+            self.assertIn('18 refs fetched', ran.stdout)
+            network.write_text('')
+            ran = self.run_lane(3)
+            self.assertEqual(ran.returncode, 0, ran.stderr)
+            self.assertEqual(network.read_text().splitlines().count('fetch'), 0)
+        finally:
+            os.environ['PATH'] = previous
+
 
     def test_it_lands_the_newest_finished_record_and_drops_the_line(self):
         self.record('20261009T100000Z', 'fast', 'red: old')
