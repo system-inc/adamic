@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+    oracle_test.go:753: gate cache node hit
+    oracle_test.go:753: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:774: stdout differs
+        node:   exit 0, stdout "0\n", stderr ""
+        native: exit 0, stdout "1\n", stderr ""
+    oracle_test.go:780: JavaScript backend: stdout differs
+        node:    exit 0, stdout "0\n", stderr ""
+        backend: exit 0, stdout "1\n", stderr ""
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a (0.07s)
+FAIL
+gate cache: native hits=3 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.108s
+FAIL

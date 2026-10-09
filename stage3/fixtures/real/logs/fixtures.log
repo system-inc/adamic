@@ -1,0 +1,90 @@
+=== RUN   TestFixtures
+=== PAUSE TestFixtures
+=== CONT  TestFixtures
+=== RUN   TestFixtures/real
+=== PAUSE TestFixtures/real
+=== CONT  TestFixtures/real
+=== RUN   TestFixtures/real/type-predicate/main.a
+=== PAUSE TestFixtures/real/type-predicate/main.a
+=== RUN   TestFixtures/real/non-null-assertion/main.a
+=== PAUSE TestFixtures/real/non-null-assertion/main.a
+=== RUN   TestFixtures/real/function-without-body/main.a
+=== PAUSE TestFixtures/real/function-without-body/main.a
+=== RUN   TestFixtures/real/prefix-unary-value/main.a
+=== PAUSE TestFixtures/real/prefix-unary-value/main.a
+=== RUN   TestFixtures/real/structural-method-statics/main.a
+=== PAUSE TestFixtures/real/structural-method-statics/main.a
+=== RUN   TestFixtures/real/generic-optional-return/main.a
+=== PAUSE TestFixtures/real/generic-optional-return/main.a
+=== RUN   TestFixtures/real/value-condition/main.a
+=== PAUSE TestFixtures/real/value-condition/main.a
+=== RUN   TestFixtures/real/binary-value-value/main.a
+=== PAUSE TestFixtures/real/binary-value-value/main.a
+=== RUN   TestFixtures/real/any-value/main.a
+=== PAUSE TestFixtures/real/any-value/main.a
+=== RUN   TestFixtures/real/optional-boolean-field/main.a
+=== PAUSE TestFixtures/real/optional-boolean-field/main.a
+=== CONT  TestFixtures/real/type-predicate/main.a
+=== CONT  TestFixtures/real/any-value/main.a
+=== CONT  TestFixtures/real/prefix-unary-value/main.a
+=== CONT  TestFixtures/real/optional-boolean-field/main.a
+=== CONT  TestFixtures/real/generic-optional-return/main.a
+=== RUN   TestFixtures/real/any-value/main.a/node
+=== RUN   TestFixtures/real/type-predicate/main.a/node
+=== RUN   TestFixtures/real/optional-boolean-field/main.a/node
+=== RUN   TestFixtures/real/prefix-unary-value/main.a/node
+=== RUN   TestFixtures/real/generic-optional-return/main.a/node
+=== RUN   TestFixtures/real/type-predicate/main.a/stage0
+=== CONT  TestFixtures/real/function-without-body/main.a
+=== RUN   TestFixtures/real/any-value/main.a/stage0
+=== CONT  TestFixtures/real/non-null-assertion/main.a
+=== RUN   TestFixtures/real/optional-boolean-field/main.a/stage0
+=== CONT  TestFixtures/real/binary-value-value/main.a
+=== RUN   TestFixtures/real/generic-optional-return/main.a/stage0
+=== CONT  TestFixtures/real/structural-method-statics/main.a
+=== RUN   TestFixtures/real/prefix-unary-value/main.a/stage0
+=== CONT  TestFixtures/real/value-condition/main.a
+=== RUN   TestFixtures/real/binary-value-value/main.a/node
+=== RUN   TestFixtures/real/value-condition/main.a/node
+=== RUN   TestFixtures/real/function-without-body/main.a/node
+=== RUN   TestFixtures/real/non-null-assertion/main.a/node
+=== RUN   TestFixtures/real/structural-method-statics/main.a/node
+=== RUN   TestFixtures/real/binary-value-value/main.a/stage0
+=== RUN   TestFixtures/real/non-null-assertion/main.a/stage0
+=== RUN   TestFixtures/real/function-without-body/main.a/stage0
+=== RUN   TestFixtures/real/value-condition/main.a/stage0
+=== RUN   TestFixtures/real/structural-method-statics/main.a/stage0
+--- PASS: TestFixtures (2.31s)
+    --- PASS: TestFixtures/real (0.00s)
+        --- PASS: TestFixtures/real/type-predicate/main.a (0.18s)
+            --- PASS: TestFixtures/real/type-predicate/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/type-predicate/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/any-value/main.a (0.18s)
+            --- PASS: TestFixtures/real/any-value/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/any-value/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/optional-boolean-field/main.a (0.21s)
+            --- PASS: TestFixtures/real/optional-boolean-field/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/optional-boolean-field/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/generic-optional-return/main.a (0.22s)
+            --- PASS: TestFixtures/real/generic-optional-return/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/generic-optional-return/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/prefix-unary-value/main.a (0.22s)
+            --- PASS: TestFixtures/real/prefix-unary-value/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/prefix-unary-value/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/binary-value-value/main.a (0.15s)
+            --- PASS: TestFixtures/real/binary-value-value/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/binary-value-value/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/non-null-assertion/main.a (0.20s)
+            --- PASS: TestFixtures/real/non-null-assertion/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/non-null-assertion/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/function-without-body/main.a (0.21s)
+            --- PASS: TestFixtures/real/function-without-body/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/function-without-body/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/value-condition/main.a (0.17s)
+            --- PASS: TestFixtures/real/value-condition/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/value-condition/main.a/stage0 (0.00s)
+        --- PASS: TestFixtures/real/structural-method-statics/main.a (0.18s)
+            --- PASS: TestFixtures/real/structural-method-statics/main.a/node (0.00s)
+            --- PASS: TestFixtures/real/structural-method-statics/main.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	2.724s

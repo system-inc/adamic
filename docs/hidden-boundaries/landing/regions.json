@@ -1,0 +1,380 @@
+{
+  "source_pin": "388096e6a83a4e9d287fb827f793c599ba1bf0ad",
+  "compiler": "ad2e8902c8454588d0f0716a3bc13a1673ef8265",
+  "all_adapted_hashes_verified": 82,
+  "scope": "All independently overlapping declarations in the eight assigned intervals; entire project loaded and registered. No corpus-wide claim.",
+  "regions": [
+    {
+      "label": "hidden-01-large",
+      "file": "transformers/declarations.ts",
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "start": 68180,
+      "end": 81805,
+      "bytes": 13625,
+      "before": {
+        "hidden_bytes": 13625,
+        "ranges": [
+          [
+            68180,
+            81805
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 13625,
+        "ranges": [
+          [
+            68180,
+            81805
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-01-small",
+      "file": "transformers/declarations.ts",
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "start": 82928,
+      "end": 89827,
+      "bytes": 6899,
+      "before": {
+        "hidden_bytes": 6899,
+        "ranges": [
+          [
+            82928,
+            89827
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 6899,
+        "ranges": [
+          [
+            82928,
+            89827
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-05-large",
+      "file": "transformers/es2018.ts",
+      "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88",
+      "start": 35690,
+      "end": 41768,
+      "bytes": 6078,
+      "before": {
+        "hidden_bytes": 5583,
+        "ranges": [
+          [
+            35690,
+            36087
+          ],
+          [
+            36483,
+            36992
+          ],
+          [
+            37091,
+            41768
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 5583,
+        "ranges": [
+          [
+            35690,
+            36087
+          ],
+          [
+            36483,
+            36992
+          ],
+          [
+            37091,
+            41768
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-05-small",
+      "file": "transformers/es2015.ts",
+      "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+      "start": 144178,
+      "end": 149926,
+      "bytes": 5748,
+      "before": {
+        "hidden_bytes": 5420,
+        "ranges": [
+          [
+            144178,
+            144610
+          ],
+          [
+            144839,
+            145083
+          ],
+          [
+            145182,
+            149926
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 5420,
+        "ranges": [
+          [
+            144178,
+            144610
+          ],
+          [
+            144839,
+            145083
+          ],
+          [
+            145182,
+            149926
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-06",
+      "file": "transformers/esDecorators.ts",
+      "sha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+      "start": 61324,
+      "end": 72741,
+      "bytes": 11417,
+      "before": {
+        "hidden_bytes": 11417,
+        "ranges": [
+          [
+            61324,
+            72741
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 1020,
+        "ranges": [
+          [
+            61665,
+            61755
+          ],
+          [
+            61858,
+            61958
+          ],
+          [
+            62407,
+            62493
+          ],
+          [
+            62902,
+            62952
+          ],
+          [
+            65225,
+            65317
+          ],
+          [
+            69170,
+            69305
+          ],
+          [
+            72267,
+            72734
+          ]
+        ]
+      },
+      "revealed_bytes": 10397
+    },
+    {
+      "label": "hidden-13",
+      "file": "transformers/es2017.ts",
+      "sha256": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755",
+      "start": 30237,
+      "end": 37526,
+      "bytes": 7289,
+      "before": {
+        "hidden_bytes": 7289,
+        "ranges": [
+          [
+            30237,
+            37526
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 6965,
+        "ranges": [
+          [
+            30561,
+            37526
+          ]
+        ]
+      },
+      "revealed_bytes": 324
+    },
+    {
+      "label": "hidden-14",
+      "file": "utilities.ts",
+      "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "start": 455532,
+      "end": 462634,
+      "bytes": 7102,
+      "before": {
+        "hidden_bytes": 7102,
+        "ranges": [
+          [
+            455532,
+            462634
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 5983,
+        "ranges": [
+          [
+            455663,
+            456560
+          ],
+          [
+            456642,
+            456735
+          ],
+          [
+            456871,
+            457602
+          ],
+          [
+            457675,
+            461483
+          ],
+          [
+            461628,
+            461735
+          ],
+          [
+            461784,
+            461874
+          ],
+          [
+            461919,
+            461992
+          ],
+          [
+            462033,
+            462117
+          ],
+          [
+            462396,
+            462496
+          ]
+        ]
+      },
+      "revealed_bytes": 1119
+    },
+    {
+      "label": "hidden-08",
+      "file": "utilities.ts",
+      "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "start": 356194,
+      "end": 365984,
+      "bytes": 9790,
+      "before": {
+        "hidden_bytes": 9790,
+        "ranges": [
+          [
+            356194,
+            365984
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 2360,
+        "ranges": [
+          [
+            356393,
+            356512
+          ],
+          [
+            356618,
+            356787
+          ],
+          [
+            356915,
+            357041
+          ],
+          [
+            357756,
+            357896
+          ],
+          [
+            358711,
+            358849
+          ],
+          [
+            359252,
+            359349
+          ],
+          [
+            359475,
+            359613
+          ],
+          [
+            359778,
+            359942
+          ],
+          [
+            360383,
+            360541
+          ],
+          [
+            361258,
+            361416
+          ],
+          [
+            361855,
+            361997
+          ],
+          [
+            362579,
+            362661
+          ],
+          [
+            362831,
+            362957
+          ],
+          [
+            363079,
+            363161
+          ],
+          [
+            363312,
+            363430
+          ],
+          [
+            363546,
+            363659
+          ],
+          [
+            363811,
+            364041
+          ],
+          [
+            365676,
+            365736
+          ]
+        ]
+      },
+      "revealed_bytes": 7430
+    }
+  ]
+}

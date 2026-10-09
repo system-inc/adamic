@@ -1,8 +1,7 @@
-package native_test
+package native
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -10,15 +9,9 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"runtime"
 	"strconv"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
-
-	"github.com/system-inc/adamic/internal/leakcheck"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const recordFixtures = "testdata/records"
@@ -34,10 +27,7 @@ func recordHarness(t *testing.T) string {
 
 func recordRun(binary string, arguments ...string) (string, string, error) {
 	command := exec.Command(binary, arguments...)
-	command.Env = append(os.Environ(), "UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1")
-	if runtime.GOOS == "linux" {
-		command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=0:halt_on_error=1")
-	}
+	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "LSAN_OPTIONS=exitcode=23", "UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1")
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err := command.Run()
@@ -68,12 +58,12 @@ func recordCheckCounts(t *testing.T, stderr string) {
 	t.Log(strings.TrimSpace(stderr))
 }
 
-// Every successful fixture is counted and sanitized, then checked by the shared leak helper.
+// Every successful fixture is counted and run with ASan, UBSan and Linux LeakSanitizer enabled.
 // The oracle uses Node's own Object operations and for...in, never the runtime's sort algorithm.
 func TestRecordsAgainstNode(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "records")
-	if err := native.Build(recordHarness(t), binary, native.Options{Sanitize: true, Count: true}); err != nil {
+	if err := Build(recordHarness(t), binary, Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"reads"}, {"references"}, {"iteration"}, {"numeric"}, {"workload", "1000000"}, {"bench", "1000"}} {
@@ -83,9 +73,6 @@ func TestRecordsAgainstNode(t *testing.T) {
 				t.Fatalf("native: %v\n%s", err, stderr)
 			}
 			recordCheckCounts(t, stderr)
-			if report := leakcheck.Report(t, recordHarness(t), binary, arguments...); report != "" {
-				t.Fatal(report)
-			}
 			want := recordNode(t, arguments...)
 			if arguments[0] == "bench" {
 				// Timing is observational. Only workload results are held byte for byte.
@@ -161,140 +148,93 @@ func recordDifference(a, b string) int {
 
 // Build a changed runtime in an isolated cache, without editing the working tree. Each mutant
 // changes production C, links successfully, and is rejected by the named external check.
-type recordMutantProgram struct {
-	binary, directory string
-}
-
-func recordMutant(t *testing.T, file, before, after string) recordMutantProgram {
+func recordMutant(t *testing.T, file, before, after string) string {
 	t.Helper()
-	directory := t.TempDir()
-	entries, err := os.ReadDir("runtime")
+	files, err := readRuntime(runtime, "runtime")
 	if err != nil {
 		t.Fatal(err)
 	}
 	found := false
-	for _, entry := range entries {
-		if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h")) {
-			continue
-		}
-		contents, err := os.ReadFile(filepath.Join("runtime", entry.Name()))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if entry.Name() == file {
-			if !strings.Contains(string(contents), before) {
+	for index := range files {
+		if files[index].name == file {
+			contents := string(files[index].contents)
+			if !strings.Contains(contents, before) {
 				t.Fatalf("mutant input missing in %s", file)
 			}
-			contents = []byte(strings.Replace(string(contents), before, after, 1))
+			files[index].contents = []byte(strings.Replace(contents, before, after, 1))
 			found = true
-		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), contents, 0o644); err != nil {
-			t.Fatal(err)
 		}
 	}
 	if !found {
 		t.Fatalf("runtime file missing: %s", file)
 	}
-	program := recordMutantProgram{filepath.Join(t.TempDir(), "mutant"), directory}
-	if err := program.build(recordHarness(t), program.binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		t.Fatalf("mutant must compile: %v", err)
-	}
-	return program
-}
-
-func (program recordMutantProgram) build(code, binary string, options native.Options) error {
-	library, err := native.RuntimeLibrary(program.directory, options)
-	if err != nil {
-		return err
-	}
-	source := binary + ".c"
-	if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
-		return err
-	}
-	arguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", binary, source)
-	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
-	arguments = append(arguments, "-lm")
-	output, err := exec.Command("clang", arguments...).CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("compile: %w\n%s", err, output)
-	}
-	return nil
-}
-
-func recordMutantLeaks(t *testing.T, program recordMutantProgram, arguments ...string) string {
-	t.Helper()
-	report, err := leakcheck.Check(leakcheck.Program{
-		C: recordHarness(t), Sanitized: program.binary, Counted: filepath.Join(t.TempDir(), "counted"),
-		BuildCounted: func(code, output string) error { return program.build(code, output, native.Options{Count: true}) },
-		Arguments:    func() []string { return arguments },
-		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
-			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-			defer cancel()
-			command := exec.CommandContext(ctx, name, arguments...)
-			command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-			command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-			command.WaitDelay = 5 * time.Second
-			command.Env = append(os.Environ(), environment...)
-			var stdout, stderr bytes.Buffer
-			command.Stdout, command.Stderr = &stdout, &stderr
-			err := command.Run()
-			if err != nil {
-				if _, ok := err.(*exec.ExitError); !ok {
-					t.Fatal(err)
-				}
-			}
-			return leakcheck.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
-		},
-	})
+	directory := t.TempDir()
+	compiler, err := exec.LookPath("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
-	return report
+	flags := Flags(Options{Sanitize: true, Count: true})
+	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	if err != nil {
+		t.Fatal(err)
+	}
+	cacheDirectory, err := os.UserCacheDir()
+	if err != nil {
+		t.Fatal(err)
+	}
+	library, err := cachedRuntime(files, flags, compiler, string(version), filepath.Join(cacheDirectory, "adamic", "record-mutants"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "main")
+	if err := os.WriteFile(source, []byte(recordHarness(t)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	arguments := append(flags, "-I", filepath.Dir(library), "-o", binary, source)
+	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments = append(arguments, "-lm")
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cache, err := newTestBuildCache(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command(compiler, arguments...)
+	command.Dir = repository
+	if output, err := cache.Command(command, directory); err != nil {
+		t.Fatalf("mutant must compile: %v\n%s", err, output)
+	}
+	return binary
+}
+
+var recordMutationCases = []struct {
+	name, file, before, after, mode, caught string
+}{
+	{"indices-in-insertion-order", "record.c", "qsort(indices, count, sizeof *indices, compare_indices);", "(void)compare_indices;", "semantics", "Node"},
+	{"uint32-max-as-index", "record.c", "number >= UINT32_MAX", "number > UINT32_MAX", "semantics", "Node"},
+	{"deleted-key-iterated", "record.c", "if (slot != NULL) {\n\t\t\t*key = candidate;\n\t\t\t*value = *slot;", "if (true) {\n\t\t\t*key = candidate;\n\t\t\t*value = slot == NULL ? (adamic_value){.number = 0} : *slot;", "iteration", "Node"},
+	{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
+	{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
+	{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
 }
 
 func TestRecordMutants(t *testing.T) {
 	t.Parallel()
-	for _, mutant := range []struct {
-		name, file, before, after, mode, caught string
-	}{
-		{"indices-in-insertion-order", "record.c", "qsort(indices, count, sizeof *indices, compare_indices);", "(void)compare_indices;", "semantics", "Node"},
-		{"uint32-max-as-index", "record.c", "number >= UINT32_MAX", "number > UINT32_MAX", "semantics", "Node"},
-		{"deleted-key-iterated", "record.c", "if (slot != NULL) {\n\t\t\t*key = candidate;\n\t\t\t*value = *slot;", "if (true) {\n\t\t\t*key = candidate;\n\t\t\t*value = slot == NULL ? (adamic_value){.number = 0} : *slot;", "iteration", "Node"},
-		{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
-		{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
-		{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
-	} {
+	shard := currentTestShard(t)
+	for index, mutant := range recordMutationCases {
+		if !shard.owns(index) {
+			continue
+		}
 		t.Run(mutant.name, func(t *testing.T) {
-			program := recordMutant(t, mutant.file, mutant.before, mutant.after)
-			if mutant.caught == "LeakSanitizer" {
-				report := recordMutantLeaks(t, program, mutant.mode)
-				if !strings.Contains(report, "LeakSanitizer") && !strings.Contains(report, "heap values leaked") {
-					t.Fatalf("leak mutant survived: %s", report)
-				}
-				counted := filepath.Join(t.TempDir(), "counted-proof")
-				if err := program.build(recordHarness(t), counted, native.Options{Count: true}); err != nil {
-					t.Fatal(err)
-				}
-				stdout, stderr, err := recordRun(counted, mutant.mode)
-				if err != nil {
-					t.Fatalf("counted mutant failed: %v\n%s", err, stderr)
-				}
-				proof := leakcheck.Unbalanced(leakcheck.Run{Stdout: []byte(stdout), Stderr: []byte(stderr)})
-				if !strings.Contains(proof, "heap values leaked") {
-					t.Fatalf("counted rule missed mutant: %s", proof)
-				}
-				t.Logf("shared check: %s; counted check: %s", report, proof)
-				return
-			}
-			stdout, stderr, err := recordRun(program.binary, mutant.mode)
+			binary := recordMutant(t, mutant.file, mutant.before, mutant.after)
+			stdout, stderr, err := recordRun(binary, mutant.mode)
 			if mutant.caught == "Node" {
 				if err != nil {
 					t.Fatalf("order mutant must finish without sanitizer failure: %v\n%s", err, stderr)
 				}
 				recordCheckCounts(t, stderr)
-				if report := recordMutantLeaks(t, program, mutant.mode); report != "" {
-					t.Fatal(report)
-				}
 				if want := recordNode(t, mutant.mode); stdout == want {
 					t.Fatal("Node comparison did not catch mutant")
 				}
@@ -318,8 +258,7 @@ func TestRecordReadMutants(t *testing.T) {
 		{"own-read-checked-as-missing", guardedMiss, "check_missing_member(key);", "reads"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
-			program := recordMutant(t, "record.c", mutant.before, mutant.after)
-			binary := program.binary
+			binary := recordMutant(t, "record.c", mutant.before, mutant.after)
 			if mutant.operation == "reads" {
 				stdout, stderr, err := recordRun(binary, "reads")
 				exit, ok := err.(*exec.ExitError)
@@ -334,9 +273,6 @@ func TestRecordReadMutants(t *testing.T) {
 				t.Fatalf("fallback mutant must finish without sanitizer failures: %v\n%s", err, stderr)
 			}
 			recordCheckCounts(t, stderr)
-			if report := recordMutantLeaks(t, program, mutant.operation, "toString"); report != "" {
-				t.Fatal(report)
-			}
 			if recordMemberStop(stdout, stderr, err, "toString") {
 				t.Fatal("exact stop contract did not catch mutant")
 			}
@@ -359,7 +295,7 @@ func TestRecordBenchmark(t *testing.T) {
 		t.Skip("set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons")
 	}
 	binary := filepath.Join(t.TempDir(), "records")
-	if err := native.Build(recordHarness(t), binary, native.Options{}); err != nil {
+	if err := Build(recordHarness(t), binary, Options{}); err != nil {
 		t.Fatal(err)
 	}
 	for _, size := range []int{1000, 10000, 100000, 1000000} {

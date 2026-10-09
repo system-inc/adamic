@@ -1,0 +1,3271 @@
+{
+  "limit_seconds": 30.0,
+  "budget_enforced": true,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "0/90",
+      "invocation_seconds": 5.00655276100224,
+      "group_seconds": 2.9,
+      "max_unit_seconds": 2.84,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_000000_002048",
+          "action": "pass",
+          "seconds": 2.84,
+          "run": "^TestDecodeASCII$/^native$/^cases_000000_002048$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "1/90",
+      "invocation_seconds": 4.92649849299778,
+      "group_seconds": 2.85,
+      "max_unit_seconds": 2.8,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_002048_004096",
+          "action": "pass",
+          "seconds": 2.8,
+          "run": "^TestDecodeASCII$/^native$/^cases_002048_004096$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "2/90",
+      "invocation_seconds": 4.964051555001788,
+      "group_seconds": 2.91,
+      "max_unit_seconds": 2.86,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_004096_006144",
+          "action": "pass",
+          "seconds": 2.86,
+          "run": "^TestDecodeASCII$/^native$/^cases_004096_006144$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "3/90",
+      "invocation_seconds": 4.946577915998205,
+      "group_seconds": 2.95,
+      "max_unit_seconds": 2.9,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_006144_008192",
+          "action": "pass",
+          "seconds": 2.9,
+          "run": "^TestDecodeASCII$/^native$/^cases_006144_008192$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "4/90",
+      "invocation_seconds": 4.973236194000492,
+      "group_seconds": 2.99,
+      "max_unit_seconds": 2.94,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_008192_010240",
+          "action": "pass",
+          "seconds": 2.94,
+          "run": "^TestDecodeASCII$/^native$/^cases_008192_010240$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "5/90",
+      "invocation_seconds": 5.021260060999339,
+      "group_seconds": 2.93,
+      "max_unit_seconds": 2.88,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_010240_012288",
+          "action": "pass",
+          "seconds": 2.88,
+          "run": "^TestDecodeASCII$/^native$/^cases_010240_012288$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "6/90",
+      "invocation_seconds": 4.750777785000537,
+      "group_seconds": 2.75,
+      "max_unit_seconds": 2.71,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_012288_014336",
+          "action": "pass",
+          "seconds": 2.71,
+          "run": "^TestDecodeASCII$/^native$/^cases_012288_014336$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "7/90",
+      "invocation_seconds": 4.755906031998165,
+      "group_seconds": 2.88,
+      "max_unit_seconds": 2.83,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_014336_016384",
+          "action": "pass",
+          "seconds": 2.83,
+          "run": "^TestDecodeASCII$/^native$/^cases_014336_016384$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "8/90",
+      "invocation_seconds": 4.624470487000508,
+      "group_seconds": 2.73,
+      "max_unit_seconds": 2.68,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_016384_018432",
+          "action": "pass",
+          "seconds": 2.68,
+          "run": "^TestDecodeASCII$/^native$/^cases_016384_018432$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "9/90",
+      "invocation_seconds": 4.59408844599966,
+      "group_seconds": 2.71,
+      "max_unit_seconds": 2.67,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_018432_020480",
+          "action": "pass",
+          "seconds": 2.67,
+          "run": "^TestDecodeASCII$/^native$/^cases_018432_020480$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "10/90",
+      "invocation_seconds": 4.598415761000069,
+      "group_seconds": 2.71,
+      "max_unit_seconds": 2.67,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_020480_022528",
+          "action": "pass",
+          "seconds": 2.67,
+          "run": "^TestDecodeASCII$/^native$/^cases_020480_022528$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "11/90",
+      "invocation_seconds": 4.733251173998724,
+      "group_seconds": 2.86,
+      "max_unit_seconds": 2.82,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_022528_024576",
+          "action": "pass",
+          "seconds": 2.82,
+          "run": "^TestDecodeASCII$/^native$/^cases_022528_024576$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "12/90",
+      "invocation_seconds": 4.626454172001104,
+      "group_seconds": 2.74,
+      "max_unit_seconds": 2.69,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_024576_026624",
+          "action": "pass",
+          "seconds": 2.69,
+          "run": "^TestDecodeASCII$/^native$/^cases_024576_026624$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "13/90",
+      "invocation_seconds": 4.683566572999553,
+      "group_seconds": 2.77,
+      "max_unit_seconds": 2.73,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_026624_028672",
+          "action": "pass",
+          "seconds": 2.73,
+          "run": "^TestDecodeASCII$/^native$/^cases_026624_028672$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "14/90",
+      "invocation_seconds": 4.742982525000116,
+      "group_seconds": 2.81,
+      "max_unit_seconds": 2.76,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_028672_030720",
+          "action": "pass",
+          "seconds": 2.76,
+          "run": "^TestDecodeASCII$/^native$/^cases_028672_030720$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "15/90",
+      "invocation_seconds": 4.8050592390027305,
+      "group_seconds": 2.8,
+      "max_unit_seconds": 2.75,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_030720_032768",
+          "action": "pass",
+          "seconds": 2.75,
+          "run": "^TestDecodeASCII$/^native$/^cases_030720_032768$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "16/90",
+      "invocation_seconds": 4.992726975997357,
+      "group_seconds": 3,
+      "max_unit_seconds": 2.95,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_032768_034816",
+          "action": "pass",
+          "seconds": 2.95,
+          "run": "^TestDecodeASCII$/^native$/^cases_032768_034816$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "17/90",
+      "invocation_seconds": 4.7608575979975285,
+      "group_seconds": 2.84,
+      "max_unit_seconds": 2.79,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_034816_036864",
+          "action": "pass",
+          "seconds": 2.79,
+          "run": "^TestDecodeASCII$/^native$/^cases_034816_036864$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "18/90",
+      "invocation_seconds": 5.01368971699776,
+      "group_seconds": 2.98,
+      "max_unit_seconds": 2.93,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_036864_038912",
+          "action": "pass",
+          "seconds": 2.93,
+          "run": "^TestDecodeASCII$/^native$/^cases_036864_038912$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "19/90",
+      "invocation_seconds": 4.937544332999096,
+      "group_seconds": 2.96,
+      "max_unit_seconds": 2.91,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_038912_040960",
+          "action": "pass",
+          "seconds": 2.91,
+          "run": "^TestDecodeASCII$/^native$/^cases_038912_040960$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "20/90",
+      "invocation_seconds": 4.863864129998547,
+      "group_seconds": 2.91,
+      "max_unit_seconds": 2.86,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_040960_043008",
+          "action": "pass",
+          "seconds": 2.86,
+          "run": "^TestDecodeASCII$/^native$/^cases_040960_043008$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "21/90",
+      "invocation_seconds": 4.928395328999613,
+      "group_seconds": 2.94,
+      "max_unit_seconds": 2.89,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_043008_045056",
+          "action": "pass",
+          "seconds": 2.89,
+          "run": "^TestDecodeASCII$/^native$/^cases_043008_045056$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "22/90",
+      "invocation_seconds": 4.914155025999207,
+      "group_seconds": 2.9,
+      "max_unit_seconds": 2.85,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_045056_047104",
+          "action": "pass",
+          "seconds": 2.85,
+          "run": "^TestDecodeASCII$/^native$/^cases_045056_047104$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "23/90",
+      "invocation_seconds": 5.217876828999579,
+      "group_seconds": 3.11,
+      "max_unit_seconds": 3.06,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_047104_049152",
+          "action": "pass",
+          "seconds": 3.06,
+          "run": "^TestDecodeASCII$/^native$/^cases_047104_049152$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "24/90",
+      "invocation_seconds": 4.9669226439982594,
+      "group_seconds": 2.95,
+      "max_unit_seconds": 2.9,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_049152_051200",
+          "action": "pass",
+          "seconds": 2.9,
+          "run": "^TestDecodeASCII$/^native$/^cases_049152_051200$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "25/90",
+      "invocation_seconds": 4.78995139700055,
+      "group_seconds": 2.95,
+      "max_unit_seconds": 2.9,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_051200_053248",
+          "action": "pass",
+          "seconds": 2.9,
+          "run": "^TestDecodeASCII$/^native$/^cases_051200_053248$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "26/90",
+      "invocation_seconds": 4.931260197998199,
+      "group_seconds": 2.93,
+      "max_unit_seconds": 2.88,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_053248_055296",
+          "action": "pass",
+          "seconds": 2.88,
+          "run": "^TestDecodeASCII$/^native$/^cases_053248_055296$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "27/90",
+      "invocation_seconds": 5.005297117000737,
+      "group_seconds": 3.1,
+      "max_unit_seconds": 3.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_055296_057344",
+          "action": "pass",
+          "seconds": 3.04,
+          "run": "^TestDecodeASCII$/^native$/^cases_055296_057344$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "28/90",
+      "invocation_seconds": 4.976365231003001,
+      "group_seconds": 3.05,
+      "max_unit_seconds": 3,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_057344_059392",
+          "action": "pass",
+          "seconds": 3,
+          "run": "^TestDecodeASCII$/^native$/^cases_057344_059392$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "29/90",
+      "invocation_seconds": 4.973705065000104,
+      "group_seconds": 2.94,
+      "max_unit_seconds": 2.89,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_059392_061440",
+          "action": "pass",
+          "seconds": 2.89,
+          "run": "^TestDecodeASCII$/^native$/^cases_059392_061440$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "30/90",
+      "invocation_seconds": 4.982836446000874,
+      "group_seconds": 2.95,
+      "max_unit_seconds": 2.9,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_061440_063488",
+          "action": "pass",
+          "seconds": 2.9,
+          "run": "^TestDecodeASCII$/^native$/^cases_061440_063488$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "31/90",
+      "invocation_seconds": 5.223026241998014,
+      "group_seconds": 3.15,
+      "max_unit_seconds": 3.1,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_063488_065536",
+          "action": "pass",
+          "seconds": 3.1,
+          "run": "^TestDecodeASCII$/^native$/^cases_063488_065536$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "32/90",
+      "invocation_seconds": 5.487165007998556,
+      "group_seconds": 3.28,
+      "max_unit_seconds": 3.23,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_065536_067584",
+          "action": "pass",
+          "seconds": 3.23,
+          "run": "^TestDecodeASCII$/^native$/^cases_065536_067584$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "33/90",
+      "invocation_seconds": 5.104238539999642,
+      "group_seconds": 3.18,
+      "max_unit_seconds": 3.13,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_067584_069632",
+          "action": "pass",
+          "seconds": 3.13,
+          "run": "^TestDecodeASCII$/^native$/^cases_067584_069632$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "34/90",
+      "invocation_seconds": 5.233747810998466,
+      "group_seconds": 3.06,
+      "max_unit_seconds": 3.01,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_069632_071680",
+          "action": "pass",
+          "seconds": 3.01,
+          "run": "^TestDecodeASCII$/^native$/^cases_069632_071680$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "35/90",
+      "invocation_seconds": 5.040841867001291,
+      "group_seconds": 3.09,
+      "max_unit_seconds": 3.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_071680_073728",
+          "action": "pass",
+          "seconds": 3.04,
+          "run": "^TestDecodeASCII$/^native$/^cases_071680_073728$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "36/90",
+      "invocation_seconds": 5.252523498998926,
+      "group_seconds": 3.24,
+      "max_unit_seconds": 3.19,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_073728_075776",
+          "action": "pass",
+          "seconds": 3.19,
+          "run": "^TestDecodeASCII$/^native$/^cases_073728_075776$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "37/90",
+      "invocation_seconds": 5.2965892249994795,
+      "group_seconds": 3.26,
+      "max_unit_seconds": 3.21,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_075776_077824",
+          "action": "pass",
+          "seconds": 3.21,
+          "run": "^TestDecodeASCII$/^native$/^cases_075776_077824$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "38/90",
+      "invocation_seconds": 4.8748517370004265,
+      "group_seconds": 2.97,
+      "max_unit_seconds": 2.93,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_077824_079872",
+          "action": "pass",
+          "seconds": 2.93,
+          "run": "^TestDecodeASCII$/^native$/^cases_077824_079872$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "39/90",
+      "invocation_seconds": 5.234100194997154,
+      "group_seconds": 3.21,
+      "max_unit_seconds": 3.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_079872_081920",
+          "action": "pass",
+          "seconds": 3.16,
+          "run": "^TestDecodeASCII$/^native$/^cases_079872_081920$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "40/90",
+      "invocation_seconds": 6.501847755000199,
+      "group_seconds": 4.47,
+      "max_unit_seconds": 4.42,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_081920_083968",
+          "action": "pass",
+          "seconds": 4.42,
+          "run": "^TestDecodeASCII$/^native$/^cases_081920_083968$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "41/90",
+      "invocation_seconds": 6.787885446003202,
+      "group_seconds": 4.56,
+      "max_unit_seconds": 4.51,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_083968_086016",
+          "action": "pass",
+          "seconds": 4.51,
+          "run": "^TestDecodeASCII$/^native$/^cases_083968_086016$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "42/90",
+      "invocation_seconds": 6.586230904998956,
+      "group_seconds": 4.51,
+      "max_unit_seconds": 4.47,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_086016_088064",
+          "action": "pass",
+          "seconds": 4.47,
+          "run": "^TestDecodeASCII$/^native$/^cases_086016_088064$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "43/90",
+      "invocation_seconds": 6.331038928998169,
+      "group_seconds": 4.3,
+      "max_unit_seconds": 4.26,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_088064_090112",
+          "action": "pass",
+          "seconds": 4.26,
+          "run": "^TestDecodeASCII$/^native$/^cases_088064_090112$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "44/90",
+      "invocation_seconds": 5.9808295059992815,
+      "group_seconds": 3.97,
+      "max_unit_seconds": 3.92,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/native/cases_090112_092014",
+          "action": "pass",
+          "seconds": 3.92,
+          "run": "^TestDecodeASCII$/^native$/^cases_090112_092014$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "45/90",
+      "invocation_seconds": 2.7145816669981286,
+      "group_seconds": 0.69,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_000000_002048",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_000000_002048$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "46/90",
+      "invocation_seconds": 2.727444635998836,
+      "group_seconds": 0.73,
+      "max_unit_seconds": 0.69,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_002048_004096",
+          "action": "pass",
+          "seconds": 0.69,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_002048_004096$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "47/90",
+      "invocation_seconds": 2.671214494999731,
+      "group_seconds": 0.76,
+      "max_unit_seconds": 0.72,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_004096_006144",
+          "action": "pass",
+          "seconds": 0.72,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_004096_006144$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "48/90",
+      "invocation_seconds": 2.647799661001045,
+      "group_seconds": 0.73,
+      "max_unit_seconds": 0.68,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_006144_008192",
+          "action": "pass",
+          "seconds": 0.68,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_006144_008192$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "49/90",
+      "invocation_seconds": 2.6622937909996836,
+      "group_seconds": 0.7,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_008192_010240",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_008192_010240$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "50/90",
+      "invocation_seconds": 2.623879973001749,
+      "group_seconds": 0.68,
+      "max_unit_seconds": 0.64,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_010240_012288",
+          "action": "pass",
+          "seconds": 0.64,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_010240_012288$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "51/90",
+      "invocation_seconds": 2.6777724109997507,
+      "group_seconds": 0.69,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_012288_014336",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_012288_014336$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "52/90",
+      "invocation_seconds": 2.66540302499925,
+      "group_seconds": 0.71,
+      "max_unit_seconds": 0.66,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_014336_016384",
+          "action": "pass",
+          "seconds": 0.66,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_014336_016384$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "53/90",
+      "invocation_seconds": 2.57276485300099,
+      "group_seconds": 0.72,
+      "max_unit_seconds": 0.68,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_016384_018432",
+          "action": "pass",
+          "seconds": 0.68,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_016384_018432$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "54/90",
+      "invocation_seconds": 2.625402738001867,
+      "group_seconds": 0.71,
+      "max_unit_seconds": 0.67,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_018432_020480",
+          "action": "pass",
+          "seconds": 0.67,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_018432_020480$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "55/90",
+      "invocation_seconds": 2.654196868999861,
+      "group_seconds": 0.68,
+      "max_unit_seconds": 0.63,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_020480_022528",
+          "action": "pass",
+          "seconds": 0.63,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_020480_022528$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "56/90",
+      "invocation_seconds": 2.51334376199884,
+      "group_seconds": 0.67,
+      "max_unit_seconds": 0.63,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_022528_024576",
+          "action": "pass",
+          "seconds": 0.63,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_022528_024576$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "57/90",
+      "invocation_seconds": 2.527983375999611,
+      "group_seconds": 0.68,
+      "max_unit_seconds": 0.64,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_024576_026624",
+          "action": "pass",
+          "seconds": 0.64,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_024576_026624$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "58/90",
+      "invocation_seconds": 2.7112773050030228,
+      "group_seconds": 0.73,
+      "max_unit_seconds": 0.68,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_026624_028672",
+          "action": "pass",
+          "seconds": 0.68,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_026624_028672$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "59/90",
+      "invocation_seconds": 2.700015638998593,
+      "group_seconds": 0.69,
+      "max_unit_seconds": 0.64,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_028672_030720",
+          "action": "pass",
+          "seconds": 0.64,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_028672_030720$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "60/90",
+      "invocation_seconds": 2.543325585000275,
+      "group_seconds": 0.68,
+      "max_unit_seconds": 0.63,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_030720_032768",
+          "action": "pass",
+          "seconds": 0.63,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_030720_032768$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "61/90",
+      "invocation_seconds": 2.6544364750006935,
+      "group_seconds": 0.83,
+      "max_unit_seconds": 0.78,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_032768_034816",
+          "action": "pass",
+          "seconds": 0.78,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_032768_034816$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "62/90",
+      "invocation_seconds": 2.697826645002351,
+      "group_seconds": 0.83,
+      "max_unit_seconds": 0.78,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_034816_036864",
+          "action": "pass",
+          "seconds": 0.78,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_034816_036864$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "63/90",
+      "invocation_seconds": 2.6667408510002133,
+      "group_seconds": 0.76,
+      "max_unit_seconds": 0.72,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_036864_038912",
+          "action": "pass",
+          "seconds": 0.72,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_036864_038912$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "64/90",
+      "invocation_seconds": 2.679173930999241,
+      "group_seconds": 0.74,
+      "max_unit_seconds": 0.69,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_038912_040960",
+          "action": "pass",
+          "seconds": 0.69,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_038912_040960$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "65/90",
+      "invocation_seconds": 2.672302530001616,
+      "group_seconds": 0.78,
+      "max_unit_seconds": 0.73,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_040960_043008",
+          "action": "pass",
+          "seconds": 0.73,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_040960_043008$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "66/90",
+      "invocation_seconds": 2.782878697002161,
+      "group_seconds": 0.75,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_043008_045056",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_043008_045056$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "67/90",
+      "invocation_seconds": 2.6324245640025765,
+      "group_seconds": 0.77,
+      "max_unit_seconds": 0.73,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_045056_047104",
+          "action": "pass",
+          "seconds": 0.73,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_045056_047104$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "68/90",
+      "invocation_seconds": 2.6950021740012744,
+      "group_seconds": 0.74,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_047104_049152",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_047104_049152$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "69/90",
+      "invocation_seconds": 2.6199950039990654,
+      "group_seconds": 0.76,
+      "max_unit_seconds": 0.71,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_049152_051200",
+          "action": "pass",
+          "seconds": 0.71,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_049152_051200$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "70/90",
+      "invocation_seconds": 2.7565374140031054,
+      "group_seconds": 0.76,
+      "max_unit_seconds": 0.71,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_051200_053248",
+          "action": "pass",
+          "seconds": 0.71,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_051200_053248$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "71/90",
+      "invocation_seconds": 2.6296960870022303,
+      "group_seconds": 0.74,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_053248_055296",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_053248_055296$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "72/90",
+      "invocation_seconds": 2.7881633110009716,
+      "group_seconds": 0.78,
+      "max_unit_seconds": 0.73,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_055296_057344",
+          "action": "pass",
+          "seconds": 0.73,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_055296_057344$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "73/90",
+      "invocation_seconds": 2.8691922030011483,
+      "group_seconds": 0.81,
+      "max_unit_seconds": 0.76,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_057344_059392",
+          "action": "pass",
+          "seconds": 0.76,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_057344_059392$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "74/90",
+      "invocation_seconds": 2.869785940001748,
+      "group_seconds": 0.76,
+      "max_unit_seconds": 0.71,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_059392_061440",
+          "action": "pass",
+          "seconds": 0.71,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_059392_061440$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "75/90",
+      "invocation_seconds": 2.815694622000592,
+      "group_seconds": 0.78,
+      "max_unit_seconds": 0.74,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_061440_063488",
+          "action": "pass",
+          "seconds": 0.74,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_061440_063488$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "76/90",
+      "invocation_seconds": 2.697133751997171,
+      "group_seconds": 0.75,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_063488_065536",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_063488_065536$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "77/90",
+      "invocation_seconds": 2.869430781000119,
+      "group_seconds": 0.82,
+      "max_unit_seconds": 0.78,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_065536_067584",
+          "action": "pass",
+          "seconds": 0.78,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_065536_067584$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "78/90",
+      "invocation_seconds": 2.6750624109990895,
+      "group_seconds": 0.75,
+      "max_unit_seconds": 0.71,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_067584_069632",
+          "action": "pass",
+          "seconds": 0.71,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_067584_069632$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "79/90",
+      "invocation_seconds": 2.665590141998109,
+      "group_seconds": 0.79,
+      "max_unit_seconds": 0.75,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_069632_071680",
+          "action": "pass",
+          "seconds": 0.75,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_069632_071680$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "80/90",
+      "invocation_seconds": 2.8259378149996337,
+      "group_seconds": 0.83,
+      "max_unit_seconds": 0.78,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_071680_073728",
+          "action": "pass",
+          "seconds": 0.78,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_071680_073728$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "81/90",
+      "invocation_seconds": 2.7721173139980237,
+      "group_seconds": 0.78,
+      "max_unit_seconds": 0.73,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_073728_075776",
+          "action": "pass",
+          "seconds": 0.73,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_073728_075776$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "82/90",
+      "invocation_seconds": 2.875749012000597,
+      "group_seconds": 0.9,
+      "max_unit_seconds": 0.85,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_075776_077824",
+          "action": "pass",
+          "seconds": 0.85,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_075776_077824$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "83/90",
+      "invocation_seconds": 2.8050382299988996,
+      "group_seconds": 0.84,
+      "max_unit_seconds": 0.79,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_077824_079872",
+          "action": "pass",
+          "seconds": 0.79,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_077824_079872$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "84/90",
+      "invocation_seconds": 2.8435596319977776,
+      "group_seconds": 0.78,
+      "max_unit_seconds": 0.74,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_079872_081920",
+          "action": "pass",
+          "seconds": 0.74,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_079872_081920$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "85/90",
+      "invocation_seconds": 3.1823412159974396,
+      "group_seconds": 1.29,
+      "max_unit_seconds": 1.24,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_081920_083968",
+          "action": "pass",
+          "seconds": 1.24,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_081920_083968$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "86/90",
+      "invocation_seconds": 3.3109895269990375,
+      "group_seconds": 1.31,
+      "max_unit_seconds": 1.26,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_083968_086016",
+          "action": "pass",
+          "seconds": 1.26,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_083968_086016$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "87/90",
+      "invocation_seconds": 3.357586543999787,
+      "group_seconds": 1.26,
+      "max_unit_seconds": 1.22,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_086016_088064",
+          "action": "pass",
+          "seconds": 1.22,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_086016_088064$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "88/90",
+      "invocation_seconds": 3.1818839740008116,
+      "group_seconds": 1.25,
+      "max_unit_seconds": 1.21,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_088064_090112",
+          "action": "pass",
+          "seconds": 1.21,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_088064_090112$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDecodeASCII",
+      "shard": "89/90",
+      "invocation_seconds": 3.0509473589991103,
+      "group_seconds": 1.16,
+      "max_unit_seconds": 1.12,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDecodeASCII/wasi/cases_090112_092014",
+          "action": "pass",
+          "seconds": 1.12,
+          "run": "^TestDecodeASCII$/^wasi$/^cases_090112_092014$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "0/18",
+      "invocation_seconds": 4.441774061000615,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.56,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_000000_065536",
+          "action": "pass",
+          "seconds": 2.56,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_000000_065536$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "1/18",
+      "invocation_seconds": 4.3134669079991,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.34,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_065536_131072",
+          "action": "pass",
+          "seconds": 2.34,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_065536_131072$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "2/18",
+      "invocation_seconds": 4.341437297000084,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.41,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_131072_196608",
+          "action": "pass",
+          "seconds": 2.41,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_131072_196608$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "3/18",
+      "invocation_seconds": 4.183602527999028,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.33,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_196608_262144",
+          "action": "pass",
+          "seconds": 2.33,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_196608_262144$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "4/18",
+      "invocation_seconds": 4.283478150002338,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.33,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_262144_327680",
+          "action": "pass",
+          "seconds": 2.33,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_262144_327680$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "5/18",
+      "invocation_seconds": 4.204591462999815,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.33,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_327680_393216",
+          "action": "pass",
+          "seconds": 2.33,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_327680_393216$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "6/18",
+      "invocation_seconds": 4.391061133999756,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.37,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_393216_458752",
+          "action": "pass",
+          "seconds": 2.37,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_393216_458752$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "7/18",
+      "invocation_seconds": 4.425777124000888,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.41,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_458752_524288",
+          "action": "pass",
+          "seconds": 2.41,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_458752_524288$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "8/18",
+      "invocation_seconds": 4.317425091998302,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.36,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_524288_589824",
+          "action": "pass",
+          "seconds": 2.36,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_524288_589824$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "9/18",
+      "invocation_seconds": 4.413666864998959,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.48,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_589824_655360",
+          "action": "pass",
+          "seconds": 2.48,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_589824_655360$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "10/18",
+      "invocation_seconds": 4.6451800579998235,
+      "group_seconds": 0.05,
+      "max_unit_seconds": 2.46,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_655360_720896",
+          "action": "pass",
+          "seconds": 2.46,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_655360_720896$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "11/18",
+      "invocation_seconds": 4.319778072996996,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.34,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_720896_786432",
+          "action": "pass",
+          "seconds": 2.34,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_720896_786432$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "12/18",
+      "invocation_seconds": 4.384560284001054,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.42,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_786432_851968",
+          "action": "pass",
+          "seconds": 2.42,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_786432_851968$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "13/18",
+      "invocation_seconds": 4.513095172998874,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.46,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_851968_917504",
+          "action": "pass",
+          "seconds": 2.46,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_851968_917504$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "14/18",
+      "invocation_seconds": 4.446292029999313,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.43,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_917504_983040",
+          "action": "pass",
+          "seconds": 2.43,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_917504_983040$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "15/18",
+      "invocation_seconds": 4.498648216998845,
+      "group_seconds": 0.05,
+      "max_unit_seconds": 2.5,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_983040_1048576",
+          "action": "pass",
+          "seconds": 2.5,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_983040_1048576$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "16/18",
+      "invocation_seconds": 4.352599588997691,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 2.41,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/points/cases_1048576_1114112",
+          "action": "pass",
+          "seconds": 2.41,
+          "run": "^TestNormalizeMatchesNode$/^points$/^cases_1048576_1114112$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeMatchesNode",
+      "shard": "17/18",
+      "invocation_seconds": 7.52912570099943,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 5.6,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeMatchesNode/contexts",
+          "action": "pass",
+          "seconds": 5.6,
+          "run": "^TestNormalizeMatchesNode$/^contexts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordMutants",
+      "shard": "0/6",
+      "invocation_seconds": 2.3092800979975436,
+      "group_seconds": 0.37,
+      "max_unit_seconds": 0.37,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordMutants/indices-in-insertion-order",
+          "action": "pass",
+          "seconds": 0.37,
+          "run": "^TestRecordMutants$/^indices\\-in\\-insertion\\-order$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordMutants",
+      "shard": "1/6",
+      "invocation_seconds": 2.3731956820010964,
+      "group_seconds": 0.37,
+      "max_unit_seconds": 0.37,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordMutants/uint32-max-as-index",
+          "action": "pass",
+          "seconds": 0.37,
+          "run": "^TestRecordMutants$/^uint32\\-max\\-as\\-index$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordMutants",
+      "shard": "2/6",
+      "invocation_seconds": 2.3126053850028256,
+      "group_seconds": 0.36,
+      "max_unit_seconds": 0.35,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordMutants/deleted-key-iterated",
+          "action": "pass",
+          "seconds": 0.35,
+          "run": "^TestRecordMutants$/^deleted\\-key\\-iterated$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordMutants",
+      "shard": "3/6",
+      "invocation_seconds": 2.420156144999055,
+      "group_seconds": 0.48,
+      "max_unit_seconds": 0.48,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordMutants/overwrite-key-leaked",
+          "action": "pass",
+          "seconds": 0.48,
+          "run": "^TestRecordMutants$/^overwrite\\-key\\-leaked$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordMutants",
+      "shard": "4/6",
+      "invocation_seconds": 2.561371641000733,
+      "group_seconds": 0.38,
+      "max_unit_seconds": 0.38,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordMutants/stored-key-freed",
+          "action": "pass",
+          "seconds": 0.38,
+          "run": "^TestRecordMutants$/^stored\\-key\\-freed$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordMutants",
+      "shard": "5/6",
+      "invocation_seconds": 2.2351316460008093,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.33,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordMutants/own-slot-null-read",
+          "action": "pass",
+          "seconds": 0.33,
+          "run": "^TestRecordMutants$/^own\\-slot\\-null\\-read$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "0/40",
+      "invocation_seconds": 3.063174776998494,
+      "group_seconds": 1.11,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_000000_000250",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_000000_000250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "1/40",
+      "invocation_seconds": 2.9756130120003945,
+      "group_seconds": 1.04,
+      "max_unit_seconds": 0.6,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_000250_000500",
+          "action": "pass",
+          "seconds": 0.6,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_000250_000500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "2/40",
+      "invocation_seconds": 3.0216699779994087,
+      "group_seconds": 1.04,
+      "max_unit_seconds": 0.59,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_000500_000750",
+          "action": "pass",
+          "seconds": 0.59,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_000500_000750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "3/40",
+      "invocation_seconds": 2.8733028240021667,
+      "group_seconds": 0.98,
+      "max_unit_seconds": 0.52,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_000750_001000",
+          "action": "pass",
+          "seconds": 0.52,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_000750_001000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "4/40",
+      "invocation_seconds": 2.94938171800095,
+      "group_seconds": 1.05,
+      "max_unit_seconds": 0.61,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_001000_001250",
+          "action": "pass",
+          "seconds": 0.61,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_001000_001250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "5/40",
+      "invocation_seconds": 3.16053601800013,
+      "group_seconds": 1.15,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_001250_001500",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_001250_001500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "6/40",
+      "invocation_seconds": 3.1792127920016355,
+      "group_seconds": 1.15,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_001500_001750",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_001500_001750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "7/40",
+      "invocation_seconds": 3.0747421109990682,
+      "group_seconds": 1.07,
+      "max_unit_seconds": 0.62,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_001750_002000",
+          "action": "pass",
+          "seconds": 0.62,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_001750_002000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "8/40",
+      "invocation_seconds": 2.961846140002308,
+      "group_seconds": 1.05,
+      "max_unit_seconds": 0.58,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_002000_002250",
+          "action": "pass",
+          "seconds": 0.58,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_002000_002250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "9/40",
+      "invocation_seconds": 2.9853760170008172,
+      "group_seconds": 1.03,
+      "max_unit_seconds": 0.56,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_002250_002500",
+          "action": "pass",
+          "seconds": 0.56,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_002250_002500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "10/40",
+      "invocation_seconds": 3.0023651119990973,
+      "group_seconds": 1.05,
+      "max_unit_seconds": 0.61,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_002500_002750",
+          "action": "pass",
+          "seconds": 0.61,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_002500_002750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "11/40",
+      "invocation_seconds": 3.029498848998628,
+      "group_seconds": 1.06,
+      "max_unit_seconds": 0.6,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_002750_003000",
+          "action": "pass",
+          "seconds": 0.6,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_002750_003000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "12/40",
+      "invocation_seconds": 2.9363986469979864,
+      "group_seconds": 1,
+      "max_unit_seconds": 0.55,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_003000_003250",
+          "action": "pass",
+          "seconds": 0.55,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_003000_003250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "13/40",
+      "invocation_seconds": 3.0445670260014595,
+      "group_seconds": 1.15,
+      "max_unit_seconds": 0.69,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_003250_003500",
+          "action": "pass",
+          "seconds": 0.69,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_003250_003500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "14/40",
+      "invocation_seconds": 3.236228616999142,
+      "group_seconds": 1.18,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_003500_003750",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_003500_003750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "15/40",
+      "invocation_seconds": 3.160145982998074,
+      "group_seconds": 1.03,
+      "max_unit_seconds": 0.54,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_003750_004000",
+          "action": "pass",
+          "seconds": 0.54,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_003750_004000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "16/40",
+      "invocation_seconds": 2.954118900001049,
+      "group_seconds": 0.99,
+      "max_unit_seconds": 0.51,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_004000_004250",
+          "action": "pass",
+          "seconds": 0.51,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_004000_004250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "17/40",
+      "invocation_seconds": 3.0866215380010544,
+      "group_seconds": 1.18,
+      "max_unit_seconds": 0.7,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_004250_004500",
+          "action": "pass",
+          "seconds": 0.7,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_004250_004500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "18/40",
+      "invocation_seconds": 3.1159444129989424,
+      "group_seconds": 1.13,
+      "max_unit_seconds": 0.66,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_004500_004750",
+          "action": "pass",
+          "seconds": 0.66,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_004500_004750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "19/40",
+      "invocation_seconds": 3.084013215997402,
+      "group_seconds": 1.11,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_004750_005000",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_004750_005000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "20/40",
+      "invocation_seconds": 3.0212531719989784,
+      "group_seconds": 1.09,
+      "max_unit_seconds": 0.62,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_005000_005250",
+          "action": "pass",
+          "seconds": 0.62,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_005000_005250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "21/40",
+      "invocation_seconds": 3.051799838001898,
+      "group_seconds": 1.11,
+      "max_unit_seconds": 0.66,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_005250_005500",
+          "action": "pass",
+          "seconds": 0.66,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_005250_005500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "22/40",
+      "invocation_seconds": 3.099184417998913,
+      "group_seconds": 1.08,
+      "max_unit_seconds": 0.63,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_005500_005750",
+          "action": "pass",
+          "seconds": 0.63,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_005500_005750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "23/40",
+      "invocation_seconds": 3.0611394589977863,
+      "group_seconds": 1.08,
+      "max_unit_seconds": 0.62,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_005750_006000",
+          "action": "pass",
+          "seconds": 0.62,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_005750_006000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "24/40",
+      "invocation_seconds": 3.1879895659985777,
+      "group_seconds": 1.2,
+      "max_unit_seconds": 0.72,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_006000_006250",
+          "action": "pass",
+          "seconds": 0.72,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_006000_006250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "25/40",
+      "invocation_seconds": 3.215422392000619,
+      "group_seconds": 1.1,
+      "max_unit_seconds": 0.64,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_006250_006500",
+          "action": "pass",
+          "seconds": 0.64,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_006250_006500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "26/40",
+      "invocation_seconds": 3.063895818999299,
+      "group_seconds": 1.12,
+      "max_unit_seconds": 0.63,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_006500_006750",
+          "action": "pass",
+          "seconds": 0.63,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_006500_006750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "27/40",
+      "invocation_seconds": 2.9730224599989015,
+      "group_seconds": 0.99,
+      "max_unit_seconds": 0.53,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_006750_007000",
+          "action": "pass",
+          "seconds": 0.53,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_006750_007000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "28/40",
+      "invocation_seconds": 3.1549767760006944,
+      "group_seconds": 1.08,
+      "max_unit_seconds": 0.62,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_007000_007250",
+          "action": "pass",
+          "seconds": 0.62,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_007000_007250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "29/40",
+      "invocation_seconds": 3.0459050819990807,
+      "group_seconds": 1.08,
+      "max_unit_seconds": 0.62,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_007250_007500",
+          "action": "pass",
+          "seconds": 0.62,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_007250_007500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "30/40",
+      "invocation_seconds": 3.198293534002005,
+      "group_seconds": 1.3,
+      "max_unit_seconds": 0.82,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_007500_007750",
+          "action": "pass",
+          "seconds": 0.82,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_007500_007750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "31/40",
+      "invocation_seconds": 3.1185781200001657,
+      "group_seconds": 1.03,
+      "max_unit_seconds": 0.57,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_007750_008000",
+          "action": "pass",
+          "seconds": 0.57,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_007750_008000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "32/40",
+      "invocation_seconds": 3.1345094150019577,
+      "group_seconds": 1.15,
+      "max_unit_seconds": 0.66,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_008000_008250",
+          "action": "pass",
+          "seconds": 0.66,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_008000_008250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "33/40",
+      "invocation_seconds": 3.0699220030001015,
+      "group_seconds": 1.04,
+      "max_unit_seconds": 0.58,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_008250_008500",
+          "action": "pass",
+          "seconds": 0.58,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_008250_008500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "34/40",
+      "invocation_seconds": 3.0213162190011644,
+      "group_seconds": 1.04,
+      "max_unit_seconds": 0.56,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_008500_008750",
+          "action": "pass",
+          "seconds": 0.56,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_008500_008750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "35/40",
+      "invocation_seconds": 2.948146037000697,
+      "group_seconds": 1.07,
+      "max_unit_seconds": 0.63,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_008750_009000",
+          "action": "pass",
+          "seconds": 0.63,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_008750_009000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "36/40",
+      "invocation_seconds": 3.090781736998906,
+      "group_seconds": 1.14,
+      "max_unit_seconds": 0.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_009000_009250",
+          "action": "pass",
+          "seconds": 0.65,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_009000_009250$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "37/40",
+      "invocation_seconds": 2.9111396169973887,
+      "group_seconds": 1.03,
+      "max_unit_seconds": 0.57,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_009250_009500",
+          "action": "pass",
+          "seconds": 0.57,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_009250_009500$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "38/40",
+      "invocation_seconds": 2.970608228999481,
+      "group_seconds": 1,
+      "max_unit_seconds": 0.55,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_009500_009750",
+          "action": "pass",
+          "seconds": 0.55,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_009500_009750$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeRandomNode",
+      "shard": "39/40",
+      "invocation_seconds": 2.9298988830014423,
+      "group_seconds": 0.99,
+      "max_unit_seconds": 0.54,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeRandomNode/cases_009750_010000",
+          "action": "pass",
+          "seconds": 0.54,
+          "run": "^TestRegExpBytecodeRandomNode$/^cases_009750_010000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitTSGoAgrees",
+      "shard": "0/2",
+      "invocation_seconds": 9.602278333000868,
+      "group_seconds": 7.69,
+      "max_unit_seconds": 0.55,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitTSGoAgrees/cache_0",
+          "action": "pass",
+          "seconds": 0.55,
+          "run": "^TestSplitTSGoAgrees$/^cache_0$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitTSGoAgrees",
+      "shard": "1/2",
+      "invocation_seconds": 16.277178846001334,
+      "group_seconds": 14.37,
+      "max_unit_seconds": 7.28,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitTSGoAgrees/cache_1",
+          "action": "pass",
+          "seconds": 7.28,
+          "run": "^TestSplitTSGoAgrees$/^cache_1$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "0/36",
+      "invocation_seconds": 2.2871919089993753,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/01_hello.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^01_hello\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "1/36",
+      "invocation_seconds": 2.323375300002226,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^02_fizzbuzz\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "2/36",
+      "invocation_seconds": 2.3099185479986772,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/03_shapes.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^03_shapes\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "3/36",
+      "invocation_seconds": 2.210932944002707,
+      "group_seconds": 0.37,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/04_closures.ts",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^04_closures\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "4/36",
+      "invocation_seconds": 2.2191188069991767,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/05_wordcount.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^05_wordcount\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "5/36",
+      "invocation_seconds": 2.2366678549988137,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/06_stack.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^06_stack\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "6/36",
+      "invocation_seconds": 2.234757714999432,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/07_modules/main.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^07_modules$/^main\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "7/36",
+      "invocation_seconds": 2.253395260999241,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/08_results.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^08_results\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "8/36",
+      "invocation_seconds": 2.2478115869998874,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/09_tree.ts",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^09_tree\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "9/36",
+      "invocation_seconds": 2.1869214399994235,
+      "group_seconds": 0.31,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/load/testdata/0.1/compile/10_unicode.ts",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^10_unicode\\.ts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "10/36",
+      "invocation_seconds": 2.1954515269972035,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/strings.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^strings\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "11/36",
+      "invocation_seconds": 2.1290878770014388,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/numbers.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^numbers\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "12/36",
+      "invocation_seconds": 5.078632991997438,
+      "group_seconds": 3.09,
+      "max_unit_seconds": 2.9,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/bitwise_sweep.a",
+          "action": "pass",
+          "seconds": 2.9,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^bitwise_sweep\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "13/36",
+      "invocation_seconds": 2.2452904260026116,
+      "group_seconds": 0.31,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/functions.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^functions\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "14/36",
+      "invocation_seconds": 2.1563428499976,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/regions.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^regions\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "15/36",
+      "invocation_seconds": 2.2305216540007677,
+      "group_seconds": 0.34,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/regions_throw.a",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^regions_throw\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "16/36",
+      "invocation_seconds": 2.198417359999439,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/weak_parent.a",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^weak_parent\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "17/36",
+      "invocation_seconds": 2.257467166000424,
+      "group_seconds": 0.34,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/weak_narrowed.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^weak_narrowed\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "18/36",
+      "invocation_seconds": 2.3616341309971176,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/reuse_weak_after_reuse.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^reuse_weak_after_reuse\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "19/36",
+      "invocation_seconds": 2.4663952449991484,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/reuse_weak_during_spread.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^reuse_weak_during_spread\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "20/36",
+      "invocation_seconds": 2.2689231160002237,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/normalize.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^normalize\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "21/36",
+      "invocation_seconds": 2.2059570769997663,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/maps_and_text.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^maps_and_text\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "22/36",
+      "invocation_seconds": 2.2221226889996615,
+      "group_seconds": 0.31,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/stack_overflow.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^stack_overflow\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "23/36",
+      "invocation_seconds": 2.240380480001477,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/stack_forever.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^stack_forever\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "24/36",
+      "invocation_seconds": 2.240586661002453,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/stack_tail_call.a",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^stack_tail_call\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "25/36",
+      "invocation_seconds": 2.3533078399996157,
+      "group_seconds": 0.31,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/panic.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^panic\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "26/36",
+      "invocation_seconds": 2.213360587000352,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/json_stringify_numbers.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^json_stringify_numbers\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "27/36",
+      "invocation_seconds": 2.147052154999983,
+      "group_seconds": 0.3,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/regexp_cycle_collections.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^regexp_cycle_collections\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "28/36",
+      "invocation_seconds": 2.2377295939986652,
+      "group_seconds": 0.35,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/library_object_keys.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^library_object_keys\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "29/36",
+      "invocation_seconds": 2.4256860399982543,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/library_array_flat.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^library_array_flat\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "30/36",
+      "invocation_seconds": 2.2467185790010262,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/read_files.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^read_files\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "31/36",
+      "invocation_seconds": 2.175966860999324,
+      "group_seconds": 0.31,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/native/wasm/io.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^native$/^wasm$/^io\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "32/36",
+      "invocation_seconds": 2.134345198999654,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.17,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/closures_throw.a",
+          "action": "pass",
+          "seconds": 0.17,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^closures_throw\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "33/36",
+      "invocation_seconds": 2.167756417002238,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.15,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/write_stdout_order.a",
+          "action": "pass",
+          "seconds": 0.15,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^write_stdout_order\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "34/36",
+      "invocation_seconds": 2.087294485001621,
+      "group_seconds": 0.29,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/internal/oracle/testdata/write_stderr_order.a",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestWASI$/^internal$/^oracle$/^testdata$/^write_stderr_order\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASI",
+      "shard": "35/36",
+      "invocation_seconds": 2.625426583999797,
+      "group_seconds": 0.73,
+      "max_unit_seconds": 0.57,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASI/requests",
+          "action": "pass",
+          "seconds": 0.57,
+          "run": "^TestWASI$/^requests$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and shared builds keyed by inputs are not timed units. Unit execution and comparison outcomes are never cached; decoder Node goldens are prepared inputs."
+}

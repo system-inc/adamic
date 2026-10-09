@@ -1,0 +1,8 @@
+=== RUN   TestOverloadStructuralRefuses
+=== RUN   TestOverloadStructuralRefuses/reverse_readonly_variance
+    overload_structural_test.go:45: wanted refusal naming result.value, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.10s)
+    --- FAIL: TestOverloadStructuralRefuses/reverse_readonly_variance (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.109s
+FAIL
