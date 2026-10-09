@@ -1,0 +1,10 @@
+FIRST FAILURE (tests, at 90.0 s):
+github.com/system-inc/adamic/stage1/cohere/estree TestRecoveryMutants_001
+=== RUN   TestRecoveryMutants_001
+=== PAUSE TestRecoveryMutants_001
+=== CONT  TestRecoveryMutants_001
+    recovery_mutants_split_test.go:182: build estree-recovery-mutant-prepared-first-accessibility: run TestRecoveryMutants_Setup first; shards never build
+    recovery_shards_test.go:33: TEST totalCPU=2.365587s
+--- FAIL: TestRecoveryMutants_001 (0.65s)
+
+(box load 38.6 on 64 cores at first failure)
