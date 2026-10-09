@@ -24,19 +24,45 @@ func TestCookedSurrogatesShardFailure(t *testing.T) {
 	estreeShardFailure(t, testCookedSurrogatesShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
 }
 
+const testCookedSurrogateMutantShards = 1
+
+func cookedSurrogateMutantGroups() [][]int {
+	group := make([]int, len(cookedSurrogates()))
+	for id := range group {
+		group[id] = id
+	}
+	return [][]int{group}
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
+// Keep the complete manifest together: the original predicate requires some
+// input to kill this mutant, and paired-surrogate controls need not differ.
 func TestCookedSurrogateMutant(t *testing.T) {
-	list := manifest(t, cookedSurrogates())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	path := mutantPort(t, "protocol.ts", `result += '\\ufffd\\ufffd\\ufffd';`, `result += '\\ufffd';`)
-	binary, _ := build(t, path, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if d := firstDifference(want, got); d == "" {
-			t.Fatal(name + " mutant survived")
-		} else {
-			t.Log(name + ": " + d)
-		}
+	estreeAccounting(t)
+	started := time.Now()
+	sources := cookedSurrogates()
+	selected := estreeShardPlan(t, testCookedSurrogateMutantShards, len(sources), cookedSurrogateMutantGroups())
+	oracle := estreeTimedOracle(t)
+	main := mutantPort(t, "protocol.ts", `result += '\\ufffd\\ufffd\\ufffd';`, `result += '\\ufffd';`)
+	binary, _ := estreeTimedBuild(t, main, true)
+	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
+	if selected[0] {
+		t.Run("shard-000", func(t *testing.T) {
+			t.Parallel()
+			list := manifest(t, sources)
+			want := execute(t, "", oracle, "--manifest", list)
+			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+				if err := estreeMutantVerdict(want, got); err != nil {
+					t.Fatalf("%s: %v", name, err)
+				}
+			}
+		})
 	}
 }
+func TestCookedSurrogateMutantShardFailure(t *testing.T) {
+	estreeShardFailure(t, testCookedSurrogateMutantShards, len(cookedSurrogates()), cookedSurrogateMutantGroups(), "mutant", 0)
+}
+
 func TestCookedSurrogateLibraryGap(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
