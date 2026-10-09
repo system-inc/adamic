@@ -1,0 +1,7 @@
+{
+  "fixture": "stage3/interface-downcasts/v2/tuple-identity-wrong.a",
+  "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/checked-views-defense/D1-actual.mjs",
+  "exit": 70,
+  "stdout": "",
+  "stderr": "adamic: panic: field read failed: viewed.value narrowed read has a different member\n"
+}

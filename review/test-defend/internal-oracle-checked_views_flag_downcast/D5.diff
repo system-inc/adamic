@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -138,7 +138,7 @@
+         const adamic_view_untagged_field *field = &contract->fields[i];
+         if (field->optional || strcmp(field->name, "kind") != 0 || field->contract == 0 || field->contract > count) { continue; }
+         const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
+-        if (child->kind != 1 || (child->of != adamic_rep_number && child->of != adamic_rep_boolean && child->of != adamic_rep_string)) { continue; }
++        if (child->kind != 1 || (child->of != adamic_rep_boolean && child->of != adamic_rep_boolean && child->of != adamic_rep_string)) { continue; }
+         adamic_view_union_value slot;
+         return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path);
+     }

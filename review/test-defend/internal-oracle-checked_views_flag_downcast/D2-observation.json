@@ -1,0 +1,7 @@
+{
+  "fixture": "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+  "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/checked-views-defense/D2-actual.mjs",
+  "exit": 0,
+  "stdout": "true\n",
+  "stderr": ""
+}

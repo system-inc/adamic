@@ -1,0 +1,47 @@
+[
+  {
+    "id": "D1",
+    "target": "Tuple",
+    "file": "internal/javascript/view_unions_untagged.go",
+    "old": "  if(contract.FixedTuple && (!Array.isArray(value) || value.length !== contract.Tuple.length)) return false;\n",
+    "new": "",
+    "change": "drop fixed tuple array identity and length guard",
+    "line": 87
+  },
+  {
+    "id": "D2",
+    "target": "Producer",
+    "file": "internal/javascript/view_unions_untagged.go",
+    "old": "if !certified {",
+    "new": "if certified {",
+    "change": "flip callable producer certification bypass",
+    "line": 153
+  },
+  {
+    "id": "D3b",
+    "target": "Moved",
+    "file": "internal/lower/view_objects.go",
+    "old": "value.Type() != ir.Object || source.Flags()",
+    "new": "value.Type() == ir.Object || source.Flags()",
+    "change": "flip structural cast receiver admission condition",
+    "line": 35
+  },
+  {
+    "id": "D4",
+    "target": "Moved",
+    "file": "internal/javascript/javascript.go",
+    "old": "ir.BitAnd: \"&\"",
+    "new": "ir.BitAnd: \"|\"",
+    "change": "change bitmask AND operator to OR",
+    "line": 688
+  },
+  {
+    "id": "D5",
+    "target": "Moved",
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "old": "child->of != adamic_rep_number && child->of != adamic_rep_boolean && child->of != adamic_rep_string",
+    "new": "child->of != adamic_rep_boolean && child->of != adamic_rep_boolean && child->of != adamic_rep_string",
+    "change": "change open kind selector number storage option to boolean",
+    "line": 141
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "D1",
+    "command": "git apply --check review/test-defend/internal-oracle-checked_views_flag_downcast/D1.diff",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "mutant": "D2",
+    "command": "git apply --check review/test-defend/internal-oracle-checked_views_flag_downcast/D2.diff",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "mutant": "D3b",
+    "command": "git apply --check review/test-defend/internal-oracle-checked_views_flag_downcast/D3b.diff",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "mutant": "D4",
+    "command": "git apply --check review/test-defend/internal-oracle-checked_views_flag_downcast/D4.diff",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "mutant": "D5",
+    "command": "git apply --check review/test-defend/internal-oracle-checked_views_flag_downcast/D5.diff",
+    "exit": 0,
+    "stderr": ""
+  }
+]

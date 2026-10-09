@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -150,7 +150,7 @@
+ 		certified = certified || contract.ProducerCertified
+ 		functions = append(functions, contract.Functions...)
+ 	}
+-	if !certified {
++	if certified {
+ 		return recorded
+ 	}
+ 	encoded, _ := json.Marshal(functions)

@@ -1,0 +1,7 @@
+{
+  "fixture": "stage3/interface-downcasts/v2/tuple-identity-wrong.a",
+  "command": "go run ./cmd/adamic js stage3/interface-downcasts/v2/tuple-identity-wrong.a > /workspace/adamic/review/test-defend/internal-oracle-checked_views_flag_downcast/D1-actual.js.txt; node --input-type=commonjs < /workspace/adamic/review/test-defend/internal-oracle-checked_views_flag_downcast/D1-actual.js.txt",
+  "exit": 1,
+  "stdout": "",
+  "stderr": "[stdin]:3\nimport { fileStatus, panic, programArguments, readDirectory, readTextFile, utf8At, utf8Length, writeTextFile } from 'adamic';\n^^^^^^\n\nSyntaxError: Cannot use import statement outside a module\n    at makeContextifyScript (node:internal/vm:194:14)\n    at compileScript (node:internal/process/execution:388:10)\n    at node:internal/process/execution:452:25\n    at [stdin]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:92:30)\n    at evalScript (node:internal/process/execution:104:3)\n    at node:internal/main/eval_stdin:51:5\n    at Socket.<anonymous> (node:internal/process/execution:205:5)\n    at Socket.emit (node:events:521:24)\n\nNode.js v24.19.0\n"
+}
