@@ -157,7 +157,7 @@ fi
         # Not taken at once and no time to wait, so the waiter asks for its box race and returns.
         env = dict(os.environ, LOOM_FAST_JOBS=str(jobs), ADAMIC_POOL_TAKE_SECONDS='0', ADAMIC_POOL_JOB_SECONDS='0',
                    ADAMIC_FAST_GATE_WATCH_STATE=str(self.root / 'watch'))
-        result = subprocess.run(['bash', str(self.here / 'cloud' / 'pool-job.sh'), sha, '--branch', branch, '--tools', 'tools'],
+        result = subprocess.run(['bash', str(self.here / 'cloud' / 'pool-job.sh'), sha, '--branch', branch, '--tools', 'tools', '--priority', '10'],
                                 env=env, capture_output=True, text=True, timeout=60)
         job = jobs / (sha + '.json')
         return result, (json.loads(job.read_text()) if job.exists() else None)

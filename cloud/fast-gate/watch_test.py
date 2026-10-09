@@ -753,9 +753,10 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: all(b + ' ' in w.read('pool-starts') for b in ('cloud/land-x', 'codex/side', 'cloud/land-train-9', 'area/compiler')))
         for branch in ('cloud/land-x', 'codex/side', 'cloud/land-train-9', 'area/compiler'):
             self.assertNotIn(branch + ' ', w.read('starts'))
+        # Every job carries its tier (#12dg93f): the star, the front file's first line, at 40, side work at 10.
         star = [line for line in w.read('pool-args').splitlines() if 'cloud/land-train-9' in line][0]
-        self.assertIn('--priority 30', star)
-        self.assertNotIn('--priority', [line for line in w.read('pool-args').splitlines() if 'codex/side' in line][0])
+        self.assertIn('--priority 40', star)
+        self.assertIn('--priority 10', [line for line in w.read('pool-args').splitlines() if 'codex/side' in line][0])
         # A first pool void goes back to the pool, a second to the boxes, never counting toward a void storm.
         w.put('pool-mode', 'void')
         side = 'pool void codex/side %s: ' % w.tips[1][1]
@@ -763,7 +764,6 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: any(side in x and x.endswith('queued again for the boxes') for x in w.read('output').splitlines()))
         self.assertEqual(w.read('pool-starts').count('codex/side '), 2)
         side = [line for line in w.read('pool-args').splitlines() if 'codex/side' in line]
-        self.assertNotIn('--priority', side[0])
         self.assertIn('--priority 10', side[1], 'a retry sits ahead of fresh work')
         self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
         w.put('mode', 'pass')
@@ -786,6 +786,27 @@ class WatchTests(unittest.TestCase):
         w.put('pool-mode', 'void')
         w.wait(lambda: 'preempted codex/side' in w.read('output'))
         self.assertEqual(w.read('pool-starts').count('cloud/land-train-1 '), 2)
+
+    def test_every_pool_job_carries_its_waterfall_tier(self):
+        # #12dg93f: the after-chain and hidden-boundaries went to Loom with no priority and sat at tier 0 for an hour.
+        w = self.reservation('pool P\nbox0 S\n', [('cloud/land-star-1', 'B'), ('cloud/land-wave0-1', 'B'), ('cloud/land-chain-1', 'B'),
+                                                  ('codex/wave1', 'S'), ('codex/side', 'S')], release=False)
+        (w.state / 'front').write_text('cloud/land-star-* # the star\ncloud/land-wave0-* # wave 0\n')
+        (w.state / 'wave-globs').write_text('0 cloud/land-chain-*\n1 codex/wave1\n')
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: len(w.read('pool-args').splitlines()) == 5)
+        tiers = {line.split('--branch ')[1].split()[0]: line.split('--priority ')[1].split()[0] for line in w.read('pool-args').splitlines()}
+        self.assertEqual(tiers, {'cloud/land-star-1': '40', 'cloud/land-wave0-1': '30', 'cloud/land-chain-1': '30', 'codex/wave1': '30', 'codex/side': '10'})
+
+    def test_a_pool_job_without_a_tier_is_refused_and_writes_no_job(self):
+        jobs = tempfile.TemporaryDirectory()
+        self.addCleanup(jobs.cleanup)
+        result = subprocess.run(['bash', str(ROOT / 'cloud' / 'pool-job.sh'), 'f' * 40, '--branch', 'codex/side', '--tools', 'e' * 40],
+                                capture_output=True, text=True, env=dict(os.environ, LOOM_FAST_JOBS=jobs.name), timeout=30)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn('pool job refused: no tier (--priority)', result.stdout)
+        self.assertEqual(os.listdir(jobs.name), [])
 
     def test_every_pool_bound_tip_goes_to_the_pool_at_once_whatever_the_pool_lines(self):
         # #sp2wer3: Loom places the units; one "pool P" line no longer holds the second tip back for the boxes.

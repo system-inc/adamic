@@ -7,6 +7,20 @@
 set -uo pipefail
 mode=${1:-}
 cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" || exit 1
+# With --waves, "<wave> <glob>" for every open step of system_adamic's waterfall in waves 0 and 1, one line per branch
+# glob its artifacts declare (git:<repository>:<glob>): the watcher stamps a pool job's tier from them (#12dg93f). A
+# step that declares no git artifact has no branch to match, so its tips take the lowest tier.
+if [ "${mode}" = --waves ]; then
+  ahra tasks waterfall system_adamic --json | python3 -c '
+import json, sys
+for node in json.load(sys.stdin)["nodes"]:
+    if node.get("wave") in (0, 1) and node.get("status") not in ("Done", "Cancelled", "Failed"):
+        for artifact in node.get("artifacts") or []:
+            if artifact.startswith("git:"):
+                print(node["wave"], artifact.rsplit(":", 1)[1])
+'
+  exit
+fi
 ready=$(ahra tasks ready system_adamic) || exit 1
 ids=$(printf '%s\n' "${ready}" | sed -nE 's/.*#([a-z0-9]{7})([^a-z0-9].*|$)/\1/p')
 position=0

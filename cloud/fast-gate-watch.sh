@@ -229,12 +229,7 @@ dispatch() {
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
     # token names the good tools and a pool green promotes nothing.
     token="$(cat "${state}/tools-good"):pool"
-    # The star at Loom's priority 30; a tip the pool already voided back at 10, the everything-else tier, so no retry
-    # sits ahead of a wave-0 candidate (Loom, Oct 9 09:41Z).
-    local priority=""
-    grep -qx "${sha}" "${state}/pool-void-tries" 2> /dev/null && priority="--priority 10"
-    isFront "${branch}" && priority="--priority 30"
-    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" ${priority} > "${log}" 2>&1 &
+    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" --priority "$(poolTier "${branch}" "${sha}")" > "${log}" 2>&1 &
   else
     ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   fi
@@ -245,6 +240,21 @@ dispatch() {
   if slotReserved "${branch}" "${box}" "${slot}"; then
     echo "${box}" > "${state}/reserved-running/${pid}"
   fi
+}
+# Every pool job's tier at Loom, from the waterfall (@system_adamic, Oct 9 13:05Z, #12dg93f; a job with none sat at tier 0
+# behind side work for an hour): the star, the front file's first line, at 40; the rest of the front and every tip a wave 0
+# or 1 step's artifacts name (wave-globs, from cloud/first-step-branches.sh --waves) at 30; everything else at 10, and so
+# is a tip the pool already voided, so no retry sits ahead of a wave-0 candidate (Loom, Oct 9 09:41Z). Main's whole gate,
+# at 20, isn't this watcher's to send. cloud/pool-job.sh refuses a job without one.
+poolTier() {
+  local branch=$1 sha=$2 wave glob
+  isFront "${branch}" && [ "$(frontLine "${branch}")" = 1 ] && { echo 40; return; }
+  isFront "${branch}" && { echo 30; return; }
+  grep -qx "${sha}" "${state}/pool-void-tries" 2> /dev/null && { echo 10; return; }
+  while read -r wave glob; do
+    [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && { echo 30; return; }
+  done < <(cat "${state}/wave-globs" 2> /dev/null)
+  echo 10
 }
 # Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents; gate the gate, Oct 9 10:21Z):
 # with a box named in ${state}/canary-box, new box tools run one gate only, a canary of main's tip on that box, while
@@ -987,7 +997,9 @@ while true; do
     (bash "${here}/cloud/first-step-branches.sh" > "${state}/first-step-globs.tmp" &&
       mv "${state}/first-step-globs.tmp" "${state}/first-step-globs"
      bash "${here}/cloud/first-step-branches.sh" --all > "${state}/step-globs.tmp" &&
-      mv "${state}/step-globs.tmp" "${state}/step-globs") &
+      mv "${state}/step-globs.tmp" "${state}/step-globs"
+     bash "${here}/cloud/first-step-branches.sh" --waves > "${state}/wave-globs.tmp" &&
+      mv "${state}/wave-globs.tmp" "${state}/wave-globs") &
     firstStepPid=$!
     firstStepRefresh=${now}
   fi

@@ -24,6 +24,9 @@ while [ $# -gt 0 ]; do
   esac
 done
 [[ ${sha} =~ ^[0-9a-f]{40}$ ]] || { echo "void: pool job refused: sha '${sha}' is not 40 hex digits"; exit 2; }
+# Every job carries its waterfall tier (#12dg93f): Loom ranks one without a priority at 0, behind all side work, where
+# the after-chain and hidden-boundaries sat for an hour (Oct 9 13:05Z). No default here, so a caller that forgets is loud.
+[[ ${priority} =~ ^[0-9]+$ ]] || { echo "void: ${sha} pool job refused: no tier (--priority), which Loom would rank 0"; exit 2; }
 jobs=${LOOM_FAST_JOBS:-${HOME}/.loom/jobs/fast}
 limit=${ADAMIC_POOL_JOB_SECONDS:-5400}
 # A job whose units Loom hasn't all placed within this long gets a box racing it, the boxes being the fallback once the
