@@ -1,0 +1,2 @@
+export const message = 'Prefer .find(...) instead of .filter(...)[0].';
+export const suggestionMessage = 'Use .find(...) instead of .filter(...)[0].';

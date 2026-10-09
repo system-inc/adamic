@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function isRestParameter(context:RuleContext,index:number):boolean {return index>=0 && context.kind(index)==='Parameter' && context.has(index,'DotDotDotToken');}

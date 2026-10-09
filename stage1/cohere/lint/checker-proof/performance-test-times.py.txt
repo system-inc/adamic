@@ -1,0 +1,21 @@
+import json,sys,datetime,statistics
+from pathlib import Path
+source=Path(sys.argv[1]); result={}; opened={}; active={}; first={}; last={}
+for line in source.read_text().splitlines():
+ try: e=json.loads(line)
+ except ValueError: continue
+ name=e.get('Test',''); action=e.get('Action'); stamp=e.get('Time','')
+ if not name:continue
+ at=datetime.datetime.fromisoformat(stamp.replace('Z','+00:00')).timestamp()
+ if action in ('run','cont'):
+  opened[name]=at;first.setdefault(name,at)
+ elif action=='pause':
+  active[name]=active.get(name,0)+at-opened.pop(name)
+ elif action in ('pass','fail','skip'):
+  active[name]=active.get(name,0)+at-opened.pop(name,at)
+  result[name]={'reported_seconds':e.get('Elapsed',0),'active_span_seconds':active[name],'wall_span_seconds':at-first.get(name,at),'result':action}
+Path(sys.argv[2]).write_text(json.dumps(result,indent=2)+'\n')
+print('| Top-level test | Own active time (s) | Active span including children (s) | Result |')
+print('|---|---:|---:|---|')
+for name, row in result.items():
+ if '/' not in name:print(f"| {name} | {row['reported_seconds']:.2f} | {row['active_span_seconds']:.2f} | {row['result']} |")

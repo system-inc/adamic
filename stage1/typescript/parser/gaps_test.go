@@ -16,6 +16,7 @@ import (
 )
 
 func TestStrongAstParentGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/1_strong_ast_parent.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -40,6 +41,7 @@ func TestStrongAstParentGap(t *testing.T) {
 }
 
 func TestPushSpreadGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/2_push_spread.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -64,6 +66,7 @@ func TestPushSpreadGap(t *testing.T) {
 }
 
 func TestClassMethodInterfaceGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/4_class_interface_method.ts")
 	if err != nil {
 		t.Fatal(err)

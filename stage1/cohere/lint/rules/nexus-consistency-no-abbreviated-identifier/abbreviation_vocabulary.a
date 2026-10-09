@@ -17,6 +17,9 @@ export class Abbreviation {
 function capitalized(value: string): string {
     return value.slice(0, 1).toUpperCase() + value.slice(1);
 }
+// Each word capitalized, made once: the suffix and segment phases read it for every entry of every
+// identifier, and building it there was most of the rule's cost.
+const capitals: string[] = vocabulary.map((entry) => capitalized(entry[0] ?? panic('word')));
 function prefixFinding(text: string, entry: readonly string[]): Abbreviation {
     const word = entry[0] ?? panic('word');
     const expansion = entry[1] ?? '';
@@ -44,12 +47,22 @@ export function abbreviation(text: string): Abbreviation | undefined {
             return new Abbreviation('whole', word, 'abbreviatedIdentifier', ['name', text, 'advice', advice]);
         }
     }
+    // Every identifier in a file reaches this loop, and most hold no vocabulary word at all, so each
+    // regex below sits behind a substring test it cannot match without: a prefix pattern needs the
+    // word at the start, the millisecond pattern needs 'Ms', and a segment pattern needs the
+    // capitalized word. Skipping a test that cannot match changes no finding. The segment phase's
+    // allowed-segment check can sit behind its gate too: the phase is the last one and the function
+    // ends in undefined, so where that check returns undefined changes nothing. Measured on Sun2 over
+    // TypeScript's 77 compiler files, the gates and the precomputed capitals take this rule from 86.6G
+    // instructions to 18.4G over the parse floor, with its output byte-identical (#tj6d455).
     for(const phase of ['early', 'suffix', 'late', 'segment']) {
-        for(const entry of vocabulary) {
+        for(let index = 0; index < vocabulary.length; index++) {
+            const entry = vocabulary[index] ?? panic('entry');
+            const capital = capitals[index] ?? panic('capital');
             const word = entry[0] ?? panic('word');
             const expansion = entry[1] ?? '';
             if(phase === 'early' || phase === 'late') {
-                if(entry[4] !== phase || !prefixMatches(word, text)) {
+                if(entry[4] !== phase || !text.startsWith(word) || !prefixMatches(word, text)) {
                     continue;
                 }
                 let allowed = false;
@@ -64,7 +77,7 @@ export function abbreviation(text: string): Abbreviation | undefined {
             }
             if(phase === 'suffix' && entry[6] === 'true') {
                 if(entry[7] === 'millisecondWord') {
-                    if(/([a-z])Ms((?![\s\S])|[A-Z])/u.test(text)) {
+                    if(text.includes('Ms') && /([a-z])Ms((?![\s\S])|[A-Z])/u.test(text)) {
                         return new Abbreviation('suffix', word, 'millisecondSuffix', [
                             'name', text, 'suggestion',
                             text.replace(/([a-z])Ms((?![\s\S])|[A-Z])/u, '$1' + (entry[8] ?? '') + '$2'),
@@ -72,7 +85,7 @@ export function abbreviation(text: string): Abbreviation | undefined {
                     }
                 }
                 else {
-                    const suffix = capitalized(word);
+                    const suffix = capital;
                     if(text.endsWith(suffix)) {
                         const replacement = entry[8] === '' ? capitalized(expansion) : (entry[8] ?? '');
                         const advice =
@@ -91,6 +104,9 @@ export function abbreviation(text: string): Abbreviation | undefined {
                 }
             }
             if(phase === 'segment' && entry[10] === 'true') {
+                if(!text.includes(capital)) {
+                    continue;
+                }
                 let allowed = false;
                 for(const segment of allowedSegments) {
                     if(text.includes(segment)) {
@@ -100,14 +116,13 @@ export function abbreviation(text: string): Abbreviation | undefined {
                 if(allowed) {
                     return undefined;
                 }
-                const segment = capitalized(word);
                 const suggestion = replaceSegment(word, text, capitalized(expansion));
                 if(segmentMatches(word, text) && suggestion !== text) {
                     return new Abbreviation('segment', word, 'abbreviatedWordSegment', [
                         'name',
                         text,
                         'word',
-                        segment,
+                        capital,
                         'suggestion',
                         suggestion,
                     ]);

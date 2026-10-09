@@ -47,6 +47,6 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	flags := append(sourceFlags(source, options), "-DADAMIC_TSGO")
+	flags := append(SourceFlags(source, options), "-DADAMIC_TSGO")
 	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }

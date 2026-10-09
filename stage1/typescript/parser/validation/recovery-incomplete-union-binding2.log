@@ -1,0 +1,91 @@
+=== RUN   TestIncompleteCompilerAgrees
+    incomplete_test.go:32: /workspace/adamic/stage1/typescript/parser/parser.ts:1144:18: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1144:20: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1159:16: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1159:18: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1171:21: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1171:23: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1180:21: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1180:23: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1189:22: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1189:32: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1189:34: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1233:17: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1233:19: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1257:25: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1257:27: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1296:17: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1296:19: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1355:12: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1355:14: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1358:16: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1358:18: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1361:16: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1362:13: error TS1005: ':' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1362:38: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:25: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:41: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:52: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:59: error TS1011: An element access expression should take an argument.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:72: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:82: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1364:84: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1368:11: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1368:13: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1389:24: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1389:33: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1389:35: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1404:13: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1404:15: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1410:16: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1410:25: error TS1011: An element access expression should take an argument.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1410:27: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1421:22: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1421:41: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1421:51: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1421:53: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1564:19: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1564:21: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1577:26: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1577:28: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1587:19: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1587:21: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1602:15: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1602:17: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1617:12: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1617:14: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1644:19: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1644:21: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:105: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:107: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:19: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:35: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:46: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:53: error TS1011: An element access expression should take an argument.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:60: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:75: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1660:95: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1689:21: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1689:23: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1750:13: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1750:15: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1763:12: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1763:14: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1830:19: error TS1005: ',' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1830:28: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1830:30: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1858:35: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1858:37: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1892:42: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1892:44: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1902:24: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1902:26: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1912:17: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1912:19: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1922:11: error TS1005: ';' expected.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1922:13: error TS1434: Unexpected keyword or identifier.
+        /workspace/adamic/stage1/typescript/parser/parser.ts:1942:1: error TS1005: '}' expected.
+--- FAIL: TestIncompleteCompilerAgrees (0.59s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.597s
+FAIL

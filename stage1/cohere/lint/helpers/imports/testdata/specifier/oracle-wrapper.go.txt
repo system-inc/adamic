@@ -1,0 +1,31 @@
+func SpecifierNode(node *ast.Node) *ast.Node {
+ base, _ := strconv.Atoi(os.Getenv("WAVE15_SPECIFIER_BASE"))
+ result := wave15OriginalSpecifierNode(node)
+ index, kind, module, hasFirst, argument, answer := -1, 0, -1, 0, -1, -1
+ var moduleNode, argumentNode *ast.Node
+ if node != nil {
+  index, kind = base, int(node.Kind)
+  if node.Kind == ast.KindImportDeclaration {
+   if declaration := node.AsImportDeclaration(); declaration != nil { moduleNode = declaration.ModuleSpecifier }
+  }
+  if node.Kind == ast.KindCallExpression {
+   if call := node.AsCallExpression(); call != nil && call.Arguments != nil && len(call.Arguments.Nodes) > 0 {
+    hasFirst = 1
+    argumentNode = call.Arguments.Nodes[0]
+   }
+  }
+ }
+ if moduleNode != nil { module = base + 1; if moduleNode == node { module = index } }
+ if argumentNode != nil { argument = base + 2; if argumentNode == node { argument = index }; if argumentNode == moduleNode { argument = module } }
+ if result != nil {
+  switch result { case node: answer = index; case moduleNode: answer = module; case argumentNode: answer = argument; default: panic("unidentified SpecifierNode result") }
+ }
+ path := os.Getenv("WAVE15_SPECIFIER_CAPTURE")
+ if path != "" {
+  record := []int{index,kind,module,hasFirst,argument,answer,int(ast.KindImportDeclaration),int(ast.KindCallExpression)}
+  data, err := json.Marshal(record); if err != nil { panic(err) }
+  file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600); if err != nil { panic(err) }
+  if _, err = file.Write(append(data, '\n')); err != nil { panic(err) }; if err = file.Close(); err != nil { panic(err) }
+ }
+ return result
+}

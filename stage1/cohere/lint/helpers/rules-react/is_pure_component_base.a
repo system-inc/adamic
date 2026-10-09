@@ -1,0 +1,9 @@
+import type {RuleContext} from '../../context.ts';
+import {skipParenthesesOptional} from './skip_parentheses_optional.a';
+export function isPureComponentBase(context:RuleContext,index:number):boolean {
+ index=skipParenthesesOptional(context,index);if(index<0){return false;}
+ if(context.kind(index)==='Identifier'){return context.node(index).text==='PureComponent';}
+ if(context.kind(index)!=='PropertyAccessExpression'){return false;}
+ const object=context.node(index).children[0] ?? -1;if(object<0 || context.kind(object)!=='Identifier' || context.node(object).text!=='React'){return false;}
+ const name=context.property(index);return name>=0 && context.kind(name)==='Identifier' && context.node(name).text==='PureComponent';
+}

@@ -1,0 +1,520 @@
+go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+go: downloading github.com/dlclark/regexp2 v1.11.5
+=== RUN   TestOperatorAssignmentFires
+=== PAUSE TestOperatorAssignmentFires
+=== RUN   TestOperatorAssignmentStaysSilent
+=== PAUSE TestOperatorAssignmentStaysSilent
+=== RUN   TestOperatorAssignmentTypeScriptShapes
+=== PAUSE TestOperatorAssignmentTypeScriptShapes
+=== CONT  TestOperatorAssignmentFires
+=== RUN   TestOperatorAssignmentFires/x_=_x_+_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_+_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_-_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_-_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_*_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_*_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_y_*_x_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_y_*_x_[]
+=== RUN   TestOperatorAssignmentFires/x_=_(y_*_z)_*_x_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_(y_*_z)_*_x_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_/_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_/_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_%_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_%_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_<<_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_<<_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_>>_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_>>_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_>>>_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_>>>_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_&_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_&_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_^_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_^_y_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_|_y_[]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_|_y_[]
+=== RUN   TestOperatorAssignmentFires/x[0]_=_x[0]_-_y_[]
+=== PAUSE TestOperatorAssignmentFires/x[0]_=_x[0]_-_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_y_+_x_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_y_+_x_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_+=_x_+_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_+=_x_+_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_(x_+_y)_-_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_(x_+_y)_-_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_-=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_-=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_y_-_x_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_y_-_x_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_*=_x_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_*=_x_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_y_*_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_y_*_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_(x_*_y)_*_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_(x_*_y)_*_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_y_/_x_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_y_/_x_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_/=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_/=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_%=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_%=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_<<=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_<<=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_>>=_x_>>_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_>>=_x_>>_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_>>>=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_>>>=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_&=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_&=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_**=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_**=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_^=_y_^_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_^=_y_^_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_|=_x_|_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_|=_x_|_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_&&_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_&&_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_||_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_||_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_<_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_<_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_>_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_>_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_<=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_<=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_>=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_>=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_instanceof_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_instanceof_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_in_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_in_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_==_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_==_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_!=_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_!=_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_===_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_===_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_!==_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_!==_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x[y]_=_x['y']_+_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x[y]_=_x['y']_+_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x.y_=_x['y']_/_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x.y_=_x['y']_/_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x.y_=_z_+_x.y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x.y_=_z_+_x.y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x[fn()]_=_x[fn()]_+_y_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x[fn()]_=_x[fn()]_+_y_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_+=_x_+_y_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_+=_x_+_y_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_+_y_["never"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_+_y_["never"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_**_y_["never"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_**_y_["never"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_y_**_x_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_y_**_x_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_*_y_+_z_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_*_y_+_z_[]
+=== RUN   TestOperatorAssignmentStaysSilent/this.x_=_this.y_+_z_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/this.x_=_this.y_+_z_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/this.x_=_foo.x_+_y_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/this.x_=_foo.x_+_y_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/this.x_=_foo.this.x_+_y_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/this.x_=_foo.this.x_+_y_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/const_foo_=_0;_class_C_{_foo_=_foo_+_1;_}_[]
+=== PAUSE TestOperatorAssignmentStaysSilent/const_foo_=_0;_class_C_{_foo_=_foo_+_1;_}_[]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_&&_y_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_&&_y_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_||_y_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_||_y_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_=_x_??_y_["always"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_=_x_??_y_["always"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_&&=_y_["never"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_&&=_y_["never"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_||=_y_["never"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_||=_y_["never"]
+=== RUN   TestOperatorAssignmentStaysSilent/x_??=_y_["never"]
+=== PAUSE TestOperatorAssignmentStaysSilent/x_??=_y_["never"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_y_[]
+=== CONT  TestOperatorAssignmentTypeScriptShapes
+=== RUN   TestOperatorAssignmentTypeScriptShapes/an_as-expression_inside_the_right_operand
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/an_as-expression_inside_the_right_operand
+=== RUN   TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_inside_the_right_operand
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_inside_the_right_operand
+=== RUN   TestOperatorAssignmentTypeScriptShapes/a_generic_call_on_the_right
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/a_generic_call_on_the_right
+=== RUN   TestOperatorAssignmentTypeScriptShapes/a_generic_call_expanded
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/a_generic_call_expanded
+=== RUN   TestOperatorAssignmentTypeScriptShapes/an_as-expression_needs_parentheses_when_expanded
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/an_as-expression_needs_parentheses_when_expanded
+=== RUN   TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_needs_them_too
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_needs_them_too
+=== RUN   TestOperatorAssignmentTypeScriptShapes/a_non-null_assertion_on_the_target_reports_without_a_repair
+=== PAUSE TestOperatorAssignmentTypeScriptShapes/a_non-null_assertion_on_the_target_reports_without_a_repair
+=== CONT  TestOperatorAssignmentTypeScriptShapes/an_as-expression_inside_the_right_operand
+=== CONT  TestOperatorAssignmentStaysSilent/x_??=_y_["never"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_||=_y_["never"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_&&=_y_["never"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_??_y_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_||_y_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_&&_y_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/const_foo_=_0;_class_C_{_foo_=_foo_+_1;_}_[]
+=== CONT  TestOperatorAssignmentStaysSilent/this.x_=_foo.this.x_+_y_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/this.x_=_foo.x_+_y_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/this.x_=_this.y_+_z_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_*_y_+_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_y_**_x_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_**_y_["never"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_+_y_["never"]
+=== CONT  TestOperatorAssignmentStaysSilent/x_+=_x_+_y_["always"]
+=== CONT  TestOperatorAssignmentStaysSilent/x[fn()]_=_x[fn()]_+_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x.y_=_z_+_x.y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x.y_=_x['y']_/_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x[y]_=_x['y']_+_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_!==_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_===_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_!=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_==_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_in_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_instanceof_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_>=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_<=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_>_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_<_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_||_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_x_&&_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_|=_x_|_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_^=_y_^_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_**=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_&=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_>>>=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_>>=_x_>>_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_<<=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_%=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_/=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_y_/_x_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_(x_*_y)_*_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_y_*_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_*=_x_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_y_-_x_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_-=_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_(x_+_y)_-_z_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_+=_x_+_y_[]
+=== CONT  TestOperatorAssignmentStaysSilent/x_=_y_+_x_[]
+--- PASS: TestOperatorAssignmentStaysSilent (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_??=_y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_||=_y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_&&=_y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_??_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_||_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_&&_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/const_foo_=_0;_class_C_{_foo_=_foo_+_1;_}_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/this.x_=_foo.this.x_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/this.x_=_foo.x_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/this.x_=_this.y_+_z_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_*_y_+_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_y_**_x_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_**_y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_+_y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_+=_x_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x[fn()]_=_x[fn()]_+_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x.y_=_z_+_x.y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x.y_=_x['y']_/_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x[y]_=_x['y']_+_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_!==_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_===_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_!=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_==_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_in_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_instanceof_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_>=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_<=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_>_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_<_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_||_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_x_&&_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_|=_x_|_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_^=_y_^_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_**=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_&=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_>>>=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_>>=_x_>>_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_<<=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_%=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_/=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_y_/_x_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_(x_*_y)_*_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_y_*_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_*=_x_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_y_-_x_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_-=_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_(x_+_y)_-_z_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_+=_x_+_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentStaysSilent/x_=_y_+_x_[] (0.00s)
+=== CONT  TestOperatorAssignmentTypeScriptShapes/a_non-null_assertion_on_the_target_reports_without_a_repair
+=== CONT  TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_needs_them_too
+=== CONT  TestOperatorAssignmentTypeScriptShapes/an_as-expression_needs_parentheses_when_expanded
+=== CONT  TestOperatorAssignmentTypeScriptShapes/a_generic_call_expanded
+=== CONT  TestOperatorAssignmentTypeScriptShapes/a_generic_call_on_the_right
+=== CONT  TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_inside_the_right_operand
+--- PASS: TestOperatorAssignmentTypeScriptShapes (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/an_as-expression_inside_the_right_operand (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/a_non-null_assertion_on_the_target_reports_without_a_repair (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_needs_them_too (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/an_as-expression_needs_parentheses_when_expanded (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/a_generic_call_expanded (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/a_generic_call_on_the_right (0.00s)
+    --- PASS: TestOperatorAssignmentTypeScriptShapes/a_satisfies_expression_inside_the_right_operand (0.00s)
+=== RUN   TestOperatorAssignmentFires/x.y[z['a']][0].b_=_x.y[z['a']][0].b_*_2_[]
+=== PAUSE TestOperatorAssignmentFires/x.y[z['a']][0].b_=_x.y[z['a']][0].b_*_2_[]
+=== RUN   TestOperatorAssignmentFires/x_=_x_+_y_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_+_y_["always"]
+=== RUN   TestOperatorAssignmentFires/x_=_(x_+_y)_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_(x_+_y)_["always"]
+=== RUN   TestOperatorAssignmentFires/x_=_x_+_(y)_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_+_(y)_["always"]
+=== RUN   TestOperatorAssignmentFires/x_+=_(y)_["never"]
+=== PAUSE TestOperatorAssignmentFires/x_+=_(y)_["never"]
+=== RUN   TestOperatorAssignmentFires/x_+=_y_["never"]
+=== PAUSE TestOperatorAssignmentFires/x_+=_y_["never"]
+=== RUN   TestOperatorAssignmentFires/foo.bar_=_foo.bar_+_baz_[]
+=== PAUSE TestOperatorAssignmentFires/foo.bar_=_foo.bar_+_baz_[]
+=== RUN   TestOperatorAssignmentFires/foo.bar_+=_baz_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo.bar_+=_baz_["never"]
+=== RUN   TestOperatorAssignmentFires/this.foo_=_this.foo_+_bar_[]
+=== PAUSE TestOperatorAssignmentFires/this.foo_=_this.foo_+_bar_[]
+=== RUN   TestOperatorAssignmentFires/this.foo_+=_bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/this.foo_+=_bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo.bar.baz_=_foo.bar.baz_+_qux_[]
+=== PAUSE TestOperatorAssignmentFires/foo.bar.baz_=_foo.bar.baz_+_qux_[]
+=== RUN   TestOperatorAssignmentFires/foo.bar.baz_+=_qux_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo.bar.baz_+=_qux_["never"]
+=== RUN   TestOperatorAssignmentFires/this.foo.bar_=_this.foo.bar_+_baz_[]
+=== PAUSE TestOperatorAssignmentFires/this.foo.bar_=_this.foo.bar_+_baz_[]
+=== RUN   TestOperatorAssignmentFires/this.foo.bar_+=_baz_["never"]
+=== PAUSE TestOperatorAssignmentFires/this.foo.bar_+=_baz_["never"]
+=== RUN   TestOperatorAssignmentFires/foo[bar]_=_foo[bar]_+_baz_[]
+=== PAUSE TestOperatorAssignmentFires/foo[bar]_=_foo[bar]_+_baz_[]
+=== RUN   TestOperatorAssignmentFires/this[foo]_=_this[foo]_+_bar_[]
+=== PAUSE TestOperatorAssignmentFires/this[foo]_=_this[foo]_+_bar_[]
+=== RUN   TestOperatorAssignmentFires/foo[bar]_>>>=_baz_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo[bar]_>>>=_baz_["never"]
+=== RUN   TestOperatorAssignmentFires/this[foo]_>>>=_bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/this[foo]_>>>=_bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo[5]_=_foo[5]_/_baz_[]
+=== PAUSE TestOperatorAssignmentFires/foo[5]_=_foo[5]_/_baz_[]
+=== RUN   TestOperatorAssignmentFires/this[5]_=_this[5]_/_foo_[]
+=== PAUSE TestOperatorAssignmentFires/this[5]_=_this[5]_/_foo_[]
+=== RUN   TestOperatorAssignmentFires//*1*/x/*2*/./*3*/y/*4*/=_x.y_+/*5*/z/*6*/./*7*/w/*8*/;_["always"]
+=== PAUSE TestOperatorAssignmentFires//*1*/x/*2*/./*3*/y/*4*/=_x.y_+/*5*/z/*6*/./*7*/w/*8*/;_["always"]
+=== RUN   TestOperatorAssignmentFires/x_//_1__._//_2__y_//_3__=_x.y_+_//4__z_//5__._//6__w;_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_//_1__._//_2__y_//_3__=_x.y_+_//4__z_//5__._//6__w;_["always"]
+=== RUN   TestOperatorAssignmentFires/x_=_/*1*/_x_+_y_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_/*1*/_x_+_y_["always"]
+=== RUN   TestOperatorAssignmentFires/x_=_//1__x_+_y_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_//1__x_+_y_["always"]
+=== RUN   TestOperatorAssignmentFires/x.y_=_x/*1*/.y_+_z_["always"]
+=== PAUSE TestOperatorAssignmentFires/x.y_=_x/*1*/.y_+_z_["always"]
+=== RUN   TestOperatorAssignmentFires/x.y_=_x._//1__y_+_z_["always"]
+=== PAUSE TestOperatorAssignmentFires/x.y_=_x._//1__y_+_z_["always"]
+=== RUN   TestOperatorAssignmentFires/x_=_x_/*1*/_+_y_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_/*1*/_+_y_["always"]
+=== RUN   TestOperatorAssignmentFires/x_=_x_//1__+_y_["always"]
+=== PAUSE TestOperatorAssignmentFires/x_=_x_//1__+_y_["always"]
+=== RUN   TestOperatorAssignmentFires//*1*/x_+=/*2*/y/*3*/;_["never"]
+=== PAUSE TestOperatorAssignmentFires//*1*/x_+=/*2*/y/*3*/;_["never"]
+=== RUN   TestOperatorAssignmentFires/x_+=//1__y_["never"]
+=== PAUSE TestOperatorAssignmentFires/x_+=//1__y_["never"]
+=== RUN   TestOperatorAssignmentFires/(/*1*/x_+=_y)_["never"]
+=== PAUSE TestOperatorAssignmentFires/(/*1*/x_+=_y)_["never"]
+=== RUN   TestOperatorAssignmentFires/x/*1*/+=__y_["never"]
+=== PAUSE TestOperatorAssignmentFires/x/*1*/+=__y_["never"]
+=== RUN   TestOperatorAssignmentFires/x_//1__+=__y_["never"]
+=== PAUSE TestOperatorAssignmentFires/x_//1__+=__y_["never"]
+=== RUN   TestOperatorAssignmentFires/(/*1*/x)_+=__y_["never"]
+=== PAUSE TestOperatorAssignmentFires/(/*1*/x)_+=__y_["never"]
+=== RUN   TestOperatorAssignmentFires/x/*1*/.y_+=__z_["never"]
+=== PAUSE TestOperatorAssignmentFires/x/*1*/.y_+=__z_["never"]
+=== RUN   TestOperatorAssignmentFires/x.//1__y_+=__z_["never"]
+=== PAUSE TestOperatorAssignmentFires/x.//1__y_+=__z_["never"]
+=== RUN   TestOperatorAssignmentFires/(foo.bar)_^=_((((((((((((((((baz))))))))))))))))_["never"]
+=== PAUSE TestOperatorAssignmentFires/(foo.bar)_^=_((((((((((((((((baz))))))))))))))))_["never"]
+=== RUN   TestOperatorAssignmentFires/foo_=_foo_**_bar_[]
+=== PAUSE TestOperatorAssignmentFires/foo_=_foo_**_bar_[]
+=== RUN   TestOperatorAssignmentFires/foo_**=_bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo_**=_bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo_*=_bar_+_1_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo_*=_bar_+_1_["never"]
+=== RUN   TestOperatorAssignmentFires/foo_-=_bar_-_baz_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo_-=_bar_-_baz_["never"]
+=== RUN   TestOperatorAssignmentFires/foo_+=_bar_+_baz_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo_+=_bar_+_baz_["never"]
+=== RUN   TestOperatorAssignmentFires/foo_+=_bar_=_1_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo_+=_bar_=_1_["never"]
+=== RUN   TestOperatorAssignmentFires/foo_*=_(bar_+_1)_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo_*=_(bar_+_1)_["never"]
+=== RUN   TestOperatorAssignmentFires/foo+=-bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo+=-bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo/=bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo/=bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo/=/**/bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo/=/**/bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo/=//_bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo/=//_bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo/=/^bar$/_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo/=/^bar$/_["never"]
+=== RUN   TestOperatorAssignmentFires/foo+=+bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo+=+bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo+=_+bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo+=_+bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo+=/**/+bar_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo+=/**/+bar_["never"]
+=== RUN   TestOperatorAssignmentFires/foo+=+bar===baz_["never"]
+=== PAUSE TestOperatorAssignmentFires/foo+=+bar===baz_["never"]
+=== RUN   TestOperatorAssignmentFires/(obj?.a).b_=_(obj?.a).b_+_y_[]
+=== PAUSE TestOperatorAssignmentFires/(obj?.a).b_=_(obj?.a).b_+_y_[]
+=== RUN   TestOperatorAssignmentFires/obj.a_=_obj?.a_+_b_[]
+=== PAUSE TestOperatorAssignmentFires/obj.a_=_obj?.a_+_b_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_+_y_[]
+=== CONT  TestOperatorAssignmentFires/obj.a_=_obj?.a_+_b_[]
+=== CONT  TestOperatorAssignmentFires/(obj?.a).b_=_(obj?.a).b_+_y_[]
+=== CONT  TestOperatorAssignmentFires/foo+=+bar===baz_["never"]
+=== CONT  TestOperatorAssignmentFires/foo+=/**/+bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo+=_+bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo+=+bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo/=/^bar$/_["never"]
+=== CONT  TestOperatorAssignmentFires/foo/=//_bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo/=/**/bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo/=bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo+=-bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_*=_(bar_+_1)_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_+=_bar_=_1_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_+=_bar_+_baz_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_-=_bar_-_baz_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_*=_bar_+_1_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_**=_bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo_=_foo_**_bar_[]
+=== CONT  TestOperatorAssignmentFires/(foo.bar)_^=_((((((((((((((((baz))))))))))))))))_["never"]
+=== CONT  TestOperatorAssignmentFires/x.//1__y_+=__z_["never"]
+=== CONT  TestOperatorAssignmentFires/x/*1*/.y_+=__z_["never"]
+=== CONT  TestOperatorAssignmentFires/(/*1*/x)_+=__y_["never"]
+=== CONT  TestOperatorAssignmentFires/x_//1__+=__y_["never"]
+=== CONT  TestOperatorAssignmentFires/x/*1*/+=__y_["never"]
+=== CONT  TestOperatorAssignmentFires/(/*1*/x_+=_y)_["never"]
+=== CONT  TestOperatorAssignmentFires/x_+=//1__y_["never"]
+=== CONT  TestOperatorAssignmentFires//*1*/x_+=/*2*/y/*3*/;_["never"]
+=== CONT  TestOperatorAssignmentFires/x_=_x_//1__+_y_["always"]
+=== CONT  TestOperatorAssignmentFires/x_=_x_/*1*/_+_y_["always"]
+=== CONT  TestOperatorAssignmentFires/x.y_=_x._//1__y_+_z_["always"]
+=== CONT  TestOperatorAssignmentFires/x.y_=_x/*1*/.y_+_z_["always"]
+=== CONT  TestOperatorAssignmentFires/x_=_//1__x_+_y_["always"]
+=== CONT  TestOperatorAssignmentFires/x_=_/*1*/_x_+_y_["always"]
+=== CONT  TestOperatorAssignmentFires/x_//_1__._//_2__y_//_3__=_x.y_+_//4__z_//5__._//6__w;_["always"]
+=== CONT  TestOperatorAssignmentFires//*1*/x/*2*/./*3*/y/*4*/=_x.y_+/*5*/z/*6*/./*7*/w/*8*/;_["always"]
+=== CONT  TestOperatorAssignmentFires/this[5]_=_this[5]_/_foo_[]
+=== CONT  TestOperatorAssignmentFires/foo[5]_=_foo[5]_/_baz_[]
+=== CONT  TestOperatorAssignmentFires/this[foo]_>>>=_bar_["never"]
+=== CONT  TestOperatorAssignmentFires/foo[bar]_>>>=_baz_["never"]
+=== CONT  TestOperatorAssignmentFires/this[foo]_=_this[foo]_+_bar_[]
+=== CONT  TestOperatorAssignmentFires/foo[bar]_=_foo[bar]_+_baz_[]
+=== CONT  TestOperatorAssignmentFires/this.foo.bar_+=_baz_["never"]
+=== CONT  TestOperatorAssignmentFires/this.foo.bar_=_this.foo.bar_+_baz_[]
+=== CONT  TestOperatorAssignmentFires/foo.bar.baz_+=_qux_["never"]
+=== CONT  TestOperatorAssignmentFires/foo.bar.baz_=_foo.bar.baz_+_qux_[]
+=== CONT  TestOperatorAssignmentFires/this.foo_+=_bar_["never"]
+=== CONT  TestOperatorAssignmentFires/this.foo_=_this.foo_+_bar_[]
+=== CONT  TestOperatorAssignmentFires/foo.bar_+=_baz_["never"]
+=== CONT  TestOperatorAssignmentFires/foo.bar_=_foo.bar_+_baz_[]
+=== CONT  TestOperatorAssignmentFires/x_+=_y_["never"]
+=== CONT  TestOperatorAssignmentFires/x_+=_(y)_["never"]
+=== CONT  TestOperatorAssignmentFires/x_=_x_+_(y)_["always"]
+=== CONT  TestOperatorAssignmentFires/x_=_(x_+_y)_["always"]
+=== CONT  TestOperatorAssignmentFires/x_=_x_+_y_["always"]
+=== CONT  TestOperatorAssignmentFires/x.y[z['a']][0].b_=_x.y[z['a']][0].b_*_2_[]
+=== CONT  TestOperatorAssignmentFires/x[0]_=_x[0]_-_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_|_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_^_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_&_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_>>>_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_>>_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_<<_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_%_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_/_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_(y_*_z)_*_x_[]
+=== CONT  TestOperatorAssignmentFires/x_=_y_*_x_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_*_y_[]
+=== CONT  TestOperatorAssignmentFires/x_=_x_-_y_[]
+--- PASS: TestOperatorAssignmentFires (0.01s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_+_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/obj.a_=_obj?.a_+_b_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/(obj?.a).b_=_(obj?.a).b_+_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo+=+bar===baz_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo+=/**/+bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo+=_+bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo+=+bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo/=/^bar$/_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo/=//_bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo/=/**/bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo/=bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo+=-bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_*=_(bar_+_1)_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_+=_bar_=_1_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_+=_bar_+_baz_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_-=_bar_-_baz_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_*=_bar_+_1_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_**=_bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo_=_foo_**_bar_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/(foo.bar)_^=_((((((((((((((((baz))))))))))))))))_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x.//1__y_+=__z_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x/*1*/.y_+=__z_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/(/*1*/x)_+=__y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_//1__+=__y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x/*1*/+=__y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/(/*1*/x_+=_y)_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_+=//1__y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires//*1*/x_+=/*2*/y/*3*/;_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_//1__+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_/*1*/_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x.y_=_x._//1__y_+_z_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x.y_=_x/*1*/.y_+_z_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_//1__x_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_/*1*/_x_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_//_1__._//_2__y_//_3__=_x.y_+_//4__z_//5__._//6__w;_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires//*1*/x/*2*/./*3*/y/*4*/=_x.y_+/*5*/z/*6*/./*7*/w/*8*/;_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this[5]_=_this[5]_/_foo_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo[5]_=_foo[5]_/_baz_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this[foo]_>>>=_bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo[bar]_>>>=_baz_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this[foo]_=_this[foo]_+_bar_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo[bar]_=_foo[bar]_+_baz_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this.foo.bar_+=_baz_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this.foo.bar_=_this.foo.bar_+_baz_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo.bar.baz_+=_qux_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo.bar.baz_=_foo.bar.baz_+_qux_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this.foo_+=_bar_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/this.foo_=_this.foo_+_bar_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo.bar_+=_baz_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/foo.bar_=_foo.bar_+_baz_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_+=_y_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_+=_(y)_["never"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_+_(y)_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_(x_+_y)_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_+_y_["always"] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x.y[z['a']][0].b_=_x.y[z['a']][0].b_*_2_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x[0]_=_x[0]_-_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_|_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_^_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_&_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_>>>_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_>>_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_<<_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_%_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_/_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_(y_*_z)_*_x_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_y_*_x_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_*_y_[] (0.00s)
+    --- PASS: TestOperatorAssignmentFires/x_=_x_-_y_[] (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.066s

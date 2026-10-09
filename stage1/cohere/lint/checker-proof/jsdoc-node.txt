@@ -1,0 +1,6 @@
+case 0
+/workspace/checker-jsdoc-repro/source.ts:1:1
+  nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+
+range 0 23 useSimpleComment fix	// Unicode prose.		0 23
+fixed	// Unicode prose.\u000aconst value = 1;\u000a

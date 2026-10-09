@@ -66,9 +66,11 @@ the class-member progress guard reaches a 500ms deadline on source Node/native.
 The audit contains no instrumentation. `gaps/portParserRecovery.ts` calls the
 actual driver, which checks parser diagnostics before conversion.
 
-The unchanged shared-parser gap `gaps/parserRecovery.ts` still times out after
-one second on source Node and sanitized native. That observation concerns the
-shared dependency, not the local driver. The original modifier, cooked surrogate
+The shared-parser gap `gaps/parserRecovery.ts` is closed. It once looped
+forever on source Node and sanitized native; the shared parser's recovery port
+(88f4a83d) made it finish, and `TestParserRecoveryTerminates` now holds source
+Node, sanitized native and emitted JavaScript to the same output under a hang
+guard. The original modifier, cooked surrogate
 and JSX refusals are repaired and held to Go on all three builds. The baseline
 92 output mismatches are also resolved. Current frozen-corpus acceptance still
 differs on five files, all refused because the text input boundary loses raw

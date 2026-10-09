@@ -1,0 +1,1 @@
+{"name":"inline-script-presence-inverted","from":"if (!hasAttributeNamed(this.nodes,parts.attributes,'src',matchExactly))","to":"if (hasAttributeNamed(this.nodes,parts.attributes,'src',matchExactly))"}

@@ -1,0 +1,5 @@
+import type { CoreArena } from './nodes.a';
+export function memberAccessObject(arena: CoreArena, index: number): number {
+    if(index < 0) { return -1; } const node = arena.node(index);
+    return node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression' ? node.expression : -1;
+}

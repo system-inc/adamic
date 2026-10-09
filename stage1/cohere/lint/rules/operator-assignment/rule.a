@@ -1,0 +1,145 @@
+import { utf8Length } from 'adamic';
+import { RuleContext } from '../../context.ts';
+import { FileCommentCache, forFile } from '../../helpers/comments/for_file.ts';
+import { replacedMessage, unexpectedMessage } from './messages.a';
+
+const binaryKinds = ['AsteriskToken', 'AmpersandToken', 'CaretToken', 'BarToken', 'PlusToken', 'MinusToken', 'SlashToken', 'PercentToken', 'LessThanLessThanToken', 'GreaterThanGreaterThanToken', 'GreaterThanGreaterThanGreaterThanToken', 'AsteriskAsteriskToken'];
+const compoundKinds = ['AsteriskEqualsToken', 'AmpersandEqualsToken', 'CaretEqualsToken', 'BarEqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AsteriskAsteriskEqualsToken'];
+const operators = ['*', '&', '^', '|', '+', '-', '/', '%', '<<', '>>', '>>>', '**'];
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly comments: FileCommentCache;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.comments = new FileCommentCache(context.parser, context.root);
+    }
+    same(left: number, right: number): boolean {
+        const context = this.context;
+        if(left < 0 || right < 0 || context.kind(left) !== context.kind(right)) { return false; }
+        const kind = context.kind(left);
+        switch(kind) {
+            case 'ThisKeyword': case 'SuperKeyword': return true;
+            case 'Identifier': case 'PrivateIdentifier': case 'StringLiteral': case 'NumericLiteral':
+            case 'BigIntLiteral': case 'TrueKeyword': case 'FalseKeyword': case 'NullKeyword':
+            case 'NoSubstitutionTemplateLiteral': case 'RegularExpressionLiteral':
+                return context.node(left).text === context.node(right).text;
+            case 'PropertyAccessExpression': case 'ElementAccessExpression':
+                return this.same(context.unwrap(context.property(left)), context.unwrap(context.property(right))) &&
+                    this.same(context.unwrap(context.child(left, 0)), context.unwrap(context.child(right, 0)));
+            default: return false;
+        }
+    }
+    canFix(index: number): boolean {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'Identifier') { return true; }
+        if(kind !== 'PropertyAccessExpression' && kind !== 'ElementAccessExpression') { return false; }
+        if(context.questionDot(index)) { return false; }
+        const object = context.unwrap(context.child(index, 0));
+        if(context.kind(object) !== 'Identifier' && context.kind(object) !== 'ThisKeyword') { return false; }
+        if(kind === 'PropertyAccessExpression') { return true; }
+        const argument = context.unwrap(context.property(index));
+        return ['StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword', 'RegularExpressionLiteral'].includes(context.kind(argument));
+    }
+    commentsBetween(from: number, to: number): boolean {
+        const context = this.context;
+        const start = utf8Length(context.source.slice(0, from));
+        const end = utf8Length(context.source.slice(0, to));
+        // The shared helper returns byte ranges; this comparison stays in bytes.
+        for(const comment of forFile(context.parser, context.root, this.comments)) {
+            if(comment.start >= start && comment.end <= end) { return true; }
+        }
+        return false;
+    }
+    binaryPrecedence(kind: string): number {
+        switch(kind) {
+            case 'QuestionQuestionToken': case 'BarBarToken': return 4;
+            case 'AmpersandAmpersandToken': return 5;
+            case 'BarToken': return 6;
+            case 'CaretToken': return 7;
+            case 'AmpersandToken': return 8;
+            case 'EqualsEqualsToken': case 'ExclamationEqualsToken': case 'EqualsEqualsEqualsToken': case 'ExclamationEqualsEqualsToken': return 9;
+            case 'LessThanToken': case 'LessThanEqualsToken': case 'GreaterThanToken': case 'GreaterThanEqualsToken': case 'InKeyword': case 'InstanceOfKeyword': return 10;
+            case 'LessThanLessThanToken': case 'GreaterThanGreaterThanToken': case 'GreaterThanGreaterThanGreaterThanToken': return 11;
+            case 'PlusToken': case 'MinusToken': return 12;
+            case 'AsteriskToken': case 'SlashToken': case 'PercentToken': return 13;
+            case 'AsteriskAsteriskToken': return 15;
+            default: return -1;
+        }
+    }
+    precedence(index: number): number {
+        const context = this.context;
+        switch(context.kind(index)) {
+            case 'ConditionalExpression': return 3;
+            case 'BinaryExpression': {
+                const operator = context.kind(context.child(index, 1));
+                if(operator === 'CommaToken') { return 0; }
+                if(operator === 'EqualsToken' || compoundKinds.includes(operator) || ['AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator)) { return 1; }
+                return this.binaryPrecedence(operator);
+            }
+            case 'ArrowFunction': case 'YieldExpression': return 1;
+            case 'PrefixUnaryExpression': case 'TypeOfExpression': case 'VoidExpression': case 'DeleteExpression': case 'AwaitExpression': return 16;
+            case 'PostfixUnaryExpression': return 17;
+            case 'CallExpression': return 18;
+            case 'NewExpression': return 19;
+            case 'AsExpression': case 'SatisfiesExpression': return 2;
+            case 'Identifier': case 'ThisKeyword': case 'SuperKeyword': case 'StringLiteral': case 'NumericLiteral':
+            case 'BigIntLiteral': case 'TrueKeyword': case 'FalseKeyword': case 'NullKeyword':
+            case 'RegularExpressionLiteral': case 'NoSubstitutionTemplateLiteral': case 'TemplateExpression':
+            case 'ArrayLiteralExpression': case 'ObjectLiteralExpression': case 'PropertyAccessExpression':
+            case 'ElementAccessExpression': case 'TaggedTemplateExpression': case 'FunctionExpression':
+            case 'ClassExpression': case 'ParenthesizedExpression': case 'NonNullExpression': return 20;
+            default: return -1;
+        }
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const operatorIndex = context.child(index, 1);
+        const kind = context.kind(operatorIndex);
+        const left = context.child(index, 0);
+        const right = context.child(index, 2);
+        const never = context.settings.read('require', context.settings.read('option', 'always')) === 'never';
+        if(never) {
+            const slot = compoundKinds.indexOf(kind);
+            if(slot < 0) { return; }
+            const operator = operators[slot] ?? '';
+            if(!this.canFix(context.unwrap(left)) || this.commentsBetween(context.start(index), context.start(operatorIndex))) {
+                context.report(index, 'operator-assignment', 'unexpected', unexpectedMessage(operator + '='), '', '', '');
+                return;
+            }
+            const leftText = context.source.slice(context.start(index), context.start(operatorIndex));
+            let rightText = '';
+            if(context.kind(right) !== 'ParenthesizedExpression' && this.precedence(right) <= this.binaryPrecedence(binaryKinds[slot] ?? '')) {
+                rightText = context.source.slice(context.node(operatorIndex).end, context.start(right)) + '(' + context.raw(right) + ')';
+            }
+            else {
+                const remainder = context.source.slice(context.node(operatorIndex).end, context.node(index).end);
+                const last = operator.slice(-1);
+                const needsSpace = ['+', '-', '/'].includes(last) && remainder.slice(0, 1) === last;
+                rightText = (needsSpace ? ' ' : '') + remainder;
+            }
+            context.report(index, 'operator-assignment', 'unexpected', unexpectedMessage(operator + '='), 'fix', leftText + '= ' + leftText + operator + rightText, '');
+            return;
+        }
+        if(kind !== 'EqualsToken') { return; }
+        const operation = context.unwrap(right);
+        if(context.kind(operation) !== 'BinaryExpression') { return; }
+        const binaryIndex = context.child(operation, 1);
+        const slot = binaryKinds.indexOf(context.kind(binaryIndex));
+        if(slot < 0) { return; }
+        const target = context.unwrap(left);
+        const operationLeft = context.unwrap(context.child(operation, 0));
+        const operationRight = context.unwrap(context.child(operation, 2));
+        const forward = this.same(target, operationLeft);
+        if(!forward && !(slot < 4 && this.same(target, operationRight))) { return; }
+        const compound = (operators[slot] ?? '') + '=';
+        if(!forward || !this.canFix(target) || !this.canFix(operationLeft) || this.commentsBetween(context.node(operatorIndex).end, context.start(binaryIndex))) {
+            context.report(index, 'operator-assignment', 'replaced', replacedMessage(compound), '', '', '');
+            return;
+        }
+        const replacement = context.source.slice(context.start(index), context.start(operatorIndex)) + compound + context.source.slice(context.node(binaryIndex).end, context.node(operation).end);
+        context.report(index, 'operator-assignment', 'replaced', replacedMessage(compound), 'fix', replacement, '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

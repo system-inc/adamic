@@ -1,0 +1,3 @@
+import type { CoreArena } from './nodes.a';
+import { appendNodeSignature } from './append_node_signature.a';
+export function tokenSignature(arena: CoreArena, index: number): string { return appendNodeSignature(arena, index); }

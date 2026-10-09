@@ -1,0 +1,1 @@
+f(<T extends A & { readonly x: T;; }>(x: T) => x);

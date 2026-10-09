@@ -1,0 +1,1 @@
+export interface Shape<T> extends Base<T>, Other { value: T; }

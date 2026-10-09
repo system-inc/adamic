@@ -1,0 +1,12 @@
+{
+  "name": "structure/network-no-direct-fetch",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleStructureNetworkNoDirectFetch",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestNetworkNoDirectFetch",
+  "factory": "create",
+  "class": "Rule"
+}

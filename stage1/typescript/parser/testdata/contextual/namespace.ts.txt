@@ -1,0 +1,18 @@
+{
+    namespace = true;
+    namespace();
+    namespace.value;
+    namespace
+}
+{
+    namespace
+    class C {}
+}
+{
+    namespace
+    function f() {}
+}
+{
+    namespace
+    "m";
+}

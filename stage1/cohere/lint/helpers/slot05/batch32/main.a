@@ -1,0 +1,24 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { isJsxValue } from './is_jsx_value.a';
+import { jsxAfterParentheses } from './jsx_after_parentheses.a';
+import { returnArgumentLooksLikeJsx } from './return_argument_looks_like_jsx.a';
+import type { JsxNode } from './model.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function truth(index: number, name: string): boolean { return text(index, name) === 'true'; }
+function number(index: number, name: string): number { return Number(text(index, name)); }
+const mode = text(root, 'mode');
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const nodes: JsxNode[] = [];
+    for (const n of json.node(json.field(row, 'nodes')).children) {
+        nodes.push({element: truth(n, 'element'), fragment: truth(n, 'fragment'), selfClosing: truth(n, 'selfClosing'), parenthesized: truth(n, 'parenthesized'), conditional: truth(n, 'conditional'), expression: number(n, 'expression'), whenTrue: number(n, 'whenTrue'), whenFalse: number(n, 'whenFalse')});
+    }
+    for (const q of json.node(json.field(row, 'queries')).children) {
+        const index = Number(json.node(q).text);
+        const answer = mode === 'value' ? isJsxValue(nodes, index) : mode === 'after' ? jsxAfterParentheses(nodes, index) : returnArgumentLooksLikeJsx(nodes, index);
+        console.log(`${answer}`);
+    }
+}
