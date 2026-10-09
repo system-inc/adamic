@@ -1,0 +1,22 @@
+[
+  {
+    "file": "01-core-forEach.a",
+    "exit": 1,
+    "stderr": "stage3/scouts/step12/generics-names/01-core-forEach.a:4:37: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n"
+  },
+  {
+    "file": "02-utilities-forEachEntry.a",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/generics-names/02-utilities-forEachEntry.a:1:17: stage 0 can't lower a function returning U | undefined yet\n"
+  },
+  {
+    "file": "03-concrete-each.a",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/generics-names/03-concrete-each.a:1:17: stage 0 can't lower a function returning U | undefined yet\n"
+  },
+  {
+    "file": "04-scanner-constructor.a",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/generics-names/04-scanner-constructor.a:1:20: stage 0 can't lower a computed field name yet\n"
+  }
+]

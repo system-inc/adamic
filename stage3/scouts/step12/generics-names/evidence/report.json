@@ -1,0 +1,198 @@
+[
+  {
+    "file": "01-core-forEach.a",
+    "topic": "generic",
+    "node": {
+      "exit": 0,
+      "stdout": "hit\nmissing\n",
+      "stderr": ""
+    },
+    "mutant_node": {
+      "exit": 0,
+      "stdout": "missing\nmissing\n",
+      "stderr": ""
+    },
+    "modes": [
+      {
+        "split": "0",
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "stage3/scouts/step12/generics-names/01-core-forEach.a:4:37: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n"
+        }
+      },
+      {
+        "split": "1",
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "stage3/scouts/step12/generics-names/01-core-forEach.a:4:37: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n"
+        }
+      }
+    ]
+  },
+  {
+    "file": "02-utilities-forEachEntry.a",
+    "topic": "generic",
+    "node": {
+      "exit": 0,
+      "stdout": "y\nmissing\n",
+      "stderr": ""
+    },
+    "mutant_node": {
+      "exit": 0,
+      "stdout": "missing\nmissing\n",
+      "stderr": ""
+    },
+    "modes": [
+      {
+        "split": "0",
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/generics-names/02-utilities-forEachEntry.a:5:13: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
+        }
+      },
+      {
+        "split": "1",
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/generics-names/02-utilities-forEachEntry.a:5:13: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
+        }
+      }
+    ]
+  },
+  {
+    "file": "03-concrete-each.a",
+    "topic": "generic",
+    "node": {
+      "exit": 0,
+      "stdout": "x\nmissing\n",
+      "stderr": ""
+    },
+    "mutant_node": {
+      "exit": 0,
+      "stdout": "missing\nmissing\n",
+      "stderr": ""
+    },
+    "modes": [
+      {
+        "split": "0",
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "native": {
+          "exit": 0,
+          "stdout": "x\nmissing\n",
+          "stderr": ""
+        },
+        "matches_node": true,
+        "mutant_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "mutant_native": {
+          "exit": 0,
+          "stdout": "missing\nmissing\n",
+          "stderr": ""
+        },
+        "mutant_caught": true
+      },
+      {
+        "split": "1",
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "native": {
+          "exit": 0,
+          "stdout": "x\nmissing\n",
+          "stderr": ""
+        },
+        "matches_node": true,
+        "mutant_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "mutant_native": {
+          "exit": 0,
+          "stdout": "missing\nmissing\n",
+          "stderr": ""
+        },
+        "mutant_caught": true
+      }
+    ]
+  },
+  {
+    "file": "04-scanner-constructor.a",
+    "topic": "names",
+    "node": {
+      "exit": 0,
+      "stdout": "constructor\n",
+      "stderr": ""
+    },
+    "mutant_node": {
+      "exit": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    },
+    "modes": [
+      {
+        "split": "0",
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "native": {
+          "exit": 0,
+          "stdout": "constructor\n",
+          "stderr": ""
+        },
+        "matches_node": true,
+        "mutant_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "mutant_native": {
+          "exit": 0,
+          "stdout": "wrong\n",
+          "stderr": ""
+        },
+        "mutant_caught": true
+      },
+      {
+        "split": "1",
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "native": {
+          "exit": 0,
+          "stdout": "constructor\n",
+          "stderr": ""
+        },
+        "matches_node": true,
+        "mutant_build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "mutant_native": {
+          "exit": 0,
+          "stdout": "wrong\n",
+          "stderr": ""
+        },
+        "mutant_caught": true
+      }
+    ]
+  }
+]
