@@ -1,0 +1,51 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/diagnostics.go",
+    "line": 33,
+    "old": "return &NotYet{Where: l.program.Where(node), What: what}",
+    "new": "return &NotYet{Where: l.program.Where(node), What: \"\"}"
+  },
+  {
+    "id": "M2",
+    "file": "internal/lower/cycles.go",
+    "line": 63,
+    "old": "func (l *lowering) findCycles(modules []*ast.SourceFile) error {",
+    "new": "func (l *lowering) findCycles(modules []*ast.SourceFile) error {\n if true { return nil }"
+  },
+  {
+    "id": "M3",
+    "file": "internal/lower/expression.go",
+    "line": 721,
+    "old": "return ir.NumberConstant{Value: value.Float()}, nil",
+    "new": "return ir.NumberConstant{Value: value.Float() + 1}, nil"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/typescript/parser/grammar.ts",
+    "line": 40,
+    "old": "return 14;",
+    "new": "return 12;"
+  },
+  {
+    "id": "E_LOAD",
+    "file": "internal/load/load.go",
+    "line": 81,
+    "old": "return load(paths, nil)",
+    "new": "return nil, nil"
+  },
+  {
+    "id": "E_LOWER",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n if true { return &ir.Program{}, nil }"
+  },
+  {
+    "id": "E_PORT",
+    "file": "stage1/typescript/parser/main.ts",
+    "line": 5,
+    "old": "function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {",
+    "new": "Replace the entire run body with return 0; remaining unreachable statements dropped to preserve TypeScript narrowing."
+  }
+]

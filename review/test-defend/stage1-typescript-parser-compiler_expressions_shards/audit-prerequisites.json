@@ -1,0 +1,23 @@
+[
+  {
+    "label": "npm",
+    "seconds": 2.138794890999634,
+    "exit": 0,
+    "command": [
+      "npm",
+      "ci"
+    ]
+  },
+  {
+    "label": "list",
+    "seconds": 10.240883607999422,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/typescript/parser/"
+    ]
+  }
+]

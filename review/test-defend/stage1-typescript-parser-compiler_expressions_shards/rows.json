@@ -1,0 +1,88 @@
+[
+  {
+    "test": "TestPushSpreadGap",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestClassMethodInterfaceGap",
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/diagnostics.go:39",
+        "change": "\"AEIOU\" -> \"AEIOUS\"",
+        "rows_failed": [
+          "TestPushSpreadGap"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-parser/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(Test.*Gap|TestTypeOnlyImportCycleCompiles)$' > D1-bounded.log 2>&1; gaps_test.go:64: GAPS.md records push spread NotYet, got /workspace/adamic/stage1/typescript/parser/gaps/2_push_spread.ts:3:15: stage 0 can't lower an SpreadElement yet",
+    "passed_rows": [
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestStrongAstParentGap",
+      "TestClassMethodInterfaceGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "bounded": true,
+    "reason": "Only this row failed in the six-row matrix and all 19 current lowering-product rows passed. Whole-package runs exceeded budget; remaining one-off native parser builds were not completed. These are strong bounded defense candidates, but package uniqueness is unresolved."
+  },
+  {
+    "test": "TestClassMethodInterfaceGap",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestPushSpreadGap",
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/iteration_origin.go:95",
+        "change": "found = l.notYet(where, \"a class method through a view that erases its prototype origin\") -> // Class-origin refusal deliberately dropped.",
+        "rows_failed": [
+          "TestClassMethodInterfaceGap"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-parser/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(Test.*Gap|TestTypeOnlyImportCycleCompiles)$' > D2-bounded.log 2>&1; gaps_test.go:89: GAPS.md records an erased class-method origin NotYet, got <nil>",
+    "passed_rows": [
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "bounded": true,
+    "reason": "Only this row failed in the six-row matrix and all 19 current lowering-product rows passed. Whole-package runs exceeded budget; remaining one-off native parser builds were not completed. These are strong bounded defense candidates, but package uniqueness is unresolved."
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestTypeOnlyImportCycleCompiles",
+    "defense": "defended",
+    "unique_mutant": "D4 internal/javascript/javascript.go:742",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/javascript/javascript.go:975",
+        "change": "return \"(\" + e.value(expression.Value) + \" === undefined)\" -> return \"(\" + e.value(expression.Value) + \" !== undefined)\"",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/javascript/javascript.go:742",
+        "change": "return number(expression.Value) -> return number(expression.Value + 1)",
+        "rows_failed": [
+          "TestClosedOptionalFunctionValueGap"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-parser/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap)$' > D4-bounded.log 2>&1; gaps_test.go:132: JavaScript backend: \"2\\n\", Node \"1\\n\"",
+    "passed_rows": [
+      "TestClosedConditionalEmptyArrayGap"
+    ],
+    "bounded": true,
+    "reason": "Static call-site enumeration finds exactly two JavaScript.JavaScript callers in this package, both covered by D4. The other caller passes. Other tests emit native C and cannot reach this mutation."
+  }
+]

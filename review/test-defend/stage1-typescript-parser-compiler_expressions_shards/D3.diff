@@ -1,0 +1,13 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..62466172 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -972,7 +972,7 @@ func (e *emitter) value(expression ir.Expression) string {
+ 	case ir.Undefined:
+ 		return "undefined"
+ 	case ir.IsUndefined:
+-		return "(" + e.value(expression.Value) + " === undefined)"
++		return "(" + e.value(expression.Value) + " !== undefined)"
+ 	case ir.Unwrap:
+ 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
+ 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"

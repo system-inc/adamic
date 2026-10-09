@@ -1,0 +1,131 @@
+[
+  {
+    "mutant": "D1",
+    "vet": 0,
+    "runs": [
+      {
+        "label": "whole",
+        "argv": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/typescript/parser/",
+          "-run",
+          "."
+        ],
+        "status": 1,
+        "wall_seconds": 103.64431038600014
+      },
+      {
+        "label": "bounded",
+        "argv": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/typescript/parser/",
+          "-run",
+          "^(Test.*Gap|TestTypeOnlyImportCycleCompiles)$"
+        ],
+        "status": 1,
+        "wall_seconds": 8.057382439998037
+      }
+    ],
+    "wall_seconds": 112.33914171200013
+  },
+  {
+    "mutant": "D2",
+    "vet": 0,
+    "runs": [
+      {
+        "label": "whole",
+        "argv": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/typescript/parser/",
+          "-run",
+          "."
+        ],
+        "status": 124,
+        "wall_seconds": 120.00486290800109
+      },
+      {
+        "label": "bounded",
+        "argv": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/typescript/parser/",
+          "-run",
+          "^(Test.*Gap|TestTypeOnlyImportCycleCompiles)$"
+        ],
+        "status": 1,
+        "wall_seconds": 3.894733172997803
+      }
+    ],
+    "wall_seconds": 126.24482213899682
+  },
+  {
+    "mutant": "D3",
+    "vet": 0,
+    "runs": [
+      {
+        "label": "whole",
+        "argv": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/typescript/parser/",
+          "-run",
+          "."
+        ],
+        "status": 1,
+        "wall_seconds": 97.22397454599923
+      },
+      {
+        "label": "bounded",
+        "argv": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/typescript/parser/",
+          "-run",
+          "^(Test.*Gap|TestTypeOnlyImportCycleCompiles)$"
+        ],
+        "status": 0,
+        "wall_seconds": 3.8172137580004346
+      }
+    ],
+    "wall_seconds": 101.14308414200059
+  }
+]

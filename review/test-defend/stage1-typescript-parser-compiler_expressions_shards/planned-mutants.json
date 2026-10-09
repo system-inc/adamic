@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/diagnostics.go:39",
+    "change": "\"AEIOU\" -> \"AEIOUS\"",
+    "menu": "change constant"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/lower/iteration_origin.go:95",
+    "change": "found = l.notYet(where, \"a class method through a view that erases its prototype origin\") -> // Class-origin refusal deliberately dropped.",
+    "menu": "drop statement"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/javascript/javascript.go:975",
+    "change": "return \"(\" + e.value(expression.Value) + \" === undefined)\" -> return \"(\" + e.value(expression.Value) + \" !== undefined)\"",
+    "menu": "flip condition"
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/javascript/javascript.go:742",
+    "change": "return number(expression.Value) -> return number(expression.Value + 1)",
+    "menu": "change numeric constant"
+  }
+]

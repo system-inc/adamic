@@ -1,0 +1,13 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..8bc164fe 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -739,7 +739,7 @@ func (e *emitter) value(expression ir.Expression) string {
+ 		}
+ 		return "(" + e.value(expression.Value) + " === null)"
+ 	case ir.NumberConstant:
+-		return number(expression.Value)
++		return number(expression.Value + 1)
+ 	case ir.BooleanConstant:
+ 		return strconv.FormatBool(expression.Value)
+ 	case ir.StringConstant:

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..9e20d774 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -36,7 +36,7 @@ func (l *lowering) notYet(node *ast.Node, what string) error {
+ // describe names a node's kind for a person: "a VariableStatement", "an ImportDeclaration".
+ func describe(node *ast.Node) string {
+ 	name := strings.TrimPrefix(node.Kind.String(), "Kind")
+-	if strings.ContainsAny(name[:1], "AEIOU") {
++	if strings.ContainsAny(name[:1], "AEIOUS") {
+ 		return "an " + name
+ 	}
+ 	return "a " + name

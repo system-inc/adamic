@@ -1,0 +1,115 @@
+{
+  "D1": {
+    "outcomes": {
+      "TestClosedOptionalFunctionValueGap": "pass",
+      "TestClosedConditionalEmptyArrayGap": "pass",
+      "TestPushSpreadGap": "fail",
+      "TestStrongAstParentGap": "pass",
+      "TestClassMethodInterfaceGap": "pass",
+      "TestTypeOnlyImportCycleCompiles": "pass"
+    },
+    "rows_failed": [
+      "TestPushSpreadGap"
+    ],
+    "rows_passed": [
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestStrongAstParentGap",
+      "TestClassMethodInterfaceGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "lowering_products": {
+      "TestProduct_WholeMutantsLower_002": "pass",
+      "TestProduct_ExpressionsLower000": "pass",
+      "TestProduct_JsxMutantsLower_003": "pass",
+      "TestProduct_JsxMutantsLower_005": "pass",
+      "TestProduct_JsxMutantsLower_004": "pass",
+      "TestProduct_WholeMutantsLower_001": "pass",
+      "TestProduct_WholeMutantsLower_000": "pass",
+      "TestProduct_WholeMutantsLower_Control": "pass",
+      "TestProduct_CompilerExpressionsLower": "pass",
+      "TestProduct_JsxMutantsLower_008": "pass",
+      "TestProduct_JsxMutantsLower_007": "pass",
+      "TestProduct_JsxMutantsLower_006": "pass",
+      "TestProduct_JsxMutantsLower_Control": "pass",
+      "TestProduct_JsxMutantsLower_002": "pass",
+      "TestProduct_JsxMutantsLower_001": "pass",
+      "TestProduct_JsxMutantsLower_000": "pass",
+      "TestProduct_ExpressionsLower002": "pass",
+      "TestProduct_ExpressionsLower003": "pass",
+      "TestProduct_ExpressionsLower001": "pass"
+    }
+  },
+  "D2": {
+    "outcomes": {
+      "TestClosedOptionalFunctionValueGap": "pass",
+      "TestClosedConditionalEmptyArrayGap": "pass",
+      "TestPushSpreadGap": "pass",
+      "TestClassMethodInterfaceGap": "fail",
+      "TestStrongAstParentGap": "pass",
+      "TestTypeOnlyImportCycleCompiles": "pass"
+    },
+    "rows_failed": [
+      "TestClassMethodInterfaceGap"
+    ],
+    "rows_passed": [
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "lowering_products": {
+      "TestProduct_ExpressionsLower000": "pass",
+      "TestProduct_WholeMutantsLower_Control": "pass",
+      "TestProduct_WholeMutantsLower_001": "pass",
+      "TestProduct_JsxMutantsLower_005": "pass",
+      "TestProduct_CompilerExpressionsLower": "pass",
+      "TestProduct_WholeMutantsLower_002": "pass",
+      "TestProduct_JsxMutantsLower_007": "pass",
+      "TestProduct_JsxMutantsLower_008": "pass",
+      "TestProduct_JsxMutantsLower_006": "pass",
+      "TestProduct_WholeMutantsLower_000": "pass",
+      "TestProduct_JsxMutantsLower_000": "pass",
+      "TestProduct_JsxMutantsLower_003": "pass",
+      "TestProduct_JsxMutantsLower_004": "pass",
+      "TestProduct_JsxMutantsLower_001": "pass",
+      "TestProduct_JsxMutantsLower_002": "pass",
+      "TestProduct_ExpressionsLower001": "pass",
+      "TestProduct_ExpressionsLower002": "pass",
+      "TestProduct_ExpressionsLower003": "pass",
+      "TestProduct_JsxMutantsLower_Control": "pass"
+    }
+  },
+  "D3": {
+    "outcomes": {
+      "TestClosedOptionalFunctionValueGap": "pass",
+      "TestClosedConditionalEmptyArrayGap": "pass",
+      "TestClassMethodInterfaceGap": "pass",
+      "TestStrongAstParentGap": "pass",
+      "TestPushSpreadGap": "pass",
+      "TestTypeOnlyImportCycleCompiles": "pass"
+    },
+    "rows_failed": [],
+    "rows_passed": [
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClassMethodInterfaceGap",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ]
+  },
+  "D4": {
+    "outcomes": {
+      "TestClosedOptionalFunctionValueGap": "fail",
+      "TestClosedConditionalEmptyArrayGap": "pass"
+    },
+    "rows_failed": [
+      "TestClosedOptionalFunctionValueGap"
+    ],
+    "rows_passed": [
+      "TestClosedConditionalEmptyArrayGap"
+    ]
+  }
+}

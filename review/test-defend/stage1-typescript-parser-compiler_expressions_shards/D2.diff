@@ -1,0 +1,13 @@
+diff --git a/internal/lower/iteration_origin.go b/internal/lower/iteration_origin.go
+index 0fa45453..79435e87 100644
+--- a/internal/lower/iteration_origin.go
++++ b/internal/lower/iteration_origin.go
+@@ -92,7 +92,7 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
+ 							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) || (member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
+ 								continue
+ 							}
+-							found = l.notYet(where, "a class method through a view that erases its prototype origin")
++							// Class-origin refusal deliberately dropped.
+ 							return true
+ 						}
+ 					}
