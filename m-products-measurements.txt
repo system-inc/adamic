@@ -1,0 +1,1502 @@
+
+
+===== CompilerAgreementReleaseNative.builds.jsonl =====
+build compiler-agreement-lowered 4a61b34a8dbc miss 62.40
+build compiler-agreement-native-false 2da15c7c2603 miss 75.44
+
+
+===== CompilerAgreementReleaseNative.deps-warm.builds =====
+build compiler-agreement-lowered 4a61b34a8dbc hit 0.48
+build compiler-agreement-native-false 2da15c7c2603 miss 9.28
+
+
+===== CompilerAgreementReleaseNative.deps-warm.log =====
+=== RUN   TestProduct_CompilerAgreementReleaseNative
+=== PAUSE TestProduct_CompilerAgreementReleaseNative
+=== CONT  TestProduct_CompilerAgreementReleaseNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-lowered 4a61b34a8dbc hit 0.48
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-false 2da15c7c2603 miss 9.28
+    compiler_stage1_split_test.go:301: TestProduct_CompilerAgreementReleaseNative: 9.479s cooked=false
+--- PASS: TestProduct_CompilerAgreementReleaseNative (9.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	9.508s
+
+
+===== CompilerAgreementReleaseNative.log =====
+=== RUN   TestProduct_CompilerAgreementReleaseNative
+=== PAUSE TestProduct_CompilerAgreementReleaseNative
+=== CONT  TestProduct_CompilerAgreementReleaseNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-lowered 4a61b34a8dbc miss 62.40
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-false 2da15c7c2603 miss 75.44
+    compiler_stage1_split_test.go:301: TestProduct_CompilerAgreementReleaseNative: 75.965s cooked=true
+--- PASS: TestProduct_CompilerAgreementReleaseNative (75.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	76.016s
+
+
+===== CompilerAgreementSanitizedNative.builds.jsonl =====
+build compiler-agreement-lowered 4a61b34a8dbc miss 61.33
+
+
+===== CompilerAgreementSanitizedNative.deps-warm.builds =====
+build compiler-agreement-lowered 4a61b34a8dbc hit 0.48
+build compiler-agreement-native-true 9117450a16da miss 32.05
+
+
+===== CompilerAgreementSanitizedNative.deps-warm.log =====
+=== RUN   TestProduct_CompilerAgreementSanitizedNative
+=== PAUSE TestProduct_CompilerAgreementSanitizedNative
+=== CONT  TestProduct_CompilerAgreementSanitizedNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-lowered 4a61b34a8dbc hit 0.48
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-true 9117450a16da miss 32.05
+    compiler_stage1_split_test.go:296: TestProduct_CompilerAgreementSanitizedNative: 32.250s cooked=false
+--- PASS: TestProduct_CompilerAgreementSanitizedNative (32.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	32.278s
+
+
+===== CompilerAgreementSanitizedNative.log =====
+=== RUN   TestProduct_CompilerAgreementSanitizedNative
+=== PAUSE TestProduct_CompilerAgreementSanitizedNative
+=== CONT  TestProduct_CompilerAgreementSanitizedNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-lowered 4a61b34a8dbc miss 61.33
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_CompilerAgreementSanitizedNative (1m30s)
+
+goroutine 96 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x244d31994b48, 0x244d31697b58)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0xdf13e6, 0x1c}, {0xe41d18, 0x2f}, 0x244d3166e210, {0x213cf10, 0x1a53, 0x1a53}, {0xc2aa54114288456e, 0x14f5c1594a, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x244d31aa3040)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/lint.TestMain(0x244d31aa3040)
+	/workspace/m-products-measure/stage1/cohere/lint/registration_test.go:35 +0x111
+main.main()
+	_testmain.go:13524 +0xa5
+
+goroutine 18 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x244d3245f240, 0x4, 0x244d317f3680, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x244d3245f26e?, 0x244d3245f398?, 0x56bd4b?, 0x18?, 0x2006cb8?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x244d3187c780)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x20?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x244d31b83520)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x244d31b83520)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x244d31b83520)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.Build({0x244d37c36000, 0x61bdf2}, {0x244d3168e380, 0x6c}, {{0x0, 0x0}, 0x0, 0x0, 0x1, 0x1, ...})
+	/workspace/m-products-measure/internal/native/native.go:150 +0xd73
+github.com/system-inc/adamic/stage1/cohere/lint.compilerAgreementNative.func1({0x244d31ad9180, 0x67})
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:225 +0x165
+github.com/system-inc/adamic/internal/buildcache.get({{0x244d319fa0e0, 0x1e}, {0x244d31d92000, 0x5775, 0x5c00}, {0x244d317fedc0, 0x14, 0x16}, {0x244d31892240, 0x3, ...}}, ...)
+	/workspace/m-products-measure/internal/buildcache/buildcache.go:104 +0x4cb
+github.com/system-inc/adamic/internal/buildcache.Product({0x2074f10, 0x244d31994fc8}, {{0x244d319fa0e0, 0x1e}, {0x244d31d92000, 0x5775, 0x5c00}, {0x244d317fedc0, 0x14, 0x16}, ...}, ...)
+	/workspace/m-products-measure/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/lint.compilerAgreementProduct.func1()
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:182 +0x70
+sync.(*Once).doSlow(0x2167d40?, 0x14869c0?)
+	/workspace/adamic-tools/go/src/sync/once.go:78 +0xab
+sync.(*Once).Do(...)
+	/workspace/adamic-tools/go/src/sync/once.go:69
+github.com/system-inc/adamic/stage1/cohere/lint.compilerAgreementProduct(0x244d31994fc8, {{0x244d319fa0e0, 0x1e}, {0x244d31d92000, 0x5775, 0x5c00}, {0x244d317fedc0, 0x14, 0x16}, {0x244d31892240, ...}}, ...)
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:182 +0x157
+github.com/system-inc/adamic/stage1/cohere/lint.compilerAgreementNative(0x244d31994fc8, 0x1)
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:219 +0x27f
+github.com/system-inc/adamic/stage1/cohere/lint.TestProduct_CompilerAgreementSanitizedNative.func1(0x14869c0?)
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:296 +0x18
+github.com/system-inc/adamic/stage1/cohere/lint.compilerAgreementMeasureProduct(0x244d31994fc8, 0x2082a30)
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:280 +0x57
+github.com/system-inc/adamic/stage1/cohere/lint.TestProduct_CompilerAgreementSanitizedNative(0x244d31994fc8)
+	/workspace/m-products-measure/stage1/cohere/lint/compiler_stage1_split_test.go:296 +0x29
+testing.tRunner(0x244d31994fc8, 0x20824d0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 95 [IO wait]:
+internal/poll.runtime_pollWait(0x7f03242ece00, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x244d31c242a0?, 0x244d31b8a800?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x244d31c242a0, {0x244d31b8a800, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x244d3165edd8, {0x244d31b8a800?, 0x746e6f43656c7552?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x244d318d8e10, {0x2066c48, 0x244d3165edd8})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x2066d68, 0x244d318d8e10}, {0x2066c48, 0x244d3165edd8}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x244d3165edd8?, {0x2066d68?, 0x244d318d8e10?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x244d3165edd8, {0x2066d68, 0x244d318d8e10})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x2066d68, 0x244d318d8e10}, {0x2066cc8, 0x244d3165edd8}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 18
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.037s
+FAIL
+
+
+===== DecodedOptionsNative.builds.jsonl =====
+build lint-decoded-options-lowered-setup-v2 3e7a03baec99 miss 11.80
+build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 687e518a3693 miss 11.58
+build lint-decoded-options-native-setup-v2 845423373daf miss 7.85
+build lint-decoded-options-go-oracle-setup-v2 d4058456ce74 miss 45.54
+
+
+===== DecodedOptionsNative.deps-warm.builds =====
+build lint-decoded-options-lowered-setup-v2 3e7a03baec99 hit 1.70
+build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 687e518a3693 hit 0.83
+build lint-decoded-options-native-setup-v2 845423373daf miss 1.37
+build lint-decoded-options-go-oracle-setup-v2 d4058456ce74 hit 1.09
+
+
+===== DecodedOptionsNative.deps-warm.log =====
+=== RUN   TestProduct_DecodedOptionsNative
+=== PAUSE TestProduct_DecodedOptionsNative
+=== CONT  TestProduct_DecodedOptionsNative
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 3e7a03baec99 hit 1.70
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 687e518a3693 hit 0.83
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 845423373daf miss 1.37
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 d4058456ce74 hit 1.09
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 5.078936231s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:131: product wall=5.079014303s
+--- PASS: TestProduct_DecodedOptionsNative (5.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	5.109s
+
+
+===== DecodedOptionsNative.final-cold.builds =====
+build lint-decoded-options-lowered-setup-v2 3e7a03baec99 miss 10.88
+build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 687e518a3693 miss 12.10
+build lint-decoded-options-native-setup-v2 845423373daf miss 1.96
+build lint-decoded-options-go-oracle-setup-v2 d4058456ce74 miss 3.75
+
+
+===== DecodedOptionsNative.final-cold.log =====
+=== RUN   TestProduct_DecodedOptionsNative
+=== PAUSE TestProduct_DecodedOptionsNative
+=== CONT  TestProduct_DecodedOptionsNative
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 3e7a03baec99 miss 10.88
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 687e518a3693 miss 12.10
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 845423373daf miss 1.96
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 d4058456ce74 miss 3.75
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 28.770597727s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:131: product wall=28.770664218s
+--- PASS: TestProduct_DecodedOptionsNative (28.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	28.802s
+
+
+===== DecodedOptionsNative.log =====
+=== RUN   TestProduct_DecodedOptionsNative
+=== PAUSE TestProduct_DecodedOptionsNative
+=== CONT  TestProduct_DecodedOptionsNative
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 3e7a03baec99 miss 11.80
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 687e518a3693 miss 11.58
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 845423373daf miss 7.85
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 d4058456ce74 miss 45.54
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 1m16.899321577s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:131: product wall=1m16.89977575s
+--- PASS: TestProduct_DecodedOptionsNative (76.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	76.932s
+
+
+===== MarkdownWhitespace_manifest.builds.jsonl =====
+build markdown-whitespace-layout-lowered-whitespace_probe.ts db0d4da56ed6 miss 23.48
+build markdown-whitespace-layout-lowered-list_probe.ts 0827d6732b68 miss 36.80
+build markdown-whitespace-layout-go-lists e6db65f36773 miss 2.95
+build markdown-whitespace-layout-go-layout ce6aee821779 miss 1.48
+build markdown-whitespace-layout-lowered-whitespace_probe.ts-native-sanitized f27d871e8708 miss 27.30
+build markdown-whitespace-layout-lowered-list_probe.ts-native-false 6cc05efeca94 miss 10.24
+build markdown-whitespace-layout-lowered-list_probe.ts-native-true 29a672341b39 miss 20.28
+build markdown-whitespace-layout-setup-v2 fc36e8b218e5 miss 62.54
+
+
+===== MarkdownWhitespace_manifest.deps-warm.builds =====
+build markdown-whitespace-layout-lowered-whitespace_probe.ts db0d4da56ed6 hit 1.12
+build markdown-whitespace-layout-lowered-list_probe.ts 0827d6732b68 hit 1.13
+build markdown-whitespace-layout-lowered-whitespace_probe.ts-native-sanitized f27d871e8708 hit 1.05
+build markdown-whitespace-layout-go-lists e6db65f36773 hit 1.15
+build markdown-whitespace-layout-go-layout ce6aee821779 hit 1.12
+build markdown-whitespace-layout-lowered-list_probe.ts-native-false 6cc05efeca94 hit 1.04
+build markdown-whitespace-layout-lowered-list_probe.ts-native-true 29a672341b39 hit 1.05
+build markdown-whitespace-layout-setup-v2 fc36e8b218e5 miss 5.52
+
+
+===== MarkdownWhitespace_manifest.deps-warm.log =====
+=== RUN   TestProduct_MarkdownWhitespace_manifest
+=== PAUSE TestProduct_MarkdownWhitespace_manifest
+=== CONT  TestProduct_MarkdownWhitespace_manifest
+    whitespace_layout_split_test.go:258: build markdown-whitespace-layout-lowered-whitespace_probe.ts db0d4da56ed6 hit 1.12
+    whitespace_layout_split_test.go:258: build markdown-whitespace-layout-lowered-list_probe.ts 0827d6732b68 hit 1.13
+    whitespace_layout_split_test.go:690: build markdown-whitespace-layout-lowered-whitespace_probe.ts-native-sanitized f27d871e8708 hit 1.05
+    whitespace_layout_split_test.go:695: TestMarkdownWhitespaceLayout (policy setup): 2.178s
+    whitespace_layout_split_test.go:315: build markdown-whitespace-layout-go-lists e6db65f36773 hit 1.15
+    whitespace_layout_split_test.go:315: build markdown-whitespace-layout-go-layout ce6aee821779 hit 1.12
+    whitespace_layout_split_test.go:55: TestMarkdownWhitespaceLayout (Go and lowered products): 3.399s
+    whitespace_layout_split_test.go:899: build markdown-whitespace-layout-lowered-list_probe.ts-native-false 6cc05efeca94 hit 1.04
+    whitespace_layout_split_test.go:899: build markdown-whitespace-layout-lowered-list_probe.ts-native-true 29a672341b39 hit 1.05
+    whitespace_layout_split_test.go:86: TestMarkdownWhitespaceLayoutNative (setup): 1.049s
+    whitespace_layout_split_test.go:117: build markdown-whitespace-layout-setup-v2 fc36e8b218e5 miss 5.52
+--- PASS: TestProduct_MarkdownWhitespace_manifest (5.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	5.556s
+
+
+===== MarkdownWhitespace_manifest.log =====
+=== RUN   TestProduct_MarkdownWhitespace_manifest
+=== PAUSE TestProduct_MarkdownWhitespace_manifest
+=== CONT  TestProduct_MarkdownWhitespace_manifest
+    whitespace_layout_split_test.go:258: build markdown-whitespace-layout-lowered-whitespace_probe.ts db0d4da56ed6 miss 23.48
+    whitespace_layout_split_test.go:258: build markdown-whitespace-layout-lowered-list_probe.ts 0827d6732b68 miss 36.80
+    whitespace_layout_split_test.go:315: build markdown-whitespace-layout-go-lists e6db65f36773 miss 2.95
+    whitespace_layout_split_test.go:315: build markdown-whitespace-layout-go-layout ce6aee821779 miss 1.48
+    whitespace_layout_split_test.go:55: TestMarkdownWhitespaceLayout (Go and lowered products): 41.233s
+    whitespace_layout_split_test.go:690: build markdown-whitespace-layout-lowered-whitespace_probe.ts-native-sanitized f27d871e8708 miss 27.30
+    whitespace_layout_split_test.go:695: TestMarkdownWhitespaceLayout (policy setup): 50.780s
+    whitespace_layout_split_test.go:899: build markdown-whitespace-layout-lowered-list_probe.ts-native-false 6cc05efeca94 miss 10.24
+    whitespace_layout_split_test.go:899: build markdown-whitespace-layout-lowered-list_probe.ts-native-true 29a672341b39 miss 20.28
+    whitespace_layout_split_test.go:86: TestMarkdownWhitespaceLayoutNative (setup): 20.281s
+    whitespace_layout_split_test.go:117: build markdown-whitespace-layout-setup-v2 fc36e8b218e5 miss 62.54
+--- PASS: TestProduct_MarkdownWhitespace_manifest (62.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	62.616s
+
+
+===== NodeTableCapture.builds.jsonl =====
+build lint-node-table-capture fde8dd56f1ef miss 65.25
+
+
+===== NodeTableCapture.fresh-repeat.builds =====
+build lint-node-table-capture fde8dd56f1ef miss 9.61
+
+
+===== NodeTableCapture.fresh-repeat.log =====
+=== RUN   TestProduct_NodeTableCapture
+=== PAUSE TestProduct_NodeTableCapture
+=== CONT  TestProduct_NodeTableCapture
+    node_table_oracle_floor_test.go:582: build lint-node-table-capture fde8dd56f1ef miss 9.61
+--- PASS: TestProduct_NodeTableCapture (9.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	9.640s
+
+
+===== NodeTableCapture.log =====
+=== RUN   TestProduct_NodeTableCapture
+=== PAUSE TestProduct_NodeTableCapture
+=== CONT  TestProduct_NodeTableCapture
+    node_table_oracle_floor_test.go:582: build lint-node-table-capture fde8dd56f1ef miss 65.25
+--- PASS: TestProduct_NodeTableCapture (65.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	65.280s
+
+
+===== NodeTableEmitted.builds.jsonl =====
+build lint-node-table-lowered-ir 20c65f427d7f miss 4.41
+build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 53.66
+
+
+===== NodeTableEmitted.deps-warm.builds =====
+build lint-node-table-lowered-ir 20c65f427d7f hit 0.17
+build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 54.05
+
+
+===== NodeTableEmitted.deps-warm.log =====
+=== RUN   TestProduct_NodeTableEmitted
+=== PAUSE TestProduct_NodeTableEmitted
+=== CONT  TestProduct_NodeTableEmitted
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 20c65f427d7f hit 0.17
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 54.05
+--- PASS: TestProduct_NodeTableEmitted (54.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	54.341s
+
+
+===== NodeTableEmitted.log =====
+=== RUN   TestProduct_NodeTableEmitted
+=== PAUSE TestProduct_NodeTableEmitted
+=== CONT  TestProduct_NodeTableEmitted
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 20c65f427d7f miss 4.41
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 53.66
+--- PASS: TestProduct_NodeTableEmitted (58.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	58.132s
+
+
+===== NodeTableNative.builds.jsonl =====
+build lint-node-table-lowered-ir 20c65f427d7f miss 4.61
+build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 56.01
+build lint-node-table-native 9433702423ba miss 5.16
+
+
+===== NodeTableNative.deps-warm.builds =====
+build lint-node-table-lowered-ir 20c65f427d7f hit 0.12
+build lint-node-table-emitted-c-serial-v2 0a2a17c28188 hit 0.11
+build lint-node-table-native 9433702423ba miss 1.13
+
+
+===== NodeTableNative.deps-warm.log =====
+=== RUN   TestProduct_NodeTableNative
+=== PAUSE TestProduct_NodeTableNative
+=== CONT  TestProduct_NodeTableNative
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 20c65f427d7f hit 0.12
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 0a2a17c28188 hit 0.11
+    node_table_oracle_floor_test.go:143: build lint-node-table-native 9433702423ba miss 1.13
+--- PASS: TestProduct_NodeTableNative (1.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.435s
+
+
+===== NodeTableNative.log =====
+=== RUN   TestProduct_NodeTableNative
+=== PAUSE TestProduct_NodeTableNative
+=== CONT  TestProduct_NodeTableNative
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 20c65f427d7f miss 4.61
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 56.01
+    node_table_oracle_floor_test.go:143: build lint-node-table-native 9433702423ba miss 5.16
+--- PASS: TestProduct_NodeTableNative (65.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	65.926s
+
+
+===== ProfileCompilationC.builds.jsonl =====
+build lint-profile-lowered 014d16d8f4e0 miss 4.45
+build lint-profile-emit-c 5a28f6e85810 miss 53.37
+
+
+===== ProfileCompilationC.deps-warm.builds =====
+build lint-profile-lowered 014d16d8f4e0 hit 0.04
+build lint-profile-emit-c 5a28f6e85810 miss 53.67
+
+
+===== ProfileCompilationC.deps-warm.log =====
+=== RUN   TestProduct_ProfileCompilationC
+=== PAUSE TestProduct_ProfileCompilationC
+=== CONT  TestProduct_ProfileCompilationC
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 5a28f6e85810 miss 53.67
+    lint_setup_clock_products_test.go:54: product wall=53.862025486s
+--- PASS: TestProduct_ProfileCompilationC (53.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	53.891s
+
+
+===== ProfileCompilationC.log =====
+=== RUN   TestProduct_ProfileCompilationC
+=== PAUSE TestProduct_ProfileCompilationC
+=== CONT  TestProduct_ProfileCompilationC
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 miss 4.45
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 5a28f6e85810 miss 53.37
+    lint_setup_clock_products_test.go:54: product wall=58.002225594s
+--- PASS: TestProduct_ProfileCompilationC (58.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	58.058s
+
+
+===== ProfileCompilationCounted.builds.jsonl =====
+build lint-profile-lowered 014d16d8f4e0 miss 4.88
+build lint-profile-emit-c 7a311185cd47 miss 56.86
+build lint-profile-lowered 014d16d8f4e0 hit 0.09
+build lint-profile-emit-javascript a6fec6a616e0 miss 0.11
+build lint-profile-counted 5f8c510610dd miss 11.76
+
+
+===== ProfileCompilationCounted.deps-warm.builds =====
+build lint-profile-lowered 014d16d8f4e0 hit 0.03
+build lint-profile-emit-c 7a311185cd47 hit 0.03
+build lint-profile-lowered 014d16d8f4e0 hit 0.03
+build lint-profile-emit-javascript a6fec6a616e0 hit 0.03
+build lint-profile-counted 5f8c510610dd miss 8.19
+
+
+===== ProfileCompilationCounted.deps-warm.log =====
+=== RUN   TestProduct_ProfileCompilationCounted
+=== PAUSE TestProduct_ProfileCompilationCounted
+=== CONT  TestProduct_ProfileCompilationCounted
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 7a311185cd47 hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript a6fec6a616e0 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-counted 5f8c510610dd miss 8.19
+    lint_setup_clock_products_test.go:75: product wall=8.54384891s
+--- PASS: TestProduct_ProfileCompilationCounted (8.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	8.572s
+
+
+===== ProfileCompilationCounted.log =====
+=== RUN   TestProduct_ProfileCompilationCounted
+=== PAUSE TestProduct_ProfileCompilationCounted
+=== CONT  TestProduct_ProfileCompilationCounted
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 miss 4.88
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 7a311185cd47 miss 56.86
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.09
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript a6fec6a616e0 miss 0.11
+    profile_compilation_main_test.go:201: build lint-profile-counted 5f8c510610dd miss 11.76
+    lint_setup_clock_products_test.go:75: product wall=1m13.916403481s
+--- PASS: TestProduct_ProfileCompilationCounted (73.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	73.946s
+
+
+===== ProfileCompilationOracleOutputs.builds.jsonl =====
+build lint-profile-lowered 014d16d8f4e0 miss 4.44
+build lint-profile-emit-c c8092ad313c3 miss 54.19
+build lint-profile-lowered 014d16d8f4e0 hit 0.05
+build lint-profile-emit-javascript 28b07b077ed1 miss 0.12
+build lint-profile-scanner 701d6b755750 miss 10.28
+build lint-profile-counted 5f8c510610dd miss 10.32
+build lint-profile-profiled 6804a945e53e miss 18.20
+build shards-agree-profile-oracle c247d4584ef8 miss 8.01
+build lint-profile-oracle-outputs ede9a9b98fc2 miss 0.04
+
+
+===== ProfileCompilationOracleOutputs.deps-warm.builds =====
+build lint-profile-lowered 014d16d8f4e0 hit 0.04
+build lint-profile-emit-c c8092ad313c3 hit 0.03
+build lint-profile-lowered 014d16d8f4e0 hit 0.03
+build lint-profile-emit-javascript 28b07b077ed1 hit 0.03
+build lint-profile-scanner 701d6b755750 hit 0.03
+build lint-profile-counted 5f8c510610dd hit 0.03
+build lint-profile-profiled 6804a945e53e hit 0.03
+build shards-agree-profile-oracle c247d4584ef8 hit 1.10
+build lint-profile-oracle-outputs ede9a9b98fc2 miss 0.03
+
+
+===== ProfileCompilationOracleOutputs.deps-warm.log =====
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c c8092ad313c3 hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript 28b07b077ed1 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 701d6b755750 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-counted 5f8c510610dd hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-profiled 6804a945e53e hit 0.03
+    lint_setup_clock_products_test.go:88: build shards-agree-profile-oracle c247d4584ef8 hit 1.10
+    lint_setup_clock_products_test.go:88: build lint-profile-oracle-outputs ede9a9b98fc2 miss 0.03
+    lint_setup_clock_products_test.go:89: product wall=1.68845877s
+--- PASS: TestProduct_ProfileCompilationOracleOutputs (1.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.718s
+
+
+===== ProfileCompilationOracleOutputs.log =====
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 miss 4.44
+    profile_compilation_main_test.go:329: build lint-profile-emit-c c8092ad313c3 miss 54.19
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.05
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript 28b07b077ed1 miss 0.12
+    profile_compilation_main_test.go:201: build lint-profile-scanner 701d6b755750 miss 10.28
+    profile_compilation_main_test.go:201: build lint-profile-counted 5f8c510610dd miss 10.32
+    profile_compilation_main_test.go:201: build lint-profile-profiled 6804a945e53e miss 18.20
+    lint_setup_clock_products_test.go:88: build shards-agree-profile-oracle c247d4584ef8 miss 8.01
+    lint_setup_clock_products_test.go:88: build lint-profile-oracle-outputs ede9a9b98fc2 miss 0.04
+    lint_setup_clock_products_test.go:89: product wall=1m25.445918845s
+--- PASS: TestProduct_ProfileCompilationOracleOutputs (85.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	85.500s
+
+
+===== ProfileCompilationScanner.builds.jsonl =====
+build lint-profile-lowered 014d16d8f4e0 miss 5.78
+build lint-profile-emit-c 335be1c8907e miss 62.92
+build lint-profile-lowered 014d16d8f4e0 hit 0.07
+build lint-profile-emit-javascript 91a5b07d57bf miss 0.10
+build lint-profile-scanner 701d6b755750 miss 9.59
+
+
+===== ProfileCompilationScanner.deps-warm.builds =====
+build lint-profile-lowered 014d16d8f4e0 hit 0.04
+build lint-profile-emit-c 335be1c8907e hit 0.03
+build lint-profile-lowered 014d16d8f4e0 hit 0.03
+build lint-profile-emit-javascript 91a5b07d57bf hit 0.03
+build lint-profile-scanner 701d6b755750 miss 8.20
+
+
+===== ProfileCompilationScanner.deps-warm.log =====
+=== RUN   TestProduct_ProfileCompilationScanner
+=== PAUSE TestProduct_ProfileCompilationScanner
+=== CONT  TestProduct_ProfileCompilationScanner
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 335be1c8907e hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript 91a5b07d57bf hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 701d6b755750 miss 8.20
+    lint_setup_clock_products_test.go:68: product wall=8.520507346s
+--- PASS: TestProduct_ProfileCompilationScanner (8.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	8.547s
+
+
+===== ProfileCompilationScanner.log =====
+=== RUN   TestProduct_ProfileCompilationScanner
+=== PAUSE TestProduct_ProfileCompilationScanner
+=== CONT  TestProduct_ProfileCompilationScanner
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 miss 5.78
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 335be1c8907e miss 62.92
+    profile_compilation_main_test.go:303: build lint-profile-lowered 014d16d8f4e0 hit 0.07
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript 91a5b07d57bf miss 0.10
+    profile_compilation_main_test.go:201: build lint-profile-scanner 701d6b755750 miss 9.59
+    lint_setup_clock_products_test.go:68: product wall=1m18.71965588s
+--- PASS: TestProduct_ProfileCompilationScanner (78.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	78.760s
+
+
+===== ShardsAgreeCapture.builds.jsonl =====
+build shards-agree-capture aa703ce0a128 miss 24.57
+
+
+===== ShardsAgreeCapture.log =====
+=== RUN   TestProduct_ShardsAgreeCapture
+=== PAUSE TestProduct_ShardsAgreeCapture
+=== CONT  TestProduct_ShardsAgreeCapture
+    shards_agree_split_test.go:129: build shards-agree-capture aa703ce0a128 miss 24.57
+    lint_setup_clock_products_test.go:33: product wall=24.613713863s
+--- PASS: TestProduct_ShardsAgreeCapture (24.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	24.680s
+
+
+===== ShardsAgreeLowered.builds.jsonl =====
+build shards-agree-lowered 30fb9d01d343 miss 63.60
+
+
+===== ShardsAgreeLowered.log =====
+=== RUN   TestProduct_ShardsAgreeLowered
+=== PAUSE TestProduct_ShardsAgreeLowered
+=== CONT  TestProduct_ShardsAgreeLowered
+    shards_agree_split_test.go:154: build shards-agree-lowered 30fb9d01d343 miss 63.60
+    lint_setup_clock_products_test.go:12: product wall=1m3.616112818s
+--- PASS: TestProduct_ShardsAgreeLowered (63.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	63.707s
+
+
+===== ShardsAgreeNative.builds.jsonl =====
+build shards-agree-lowered 30fb9d01d343 miss 71.34
+build shards-agree-native d0539231fc77 miss 11.44
+
+
+===== ShardsAgreeNative.deps-warm.builds =====
+build shards-agree-lowered 30fb9d01d343 hit 2.00
+build shards-agree-native d0539231fc77 miss 9.13
+
+
+===== ShardsAgreeNative.deps-warm.log =====
+=== RUN   TestProduct_ShardsAgreeNative
+=== PAUSE TestProduct_ShardsAgreeNative
+=== CONT  TestProduct_ShardsAgreeNative
+    shards_agree_split_test.go:154: build shards-agree-lowered 30fb9d01d343 hit 2.00
+    shards_agree_split_test.go:171: build shards-agree-native d0539231fc77 miss 9.13
+    lint_setup_clock_products_test.go:19: product wall=11.144110814s
+--- PASS: TestProduct_ShardsAgreeNative (11.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.176s
+
+
+===== ShardsAgreeNative.log =====
+=== RUN   TestProduct_ShardsAgreeNative
+=== PAUSE TestProduct_ShardsAgreeNative
+=== CONT  TestProduct_ShardsAgreeNative
+    shards_agree_split_test.go:154: build shards-agree-lowered 30fb9d01d343 miss 71.34
+    shards_agree_split_test.go:171: build shards-agree-native d0539231fc77 miss 11.44
+    lint_setup_clock_products_test.go:19: product wall=1m22.805515899s
+--- PASS: TestProduct_ShardsAgreeNative (82.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	82.854s
+
+
+===== ShardsAgreePrepared.all-deps-warm.log =====
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    shards_agree_split_test.go:154: build shards-agree-lowered 30fb9d01d343 hit 1.12
+    shards_agree_split_test.go:171: build shards-agree-native d0539231fc77 hit 1.15
+    shards_agree_split_test.go:125: build shards-agree-oracle c85b8288aa80 hit 1.06
+    shards_agree_split_test.go:129: build shards-agree-capture aa703ce0a128 hit 1.18
+    lint_setup_clock_products_test.go:39: build shards-agree-prepared-v1 169a17be78b0 miss 7.38
+    lint_setup_clock_products_test.go:39: TestShardsAgree (setup): 7.405s; /workspace/m-products-evidence/cache-ShardsAgreePrepared/169a17be78b0143f6b7e05b48ba3515914283000dd25f0e5c60ea4e6344f3b1e
+    lint_setup_clock_products_test.go:40: product wall=7.404977739s
+--- PASS: TestProduct_ShardsAgreePrepared (7.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	7.430s
+
+
+===== ShardsAgreePrepared.builds.jsonl =====
+build shards-agree-lowered 30fb9d01d343 miss 73.93
+build shards-agree-native d0539231fc77 miss 9.97
+
+
+===== ShardsAgreePrepared.deps-warm.builds =====
+build shards-agree-lowered 30fb9d01d343 hit 1.00
+build shards-agree-native d0539231fc77 hit 1.02
+build shards-agree-oracle c85b8288aa80 miss 4.26
+build shards-agree-capture aa703ce0a128 miss 17.04
+build shards-agree-prepared-v1 169a17be78b0 miss 26.02
+
+
+===== ShardsAgreePrepared.deps-warm.log =====
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    shards_agree_split_test.go:154: build shards-agree-lowered 30fb9d01d343 hit 1.00
+    shards_agree_split_test.go:171: build shards-agree-native d0539231fc77 hit 1.02
+    shards_agree_split_test.go:125: build shards-agree-oracle c85b8288aa80 miss 4.26
+    shards_agree_split_test.go:129: build shards-agree-capture aa703ce0a128 miss 17.04
+    lint_setup_clock_products_test.go:39: build shards-agree-prepared-v1 169a17be78b0 miss 26.02
+    lint_setup_clock_products_test.go:39: TestShardsAgree (setup): 26.060s; /workspace/m-products-evidence/cache-ShardsAgreePrepared/169a17be78b0143f6b7e05b48ba3515914283000dd25f0e5c60ea4e6344f3b1e
+    lint_setup_clock_products_test.go:40: product wall=26.059770807s
+--- PASS: TestProduct_ShardsAgreePrepared (26.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.087s
+
+
+===== ShardsAgreePrepared.log =====
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    shards_agree_split_test.go:154: build shards-agree-lowered 30fb9d01d343 miss 73.93
+    shards_agree_split_test.go:171: build shards-agree-native d0539231fc77 miss 9.97
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_ShardsAgreePrepared (1m30s)
+
+goroutine 36 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x27f9893c2b48, 0x27f9891d5b58)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0xdf13e6, 0x1c}, {0xe41d18, 0x2f}, 0x27f98909c6d8, {0x213cf10, 0x1a53, 0x1a53}, {0xc2aa54d7a52eb311, 0x14f6d67bad, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x27f9894d0460)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/lint.TestMain(0x27f9894d0460)
+	/workspace/m-products-measure/stage1/cohere/lint/registration_test.go:35 +0x111
+main.main()
+	_testmain.go:13524 +0xa5
+
+goroutine 18 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xd, 0x27f9895acc30, 0x4, 0x27f989242000, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x27f9895acc5e?, 0x27f9895acd88?, 0x56bd4b?, 0x18?, 0x2006cb8?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x27f989412980)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x1?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x27f9894bb6c0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x27f9894bb6c0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/stage1/cohere/lint.testShardsAgreeRun({0x27f9891fe1e0, 0x24}, {0x0, 0x0, 0x3?}, {0xdcc028, 0x2}, {0x27f989482c08, 0x50, 0x57})
+	/workspace/m-products-measure/stage1/cohere/lint/shards_agree_split_test.go:477 +0x3a6
+github.com/system-inc/adamic/stage1/cohere/lint.testShardsAgreeGoOracleIn({0x27f98935e640, 0x30}, {0x27f9894da180, 0x5a})
+	/workspace/m-products-measure/stage1/cohere/lint/shards_agree_split_test.go:587 +0xc05
+github.com/system-inc/adamic/stage1/cohere/lint.testShardsAgreeOracle.func1({0x27f9894da180?, 0xdd62c0?})
+	/workspace/m-products-measure/stage1/cohere/lint/shards_agree_split_test.go:125 +0x32
+github.com/system-inc/adamic/internal/buildcache.get({{0x27f9893261f8, 0x13}, {0x27f989332008, 0x1ab, 0x1ff}, {0x27f989276840, 0xf, 0x16}, {0x27f98916a570, 0x3, ...}}, ...)
+	/workspace/m-products-measure/internal/buildcache/buildcache.go:104 +0x4cb
+github.com/system-inc/adamic/internal/buildcache.Product({0x2074f10, 0x27f9893c2fc8}, {{0x27f9893261f8, 0x13}, {0x27f989332008, 0x1ab, 0x1ff}, {0x27f989276840, 0xf, 0x16}, ...}, ...)
+	/workspace/m-products-measure/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/lint.testShardsAgreeOracle(0x27f9893c2fc8)
+	/workspace/m-products-measure/stage1/cohere/lint/shards_agree_split_test.go:125 +0xcd
+github.com/system-inc/adamic/stage1/cohere/lint.testShardsAgreePrepare.func1({0x27f98967a9c0, 0x5a})
+	/workspace/m-products-measure/stage1/cohere/lint/shards_agree_split_test.go:277 +0x69
+github.com/system-inc/adamic/internal/buildcache.get({{0x27f9890b95f0, 0x18}, {0x27f989234008, 0x1ac, 0x1ff}, {0x27f9892eedc0, 0x10, 0x16}, {0x27f9892c3a70, 0x3, ...}}, ...)
+	/workspace/m-products-measure/internal/buildcache/buildcache.go:104 +0x4cb
+github.com/system-inc/adamic/internal/buildcache.Product({0x2074f10, 0x27f9893c2fc8}, {{0x27f9890b95f0, 0x18}, {0x27f989234008, 0x1ac, 0x1ff}, {0x27f9892eedc0, 0x10, 0x16}, ...}, ...)
+	/workspace/m-products-measure/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/lint.testShardsAgreePrepare(0x27f9893c2fc8)
+	/workspace/m-products-measure/stage1/cohere/lint/shards_agree_split_test.go:275 +0x105
+github.com/system-inc/adamic/stage1/cohere/lint.TestProduct_ShardsAgreePrepared(0x27f9893c2fc8)
+	/workspace/m-products-measure/stage1/cohere/lint/lint_setup_clock_products_test.go:39 +0x3e
+testing.tRunner(0x27f9893c2fc8, 0x20825d8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 50 [IO wait]:
+internal/poll.runtime_pollWait(0x7fde1568b200, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x27f9895292c0?, 0x27f98951c200?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x27f9895292c0, {0x27f98951c200, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x27f98908cf38, {0x27f98951c200?, 0x0?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x27f98bc54e70, {0x2066c48, 0x27f98908cf38})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x2066d68, 0x27f98bc54e70}, {0x2066c48, 0x27f98908cf38}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x27f98908cf38?, {0x2066d68?, 0x27f98bc54e70?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x27f98908cf38, {0x2066d68, 0x27f98bc54e70})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x2066d68, 0x27f98bc54e70}, {0x2066cc8, 0x27f98908cf38}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 18
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.054s
+FAIL
+
+
+===== TSPrinterMutantNative_020.builds.jsonl =====
+build TS_printer_mutant_020_sanitized_native 1d0da75e7fc1 miss 26.15
+
+
+===== TSPrinterMutantNative_020.log =====
+=== RUN   TestProduct_TSPrinterMutantNative_020
+=== PAUSE TestProduct_TSPrinterMutantNative_020
+=== CONT  TestProduct_TSPrinterMutantNative_020
+    mutant_products_test.go:57: grain lowering: 2.223s
+    mutant_products_test.go:60: grain C emission: 13.107s
+    mutant_products_test.go:63: grain clang runtime/compile/link: 9.880s
+    expressions_test.go:170: build TS_printer_mutant_020_sanitized_native 1d0da75e7fc1 miss 26.15
+--- PASS: TestProduct_TSPrinterMutantNative_020 (27.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	27.284s
+
+
+===== TSPrinterStatementsEmbedded_010.builds.jsonl =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 47.57
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.06
+
+
+===== TSPrinterStatementsEmbedded_010.deps-warm.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be hit 1.01
+build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+build tsprinter-statements-embedded-oracle-shard-010-v1 c469e7300a71 miss 2.08
+
+
+===== TSPrinterStatementsEmbedded_010.deps-warm.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_010
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_010
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_010
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be hit 1.01
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-embedded-oracle-shard-010-v1: 2.073s, 3.053 CPU s
+    statements_test.go:244: build tsprinter-statements-embedded-oracle-shard-010-v1 c469e7300a71 miss 2.08
+--- PASS: TestProduct_TSPrinterStatementsEmbedded_010 (3.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	3.907s
+
+
+===== TSPrinterStatementsEmbedded_010.final-cold.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 3.14
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.12
+build tsprinter-statements-embedded-oracle-shard-010-v1 c469e7300a71 miss 2.11
+
+
+===== TSPrinterStatementsEmbedded_010.final-cold.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_010
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_010
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_010
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 3.14
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.10s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.115s, 2.641 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.12
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-embedded-oracle-shard-010-v1: 2.112s, 3.228 CPU s
+    statements_test.go:244: build tsprinter-statements-embedded-oracle-shard-010-v1 c469e7300a71 miss 2.11
+--- PASS: TestProduct_TSPrinterStatementsEmbedded_010 (8.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	8.077s
+
+
+===== TSPrinterStatementsEmbedded_010.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_010
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_010
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_010
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 47.57
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.04s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.056s, 2.574 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.06
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    printer_gate_corpus_products_test.go:155: oracle input symlink: /workspace/m-products-evidence/prettier/node_modules/.bin/prettier
+--- FAIL: TestProduct_TSPrinterStatementsEmbedded_010 (50.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/tsprinter	50.342s
+FAIL
+
+
+===== TSPrinterStatementsEmbedded_013.builds.jsonl =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 3.55
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.02
+
+
+===== TSPrinterStatementsEmbedded_013.deps-warm.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be hit 0.97
+build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+build tsprinter-statements-embedded-oracle-shard-013-v1 1426f280f105 miss 2.29
+
+
+===== TSPrinterStatementsEmbedded_013.deps-warm.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_013
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_013
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_013
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be hit 0.97
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-embedded-oracle-shard-013-v1: 2.287s, 3.299 CPU s
+    statements_test.go:244: build tsprinter-statements-embedded-oracle-shard-013-v1 1426f280f105 miss 2.29
+--- PASS: TestProduct_TSPrinterStatementsEmbedded_013 (3.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	3.987s
+
+
+===== TSPrinterStatementsEmbedded_013.final-cold.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.18
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.01
+build tsprinter-statements-embedded-oracle-shard-013-v1 1426f280f105 miss 1.94
+
+
+===== TSPrinterStatementsEmbedded_013.final-cold.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_013
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_013
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_013
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.18
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (1.99s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.005s, 2.454 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.01
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-embedded-oracle-shard-013-v1: 1.934s, 2.976 CPU s
+    statements_test.go:244: build tsprinter-statements-embedded-oracle-shard-013-v1 1426f280f105 miss 1.94
+--- PASS: TestProduct_TSPrinterStatementsEmbedded_013 (6.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	6.729s
+
+
+===== TSPrinterStatementsEmbedded_013.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_013
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_013
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_013
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 3.55
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.00s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.017s, 2.521 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.02
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    printer_gate_corpus_products_test.go:167: oracle input symlink: /workspace/m-products-evidence/prettier/node_modules/.bin/prettier
+--- FAIL: TestProduct_TSPrinterStatementsEmbedded_013 (6.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/tsprinter	6.189s
+FAIL
+
+
+===== TSPrinterStatementsEmbedded_014.builds.jsonl =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.26
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.06
+
+
+===== TSPrinterStatementsEmbedded_014.deps-warm.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be hit 0.98
+build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+build tsprinter-statements-embedded-oracle-shard-014-v1 7803033169e6 miss 2.37
+
+
+===== TSPrinterStatementsEmbedded_014.deps-warm.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_014
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_014
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_014
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be hit 0.98
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-embedded-oracle-shard-014-v1: 2.364s, 3.592 CPU s
+    statements_test.go:244: build tsprinter-statements-embedded-oracle-shard-014-v1 7803033169e6 miss 2.37
+--- PASS: TestProduct_TSPrinterStatementsEmbedded_014 (4.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	4.099s
+
+
+===== TSPrinterStatementsEmbedded_014.final-cold.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.16
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.05
+build tsprinter-statements-embedded-oracle-shard-014-v1 7803033169e6 miss 1.94
+
+
+===== TSPrinterStatementsEmbedded_014.final-cold.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_014
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_014
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_014
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.16
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.03s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.045s, 2.561 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.05
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-embedded-oracle-shard-014-v1: 1.936s, 2.992 CPU s
+    statements_test.go:244: build tsprinter-statements-embedded-oracle-shard-014-v1 7803033169e6 miss 1.94
+--- PASS: TestProduct_TSPrinterStatementsEmbedded_014 (6.80s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	6.808s
+
+
+===== TSPrinterStatementsEmbedded_014.log =====
+=== RUN   TestProduct_TSPrinterStatementsEmbedded_014
+=== PAUSE TestProduct_TSPrinterStatementsEmbedded_014
+=== CONT  TestProduct_TSPrinterStatementsEmbedded_014
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.26
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.05s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.062s, 2.567 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.06
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    printer_gate_corpus_products_test.go:171: oracle input symlink: /workspace/m-products-evidence/prettier/node_modules/.bin/prettier
+--- FAIL: TestProduct_TSPrinterStatementsEmbedded_014 (4.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/tsprinter	4.942s
+FAIL
+
+
+===== TSPrinterStatementsNPM_002.builds.jsonl =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.31
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.04
+
+
+===== TSPrinterStatementsNPM_002.deps-warm.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be hit 1.01
+build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+build tsprinter-statements-npm-oracle-shard-002-v1 afe025d28301 miss 1.89
+
+
+===== TSPrinterStatementsNPM_002.deps-warm.log =====
+=== RUN   TestProduct_TSPrinterStatementsNPM_002
+=== PAUSE TestProduct_TSPrinterStatementsNPM_002
+=== CONT  TestProduct_TSPrinterStatementsNPM_002
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be hit 1.01
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-npm-oracle-shard-002-v1: 1.885s, 2.989 CPU s
+    statements_test.go:244: build tsprinter-statements-npm-oracle-shard-002-v1 afe025d28301 miss 1.89
+--- PASS: TestProduct_TSPrinterStatementsNPM_002 (3.58s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	3.597s
+
+
+===== TSPrinterStatementsNPM_002.final-cold.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.21
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.20
+build tsprinter-statements-npm-oracle-shard-002-v1 afe025d28301 miss 2.06
+
+
+===== TSPrinterStatementsNPM_002.final-cold.log =====
+=== RUN   TestProduct_TSPrinterStatementsNPM_002
+=== PAUSE TestProduct_TSPrinterStatementsNPM_002
+=== CONT  TestProduct_TSPrinterStatementsNPM_002
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.21
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.19s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.203s, 2.757 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.20
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-npm-oracle-shard-002-v1: 2.060s, 3.197 CPU s
+    statements_test.go:244: build tsprinter-statements-npm-oracle-shard-002-v1 afe025d28301 miss 2.06
+--- PASS: TestProduct_TSPrinterStatementsNPM_002 (7.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	7.070s
+
+
+===== TSPrinterStatementsNPM_002.log =====
+=== RUN   TestProduct_TSPrinterStatementsNPM_002
+=== PAUSE TestProduct_TSPrinterStatementsNPM_002
+=== CONT  TestProduct_TSPrinterStatementsNPM_002
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.31
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.03s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.042s, 2.546 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.04
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    printer_gate_corpus_products_test.go:59: oracle input symlink: /workspace/m-products-evidence/prettier/node_modules/.bin/prettier
+--- FAIL: TestProduct_TSPrinterStatementsNPM_002 (4.92s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/tsprinter	4.932s
+FAIL
+
+
+===== TSPrinterStatementsNPM_008.builds.jsonl =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.24
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.15
+
+
+===== TSPrinterStatementsNPM_008.deps-warm.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be hit 1.06
+build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+build tsprinter-statements-npm-oracle-shard-008-v1 69fe20c486dc miss 2.58
+
+
+===== TSPrinterStatementsNPM_008.deps-warm.log =====
+=== RUN   TestProduct_TSPrinterStatementsNPM_008
+=== PAUSE TestProduct_TSPrinterStatementsNPM_008
+=== CONT  TestProduct_TSPrinterStatementsNPM_008
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be hit 1.06
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 hit 0.00
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-npm-oracle-shard-008-v1: 2.576s, 3.839 CPU s
+    statements_test.go:244: build tsprinter-statements-npm-oracle-shard-008-v1 69fe20c486dc miss 2.58
+--- PASS: TestProduct_TSPrinterStatementsNPM_008 (4.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	4.414s
+
+
+===== TSPrinterStatementsNPM_008.final-cold.builds =====
+build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.39
+build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.24
+build tsprinter-statements-npm-oracle-shard-008-v1 69fe20c486dc miss 2.47
+
+
+===== TSPrinterStatementsNPM_008.final-cold.log =====
+=== RUN   TestProduct_TSPrinterStatementsNPM_008
+=== PAUSE TestProduct_TSPrinterStatementsNPM_008
+=== CONT  TestProduct_TSPrinterStatementsNPM_008
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.39
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.22s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.236s, 2.776 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.24
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    statements_shards_test.go:31: build tsprinter-statements-npm-oracle-shard-008-v1: 2.468s, 3.679 CPU s
+    statements_test.go:244: build tsprinter-statements-npm-oracle-shard-008-v1 69fe20c486dc miss 2.47
+--- PASS: TestProduct_TSPrinterStatementsNPM_008 (7.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	7.767s
+
+
+===== TSPrinterStatementsNPM_008.log =====
+=== RUN   TestProduct_TSPrinterStatementsNPM_008
+=== PAUSE TestProduct_TSPrinterStatementsNPM_008
+=== CONT  TestProduct_TSPrinterStatementsNPM_008
+    statements_test.go:260: corpus root bench: 6 git-tracked .ts files
+    statements_test.go:260: corpus root bridge: 1 git-tracked .ts files
+    statements_test.go:260: corpus root cmd: 5 git-tracked .ts files
+    statements_test.go:260: corpus root internal: 69 git-tracked .ts files
+    statements_test.go:260: corpus root stage1: 477 git-tracked .ts files
+    statements_test.go:260: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    statements_test.go:260: corpus root src/compiler: 77 git-tracked .ts files
+    printer_gate_products_test.go:45: build tsprinter-go-oracle-v2 0fa3d9dd47be miss 2.24
+    statements_test.go:74: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:146: 935 files, 1 parse failures, 58052 supported statement/program fragments, 18 complete files
+        --- PASS: TestAdamicStatementCorpus (2.14s)
+        PASS
+        
+    statements_shards_test.go:31: build tsprinter-statements-oracle-output-v1: 2.149s, 2.642 CPU s
+    statements_test.go:260: build tsprinter-statements-oracle-output-v1 7e2463693637 miss 2.15
+    statements_test.go:260: cases: 58052 cases in 5 largest-first processes
+    printer_gate_corpus_products_test.go:83: oracle input symlink: /workspace/m-products-evidence/prettier/node_modules/.bin/prettier
+--- FAIL: TestProduct_TSPrinterStatementsNPM_008 (4.97s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/tsprinter	4.987s
+FAIL
+
+
+===== compile-lint.log =====
+wall=160.834 user=480.411 sys=57.865
+
+
+===== compile-markdownblocks.log =====
+wall=6.492 user=12.319 sys=1.729
+
+
+===== compile-tsprinter.log =====
+wall=8.064 user=11.748 sys=2.945
+
+
+===== final-cold.jsonl =====
+{"product": "DecodedOptionsNative", "wall": 30.95852401000002, "exit": 0}
+{"product": "TSPrinterStatementsEmbedded_010", "wall": 9.870691017999889, "exit": 0}
+{"product": "TSPrinterStatementsEmbedded_013", "wall": 8.955774827999903, "exit": 0}
+{"product": "TSPrinterStatementsEmbedded_014", "wall": 8.381851943000129, "exit": 0}
+{"product": "TSPrinterStatementsNPM_002", "wall": 8.79610271499996, "exit": 0}
+{"product": "TSPrinterStatementsNPM_008", "wall": 9.642059390999748, "exit": 0}
+
+
+===== final-cold.py =====
+import os,pathlib,subprocess,time,json
+r=pathlib.Path('/workspace/m-products-evidence');e=os.environ.copy();e.update(PATH='/workspace/adamic-tools/go/bin:/workspace/adamic-tools/llvm/bin:'+e['PATH'],GOCACHE=str(r/'gocache-serial'),GOMAXPROCS='4',ADAMIC_BUILD_CACHE='on',ADAMIC_TS_PRETTIER=str(r/'prettier'),ADAMIC_TYPESCRIPT_SOURCE=str(r/'typescript'))
+for pkg,name in [('lint','DecodedOptionsNative')]+[('tsprinter',n) for n in ['TSPrinterStatementsEmbedded_010','TSPrinterStatementsEmbedded_013','TSPrinterStatementsEmbedded_014','TSPrinterStatementsNPM_002','TSPrinterStatementsNPM_008']]:
+ c=r/('cache-final-'+name);c.mkdir();ee=e.copy();ee.update(ADAMIC_BUILD_CACHE_DIR=str(c),ADAMIC_BUILD_LOG=str(r/(name+'.final-cold.builds')));start=time.monotonic()
+ with open(r/(name+'.final-cold.log'),'w') as f:p=subprocess.run(['go','test','./stage1/cohere/'+pkg,'-run','^TestProduct_'+name+'$','-count=1','-v','-timeout','90s'],env=ee,stdout=f,stderr=subprocess.STDOUT)
+ row=dict(product=name,wall=time.monotonic()-start,exit=p.returncode)
+ with open(r/'final-cold.jsonl','a') as f:f.write(json.dumps(row)+'\n')
+ print(json.dumps(row),flush=True)
+
+
+===== jsx_tree_setup.builds.jsonl =====
+build jsx-membership ea979905c5e5 miss 3.29
+build jsx-parser 5fb7f5a562c0 miss 4.33
+build jsx-tree-lowered 24d12a7021de miss 5.73
+build jsx-tree-native 8f5794aceb97 miss 8.56
+build jsx-tree-setup-v1 f0e61a9a936b miss 47.06
+
+
+===== jsx_tree_setup.deps-warm.builds =====
+build jsx-membership ea979905c5e5 hit 0.27
+build jsx-parser 5fb7f5a562c0 hit 0.27
+build jsx-tree-lowered 24d12a7021de hit 0.35
+build jsx-tree-native 8f5794aceb97 hit 0.35
+build jsx-tree-setup-v1 f0e61a9a936b miss 19.51
+
+
+===== jsx_tree_setup.deps-warm.log =====
+=== RUN   TestProduct_jsx_tree_setup
+=== PAUSE TestProduct_jsx_tree_setup
+=== CONT  TestProduct_jsx_tree_setup
+    jsx_shards_test.go:518: build jsx-membership ea979905c5e5 hit 0.27
+    jsx_shards_test.go:523: build jsx-parser 5fb7f5a562c0 hit 0.27
+    jsx_shards_test.go:524: build jsx-tree-lowered 24d12a7021de hit 0.35
+    jsx_shards_test.go:524: build jsx-tree-native 8f5794aceb97 hit 0.35
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 f0e61a9a936b miss 19.51
+--- PASS: TestProduct_jsx_tree_setup (19.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	19.625s
+
+
+===== jsx_tree_setup.log =====
+=== RUN   TestProduct_jsx_tree_setup
+=== PAUSE TestProduct_jsx_tree_setup
+=== CONT  TestProduct_jsx_tree_setup
+    jsx_shards_test.go:518: build jsx-membership ea979905c5e5 miss 3.29
+    jsx_shards_test.go:523: build jsx-parser 5fb7f5a562c0 miss 4.33
+    jsx_shards_test.go:524: build jsx-tree-lowered 24d12a7021de miss 5.73
+    jsx_shards_test.go:524: build jsx-tree-native 8f5794aceb97 miss 8.56
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 f0e61a9a936b miss 47.06
+--- PASS: TestProduct_jsx_tree_setup (47.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	47.168s
+
+
+===== measure.py =====
+import os, subprocess, time, json, pathlib
+root=pathlib.Path('/workspace/m-products-evidence')
+env=os.environ.copy()
+env.update(PATH='/workspace/adamic-tools/go/bin:/workspace/adamic-tools/llvm/bin:'+env['PATH'],GOCACHE=str(root/'gocache-serial'),GOMAXPROCS='4',ADAMIC_BUILD_CACHE='on')
+groups=[('fq0nrr3','lint','CompilerAgreementReleaseNative CompilerAgreementSanitizedNative DecodedOptionsNative NodeTableCapture NodeTableEmitted NodeTableNative ProfileCompilationC ProfileCompilationCounted ProfileCompilationOracleOutputs ProfileCompilationScanner ShardsAgreeCapture ShardsAgreeNative ShardsAgreePrepared jsx_tree_setup'),('vdcn80y','lint','ShardsAgreeLowered'),('gs1d8kw','tsprinter','TSPrinterMutantNative_020 TSPrinterStatementsEmbedded_010 TSPrinterStatementsEmbedded_013 TSPrinterStatementsEmbedded_014 TSPrinterStatementsNPM_002 TSPrinterStatementsNPM_008'),('kbhqfgy','markdownblocks','MarkdownWhitespace_manifest')]
+for task,pkg,names in groups:
+ for name in names.split():
+  cache=root/('cache-'+name); cache.mkdir(exist_ok=True)
+  e=env.copy(); e.update(ADAMIC_BUILD_CACHE_DIR=str(cache),ADAMIC_BUILD_LOG=str(root/(name+'.builds.jsonl')))
+  cmd=['go','test','./stage1/cohere/'+pkg,'-run','^TestProduct_'+name+'$','-count=1','-v','-timeout','90s']
+  start=time.monotonic()
+  with open(root/(name+'.log'),'w') as log:
+   p=subprocess.run(cmd,env=e,stdout=log,stderr=subprocess.STDOUT)
+  row=dict(task=task,package=pkg,product=name,wall=time.monotonic()-start,exit=p.returncode)
+  with open(root/'timings.jsonl','a') as f:f.write(json.dumps(row)+'\n')
+  print(json.dumps(row),flush=True)
+
+
+===== repeat.py =====
+import os, pathlib, subprocess, time, json, shutil
+root=pathlib.Path('/workspace/m-products-evidence'); env=os.environ.copy()
+env.update(PATH='/workspace/adamic-tools/go/bin:/workspace/adamic-tools/llvm/bin:'+env['PATH'],GOCACHE=str(root/'gocache-serial'),GOMAXPROCS='4',ADAMIC_BUILD_CACHE='on',ADAMIC_TS_PRETTIER=str(root/'prettier'),ADAMIC_TYPESCRIPT_SOURCE=str(root/'typescript'))
+targets=[('lint','NodeTableCapture','fresh-repeat',''),('tsprinter','TSPrinterStatementsEmbedded_010','deps-warm',''),('tsprinter','TSPrinterStatementsEmbedded_013','deps-warm',''),('tsprinter','TSPrinterStatementsEmbedded_014','deps-warm',''),('tsprinter','TSPrinterStatementsNPM_002','deps-warm',''),('tsprinter','TSPrinterStatementsNPM_008','deps-warm',''),('lint','CompilerAgreementReleaseNative','deps-warm','compiler-agreement-native-false'),('lint','CompilerAgreementSanitizedNative','deps-warm','compiler-agreement-native-true'),('lint','DecodedOptionsNative','deps-warm','lint-decoded-options-native-setup-v2'),('lint','NodeTableEmitted','deps-warm','lint-node-table-emitted-c-serial-v2'),('lint','NodeTableNative','deps-warm','lint-node-table-native'),('lint','ProfileCompilationC','deps-warm','lint-profile-emit-c'),('lint','ProfileCompilationCounted','deps-warm','lint-profile-counted'),('lint','ProfileCompilationOracleOutputs','deps-warm','lint-profile-oracle-outputs'),('lint','ProfileCompilationScanner','deps-warm','lint-profile-scanner'),('lint','ShardsAgreeNative','deps-warm','shards-agree-native'),('lint','ShardsAgreePrepared','deps-warm','shards-agree-prepared-v1'),('lint','jsx_tree_setup','deps-warm','jsx-tree-setup-v1'),('markdownblocks','MarkdownWhitespace_manifest','deps-warm','markdown-whitespace-layout-setup-v2')]
+for pkg,name,mode,own in targets:
+ cache=root/('cache-'+name if mode=='deps-warm' else 'cache-'+name+'-repeat');cache.mkdir(exist_ok=True)
+ if own:
+  for f in cache.glob('*.inputs'):
+   if f.read_text().splitlines()[0]=='name '+own:
+    product=f.with_suffix('')
+    if product.is_dir():shutil.rmtree(product)
+ e=env.copy();e.update(ADAMIC_BUILD_CACHE_DIR=str(cache),ADAMIC_BUILD_LOG=str(root/(name+'.'+mode+'.builds')))
+ start=time.monotonic()
+ with open(root/(name+'.'+mode+'.log'),'w') as log:
+  p=subprocess.run(['go','test','./stage1/cohere/'+pkg,'-run','^TestProduct_'+name+'$','-count=1','-v','-timeout','90s'],env=e,stdout=log,stderr=subprocess.STDOUT)
+ row=dict(product=name,mode=mode,wall=time.monotonic()-start,exit=p.returncode)
+ with open(root/'repeats.jsonl','a') as f:f.write(json.dumps(row)+'\n')
+ print(json.dumps(row),flush=True)
+
+
+===== repeats.jsonl =====
+{"product": "NodeTableCapture", "mode": "fresh-repeat", "wall": 12.903950930000065, "exit": 0}
+{"product": "TSPrinterStatementsEmbedded_010", "mode": "deps-warm", "wall": 5.697473869000078, "exit": 0}
+{"product": "TSPrinterStatementsEmbedded_013", "mode": "deps-warm", "wall": 5.5651404790000925, "exit": 0}
+{"product": "TSPrinterStatementsEmbedded_014", "mode": "deps-warm", "wall": 5.6643750380001165, "exit": 0}
+{"product": "TSPrinterStatementsNPM_002", "mode": "deps-warm", "wall": 5.280464510999991, "exit": 0}
+{"product": "TSPrinterStatementsNPM_008", "mode": "deps-warm", "wall": 5.987648221999962, "exit": 0}
+{"product": "CompilerAgreementReleaseNative", "mode": "deps-warm", "wall": 11.195873893999988, "exit": 0}
+{"product": "CompilerAgreementSanitizedNative", "mode": "deps-warm", "wall": 33.996251752000035, "exit": 0}
+{"product": "DecodedOptionsNative", "mode": "deps-warm", "wall": 7.932787150999957, "exit": 0}
+{"product": "NodeTableEmitted", "mode": "deps-warm", "wall": 56.368536450999954, "exit": 0}
+{"product": "NodeTableNative", "mode": "deps-warm", "wall": 6.0979586270000254, "exit": 0}
+{"product": "ProfileCompilationC", "mode": "deps-warm", "wall": 56.29930735100015, "exit": 0}
+{"product": "ProfileCompilationCounted", "mode": "deps-warm", "wall": 10.358140875000117, "exit": 0}
+{"product": "ProfileCompilationOracleOutputs", "mode": "deps-warm", "wall": 3.3836602010001116, "exit": 0}
+{"product": "ProfileCompilationScanner", "mode": "deps-warm", "wall": 10.320828069000072, "exit": 0}
+{"product": "ShardsAgreeNative", "mode": "deps-warm", "wall": 13.1161306959998, "exit": 0}
+{"product": "ShardsAgreePrepared", "mode": "deps-warm", "wall": 28.495448203999786, "exit": 0}
+{"product": "jsx_tree_setup", "mode": "deps-warm", "wall": 21.82310785699974, "exit": 0}
+{"product": "MarkdownWhitespace_manifest", "mode": "deps-warm", "wall": 8.838587087999713, "exit": 0}
+{"product": "ShardsAgreePrepared", "mode": "all-deps-warm", "wall": 1.7638070869998046, "exit": 1}
+{"product": "ShardsAgreePrepared", "mode": "all-deps-warm", "wall": 9.089295625999966, "exit": 0}
+
+
+===== report.py =====
+from pathlib import Path
+import json
+r=Path('/workspace/m-products-evidence')
+rows=[json.loads(s) for s in (r/'timings.jsonl').read_text().splitlines()]; first={x['product']:x for x in rows}; rep=[json.loads(s) for s in (r/'repeats.jsonl').read_text().splitlines()]; warm={x['product']:x for x in rep if x['exit']==0 and x['mode']!='fresh-repeat'}; final={x['product']:x for x in map(json.loads,(r/'final-cold.jsonl').read_text().splitlines())}; final['NodeTableCapture']=next(x for x in rep if x['mode']=='fresh-repeat')
+loom=[88,99,73,73,71,78,61,74,143,78,89,92,122,200,'killed 90',126,85,84,87,90,136,'killed 90']
+phase=['lowering/C emission (62.40 s), then plain clang','lowering/C emission, then sanitized clang (killed there)','original + mutant lowering/emission (22.98 s)','upstream Go assertion capture (9.61 s after Go warming)','C emission (53.66 s)','C emission (56.01 s), then plain clang (5.16 s)','C emission (53.37 s)','C emission (56.86 s), counted clang (11.76 s)','C emission (54.19 s); answers only 0.04 s','C emission (62.92 s), plain clang (9.59 s)','upstream Go assertion capture (24.57 s)','lowering/C emission (71.34 s), plain clang (11.44 s)','lowering/C emission (73.93 s); killed during Go oracle build','upstream fixture capture, Go builds, native setup','combined loading/lowering/C emission (63.60 s)','C emission 13.11 s; sanitized clang 9.88 s; lowering 2.22 s']+['Go oracle build + corpus generation + Node oracle (~2 s)']*5+['combined lowering/C emission + sanitized/plain clang; concurrent recipes']
+out='''# Product measurements
+
+Base: origin/main a467d1a1571c43e0f01fc4efcb43890280e4a1ac, fetched at the start. Instance CPU quota: 400000/100000 = 4 CPUs; 16 GiB memory. Go 1.27.1. All measured products ran serially, one exact top-level selection per process, -count=1 -v -timeout 90s. The current 90-second rule overrides the earlier requested 10m. No whole-package tests ran.
+
+## Go compilation
+
+`go test -c -o /dev/null` walls: lint 160.834 s, tsprinter 8.064 s, markdownblocks 6.492 s. One initially empty GOCACHE, in that order; later packages reuse common Go compilation, so the last two are marginal package warm-up costs, not independently cold-Go costs. These are measurements on this instance, not arithmetic deductions from Loom's runs. The initial overlapping warm-up was discarded and all three repeated serially using a new empty cache.
+
+Package compilation does not warm all overlay Go oracle/capture builds. Their first-use costs are retained below and fresh-product repeats distinguish them: DecodedOptionsNative first 80.617 s (Go oracle 45.54 s), repeated 30.959 s (Go oracle 3.75 s); NodeTableCapture first 67.669 s, repeated 12.904 s; statement Embedded_010's first Go oracle build 47.57 s, later fresh-product Go builds about 2–4 s. First statement attempts failed on npm's .bin/prettier symlink before Node ran; removing the install-only launcher preserved prettier@3.9.6 library bytes. Corrected fresh-product runs are reported.
+
+Cold columns use a separate initially empty ADAMIC_BUILD_CACHE_DIR for every product. Dependencies-warm columns remove only that product's own entry, retaining its declared dependencies; all retain warm GOCACHE. Command walls include Go invocation/hash/registry overhead. Log phase times can overlap or nest and must not be summed indiscriminately.
+
+'''
+last=None
+for i,x in enumerate(rows):
+ name=x['product'];task=x['task']
+ if task!=last:
+  out+='\n## #'+task+'\n\n| Product | Loom s | Cold product / warm Go wall s | Dependencies built wall s | Dominant phase |\n|---|---:|---:|---:|---|\n';last=task
+ chosen=final.get(name,x); cold=f"{chosen['wall']:.2f}" if chosen['exit']==0 else f"killed at 90 ({chosen['wall']:.2f} wall)"
+ dep=f"{warm[name]['wall']:.2f}" if name in warm else '—'
+ out+=f"| {name} | {loom[i]} | {cold} | {dep} | {phase[i]} |\n"
+out+='''
+## Dependencies and interpretation
+
+CompilerAgreement native products use compiler-agreement-lowered (load/lower/C and JS emission). Their cold chain exceeds 60 s; sanitized cold chain hit 90 s. With that dependency built, native compilation is 11.20/34.00 s. These compiler costs belong to #3he8f8g.
+
+DecodedOptionsNative's existing wrapper also prepares original and mutant lowering, its sanitized binary, Go oracle, and one fixture answer. NodeTableEmitted depends on NodeTableLowered; NodeTableNative depends on both. Capture has no separately declared prerequisite but runs overlay upstream Go tests.
+
+ProfileCompilationC depends on ProfileCompilationLowered. Counted and Scanner also fetch C and JavaScript emission. OracleOutputs prepares scanner, counted and profiled binaries plus the Go oracle before its answer product (0.04 s). Their excessive cold walls are compiler work, not oracle-answer work.
+
+ShardsAgreeNative depends on ShardsAgreeLowered (one combined load/lower/C-emission recipe). ShardsAgreePrepared depends on lowered, native, Go oracle, capture and generated/recovery fixtures. Its first dependency-warm retry still built oracle and capture and took 28.50 s; the all-dependencies-built result is in the table. The cold chain hit 90 s during oracle compilation after 73.93 s lowering/emission and 9.97 s clang.
+
+JSX setup uses jsx-membership, jsx-parser, jsx-tree-lowered and jsx-tree-native and captures/copies fixtures. Statement library products depend on TSPrinterGoOracle and TSPrinterStatementsCorpus (935 files, 58052 supported fragments), then run their own npm or embedded Node oracle. MutantNative_020 has no separately cached lowering prerequisite: its own recipe logs lowering, C emission and sanitized clang.
+
+MarkdownWhitespace_manifest prepares list and policy lowering/emission, Go lists/layout oracles, release and sanitized list binaries, and a sanitized policy binary, with concurrent recipes. Combined lowering/emission logged 36.80 s (list) and 23.48 s (policy); policy clang 27.30 s, list sanitized clang 20.28 s and release 10.24 s. The aggregate setup took 62.54 s; manifest rebuild with all dependencies retained is below 60 s. No instrumentation was added, so inseparable lowering versus emission cannot be assigned finer timings.
+
+No measured product exceeded 60 s with a dominant qualifying own-work phase once transitive Go compilation was warm. No test source changed; no split, union/failure proof, lane-check or PR was required. No merge performed. Compiler emission/clang excesses are named above, not worked around. Two full cold chains remain failures under the 90 s rule and are reported honestly.
+
+Raw evidence and drivers are saved in m-products-measurements.txt on the WIP branch. The scratch branch must not be landed.
+'''
+Path('/workspace/m-products-measure/m-products-timings.txt').write_text(out)
+raw=''
+for f in sorted(r.iterdir()):
+ if f.is_file() and f.suffix in ['.log','.jsonl','.py','.builds']:
+  raw+='\n\n===== '+f.name+' =====\n'+f.read_text()
+Path('/workspace/m-products-measure/m-products-measurements.txt').write_text(raw)
+
+
+===== timings.jsonl =====
+{"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementReleaseNative", "wall": 79.64058822599998, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementSanitizedNative", "wall": 94.65787202800004, "exit": 1}
+{"task": "fq0nrr3", "package": "lint", "product": "DecodedOptionsNative", "wall": 80.61694802, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "NodeTableCapture", "wall": 67.66861923600004, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "NodeTableEmitted", "wall": 60.03280874199993, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "NodeTableNative", "wall": 67.99742962599998, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationC", "wall": 63.72461402199997, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationCounted", "wall": 75.93728544600003, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationOracleOutputs", "wall": 88.52541111899995, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationScanner", "wall": 80.98758218099988, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreeCapture", "wall": 27.565030649999926, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreeNative", "wall": 85.49374783500002, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreePrepared", "wall": 94.99573211899997, "exit": 1}
+{"task": "fq0nrr3", "package": "lint", "product": "jsx_tree_setup", "wall": 50.41461825600004, "exit": 0}
+{"task": "vdcn80y", "package": "lint", "product": "ShardsAgreeLowered", "wall": 67.49769589699986, "exit": 0}
+{"task": "gs1d8kw", "package": "tsprinter", "product": "TSPrinterMutantNative_020", "wall": 30.18895160399984, "exit": 0}
+{"task": "gs1d8kw", "package": "tsprinter", "product": "TSPrinterStatementsEmbedded_010", "wall": 52.33787252999991, "exit": 1}
+{"task": "gs1d8kw", "package": "tsprinter", "product": "TSPrinterStatementsEmbedded_013", "wall": 9.090405444999988, "exit": 1}
+{"task": "gs1d8kw", "package": "tsprinter", "product": "TSPrinterStatementsEmbedded_014", "wall": 6.812784786999828, "exit": 1}
+{"task": "gs1d8kw", "package": "tsprinter", "product": "TSPrinterStatementsNPM_002", "wall": 6.904874755000037, "exit": 1}
+{"task": "gs1d8kw", "package": "tsprinter", "product": "TSPrinterStatementsNPM_008", "wall": 7.063054931000124, "exit": 1}
+{"task": "kbhqfgy", "package": "markdownblocks", "product": "MarkdownWhitespace_manifest", "wall": 64.88432904699994, "exit": 0}

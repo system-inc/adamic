@@ -1,21 +1,72 @@
-Measurements on origin/main a467d1a1; four-CPU quota.
-Serial compilation uses one initially empty shared GOCACHE, package order lint, tsprinter, markdownblocks.
-lint wall=160.834 user=480.411 sys=57.865
-tsprinter wall=8.064 user=11.748 sys=2.945
-markdownblocks wall=6.492 user=12.319 sys=1.729
+# Product measurements
 
-Product results so far (fresh cache for each):
-{"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementReleaseNative", "wall": 79.64058822599998, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementSanitizedNative", "wall": 94.65787202800004, "exit": 1}
-{"task": "fq0nrr3", "package": "lint", "product": "DecodedOptionsNative", "wall": 80.61694802, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "NodeTableCapture", "wall": 67.66861923600004, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "NodeTableEmitted", "wall": 60.03280874199993, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "NodeTableNative", "wall": 67.99742962599998, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationC", "wall": 63.72461402199997, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationCounted", "wall": 75.93728544600003, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationOracleOutputs", "wall": 88.52541111899995, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationScanner", "wall": 80.98758218099988, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreeCapture", "wall": 27.565030649999926, "exit": 0}
-{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreeNative", "wall": 85.49374783500002, "exit": 0}
+Base: origin/main a467d1a1571c43e0f01fc4efcb43890280e4a1ac, fetched at the start. Instance CPU quota: 400000/100000 = 4 CPUs; 16 GiB memory. Go 1.27.1. All measured products ran serially, one exact top-level selection per process, -count=1 -v -timeout 90s. The current 90-second rule overrides the earlier requested 10m. No whole-package tests ran.
 
-Measurement in progress. No test changes. Current rule: one unit, timeout 90s.
+## Go compilation
+
+`go test -c -o /dev/null` walls: lint 160.834 s, tsprinter 8.064 s, markdownblocks 6.492 s. One initially empty GOCACHE, in that order; later packages reuse common Go compilation, so the last two are marginal package warm-up costs, not independently cold-Go costs. These are measurements on this instance, not arithmetic deductions from Loom's runs. The initial overlapping warm-up was discarded and all three repeated serially using a new empty cache.
+
+Package compilation does not warm all overlay Go oracle/capture builds. Their first-use costs are retained below and fresh-product repeats distinguish them: DecodedOptionsNative first 80.617 s (Go oracle 45.54 s), repeated 30.959 s (Go oracle 3.75 s); NodeTableCapture first 67.669 s, repeated 12.904 s; statement Embedded_010's first Go oracle build 47.57 s, later fresh-product Go builds about 2–4 s. First statement attempts failed on npm's .bin/prettier symlink before Node ran; removing the install-only launcher preserved prettier@3.9.6 library bytes. Corrected fresh-product runs are reported.
+
+Cold columns use a separate initially empty ADAMIC_BUILD_CACHE_DIR for every product. Dependencies-warm columns remove only that product's own entry, retaining its declared dependencies; all retain warm GOCACHE. Command walls include Go invocation/hash/registry overhead. Log phase times can overlap or nest and must not be summed indiscriminately.
+
+
+## #fq0nrr3
+
+| Product | Loom s | Cold product / warm Go wall s | Dependencies built wall s | Dominant phase |
+|---|---:|---:|---:|---|
+| CompilerAgreementReleaseNative | 88 | 79.64 | 11.20 | lowering/C emission (62.40 s), then plain clang |
+| CompilerAgreementSanitizedNative | 99 | killed at 90 (94.66 wall) | 34.00 | lowering/C emission, then sanitized clang (killed there) |
+| DecodedOptionsNative | 73 | 30.96 | 7.93 | original + mutant lowering/emission (22.98 s) |
+| NodeTableCapture | 73 | 12.90 | — | upstream Go assertion capture (9.61 s after Go warming) |
+| NodeTableEmitted | 71 | 60.03 | 56.37 | C emission (53.66 s) |
+| NodeTableNative | 78 | 68.00 | 6.10 | C emission (56.01 s), then plain clang (5.16 s) |
+| ProfileCompilationC | 61 | 63.72 | 56.30 | C emission (53.37 s) |
+| ProfileCompilationCounted | 74 | 75.94 | 10.36 | C emission (56.86 s), counted clang (11.76 s) |
+| ProfileCompilationOracleOutputs | 143 | 88.53 | 3.38 | C emission (54.19 s); answers only 0.04 s |
+| ProfileCompilationScanner | 78 | 80.99 | 10.32 | C emission (62.92 s), plain clang (9.59 s) |
+| ShardsAgreeCapture | 89 | 27.57 | — | upstream Go assertion capture (24.57 s) |
+| ShardsAgreeNative | 92 | 85.49 | 13.12 | lowering/C emission (71.34 s), plain clang (11.44 s) |
+| ShardsAgreePrepared | 122 | killed at 90 (95.00 wall) | 9.09 | lowering/C emission (73.93 s); killed during Go oracle build |
+| jsx_tree_setup | 200 | 50.41 | 21.82 | upstream fixture capture, Go builds, native setup |
+
+## #vdcn80y
+
+| Product | Loom s | Cold product / warm Go wall s | Dependencies built wall s | Dominant phase |
+|---|---:|---:|---:|---|
+| ShardsAgreeLowered | killed 90 | 67.50 | — | combined loading/lowering/C emission (63.60 s) |
+
+## #gs1d8kw
+
+| Product | Loom s | Cold product / warm Go wall s | Dependencies built wall s | Dominant phase |
+|---|---:|---:|---:|---|
+| TSPrinterMutantNative_020 | 126 | 30.19 | — | C emission 13.11 s; sanitized clang 9.88 s; lowering 2.22 s |
+| TSPrinterStatementsEmbedded_010 | 85 | 9.87 | 5.70 | Go oracle build + corpus generation + Node oracle (~2 s) |
+| TSPrinterStatementsEmbedded_013 | 84 | 8.96 | 5.57 | Go oracle build + corpus generation + Node oracle (~2 s) |
+| TSPrinterStatementsEmbedded_014 | 87 | 8.38 | 5.66 | Go oracle build + corpus generation + Node oracle (~2 s) |
+| TSPrinterStatementsNPM_002 | 90 | 8.80 | 5.28 | Go oracle build + corpus generation + Node oracle (~2 s) |
+| TSPrinterStatementsNPM_008 | 136 | 9.64 | 5.99 | Go oracle build + corpus generation + Node oracle (~2 s) |
+
+## #kbhqfgy
+
+| Product | Loom s | Cold product / warm Go wall s | Dependencies built wall s | Dominant phase |
+|---|---:|---:|---:|---|
+| MarkdownWhitespace_manifest | killed 90 | 64.88 | 8.84 | combined lowering/C emission + sanitized/plain clang; concurrent recipes |
+
+## Dependencies and interpretation
+
+CompilerAgreement native products use compiler-agreement-lowered (load/lower/C and JS emission). Their cold chain exceeds 60 s; sanitized cold chain hit 90 s. With that dependency built, native compilation is 11.20/34.00 s. These compiler costs belong to #3he8f8g.
+
+DecodedOptionsNative's existing wrapper also prepares original and mutant lowering, its sanitized binary, Go oracle, and one fixture answer. NodeTableEmitted depends on NodeTableLowered; NodeTableNative depends on both. Capture has no separately declared prerequisite but runs overlay upstream Go tests.
+
+ProfileCompilationC depends on ProfileCompilationLowered. Counted and Scanner also fetch C and JavaScript emission. OracleOutputs prepares scanner, counted and profiled binaries plus the Go oracle before its answer product (0.04 s). Their excessive cold walls are compiler work, not oracle-answer work.
+
+ShardsAgreeNative depends on ShardsAgreeLowered (one combined load/lower/C-emission recipe). ShardsAgreePrepared depends on lowered, native, Go oracle, capture and generated/recovery fixtures. Its first dependency-warm retry still built oracle and capture and took 28.50 s; the all-dependencies-built result is in the table. The cold chain hit 90 s during oracle compilation after 73.93 s lowering/emission and 9.97 s clang.
+
+JSX setup uses jsx-membership, jsx-parser, jsx-tree-lowered and jsx-tree-native and captures/copies fixtures. Statement library products depend on TSPrinterGoOracle and TSPrinterStatementsCorpus (935 files, 58052 supported fragments), then run their own npm or embedded Node oracle. MutantNative_020 has no separately cached lowering prerequisite: its own recipe logs lowering, C emission and sanitized clang.
+
+MarkdownWhitespace_manifest prepares list and policy lowering/emission, Go lists/layout oracles, release and sanitized list binaries, and a sanitized policy binary, with concurrent recipes. Combined lowering/emission logged 36.80 s (list) and 23.48 s (policy); policy clang 27.30 s, list sanitized clang 20.28 s and release 10.24 s. The aggregate setup took 62.54 s; manifest rebuild with all dependencies retained is below 60 s. No instrumentation was added, so inseparable lowering versus emission cannot be assigned finer timings.
+
+No measured product exceeded 60 s with a dominant qualifying own-work phase once transitive Go compilation was warm. No test source changed; no split, union/failure proof, lane-check or PR was required. No merge performed. Compiler emission/clang excesses are named above, not worked around. Two full cold chains remain failures under the 90 s rule and are reported honestly.
+
+Raw evidence and drivers are saved in m-products-measurements.txt on the WIP branch. The scratch branch must not be landed.
