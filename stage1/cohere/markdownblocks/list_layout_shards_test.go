@@ -181,8 +181,12 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 		}
 		return binary
 	}
-	p.goList = buildGo("adamic_markdown_lists", "testdata/list_go.go", true)
-	p.goLayout = buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false)
+	var workers sync.WaitGroup
+	defer workers.Wait()
+	goListTask := startFixtureTask(&workers, func() (string, error) { return buildGo("adamic_markdown_lists", "testdata/list_go.go", true), nil })
+	goLayoutTask := startFixtureTask(&workers, func() (string, error) {
+		return buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false), nil
+	})
 	files := []string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}
 	// Hash compiler and port source, excluding unrelated evidence and TypeScript's fixture tree.
 	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
@@ -247,13 +251,16 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 	if err != nil {
 		t.Fatal(err)
 	}
-	emitted := emit(main, "markdown-list-layout-lowered")
-	p.javascript, err = os.ReadFile(filepath.Join(emitted, "program.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	p.sanitized = buildNative(emitted, "markdown-list-layout-sanitized", true)
-	p.release = buildNative(emitted, "markdown-list-layout-release", false)
+	baselineTask := startFixtureTask(&workers, func() (listLayoutProducts, error) {
+		emitted := emit(main, "markdown-list-layout-lowered")
+		data, err := os.ReadFile(filepath.Join(emitted, "program.mjs"))
+		if err != nil {
+			return listLayoutProducts{}, err
+		}
+		sanitizedTask := startFixtureTask(&workers, func() (string, error) { return buildNative(emitted, "markdown-list-layout-sanitized", true), nil })
+		release := buildNative(emitted, "markdown-list-layout-release", false)
+		return listLayoutProducts{javascript: data, sanitized: sanitizedTask.await(t), release: release}, nil
+	})
 	mutations := []struct{ from, to string }{{"frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"}, {"'[x] '", "'[X] '"}, {"999999999", "999999998"}}
 	for i, mutation := range mutations {
 		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", i))
@@ -295,8 +302,6 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 		write(t, mutantMain, content)
 		p.mutants = append(p.mutants, mutantMain)
 		if i == 0 { // Cache keys name the stable mutation rather than its temporary path.
-			oldFiles := files
-			files = append(append([]string{}, files...), "stage1/cohere/markdownblocks/lists.ts")
 			// The mutant is a deterministic transformation of the hashed repository files.
 			product := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-lowered", Files: files, Flags: []string{mutation.from, mutation.to}, Toolchain: []string{runtime.Version()}}, func(directory string) error {
 				program, err := loweredResult(mutantMain)
@@ -305,7 +310,6 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 				}
 				return os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0644)
 			})
-			files = oldFiles
 			source, err := os.ReadFile(filepath.Join(product, "program.c"))
 			if err != nil {
 				t.Fatal(err)
@@ -338,6 +342,9 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 			p.canary = filepath.Join(built, "binary")
 		}
 	}
+	baseline := baselineTask.await(t)
+	p.javascript, p.sanitized, p.release = baseline.javascript, baseline.sanitized, baseline.release
+	p.goList, p.goLayout = goListTask.await(t), goLayoutTask.await(t)
 	return p
 }
 
