@@ -1,0 +1,121 @@
+{
+  "base": "b3f83786a0ea00c23d47d774d3b6c98f9dd71336",
+  "mutations": [
+    {
+      "id": "M1",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 176,
+      "before": "sum := sha256.Sum256(content)",
+      "after": "sum := sha256.Sum256(nil)",
+      "description": "change constant: content digest uses empty bytes",
+      "kind": "production"
+    },
+    {
+      "id": "M2",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 132,
+      "before": "\tfor _, flag := range inputs.Flags {\n\t\tfield(\"flag\", flag)\n\t}",
+      "after": "",
+      "description": "drop entire flag loop",
+      "kind": "production"
+    },
+    {
+      "id": "M3",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 135,
+      "before": "\tfor _, tool := range inputs.Toolchain {\n\t\tfield(\"tool\", tool)\n\t}",
+      "after": "",
+      "description": "drop entire toolchain loop",
+      "kind": "production"
+    },
+    {
+      "id": "M4",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 126,
+      "before": "\tfield(\"name\", inputs.Name)",
+      "after": "",
+      "description": "drop name field",
+      "kind": "production"
+    },
+    {
+      "id": "M5",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 125,
+      "before": "field(\"buildcache\", \"v1\")",
+      "after": "field(\"buildcache\", \"v2\")",
+      "description": "change version constant",
+      "kind": "production"
+    },
+    {
+      "id": "M6",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 84,
+      "before": "if _, err = os.Stat(product); err == nil {",
+      "after": "if _, err = os.Stat(product); false {",
+      "description": "flip first hit condition to false",
+      "kind": "production"
+    },
+    {
+      "id": "S1",
+      "file": "bridge/tsgo/products_test.go",
+      "line": 38,
+      "before": "\"bridge/tsgo/products_test.go\": true,",
+      "after": "",
+      "description": "setup construction: drop recipe file",
+      "kind": "setup"
+    },
+    {
+      "id": "S2",
+      "file": "bridge/tsgo/products_test.go",
+      "line": 23,
+      "before": "[]string{\"tsgo.a\", \"tsgo-asan.a\",",
+      "after": "[]string{\"tsgo-asan.a\",",
+      "description": "setup construction: drop one product",
+      "kind": "setup"
+    },
+    {
+      "id": "S3",
+      "file": "bridge/tsgo/product_units_test.go",
+      "line": 20,
+      "before": "return []string{\"api\"}",
+      "after": "return []string{\"unknown-product\"}",
+      "description": "setup construction: change abi dependency constant",
+      "kind": "setup"
+    },
+    {
+      "id": "P1",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 120,
+      "description": "empty entry func Key(root string, inputs Inputs) (string, error) {",
+      "kind": "probe"
+    },
+    {
+      "id": "P2",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 54,
+      "description": "empty entry func Get(inputs Inputs, build func(directory string) error) (string, error) {",
+      "kind": "probe"
+    },
+    {
+      "id": "P3",
+      "file": "bridge/tsgo/products_test.go",
+      "line": 28,
+      "description": "empty entry func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Inputs {",
+      "kind": "probe"
+    }
+  ],
+  "repairs": [
+    {
+      "id": "P1",
+      "change": "remove unused import after empty-body replacement",
+      "apply": 0,
+      "vet": 0
+    },
+    {
+      "id": "P3",
+      "change": "remove unused import after empty-body replacement",
+      "apply": 0,
+      "vet": 0
+    }
+  ]
+}

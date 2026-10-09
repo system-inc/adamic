@@ -1,0 +1,3 @@
+package main
+import("fmt";"os";"path/filepath";"github.com/system-inc/adamic/internal/buildcache")
+func main(){root,e:=os.MkdirTemp("","u002-witness-");if e!=nil{panic(e)};defer os.RemoveAll(root);os.WriteFile(filepath.Join(root,"source"),[]byte("source"),0600);in:=buildcache.Inputs{Name:"product-a",Files:[]string{"source"},Flags:[]string{"flag-a"},Toolchain:[]string{"tool-a"}};printKey:=func(label string){k,e:=buildcache.Key(root,in);fmt.Println(label,k,e)};printKey("base");in.Toolchain=[]string{"tool-b"};printKey("changed-tool");in.Toolchain=[]string{"tool-a"};in.Name="product-b";printKey("changed-name")}

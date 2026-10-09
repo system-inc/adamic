@@ -1,0 +1,158 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeProductUnitsCoverEveryProduct|TestBridgeProductInput_.*|TestBridgeProductCacheIsVerified)$",
+  "wall": 5.566457353001169,
+  "exit": 0,
+  "seconds": 3.7880000000000003,
+  "failed": [],
+  "passed": [
+    "TestBridgeProductCacheIsVerified",
+    "TestBridgeProductUnitsCoverEveryProduct",
+    "TestBridgeProductInput_RegionStage0",
+    "TestBridgeProductInput_LengthDriver",
+    "TestBridgeProductInput_WrongNative",
+    "TestBridgeProductInput_RegionNative",
+    "TestBridgeProductInput_LinkageTest",
+    "TestBridgeProductInput_Oracle",
+    "TestBridgeProductInput_WrongArchive",
+    "TestBridgeProductInput_Stage0",
+    "TestBridgeProductInput_LeakArchive",
+    "TestBridgeProductInput_ApiDriver",
+    "TestBridgeProductInput_StaleArchive",
+    "TestBridgeProductInput_LengthArchive",
+    "TestBridgeProductInput_TsgoSanitizedArchive",
+    "TestBridgeProductInput_HealthyRegion",
+    "TestBridgeProductInput_TsgoArchive",
+    "TestBridgeProductInput_LeakDriver",
+    "TestBridgeProductInput_SanitizedNative",
+    "TestBridgeProductInput_StaleDriver",
+    "TestBridgeProductInput_Native"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestBridgeProductCacheIsVerified": [
+      "=== RUN   TestBridgeProductCacheIsVerified",
+      "    coverage_test.go:173: same hash built once; corrupt bytes and extra product refused",
+      "--- PASS: TestBridgeProductCacheIsVerified (0.00s)"
+    ],
+    "TestBridgeProductUnitsCoverEveryProduct": [
+      "=== RUN   TestBridgeProductUnitsCoverEveryProduct",
+      "=== PAUSE TestBridgeProductUnitsCoverEveryProduct",
+      "=== CONT  TestBridgeProductUnitsCoverEveryProduct",
+      "--- PASS: TestBridgeProductUnitsCoverEveryProduct (0.00s)"
+    ],
+    "TestBridgeProductInput_TsgoArchive": [
+      "=== RUN   TestBridgeProductInput_TsgoArchive",
+      "=== PAUSE TestBridgeProductInput_TsgoArchive",
+      "=== CONT  TestBridgeProductInput_TsgoArchive",
+      "--- PASS: TestBridgeProductInput_TsgoArchive (1.00s)"
+    ],
+    "TestBridgeProductInput_TsgoSanitizedArchive": [
+      "=== RUN   TestBridgeProductInput_TsgoSanitizedArchive",
+      "=== PAUSE TestBridgeProductInput_TsgoSanitizedArchive",
+      "=== CONT  TestBridgeProductInput_TsgoSanitizedArchive",
+      "--- PASS: TestBridgeProductInput_TsgoSanitizedArchive (0.94s)"
+    ],
+    "TestBridgeProductInput_LengthArchive": [
+      "=== RUN   TestBridgeProductInput_LengthArchive",
+      "=== PAUSE TestBridgeProductInput_LengthArchive",
+      "=== CONT  TestBridgeProductInput_LengthArchive",
+      "--- PASS: TestBridgeProductInput_LengthArchive (0.96s)"
+    ],
+    "TestBridgeProductInput_StaleArchive": [
+      "=== RUN   TestBridgeProductInput_StaleArchive",
+      "=== PAUSE TestBridgeProductInput_StaleArchive",
+      "=== CONT  TestBridgeProductInput_StaleArchive",
+      "--- PASS: TestBridgeProductInput_StaleArchive (0.95s)"
+    ],
+    "TestBridgeProductInput_WrongArchive": [
+      "=== RUN   TestBridgeProductInput_WrongArchive",
+      "=== PAUSE TestBridgeProductInput_WrongArchive",
+      "=== CONT  TestBridgeProductInput_WrongArchive",
+      "--- PASS: TestBridgeProductInput_WrongArchive (0.94s)"
+    ],
+    "TestBridgeProductInput_LeakArchive": [
+      "=== RUN   TestBridgeProductInput_LeakArchive",
+      "=== PAUSE TestBridgeProductInput_LeakArchive",
+      "=== CONT  TestBridgeProductInput_LeakArchive",
+      "--- PASS: TestBridgeProductInput_LeakArchive (0.99s)"
+    ],
+    "TestBridgeProductInput_Stage0": [
+      "=== RUN   TestBridgeProductInput_Stage0",
+      "=== PAUSE TestBridgeProductInput_Stage0",
+      "=== CONT  TestBridgeProductInput_Stage0",
+      "--- PASS: TestBridgeProductInput_Stage0 (0.99s)"
+    ],
+    "TestBridgeProductInput_Oracle": [
+      "=== RUN   TestBridgeProductInput_Oracle",
+      "=== PAUSE TestBridgeProductInput_Oracle",
+      "=== CONT  TestBridgeProductInput_Oracle",
+      "--- PASS: TestBridgeProductInput_Oracle (0.97s)"
+    ],
+    "TestBridgeProductInput_ApiDriver": [
+      "=== RUN   TestBridgeProductInput_ApiDriver",
+      "=== PAUSE TestBridgeProductInput_ApiDriver",
+      "=== CONT  TestBridgeProductInput_ApiDriver",
+      "--- PASS: TestBridgeProductInput_ApiDriver (1.03s)"
+    ],
+    "TestBridgeProductInput_LengthDriver": [
+      "=== RUN   TestBridgeProductInput_LengthDriver",
+      "=== PAUSE TestBridgeProductInput_LengthDriver",
+      "=== CONT  TestBridgeProductInput_LengthDriver",
+      "--- PASS: TestBridgeProductInput_LengthDriver (1.03s)"
+    ],
+    "TestBridgeProductInput_StaleDriver": [
+      "=== RUN   TestBridgeProductInput_StaleDriver",
+      "=== PAUSE TestBridgeProductInput_StaleDriver",
+      "=== CONT  TestBridgeProductInput_StaleDriver",
+      "--- PASS: TestBridgeProductInput_StaleDriver (0.76s)"
+    ],
+    "TestBridgeProductInput_LeakDriver": [
+      "=== RUN   TestBridgeProductInput_LeakDriver",
+      "=== PAUSE TestBridgeProductInput_LeakDriver",
+      "=== CONT  TestBridgeProductInput_LeakDriver",
+      "--- PASS: TestBridgeProductInput_LeakDriver (0.80s)"
+    ],
+    "TestBridgeProductInput_SanitizedNative": [
+      "=== RUN   TestBridgeProductInput_SanitizedNative",
+      "=== PAUSE TestBridgeProductInput_SanitizedNative",
+      "=== CONT  TestBridgeProductInput_SanitizedNative",
+      "--- PASS: TestBridgeProductInput_SanitizedNative (0.79s)"
+    ],
+    "TestBridgeProductInput_Native": [
+      "=== RUN   TestBridgeProductInput_Native",
+      "=== PAUSE TestBridgeProductInput_Native",
+      "=== CONT  TestBridgeProductInput_Native",
+      "--- PASS: TestBridgeProductInput_Native (0.82s)"
+    ],
+    "TestBridgeProductInput_WrongNative": [
+      "=== RUN   TestBridgeProductInput_WrongNative",
+      "=== PAUSE TestBridgeProductInput_WrongNative",
+      "=== CONT  TestBridgeProductInput_WrongNative",
+      "--- PASS: TestBridgeProductInput_WrongNative (1.05s)"
+    ],
+    "TestBridgeProductInput_HealthyRegion": [
+      "=== RUN   TestBridgeProductInput_HealthyRegion",
+      "=== PAUSE TestBridgeProductInput_HealthyRegion",
+      "=== CONT  TestBridgeProductInput_HealthyRegion",
+      "--- PASS: TestBridgeProductInput_HealthyRegion (0.96s)"
+    ],
+    "TestBridgeProductInput_RegionStage0": [
+      "=== RUN   TestBridgeProductInput_RegionStage0",
+      "=== PAUSE TestBridgeProductInput_RegionStage0",
+      "=== CONT  TestBridgeProductInput_RegionStage0",
+      "--- PASS: TestBridgeProductInput_RegionStage0 (1.02s)"
+    ],
+    "TestBridgeProductInput_RegionNative": [
+      "=== RUN   TestBridgeProductInput_RegionNative",
+      "=== PAUSE TestBridgeProductInput_RegionNative",
+      "=== CONT  TestBridgeProductInput_RegionNative",
+      "--- PASS: TestBridgeProductInput_RegionNative (1.05s)"
+    ],
+    "TestBridgeProductInput_LinkageTest": [
+      "=== RUN   TestBridgeProductInput_LinkageTest",
+      "=== PAUSE TestBridgeProductInput_LinkageTest",
+      "=== CONT  TestBridgeProductInput_LinkageTest",
+      "--- PASS: TestBridgeProductInput_LinkageTest (1.06s)"
+    ]
+  }
+}

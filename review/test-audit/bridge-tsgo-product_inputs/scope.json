@@ -1,0 +1,33 @@
+{
+  "base": "b3f83786a0ea00c23d47d774d3b6c98f9dd71336",
+  "requested_names": [
+    "TestBridgeProductInput_TsgoArchive",
+    "TestBridgeProductInput_TsgoSanitizedArchive",
+    "TestBridgeProductInput_LengthArchive",
+    "TestBridgeProductInput_StaleArchive",
+    "TestBridgeProductInput_WrongArchive",
+    "TestBridgeProductInput_LeakArchive",
+    "TestBridgeProductInput_Stage0",
+    "TestBridgeProductInput_Oracle",
+    "TestBridgeProductInput_ApiDriver",
+    "TestBridgeProductInput_LengthDriver",
+    "TestBridgeProductInput_StaleDriver",
+    "TestBridgeProductInput_LeakDriver",
+    "TestBridgeProductInput_SanitizedNative",
+    "TestBridgeProductInput_Native",
+    "TestBridgeProductInput_WrongNative",
+    "TestBridgeProductInput_HealthyRegion",
+    "TestBridgeProductInput_RegionStage0",
+    "TestBridgeProductInput_RegionNative",
+    "TestBridgeProductInput_LinkageTest",
+    "TestBridgeProductUnitsCoverEveryProduct"
+  ],
+  "moved": [],
+  "vanished": [],
+  "matrix_rows": [
+    "TestBridgeProductInput family",
+    "TestBridgeProductUnitsCoverEveryProduct",
+    "TestBridgeProductCacheIsVerified"
+  ],
+  "outside_matrix": "Every other package test, including all TestProduct_* and bridge execution rows, has unknown mutant results. Cold sanitized archive build exceeded baseline budget."
+}

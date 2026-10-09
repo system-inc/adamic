@@ -1,0 +1,4 @@
+patching file bridge/tsgo/products_test.go
+# github.com/system-inc/adamic/bridge/tsgo_test
+# [github.com/system-inc/adamic/bridge/tsgo_test]
+vet: ./review/test-audit/bridge-tsgo-product_inputs/validation/P3/bridge/tsgo/products_test.go:16:2: "github.com/system-inc/adamic/internal/native" imported and not used

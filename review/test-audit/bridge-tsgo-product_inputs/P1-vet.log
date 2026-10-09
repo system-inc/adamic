@@ -1,0 +1,4 @@
+patching file internal/buildcache/buildcache.go
+# github.com/system-inc/adamic/internal/buildcache
+# [github.com/system-inc/adamic/internal/buildcache]
+vet: ./review/test-audit/bridge-tsgo-product_inputs/validation/P1/internal/buildcache/buildcache.go:15:2: "encoding/hex" imported and not used

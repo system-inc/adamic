@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/product_units_test.go
++++ b/bridge/tsgo/product_units_test.go
+@@ -17,7 +17,7 @@
+ func bridgeCaseProducts(piece string) []string {
+ 	switch piece {
+ 	case "abi", "input-length":
+-		return []string{"api"}
++		return []string{"unknown-product"}
+ 	case "unlinked-build", "unlinked-c", "unlinked-js":
+ 		return []string{"stage0"}
+ 	case "output-length":

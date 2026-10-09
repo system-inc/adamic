@@ -1,0 +1,86 @@
+[
+  {
+    "test": "TestBridgeProductInput family",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_inputs_test.go",
+    "seconds": 3.983,
+    "oracle": "self-written version one/version two and key inequality, using synthetic dependencies and products; no real bridge result or external authority comparison",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M2: product_inputs_test.go:151: api served stale product: \"version one\", want version two",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBridgeProductInput family",
+      "TestBridgeProductUnitsCoverEveryProduct",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeProductUnitsCoverEveryProduct|TestBridgeProductInput_.*|TestBridgeProductCacheIsVerified)$; ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u002/cache/M1; product_inputs_test.go:151: api served stale product: \"version one\", want version two",
+    "members": [
+      "TestBridgeProductInput_TsgoArchive",
+      "TestBridgeProductInput_TsgoSanitizedArchive",
+      "TestBridgeProductInput_LengthArchive",
+      "TestBridgeProductInput_StaleArchive",
+      "TestBridgeProductInput_WrongArchive",
+      "TestBridgeProductInput_LeakArchive",
+      "TestBridgeProductInput_Stage0",
+      "TestBridgeProductInput_Oracle",
+      "TestBridgeProductInput_ApiDriver",
+      "TestBridgeProductInput_LengthDriver",
+      "TestBridgeProductInput_StaleDriver",
+      "TestBridgeProductInput_LeakDriver",
+      "TestBridgeProductInput_SanitizedNative",
+      "TestBridgeProductInput_Native",
+      "TestBridgeProductInput_WrongNative",
+      "TestBridgeProductInput_HealthyRegion",
+      "TestBridgeProductInput_RegionStage0",
+      "TestBridgeProductInput_RegionNative",
+      "TestBridgeProductInput_LinkageTest"
+    ]
+  },
+  {
+    "test": "TestBridgeProductUnitsCoverEveryProduct",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_inputs_test.go",
+    "seconds": 0.01,
+    "oracle": "self-written count 19 and presence of product bindings; setup construction, not checker output",
+    "oracle_kind": "self",
+    "kills": [
+      "S2",
+      "S3"
+    ],
+    "unique_kills": [
+      "S2",
+      "S3"
+    ],
+    "last_proven_fail": "S3: product_inputs_test.go:81: TestBridgeABI fetches unknown product unknown-product",
+    "verdict": "setup-check",
+    "subsumed_by": null,
+    "mutants_in_matrix": 9,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBridgeProductInput family",
+      "TestBridgeProductUnitsCoverEveryProduct",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeProductUnitsCoverEveryProduct|TestBridgeProductInput_.*|TestBridgeProductCacheIsVerified)$; ADAMIC_MUTANT=S2 ADAMIC_BUILD_CACHE_DIR=/tmp/u002/cache/S2; product_inputs_test.go:71: product coverage: 18 products, 19 units, want 19"
+  }
+]

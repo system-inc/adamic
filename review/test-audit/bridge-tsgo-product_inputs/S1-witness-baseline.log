@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T09:17:06.22174788Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T09:17:06.241467835Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestAuditRecipeWitness"}
+{"Time":"2026-10-09T09:17:06.24153732Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestAuditRecipeWitness","Output":"=== RUN   TestAuditRecipeWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:17:06.719458691Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestAuditRecipeWitness","Output":"    audit_recipe_test.go:3: recipe_present=true files=1119 digest=f41b9377728e8ed695b0774eb40ab7ae56f2f14ed2759864088b6f4767af19da\n"}
+{"Time":"2026-10-09T09:17:06.719531972Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestAuditRecipeWitness","Output":"--- PASS: TestAuditRecipeWitness (0.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:17:06.719537474Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestAuditRecipeWitness","Elapsed":0.48}
+{"Time":"2026-10-09T09:17:06.719556438Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:17:06.720570872Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.497s\n"}
+{"Time":"2026-10-09T09:17:06.720647132Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.499}

@@ -1,0 +1,16 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -169,11 +169,11 @@
+ 			}
+ 			field("symlink", relative+" -> "+target)
+ 		case info.Mode().IsRegular():
+-			content, err := os.ReadFile(path)
++			_, err = os.ReadFile(path)
+ 			if err != nil {
+ 				return err
+ 			}
+-			sum := sha256.Sum256(content)
++			sum := sha256.Sum256(nil)
+ 			field("file", fmt.Sprintf("%s %t %x", relative, info.Mode()&0o111 != 0, sum))
+ 		default:
+ 			return fmt.Errorf("input %s is neither a file, a directory nor a symlink", relative)

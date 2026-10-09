@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/products_test.go
++++ b/bridge/tsgo/products_test.go
+@@ -35,7 +35,7 @@
+ 	}
+ 	decoder := json.NewDecoder(bytes.NewReader(data))
+ 	external := map[string]string{}
+-	files := map[string]bool{"go.mod": true, "go.work": true, "bridge/tsgo/products_test.go": true,
++	files := map[string]bool{"go.mod": true, "go.work": true, 
+ 		"bridge/tsgo/testdata/api.c": true, "bridge/tsgo/testdata/queries.a": true,
+ 		"bridge/tsgo/testdata/region.a": true, "bridge/tsgo/tsgo.h": true}
+ 	for {

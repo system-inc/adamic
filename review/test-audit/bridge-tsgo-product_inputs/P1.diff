@@ -1,0 +1,36 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -12,7 +12,6 @@
+ 
+ import (
+ 	"crypto/sha256"
+-	"encoding/hex"
+ 	"errors"
+ 	"fmt"
+ 	"io"
+@@ -118,24 +117,7 @@
+ 
+ // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
+ func Key(root string, inputs Inputs) (string, error) {
+-	hash := sha256.New()
+-	field := func(kind, value string) {
+-		fmt.Fprintf(hash, "%s %d\n%s\n", kind, len(value), value)
+-	}
+-	field("buildcache", "v1")
+-	field("name", inputs.Name)
+-	for _, name := range inputs.Files {
+-		if err := hashPath(hash, root, name, field); err != nil {
+-			return "", err
+-		}
+-	}
+-	for _, flag := range inputs.Flags {
+-		field("flag", flag)
+-	}
+-	for _, tool := range inputs.Toolchain {
+-		field("tool", tool)
+-	}
+-	return hex.EncodeToString(hash.Sum(nil)), nil
++	return "", nil
+ }
+ 
+ func hashPath(hash io.Writer, root, name string, field func(kind, value string)) error {

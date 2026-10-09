@@ -1,0 +1,3 @@
+package main
+import("fmt";"os";"path/filepath";"github.com/system-inc/adamic/internal/buildcache")
+func main(){builds:=0;build:=func(d string)error{builds++;return os.WriteFile(filepath.Join(d,"product"),[]byte("answer"),0600)};in:=buildcache.Inputs{Name:"u002-reuse-witness",Flags:[]string{"same"}};a,e:=buildcache.Get(in,build);if e!=nil{panic(e)};b,e:=buildcache.Get(in,build);if e!=nil{panic(e)};data,e:=os.ReadFile(filepath.Join(b,"product"));fmt.Printf("builds=%d same=%t product=%s error=%v\n",builds,a==b,data,e)}

@@ -1,0 +1,178 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeProductUnitsCoverEveryProduct|TestBridgeProductInput_.*|TestBridgeProductCacheIsVerified)$",
+  "wall": 5.593476890000602,
+  "exit": 1,
+  "seconds": 3.83,
+  "failed": [
+    "TestBridgeProductCacheIsVerified",
+    "TestBridgeProductInput_ApiDriver",
+    "TestBridgeProductInput_WrongNative",
+    "TestBridgeProductInput_LinkageTest",
+    "TestBridgeProductInput_LengthDriver",
+    "TestBridgeProductInput_RegionStage0",
+    "TestBridgeProductInput_Oracle",
+    "TestBridgeProductInput_Stage0",
+    "TestBridgeProductInput_WrongArchive",
+    "TestBridgeProductInput_RegionNative",
+    "TestBridgeProductInput_LeakArchive",
+    "TestBridgeProductInput_LengthArchive",
+    "TestBridgeProductInput_StaleArchive",
+    "TestBridgeProductInput_TsgoSanitizedArchive",
+    "TestBridgeProductInput_HealthyRegion",
+    "TestBridgeProductInput_TsgoArchive",
+    "TestBridgeProductInput_LeakDriver",
+    "TestBridgeProductInput_Native",
+    "TestBridgeProductInput_SanitizedNative",
+    "TestBridgeProductInput_StaleDriver"
+  ],
+  "passed": [
+    "TestBridgeProductUnitsCoverEveryProduct"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestBridgeProductCacheIsVerified": [
+      "=== RUN   TestBridgeProductCacheIsVerified",
+      "    coverage_test.go:152: product digest: api",
+      "--- FAIL: TestBridgeProductCacheIsVerified (0.00s)"
+    ],
+    "TestBridgeProductUnitsCoverEveryProduct": [
+      "=== RUN   TestBridgeProductUnitsCoverEveryProduct",
+      "=== PAUSE TestBridgeProductUnitsCoverEveryProduct",
+      "=== CONT  TestBridgeProductUnitsCoverEveryProduct",
+      "--- PASS: TestBridgeProductUnitsCoverEveryProduct (0.00s)"
+    ],
+    "TestBridgeProductInput_TsgoArchive": [
+      "=== RUN   TestBridgeProductInput_TsgoArchive",
+      "=== PAUSE TestBridgeProductInput_TsgoArchive",
+      "=== CONT  TestBridgeProductInput_TsgoArchive",
+      "    product_inputs_test.go:111: tsgo.a served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_TsgoArchive (1.15s)"
+    ],
+    "TestBridgeProductInput_TsgoSanitizedArchive": [
+      "=== RUN   TestBridgeProductInput_TsgoSanitizedArchive",
+      "=== PAUSE TestBridgeProductInput_TsgoSanitizedArchive",
+      "=== CONT  TestBridgeProductInput_TsgoSanitizedArchive",
+      "    product_inputs_test.go:116: tsgo-asan.a served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_TsgoSanitizedArchive (1.02s)"
+    ],
+    "TestBridgeProductInput_LengthArchive": [
+      "=== RUN   TestBridgeProductInput_LengthArchive",
+      "=== PAUSE TestBridgeProductInput_LengthArchive",
+      "=== CONT  TestBridgeProductInput_LengthArchive",
+      "    product_inputs_test.go:121: length.a served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_LengthArchive (0.92s)"
+    ],
+    "TestBridgeProductInput_StaleArchive": [
+      "=== RUN   TestBridgeProductInput_StaleArchive",
+      "=== PAUSE TestBridgeProductInput_StaleArchive",
+      "=== CONT  TestBridgeProductInput_StaleArchive",
+      "    product_inputs_test.go:126: stale.a served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_StaleArchive (1.03s)"
+    ],
+    "TestBridgeProductInput_WrongArchive": [
+      "=== RUN   TestBridgeProductInput_WrongArchive",
+      "=== PAUSE TestBridgeProductInput_WrongArchive",
+      "=== CONT  TestBridgeProductInput_WrongArchive",
+      "    product_inputs_test.go:131: wrong.a served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_WrongArchive (0.96s)"
+    ],
+    "TestBridgeProductInput_LeakArchive": [
+      "=== RUN   TestBridgeProductInput_LeakArchive",
+      "=== PAUSE TestBridgeProductInput_LeakArchive",
+      "=== CONT  TestBridgeProductInput_LeakArchive",
+      "    product_inputs_test.go:136: leak.a served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_LeakArchive (1.05s)"
+    ],
+    "TestBridgeProductInput_Stage0": [
+      "=== RUN   TestBridgeProductInput_Stage0",
+      "=== PAUSE TestBridgeProductInput_Stage0",
+      "=== CONT  TestBridgeProductInput_Stage0",
+      "    product_inputs_test.go:141: stage0 served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_Stage0 (0.95s)"
+    ],
+    "TestBridgeProductInput_Oracle": [
+      "=== RUN   TestBridgeProductInput_Oracle",
+      "=== PAUSE TestBridgeProductInput_Oracle",
+      "=== CONT  TestBridgeProductInput_Oracle",
+      "    product_inputs_test.go:146: oracle served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_Oracle (0.94s)"
+    ],
+    "TestBridgeProductInput_ApiDriver": [
+      "=== RUN   TestBridgeProductInput_ApiDriver",
+      "=== PAUSE TestBridgeProductInput_ApiDriver",
+      "=== CONT  TestBridgeProductInput_ApiDriver",
+      "    product_inputs_test.go:151: api served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_ApiDriver (1.00s)"
+    ],
+    "TestBridgeProductInput_LengthDriver": [
+      "=== RUN   TestBridgeProductInput_LengthDriver",
+      "=== PAUSE TestBridgeProductInput_LengthDriver",
+      "=== CONT  TestBridgeProductInput_LengthDriver",
+      "    product_inputs_test.go:156: length-driver served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_LengthDriver (1.01s)"
+    ],
+    "TestBridgeProductInput_StaleDriver": [
+      "=== RUN   TestBridgeProductInput_StaleDriver",
+      "=== PAUSE TestBridgeProductInput_StaleDriver",
+      "=== CONT  TestBridgeProductInput_StaleDriver",
+      "    product_inputs_test.go:161: stale-driver served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_StaleDriver (0.77s)"
+    ],
+    "TestBridgeProductInput_LeakDriver": [
+      "=== RUN   TestBridgeProductInput_LeakDriver",
+      "=== PAUSE TestBridgeProductInput_LeakDriver",
+      "=== CONT  TestBridgeProductInput_LeakDriver",
+      "    product_inputs_test.go:166: leak-driver served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_LeakDriver (0.84s)"
+    ],
+    "TestBridgeProductInput_SanitizedNative": [
+      "=== RUN   TestBridgeProductInput_SanitizedNative",
+      "=== PAUSE TestBridgeProductInput_SanitizedNative",
+      "=== CONT  TestBridgeProductInput_SanitizedNative",
+      "    product_inputs_test.go:171: native-asan served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_SanitizedNative (0.80s)"
+    ],
+    "TestBridgeProductInput_Native": [
+      "=== RUN   TestBridgeProductInput_Native",
+      "=== PAUSE TestBridgeProductInput_Native",
+      "=== CONT  TestBridgeProductInput_Native",
+      "    product_inputs_test.go:176: native served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_Native (0.81s)"
+    ],
+    "TestBridgeProductInput_WrongNative": [
+      "=== RUN   TestBridgeProductInput_WrongNative",
+      "=== PAUSE TestBridgeProductInput_WrongNative",
+      "=== CONT  TestBridgeProductInput_WrongNative",
+      "    product_inputs_test.go:181: wrong-native served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_WrongNative (1.01s)"
+    ],
+    "TestBridgeProductInput_HealthyRegion": [
+      "=== RUN   TestBridgeProductInput_HealthyRegion",
+      "=== PAUSE TestBridgeProductInput_HealthyRegion",
+      "=== CONT  TestBridgeProductInput_HealthyRegion",
+      "    product_inputs_test.go:186: healthy-region served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_HealthyRegion (0.98s)"
+    ],
+    "TestBridgeProductInput_RegionStage0": [
+      "=== RUN   TestBridgeProductInput_RegionStage0",
+      "=== PAUSE TestBridgeProductInput_RegionStage0",
+      "=== CONT  TestBridgeProductInput_RegionStage0",
+      "    product_inputs_test.go:191: region-stage0 served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_RegionStage0 (1.02s)"
+    ],
+    "TestBridgeProductInput_RegionNative": [
+      "=== RUN   TestBridgeProductInput_RegionNative",
+      "=== PAUSE TestBridgeProductInput_RegionNative",
+      "=== CONT  TestBridgeProductInput_RegionNative",
+      "    product_inputs_test.go:196: region-native served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_RegionNative (1.03s)"
+    ],
+    "TestBridgeProductInput_LinkageTest": [
+      "=== RUN   TestBridgeProductInput_LinkageTest",
+      "=== PAUSE TestBridgeProductInput_LinkageTest",
+      "=== CONT  TestBridgeProductInput_LinkageTest",
+      "    product_inputs_test.go:201: linkage.test served stale product: \"version one\", want version two",
+      "--- FAIL: TestBridgeProductInput_LinkageTest (1.01s)"
+    ]
+  }
+}

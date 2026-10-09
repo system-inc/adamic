@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/products_test.go
++++ b/bridge/tsgo/products_test.go
+@@ -20,7 +20,7 @@
+ 	"github.com/system-inc/adamic/internal/native"
+ )
+ 
+-var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
++var bridgeProductNames = []string{"tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
+ 
+ // The same recipe is called by the product unit and every consumer. Dependency
+ // discovery does not compile: Files retain the source and embed content, including

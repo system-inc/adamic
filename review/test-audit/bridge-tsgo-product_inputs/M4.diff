@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -123,7 +123,7 @@
+ 		fmt.Fprintf(hash, "%s %d\n%s\n", kind, len(value), value)
+ 	}
+ 	field("buildcache", "v1")
+-	field("name", inputs.Name)
++
+ 	for _, name := range inputs.Files {
+ 		if err := hashPath(hash, root, name, field); err != nil {
+ 			return "", err

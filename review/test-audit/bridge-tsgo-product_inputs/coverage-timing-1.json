@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeProductUnitsCoverEveryProduct$",
+  "wall": 1.8767502949995105,
+  "exit": 0,
+  "seconds": 0.015,
+  "failed": [],
+  "passed": [
+    "TestBridgeProductUnitsCoverEveryProduct"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestBridgeProductUnitsCoverEveryProduct": [
+      "=== RUN   TestBridgeProductUnitsCoverEveryProduct",
+      "=== PAUSE TestBridgeProductUnitsCoverEveryProduct",
+      "=== CONT  TestBridgeProductUnitsCoverEveryProduct",
+      "--- PASS: TestBridgeProductUnitsCoverEveryProduct (0.00s)"
+    ]
+  }
+}

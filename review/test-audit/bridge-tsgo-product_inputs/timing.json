@@ -1,0 +1,20 @@
+{
+  "setup": {
+    "npm_seconds": 0.6680773869993573,
+    "npm_exit": 0,
+    "toolchain": "warm env verified; setup skipped",
+    "nproc": 5
+  },
+  "build": {
+    "repeated_switched_build_wall": 0.13601380999898538,
+    "exit": 0,
+    "initial_build_wall": null,
+    "note": "Initial switch build passed but its wall time was not instrumented."
+  },
+  "baseline_binary": 90.025,
+  "bounded_clean_binary": 7.531,
+  "matrix_wall": 64.35905635000381,
+  "matrix_binary": 43.055,
+  "timing_runs_wall": 31.970487974002026,
+  "recorded_at": "2026-10-09T09:20:30.408296+00:00"
+}
