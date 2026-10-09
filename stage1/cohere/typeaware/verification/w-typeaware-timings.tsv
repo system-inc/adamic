@@ -1,0 +1,7 @@
+# Worker started 2026-10-09 10:34 UTC; base origin/main 83f3940ec77b8ba779da05ded113e9d9e7e710b6.
+# Instance CPU quota: 400000/100000 (4 CPUs); measurement GOMAXPROCS=4.
+# No test fixes yet. Alone baselines pending product prebuild and warm Go cache.
+# Bootstrap: SSH submodule clone refused; HTTPS retry downloads TypeScript.
+# Initial TestProduct_profile_missing_binding invocation could not load missing cohere/TypeScript/tsc/go.mod; no leaf timing.
+# Leaves use -count=1 -timeout 90s -test.skip ^TestProduct_; products use -timeout 10m.
+kind	unit	loom_s	alone_before_s	setup_s	own_work_s	status
