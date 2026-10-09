@@ -304,7 +304,7 @@ Evidence branch: test-audit/stage1-cohere-lint-shards_agree_split; production/te
       "TestSuggestionAlongsideAutomaticFix family",
       "TestWitnessScriptKind family"
     ],
-    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindLowered (0.00s)",
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindNative (0.00s)",
     "members": [
       "TestProduct_WitnessScriptKindNative"
     ]
@@ -330,7 +330,7 @@ Evidence branch: test-audit/stage1-cohere-lint-shards_agree_split; production/te
       "TestSuggestionAlongsideAutomaticFix family",
       "TestWitnessScriptKind family"
     ],
-    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindLowered (0.00s)",
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindGoOracle (0.00s)",
     "members": [
       "TestProduct_WitnessScriptKindGoOracle"
     ]

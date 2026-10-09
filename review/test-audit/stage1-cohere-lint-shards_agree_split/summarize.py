@@ -50,7 +50,14 @@ def make(test,members,group,oracle,kind,verdict,check=None,prod=None):
    id=r['kills'][-1];line=evidence(id+'-'+prod);r['last_proven_fail']=id+': '+line;r['evidence']='timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '+('^TestSuggestionAlongsideAutomaticFix_[0-9]+$' if prod=='suggestion' else '^TestWitnessScriptKind(?:_[0-9]+)?$')+'; selector='+id+'; '+line
   else:r['verdict']='cannot-judge';r['evidence']='No verified production kill in available matrix.'
  elif check:
-  rr=next(x for x in checks if x['id']==check);line=evidence(check,fail=rr['exit']!=0);r['evidence']=' '.join(rr['command'])+'; '+line
+  rr=next(x for x in checks if x['id']==check);line=evidence(check,fail=rr['exit']!=0)
+  if check=='S1-products':
+   for raw in (E/(check+'.log')).read_text().splitlines():
+    try:
+     event=json.loads(raw)
+     if event.get('Test')==test and '--- PASS:' in event.get('Output',''):line=event['Output'].strip();break
+    except:pass
+  r['evidence']=' '.join(rr['command'])+'; '+line
   if rr['exit'] and not rr['timeout']:r['last_proven_fail']=check+': '+line
   elif rr['timeout']:r['verdict']='cannot-judge';r['evidence']+='; cooked'
  else:
