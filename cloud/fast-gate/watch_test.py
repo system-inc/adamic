@@ -1133,6 +1133,17 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(w.read('whole').splitlines(), ['canary/main'])
         self.assertIn('(box0 whole, log', w.read('output'))
 
+    def test_a_stage_canary_never_takes_a_box_a_whole_gate_loop_lends(self):
+        # Oct 9 16:25Z: main's whole gate reclaimed home and killed d97a443a's first whole-box canary 80 s in.
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='home B\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
+        self.addCleanup(w.close)
+        (w.state / 'whole-gate-boxes').write_text('home\n')
+        w.wait(lambda: 'watching ' in w.read('output'))
+        (w.state / 'canary-box').write_text('home\n')
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'gating canary/main' in w.read('output'))
+        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box1'), w.read('starts'))
+
     def test_a_stage_canary_with_no_empty_box_drains_the_canary_box_and_takes_it_whole(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
         self.addCleanup(w.close)
@@ -1352,12 +1363,13 @@ class WatchTests(unittest.TestCase):
         self.assertIn('with tools tools-zero', w.read('output'))
 
     def test_main_s_half_hourly_canary_waits_while_a_stage_canary_waits_for_its_box(self):
-        w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'}, mainCanary=1800)
+        # A short interval, not a clock jump: a jump past 1800 s also trips test0's box ceiling and empties the box.
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'}, mainCanary=100)
         self.addCleanup(w.close)
         w.wait(lambda: 'codex/test0 ' in w.read('starts'))
         w.put('head', 'tools-two')
         w.wait(lambda: 'staging tools tools-two' in w.read('output'))
-        w.put('clock', '2900')
+        w.put('clock', '1200')
         time.sleep(1)
         self.assertNotIn('half-hourly canary', w.read('output'))
         self.assertNotIn('canary/main ', w.read('starts') + w.read('good-starts'))

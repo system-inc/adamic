@@ -1047,16 +1047,20 @@ stageCanaryWaiting() {
     ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null
 }
 # A box with nothing running on it, for the stage canary: the canary box first, then the slot table's order. Prints the
-# box and its first slot's class, or nothing.
+# box and its first slot's class, or nothing. Never a box a whole-gate loop lends (${state}/whole-gate-boxes, one per
+# line): its loop reclaims the box by killing side work, and at 16:25Z main's whole gate on home killed d97a443a's first
+# whole-box canary 80 s in.
 emptyBoxForStageCanary() {
   awk -v canary="$(cat "${state}/canary-box")" '
-    FILENAME == ARGV[1] { busy[$4 == "" ? "threadripper" : $4] = 1; next }
+    FILENAME == ARGV[1] { lender[$1] = 1; next }
+    FILENAME == ARGV[2] { busy[$4 == "" ? "threadripper" : $4] = 1; next }
+    $1 in lender { next }
     $1 == "pool" || ($1 in seen) { next }
     { seen[$1] = 1; order[++n] = $1; class[$1] = $2 }
     END {
       if (canary in class && !(canary in busy)) { print canary " " class[canary]; exit }
       for (i = 1; i <= n; i++) if (!(order[i] in busy)) { print order[i] " " class[order[i]]; exit }
-    }' "${state}/running.tmp" "${state}/slots"
+    }' <(cat "${state}/whole-gate-boxes" 2> /dev/null) "${state}/running.tmp" "${state}/slots"
 }
 # The boxes with a slot of this class reserved for this branch. A tip that has one runs only there: it
 # waits out the drain for the whole box rather than borrowing a share of another.
