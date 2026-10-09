@@ -190,9 +190,8 @@ On library/area-on-main-4 (`d767edf5`), the unchanged
 native ASan/UBSan/LeakSanitizer, both with exit 0 and empty stderr.
 This is a wrong default-argument result, not a lowering refusal or a closed gap.
 `TestClosedOptionalFunctionValueGap` remains strict and fails on that disagreement;
-repair needs compiler-owned files outside this family. Its retired refusal test
-is now `TestClosedOptionalFunctionValueGap`, requiring source Node, native
-ASan/UBSan/LeakSanitizer and JavaScript-backend agreement.
+repair needs compiler-owned files outside this family. The test continues to
+require source Node, native ASan/UBSan/LeakSanitizer and JavaScript-backend agreement.
 
 The statement callback interface admits optional `make` children and optional
 `type` minimum/conditional arguments. Its callback arrows supply the defaults;

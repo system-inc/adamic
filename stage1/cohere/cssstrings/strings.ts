@@ -25,8 +25,7 @@ export function printString(raw: string, singleQuote: boolean): string {
             start = index + 1;
         }
         else if(character === quote) {
-            parts.push(content.slice(start, index));
-            parts.push(`\\${character}`);
+            parts.push(content.slice(start, index), `\\${character}`);
             start = index + 1;
         }
     }

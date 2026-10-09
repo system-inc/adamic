@@ -17,7 +17,9 @@ import (
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestLexerGaps(t *testing.T) {
-	closedGap(t, "gaps/multiplePush.ts", "2\n")
+	t.Run("multiplePush.ts", func(t *testing.T) {
+		closedGap(t, "gaps/multiplePush.ts", "2\n")
+	})
 }
 
 func TestStructuralPositionRefusal(t *testing.T) {
