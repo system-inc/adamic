@@ -17,6 +17,7 @@ tsc	all	tsc --version | grep -qx 'Version 6.0.3' && test -f "$(dirname "$(readli
 wasi-sdk	linux	test -d "${WASI_SYSROOT:-/nonexistent}"
 sysctl	darwin	command -v sysctl
 leaks	darwin	command -v leaks
+xcrun	darwin	command -v xcrun
 nm	all	command -v nm
 ar	all	command -v ar
 taskset	linux	command -v taskset
