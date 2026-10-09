@@ -319,7 +319,7 @@ func refusedConstructorFixture(path string) bool {
 // TestHiddenBoundary04MutationRefused. They have no lowered graph to trace.
 func refusedHiddenBoundaryFixture(path string) bool {
 	switch filepath.Base(path) {
-	case "hidden_boundary_alias_cast_refused.a", "hidden_boundary_optional_array_mutation_refused.a":
+	case "hidden_boundary_alias_cast_refused.a":
 		return true
 	}
 	return false
