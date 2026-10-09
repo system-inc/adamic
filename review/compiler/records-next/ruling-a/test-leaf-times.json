@@ -1,0 +1,428 @@
+[
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalCompareLeft",
+    "seconds": 0.15
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalEnvironment",
+    "seconds": 0.15
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalPrototypeRead",
+    "seconds": 0.15
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalCompareRight",
+    "seconds": 0.15
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalNamedInvalidated",
+    "seconds": 0.2
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalPrototypeSet",
+    "seconds": 0.09
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalNarrowedNumber",
+    "seconds": 0.09
+  },
+  {
+    "log": "refusals.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalPrototypeIn",
+    "seconds": 0.1
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalNamedInvalidated",
+    "seconds": 1.33
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalNarrowedNumber",
+    "seconds": 1.62
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestNamedRecordTypeGuardMutant",
+    "seconds": 1.79
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordPrototypeMutant",
+    "seconds": 1.9
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordNarrowingMutant",
+    "seconds": 1.91
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalEnvironment",
+    "seconds": 1.19
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalCompareRight",
+    "seconds": 1.26
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalCompareLeft",
+    "seconds": 1.12
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalPrototypeIn",
+    "seconds": 1.25
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalPrototypeSet",
+    "seconds": 1.33
+  },
+  {
+    "log": "refusal-mutants.log",
+    "result": "PASS",
+    "test": "TestRecordRefusalPrototypeRead",
+    "seconds": 0.77
+  },
+  {
+    "log": "neighbors.log",
+    "result": "PASS",
+    "test": "TestRecordDivergenceSupportedNeighbors",
+    "seconds": 0.26
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit02",
+    "seconds": 1.91
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit02/deleted-key-iterated",
+    "seconds": 1.88
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit04",
+    "seconds": 1.91
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit04/stored-key-freed",
+    "seconds": 1.9
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit05",
+    "seconds": 2.43
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit05/own-slot-null-read",
+    "seconds": 2.43
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit03",
+    "seconds": 3.09
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit03/overwrite-key-leaked",
+    "seconds": 3.07
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit01",
+    "seconds": 2.03
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit01/uint32-max-as-index",
+    "seconds": 2.03
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit00",
+    "seconds": 2.42
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordMutantsUnit00/indices-in-insertion-order",
+    "seconds": 2.42
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordReadMutants",
+    "seconds": 4.9
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordReadMutants/prototype-membership-restored",
+    "seconds": 2.09
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordReadMutants/missing-read-silent",
+    "seconds": 1.59
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordReadMutants/own-read-checked-as-missing",
+    "seconds": 1.21
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode",
+    "seconds": 15.14
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/semantics",
+    "seconds": 0.13
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/prototypes",
+    "seconds": 0.18
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/reads",
+    "seconds": 0.19
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/references",
+    "seconds": 0.51
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/iteration",
+    "seconds": 0.11
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/numeric",
+    "seconds": 2.49
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/two-indices",
+    "seconds": 0.21
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/workload-1000000",
+    "seconds": 10.19
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/bench-1000",
+    "seconds": 0.11
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/constructor",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/constructor",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/__defineGetter__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/__defineGetter__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/__defineSetter__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/__defineSetter__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/hasOwnProperty",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/hasOwnProperty",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/__lookupGetter__",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/__lookupGetter__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/__lookupSetter__",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/__lookupSetter__",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/isPrototypeOf",
+    "seconds": 0.03
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/isPrototypeOf",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/propertyIsEnumerable",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/propertyIsEnumerable",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/toString",
+    "seconds": 0.01
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/toString",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/valueOf",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/valueOf",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/__proto__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/__proto__",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-get/toLocaleString",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/missing-has/toLocaleString",
+    "seconds": 0.0
+  },
+  {
+    "log": "native.log",
+    "result": "PASS",
+    "test": "TestRecordsAgainstNode/proto-assignment",
+    "seconds": 0.01
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "base": "c81ba26193ce58fe7eb8c15d3ea1e46a58052fef",
+  "head": "93f4a6bf6abc2b675406502504d72ec54278552e",
+  "verdict": "pass",
+  "admitted": 23,
+  "sampling_size": 23,
+  "omitted": 0,
+  "complete_corpus": true,
+  "phase_seconds": {
+    "base_build": 8.32e-07,
+    "checkout": 5.33119199,
+    "checkout_and_provision": 5.769910505,
+    "classification": 121.732947757,
+    "head_build": 1.3029e-05,
+    "manifest_and_verification": 2.624273288,
+    "provision": 0.43871598,
+    "runtime": 8.709527339,
+    "total": 138.840606191
+  },
+  "classes": {
+    "newly-accepted": 23,
+    "accepted-by-both": 976,
+    "refused-by-both": 146
+  }
+}

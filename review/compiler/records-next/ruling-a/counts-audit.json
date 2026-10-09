@@ -1,0 +1,55 @@
+{
+  "base": "b740bd3b",
+  "removed": [
+    {
+      "fixture": "internal/oracle/testdata/records_compare_properties_left.a",
+      "before": "| internal/oracle/testdata/records_compare_properties_left.a | 4 | 0 | 4 | 3 | 4 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_compare_properties_right.a",
+      "before": "| internal/oracle/testdata/records_compare_properties_right.a | 4 | 0 | 6 | 3 | 4 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_environment_boundary.a",
+      "before": "| internal/oracle/testdata/records_environment_boundary.a | 2 | 0 | 1 | 2 | 2 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_invalidated.a",
+      "before": "| internal/oracle/testdata/records_named_invalidated.a | 3 | 1 | 11 | 7 | 3 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_narrowed_number.a",
+      "before": "| internal/oracle/testdata/records_narrowed_number.a | 2 | 0 | 4 | 4 | 2 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_prototype_in.a",
+      "before": "| internal/oracle/testdata/records_prototype_in.a | 2 | 0 | 1 | 1 | 2 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_prototype_read.a",
+      "before": "| internal/oracle/testdata/records_prototype_read.a | 2 | 0 | 1 | 1 | 2 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_prototype_set.a",
+      "before": "| internal/oracle/testdata/records_prototype_set.a | 2 | 0 | 2 | 1 | 2 | 0 |",
+      "after": "compile-time refusal; runtime counts no longer apply",
+      "attribution": "Option (a) ruling on 38vbx51"
+    }
+  ],
+  "added": [],
+  "moved": []
+}
