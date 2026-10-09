@@ -1,0 +1,93 @@
+[
+  {
+    "fixture": "entries_checked_fit",
+    "before": {
+      "exit": 0,
+      "stdout": "2,10,z,end\n2,10,9,5\n2:2\n10:10\nz:9\nend:5\none,two\nfirst:one\nextra:two\n",
+      "stderr": "adamic: counts: allocations 54 frees 54 retains 23 releases 45 peak 12 regions 0\n"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "2,10,z,end\n2,10,9,5\n2:2\n10:10\nz:9\nend:5\none,two\nfirst:one\nextra:two\n",
+      "stderr": "adamic: counts: allocations 54 frees 54 retains 25 releases 47 peak 12 regions 0\n"
+    }
+  },
+  {
+    "fixture": "entries_checked_misfit",
+    "before": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared number\nadamic: counts: allocations 7 frees 1 retains 3 releases 2 peak 6 regions 0\n"
+    },
+    "after": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared number\nadamic: counts: allocations 7 frees 1 retains 4 releases 2 peak 6 regions 0\n"
+    }
+  },
+  {
+    "fixture": "entries_checked_boolean",
+    "before": {
+      "exit": 0,
+      "stdout": "true,false\nyes:true\nno:false\n",
+      "stderr": "adamic: counts: allocations 18 frees 18 retains 6 releases 19 peak 7 regions 0\n"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "true,false\nyes:true\nno:false\n",
+      "stderr": "adamic: counts: allocations 18 frees 18 retains 7 releases 20 peak 7 regions 0\n"
+    }
+  },
+  {
+    "fixture": "entries_checked_literal",
+    "before": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared \"good\"\nadamic: counts: allocations 6 frees 0 retains 5 releases 1 peak 6 regions 0\n"
+    },
+    "after": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared \"good\"\nadamic: counts: allocations 6 frees 0 retains 6 releases 1 peak 6 regions 0\n"
+    }
+  },
+  {
+    "fixture": "entries_checked_boxed",
+    "before": {
+      "exit": 0,
+      "stdout": "1,2\nvisible:1\nhidden:2\n37,12.5\nkind:37\nextra:12.5\n",
+      "stderr": "adamic: counts: allocations 40 frees 40 retains 14 releases 38 peak 11 regions 0\n"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "1,2\nvisible:1\nhidden:2\n37,12.5\nkind:37\nextra:12.5\n",
+      "stderr": "adamic: counts: allocations 40 frees 40 retains 16 releases 40 peak 11 regions 0\n"
+    }
+  },
+  {
+    "fixture": "entries_record_alias",
+    "before": {
+      "exit": 0,
+      "stdout": "visible\nvisible:4\nown:true\n2,10,visible,late,01\n2:2\n10:10\nvisible:4\nlate:2\n01:1\n2,10,4,2,1\nlabel:changedchanged\nlast:second\nenabled:true\ndisabled:false\n",
+      "stderr": "adamic: counts: allocations 65 frees 65 retains 89 releases 118 peak 28 regions 0\n"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "visible\nvisible:4\nown:true\n2,10,visible,late,01\n2:2\n10:10\nvisible:4\nlate:2\n01:1\n2,10,4,2,1\nlabel:changedchanged\nlast:second\nenabled:true\ndisabled:false\n",
+      "stderr": "adamic: counts: allocations 65 frees 65 retains 90 releases 119 peak 28 regions 0\n"
+    }
+  },
+  {
+    "fixture": "notyet_library_object_entries_const",
+    "before": {
+      "exit": 0,
+      "stdout": "firsttentwoleadingworld\n2:two\n10:ten\nzeta:first\n01:leading\n\ud83c\udf0d:world\nGeneral_Category\nScript\n4\n",
+      "stderr": "adamic: counts: allocations 40 frees 40 retains 36 releases 35 peak 23 regions 0\n"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "firsttentwoleadingworld\n2:two\n10:ten\nzeta:first\n01:leading\n\ud83c\udf0d:world\nGeneral_Category\nScript\n4\n",
+      "stderr": "adamic: counts: allocations 40 frees 40 retains 38 releases 37 peak 23 regions 0\n"
+    }
+  }
+]
