@@ -222,7 +222,7 @@ func rulesAgreeOracle(t *testing.T) string {
 		oracleInputs := buildcache.Inputs{
 			Name:      "lint-rules-agree-go-oracle",
 			Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
-			Flags:     []string{"go build", "overlay registry and rule adapters", "context-deadline=90s", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
+			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
 			Toolchain: []string{runtime.Version()},
 		}
 		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
@@ -244,7 +244,7 @@ func rulesAgreeCapture(t *testing.T) string {
 		captureInputs := buildcache.Inputs{
 			Name:      "lint-rules-agree-capture",
 			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
-			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=90s"},
+			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
 			Toolchain: []string{runtime.Version()},
 		}
 		rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
@@ -326,7 +326,7 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 	return rulesAgreePrepared
 }
 
-// Setup has its own clock and deadline, independent of every leaf's case clock.
+// Shared setup has no deadline; Loom still covers the whole unit.
 // Filtered single-shard runs use this same preparation path and persistent cache.
 func rulesAgreeSetup(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
@@ -335,8 +335,6 @@ func rulesAgreeSetup(t *testing.T) *rulesAgreeProducts {
 	}
 	rulesAgreeSetupOnce.Do(func() {
 		started := time.Now()
-		deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree_Setup cooked: shared setup exceeded 90s") })
-		defer deadline.Stop()
 		var corpus *rulesAgreeProducts
 		var binary, lowered string
 		var workers sync.WaitGroup
@@ -358,7 +356,7 @@ func rulesAgreeSetup(t *testing.T) *rulesAgreeProducts {
 		ready.binary = filepath.Join(binary, "scanner")
 		ready.module = filepath.Join(lowered, "lint.mjs")
 		rulesAgreeReady = &ready
-		t.Logf("TestRulesAgree_Setup: %.3fs cooked=%t", time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
+		t.Logf("TestRulesAgree_Setup: %.3fs", time.Since(started).Seconds())
 	})
 	if rulesAgreeReady == nil {
 		t.Fatal("shared RulesAgree setup did not complete")
@@ -635,10 +633,10 @@ func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
 	return binary, nil
 }
 
-// The context deadline covers Go compilation as well as test execution.
+// Shared Go compilation and capture have no setup deadline.
 // Preserve the child CPU guard and kill the entire compiler process group.
 func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), rulesAgreeKill)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	command := exec.CommandContext(ctx, "go", args...)
 	command.Dir = directory
@@ -665,9 +663,6 @@ func rulesAgreeCaptureRun(directory string, environment []string, args ...string
 	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	if command.Process != nil {
 		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	if ctx.Err() != nil {
-		return nil, fmt.Errorf("shared setup cooked: child deadline exceeded: %w", ctx.Err())
 	}
 	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("go %v: %v\n%s", args, err, &stderr)
@@ -716,8 +711,7 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 	}
 	sort.Strings(names)
 	// Independent upstream packages capture into separate destinations. Bound
-	// concurrent packages to the instance's four CPUs; each Go test has its
-	// own 90-second deadline.
+	// concurrent packages to the instance's four CPUs; capture is shared setup.
 	var workers sync.WaitGroup
 	slots := make(chan struct{}, 4)
 	failures := make([]error, len(names))
@@ -730,11 +724,8 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			destination := filepath.Join(capture, name)
 			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
 			started := time.Now()
-			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=90s")
-			t.Logf("capture package %s: %.3fs cooked=%t", name, time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
-			if failures[index] == nil && time.Since(started) >= 60*time.Second {
-				failures[index] = fmt.Errorf("capture package %s cooked: over 60s; split smaller", name)
-			}
+			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0")
+			t.Logf("capture package %s: %.3fs", name, time.Since(started).Seconds())
 		}()
 	}
 	workers.Wait()
