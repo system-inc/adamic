@@ -1588,6 +1588,7 @@ class Gate:
         package path is no read."""
         tree = self.arguments.tree
         files = self.git(tree, "ls-files").splitlines()
+        fileSet = set(files)
         tops = {path.split("/", 1)[0] for path in files if "/" in path}
         rules = [(package, pattern) for _, package, pattern, _ in self.readsRules()]
         def ownerOf(path):
@@ -1617,9 +1618,14 @@ class Gate:
                 else:
                     continue
                 owner = ownerOf(target)
-                if target.startswith("..") or "*" in target or owner in (None, reader) or not testInput(target):
+                if target.startswith("..") or "*" in target or owner == reader:
                     continue
-                inputs = [name for name in files if (name == target or name.startswith(target + "/")) and testInput(name)]
+                if testInput(target) and owner is not None:
+                    inputs = [name for name in files if (name == target or name.startswith(target + "/")) and testInput(name)]
+                elif target in fileSet and not target.endswith(".go"):
+                    inputs = [target]
+                else:
+                    continue
                 if any(not any(package == reader and fnmatch.fnmatchcase(name, pattern) for package, pattern in rules) for name in inputs):
                     undeclared.append("%s reads %s (%s)" % (reader, target, path))
         if undeclared:

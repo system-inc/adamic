@@ -2124,9 +2124,19 @@ class ReverseDependencies(unittest.TestCase):
         except ValueError as error:
             self.fail(error)
 
-    def test_reads_census_ignores_a_real_embed_seen_through_the_test_variant(self):
+    def test_reads_census_rejects_an_undeclared_non_test_read(self):
+        # internal/oracle read stage3/census/repro/r05/main.a, a plain file in no package's tests, with no line (#pj36910).
+        path = os.path.join(self.tree, "outer/table.ts")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as handle:
+            handle.write("table\n")
+        self.plantRead('"../outer/table.ts"')
+        with self.assertRaisesRegex(ValueError, "reads census.*middle reads outer/table.ts"):
+            self.gate.touched(["middle/reader_test.go"])
+
+    def test_reads_census_takes_a_real_embed_seen_through_the_test_variant_as_a_non_test_read(self):
         # go list lists a package's EmbedFiles on its test variant too: lint reading internal/load's prelude.d.ts
-        # reads production, which load's closure already selects.
+        # reads production, declared as a non-test read.
         self.packages[0]["EmbedFiles"] = ["runtime/header.h"]
         self.packages.append(dict(self.packages[0], ForTest=run.module + "/internal/load",
                                   ImportPath=run.module + "/internal/load [" + run.module + "/internal/load.test]"))
@@ -2136,6 +2146,10 @@ class ReverseDependencies(unittest.TestCase):
         with open(path, "w") as handle:
             handle.write("header\n")
         self.plantRead('"../internal/load/runtime/header.h"')
+        # Not a test input, but a production file another package reads: it needs its line like any non-test read.
+        with self.assertRaisesRegex(ValueError, "reads census.*middle reads internal/load/runtime/header.h"):
+            self.gate.touched(["middle/reader_test.go"])
+        self.readsLine("reads middle internal/load/runtime/header.h")
         try:
             self.gate.touched(["middle/reader_test.go"])
         except ValueError as error:
@@ -2261,8 +2275,8 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("reads census blind to joins", 'yield "/".join(part.group(1) for part in parts if part)', 'pass', "test_reads_census_sees_a_joined_path"),
             ("branch reads lines ignored", 'for root in (self.arguments.tools, vars(self.arguments).get("tree")):', 'for root in (self.arguments.tools,):', "test_reads_census_accepts_a_declared_read"),
             ("reads census on the base", 'for path in changed:\n            if not path.endswith(".go")', 'for path in self.git(tree, "ls-files").splitlines():\n            if not path.endswith(".go")', "test_reads_census_leaves_a_read_on_the_base_alone"),
-            ("package paths read as testdata", 'or not testInput(target):', ':', "test_reads_census_ignores_a_package_built_by_path"),
-            ("real embeds read as test inputs", 'self.readsCensus(changed, directories, testEmbedded - realEmbedded)', 'self.readsCensus(changed, directories, testEmbedded)', "test_reads_census_ignores_a_real_embed_seen_through_the_test_variant"),
+            ("package paths read as files", 'elif target in fileSet and not target.endswith(".go"):', 'elif not target.endswith(".go"):', "test_reads_census_ignores_a_package_built_by_path"),
+            ("non-test reads unchecked", 'elif target in fileSet and not target.endswith(".go"):', 'elif False:', "test_reads_census_rejects_an_undeclared_non_test_read"),
         ]
         for name, before, after, test in mutants:
             with self.subTest(mutant=name):

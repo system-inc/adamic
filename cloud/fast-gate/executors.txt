@@ -1649,3 +1649,195 @@ reads internal/oracle internal/load/testdata/0.1/compile/08_results.ts
 reads internal/oracle internal/load/testdata/0.1/compile/09_tree.ts
 # TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:177
 reads internal/oracle internal/load/testdata/0.1/compile/10_unicode.ts
+
+# Non-test files a Go source names in another package (or outside any package), found when the reads census widened
+# past test inputs on main b8bcadb2 (#pj36910). A line here may declare a path a source only mentions: that only
+# widens selection. Most are oracle's counts and namespace tests reading stage3 lane fixtures.
+# buildBridgeProduct — bridge/tsgo/products_test.go:203
+reads bridge/tsgo bridge/tsgo/archive/boundary.c
+# TestGitSnapshotAndEvidenceBoundary — cmd/adamic-stage1-progress/main_test.go:100
+reads cmd/adamic-stage1-progress stage1/cohere/gitignore/GAPS.md
+# TestGitSnapshotAndEvidenceBoundary — cmd/adamic-stage1-progress/main_test.go:101
+reads cmd/adamic-stage1-progress stage1/cohere/gitignore/main.ts
+# TestGitSnapshotAndEvidenceBoundary — cmd/adamic-stage1-progress/main_test.go:99
+reads cmd/adamic-stage1-progress stage1/cohere/yaml/GAPS.md
+# package level — internal/dry/mirrors_test.go:1
+reads internal/dry cohere
+# TestNestedRebindingNotYet — internal/lower/nested_functions_test.go:146
+reads internal/lower internal/oracle/refusals/nested_rebinding.a
+# TestOptionalIndexingMapShapeRefused — internal/lower/optional_indexing_boundary_test.go:11
+reads internal/lower review/optional-indexing/map-shape.a
+# runDecodeASCIIUnit — internal/native/decode_ascii_test.go:123
+reads internal/native oracle/wasi.mjs
+# TestParserHasNoUnusedOptionalMethodThunks — internal/native/closure_convention_test.go:175
+reads internal/native stage1/typescript/parser/main.ts
+# package level — internal/oracle/oracle_test.go:131
+reads internal/oracle dedication/dedication.a
+# TestWASIShardPlantedDisagreement — internal/oracle/wasi_shards_test.go:104
+reads internal/oracle dedication/dedication.a
+# TestWASIOracleCatchesMutants — internal/oracle/wasi_test.go:94
+reads internal/oracle dedication/dedication.a
+# TestMigratedNonNullFixturesRemainCovered — internal/oracle/non_null_migration_test.go:18
+reads internal/oracle docs/verification/non-null-fixture-migration.json
+# librarySmallRuntimeMutant — internal/oracle/library_small_runtime_mutant_test.go:23
+reads internal/oracle internal/native/runtime/regexp_replace.c
+# TestRegExpReplacementNodeMutants — internal/oracle/regexp_replace_test.go:37
+reads internal/oracle internal/native/runtime/regexp_replace.c
+# init — internal/oracle/import_cycles_test.go:16
+reads internal/oracle stage3/drivers/scanner/probes/cyclic-initialized-value/main.a
+# init — internal/oracle/import_cycles_test.go:17
+reads internal/oracle stage3/drivers/scanner/probes/cyclic-premature-value/main.a
+# TestCheckedViewFlagDowncast — internal/oracle/checked_views_flag_downcast_test.go:16
+reads internal/oracle stage3/fixtures/assertions/13_flag_downcast.a
+# init — internal/oracle/enums_stage3_test.go:32
+reads internal/oracle stage3/fixtures/enums/07_regex_array_map.a
+# init — internal/oracle/namespaces_test.go:12
+reads internal/oracle stage3/fixtures/namespaces/08_parser_jsdoc_nested.a
+# TestClosedNestedConstituentMutant — internal/oracle/real_nested_functions_test.go:40
+reads internal/oracle stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+# TestClosureMergeRefusals — internal/oracle/closure_merge_refusals_test.go:18
+reads internal/oracle stage3/fixtures/nested-functions/refused/01_scanner_frame.a
+# init — internal/oracle/taste_stage3_test.go:23
+reads internal/oracle stage3/fixtures/taste/17_binder_flow.a
+# TestCheckedViewOptionalReadBoundary — internal/oracle/checked_views_optional_read_test.go:18
+reads internal/oracle stage3/interface-downcasts/lane1/optional-read.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:10
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:11
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:12
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:13
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:14
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-boolean.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:15
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:16
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-negative-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:17
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-text-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:18
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:19
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-flags-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:20
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:21
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:22
+reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/required-missing.a
+# TestInterfaceCastChecksMalformedRead — internal/oracle/interface_cast_test.go:74
+reads internal/oracle stage3/interface-downcasts/missing-name.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:23
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a
+# TestCheckedViewUntaggedSourceDispatch — internal/oracle/checked_views_v2_source_test.go:16
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:24
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-nested.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:25
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:26
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:27
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-good-string.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:28
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:29
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:30
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:31
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/class-data-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:32
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:33
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:34
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:35
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:36
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-generic-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:37
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:38
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-helper-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:39
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-stored-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:40
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-stored-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:41
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:42
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/option-element-source-nested.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:43
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/option-element-source-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:44
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-absent.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:45
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:46
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-nested.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:47
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:48
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/structural-source-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:49
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/structural-source-nested.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:50
+reads internal/oracle stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.a
+# TestCheckedViewUntaggedSourceDispatch — internal/oracle/checked_views_v2_source_test.go:26
+reads internal/oracle stage3/interface-downcasts/untagged/source-refusals.json
+# TestCheckedViewV2ArrayArmBoundary — internal/oracle/checked_views_v2_migration_test.go:37
+reads internal/oracle stage3/interface-downcasts/v2/array-arm.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:51
+reads internal/oracle stage3/interface-downcasts/v2/callable-producer-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:52
+reads internal/oracle stage3/interface-downcasts/v2/fixed-tuple-good.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:53
+reads internal/oracle stage3/interface-downcasts/v2/fixed-tuple-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:54
+reads internal/oracle stage3/interface-downcasts/v2/fs-option-boxing.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:55
+reads internal/oracle stage3/interface-downcasts/v2/mixed-read-write.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:56
+reads internal/oracle stage3/interface-downcasts/v2/null-read-write.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:57
+reads internal/oracle stage3/interface-downcasts/v2/representation-read-write.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:58
+reads internal/oracle stage3/interface-downcasts/v2/tuple-identity-wrong.a
+# checkedViewsV2Counts — internal/oracle/checked_views_v2_counts_test.go:59
+reads internal/oracle stage3/interface-downcasts/v2/undefined-read-write.a
+# interfaceCastCounts — internal/oracle/interface_cast_counts_test.go:17
+reads internal/oracle stage3/interface-downcasts/visitor.a
+# interfaceCastCounts — internal/oracle/interface_cast_counts_test.go:17
+reads internal/oracle stage3/interface-downcasts/wrong-kind.a
+# init — internal/oracle/namespaces_test.go:12
+reads internal/oracle stage3/namespace-init-sys/cwd-control.a
+# init — internal/oracle/namespaces_test.go:12
+reads internal/oracle stage3/namespace-init-sys/realpath-control.a
+# TestNamespaceLiveExportBoundary — internal/oracle/namespace_live_export_boundary_test.go:10
+reads internal/oracle stage3/namespace-live-export/live.a
+# TestNamespaceRuledMutants — internal/oracle/namespace_ruled_mutants_test.go:14
+reads internal/oracle stage3/namespace-live-export/live.a
+# init — internal/oracle/namespaces_test.go:12
+reads internal/oracle stage3/namespace-live-export/live.a
+# init — internal/oracle/parser_namespaces_test.go:18
+reads internal/oracle stage3/namespace-parser-stops/native-callable-namespace.a
+# init — internal/oracle/parser_namespaces_test.go:16
+reads internal/oracle stage3/namespace-parser-stops/native-namespace-class.a
+# init — internal/oracle/parser_namespaces_test.go:14
+reads internal/oracle stage3/namespace-parser-stops/native-namespace-object-receiver.a
+# TestRulesAgreeLoweringCacheKey — stage1/cohere/lint/grain_rules_agree_shards_test.go:103
+reads stage1/cohere/lint internal/load/prelude.d.ts
+# statusFor — stage1/cohere/lint/inventory/testdata/engine.go:487
+reads stage1/cohere/lint/inventory stage1/cohere/lint/REPORT.md
+# statusFor — stage1/cohere/lint/inventory/testdata/engine.go:495
+reads stage1/cohere/lint/inventory stage1/cohere/lint/VOLUME.md
+# main — stage1/cohere/markdownblocks/tools/generate_classes/main.go:19
+reads stage1/cohere/markdownblocks/tools/generate_classes stage1/cohere/markdownblocks/textClasses.ts
+# main — stage1/cohere/markdownblocks/tools/generate_width/main.go:23
+reads stage1/cohere/markdownblocks/tools/generate_width stage1/cohere/markdownblocks/widthTables.ts
+# run — stage3/census/latent/replay/main.go:31
+reads stage3/census/latent/replay stage3/census/latent/make_overlay.py
