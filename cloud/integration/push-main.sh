@@ -24,6 +24,9 @@
 # --correct-minutes <new_main> <minutes> "<note>" rewrites an earlier row that was recorded another
 # way, in this landing's velocity commit: the row whose new_main starts with <new_main> gets <minutes>
 # and "; <note>" on its branches field. Exactly one row must match.
+# --strike-row <new_main> "<why>" removes an earlier row that should never have been written (a sha
+# landed twice records a second row that counts the same work again), in this landing's velocity
+# commit, and says why in that commit's message. Exactly one row must match.
 #
 # The fast gate (Kirk, October 7: "we need tests to run in <1 minute"): --fast-gate <gate-logs ref>
 # lands on the fast gate developer tools runs on the Threadripper (build and vet everywhere, the
@@ -39,7 +42,7 @@
 # main-reds.tsv beside this script, except a revert (--revert) or a fix-forward naming that red log
 # (--fix-forward <gate-logs ref>). Main never carries two unexplained reds.
 #
-# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
+# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] [--strike-row <new_main> "<why>"] [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 #        cloud/integration/push-main.sh [same options] --fast-gate <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
 set -euo pipefail
 
@@ -48,6 +51,8 @@ meterRun=""
 correctMain=""
 correctMinutes=""
 correctNote=""
+strikeMain=""
+strikeWhy=""
 fastGate=""
 gateKind=fast
 smokeReviewed=no
@@ -58,6 +63,7 @@ while [ "$#" -gt 0 ]; do
 	--defer-velocity) defer=yes; shift ;;
 	--meter-run) meterRun=$2; shift 2 ;;
 	--correct-minutes) correctMain=$2; correctMinutes=$3; correctNote=$4; shift 4 ;;
+	--strike-row) strikeMain=$2; strikeWhy=$3; shift 3 ;;
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
 	# --full-gate <gate-logs ref>/full-main of this exact sha: the whole gate as the landing's verdict
 	# and main's confirmation in one (@system_adamic, October 8). It is a superset of the fast gate,
@@ -83,6 +89,20 @@ if [ -n "$correctMain" ]; then
 	fi
 	if ! [[ "$correctMain" =~ ^[0-9a-f]{8,40}$ ]] || ! [[ "$correctMinutes" =~ ^[0-9]+$ ]]; then
 		echo "refused: --correct-minutes takes a main sha of 8 or more hex characters and whole minutes" >&2
+		exit 2
+	fi
+fi
+if [ -n "$strikeMain" ]; then
+	if [ "$defer" = yes ]; then
+		echo "refused: a struck row is removed in the velocity commit, so it can't ride a deferred push" >&2
+		exit 2
+	fi
+	if ! [[ "$strikeMain" =~ ^[0-9a-f]{8,40}$ ]] || [ -z "$strikeWhy" ]; then
+		echo "refused: --strike-row takes a main sha of 8 or more hex characters and a reason" >&2
+		exit 2
+	fi
+	if [ "$strikeMain" = "$correctMain" ]; then
+		echo "refused: one row can't be both corrected and struck" >&2
 		exit 2
 	fi
 fi
@@ -426,6 +446,13 @@ if [ -n "$correctMain" ]; then
 		exit 1
 	fi
 fi
+if [ -n "$strikeMain" ]; then
+	matched=$(git show "${sha}:${velocityFile}" 2>/dev/null | awk -F, -v main="$strikeMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
+	if [ "$matched" != "1" ]; then
+		echo "refused: ${matched} velocity rows have new_main ${strikeMain}, not one" >&2
+		exit 1
+	fi
+fi
 git push origin "${sha}:refs/heads/main"
 commitsLanded=$(git rev-list --count "${old}..${sha}")
 
@@ -452,6 +479,14 @@ if existing=$(git show "${sha}:${velocityFile}" 2>/dev/null); then
 		fi
 		existing=$(printf '%s\n' "$existing" | awk -F, -v OFS=, -v main="$correctMain" -v minutes="$correctMinutes" -v note="$(printf '%s' "$correctNote" | tr ',' ';')" 'index($3, main) == 1 { $5 = $5 "; " note; $6 = minutes } { print }')
 	fi
+	if [ -n "$strikeMain" ]; then
+		matched=$(printf '%s\n' "$existing" | awk -F, -v main="$strikeMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
+		if [ "$matched" != "1" ]; then
+			echo "main is pushed as ${sha:0:8}, but its velocity row is NOT written: ${matched} rows have new_main ${strikeMain}, not one; write the row by hand" >&2
+			exit 1
+		fi
+		existing=$(printf '%s\n' "$existing" | awk -F, -v main="$strikeMain" 'index($3, main) != 1')
+	fi
 	blob=$(printf '%s\n%s\n' "$existing" "$rows" | git hash-object -w --stdin)
 else
 	blob=$(printf '%s\n%s\n' "$velocityHeader" "$rows" | git hash-object -w --stdin)
@@ -461,7 +496,13 @@ GIT_INDEX_FILE=$index git read-tree "$sha"
 GIT_INDEX_FILE=$index git update-index --add --cacheinfo "100644,${blob},${velocityFile}"
 tree=$(GIT_INDEX_FILE=$index git write-tree)
 rm -f "${index:?}"
-velocity=$(git commit-tree "$tree" -p "$sha" -m "Record the landing ${old:0:8}..${sha:0:8} in the velocity table")
+velocityMessage="Record the landing ${old:0:8}..${sha:0:8} in the velocity table"
+if [ -n "$strikeMain" ]; then
+	velocityMessage="${velocityMessage}
+
+It also strikes the row for ${strikeMain:0:8}: ${strikeWhy}"
+fi
+velocity=$(git commit-tree "$tree" -p "$sha" -m "$velocityMessage")
 changed=$(git diff --name-only "$sha" "$velocity")
 if [ "$changed" != "$velocityFile" ]; then
 	echo "refused to push the velocity commit: it changes $changed" >&2
