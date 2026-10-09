@@ -1,0 +1,5 @@
+interface Base {readonly kind:'Receiver'}
+interface Target extends Base {readonly make:(value:string)=>{readonly value:string}}
+const raw={kind:'Receiver' as const,make:function producer(value:string):{readonly value:string} {console.log('producer');return {value};}};
+function read(base:Base):(value:string)=>{readonly value:string} {const view=base as Target;return view.make;}
+const escaped=read(raw);console.log(new escaped('bad').value);

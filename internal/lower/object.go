@@ -1525,7 +1525,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.newClassValue(node); handled {
 			return value, err
 		}
-		return nil, l.notYet(node, "new "+describe(created.Expression))
+		return nil, &NotYet{Where: l.program.Where(node), What: "new " + describe(created.Expression), Fix: "construct the producer directly with its declared parameter types; checked construction through a view is not implemented"}
 	}
 	key, value, err := l.mapTypes(node)
 	if err != nil {
