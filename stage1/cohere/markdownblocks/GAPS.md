@@ -259,8 +259,9 @@ Each numbered program is executable on source Node and covered by a test:
   property/index frames, with numeric IDs instead of owning graph edges.
   On compiler/area-next the array of string or number lowers; it stops later, at join on an array of
   objects, arrays, maps or functions.
-- `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments are
-  NotYet, `push with other than one value`. Production pushes one frame at a time.
+- `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments now lower and
+  agree on source Node, native and the JavaScript backend, including leak detection.
+  Production already pushes one frame at a time; no workaround needs removal.
 - `gaps/11_function_expression.ts` is closed: the unchanged direct function
   expression prints `value` on source Node, native and the JavaScript backend,
   with sanitizer/leak checks. Production map now supplies a capturing function

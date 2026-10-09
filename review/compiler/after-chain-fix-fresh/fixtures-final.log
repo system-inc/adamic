@@ -1,0 +1,58 @@
+=== RUN   TestFixturesSelfCompare
+=== PAUSE TestFixturesSelfCompare
+=== RUN   TestFixtureDirectoriesHaveTopLevelTests
+=== PAUSE TestFixtureDirectoriesHaveTopLevelTests
+=== CONT  TestFixturesSelfCompare
+=== CONT  TestFixtureDirectoriesHaveTopLevelTests
+    units_test.go:132: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:132: TestFixturesAssignmentProofs directory=assignment-proofs fixtures=6
+    units_test.go:132: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:132: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:132: TestFixturesHost directory=host fixtures=25
+    units_test.go:132: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:132: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:132: TestFixturesObjects directory=objects fixtures=25
+    units_test.go:132: TestFixturesPredicates directory=predicates fixtures=11
+    units_test.go:132: TestFixturesRecords directory=records fixtures=19
+    units_test.go:132: TestFixturesRunner directory=runner fixtures=3
+    units_test.go:132: TestFixturesSelfCompare directory=self-compare fixtures=3
+    units_test.go:132: TestFixturesTaste directory=taste fixtures=24
+    units_test.go:141: union: 13 directories, 182 fixtures
+--- PASS: TestFixtureDirectoriesHaveTopLevelTests (0.01s)
+=== RUN   TestFixturesSelfCompare/self-compare
+=== PAUSE TestFixturesSelfCompare/self-compare
+=== CONT  TestFixturesSelfCompare/self-compare
+=== RUN   TestFixturesSelfCompare/self-compare/closure.a
+=== PAUSE TestFixturesSelfCompare/self-compare/closure.a
+=== RUN   TestFixturesSelfCompare/self-compare/array-fill.a
+=== PAUSE TestFixturesSelfCompare/self-compare/array-fill.a
+=== RUN   TestFixturesSelfCompare/self-compare/sweep.a
+=== PAUSE TestFixturesSelfCompare/self-compare/sweep.a
+=== CONT  TestFixturesSelfCompare/self-compare/closure.a
+=== CONT  TestFixturesSelfCompare/self-compare/sweep.a
+=== CONT  TestFixturesSelfCompare/self-compare/array-fill.a
+=== RUN   TestFixturesSelfCompare/self-compare/sweep.a/node
+=== RUN   TestFixturesSelfCompare/self-compare/closure.a/node
+=== RUN   TestFixturesSelfCompare/self-compare/array-fill.a/node
+=== RUN   TestFixturesSelfCompare/self-compare/sweep.a/native
+=== RUN   TestFixturesSelfCompare/self-compare/closure.a/native
+=== RUN   TestFixturesSelfCompare/self-compare/array-fill.a/native
+=== RUN   TestFixturesSelfCompare/self-compare/closure.a/stage0
+=== RUN   TestFixturesSelfCompare/self-compare/array-fill.a/stage0
+=== RUN   TestFixturesSelfCompare/self-compare/sweep.a/stage0
+--- PASS: TestFixturesSelfCompare (0.57s)
+    --- PASS: TestFixturesSelfCompare/self-compare (0.00s)
+        --- PASS: TestFixturesSelfCompare/self-compare/closure.a (0.40s)
+            --- PASS: TestFixturesSelfCompare/self-compare/closure.a/node (0.00s)
+            --- PASS: TestFixturesSelfCompare/self-compare/closure.a/native (0.25s)
+            --- PASS: TestFixturesSelfCompare/self-compare/closure.a/stage0 (0.00s)
+        --- PASS: TestFixturesSelfCompare/self-compare/array-fill.a (0.40s)
+            --- PASS: TestFixturesSelfCompare/self-compare/array-fill.a/node (0.00s)
+            --- PASS: TestFixturesSelfCompare/self-compare/array-fill.a/native (0.24s)
+            --- PASS: TestFixturesSelfCompare/self-compare/array-fill.a/stage0 (0.00s)
+        --- PASS: TestFixturesSelfCompare/self-compare/sweep.a (0.43s)
+            --- PASS: TestFixturesSelfCompare/self-compare/sweep.a/node (0.00s)
+            --- PASS: TestFixturesSelfCompare/self-compare/sweep.a/native (0.29s)
+            --- PASS: TestFixturesSelfCompare/self-compare/sweep.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	1.016s

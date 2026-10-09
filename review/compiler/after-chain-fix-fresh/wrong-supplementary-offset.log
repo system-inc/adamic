@@ -1,0 +1,7 @@
+--- FAIL: TestGapStandsWhereGapsMdSays (2.36s)
+    scanner_products_test.go:50: build scanner-go-oracle efebc3d117c0 hit 0.87
+    scanner_products_test.go:50: build scanner-native ccf905773dfa hit 1.08
+    gaps_test.go:60: line 2: port "Identifier 6 9 0\t\\ud801\\udc00", Go "Identifier 6 10 0\t\\ud801\\udc00"
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/scanner	2.366s
+FAIL

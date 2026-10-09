@@ -1,0 +1,21 @@
+=== RUN   TestFixtureDirectoriesHaveTopLevelTests
+=== PAUSE TestFixtureDirectoriesHaveTopLevelTests
+=== CONT  TestFixtureDirectoriesHaveTopLevelTests
+    units_test.go:132: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:132: TestFixturesAssignmentProofs directory=assignment-proofs fixtures=6
+    units_test.go:132: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:132: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:132: TestFixturesHost directory=host fixtures=25
+    units_test.go:132: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:132: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:132: TestFixturesObjects directory=objects fixtures=25
+    units_test.go:132: TestFixturesPredicates directory=predicates fixtures=11
+    units_test.go:132: TestFixturesRecords directory=records fixtures=19
+    units_test.go:132: TestFixturesRunner directory=runner fixtures=3
+    units_test.go:115: fixture directory self-compare has no top-level test
+    units_test.go:132: TestFixturesTaste directory=taste fixtures=24
+    units_test.go:141: union: 13 directories, 179 fixtures
+--- FAIL: TestFixtureDirectoriesHaveTopLevelTests (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	0.013s
+FAIL
