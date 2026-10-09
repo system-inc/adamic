@@ -90,7 +90,8 @@ func adamicCohereTexts(t *testing.T) []string {
 
 // Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
-	var request struct{ Cases, Answers, Repository, Fixtures string }
+	t.Parallel()
+	var request struct{ Cases, Answers, IDs, Repository, Fixtures string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
 		t.Skip("run by Adamic CSS slice")
@@ -109,7 +110,12 @@ func TestAdamicPortCases(t *testing.T) {
 	for _, fixture := range scssParseFixtures {
 		texts = append(texts, fixture.text)
 	}
+	keys := make([]string, len(texts))
+	for i := range keys {
+		keys[i] = fmt.Sprintf("pinned/cohere@7945d102a6c18dd36adf9114a758ce646e8b2359/%d", i)
+	}
 	files := map[string]int{}
+	repositoryFiles := 0
 	roots := []string{request.Repository}
 	if request.Fixtures != "" {
 		roots = append(roots, request.Fixtures)
@@ -139,6 +145,16 @@ func TestAdamicPortCases(t *testing.T) {
 				return fmt.Errorf("%s is not UTF-8", path)
 			}
 			texts = append(texts, string(data))
+			relative, err := filepath.Rel(root, path)
+			if err != nil {
+				return err
+			}
+			prefix := "fixtures/"
+			if root == request.Repository {
+				prefix = "repository/"
+				repositoryFiles++
+			}
+			keys = append(keys, prefix+filepath.ToSlash(relative)+":0")
 			files[ext]++
 			return nil
 		})
@@ -146,7 +162,11 @@ func TestAdamicPortCases(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+	if repositoryFiles == 0 {
+		t.Fatal("repository CSS corpus is empty")
+	}
 	t.Logf("corpus files: %v", files)
+	generatedStart := len(texts)
 	parts := []string{"a", ".a", "#a", "&", "@unknown", "@media screen", "@supports (a:b)", "@a", " ", "\n", "\t", "/*x*/", "/* */", "// a\n", ":", ";", "{", "}", "(", ")", "[", "]", "--x", "b", "c", "!important", "! IMPORTANT", "1px", "#{$x}", "\"a\"", "'x'", "url(x)", "url(a(b))", "a\\:b", "\\e9 ", "😀", "é", ",", "!default"}
 	random := rand.New(rand.NewSource(20261006))
 	for range 6000 {
@@ -168,13 +188,18 @@ func TestAdamicPortCases(t *testing.T) {
 		}
 	}
 	escape := strings.NewReplacer(`\`, `\\`, "\t", `\t`, "\n", `\n`, "\r", `\r`)
+	for i := generatedStart; i < len(texts); i++ {
+		keys = append(keys, fmt.Sprintf("generated/seed-20261006/%d", i-generatedStart))
+	}
+	var ids []string
 	var cases, answers strings.Builder
 	count, parsed := 0, 0
-	for _, text := range texts {
+	for textIndex, text := range texts {
 		if !utf8.ValidString(text) {
 			t.Fatal("invalid UTF-8 in generated corpus")
 		}
 		for _, mode := range []string{"C", "S"} {
+			ids = append(ids, keys[textIndex]+":"+mode)
 			cases.WriteString(">" + mode + escape.Replace(text) + "\n")
 			fmt.Fprintf(&answers, "case %d\n", count)
 			count++
@@ -213,6 +238,15 @@ func TestAdamicPortCases(t *testing.T) {
 	}
 	if err := os.WriteFile(request.Answers, []byte(answers.String()), 0644); err != nil {
 		t.Fatal(err)
+	}
+	if request.IDs != "" {
+		data, err := json.Marshal(ids)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(request.IDs, data, 0644); err != nil {
+			t.Fatal(err)
+		}
 	}
 	t.Logf("%d cases, %d parsed", count, parsed)
 	started := time.Now()
