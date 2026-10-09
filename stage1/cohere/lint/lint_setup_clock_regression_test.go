@@ -5,6 +5,7 @@ import (
 	"context"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"syscall"
 	"testing"
@@ -36,13 +37,27 @@ func TestShardsAgree_Setup(t *testing.T) {
 
 func TestShardsAgree_SetupRequired(t *testing.T) {
 	t.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_SHARDS_AGREE_LEAF=0")
+	// Keep build-phase dependencies warm while forcing the selected leaf to
+	// create the prepared corpus itself, without selecting Setup.
+	ready := testShardsAgreeReady(t)
+	cache := t.TempDir()
+	entries, err := os.ReadDir(filepath.Dir(ready.Root))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range entries {
+		if !entry.IsDir() || entry.Name() == filepath.Base(ready.Root) {
+			continue
+		}
+		if err := os.Symlink(filepath.Join(filepath.Dir(ready.Root), entry.Name()), filepath.Join(cache, entry.Name())); err != nil {
+			t.Fatal(err)
+		}
+	}
+	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=on", "ADAMIC_SHARDS_AGREE_LEAF=0")
 	output, err := command.CombinedOutput()
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) || !bytes.Contains(output, []byte("build shards-agree-prepared-v1 ")) || !bytes.Contains(output, []byte(" miss ")) {
-		t.Fatalf("standalone shard must prepare cold products: %v\n%s", err, output)
+		t.Fatalf("standalone shard must prepare its corpus: %v\n%s", err, output)
 	}
 }
 
