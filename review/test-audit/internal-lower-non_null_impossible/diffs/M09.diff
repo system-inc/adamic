@@ -1,0 +1,11 @@
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -78,7 +78,7 @@
+ 		return nil
+ 	}
+ 	for _, property := range l.checker.GetPropertiesOfType(target) {
+-		if skip[property.Name] {
++		if false {
+ 			continue
+ 		}
+ 		declared := l.checker.GetPropertyOfType(source, property.Name)

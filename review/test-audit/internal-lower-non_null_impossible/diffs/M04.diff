@@ -1,0 +1,11 @@
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -80,7 +80,7 @@
+ 	// has no nullish representation and must never receive a pointer test.
+ 	if value.Type() == ir.Number || value.Type() == ir.Boolean {
+ 		l.recordNonNullCheck(node, true)
+-		return value, nil
++		return ir.NumberConstant{Value: 1}, nil
+ 	}
+ 	proven := l.checker.GetTypeAtLocation(operand)
+ 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {

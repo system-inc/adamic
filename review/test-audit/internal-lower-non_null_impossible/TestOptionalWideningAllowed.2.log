@@ -1,0 +1,36 @@
+{"Time":"2026-10-09T10:26:35.107953696Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:26:35.119436343Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed"}
+{"Time":"2026-10-09T10:26:35.119550545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed","Output":"=== RUN   TestOptionalWideningAllowed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119593852Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed","Output":"=== PAUSE TestOptionalWideningAllowed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119597283Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed"}
+{"Time":"2026-10-09T10:26:35.119600473Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed"}
+{"Time":"2026-10-09T10:26:35.119602316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed","Output":"=== CONT  TestOptionalWideningAllowed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119604915Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class"}
+{"Time":"2026-10-09T10:26:35.119607006Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class","Output":"=== RUN   TestOptionalWideningAllowed/class\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119610628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class","Output":"=== PAUSE TestOptionalWideningAllowed/class\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119612461Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class"}
+{"Time":"2026-10-09T10:26:35.119615166Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh"}
+{"Time":"2026-10-09T10:26:35.119617108Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh","Output":"=== RUN   TestOptionalWideningAllowed/fresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119619748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh","Output":"=== PAUSE TestOptionalWideningAllowed/fresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119621357Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh"}
+{"Time":"2026-10-09T10:26:35.119623441Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared"}
+{"Time":"2026-10-09T10:26:35.119625127Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared","Output":"=== RUN   TestOptionalWideningAllowed/declared\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119627792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared","Output":"=== PAUSE TestOptionalWideningAllowed/declared\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119629656Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared"}
+{"Time":"2026-10-09T10:26:35.119634827Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class"}
+{"Time":"2026-10-09T10:26:35.119636464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class","Output":"=== CONT  TestOptionalWideningAllowed/class\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119641324Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared"}
+{"Time":"2026-10-09T10:26:35.119653523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared","Output":"=== CONT  TestOptionalWideningAllowed/declared\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.119755281Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh"}
+{"Time":"2026-10-09T10:26:35.119759309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh","Output":"=== CONT  TestOptionalWideningAllowed/fresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.217853979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared","Output":"--- PASS: TestOptionalWideningAllowed/declared (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.230549049Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/declared","Elapsed":0.1}
+{"Time":"2026-10-09T10:26:35.230634609Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh","Output":"--- PASS: TestOptionalWideningAllowed/fresh (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.233757637Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/fresh","Elapsed":0.11}
+{"Time":"2026-10-09T10:26:35.233765283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class","Output":"--- PASS: TestOptionalWideningAllowed/class (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.233770111Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed/class","Elapsed":0.11}
+{"Time":"2026-10-09T10:26:35.233772604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed","Output":"--- PASS: TestOptionalWideningAllowed (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.237468887Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningAllowed","Elapsed":0}
+{"Time":"2026-10-09T10:26:35.237486281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:35.240147616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.132s\n"}
+{"Time":"2026-10-09T10:26:35.240599228Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.133}

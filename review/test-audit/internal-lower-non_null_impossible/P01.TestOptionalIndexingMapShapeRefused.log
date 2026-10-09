@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:41:43.619647216Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:41:43.634135861Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused"}
+{"Time":"2026-10-09T10:41:43.634265483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused","Output":"=== RUN   TestOptionalIndexingMapShapeRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:43.634334513Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused","Output":"=== PAUSE TestOptionalIndexingMapShapeRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:43.634340333Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused"}
+{"Time":"2026-10-09T10:41:43.634344533Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused"}
+{"Time":"2026-10-09T10:41:43.634349911Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused","Output":"=== CONT  TestOptionalIndexingMapShapeRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:43.681567327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused","Output":"    optional_indexing_boundary_test.go:18: got \u003cnil\u003e, want structural Map receiver boundary\n","OutputType":"error"}
+{"Time":"2026-10-09T10:41:43.681760076Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused","Output":"--- FAIL: TestOptionalIndexingMapShapeRefused (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:43.681784559Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingMapShapeRefused","Elapsed":0.05}
+{"Time":"2026-10-09T10:41:43.681822469Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:43.683531712Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.063s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:43.683598028Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.064}

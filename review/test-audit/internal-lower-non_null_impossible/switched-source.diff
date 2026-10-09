@@ -1,0 +1,181 @@
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -78,9 +78,9 @@
+ 	}
+ 	// A checked narrowing helper can already return a plain scalar. Its result
+ 	// has no nullish representation and must never receive a pointer test.
+-	if value.Type() == ir.Number || value.Type() == ir.Boolean {
++	if auditU040Bool("M02", func() bool { return value.Type() == ir.Number || value.Type() == ir.Boolean }, func() bool { return value.Type() == ir.MaybeNumber || value.Type() == ir.Boolean }) {
+ 		l.recordNonNullCheck(node, true)
+-		return value, nil
++		if auditU040Selected("M04") { return ir.NumberConstant{Value: 1}, nil }; return value, nil
+ 	}
+ 	proven := l.checker.GetTypeAtLocation(operand)
+ 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
+@@ -93,7 +93,7 @@
+ 	}
+ 	file := ast.GetSourceFileOfNode(node)
+ 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+-	message := ir.StringConstant{Index: l.constant("non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined")}
++	message := ir.StringConstant{Index: l.constant(auditU040String("M03", "non-null assertion failed at ", "") + l.program.Where(node) + ": " + text + " is null or undefined")}
+ 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
+ 	if result.Type() == ir.Union && of != ir.Union {
+ 		result = ir.Narrow{Value: result, To: of}
+@@ -103,7 +103,7 @@
+ }
+ 
+ func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+-	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
++	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), auditU040String("M01", ".ts", ".a"))
+ }
+ 
+ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -25,7 +25,7 @@
+ 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
+ 	ast.KindWithStatement:     {"with", "name the object you mean"},
+ 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
+-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
++	ast.KindIndexSignature:    {"an index signature", auditU040String("M05", "use a Map, which keeps keys in the order they were added", "use a Map")},
+ 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+ }
+ 
+@@ -37,6 +37,7 @@
+ 
+ // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
+ func (l *lowering) refuse(module *ast.SourceFile) error {
++ if auditU040Selected("P02") { return nil }
+ 	// Use the parser's directives, which also recognize the block forms honored by the checker.
+ 	// Text in a string or a prose comment never enters this list.
+ 	if len(module.CommentDirectives) > 0 {
+--- a/internal/lower/optional_indexing_map.go
++++ b/internal/lower/optional_indexing_map.go
+@@ -96,5 +96,5 @@
+ 	for _, module := range modules {
+ 		module.AsNode().ForEachChild(visit)
+ 	}
+-	return hazard
++	if auditU040Selected("M06") { return false }; return hazard
+ }
+--- a/internal/lower/optional_indexing.go
++++ b/internal/lower/optional_indexing.go
+@@ -32,7 +32,7 @@
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	if index.Type() != ir.Number {
++	if auditU040Bool("M07", func() bool { return index.Type() != ir.Number }, func() bool { return index.Type() != ir.String }) {
+ 		return nil, l.notYet(node, "an optional index that isn't a number")
+ 	}
+ 	var value ir.Expression
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -78,12 +78,12 @@
+ 		return nil
+ 	}
+ 	for _, property := range l.checker.GetPropertiesOfType(target) {
+-		if skip[property.Name] {
++		if auditU040Bool("M09", func() bool { return skip[property.Name] }, func() bool { return false }) {
+ 			continue
+ 		}
+ 		declared := l.checker.GetPropertyOfType(source, property.Name)
+ 		if declared == nil {
+-			if property.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(source) {
++			if property.Flags&ast.SymbolFlagsOptional != 0 && auditU040Bool("M08", func() bool { return !isClassInstance(source) }, func() bool { return isClassInstance(source) }) {
+ 				return &optionalWidening{property: property.Name, source: source, target: target}
+ 			}
+ 			continue
+@@ -129,6 +129,7 @@
+ // optionalAtSite uses the same relation sites as the other view rules, before lowering.
+ // A leading spread is not proof of absence: it copies fields hidden by the source's type too.
+ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
++ if auditU040Selected("P03") { return nil }
+ 	if l.nodeFSFileReadOnlyArgument(node) {
+ 		return nil
+ 	}
+@@ -176,7 +177,7 @@
+ 			target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+ 		}
+ 		if target == nil {
+-			target = l.impliedTarget(node)
++			if auditU040Selected("M10") { target = nil } else { target = l.impliedTarget(node) }
+ 		}
+ 		if target == nil {
+ 			return nil
+@@ -193,7 +194,7 @@
+ 	}
+ 	return &Refused{Where: l.program.Where(node),
+ 		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
+-		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
++		Fix:  "declare " + found.property + auditU040String("M11", " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)", " on the source type, or build a fresh object with known fields (adamic/no-optional-view)")}
+ }
+ 
+ // Resolve the import binding rather than trusting the callee's spelling.
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -231,6 +231,7 @@
+ // result. The caller's type mapper makes an outer function's parameter concrete before it is saved,
+ // so a generic function calling another with its own type parameter passes the concrete type on.
+ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
++ if auditU040Selected("P04") { return }
+ 	if declared == nil || instantiated == nil {
+ 		return
+ 	}
+@@ -256,7 +257,7 @@
+ 		}
+ 		// GetNonNullableType also turns a rigid T into T & {}. Removing only
+ 		// the optional member preserves the binder we are trying to infer.
+-		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
++		if auditU040Bool("M12", func() bool { return len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 }, func() bool { return len(present) == 0 && given.Flags()&checker.TypeFlagsUndefined == 0 }) {
+ 			l.inferTypes(present[0], given, into)
+ 		}
+ 		return
+@@ -266,7 +267,7 @@
+ 		for _, member := range declared.Types() {
+ 			known, found := into[member]
+ 			if !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-				if missing != nil {
++				if auditU040Bool("M13", func() bool { return missing != nil }, func() bool { return missing == nil }) {
+ 					return // More than one unknown binder has no unique witness.
+ 				}
+ 				missing = member
+@@ -285,7 +286,7 @@
+ 		return
+ 	}
+ 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-		if _, isSet := into[declared]; !isSet {
++		if _, isSet := into[declared]; auditU040Bool("M14", func() bool { return !isSet }, func() bool { return isSet }) {
+ 			into[declared] = l.concrete(instantiated)
+ 		}
+ 		return
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -95,7 +95,7 @@
+ 						accepts = instantiateType(l.checker, accepts, l.typeMapperOf(candidate.Parent, base))
+ 						override = instantiateType(l.checker, override, l.typeMapperOf(declaration, classType))
+ 					}
+-					if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
++					if auditU040Bool("M16", func() bool { return !l.classAssignable(accepts, override) }, func() bool { return !l.classAssignable(override, accepts) }) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+ 						return refuse("an accessor override that narrows a setter parameter (adamic/contravariant-override)", "accept the base setter's parameter type or a wider type; narrow it inside the setter")
+ 					}
+ 				}
+@@ -137,7 +137,7 @@
+ 			override := l.checker.GetTypeOfSymbol(next.Parameters()[index])
+ 			a, knownA := l.overrideParameterRepresentation(parameter)
+ 			b, knownB := l.overrideParameterRepresentation(next.Parameters()[index])
+-			if checkABI && (!knownA || !knownB || a != b) {
++			if auditU040Bool("M15", func() bool { return checkABI && (!knownA || !knownB || a != b) }, func() bool { return checkABI && (!knownA || !knownB || a == b) }) {
+ 				return l.notYet(member, "an override with a different native representation for parameter "+strconv.Quote(next.Parameters()[index].Name)+"; keep the base method's parameter form")
+ 			}
+ 			if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,7 @@
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++ if auditU040Selected("P01") { return nil, nil }
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))

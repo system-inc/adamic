@@ -1,0 +1,65 @@
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -129,61 +129,7 @@
+ // optionalAtSite uses the same relation sites as the other view rules, before lowering.
+ // A leading spread is not proof of absence: it copies fields hidden by the source's type too.
+ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
+-	if l.nodeFSFileReadOnlyArgument(node) {
+-		return nil
+-	}
+-	// Only argument positions of a directly imported node:* call can use the host exemption.
+-	if parent := node.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {
+-		for index, argument := range parent.AsCallExpression().Arguments.Nodes {
+-			if argument == node && l.nodeHostConsumesArgument(parent, index) {
+-				return nil
+-			}
+-		}
+-	}
+-	var found *optionalWidening
+-	switch node.Kind {
+-	case ast.KindAsExpression:
+-		found = l.optionalValue(node.AsAsExpression().Expression, l.checker.GetTypeAtLocation(node))
+-	case ast.KindShorthandPropertyAssignment:
+-		target := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+-		if target != nil {
+-			found = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))
+-		}
+-	case ast.KindSpreadAssignment:
+-		target := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+-		if target == nil {
+-			return nil
+-		}
+-		skip := map[string]bool{}
+-		after := false
+-		for _, property := range node.Parent.AsObjectLiteralExpression().Properties.Nodes {
+-			if property == node {
+-				after = true
+-			} else if after && property.Name() != nil {
+-				skip[property.Name().Text()] = true
+-			}
+-		}
+-		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
+-		if expression.Kind != ast.KindObjectLiteralExpression {
+-			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
+-		}
+-	default:
+-		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || l.genericFunction(node) {
+-			return nil
+-		}
+-		var target *checker.Type
+-		if viewSite(node) {
+-			target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+-		}
+-		if target == nil {
+-			target = l.impliedTarget(node)
+-		}
+-		if target == nil {
+-			return nil
+-		}
+-		found = l.optionalValue(node, target)
+-	}
+-	return found
++	return nil
+ }
+ 
+ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {

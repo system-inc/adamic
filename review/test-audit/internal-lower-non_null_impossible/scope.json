@@ -1,0 +1,37 @@
+{
+  "names": [
+    "TestAdamicNullishAssertionsAreRefused",
+    "TestNonNullAssertionLowersToNullishPanic",
+    "TestNonNullAssertionOnPresentTypeIsErased",
+    "TestOptionalIndexingMapShapeRefused",
+    "TestOptionalIndexingKeepsIndexSignaturesRefused",
+    "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "TestOptionalWideningCensus",
+    "TestOptionalWideningRefused",
+    "TestOptionalWideningAllowed",
+    "TestOptionalWideningSpreadOverwrite",
+    "TestOverloadInferenceWitnesses",
+    "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+    "TestOverrideOptionalNumberRefusesNativeSignature",
+    "TestOverrideOptionalRefusesNativeSignature"
+  ],
+  "rows": [
+    "TestAdamicNullishAssertionsAreRefused",
+    "TestNonNullAssertionLowersToNullishPanic",
+    "TestNonNullAssertionOnPresentTypeIsErased",
+    "TestOptionalIndexingMapShapeRefused",
+    "TestOptionalIndexingKeepsIndexSignaturesRefused",
+    "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "TestOptionalWideningCensus",
+    "TestOptionalWideningRefused",
+    "TestOptionalWideningAllowed",
+    "TestOptionalWideningSpreadOverwrite",
+    "TestOverloadInferenceWitnesses",
+    "TestOverrideNativeSignature family"
+  ],
+  "family": [
+    "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+    "TestOverrideOptionalNumberRefusesNativeSignature",
+    "TestOverrideOptionalRefusesNativeSignature"
+  ]
+}

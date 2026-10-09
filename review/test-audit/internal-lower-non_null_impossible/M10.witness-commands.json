@@ -1,0 +1,58 @@
+[
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u040-adamic js /tmp/u040-M10-conditional.a",
+    "sample": "conditional",
+    "label": "before",
+    "exit": 0,
+    "wall": 0.21205197500239592
+  },
+  {
+    "command": "ADAMIC_MUTANT=M10 /tmp/u040-adamic js /tmp/u040-M10-conditional.a",
+    "sample": "conditional",
+    "label": "after",
+    "exit": 0,
+    "wall": 0.16687796200130833
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u040-adamic js /tmp/u040-M10-coalesce.a",
+    "sample": "coalesce",
+    "label": "before",
+    "exit": 0,
+    "wall": 0.17607291999956942
+  },
+  {
+    "command": "ADAMIC_MUTANT=M10 /tmp/u040-adamic js /tmp/u040-M10-coalesce.a",
+    "sample": "coalesce",
+    "label": "after",
+    "exit": 0,
+    "wall": 0.24624580900126603
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u040-adamic js /tmp/u040-M10-inferred_array.a",
+    "sample": "inferred_array",
+    "label": "before",
+    "exit": 0,
+    "wall": 0.192615128999023
+  },
+  {
+    "command": "ADAMIC_MUTANT=M10 /tmp/u040-adamic js /tmp/u040-M10-inferred_array.a",
+    "sample": "inferred_array",
+    "label": "after",
+    "exit": 0,
+    "wall": 0.12442894800187787
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u040-adamic js /tmp/u040-M10-arrow.a",
+    "sample": "arrow",
+    "label": "before",
+    "exit": 0,
+    "wall": 0.10269449800034636
+  },
+  {
+    "command": "ADAMIC_MUTANT=M10 /tmp/u040-adamic js /tmp/u040-M10-arrow.a",
+    "sample": "arrow",
+    "label": "after",
+    "exit": 0,
+    "wall": 0.14592122999965795
+  }
+]

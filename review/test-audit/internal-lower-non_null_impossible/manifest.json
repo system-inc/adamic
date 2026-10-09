@@ -1,0 +1,184 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/non_null.go",
+    "line": 106,
+    "old": "\".ts\"",
+    "new": "\".a\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/non_null.go",
+    "line": 81,
+    "old": "value.Type() == ir.Number || value.Type() == ir.Boolean",
+    "new": "value.Type() == ir.MaybeNumber || value.Type() == ir.Boolean",
+    "menu": "change constant",
+    "mode": "bool"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/non_null.go",
+    "line": 96,
+    "old": "\"non-null assertion failed at \"",
+    "new": "\"\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/non_null.go",
+    "line": 83,
+    "old": "return value, nil",
+    "new": "return ir.NumberConstant{Value: 1}, nil",
+    "menu": "return early with constant",
+    "mode": "return",
+    "supplemental": true,
+    "classification_note": "Replaces the expression of an existing early return with a constant. Conservatively supplemental: the fixed menu says return early or change a constant, while this changes a returned variable expression. No verdict depends on M04."
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/refusals.go",
+    "line": 28,
+    "old": "\"use a Map, which keeps keys in the order they were added\"",
+    "new": "\"use a Map\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/optional_indexing_map.go",
+    "line": 99,
+    "old": "return hazard",
+    "new": "return false",
+    "menu": "return early",
+    "mode": "return"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/optional_indexing.go",
+    "line": 35,
+    "old": "index.Type() != ir.Number",
+    "new": "index.Type() != ir.String",
+    "menu": "change constant",
+    "mode": "bool"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/optional_widening.go",
+    "line": 86,
+    "old": "!isClassInstance(source)",
+    "new": "isClassInstance(source)",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/optional_widening.go",
+    "line": 81,
+    "old": "skip[property.Name]",
+    "new": "false",
+    "menu": "change option",
+    "mode": "bool"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/optional_widening.go",
+    "line": 179,
+    "old": "target = l.impliedTarget(node)",
+    "new": "target = nil",
+    "menu": "change option",
+    "mode": "statement"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/optional_widening.go",
+    "line": 196,
+    "old": "\" on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\"",
+    "new": "\" on the source type, or build a fresh object with known fields (adamic/no-optional-view)\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/generic.go",
+    "line": 259,
+    "old": "len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0",
+    "new": "len(present) == 0 && given.Flags()&checker.TypeFlagsUndefined == 0",
+    "menu": "off-by-one bound",
+    "mode": "bool"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/generic.go",
+    "line": 269,
+    "old": "missing != nil",
+    "new": "missing == nil",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/generic.go",
+    "line": 288,
+    "old": "if _, isSet := into[declared]; !isSet {",
+    "new": "if _, isSet := into[declared]; isSet {",
+    "menu": "flip condition",
+    "mode": "statement"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 140,
+    "old": "checkABI && (!knownA || !knownB || a != b)",
+    "new": "checkABI && (!knownA || !knownB || a == b)",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 98,
+    "old": "!l.classAssignable(accepts, override)",
+    "new": "!l.classAssignable(override, accepts)",
+    "menu": "swap two arguments",
+    "mode": "bool"
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n}",
+    "menu": "empty-answer probe",
+    "mode": "probe"
+  },
+  {
+    "id": "P02",
+    "file": "internal/lower/refusals.go",
+    "line": 39,
+    "old": "func (l *lowering) refuse(module *ast.SourceFile) error {\n\t// Use the parser's directives, which also recognize the block forms honored by the checker.\n\t// Text in a string or a prose comment never enters this list.\n\tif len(module.CommentDirectives) > 0 {\n\t\tdirective := module.CommentDirectives[0]\n\t\tname := \"@ts-ignore\"\n\t\tif directive.Kind == ast.CommentDirectiveKindExpectError {\n\t\t\tname = \"@ts-expect-error\"\n\t\t}\n\t\tline, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())\n\t\treturn &Refused{Where: fmt.Sprintf(\"%s:%d:%d\", l.program.FileName(module), line+1, column+1), What: name + \" suppression directive\", Fix: \"remove it and fix the type error\"}\n\t}\n\t// File-level checking pragmas are separate from line-suppression directives. Use every\n\t// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.\n\tfor _, pragma := range module.Pragmas {\n\t\tif pragma.Name == \"ts-nocheck\" || pragma.Name == \"ts-check\" {\n\t\t\tline, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())\n\t\t\treturn &Refused{Where: fmt.Sprintf(\"%s:%d:%d\", l.program.FileName(module), line+1, column+1), What: \"@\" + pragma.Name + \" checking pragma\", Fix: \"remove it and fix any type errors\"}\n\t\t}\n\t}\n\t// Validate arguments before visiting their annotations, so a failed contract\n\t// names the actual argument and parameter even for an inline arrow.\n\tvar contractError error\n\tvar contracts ast.Visitor\n\tcontracts = func(node *ast.Node) bool {\n\t\tif contractError != nil {\n\t\t\treturn true\n\t\t}\n\t\tif node.Kind == ast.KindCallExpression {\n\t\t\tcontractError = l.predicateArguments(node)\n\t\t}\n\t\tif contractError == nil {\n\t\t\tnode.ForEachChild(contracts)\n\t\t}\n\t\treturn contractError != nil\n\t}\n\tmodule.AsNode().ForEachChild(contracts)\n\tif contractError != nil {\n\t\treturn contractError\n\t}\n\tvar found error\n\tvar visit ast.Visitor\n\tvisit = func(node *ast.Node) bool {\n\t\tif found != nil {\n\t\t\treturn true\n\t\t}\n\t\tif branch := l.literalCallableBranch(node); branch != nil {\n\t\t\treturn visit(branch)\n\t\t}\n\t\tif node.Kind == ast.KindTypePredicate {\n\t\t\tfound = l.predicateRefusal(node)\n\t\t\treturn found != nil\n\t\t}\n\t\tif err := l.enumerationIndexedWriteRefusal(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tif err := l.enumerationDescriptorRefusal(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tif err := l.nodeLibraryRefusal(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tif refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {\n\t\t\tfound = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}\n\t\t\treturn true\n\t\t}\n\t\tif err := l.typedArrayUnsupported(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tif node.Kind == ast.KindCallExpression {\n\t\t\tif err := l.predicateArguments(node); err != nil {\n\t\t\t\tfound = err\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\tif err := l.enumRefusal(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tcheckedCast := false\n\t\tif node.Kind == ast.KindAsExpression {\n\t\t\tproof, err := l.castProof(node)\n\t\t\tif err != nil {\n\t\t\t\tfound = err\n\t\t\t\treturn true\n\t\t\t}\n\t\t\tcheckedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0\n\t\t}\n\t\tif err := l.namespaceRefusal(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tif node.Kind == ast.KindBinaryExpression {\n\t\t\tif refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {\n\t\t\t\tfound = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\tgenerator := false\n\t\tswitch node.Kind {\n\t\tcase ast.KindFunctionDeclaration:\n\t\t\tgenerator = node.AsFunctionDeclaration().AsteriskToken != nil\n\t\tcase ast.KindFunctionExpression:\n\t\t\tgenerator = node.AsFunctionExpression().AsteriskToken != nil\n\t\tcase ast.KindMethodDeclaration:\n\t\t\tgenerator = node.AsMethodDeclaration().AsteriskToken != nil\n\t\t}\n\t\tif generator {\n\t\t\tfound = &Refused{Where: l.program.Where(node), What: \"a generator function\", Fix: \"use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\"}\n\t\t\treturn true\n\t\t}\n\t\tif ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {\n\t\t\tfound = &Refused{Where: l.program.Where(node), What: \"an async function\", Fix: \"0.1 has no async; it arrives with the concurrency model\"}\n\t\t\treturn true\n\t\t}\n\t\tif node.Kind == ast.KindIdentifier && node.Text() == \"arguments\" {\n\t\t\t// JavaScript's arguments object, not a variable the program named arguments.\n\t\t\tif symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {\n\t\t\t\tif err := l.argumentsRefusal(node); err != nil {\n\t\t\t\t\tfound = err\n\t\t\t\t\treturn true\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tif (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {\n\t\t\tif err := l.nodeBufferUnsupportedUse(node); err != nil {\n\t\t\t\tfound = err\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\tif node.Kind == ast.KindShorthandPropertyAssignment {\n\t\t\tif symbol := l.checker.GetShorthandAssignmentValueSymbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {\n\t\t\t\tif initializer := symbol.Declarations[0].AsVariableDeclaration().Initializer; initializer != nil {\n\t\t\t\t\tif _, known := l.libraryMethod(initializer, map[*ast.Symbol]bool{}); known {\n\t\t\t\t\t\tfound = l.notYet(node, \"a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow\")\n\t\t\t\t\t\treturn true\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tif node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) {\n\t\t\t// A method read as a value loses its object: this is undefined when it's called.\n\t\t\taccess := node.AsPropertyAccessExpression()\n\t\t\tif access.Name().Text() == \"isPrototypeOf\" && l.libraryMember(node) {\n\t\t\t\tfound = l.prototypeRead(node, \"isPrototypeOf\")\n\t\t\t\treturn true\n\t\t\t}\n\t\t\t// Math.random has its own refusal, called or not.\n\t\t\tisRandom := l.isLibraryGlobal(access.Expression, \"Math\") && access.Name().Text() == \"random\"\n\t\t\tif symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {\n\t\t\t\tobject := \"its object\"\n\t\t\t\tif ast.IsIdentifier(access.Expression) || access.Expression.Kind == ast.KindThisKeyword {\n\t\t\t\t\tobject = scannedText(access.Expression)\n\t\t\t\t}\n\t\t\t\tparameters := \"value\"\n\t\t\t\tif signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(symbol), checker.SignatureKindCall); len(signatures) > 0 {\n\t\t\t\t\tnames := []string{}\n\t\t\t\t\tfor _, parameter := range signatures[0].Parameters() {\n\t\t\t\t\t\tnames = append(names, parameter.Name)\n\t\t\t\t\t}\n\t\t\t\t\tparameters = strings.Join(names, \", \")\n\t\t\t\t}\n\t\t\t\tfound = &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\tif node.Kind == ast.KindClassDeclaration {\n\t\t\tif err := l.checkOverrides(node, l.checker.GetTypeAtLocation(node.Name())); err != nil {\n\t\t\t\tfound = err\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\t// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.\n\t\t// A checked cast relates only members selected by its tag, not excluded source members.\n\t\tif !checkedCast {\n\t\t\tif err := l.refuseStringWidening(node); err != nil {\n\t\t\t\tfound = err\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t\tif err := l.refuseOptionalWidening(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tif err := l.classViewRefusal(node); err != nil {\n\t\t\tfound = err\n\t\t\treturn true\n\t\t}\n\t\tnode.ForEachChild(visit)\n\t\treturn false\n\t}\n\tmodule.AsNode().ForEachChild(visit)\n\treturn found\n}",
+    "new": "func (l *lowering) refuse(module *ast.SourceFile) error {\n\treturn nil\n}",
+    "menu": "empty-answer probe",
+    "mode": "probe"
+  },
+  {
+    "id": "P03",
+    "file": "internal/lower/optional_widening.go",
+    "line": 131,
+    "old": "func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {\n\tif l.nodeFSFileReadOnlyArgument(node) {\n\t\treturn nil\n\t}\n\t// Only argument positions of a directly imported node:* call can use the host exemption.\n\tif parent := node.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {\n\t\tfor index, argument := range parent.AsCallExpression().Arguments.Nodes {\n\t\t\tif argument == node && l.nodeHostConsumesArgument(parent, index) {\n\t\t\t\treturn nil\n\t\t\t}\n\t\t}\n\t}\n\tvar found *optionalWidening\n\tswitch node.Kind {\n\tcase ast.KindAsExpression:\n\t\tfound = l.optionalValue(node.AsAsExpression().Expression, l.checker.GetTypeAtLocation(node))\n\tcase ast.KindShorthandPropertyAssignment:\n\t\ttarget := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)\n\t\tif target != nil {\n\t\t\tfound = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))\n\t\t}\n\tcase ast.KindSpreadAssignment:\n\t\ttarget := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)\n\t\tif target == nil {\n\t\t\treturn nil\n\t\t}\n\t\tskip := map[string]bool{}\n\t\tafter := false\n\t\tfor _, property := range node.Parent.AsObjectLiteralExpression().Properties.Nodes {\n\t\t\tif property == node {\n\t\t\t\tafter = true\n\t\t\t} else if after && property.Name() != nil {\n\t\t\t\tskip[property.Name().Text()] = true\n\t\t\t}\n\t\t}\n\t\texpression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)\n\t\tif expression.Kind != ast.KindObjectLiteralExpression {\n\t\t\tfound = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})\n\t\t}\n\tdefault:\n\t\tif node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || l.genericFunction(node) {\n\t\t\treturn nil\n\t\t}\n\t\tvar target *checker.Type\n\t\tif viewSite(node) {\n\t\t\ttarget = l.checker.GetContextualType(node, checker.ContextFlagsNone)\n\t\t}\n\t\tif target == nil {\n\t\t\ttarget = l.impliedTarget(node)\n\t\t}\n\t\tif target == nil {\n\t\t\treturn nil\n\t\t}\n\t\tfound = l.optionalValue(node, target)\n\t}\n\treturn found\n}",
+    "new": "func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {\n\treturn nil\n}",
+    "menu": "empty-answer probe",
+    "mode": "probe"
+  },
+  {
+    "id": "P04",
+    "file": "internal/lower/generic.go",
+    "line": 233,
+    "old": "func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {\n\tif declared == nil || instantiated == nil {\n\t\treturn\n\t}\n\t// Optional implementation parameters and results can wrap the same generic\n\t// binder that the resolved overload exposes directly. Infer from the present\n\t// member; an absent argument supplies no evidence about that binder.\n\tif declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {\n\t\tpresent := []*checker.Type{}\n\t\tfor _, member := range declared.Types() {\n\t\t\tif member.Flags()&checker.TypeFlagsUndefined == 0 {\n\t\t\t\tpresent = append(present, member)\n\t\t\t}\n\t\t}\n\t\tgiven := instantiated\n\t\tif l.censusHasUndefined(given) && given.Flags()&checker.TypeFlagsUnion != 0 {\n\t\t\tmembers := []*checker.Type{}\n\t\t\tfor _, member := range given.Types() {\n\t\t\t\tif member.Flags()&checker.TypeFlagsUndefined == 0 {\n\t\t\t\t\tmembers = append(members, member)\n\t\t\t\t}\n\t\t\t}\n\t\t\tgiven = l.checker.GetUnionType(members)\n\t\t}\n\t\t// GetNonNullableType also turns a rigid T into T & {}. Removing only\n\t\t// the optional member preserves the binder we are trying to infer.\n\t\tif len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {\n\t\t\tl.inferTypes(present[0], given, into)\n\t\t}\n\t\treturn\n\t}\n\tif declared.Flags()&checker.TypeFlagsUnion != 0 {\n\t\tvar missing *checker.Type\n\t\tfor _, member := range declared.Types() {\n\t\t\tknown, found := into[member]\n\t\t\tif !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {\n\t\t\t\tif missing != nil {\n\t\t\t\t\treturn // More than one unknown binder has no unique witness.\n\t\t\t\t}\n\t\t\t\tmissing = member\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tif !found {\n\t\t\t\tknown = l.concrete(member)\n\t\t\t}\n\t\t\tif !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {\n\t\t\t\treturn\n\t\t\t}\n\t\t}\n\t\tif missing != nil {\n\t\t\tinto[missing] = l.concrete(instantiated)\n\t\t}\n\t\treturn\n\t}\n\tif declared.Flags()&checker.TypeFlagsTypeParameter != 0 {\n\t\tif _, isSet := into[declared]; !isSet {\n\t\t\tinto[declared] = l.concrete(instantiated)\n\t\t}\n\t\treturn\n\t}\n\tif declared.Flags()&checker.TypeFlagsObject != 0 && instantiated.Flags()&checker.TypeFlagsObject != 0 {\n\t\tif declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {\n\t\t\tdeclaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)\n\t\t\tfor index := range declaredArguments {\n\t\t\t\tif index < len(instantiatedArguments) {\n\t\t\t\t\tl.inferTypes(declaredArguments[index], instantiatedArguments[index], into)\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tdeclaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)\n\t\tif len(declaredSignatures) > 0 && len(instantiatedSignatures) > 0 {\n\t\t\tdeclaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()\n\t\t\tfor index := range declaredParameters {\n\t\t\t\tif index < len(instantiatedParameters) {\n\t\t\t\t\tl.inferTypes(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into)\n\t\t\t\t}\n\t\t\t}\n\t\t\tl.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)\n\t\t}\n\t}\n}",
+    "new": "func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {\n\treturn\n}",
+    "menu": "empty-answer probe",
+    "mode": "probe"
+  }
+]

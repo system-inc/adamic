@@ -1,0 +1,198 @@
+[
+  {
+    "id": "M01",
+    "label": "M01",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 62.96051121399796
+  },
+  {
+    "id": "M02",
+    "label": "M02",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 49.48622547600098
+  },
+  {
+    "id": "M03",
+    "label": "M03",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 46.9678917300007
+  },
+  {
+    "id": "M04",
+    "label": "M04",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 0,
+    "wall": 52.01991105500201
+  },
+  {
+    "id": "M05",
+    "label": "M05",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 50.07513476099848
+  },
+  {
+    "id": "M06",
+    "label": "M06",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 44.91557471100168
+  },
+  {
+    "id": "M07",
+    "label": "M07",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 59.26921534600115
+  },
+  {
+    "id": "M08",
+    "label": "M08",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 46.3756356399972
+  },
+  {
+    "id": "M09",
+    "label": "M09",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 46.71623313500095
+  },
+  {
+    "id": "M10",
+    "label": "M10",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 0,
+    "wall": 50.68809451800189
+  },
+  {
+    "id": "M11",
+    "label": "M11",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 48.25378704800096
+  },
+  {
+    "id": "M12",
+    "label": "M12",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 45.655895463998604
+  },
+  {
+    "id": "M13",
+    "label": "M13",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 45.65688766899984
+  },
+  {
+    "id": "M14",
+    "label": "M14",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 49.59455352299847
+  },
+  {
+    "id": "M15",
+    "label": "M15",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 46.21089917399877
+  },
+  {
+    "id": "M16",
+    "label": "M16",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 52.256824656997196
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestAdamicNullishAssertionsAreRefused",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAdamicNullishAssertionsAreRefused$'",
+    "exit": 1,
+    "wall": 7.120077581999794
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestNonNullAssertionLowersToNullishPanic",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionLowersToNullishPanic$'",
+    "exit": 1,
+    "wall": 2.4784087070001988
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestNonNullAssertionOnPresentTypeIsErased",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionOnPresentTypeIsErased$'",
+    "exit": 1,
+    "wall": 2.5233898049991694
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestOptionalIndexingMapShapeRefused",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingMapShapeRefused$'",
+    "exit": 1,
+    "wall": 2.9805955319970963
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestOptionalIndexingKeepsIndexSignaturesRefused",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsIndexSignaturesRefused$'",
+    "exit": 1,
+    "wall": 2.6150684649983305
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$'",
+    "exit": 1,
+    "wall": 2.7283390770026017
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestOptionalWideningRefused",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningRefused$'",
+    "exit": 1,
+    "wall": 3.231450200000836
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestOptionalWideningAllowed",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningAllowed$'",
+    "exit": 0,
+    "wall": 2.865879485998448
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestOverrideNativeSignature_family",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^(TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature)$'",
+    "exit": 1,
+    "wall": 2.6876080149995687
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestOptionalWideningSpreadOverwrite",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningSpreadOverwrite$'",
+    "exit": 0,
+    "wall": 2.573127335002937
+  },
+  {
+    "id": "P03",
+    "label": "P03.TestOptionalWideningCensus",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P03 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningCensus$'",
+    "exit": 0,
+    "wall": 2.649221159001172
+  },
+  {
+    "id": "P04",
+    "label": "P04.TestOverloadInferenceWitnesses",
+    "command": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=P04 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/P04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOverloadInferenceWitnesses$'",
+    "exit": 1,
+    "wall": 2.9294784470002924
+  }
+]

@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -91,6 +91,6 @@
+ let local_0_value;
+ let ready_0 = false;
+ 
+-local_0_value = (0);
++local_0_value = (1);
+ ready_0 = true;
+ console.log(String(local_0_value));

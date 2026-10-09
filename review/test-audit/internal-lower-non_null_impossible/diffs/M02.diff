@@ -1,0 +1,11 @@
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -78,7 +78,7 @@
+ 	}
+ 	// A checked narrowing helper can already return a plain scalar. Its result
+ 	// has no nullish representation and must never receive a pointer test.
+-	if value.Type() == ir.Number || value.Type() == ir.Boolean {
++	if value.Type() == ir.MaybeNumber || value.Type() == ir.Boolean {
+ 		l.recordNonNullCheck(node, true)
+ 		return value, nil
+ 	}

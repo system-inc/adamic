@@ -1,0 +1,224 @@
+[
+  {
+    "label": "coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverprofile=review/test-audit/internal-lower-non_null_impossible/coverage.out ./internal/lower/ -run '^(TestAdamicNullishAssertionsAreRefused|TestNonNullAssertionLowersToNullishPanic|TestNonNullAssertionOnPresentTypeIsErased|TestOptionalIndexingMapShapeRefused|TestOptionalIndexingKeepsIndexSignaturesRefused|TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningCensus|TestOptionalWideningRefused|TestOptionalWideningAllowed|TestOptionalWideningSpreadOverwrite|TestOverloadInferenceWitnesses|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature)$'",
+    "exit": 0,
+    "wall": 8.320914790998359
+  },
+  {
+    "label": "TestAdamicNullishAssertionsAreRefused.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAdamicNullishAssertionsAreRefused$'",
+    "exit": 0,
+    "wall": 4.1213485289990786
+  },
+  {
+    "label": "TestAdamicNullishAssertionsAreRefused.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAdamicNullishAssertionsAreRefused$'",
+    "exit": 0,
+    "wall": 5.2329643740013125
+  },
+  {
+    "label": "TestAdamicNullishAssertionsAreRefused.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestAdamicNullishAssertionsAreRefused$'",
+    "exit": 0,
+    "wall": 5.116330157001357
+  },
+  {
+    "label": "TestNonNullAssertionLowersToNullishPanic.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionLowersToNullishPanic$'",
+    "exit": 0,
+    "wall": 3.4909706930011453
+  },
+  {
+    "label": "TestNonNullAssertionLowersToNullishPanic.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionLowersToNullishPanic$'",
+    "exit": 0,
+    "wall": 2.8604040579994034
+  },
+  {
+    "label": "TestNonNullAssertionLowersToNullishPanic.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionLowersToNullishPanic$'",
+    "exit": 0,
+    "wall": 2.587945707000472
+  },
+  {
+    "label": "TestNonNullAssertionOnPresentTypeIsErased.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionOnPresentTypeIsErased$'",
+    "exit": 0,
+    "wall": 2.8530354220019944
+  },
+  {
+    "label": "TestNonNullAssertionOnPresentTypeIsErased.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionOnPresentTypeIsErased$'",
+    "exit": 0,
+    "wall": 2.509130089998507
+  },
+  {
+    "label": "TestNonNullAssertionOnPresentTypeIsErased.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNonNullAssertionOnPresentTypeIsErased$'",
+    "exit": 0,
+    "wall": 2.7374533639995207
+  },
+  {
+    "label": "TestOptionalIndexingMapShapeRefused.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingMapShapeRefused$'",
+    "exit": 0,
+    "wall": 2.5793569480010774
+  },
+  {
+    "label": "TestOptionalIndexingMapShapeRefused.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingMapShapeRefused$'",
+    "exit": 0,
+    "wall": 2.8060495509998873
+  },
+  {
+    "label": "TestOptionalIndexingMapShapeRefused.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingMapShapeRefused$'",
+    "exit": 0,
+    "wall": 2.6693325330015796
+  },
+  {
+    "label": "TestOptionalIndexingKeepsIndexSignaturesRefused.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsIndexSignaturesRefused$'",
+    "exit": 0,
+    "wall": 2.6297278860001825
+  },
+  {
+    "label": "TestOptionalIndexingKeepsIndexSignaturesRefused.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsIndexSignaturesRefused$'",
+    "exit": 0,
+    "wall": 2.6636897569987923
+  },
+  {
+    "label": "TestOptionalIndexingKeepsIndexSignaturesRefused.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsIndexSignaturesRefused$'",
+    "exit": 0,
+    "wall": 2.541262763999839
+  },
+  {
+    "label": "TestOptionalIndexingKeepsUnsupportedStorageNotYet.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$'",
+    "exit": 0,
+    "wall": 2.744960332001938
+  },
+  {
+    "label": "TestOptionalIndexingKeepsUnsupportedStorageNotYet.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$'",
+    "exit": 0,
+    "wall": 2.8637059869979566
+  },
+  {
+    "label": "TestOptionalIndexingKeepsUnsupportedStorageNotYet.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$'",
+    "exit": 0,
+    "wall": 2.69420022399936
+  },
+  {
+    "label": "TestOptionalWideningCensus.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningCensus$'",
+    "exit": 0,
+    "wall": 2.6408862060015963
+  },
+  {
+    "label": "TestOptionalWideningCensus.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningCensus$'",
+    "exit": 0,
+    "wall": 2.495390887001122
+  },
+  {
+    "label": "TestOptionalWideningCensus.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningCensus$'",
+    "exit": 0,
+    "wall": 2.7411142499986454
+  },
+  {
+    "label": "TestOptionalWideningRefused.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningRefused$'",
+    "exit": 0,
+    "wall": 2.9587960399985604
+  },
+  {
+    "label": "TestOptionalWideningRefused.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningRefused$'",
+    "exit": 0,
+    "wall": 3.18738873500115
+  },
+  {
+    "label": "TestOptionalWideningRefused.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningRefused$'",
+    "exit": 0,
+    "wall": 3.1289162219982245
+  },
+  {
+    "label": "TestOptionalWideningAllowed.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningAllowed$'",
+    "exit": 0,
+    "wall": 2.9626864599995315
+  },
+  {
+    "label": "TestOptionalWideningAllowed.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningAllowed$'",
+    "exit": 0,
+    "wall": 3.5170377069989627
+  },
+  {
+    "label": "TestOptionalWideningAllowed.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningAllowed$'",
+    "exit": 0,
+    "wall": 2.9935134120023577
+  },
+  {
+    "label": "TestOptionalWideningSpreadOverwrite.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningSpreadOverwrite$'",
+    "exit": 0,
+    "wall": 2.4389208249995136
+  },
+  {
+    "label": "TestOptionalWideningSpreadOverwrite.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningSpreadOverwrite$'",
+    "exit": 0,
+    "wall": 2.4008359139988897
+  },
+  {
+    "label": "TestOptionalWideningSpreadOverwrite.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOptionalWideningSpreadOverwrite$'",
+    "exit": 0,
+    "wall": 2.3407011039998906
+  },
+  {
+    "label": "TestOverloadInferenceWitnesses.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOverloadInferenceWitnesses$'",
+    "exit": 0,
+    "wall": 2.5748096290008107
+  },
+  {
+    "label": "TestOverloadInferenceWitnesses.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOverloadInferenceWitnesses$'",
+    "exit": 0,
+    "wall": 2.4630747069968493
+  },
+  {
+    "label": "TestOverloadInferenceWitnesses.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestOverloadInferenceWitnesses$'",
+    "exit": 0,
+    "wall": 2.4094915589994343
+  },
+  {
+    "label": "TestOverrideNativeSignature_family.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^(TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature)$'",
+    "exit": 0,
+    "wall": 2.657625752999593
+  },
+  {
+    "label": "TestOverrideNativeSignature_family.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^(TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature)$'",
+    "exit": 0,
+    "wall": 2.731169041002431
+  },
+  {
+    "label": "TestOverrideNativeSignature_family.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^(TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature)$'",
+    "exit": 0,
+    "wall": 3.246188289998827
+  }
+]

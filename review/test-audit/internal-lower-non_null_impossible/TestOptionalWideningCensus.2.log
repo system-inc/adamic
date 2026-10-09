@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:26:16.639271816Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:26:16.652148508Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus"}
+{"Time":"2026-10-09T10:26:16.652229079Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Output":"=== RUN   TestOptionalWideningCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:16.725103795Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Output":"    optional_widening_census_test.go:88: 1 files, 1 optional-widening relation sites\n"}
+{"Time":"2026-10-09T10:26:16.725195453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Output":"--- PASS: TestOptionalWideningCensus (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:16.725213233Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Elapsed":0.07}
+{"Time":"2026-10-09T10:26:16.725243777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:26:16.727004582Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.087s\n"}
+{"Time":"2026-10-09T10:26:16.727046924Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.088}

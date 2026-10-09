@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:41:46.234665338Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:41:46.248034924Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused"}
+{"Time":"2026-10-09T10:41:46.24812317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused","Output":"=== RUN   TestOptionalIndexingKeepsIndexSignaturesRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:46.248152949Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused","Output":"=== PAUSE TestOptionalIndexingKeepsIndexSignaturesRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:46.248155623Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused"}
+{"Time":"2026-10-09T10:41:46.24815864Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused"}
+{"Time":"2026-10-09T10:41:46.248160599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused","Output":"=== CONT  TestOptionalIndexingKeepsIndexSignaturesRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:46.299117035Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused","Output":"    optional_indexing_test.go:14: got \u003cnil\u003e, want the existing index-signature refusal and fix\n","OutputType":"error"}
+{"Time":"2026-10-09T10:41:46.29926971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused","Output":"--- FAIL: TestOptionalIndexingKeepsIndexSignaturesRefused (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:46.299310345Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalIndexingKeepsIndexSignaturesRefused","Elapsed":0.05}
+{"Time":"2026-10-09T10:41:46.299400235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:46.301646578Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.066s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:46.301673561Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.067}

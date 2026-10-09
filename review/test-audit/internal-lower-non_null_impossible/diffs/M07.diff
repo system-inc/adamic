@@ -1,0 +1,11 @@
+--- a/internal/lower/optional_indexing.go
++++ b/internal/lower/optional_indexing.go
+@@ -32,7 +32,7 @@
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	if index.Type() != ir.Number {
++	if index.Type() != ir.String {
+ 		return nil, l.notYet(node, "an optional index that isn't a number")
+ 	}
+ 	var value ir.Expression

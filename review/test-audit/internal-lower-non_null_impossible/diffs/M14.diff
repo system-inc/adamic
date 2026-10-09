@@ -1,0 +1,11 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -285,7 +285,7 @@
+ 		return
+ 	}
+ 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-		if _, isSet := into[declared]; !isSet {
++		if _, isSet := into[declared]; isSet {
+ 			into[declared] = l.concrete(instantiated)
+ 		}
+ 		return

@@ -1,0 +1,469 @@
+[
+  {
+    "id": "M01",
+    "bounded": false,
+    "failed_rows": [
+      "TestAdamicNullishAssertionsAreRefused",
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestNonNullAssertionOnPresentTypeIsErased",
+      "TestPredicateOverloadRuntime",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "fail",
+      "TestNonNullAssertionLowersToNullishPanic": "fail",
+      "TestNonNullAssertionOnPresentTypeIsErased": "fail",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M02",
+    "bounded": false,
+    "failed_rows": [
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestReadinessElisionRequiresDominatingAssignment"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "fail",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M03",
+    "bounded": false,
+    "failed_rows": [
+      "TestNonNullAssertionLowersToNullishPanic"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "fail",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M04",
+    "bounded": false,
+    "failed_rows": [],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": true,
+    "outside_scope": "observed",
+    "supplemental": true
+  },
+  {
+    "id": "M05",
+    "bounded": false,
+    "failed_rows": [
+      "TestOptionalIndexingKeepsIndexSignaturesRefused"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "fail",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M06",
+    "bounded": false,
+    "failed_rows": [
+      "TestOptionalIndexingMapShapeRefused"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "fail",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M07",
+    "bounded": false,
+    "failed_rows": [
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "fail",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M08",
+    "bounded": false,
+    "failed_rows": [
+      "TestClassWrongOutputIteratorReceiver",
+      "TestIteratorMapperIndexHasNumberRepresentation",
+      "TestOptionalWideningAllowed",
+      "TestOptionalWideningRefused"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "fail",
+      "TestOptionalWideningAllowed": "fail",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M09",
+    "bounded": false,
+    "failed_rows": [
+      "TestOptionalWideningSpreadOverwrite"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "fail",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M10",
+    "bounded": false,
+    "failed_rows": [],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": true,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M11",
+    "bounded": false,
+    "failed_rows": [
+      "TestOptionalWideningRefused"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "fail",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M12",
+    "bounded": false,
+    "failed_rows": [
+      "TestOverloadInferenceWitnesses"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "fail",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M13",
+    "bounded": false,
+    "failed_rows": [
+      "TestOverloadInferenceWitnesses"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "fail",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M14",
+    "bounded": false,
+    "failed_rows": [
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestCensusOverloadBinderGuards",
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "TestGenericJSONUnionArrayIsNotYet",
+      "TestGenericUnionFixtureHasSeparateInstances",
+      "TestOverloadInferenceWitnesses",
+      "TestPredicateOverloadRuntime"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "fail",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M15",
+    "bounded": false,
+    "failed_rows": [
+      "TestEnumSlotViews",
+      "TestInheritanceAllowsSoundOverrides",
+      "TestInheritanceNativeSignatureLimits",
+      "TestInheritanceNativeSignatureNeighbors",
+      "TestInheritanceRefusesFalseNominalViews",
+      "TestInheritanceRefusesUnsoundOverrides",
+      "TestOverrideNativeSignature family"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "fail"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "M16",
+    "bounded": false,
+    "failed_rows": [
+      "TestClassFeaturesAccessorRefusals"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "pass",
+      "TestNonNullAssertionLowersToNullishPanic": "pass",
+      "TestNonNullAssertionOnPresentTypeIsErased": "pass",
+      "TestOptionalIndexingMapShapeRefused": "pass",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "pass",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "pass",
+      "TestOptionalWideningCensus": "pass",
+      "TestOptionalWideningRefused": "pass",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOptionalWideningSpreadOverwrite": "pass",
+      "TestOverloadInferenceWitnesses": "pass",
+      "TestOverrideNativeSignature family": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "P01",
+    "bounded": false,
+    "failed_rows": [
+      "TestAdamicNullishAssertionsAreRefused",
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestNonNullAssertionOnPresentTypeIsErased",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+      "TestOptionalIndexingMapShapeRefused",
+      "TestOptionalWideningRefused",
+      "TestOverrideNativeSignature family"
+    ],
+    "observations": {
+      "TestAdamicNullishAssertionsAreRefused": "fail",
+      "TestNonNullAssertionLowersToNullishPanic": "fail",
+      "TestNonNullAssertionOnPresentTypeIsErased": "fail",
+      "TestOptionalIndexingMapShapeRefused": "fail",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused": "fail",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet": "fail",
+      "TestOptionalWideningRefused": "fail",
+      "TestOptionalWideningAllowed": "pass",
+      "TestOverrideNativeSignature family": "fail"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "P02",
+    "bounded": false,
+    "failed_rows": [],
+    "observations": {
+      "TestOptionalWideningSpreadOverwrite": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "P03",
+    "bounded": false,
+    "failed_rows": [],
+    "observations": {
+      "TestOptionalWideningCensus": "pass"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  },
+  {
+    "id": "P04",
+    "bounded": false,
+    "failed_rows": [
+      "TestOverloadInferenceWitnesses"
+    ],
+    "observations": {
+      "TestOverloadInferenceWitnesses": "fail"
+    },
+    "matrix_rows": "whole package",
+    "survivor": false,
+    "outside_scope": "observed"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -256,7 +256,7 @@
+ 		}
+ 		// GetNonNullableType also turns a rigid T into T & {}. Removing only
+ 		// the optional member preserves the binder we are trying to infer.
+-		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
++		if len(present) == 0 && given.Flags()&checker.TypeFlagsUndefined == 0 {
+ 			l.inferTypes(present[0], given, into)
+ 		}
+ 		return

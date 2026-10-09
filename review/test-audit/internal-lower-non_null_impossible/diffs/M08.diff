@@ -1,0 +1,11 @@
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -83,7 +83,7 @@
+ 		}
+ 		declared := l.checker.GetPropertyOfType(source, property.Name)
+ 		if declared == nil {
+-			if property.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(source) {
++			if property.Flags&ast.SymbolFlagsOptional != 0 && isClassInstance(source) {
+ 				return &optionalWidening{property: property.Name, source: source, target: target}
+ 			}
+ 			continue

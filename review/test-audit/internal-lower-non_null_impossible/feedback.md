@@ -1,0 +1,16 @@
+Brief feedback, unit u040
+
+1. The historical file reference is 8de93800f4, but the required fetch selected f91994f019703ba25d2918cf529c0e0b0c05d93c. All fourteen names still exist in their listed files. The actual fetched commit is recorded so replay is unambiguous.
+2. Fourteen named functions become twelve rows. The three override wrappers use one checker with different fixtures even though the first has a different name prefix. Shared checker semantics, rather than the prefix alone, settled the grouping.
+3. TestOverloadInferenceWitnesses is not a witness under this brief: it tests production inference directly. The name is misleading for classification.
+4. The opt-in census requires a project and output path, neither supplied in the brief. This run enabled it using a strict, one-file TypeScript project copied from the repository's initializer fixture. Its results describe that project only, not a larger upstream inventory.
+5. Lower is not the only production entry. SpreadOverwrite calls refuse, Census calls optionalAtSite, and InferenceWitnesses calls inferTypes. They require separate probes. Preparation Load is not a probe target for lowering.
+6. The census tests successful enumeration and encoding but has no site-count or content oracle. M08 changes its report from one site to zero without failing it. The standalone empty-answer probe independently tests this omission.
+7. The present-type assertion checks NumberConstant and absence of panic strings but not its value. M04 changes generated assignment 0 to 1 with a green whole package. This is a proven survivor, not an equivalent candidate.
+8. About three mutants per twelve rows would exceed the twenty-mutant limit. Sixteen were fixed before outcomes because the clean whole package took 44.571 binary seconds and each additional whole-package run consumed roughly another minute of the twenty-minute budget.
+9. A compiler build and a test binary have different clocks. This report separates test-binary medians from command wall time. Go compilation, linking and native products inside tests cannot be divided precisely without extra instrumentation; no pure build time is inferred from subtraction.
+10. Independent M10 witness attempts covered conditional, coalescing, inferred array and inferred arrow expressions. None changed output. It is an equivalent candidate rather than an unguarded-behavior finding.
+11. Standalone empty-answer diffs replace the entry body and remove newly unused imports. The switched scratch source instead conditionally returns at entry. Both forms are preserved, and every standalone diff passes origin apply checks and Go vet through a source overlay.
+12. The first independent M04 source used console.log(number), which this project's library rejects because it expects a string. The corrected source formats the value as a string; both failed attempts and successful commands remain in the record.
+
+13. M04 replaces a variable expression in an existing early return with a constant. The menu does not explicitly authorize changing return expressions. Conservatively marked supplemental, although it inserts no statement. No sacred or subsumed verdict rests on it. There are fifteen menu mutants and one supplemental mutant.

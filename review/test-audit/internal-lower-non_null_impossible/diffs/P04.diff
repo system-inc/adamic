@@ -1,0 +1,89 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -231,85 +231,7 @@
+ // result. The caller's type mapper makes an outer function's parameter concrete before it is saved,
+ // so a generic function calling another with its own type parameter passes the concrete type on.
+ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+-	if declared == nil || instantiated == nil {
+-		return
+-	}
+-	// Optional implementation parameters and results can wrap the same generic
+-	// binder that the resolved overload exposes directly. Infer from the present
+-	// member; an absent argument supplies no evidence about that binder.
+-	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
+-		present := []*checker.Type{}
+-		for _, member := range declared.Types() {
+-			if member.Flags()&checker.TypeFlagsUndefined == 0 {
+-				present = append(present, member)
+-			}
+-		}
+-		given := instantiated
+-		if l.censusHasUndefined(given) && given.Flags()&checker.TypeFlagsUnion != 0 {
+-			members := []*checker.Type{}
+-			for _, member := range given.Types() {
+-				if member.Flags()&checker.TypeFlagsUndefined == 0 {
+-					members = append(members, member)
+-				}
+-			}
+-			given = l.checker.GetUnionType(members)
+-		}
+-		// GetNonNullableType also turns a rigid T into T & {}. Removing only
+-		// the optional member preserves the binder we are trying to infer.
+-		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
+-			l.inferTypes(present[0], given, into)
+-		}
+-		return
+-	}
+-	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+-		var missing *checker.Type
+-		for _, member := range declared.Types() {
+-			known, found := into[member]
+-			if !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-				if missing != nil {
+-					return // More than one unknown binder has no unique witness.
+-				}
+-				missing = member
+-				continue
+-			}
+-			if !found {
+-				known = l.concrete(member)
+-			}
+-			if !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {
+-				return
+-			}
+-		}
+-		if missing != nil {
+-			into[missing] = l.concrete(instantiated)
+-		}
+-		return
+-	}
+-	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-		if _, isSet := into[declared]; !isSet {
+-			into[declared] = l.concrete(instantiated)
+-		}
+-		return
+-	}
+-	if declared.Flags()&checker.TypeFlagsObject != 0 && instantiated.Flags()&checker.TypeFlagsObject != 0 {
+-		if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+-			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
+-			for index := range declaredArguments {
+-				if index < len(instantiatedArguments) {
+-					l.inferTypes(declaredArguments[index], instantiatedArguments[index], into)
+-				}
+-			}
+-		}
+-		declaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)
+-		if len(declaredSignatures) > 0 && len(instantiatedSignatures) > 0 {
+-			declaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()
+-			for index := range declaredParameters {
+-				if index < len(instantiatedParameters) {
+-					l.inferTypes(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into)
+-				}
+-			}
+-			l.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)
+-		}
+-	}
++	return
+ }
+ 
+ // JSON descriptors must be checked against the actual type arguments too. Without

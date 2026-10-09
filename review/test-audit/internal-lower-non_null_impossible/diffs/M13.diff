@@ -1,0 +1,11 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -266,7 +266,7 @@
+ 		for _, member := range declared.Types() {
+ 			known, found := into[member]
+ 			if !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-				if missing != nil {
++				if missing == nil {
+ 					return // More than one unknown binder has no unique witness.
+ 				}
+ 				missing = member

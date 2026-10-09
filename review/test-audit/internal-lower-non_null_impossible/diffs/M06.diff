@@ -1,0 +1,9 @@
+--- a/internal/lower/optional_indexing_map.go
++++ b/internal/lower/optional_indexing_map.go
+@@ -96,5 +96,5 @@
+ 	for _, module := range modules {
+ 		module.AsNode().ForEachChild(visit)
+ 	}
+-	return hazard
++	return false
+ }

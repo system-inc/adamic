@@ -1,0 +1,1 @@
+function choose(source: { x: number } | undefined, wider: { x: number; y?: number }): { x: number } { const result = source ?? wider; return result; }

@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -95,7 +95,7 @@
+ 						accepts = instantiateType(l.checker, accepts, l.typeMapperOf(candidate.Parent, base))
+ 						override = instantiateType(l.checker, override, l.typeMapperOf(declaration, classType))
+ 					}
+-					if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
++					if !l.classAssignable(override, accepts) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+ 						return refuse("an accessor override that narrows a setter parameter (adamic/contravariant-override)", "accept the base setter's parameter type or a wider type; narrow it inside the setter")
+ 					}
+ 				}

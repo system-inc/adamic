@@ -1,0 +1,11 @@
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -176,7 +176,7 @@
+ 			target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+ 		}
+ 		if target == nil {
+-			target = l.impliedTarget(node)
++			target = nil
+ 		}
+ 		if target == nil {
+ 			return nil

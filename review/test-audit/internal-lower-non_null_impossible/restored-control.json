@@ -1,0 +1,5 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestAdamicNullishAssertionsAreRefused|TestNonNullAssertionLowersToNullishPanic|TestNonNullAssertionOnPresentTypeIsErased|TestOptionalIndexingMapShapeRefused|TestOptionalIndexingKeepsIndexSignaturesRefused|TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningCensus|TestOptionalWideningRefused|TestOptionalWideningAllowed|TestOptionalWideningSpreadOverwrite|TestOverloadInferenceWitnesses|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature)$",
+  "exit": 0,
+  "wall": 4.879109001998586
+}
