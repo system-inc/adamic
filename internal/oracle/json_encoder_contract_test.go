@@ -88,6 +88,7 @@ func TestJSONEncoderContract(t *testing.T) {
 					{"element", "JSON.stringify runtime array without complete element descriptors"},
 					{"union", "JSON union lacks proven container metadata"},
 					{"hook", "JSON toJSON result descriptor is missing"},
+					{"missing_hook", "JSON toJSON lacks a typed runtime result provider"},
 				} {
 					refused := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, probe.arg)
 					if refused.exitCode == 0 || !strings.Contains(string(refused.stderr), probe.reason) {

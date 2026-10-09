@@ -76,6 +76,7 @@ int main(int argc,char **argv) {
   if(strcmp(argv[1],"array")==0) print_json((adamic_json_result){{.reference=mixed},&array_dynamic},NULL);
   if(strcmp(argv[1],"union")==0) print_json((adamic_json_result){{.reference=child},&union_value},NULL);
   if(strcmp(argv[1],"element")==0) {elements[0].schema=NULL;print_json((adamic_json_result){{.reference=mixed},&array_dynamic},&runtime);}
+  if(strcmp(argv[1],"missing_hook")==0) print_json((adamic_json_result){{.reference=child},&hook},NULL);
   if(strcmp(argv[1],"hook")==0) {returned=(adamic_json_result){{.reference=NULL},NULL};hook_receiver=child;expected_key="";print_json((adamic_json_result){{.reference=child},&hook},&runtime);}
   return 0;
  }
