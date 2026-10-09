@@ -63,3 +63,24 @@ func TestDirectClosureTargetsUseEncodedIndex(t *testing.T) {
 		}
 	}
 }
+
+func TestUnknownClosurePreservesThrowingEffect(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Strings: []string{"unknown closure threw"},
+		Locals:  []ir.Local{{Name: "unknown", Type: ir.Closure}},
+		Functions: []ir.Function{{
+			MayThrow: true,
+			Body: []ir.Statement{ir.Throw{Value: ir.MakeError{
+				Message: ir.StringConstant{Index: 0},
+			}}},
+		}},
+	}
+	call := ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}}
+	if targets := program.ClosureTargets(call); !targets.Unknown || len(targets.Functions) != 0 {
+		t.Fatalf("closure must have unknown targets: %+v", targets)
+	}
+	if !program.ClosureMayThrow(call) {
+		t.Fatal("unknown closure lost the throwing effect of its sole always-throwing candidate")
+	}
+}

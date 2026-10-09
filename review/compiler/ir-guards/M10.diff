@@ -1,0 +1,11 @@
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -97,7 +97,7 @@
+ 			of := p.Locals[parameter].Type
+ 			if index == len(layout.Fixed) {
+ 				layout.Fixed = append(layout.Fixed, of)
+-			} else if of.IsMaybe() {
++			} else if !of.IsMaybe() {
+ 				layout.Fixed[index] = of
+ 			}
+ 		}
