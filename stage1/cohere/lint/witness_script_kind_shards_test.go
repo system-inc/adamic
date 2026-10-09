@@ -21,10 +21,6 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -50,7 +46,6 @@ func witnessScriptKindShard(key string) int {
 func witnessScriptKindSetup(t *testing.T) {
 	t.Helper()
 	witnessScriptKindOnce.Do(func() {
-		ctx := context.Background()
 		s := &witnessScriptKindState
 		directory, err := os.MkdirTemp(sharedDirectory, "witness-kind-")
 		if err != nil {
@@ -88,62 +83,10 @@ func witnessScriptKindSetup(t *testing.T) {
 			s.Keys = append(s.Keys, filepath.ToSlash(key))
 			s.Sources = append(s.Sources, source)
 		}
-		// Include the checker and every lowering/runtime input. Test edits may cause
-		// conservative misses, but cannot reuse a stale native or lowered product.
-		inputs := witnessScriptKindInputs()
-		lowered := buildcache.Product(t, inputs, func(out string) error {
-			// The manifest selects only no-debugger. Compile that unchanged rule
-			// with the unchanged scanner and serializers, avoiding every unrelated
-			// rule's lowering. Node and Go still use the complete registry.
-			source := copyPort(t, filepath.Join(out, "source"), "", "")
-			var selected []registry.Descriptor
-			for _, descriptor := range prepareRegistry(t, ".") {
-				if descriptor.Slug == "no-debugger" {
-					selected = append(selected, descriptor)
-				}
-			}
-			if len(selected) != 1 {
-				return fmt.Errorf("no-debugger descriptor count: %d", len(selected))
-			}
-			ts, _ := registry.Render(selected)
-			if err := os.WriteFile(filepath.Join(source, ".generated/registry.ts"), ts, 0644); err != nil {
-				return err
-			}
-			program, err := load.Load([]string{filepath.Join(source, "main.ts")})
-			if err != nil {
-				return err
-			}
-			result, err := lower.Lower(ctx, program)
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
-		})
+		lowered := witnessScriptKindLoweredProduct(t)
 		s.Module = filepath.Join(lowered, "lint.mjs")
-		options := native.Options{Sanitize: true, Split: true}
-		inputs.Name = "witness-script-kind-native-no-debugger-v1"
-		inputs.Flags = append(native.Flags(options), "Split=true", "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		product := buildcache.Product(t, inputs, func(out string) error {
-			data, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-			if err != nil {
-				return err
-			}
-			return native.Build(string(data), filepath.Join(out, "scanner"), options)
-		})
-		s.Binary = filepath.Join(product, "scanner")
-		inputs = witnessScriptKindInputs()
-		inputs.Name = "witness-script-kind-go-oracle-v1"
-		inputs.Flags = []string{"go build", "overlay=full-rule-registry", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
-		oracle := buildcache.Product(t, inputs, func(out string) error {
-			_, err := witnessScriptKindGoOracleIn(ctx, packageDirectory, out)
-			return err
-		})
-		s.Oracle = filepath.Join(oracle, "oracle")
+		s.Binary = filepath.Join(witnessScriptKindNativeProduct(t), "scanner")
+		s.Oracle = filepath.Join(witnessScriptKindOracleProduct(t), "oracle")
 		s.ready = true
 	})
 	s := &witnessScriptKindState

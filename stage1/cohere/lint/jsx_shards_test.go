@@ -23,14 +23,13 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
 )
 
-// Each build has its inputs beside its closure. Non-Go products and the
-// completed setup use internal/buildcache; overlay Go builds are shared within
-// the setup child because buildcache refuses overlay builds.
+// Each build has its inputs beside its closure and uses internal/buildcache.
 type jsxProductInputs struct {
 	Name      string
 	Files     []string
@@ -79,27 +78,10 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 	return result
 }
 
-func jsxOverlayProduct(t *testing.T, inputs jsxProductInputs, build func(dir string) error) string {
-	t.Helper()
-	value := shared(fmt.Sprintf("jsx product %+v", inputs), func(value *sharedValue) {
-		value.path, value.err = os.MkdirTemp(sharedDirectory, "jsx-product-")
-		if value.err != nil {
-			return
-		}
-		started := time.Now()
-		value.err = build(value.path)
-		t.Logf("build %s cold wall: %s", inputs.Name, time.Since(started))
-	})
-	if value.err != nil {
-		t.Fatal(value.err)
-	}
-	return value.path
-}
-
 func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay"}, Toolchain: runtime.Version()}
-	directory := jsxOverlayProduct(t, inputs, func(dir string) error {
+	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: runtime.Version()}
+	directory := jsxProduct(t, inputs, func(dir string) error {
 		virtual := filepath.Join(root, virtualName)
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 		if err != nil {
@@ -424,8 +406,7 @@ func TestJsxLintTreesShardCoverage(t *testing.T) {
 	}
 }
 
-// Products are read-only inputs. Overlay Go builds are run-local because
-// buildcache refuses overlays; non-Go products use the shared build cache.
+// Products are read-only inputs, shared across product and shard processes.
 func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error) string {
 	t.Helper()
 	files := make([]string, len(inputs.Files))
@@ -445,10 +426,14 @@ func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error)
 	}
 	return buildcache.Product(t, buildcache.Inputs{Name: inputs.Name, Files: files, Flags: inputs.Flags, Toolchain: []string{inputs.Toolchain}}, build)
 }
-func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
+func jsxTreeInputs(t *testing.T, entry string) jsxProductInputs {
 	t.Helper()
-	inputs := jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: runtime.Version()}
-	lowered := jsxProduct(t, inputs, func(dir string) error {
+	return jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: runtime.Version()}
+}
+
+func jsxTreeLowered(t *testing.T, entry string) string {
+	t.Helper()
+	return jsxProduct(t, jsxTreeInputs(t, entry), func(dir string) error {
 		program, err := load.Load([]string{entry})
 		if err != nil {
 			return err
@@ -459,8 +444,16 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 		}
 		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(lowered)), 0644)
 	})
-	source := filepath.Join(lowered, "program.c")
-	inputs = jsxProductInputs{Name: "jsx-tree-native", Files: append(append([]string(nil), inputs.Files...), jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: string(execute(t, "", "clang", "--version").output)}
+}
+
+func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
+	t.Helper()
+	source := filepath.Join(jsxTreeLowered(t, entry), "program.c")
+	inputs := jsxTreeInputs(t, entry)
+	inputs.Name = "jsx-tree-native"
+	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
+	inputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
+	inputs.Toolchain = string(execute(t, "", "clang", "--version").output)
 	built := jsxProduct(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(source)
 		if err != nil {
@@ -471,16 +464,38 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	return filepath.Join(built, "native")
 }
 
-// Setup owns all capture, build, and inventory work. Shards only fetch this
-// immutable product; on a cold cache run TestJsxLintTrees_Setup first. With
-// ADAMIC_BUILD_CACHE=off select setup and shards in the same test process.
+func jsxParserEntry(t *testing.T) string {
+	t.Helper()
+	entry, err := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/main.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return entry
+}
+
+func jsxParserOracle(t *testing.T) string {
+	t.Helper()
+	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
+	return jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
+}
+
+func jsxMembershipOracle(t *testing.T) string {
+	t.Helper()
+	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
+	side, _ := filepath.Abs("testdata/jsx_inventory.go")
+	return jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
+}
+
+// Every consumer prepares the immutable capture, build, and inventory product
+// once per process, before starting its own case deadline.
 type jsxTreeBundle struct {
 	Paths  []string
 	Shards [][]string
 }
 
 var jsxReadyDirectory string
-var jsxSetupContext = context.Background()
+var jsxPrepareOnce sync.Once
 
 func jsxSetupInputs() buildcache.Inputs {
 	return buildcache.Inputs{
@@ -491,23 +506,22 @@ func jsxSetupInputs() buildcache.Inputs {
 	}
 }
 
-// Not parallel: publishes the shared read-only setup before parallel leaves start.
 func TestJsxLintTrees_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_JSX_SETUP_CHILD") == "1" {
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
-		jsxSetupContext = ctx
-		directory := buildcache.Product(t, jsxSetupInputs(), func(directory string) error {
+	t.Parallel()
+	jsxPrepareTrees(t)
+}
+
+func jsxPrepareTrees(t *testing.T) string {
+	t.Helper()
+	jsxPrepareOnce.Do(func() {
+		jsxReadyDirectory = buildcache.Product(t, jsxSetupInputs(), func(directory string) error {
 			paths := jsxTreeSources(t)
 			shards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))
 			if err != nil {
 				return err
 			}
-			root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-			side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-			oracle := jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
-			parserDirectory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
-			binary := jsxTreeNative(t, filepath.Join(parserDirectory, "main.ts"), true)
+			oracle := jsxParserOracle(t)
+			binary := jsxTreeNative(t, jsxParserEntry(t), true)
 			copied := map[string]string{}
 			for _, path := range paths {
 				components := strings.Split(filepath.ToSlash(path), "/")
@@ -558,43 +572,18 @@ func TestJsxLintTrees_Setup(t *testing.T) {
 			}
 			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0444)
 		})
-		if result := os.Getenv("ADAMIC_JSX_SETUP_RESULT"); result != "" {
-			if err := os.WriteFile(result, []byte(directory), 0600); err != nil {
-				t.Fatal(err)
-			}
-		}
-		return
+	})
+	// A failed builder may have called Fatal inside Once; do not let another
+	// parallel consumer mistake its empty result for a prepared product.
+	if jsxReadyDirectory == "" {
+		t.Fatal("shared JSX preparation failed")
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	result := filepath.Join(t.TempDir(), "setup-result")
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_Setup$", "-test.v", "-test.timeout=90s")
-	command.Env = append(os.Environ(), "ADAMIC_JSX_SETUP_CHILD=1", "ADAMIC_JSX_SETUP_RESULT="+result)
-	output, err := command.CombinedOutput()
-	t.Logf("shared setup child:\n%s", output)
-	if err != nil {
-		t.Fatalf("shared setup did not complete within its 90-second bound: %v", err)
-	}
-	data, err := os.ReadFile(result)
-	if err != nil {
-		t.Fatal(err)
-	}
-	jsxReadyDirectory = string(data)
-	// In cache-off mode the child Product directory is disposable, but it must
-	// remain alive until this process's parallel tests finish.
-	t.Logf("shared setup ready")
+	return jsxReadyDirectory
 }
 
 func jsxFetchTrees(t *testing.T) (jsxTreeBundle, string) {
 	t.Helper()
-	directory := jsxReadyDirectory
-	if directory == "" {
-		directory = buildcache.Product(t, jsxSetupInputs(), func(string) error {
-			return fmt.Errorf("shared JSX setup is absent; run TestJsxLintTrees_Setup before selecting a shard; shards never build setup")
-		})
-	}
+	directory := jsxPrepareTrees(t)
 	data, err := os.ReadFile(filepath.Join(directory, "bundle.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -624,9 +613,7 @@ func jsxTreeSources(t *testing.T) []string {
 	for i, row := range rows {
 		all[i] = strings.Split(row, "\t")[0]
 	}
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
-	side, _ := filepath.Abs("testdata/jsx_inventory.go")
-	oracle := jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
+	oracle := jsxMembershipOracle(t)
 	output := execute(t, "", oracle, manifest(t, all)).output
 	membership := map[string]bool{}
 	for _, line := range strings.Split(strings.TrimSpace(string(output)), "\n") {
@@ -773,7 +760,7 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 // This uses Go's context deadline and needs no external timeout executable.
 func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
-	return jsxContextCommand(t, jsxSetupContext, name, args...)
+	return jsxContextCommand(t, context.Background(), name, args...)
 }
 
 func jsxContextCommand(t *testing.T, parent context.Context, name string, args ...string) *exec.Cmd {
@@ -837,7 +824,7 @@ func jsxUpstream(t *testing.T) []string {
 }
 
 func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(jsxSetupContext, 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
@@ -998,25 +985,4 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	return rows, nil
-}
-
-// A standalone shard with no prepared product must refuse promptly, never
-// silently take responsibility for the shared capture and compiler work.
-func TestJsxLintTreesSetupIsolation(t *testing.T) {
-	t.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_000$", "-test.v", "-test.timeout=90s")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=", "ADAMIC_JSX_SETUP_CHILD=")
-	output, err := command.CombinedOutput()
-	if err == nil || !bytes.Contains(output, []byte("shards never build setup")) {
-		t.Fatalf("cold shard did not refuse setup: %v\n%s", err, output)
-	}
-	for _, build := range []string{"build jsx-parser cold wall", "build jsx-membership cold wall", "build jsx-tree-lowered", "build jsx-tree-native"} {
-		if bytes.Contains(output, []byte(build)) {
-			t.Fatalf("shard built shared input %s:\n%s", build, output)
-		}
-	}
 }
