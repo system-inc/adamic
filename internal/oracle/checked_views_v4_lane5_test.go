@@ -13,9 +13,18 @@ import (
 
 func v4Lane5Source(t *testing.T, name string) string {
 	t.Helper()
-	source, err := os.ReadFile(filepath.Join(repository, "review/compiler/views-v4/lane5", name+".a"))
+	directory := "review/compiler/views-v4/lane5"
+	switch name {
+	case "factory-165-wrong-arity", "view-parameter-wrong-members", "view-parameter-wrong", "view-result-wrong-members", "view-result-wrong":
+		directory = "internal/oracle/testdata/views_v4_refused"
+	}
+	source, err := os.ReadFile(filepath.Join(repository, directory, name+".a"))
 	if err != nil {
 		t.Fatal(err)
+	}
+	// Keep the original witness line numbers asserted by refusal tests.
+	if strings.HasPrefix(string(source), "// a-check:") {
+		return strings.SplitN(string(source), "\n", 2)[1]
 	}
 	return string(source)
 }

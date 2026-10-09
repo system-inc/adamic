@@ -1,3 +1,4 @@
+// a-check: refused an unproven escaping callable read of viewed.run
 interface Base { readonly run:unknown; }
 interface Target { readonly run:()=>number|string; }
 function probe(value:Base):void {

@@ -34,10 +34,12 @@ func TestV4EscapeAdapterConstructSignatureRefusal(t *testing.T) {
 
 func TestV4EscapeAdapterWithoutConstructSignatureRefusal(t *testing.T) {
 	t.Parallel()
-	source, err := os.ReadFile("../../review/compiler/views-v4/construct-no-signature.a")
+	source, err := os.ReadFile("testdata/views_v4_refused/construct-no-signature.a")
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Keep the original witness line numbers asserted below.
+	source = []byte(strings.SplitN(string(source), "\n", 2)[1])
 	path := filepath.Join(t.TempDir(), "no-construct.ts")
 	if err := os.WriteFile(path, source, 0600); err != nil {
 		t.Fatal(err)

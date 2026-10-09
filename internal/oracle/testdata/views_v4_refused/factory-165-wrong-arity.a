@@ -1,3 +1,4 @@
+// a-check: refused readonly field onEmitNode becomes writable
 // Original declaration and member read; adjacent carriers and producer bodies reduced.
 type EmitHint=number;
 interface Node {readonly value:number;}
