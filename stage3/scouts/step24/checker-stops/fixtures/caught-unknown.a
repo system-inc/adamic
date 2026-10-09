@@ -1,0 +1,2 @@
+// a-check: type error TS18046
+try { throw new Error('ok'); } catch (error) { console.log(error.message); }

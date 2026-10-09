@@ -1,0 +1,3 @@
+// a-check: type error TS2532
+const values: { text: string }[] = [{ text: 'ok' }];
+console.log(values[0].text);

@@ -1,0 +1,19 @@
+// a-check: type error TS2740
+// core.ts:createSet's ES2015 Set surface, backed here by a stock Set.
+const backing = new Set<number>([1]);
+const value: Set<number> = {
+    size: backing.size,
+    has(element: number): boolean { return backing.has(element); },
+    add(element: number): Set<number> { backing.add(element); return this; },
+    delete(element: number): boolean { return backing.delete(element); },
+    clear(): void { backing.clear(); },
+    entries() { return backing.entries(); },
+    keys() { return backing.keys(); },
+    values() { return backing.values(); },
+    forEach(callback: (value: number, key: number, set: Set<number>) => void): void {
+        backing.forEach((element) => callback(element, element, value));
+    },
+    [Symbol.iterator]() { return backing.values(); },
+    [Symbol.toStringTag]: 'Set'
+};
+console.log(String(value.size));

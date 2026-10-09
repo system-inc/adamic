@@ -1,0 +1,4 @@
+// a-check: type error TS2322
+const values: string[] = ['ok'];
+const value: string = values[0];
+console.log(value);

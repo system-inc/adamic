@@ -1,0 +1,23 @@
+group,code,baseline,main_project,topic_project,baseline_absent_in_topic,paired_main_absent_in_topic,examples
+caught-unknown,TS18046,6,6,0,6,6,commandLineParser.ts:2301:91:TS18046; program.ts:406:25:TS18046; program.ts:441:25:TS18046
+host-declarations,TS2304,6,6,0,6,6,sys.ts:1499:121:TS2304; sys.ts:1499:35:TS2304; sys.ts:1499:92:TS2304
+host-declarations,TS2307,1,0,0,1,0,sys.ts:1598:69:TS2307
+host-declarations,TS2503,2,2,0,2,2,sys.ts:51:68:TS2503; sys.ts:52:39:TS2503
+host-declarations,TS2591,46,46,0,46,46,sys.ts:1471:34:TS2591; sys.ts:1471:42:TS2591; sys.ts:1472:36:TS2591
+host-inference,TS7006,1,1,0,1,1,sys.ts:1697:54:TS7006
+host-inference,TS7031,1,1,0,1,1,sys.ts:1697:61:TS7031
+host-members,TS2339,7,7,0,7,7,debug.ts:200:19:TS2339; debug.ts:201:19:TS2339; sys.ts:76:15:TS2339
+library-set-shape,TS2740,1,1,0,1,1,core.ts:1637:11:TS2740
+nullable-argument,TS2345,87,87,7,80,80,builder.ts:1246:69:TS2345; builder.ts:1345:64:TS2345; builder.ts:1347:41:TS2345
+nullable-dereference,TS2532,15,15,0,15,15,checker.ts:50153:121:TS2532; transformer.ts:367:9:TS2532; transformer.ts:395:9:TS2532
+nullable-dereference,TS18048,49,49,0,49,49,checker.ts:10022:86:TS18048; checker.ts:10033:67:TS18048; checker.ts:10033:79:TS18048
+nullable-index-key,TS2538,2,2,0,2,2,transformers/classFields.ts:2251:45:TS2538; transformers/esDecorators.ts:1164:45:TS2538
+nullable-iteration,TS2488,6,6,0,6,6,builder.ts:1258:65:TS2488; builder.ts:1292:61:TS2488; checker.ts:22498:32:TS2488
+nullable-result-relation,TS2322,30,30,9,21,21,checker.ts:15145:9:TS2322; checker.ts:16693:62:TS2322; checker.ts:1683:9:TS2322
+optional-call,TS2722,1,1,0,1,1,checker.ts:20595:32:TS2722
+optional-field-presence,TS2375,16,16,16,0,0,builder.ts:2273:9:TS2375; builder.ts:2310:9:TS2375; checker.ts:54261:5:TS2375
+optional-field-presence,TS2379,10,10,10,0,0,checker.ts:10941:33:TS2379; checker.ts:21434:98:TS2379; checker.ts:43740:86:TS2379
+optional-field-presence,TS2412,25,25,24,1,1,checker.ts:17890:21:TS2412; checker.ts:43517:20:TS2412; program.ts:4956:9:TS2412
+optional-field-presence,TS2420,1,1,1,0,0,checker.ts:54329:7:TS2420
+overload-use,TS2769,6,6,0,6,6,builder.ts:2377:13:TS2769; checker.ts:10324:76:TS2769; checker.ts:17946:29:TS2769
+spread-tuple,TS2556,1,1,0,1,1,checker.ts:22498:29:TS2556

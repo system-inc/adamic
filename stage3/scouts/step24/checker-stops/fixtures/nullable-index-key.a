@@ -1,0 +1,4 @@
+// a-check: type error TS2538
+const keys: number[] = [0];
+const values: string[] = ['ok'];
+console.log(values[keys[0]]);

@@ -1,0 +1,4 @@
+// a-check: type error TS2556
+function report(value: string, count: number): string { return value + String(count); }
+const rows: [string, number][] = [['ok', 1]];
+console.log(report(...rows[0]));
