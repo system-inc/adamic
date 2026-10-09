@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_method_values.go b/internal/lower/library_method_values.go
+index 0a226f31..05e0e11d 100644
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -434,7 +434,7 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
+ 		result = ir.NumberCall{Function: method.name, Arguments: arguments}
+ 	}
+ 	if result == nil {
+-		return nil, true, l.notYet(node, "a library map callback without a proven primitive adapter (map supplies value, index and array); use an arrow")
++		return nil, true, l.notYet(node, "an unrelated refusal injected by the guard audit")
+ 	}
+ 	function.Returns = result.Type()
+ 	function.Body = []ir.Statement{ir.Return{Value: result}}
