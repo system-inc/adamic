@@ -184,3 +184,29 @@ Each lowering summary retains `boundaries` and the complete
 `excluded_nested_functions` ledger (name, location, diagnostics, and bytes).
 Excluded parent/child byte spans can overlap; do not add them to claim unique
 unexamined bytes. This is partial observational measurement with explicit gaps.
+
+Run meter and census test cases as independent gate units after preparing the
+four probe executables, four Go test binaries and the shared fixture oracle hook once. Preparation logs all builds; fetches validate the action
+key and every binary's SHA-256 and refuse missing or corrupt products.
+
+```sh
+python3 stage3/meter/build-probes.py --prepare > /tmp/probe-build.log 2>&1
+ADAMIC_TEST_SHARD=0/8 python3 stage3/meter/shards.py meter > /tmp/meter-0.log 2>&1
+ADAMIC_TEST_SHARD=0/2 python3 stage3/meter/shards.py census > /tmp/census-0.log 2>&1
+ADAMIC_TEST_SHARD=0/8 python3 stage3/meter/shards.py meter --list > /tmp/meter-cases.json
+python3 stage3/meter/audit-shards.py /tmp/new-probe-audit > /tmp/probe-audit.log 2>&1
+```
+
+Repeat meter with indices 0 through 7 and census with indices 0 and 1.
+Assignment is SHA-256 of each complete unittest case ID, first eight bytes
+big-endian, modulo the selected shard count.
+The audit checks the complete disjoint union against the case inventory and
+plants an additional failure in exactly one case's shard for each group. Every
+original assertion still runs. In particular it retains meter's Refused-count
+failure and census's nested-unit panic on the measured main revision. Meter's
+real optional probes are enabled by the runner, rather than silently skipped.
+Census replay's ordinary unittest invocation also requires prepared products.
+The local content store can be copied to another worker at the same repository
+path with the same keyed inputs; this helper does not configure remote storage.
+See [the full timing report](../fixtures/SHARD-REPORT.md) for measured failures
+and limits. The audit is an orchestrator, not one gate test unit.

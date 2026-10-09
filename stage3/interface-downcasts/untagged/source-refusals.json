@@ -1,0 +1,8 @@
+{
+  "binding-name/wrong": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+  "binding-name/nested": "adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n",
+  "option-element/wrong": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+  "option-element/nested": "adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n",
+  "structural/wrong": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+  "structural/nested": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+}
