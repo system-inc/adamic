@@ -47,11 +47,11 @@ func jsonTopCorpus(t *testing.T) ([]textCase, []nativeChunk) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		state, err := repositoryJSONAtHEAD(root)
+		state, err := cachedRepositoryCasesAtPin(root, repositoryCorpusCommit)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(state.paths) == 0 {
+		if len(state) == 0 {
 			t.Fatal("repository JSON corpus is empty")
 		}
 		jsonTopState.cases = corpusCases(t)
