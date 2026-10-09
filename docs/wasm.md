@@ -229,3 +229,81 @@ Setup printed `go ready`, `clang ready`, `node ready` and `submodules ready` at
 0 s, `build cache warm` at 106 s, and `done in 106s on 5 processors` (`nproc` = 5,
 cgroup quota four CPUs, 17.6 GB reported memory). Go was 1.27.1 and native clang
 20.1.8. The setup environment was `/workspace/adamic-tools/env.sh`.
+
+## Threads
+
+Plain `wasm32-wasi` uses unshared memory and `-mno-atomics`. W7's guarded pool
+startup selects one executor regardless of `ADAMIC_THREADS`; no worker is started.
+`parallelMap` uses the existing single-thread path, visiting ascending indices,
+preserving result positions, and stopping at the first thrown exception. Input,
+closure and result graph publication still follows the native ownership ABI.
+The request handler remains synchronous within one module instance.
+
+WASI SDK 27 clang lowers the runtime's `_Thread_local` storage and C atomics to
+ordinary memory accesses without shared memory. A disassembled probe shows
+`i32.load`, `i32.add` and `i32.store` for TLS increment and atomic fetch-add,
+with no wasm atomic instruction. No replacement counter implementation is added.
+WASI libc supplies single-thread mutex/once operations. Its `pthread_create`
+stub returned 6 (ENXIO) and never called the worker in the executed probe; that
+stub is a failure path, not a pool implementation.
+
+The WASI panic path skips the native wait for a competing panic thread. Worker
+stack initialization leaves the constructor's linear-stack limit intact.
+Native preprocessing retains the existing pool, TLS and atomic implementation;
+all 50 release runtime objects were compared byte for byte at `-O2`.
+
+The first merged-tree checks exposed two additional integration blockers:
+`-pthread` conflicts with `-mno-atomics` in the driver, and `share.c` hashes a
+32-bit pointer with a shift by 33. The W7 evidence distinguishes these compile
+failures from runtime agreement; a green WASI oracle is required before landing.
+The W7 unit task carries the run evidence for its hooks, commands, counts and
+limitations; raw output is kept outside the repository.
+
+Actual wasm threads would require a wasi-threads-capable host, shared linear
+memory, atomics-enabled compilation and linking, worker instantiation and TLS
+initialization, per-thread stacks, and tested scheduling/ownership and shutdown.
+The native pool cannot acquire those facilities from ordinary WASI Preview 1.
+That future target needs its own Node comparisons and race/lifetime proofs.
+W7 makes no speed measurement.
+## Node host runtime on WASI
+
+The Node filesystem, directory and process translation units also build for
+WASI. Lowering remains target independent. At the target-aware build boundary,
+`TargetRefused` rejects emitted calls to `mkdtempSync`, `process.pid`,
+`process.platform`, `process.argv`, `process.stdout.columns` and
+`process.memoryUsage`. String data and comments do not select a host operation.
+Each unavailable entry also has a runtime panic with its member and reason for
+callers that did not pass through that boundary. There are no fabricated ids,
+platform strings, executable paths, terminal widths or allocation observations.
+
+WASI libc supplies ordinary file and descriptor I/O, positioned reads and writes,
+fsync, directory enumeration, stat/lstat, realpath, readlink, removal, clocks,
+allocation, environment access and mutation. Symlink creation, chmod and
+getrusage are not called by these three translation units. The executable-path
+readlink remains Linux-only; Darwin allocator headers remain Darwin-only.
+
+The shared filesystem adapter resolves a path's parent before invoking a WASI
+path operation. This preserves symlink-before-`..` traversal without following
+an unlink/lstat leaf or requiring a creation leaf to exist. Original input
+spellings remain in errors. The existing `fileStatus` directory bridge uses the
+same adapter through one include. Empty paths report Node's ENOENT, and reading
+a directory reports EISDIR rather than WASI fd_read's EBADF.
+
+Custom file and directory creation modes refuse before the effect: WASI has no
+POSIX permission-bit API. Default creation modes continue through the host.
+Node 24's WASI path_filestat_set_times drops subsecond precision; Preview 1 also
+cannot represent pre-epoch timestamps. Fractional, negative and out-of-range
+utimes inputs therefore refuse before changing timestamps. Nonnegative
+whole-second updates and timestamp reads remain available.
+
+Preview 1 has no initial cwd. The command runner explicitly supplies
+`ADAMIC_WASI_CWD`; the runtime enters that directory within the supplied
+preopens, or panics if it cannot. Without that variable, wasi-libc's virtual
+cwd remains `/`. This does not grant any additional filesystem capability.
+
+`ADAMIC_ORACLE_WASI=1` now also runs the existing input and filesystem host
+fixtures, with their directories, arguments, uid and file-effect comparisons.
+Typed compile refusals and the exact owned runtime refusals above are recorded
+as target skips. Compilation failures, ordinary panics, traps and unexpected
+output remain failures. Runtime refusal probes independently require exit 70
+and the exact reason, using token pasting to bypass the build-boundary check.

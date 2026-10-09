@@ -1,0 +1,11 @@
+for (const year of [-271821, -10000, -400, -1, -0, 0, 1, 99.9, 100, 1900, 1969, 1970, 2000, 10000, 275760, 1000001, NaN, Infinity]) {
+ for (const month of [-25, -1, 0, 1, 11, 12, 25]) {
+  console.log(`${year} ${month} ${Date.UTC(year, month, 29, 25, -60, 61, -1.9)}`);
+ }
+}
+console.log(`${Date.UTC(2020)}`);
+console.log(`${Date.UTC(2020, undefined)}`);
+console.log(`${Date.UTC(-271821, 3, 20)}`);
+console.log(`${Date.UTC(275760, 8, 13)}`);
+console.log(`${Date.UTC(275760, 8, 13, 0, 0, 0, 1)}`);
+console.log(`${Date.UTC(2000, 1, 1, 1e20, -6e21, 0, 0)}`);

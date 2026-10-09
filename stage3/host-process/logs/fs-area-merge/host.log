@@ -1,0 +1,228 @@
+=== RUN   TestFixtures
+=== PAUSE TestFixtures
+=== CONT  TestFixtures
+=== RUN   TestFixtures/host
+=== PAUSE TestFixtures/host
+=== CONT  TestFixtures/host
+=== RUN   TestFixtures/host/01_readFile_utf8.a
+=== PAUSE TestFixtures/host/01_readFile_utf8.a
+=== RUN   TestFixtures/host/02_readFile_utf16le.a
+=== PAUSE TestFixtures/host/02_readFile_utf16le.a
+=== RUN   TestFixtures/host/03_readFile_utf16be.a
+=== PAUSE TestFixtures/host/03_readFile_utf16be.a
+=== RUN   TestFixtures/host/04_readFile_missing.a
+=== PAUSE TestFixtures/host/04_readFile_missing.a
+=== RUN   TestFixtures/host/05_writeFile.a
+=== PAUSE TestFixtures/host/05_writeFile.a
+=== RUN   TestFixtures/host/06_fileExists.a
+=== PAUSE TestFixtures/host/06_fileExists.a
+=== RUN   TestFixtures/host/07_directoryExists.a
+=== PAUSE TestFixtures/host/07_directoryExists.a
+=== RUN   TestFixtures/host/08_getDirectories.a
+=== PAUSE TestFixtures/host/08_getDirectories.a
+=== RUN   TestFixtures/host/09_realpath.a
+=== PAUSE TestFixtures/host/09_realpath.a
+=== RUN   TestFixtures/host/10_getModifiedTime.a
+=== PAUSE TestFixtures/host/10_getModifiedTime.a
+=== RUN   TestFixtures/host/11_setModifiedTime.a
+=== PAUSE TestFixtures/host/11_setModifiedTime.a
+=== RUN   TestFixtures/host/12_deleteFile.a
+=== PAUSE TestFixtures/host/12_deleteFile.a
+=== RUN   TestFixtures/host/13_createDirectory.a
+=== PAUSE TestFixtures/host/13_createDirectory.a
+=== RUN   TestFixtures/host/14_getCurrentDirectory.a
+=== PAUSE TestFixtures/host/14_getCurrentDirectory.a
+=== RUN   TestFixtures/host/15_getExecutingFilePath.a
+=== PAUSE TestFixtures/host/15_getExecutingFilePath.a
+=== RUN   TestFixtures/host/16_getEnvironmentVariable.a
+=== PAUSE TestFixtures/host/16_getEnvironmentVariable.a
+=== RUN   TestFixtures/host/17_write.a
+=== PAUSE TestFixtures/host/17_write.a
+=== RUN   TestFixtures/host/18_exit_0.a
+=== PAUSE TestFixtures/host/18_exit_0.a
+=== RUN   TestFixtures/host/19_exit_1.a
+=== PAUSE TestFixtures/host/19_exit_1.a
+=== RUN   TestFixtures/host/20_exit_2.a
+=== PAUSE TestFixtures/host/20_exit_2.a
+=== RUN   TestFixtures/host/21_createHash.a
+=== PAUSE TestFixtures/host/21_createHash.a
+=== RUN   TestFixtures/host/22_createHash_fallback.a
+=== PAUSE TestFixtures/host/22_createHash_fallback.a
+=== RUN   TestFixtures/host/23_newLine.a
+=== PAUSE TestFixtures/host/23_newLine.a
+=== RUN   TestFixtures/host/24_useCaseSensitiveFileNames.a
+=== PAUSE TestFixtures/host/24_useCaseSensitiveFileNames.a
+=== RUN   TestFixtures/host/25_readDirectory.a
+=== PAUSE TestFixtures/host/25_readDirectory.a
+=== CONT  TestFixtures/host/01_readFile_utf8.a
+=== CONT  TestFixtures/host/14_getCurrentDirectory.a
+=== CONT  TestFixtures/host/07_directoryExists.a
+=== CONT  TestFixtures/host/25_readDirectory.a
+=== RUN   TestFixtures/host/14_getCurrentDirectory.a/node
+=== RUN   TestFixtures/host/01_readFile_utf8.a/node
+=== RUN   TestFixtures/host/07_directoryExists.a/node
+=== RUN   TestFixtures/host/25_readDirectory.a/node
+=== RUN   TestFixtures/host/01_readFile_utf8.a/stage0
+=== CONT  TestFixtures/host/06_fileExists.a
+=== RUN   TestFixtures/host/14_getCurrentDirectory.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/14_getCurrentDirectory.a:15:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:NotYet What:stage3/fixtures/host/14_getCurrentDirectory.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/05_writeFile.a
+=== RUN   TestFixtures/host/25_readDirectory.a/stage0
+=== CONT  TestFixtures/host/04_readFile_missing.a
+=== RUN   TestFixtures/host/06_fileExists.a/node
+=== RUN   TestFixtures/host/07_directoryExists.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/07_directoryExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/03_readFile_utf16be.a
+=== RUN   TestFixtures/host/05_writeFile.a/node
+=== RUN   TestFixtures/host/03_readFile_utf16be.a/node
+=== RUN   TestFixtures/host/04_readFile_missing.a/node
+=== RUN   TestFixtures/host/06_fileExists.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/06_fileExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/02_readFile_utf16le.a
+=== RUN   TestFixtures/host/04_readFile_missing.a/stage0
+=== CONT  TestFixtures/host/10_getModifiedTime.a
+=== RUN   TestFixtures/host/02_readFile_utf16le.a/node
+=== RUN   TestFixtures/host/03_readFile_utf16be.a/stage0
+=== CONT  TestFixtures/host/13_createDirectory.a
+=== RUN   TestFixtures/host/05_writeFile.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/05_writeFile.a:13:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0}; recorded {Outcome:NotYet What:stage3/fixtures/host/05_writeFile.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/12_deleteFile.a
+=== RUN   TestFixtures/host/10_getModifiedTime.a/node
+=== RUN   TestFixtures/host/13_createDirectory.a/node
+=== RUN   TestFixtures/host/12_deleteFile.a/node
+=== RUN   TestFixtures/host/02_readFile_utf16le.a/stage0
+=== CONT  TestFixtures/host/11_setModifiedTime.a
+=== RUN   TestFixtures/host/10_getModifiedTime.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/10_getModifiedTime.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/19_exit_1.a
+=== RUN   TestFixtures/host/12_deleteFile.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/12_deleteFile.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/24_useCaseSensitiveFileNames.a
+=== RUN   TestFixtures/host/19_exit_1.a/node
+=== RUN   TestFixtures/host/13_createDirectory.a/stage0
+=== CONT  TestFixtures/host/23_newLine.a
+=== RUN   TestFixtures/host/11_setModifiedTime.a/node
+=== RUN   TestFixtures/host/24_useCaseSensitiveFileNames.a/node
+=== RUN   TestFixtures/host/23_newLine.a/node
+=== RUN   TestFixtures/host/19_exit_1.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/19_exit_1.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/22_createHash_fallback.a
+=== RUN   TestFixtures/host/24_useCaseSensitiveFileNames.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/24_useCaseSensitiveFileNames.a:15:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/21_createHash.a
+=== RUN   TestFixtures/host/11_setModifiedTime.a/native
+=== RUN   TestFixtures/host/23_newLine.a/native
+=== RUN   TestFixtures/host/22_createHash_fallback.a/node
+=== RUN   TestFixtures/host/21_createHash.a/node
+=== RUN   TestFixtures/host/21_createHash.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/21_createHash.a:13:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:NotYet What:stage3/fixtures/host/21_createHash.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/20_exit_2.a
+=== RUN   TestFixtures/host/22_createHash_fallback.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/22_createHash_fallback.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/16_getEnvironmentVariable.a
+=== RUN   TestFixtures/host/20_exit_2.a/node
+=== RUN   TestFixtures/host/16_getEnvironmentVariable.a/node
+=== RUN   TestFixtures/host/20_exit_2.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/20_exit_2.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/18_exit_0.a
+=== RUN   TestFixtures/host/16_getEnvironmentVariable.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower a BinaryExpression with a string and a string yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/16_getEnvironmentVariable.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/17_write.a
+=== RUN   TestFixtures/host/18_exit_0.a/node
+=== RUN   TestFixtures/host/17_write.a/node
+=== RUN   TestFixtures/host/18_exit_0.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/18_exit_0.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/08_getDirectories.a
+=== RUN   TestFixtures/host/08_getDirectories.a/node
+=== RUN   TestFixtures/host/17_write.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/17_write.a:16:5: stage 0 can't lower a literal method call with an unrepresented result yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/17_write.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/09_realpath.a
+=== RUN   TestFixtures/host/09_realpath.a/node
+=== RUN   TestFixtures/host/08_getDirectories.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/08_getDirectories.a:22:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== CONT  TestFixtures/host/15_getExecutingFilePath.a
+=== RUN   TestFixtures/host/15_getExecutingFilePath.a/node
+=== RUN   TestFixtures/host/09_realpath.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/09_realpath.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}
+=== RUN   TestFixtures/host/15_getExecutingFilePath.a/stage0
+    fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/15_getExecutingFilePath.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures (2.07s)
+    --- FAIL: TestFixtures/host (0.00s)
+        --- PASS: TestFixtures/host/01_readFile_utf8.a (0.86s)
+            --- PASS: TestFixtures/host/01_readFile_utf8.a/node (0.00s)
+            --- PASS: TestFixtures/host/01_readFile_utf8.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/14_getCurrentDirectory.a (0.92s)
+            --- PASS: TestFixtures/host/14_getCurrentDirectory.a/node (0.00s)
+            --- FAIL: TestFixtures/host/14_getCurrentDirectory.a/stage0 (0.00s)
+        --- PASS: TestFixtures/host/25_readDirectory.a (0.97s)
+            --- PASS: TestFixtures/host/25_readDirectory.a/node (0.00s)
+            --- PASS: TestFixtures/host/25_readDirectory.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/07_directoryExists.a (0.97s)
+            --- PASS: TestFixtures/host/07_directoryExists.a/node (0.00s)
+            --- FAIL: TestFixtures/host/07_directoryExists.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/06_fileExists.a (0.63s)
+            --- PASS: TestFixtures/host/06_fileExists.a/node (0.00s)
+            --- FAIL: TestFixtures/host/06_fileExists.a/stage0 (0.00s)
+        --- PASS: TestFixtures/host/04_readFile_missing.a (0.63s)
+            --- PASS: TestFixtures/host/04_readFile_missing.a/node (0.00s)
+            --- PASS: TestFixtures/host/04_readFile_missing.a/stage0 (0.00s)
+        --- PASS: TestFixtures/host/03_readFile_utf16be.a (0.64s)
+            --- PASS: TestFixtures/host/03_readFile_utf16be.a/node (0.00s)
+            --- PASS: TestFixtures/host/03_readFile_utf16be.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/05_writeFile.a (0.74s)
+            --- PASS: TestFixtures/host/05_writeFile.a/node (0.00s)
+            --- FAIL: TestFixtures/host/05_writeFile.a/stage0 (0.00s)
+        --- PASS: TestFixtures/host/02_readFile_utf16le.a (0.63s)
+            --- PASS: TestFixtures/host/02_readFile_utf16le.a/node (0.00s)
+            --- PASS: TestFixtures/host/02_readFile_utf16le.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/10_getModifiedTime.a (0.53s)
+            --- PASS: TestFixtures/host/10_getModifiedTime.a/node (0.00s)
+            --- FAIL: TestFixtures/host/10_getModifiedTime.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/12_deleteFile.a (0.54s)
+            --- PASS: TestFixtures/host/12_deleteFile.a/node (0.00s)
+            --- FAIL: TestFixtures/host/12_deleteFile.a/stage0 (0.00s)
+        --- PASS: TestFixtures/host/13_createDirectory.a (0.60s)
+            --- PASS: TestFixtures/host/13_createDirectory.a/node (0.00s)
+            --- PASS: TestFixtures/host/13_createDirectory.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/19_exit_1.a (0.54s)
+            --- PASS: TestFixtures/host/19_exit_1.a/node (0.00s)
+            --- FAIL: TestFixtures/host/19_exit_1.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/24_useCaseSensitiveFileNames.a (0.48s)
+            --- PASS: TestFixtures/host/24_useCaseSensitiveFileNames.a/node (0.00s)
+            --- FAIL: TestFixtures/host/24_useCaseSensitiveFileNames.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/21_createHash.a (0.60s)
+            --- PASS: TestFixtures/host/21_createHash.a/node (0.00s)
+            --- FAIL: TestFixtures/host/21_createHash.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/22_createHash_fallback.a (0.64s)
+            --- PASS: TestFixtures/host/22_createHash_fallback.a/node (0.00s)
+            --- FAIL: TestFixtures/host/22_createHash_fallback.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/20_exit_2.a (0.42s)
+            --- PASS: TestFixtures/host/20_exit_2.a/node (0.00s)
+            --- FAIL: TestFixtures/host/20_exit_2.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/16_getEnvironmentVariable.a (0.46s)
+            --- PASS: TestFixtures/host/16_getEnvironmentVariable.a/node (0.00s)
+            --- FAIL: TestFixtures/host/16_getEnvironmentVariable.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/18_exit_0.a (0.47s)
+            --- PASS: TestFixtures/host/18_exit_0.a/node (0.00s)
+            --- FAIL: TestFixtures/host/18_exit_0.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/17_write.a (0.51s)
+            --- PASS: TestFixtures/host/17_write.a/node (0.00s)
+            --- FAIL: TestFixtures/host/17_write.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/08_getDirectories.a (0.74s)
+            --- PASS: TestFixtures/host/08_getDirectories.a/node (0.00s)
+            --- FAIL: TestFixtures/host/08_getDirectories.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/09_realpath.a (0.90s)
+            --- PASS: TestFixtures/host/09_realpath.a/node (0.00s)
+            --- FAIL: TestFixtures/host/09_realpath.a/stage0 (0.00s)
+        --- FAIL: TestFixtures/host/15_getExecutingFilePath.a (1.20s)
+            --- PASS: TestFixtures/host/15_getExecutingFilePath.a/node (0.00s)
+            --- FAIL: TestFixtures/host/15_getExecutingFilePath.a/stage0 (0.00s)
+        --- PASS: TestFixtures/host/11_setModifiedTime.a (18.29s)
+            --- PASS: TestFixtures/host/11_setModifiedTime.a/node (0.00s)
+            --- PASS: TestFixtures/host/11_setModifiedTime.a/native (17.72s)
+        --- PASS: TestFixtures/host/23_newLine.a (19.45s)
+            --- PASS: TestFixtures/host/23_newLine.a/node (0.00s)
+            --- PASS: TestFixtures/host/23_newLine.a/native (18.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	23.770s
+FAIL

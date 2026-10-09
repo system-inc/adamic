@@ -1,0 +1,10 @@
+// Compiler-owned expected refusal, ruling 4: types.ts:23, path.ts:766.
+// The normalizer has already supplied nonCanonicalizedPath at this excerpt's boundary.
+type Path = string & { __pathBrand: void; };
+function canonicalPath(nonCanonicalizedPath: string, getCanonicalFileName: (path: string) => string): Path {
+    return getCanonicalFileName(nonCanonicalizedPath) as Path;
+}
+const values = new Map<Path, string>();
+values.set(canonicalPath('/PROJECT/one.ts', path => path.toLowerCase()), 'one');
+values.set(canonicalPath('/PROJECT/two.ts', path => path.toLowerCase()), 'two');
+for (const [path, value] of values) console.log(`${path}:${value}`);

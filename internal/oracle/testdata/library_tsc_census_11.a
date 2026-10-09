@@ -1,0 +1,4 @@
+// Reduced from core.ts:2258
+const fileName = 'jquery-min.4.2.3';
+const end = 6;
+console.log(fileName.slice(0, end));

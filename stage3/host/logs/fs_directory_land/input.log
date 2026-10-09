@@ -1,0 +1,50 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+    input_test.go:111: gate cache probe miss
+--- PASS: TestInputAgreesWithNode (0.02s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a (4.63s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (9.65s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (10.20s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (11.11s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a (11.21s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (11.95s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a (7.55s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=7
+ok  	github.com/system-inc/adamic/internal/oracle	17.310s

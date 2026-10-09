@@ -1,0 +1,9 @@
+// semver.ts:149-151 and scanner.ts:1258,2788.
+function version(major: string, minor: string, patch: string): string {
+    return `${parseInt(major, 10)}.${parseInt(minor, 10)}.${parseInt(patch, 10)}`;
+}
+console.log(version('024', '019', '0tail'));
+function quantifier(min: string, max: string): boolean {
+    return Number.parseInt(min) > Number.parseInt(max);
+}
+console.log(`${quantifier('12', '2')} ${quantifier('2', '12')} ${quantifier('0x10', '15')}`);

@@ -1,0 +1,12 @@
+const text = 'a🌍ba🌍';
+for (const index of [-Infinity, -2, -0, 0, 1, 2, 3, 4, 6, 7, 8, Infinity, NaN, 1.9]) {
+ for (const search of ['', 'a', '🌍', '\ud83c', '\udf0d', 'ba', 'a🌍']) {
+  console.log(`${index} ${search.length} ${text.startsWith(search, index)} ${text.endsWith(search, index)}`);
+ }
+}
+console.log(`${text.startsWith('a', undefined)} ${text.endsWith('🌍', undefined)}`);
+let order = '';
+function receiver(): string { order = order + 'r'; return 'abc'; }
+function search(): string { order = order + 's'; return 'b'; }
+function index(): number { order = order + 'i'; return 1; }
+console.log(`${receiver().startsWith(search(), index())} ${order}`);
