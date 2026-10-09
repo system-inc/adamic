@@ -12,6 +12,7 @@ The phases, from whichever route answered:
   Loom's pool (fast.json runner "pool"; the normal route): no steps_seconds, so they come from record.jsonl, the run's
   unit events, and the record's two clocks: the ref's stamp (fast.sh's serve start) and the record commit's time.
     select   serve start to the first unit started: the gate's selection run, the job's planning, Loom placing units
+             (unknown, with publish, when the record carries an earlier attempt's run, its units started before the stamp)
     fetch    the longest unit setup, "setup N s" (the tree and its build cache onto an instance)
     build    the build-vet unit's exit wallSeconds less its setup (go build ./... and go vet ./...)
     test     the longest test unit, "tests took N s" (else its exit wallSeconds less its setup)
@@ -112,12 +113,15 @@ def poolPhases(events, stampEpoch, commitEpoch):
             tests.append(row['tests'])
         elif 'wall' in row:
             tests.append(row['wall'] - row.get('setup', 0.0))
+    # A retried job can publish an earlier attempt's run (its units started before this record's stamp: 1e8eff51's
+    # 14:37Z record carried its 13:04Z run, Oct 9). Its unit seconds stand, but nothing measured against this stamp does.
+    earlier = bool(started) and min(started) < stampEpoch
     return {
-        'select': min(started) - stampEpoch if started else None,
+        'select': min(started) - stampEpoch if started and not earlier else None,
         'fetch': max(setups) if setups else None,
         'build': build['wall'] - build.get('setup', 0.0) if 'wall' in build else None,
         'test': max(tests) if tests else None,
-        'publish': commitEpoch - max(finished) if finished else None,
+        'publish': commitEpoch - max(finished) if finished and not earlier else None,
     }
 
 
@@ -135,8 +139,12 @@ def boxPhases(fast, stampEpoch, commitEpoch):
 
 def phases(directory, stampEpoch, commitEpoch):
     """The record's route and its five phases, with its wall (stamp to record commit)."""
-    with open(os.path.join(directory, 'fast.json')) as handle:
-        fast = json.load(handle)
+    # A box run cut short can publish a red with no fast.json (seven such records on Oct 9): its phases read unknown.
+    try:
+        with open(os.path.join(directory, 'fast.json')) as handle:
+            fast = json.load(handle)
+    except (OSError, ValueError):
+        fast = {}
     if fast.get('runner') == 'pool':
         route, mapped = 'pool', poolPhases(readEvents(directory), stampEpoch, commitEpoch)
     else:

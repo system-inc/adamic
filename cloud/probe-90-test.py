@@ -92,6 +92,12 @@ class MappingTests(unittest.TestCase):
         events = [event for event in poolEvents if 'tests took' not in event.get('text', '')]
         self.assertAlmostEqual(probe.poolPhases(events, poolStamp, poolCommit)['test'], 7.898, places=3)
 
+    def test_an_earlier_attempts_run_times_nothing_against_this_stamp(self):
+        mapped = probe.poolPhases(poolEvents, poolStamp + 3600, poolCommit + 3600)
+        self.assertIsNone(mapped['select'])
+        self.assertIsNone(mapped['publish'])
+        self.assertEqual((mapped['fetch'], mapped['test']), (2.0, 10.0))
+
     def test_box_record_maps_from_steps_seconds(self):
         with tempfile.TemporaryDirectory() as directory:
             writeRecord(directory, boxFast)
@@ -109,6 +115,12 @@ class MappingTests(unittest.TestCase):
             writeRecord(directory, poolFast)
             _, _, mapped = probe.phases(directory, poolStamp, poolCommit)
         self.assertEqual([mapped[name] for name in ('select', 'fetch', 'build', 'test', 'publish')], [None] * 5)
+
+    def test_a_record_with_no_fast_json_reads_as_an_unknown_box_run(self):
+        with tempfile.TemporaryDirectory() as directory:
+            (Path(directory) / 'status.txt').write_text('red: abc fast gate, first failure at tests\n')
+            route, fast, mapped = probe.phases(directory, boxStamp, boxCommit)
+        self.assertEqual((route, fast, mapped['wall'], mapped['test']), ('box', {}, 60.0, None))
 
 
 class LineTests(unittest.TestCase):
