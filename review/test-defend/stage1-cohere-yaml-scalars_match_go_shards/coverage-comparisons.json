@@ -1,0 +1,242 @@
+{
+  "Speed": {
+    "subsumer": "Scalars",
+    "exclusive_production_modules": [
+      "stage1/cohere/yaml/gaps/arenaNodeRead.ts",
+      "stage1/cohere/yaml/gaps/numericMapLookup.ts",
+      "stage1/cohere/yaml/gaps/stringUnitScan.ts"
+    ],
+    "executed_functions": {
+      "stage1/cohere/yaml/gaps/arenaNodeRead.ts": [
+        "",
+        "<instance_members_initializer>",
+        "Entries",
+        "Entry",
+        "node"
+      ],
+      "stage1/cohere/yaml/gaps/numericMapLookup.ts": [
+        ""
+      ],
+      "stage1/cohere/yaml/gaps/stringUnitScan.ts": [
+        "",
+        "scan"
+      ]
+    }
+  },
+  "Unist": {
+    "subsumer": "Scalars",
+    "exclusive_production_modules": [
+      "stage1/cohere/yaml/composedDocument.ts",
+      "stage1/cohere/yaml/composedNode.ts",
+      "stage1/cohere/yaml/composer.ts",
+      "stage1/cohere/yaml/directives.ts",
+      "stage1/cohere/yaml/patternNode.ts",
+      "stage1/cohere/yaml/props.ts",
+      "stage1/cohere/yaml/propsResolver.ts",
+      "stage1/cohere/yaml/schemaPattern.ts",
+      "stage1/cohere/yaml/schemaTag.ts",
+      "stage1/cohere/yaml/schemaTags.ts",
+      "stage1/cohere/yaml/unistContext.ts",
+      "stage1/cohere/yaml/unistDocumentData.ts",
+      "stage1/cohere/yaml/unistNode.ts",
+      "stage1/cohere/yaml/unistPoint.ts",
+      "stage1/cohere/yaml/unistPosition.ts",
+      "stage1/cohere/yaml/unist_main.ts"
+    ],
+    "executed_functions": {
+      "stage1/cohere/yaml/composedDocument.ts": [
+        "",
+        "<instance_members_initializer>",
+        "ComposedDocument"
+      ],
+      "stage1/cohere/yaml/composedNode.ts": [
+        "",
+        "<instance_members_initializer>",
+        "ComposedNode"
+      ],
+      "stage1/cohere/yaml/composer.ts": [
+        "",
+        "<instance_members_initializer>",
+        "Composer",
+        "appendComment",
+        "blockMap",
+        "blockSequence",
+        "collectDirectives",
+        "collection",
+        "collectionTag",
+        "compose",
+        "composeNode",
+        "composeScalar",
+        "decorate",
+        "empty",
+        "error",
+        "flowCollection",
+        "isBlock",
+        "make",
+        "newline",
+        "node",
+        "pair",
+        "properties",
+        "prototypeTag",
+        "quoted",
+        "rangeError",
+        "sameValue",
+        "scalarValue",
+        "tagName",
+        "tokenError",
+        "valueText",
+        "warning"
+      ],
+      "stage1/cohere/yaml/directives.ts": [
+        "",
+        "<instance_members_initializer>",
+        "Directives",
+        "add",
+        "atDocument",
+        "decode",
+        "error",
+        "hexByte",
+        "parts",
+        "tagError",
+        "tagName"
+      ],
+      "stage1/cohere/yaml/patternNode.ts": [
+        "",
+        "<instance_members_initializer>",
+        "PatternNode"
+      ],
+      "stage1/cohere/yaml/props.ts": [
+        "",
+        "<instance_members_initializer>"
+      ],
+      "stage1/cohere/yaml/propsResolver.ts": [
+        "",
+        "<instance_members_initializer>",
+        "PropsResolver",
+        "resolve"
+      ],
+      "stage1/cohere/yaml/schemaPattern.ts": [
+        "",
+        "<instance_members_initializer>",
+        "SchemaPattern",
+        "alternative",
+        "atom",
+        "character",
+        "concatenate",
+        "escaped",
+        "leading",
+        "make",
+        "match",
+        "matchPattern",
+        "node",
+        "test"
+      ],
+      "stage1/cohere/yaml/schemaTag.ts": [
+        "",
+        "<instance_members_initializer>",
+        "SchemaTag"
+      ],
+      "stage1/cohere/yaml/schemaTags.ts": [
+        "",
+        "schemaTags"
+      ],
+      "stage1/cohere/yaml/unistContext.ts": [
+        "",
+        "<instance_members_initializer>",
+        "UnistContext",
+        "attach",
+        "attachOne",
+        "collection",
+        "comment",
+        "composed",
+        "content",
+        "document",
+        "documents",
+        "empty",
+        "end",
+        "explicit",
+        "extendEnd",
+        "extendStart",
+        "extractComments",
+        "itemValue",
+        "make",
+        "makePosition",
+        "node",
+        "offset",
+        "ownsEnd",
+        "pair",
+        "parents",
+        "parse",
+        "point",
+        "position",
+        "property",
+        "range",
+        "start",
+        "table",
+        "token",
+        "tokens",
+        "transform",
+        "typeError",
+        "update"
+      ],
+      "stage1/cohere/yaml/unistDocumentData.ts": [
+        "",
+        "<instance_members_initializer>"
+      ],
+      "stage1/cohere/yaml/unistNode.ts": [
+        "",
+        "<instance_members_initializer>",
+        "UnistNode",
+        "hasChildrenField",
+        "hasLeadingCommentsField",
+        "hasTrailingCommentField"
+      ],
+      "stage1/cohere/yaml/unistPoint.ts": [
+        "",
+        "<instance_members_initializer>",
+        "UnistPoint"
+      ],
+      "stage1/cohere/yaml/unistPosition.ts": [
+        "",
+        "<instance_members_initializer>",
+        "UnistPosition"
+      ],
+      "stage1/cohere/yaml/unist_main.ts": [
+        "",
+        "<instance_members_initializer>",
+        "UnistOutline",
+        "byteCanonical",
+        "hex",
+        "list",
+        "outline",
+        "point",
+        "unescaped"
+      ]
+    }
+  },
+  "Widths": {
+    "subsumer": "Speed",
+    "exclusive_production_modules": [
+      "stage1/cohere/yaml/width.ts",
+      "stage1/cohere/yaml/widthTables.ts",
+      "stage1/cohere/yaml/width_main.ts"
+    ],
+    "executed_functions": {
+      "stage1/cohere/yaml/width.ts": [
+        "",
+        "emojiEntries",
+        "mapped",
+        "match",
+        "matchEmoji",
+        "stringWidth",
+        "wide"
+      ],
+      "stage1/cohere/yaml/widthTables.ts": [
+        ""
+      ],
+      "stage1/cohere/yaml/width_main.ts": [
+        ""
+      ]
+    }
+  }
+}

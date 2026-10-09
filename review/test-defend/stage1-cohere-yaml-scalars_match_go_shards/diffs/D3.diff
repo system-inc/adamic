@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/widthTables.ts
++++ b/stage1/cohere/yaml/widthTables.ts
+@@ -123,7 +123,7 @@
+     [0x1fadf, 0x1faea],
+     [0x1faef, 0x1faf8],
+     [0x20000, 0x2fffd],
+-    [0x30000, 0x3fffd],
++    [0x30000, 0x3fffc],
+ ];
+ export const emojiStart = 1469;
+ export const emoji: readonly (readonly number[])[] = [

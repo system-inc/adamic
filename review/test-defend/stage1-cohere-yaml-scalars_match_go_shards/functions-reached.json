@@ -1,0 +1,465 @@
+{
+  "Speed": {
+    "stage1/cohere/yaml/gaps/numericMapLookup.ts": [
+      "<module>"
+    ],
+    "stage1/cohere/yaml/gaps/arenaNodeRead.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "Entries",
+      "Entry",
+      "node"
+    ],
+    "stage1/cohere/yaml/gaps/stringUnitScan.ts": [
+      "<module>",
+      "scan"
+    ]
+  },
+  "Unist": {
+    "stage1/cohere/yaml/unist_main.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "UnistOutline",
+      "byteCanonical",
+      "hex",
+      "list",
+      "outline",
+      "point",
+      "unescaped"
+    ],
+    "stage1/cohere/yaml/cstParser.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "append",
+      "appendItemEnd",
+      "blockMap",
+      "blockScalar",
+      "blockSequence",
+      "commentLessIndented",
+      "document",
+      "documentEnd",
+      "error",
+      "firstKeyProps",
+      "fixFlowSequence",
+      "flowCollection",
+      "flowScalar",
+      "flowToken",
+      "get",
+      "includes",
+      "indentedComment",
+      "last",
+      "lineEnd",
+      "make",
+      "map",
+      "moveIndentedComment",
+      "newLines",
+      "next",
+      "nonEmpty",
+      "pair",
+      "parse",
+      "peek",
+      "pop",
+      "previousProps",
+      "scalar",
+      "sourceToken",
+      "startBlockValue",
+      "step",
+      "stream"
+    ],
+    "stage1/cohere/yaml/cst.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "Token",
+      "tokenType"
+    ],
+    "stage1/cohere/yaml/collectionItem.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "CollectionItem"
+    ],
+    "stage1/cohere/yaml/lexer.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "asciiCharacters",
+      "atLineEnd",
+      "charAt",
+      "character",
+      "codeUnit",
+      "continueScalar",
+      "getLine",
+      "hasChars",
+      "isEmpty",
+      "isEmptyCode",
+      "isFlowIndicatorCode",
+      "lex",
+      "member",
+      "parseBlockScalar",
+      "parseBlockScalarHeader",
+      "parseBlockStart",
+      "parseDocument",
+      "parseFlowCollection",
+      "parseLineStart",
+      "parseNext",
+      "parsePlainScalar",
+      "parseQuotedScalar",
+      "parseStream",
+      "peek",
+      "pushCount",
+      "pushIndicators",
+      "pushNewline",
+      "pushSpaces",
+      "pushTag",
+      "pushToIndex",
+      "pushUntil"
+    ],
+    "stage1/cohere/yaml/composer.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "Composer",
+      "appendComment",
+      "blockMap",
+      "blockSequence",
+      "collectDirectives",
+      "collection",
+      "collectionTag",
+      "compose",
+      "composeNode",
+      "composeScalar",
+      "decorate",
+      "empty",
+      "error",
+      "flowCollection",
+      "isBlock",
+      "make",
+      "newline",
+      "node",
+      "pair",
+      "properties",
+      "prototypeTag",
+      "quoted",
+      "rangeError",
+      "sameValue",
+      "scalarValue",
+      "tagName",
+      "tokenError",
+      "valueText",
+      "warning"
+    ],
+    "stage1/cohere/yaml/propsResolver.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "PropsResolver",
+      "resolve"
+    ],
+    "stage1/cohere/yaml/composeError.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ComposeError"
+    ],
+    "stage1/cohere/yaml/props.ts": [
+      "<instance_members_initializer>",
+      "<module>"
+    ],
+    "stage1/cohere/yaml/scalar.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ScalarResolver",
+      "block",
+      "doubleQuoted",
+      "end",
+      "flow"
+    ],
+    "stage1/cohere/yaml/scalarResolution.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "error",
+      "tokenError"
+    ],
+    "stage1/cohere/yaml/scalarText.ts": [
+      "<module>",
+      "char",
+      "emptyContent",
+      "escapeCode",
+      "foldLines",
+      "lineEnd",
+      "whitespace"
+    ],
+    "stage1/cohere/yaml/newlineFold.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "NewlineFold"
+    ],
+    "stage1/cohere/yaml/blockLine.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "BlockLine"
+    ],
+    "stage1/cohere/yaml/composedNode.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ComposedNode"
+    ],
+    "stage1/cohere/yaml/composedDocument.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ComposedDocument"
+    ],
+    "stage1/cohere/yaml/directives.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "Directives",
+      "add",
+      "atDocument",
+      "decode",
+      "error",
+      "hexByte",
+      "parts",
+      "tagError",
+      "tagName"
+    ],
+    "stage1/cohere/yaml/schemaTags.ts": [
+      "<module>",
+      "schemaTags"
+    ],
+    "stage1/cohere/yaml/schemaTag.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "SchemaTag"
+    ],
+    "stage1/cohere/yaml/schemaPattern.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "SchemaPattern",
+      "alternative",
+      "atom",
+      "character",
+      "concatenate",
+      "escaped",
+      "leading",
+      "make",
+      "match",
+      "matchPattern",
+      "node",
+      "test"
+    ],
+    "stage1/cohere/yaml/patternNode.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "PatternNode"
+    ],
+    "stage1/cohere/yaml/unistContext.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "UnistContext",
+      "attach",
+      "attachOne",
+      "collection",
+      "comment",
+      "composed",
+      "content",
+      "document",
+      "documents",
+      "empty",
+      "end",
+      "explicit",
+      "extendEnd",
+      "extendStart",
+      "extractComments",
+      "itemValue",
+      "make",
+      "makePosition",
+      "node",
+      "offset",
+      "ownsEnd",
+      "pair",
+      "parents",
+      "parse",
+      "point",
+      "position",
+      "property",
+      "range",
+      "start",
+      "table",
+      "token",
+      "tokens",
+      "transform",
+      "typeError",
+      "update"
+    ],
+    "stage1/cohere/yaml/unistNode.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "UnistNode",
+      "hasChildrenField",
+      "hasLeadingCommentsField",
+      "hasTrailingCommentField"
+    ],
+    "stage1/cohere/yaml/unistDocumentData.ts": [
+      "<instance_members_initializer>",
+      "<module>"
+    ],
+    "stage1/cohere/yaml/unistPoint.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "UnistPoint"
+    ],
+    "stage1/cohere/yaml/unistPosition.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "UnistPosition"
+    ]
+  },
+  "Widths": {
+    "stage1/cohere/yaml/width_main.ts": [
+      "<module>"
+    ],
+    "stage1/cohere/yaml/width.ts": [
+      "<module>",
+      "emojiEntries",
+      "mapped",
+      "match",
+      "matchEmoji",
+      "stringWidth",
+      "wide"
+    ],
+    "stage1/cohere/yaml/widthTables.ts": [
+      "<module>"
+    ]
+  },
+  "Scalars": {
+    "stage1/cohere/yaml/scalar_main.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ScalarOutline",
+      "hex",
+      "unescaped",
+      "visit"
+    ],
+    "stage1/cohere/yaml/cstParser.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "append",
+      "appendItemEnd",
+      "blockMap",
+      "blockScalar",
+      "blockSequence",
+      "commentLessIndented",
+      "document",
+      "documentEnd",
+      "error",
+      "firstKeyProps",
+      "fixFlowSequence",
+      "flowCollection",
+      "flowScalar",
+      "flowToken",
+      "get",
+      "includes",
+      "indentedComment",
+      "last",
+      "lineEnd",
+      "make",
+      "map",
+      "moveIndentedComment",
+      "newLines",
+      "next",
+      "nonEmpty",
+      "pair",
+      "parse",
+      "peek",
+      "pop",
+      "previousProps",
+      "scalar",
+      "sourceToken",
+      "startBlockValue",
+      "step",
+      "stream"
+    ],
+    "stage1/cohere/yaml/cst.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "Token",
+      "tokenType"
+    ],
+    "stage1/cohere/yaml/collectionItem.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "CollectionItem"
+    ],
+    "stage1/cohere/yaml/lexer.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "asciiCharacters",
+      "atLineEnd",
+      "charAt",
+      "character",
+      "codeUnit",
+      "continueScalar",
+      "getLine",
+      "hasChars",
+      "isEmpty",
+      "isEmptyCode",
+      "isFlowIndicatorCode",
+      "lex",
+      "member",
+      "parseBlockScalar",
+      "parseBlockScalarHeader",
+      "parseBlockStart",
+      "parseDocument",
+      "parseFlowCollection",
+      "parseLineStart",
+      "parseNext",
+      "parsePlainScalar",
+      "parseQuotedScalar",
+      "parseStream",
+      "peek",
+      "pushCount",
+      "pushIndicators",
+      "pushNewline",
+      "pushSpaces",
+      "pushTag",
+      "pushToIndex",
+      "pushUntil",
+      "setNext"
+    ],
+    "stage1/cohere/yaml/scalar.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ScalarResolver",
+      "block",
+      "characterCode",
+      "doubleQuoted",
+      "end",
+      "flow"
+    ],
+    "stage1/cohere/yaml/scalarResolution.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "error",
+      "tokenError"
+    ],
+    "stage1/cohere/yaml/composeError.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "ComposeError"
+    ],
+    "stage1/cohere/yaml/scalarText.ts": [
+      "<module>",
+      "char",
+      "emptyContent",
+      "escapeCode",
+      "foldLines",
+      "lineEnd",
+      "whitespace"
+    ],
+    "stage1/cohere/yaml/newlineFold.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "NewlineFold"
+    ],
+    "stage1/cohere/yaml/blockLine.ts": [
+      "<instance_members_initializer>",
+      "<module>",
+      "BlockLine"
+    ]
+  }
+}

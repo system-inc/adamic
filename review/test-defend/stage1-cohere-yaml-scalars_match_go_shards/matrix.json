@@ -1,0 +1,201 @@
+{
+  "D2": {
+    "rows_failed": [
+      "TestUnistMatchesGo"
+    ],
+    "rows_passed": [
+      "TestFileDriverUnion",
+      "TestFileDriver_000",
+      "TestFileDriver_001",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_004",
+      "TestFileDriver_005",
+      "TestFileDriver_006",
+      "TestFileDriver_007",
+      "TestFileDriver_Setup",
+      "TestFormatterMatchesGo",
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_005",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSpeedCostProbes",
+      "TestUnistMutants"
+    ],
+    "rows_skipped": [],
+    "failing_output": [
+      {
+        "log": "D2-target.log",
+        "line": "unist_test.go:80: native ASan/UBSan/LSan: byte 22: got \"case 0\\nroot|1,1,0|564,2,30842|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,2,30842|||-1|0|0\", want \"case 0\\nroot|1,1,0|564,1,30841|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,1,30841|||-1|0|0\""
+      }
+    ]
+  },
+  "D3": {
+    "rows_failed": [
+      "TestWidthsMatchGo"
+    ],
+    "rows_passed": [
+      "TestFileDriverUnion",
+      "TestFileDriver_000",
+      "TestFileDriver_001",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_004",
+      "TestFileDriver_005",
+      "TestFileDriver_006",
+      "TestFileDriver_007",
+      "TestFileDriver_Setup",
+      "TestFormatterMatchesGo",
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_005",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSpeedCostProbes"
+    ],
+    "rows_skipped": [],
+    "failing_output": [
+      {
+        "log": "D3-target.log",
+        "line": "width_test.go:108: native ASan/UBSan/LSan: byte 520186: got \"2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\", want \"2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\""
+      }
+    ]
+  },
+  "D4": {
+    "rows_failed": [
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSpeedCostProbes"
+    ],
+    "rows_passed": [
+      "TestScalarsMatchGoUnion"
+    ],
+    "failing_output": [
+      "speed_gap_test.go:69: slice native ASan/UBSan/LSan: got \"52408400000\\n\", want \"52998400000\\n\"",
+      "scalars_match_go_shards_test.go:364: native ASan/UBSan/LSan: byte 87000: got \"10,16|00200063|\\nscalar|9|0|0078|PLAIN|9,10,16|00200063|\\ncase 86\\nscalar|0|1|d83dd83d|PLAIN|0,2,8|00200063|\\nscalar|0|0|d83dd83d|PLAIN|0,2,8|00200063|\\ncase 87\\nscal\", want \"10,16|00200063|\\nscalar|9|0|0078|PLAIN|9,10,16|00200063|\\ncase 86\\nscalar|0|1|d83dde00|PLAIN|0,2,8|00200063|\\nscalar|0|0|d83dde00|PLAIN|0,2,8|00200063|\\ncase 87\\nscal\"",
+      "scalars_match_go_shards_test.go:362: native ASan/UBSan/LSan: byte 72689: got \"|1|0078|PLAIN|9,10,11||\\nscalar|9|0|0078|PLAIN|9,10,11||\\ncase 83\\nscalar|0|1|d83dd83d|PLAIN|0,2,3||\\nscalar|0|0|d83dd83d|PLAIN|0,2,3||\\ncase 84\\nscalar|2|1|d83dde00|\", want \"|1|0078|PLAIN|9,10,11||\\nscalar|9|0|0078|PLAIN|9,10,11||\\ncase 83\\nscalar|0|1|d83dde00|PLAIN|0,2,3||\\nscalar|0|0|d83dde00|PLAIN|0,2,3||\\ncase 84\\nscalar|2|1|d83dde00|\"",
+      "scalars_match_go_shards_test.go:365: native ASan/UBSan/LSan: byte 166273: got \"11|00200063|\\nscalar|3|0|d83dde00|PLAIN|3,5,11|00200063|\\ncase 81\\nscalar|1|1|d83dd83d|PLAIN|1,3,4||\\nscalar|1|0|d83dd83d|PLAIN|1,3,4||\\ncase 82\\nscalar|1|1|0061|PLAI\", want \"11|00200063|\\nscalar|3|0|d83dde00|PLAIN|3,5,11|00200063|\\ncase 81\\nscalar|1|1|d83dde00|PLAIN|1,3,4||\\nscalar|1|0|d83dde00|PLAIN|1,3,4||\\ncase 82\\nscalar|1|1|0061|PLAI\"",
+      "scalars_match_go_shards_test.go:363: native ASan/UBSan/LSan: byte 6595: got \"|767|0|006c006100620065006c|PLAIN|767,772,772||\\nsingle-quoted-scalar|774|1|d83dd83d00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|774,791,792\", want \"|767|0|006c006100620065006c|PLAIN|767,772,772||\\nsingle-quoted-scalar|774|1|d83ddd0d00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|774,791,792\"",
+      "scalars_match_go_shards_test.go:366: native ASan/UBSan/LSan: byte 256714: got \" 78\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|d83dd83d|PLAIN|3,5,11|00200063|\\nscalar|3|0|d83dd83d|PLAIN|3,5,11|00200063|\\ncase 79\\nsc\", want \" 78\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|d83dde00|PLAIN|3,5,11|00200063|\\nscalar|3|0|d83dde00|PLAIN|3,5,11|00200063|\\ncase 79\\nsc\"",
+      "scalars_match_go_shards_test.go:368: native ASan/UBSan/LSan: byte 19405: got \" 70\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|d83dd83d|PLAIN|3,5,6||\\nscalar|3|0|d83dd83d|PLAIN|3,5,6||\\ncase 71\\nscalar|0|1|0061|PLAI\", want \" 70\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|d83dde00|PLAIN|3,5,6||\\nscalar|3|0|d83dde00|PLAIN|3,5,6||\\ncase 71\\nscalar|0|1|0061|PLAI\"",
+      "scalars_match_go_shards_test.go:369: native ASan/UBSan/LSan: byte 4951: got \"|544|0|006c006100620065006c|PLAIN|544,549,549||\\nsingle-quoted-scalar|551|1|d83dd83d00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|551,568,569\", want \"|544|0|006c006100620065006c|PLAIN|544,549,549||\\nsingle-quoted-scalar|551|1|d83ddd0e00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|551,568,569\"",
+      "scalars_match_go_shards_test.go:367: native ASan/UBSan/LSan: byte 242355: got \"0790022|PLAIN|6,8,8||\\nscalar|6|0|00790022|PLAIN|6,8,8||\\ncase 12\\nscalar|0|1|d83dd83d|PLAIN|0,2,2||\\nscalar|0|0|d83dd83d|PLAIN|0,2,2||\\nscalar|4|1|00630061006600e9|\", want \"0790022|PLAIN|6,8,8||\\nscalar|6|0|00790022|PLAIN|6,8,8||\\ncase 12\\nscalar|0|1|d83dde00|PLAIN|0,2,2||\\nscalar|0|0|d83dde00|PLAIN|0,2,2||\\nscalar|4|1|00630061006600e9|\""
+    ]
+  },
+  "D5": {
+    "rows_failed": [
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSpeedCostProbes"
+    ],
+    "rows_passed": [
+      "TestScalarsMatchGoUnion"
+    ],
+    "failing_output": [
+      "speed_gap_test.go:69: slice native ASan/UBSan/LSan: got \"53588400000\\n\", want \"52998400000\\n\"",
+      "scalars_match_go_shards_test.go:368: native ASan/UBSan/LSan: byte 19401: got \"case 70\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|de00de00|PLAIN|3,5,6||\\nscalar|3|0|de00de00|PLAIN|3,5,6||\\ncase 71\\nscalar|0|1|0061|\", want \"case 70\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|d83dde00|PLAIN|3,5,6||\\nscalar|3|0|d83dde00|PLAIN|3,5,6||\\ncase 71\\nscalar|0|1|0061|\"",
+      "scalars_match_go_shards_test.go:362: native ASan/UBSan/LSan: byte 72685: got \"ar|9|1|0078|PLAIN|9,10,11||\\nscalar|9|0|0078|PLAIN|9,10,11||\\ncase 83\\nscalar|0|1|de00de00|PLAIN|0,2,3||\\nscalar|0|0|de00de00|PLAIN|0,2,3||\\ncase 84\\nscalar|2|1|d83dd\", want \"ar|9|1|0078|PLAIN|9,10,11||\\nscalar|9|0|0078|PLAIN|9,10,11||\\ncase 83\\nscalar|0|1|d83dde00|PLAIN|0,2,3||\\nscalar|0|0|d83dde00|PLAIN|0,2,3||\\ncase 84\\nscalar|2|1|d83dd\"",
+      "scalars_match_go_shards_test.go:364: native ASan/UBSan/LSan: byte 86996: got \"N|9,10,16|00200063|\\nscalar|9|0|0078|PLAIN|9,10,16|00200063|\\ncase 86\\nscalar|0|1|de00de00|PLAIN|0,2,8|00200063|\\nscalar|0|0|de00de00|PLAIN|0,2,8|00200063|\\ncase 87\\n\", want \"N|9,10,16|00200063|\\nscalar|9|0|0078|PLAIN|9,10,16|00200063|\\ncase 86\\nscalar|0|1|d83dde00|PLAIN|0,2,8|00200063|\\nscalar|0|0|d83dde00|PLAIN|0,2,8|00200063|\\ncase 87\\n\"",
+      "scalars_match_go_shards_test.go:363: native ASan/UBSan/LSan: byte 6591: got \"alar|767|0|006c006100620065006c|PLAIN|767,772,772||\\nsingle-quoted-scalar|774|1|dd0ddd0d00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|774,791\", want \"alar|767|0|006c006100620065006c|PLAIN|767,772,772||\\nsingle-quoted-scalar|774|1|d83ddd0d00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|774,791\"",
+      "scalars_match_go_shards_test.go:365: native ASan/UBSan/LSan: byte 166269: got \"3,5,11|00200063|\\nscalar|3|0|d83dde00|PLAIN|3,5,11|00200063|\\ncase 81\\nscalar|1|1|de00de00|PLAIN|1,3,4||\\nscalar|1|0|de00de00|PLAIN|1,3,4||\\ncase 82\\nscalar|1|1|0061|\", want \"3,5,11|00200063|\\nscalar|3|0|d83dde00|PLAIN|3,5,11|00200063|\\ncase 81\\nscalar|1|1|d83dde00|PLAIN|1,3,4||\\nscalar|1|0|d83dde00|PLAIN|1,3,4||\\ncase 82\\nscalar|1|1|0061|\"",
+      "scalars_match_go_shards_test.go:367: native ASan/UBSan/LSan: byte 242351: got \"|1|00790022|PLAIN|6,8,8||\\nscalar|6|0|00790022|PLAIN|6,8,8||\\ncase 12\\nscalar|0|1|de00de00|PLAIN|0,2,2||\\nscalar|0|0|de00de00|PLAIN|0,2,2||\\nscalar|4|1|0063006100660\", want \"|1|00790022|PLAIN|6,8,8||\\nscalar|6|0|00790022|PLAIN|6,8,8||\\ncase 12\\nscalar|0|1|d83dde00|PLAIN|0,2,2||\\nscalar|0|0|d83dde00|PLAIN|0,2,2||\\nscalar|4|1|0063006100660\"",
+      "scalars_match_go_shards_test.go:369: native ASan/UBSan/LSan: byte 4947: got \"alar|544|0|006c006100620065006c|PLAIN|544,549,549||\\nsingle-quoted-scalar|551|1|dd0edd0e00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|551,568\", want \"alar|544|0|006c006100620065006c|PLAIN|544,549,549||\\nsingle-quoted-scalar|551|1|d83ddd0e00200053006500610072006300680020005400650072006d0073|QUOTE_SINGLE|551,568\"",
+      "scalars_match_go_shards_test.go:366: native ASan/UBSan/LSan: byte 256710: got \"case 78\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|de00de00|PLAIN|3,5,11|00200063|\\nscalar|3|0|de00de00|PLAIN|3,5,11|00200063|\\ncase 7\", want \"case 78\\nscalar|0|1|0061|PLAIN|0,1,1||\\nscalar|0|0|0061|PLAIN|0,1,1||\\nscalar|3|1|d83dde00|PLAIN|3,5,11|00200063|\\nscalar|3|0|d83dde00|PLAIN|3,5,11|00200063|\\ncase 7\""
+    ]
+  },
+  "D6": {
+    "rows_failed": [
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007"
+    ],
+    "rows_passed": [
+      "TestScalarsMatchGoUnion",
+      "TestSpeedCostProbes"
+    ],
+    "failing_output": [
+      "scalars_match_go_shards_test.go:368: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:364: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:369: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:365: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:367: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:362: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:363: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1",
+      "scalars_match_go_shards_test.go:366: /tmp/yaml-defend/cache/D6/265cb6b5ff7f962559d0c55320f3182cefa4fb1dbe2c295e70c237d39ccafb67/scalars: exit status 1"
+    ]
+  }
+}

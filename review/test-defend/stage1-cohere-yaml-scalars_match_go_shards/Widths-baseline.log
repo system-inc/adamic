@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T14:34:56.186116666Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T14:34:56.194018276Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo"}
+{"Time":"2026-10-09T14:34:56.194108699Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"=== RUN   TestWidthsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:35:29.27249845Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"    width_test.go:111: 1112320 width cases: every Unicode scalar and 256 emoji/context sequences; 2224684 exact Go answer bytes\n"}
+{"Time":"2026-10-09T14:35:29.273806244Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"--- PASS: TestWidthsMatchGo (33.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:35:29.273827715Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Elapsed":33.08}
+{"Time":"2026-10-09T14:35:29.27385128Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:35:29.281055489Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"coverage: 18.4% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T14:35:29.302697221Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t33.115s\tcoverage: 18.4% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T14:35:29.302746453Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":33.117}

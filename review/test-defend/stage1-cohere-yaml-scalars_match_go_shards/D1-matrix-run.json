@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/yaml/",
+    "-run",
+    "^Test(SpeedCostProbes|ScalarsMatchGo(Union|_[0-9]+))$"
+  ],
+  "exit": 1,
+  "seconds": 16.703036603001237,
+  "cache": "/tmp/yaml-defend/cache/D1"
+}

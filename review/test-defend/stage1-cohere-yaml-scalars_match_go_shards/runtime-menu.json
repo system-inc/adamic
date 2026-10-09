@@ -1,0 +1,32 @@
+[
+  {
+    "id": "D4",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 43,
+    "old": "builder_unit(&build, unit_at(string, offset - 4, true));",
+    "new": "builder_unit(&build, unit_at(string, offset - 4, false));",
+    "offset": 1707,
+    "menu": "change constant: low half becomes high half",
+    "target": "TestSpeedCostProbes"
+  },
+  {
+    "id": "D5",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 49,
+    "old": "builder_unit(&build, unit_at(string, stop, false));",
+    "new": "builder_unit(&build, unit_at(string, stop, true));",
+    "offset": 1863,
+    "menu": "change constant: high half becomes low half",
+    "target": "TestSpeedCostProbes"
+  },
+  {
+    "id": "D6",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 52,
+    "old": "slice->units = last - first + 1;",
+    "new": "slice->units = last - first + 2;",
+    "offset": 1967,
+    "menu": "off by one: built slice UTF-16 length",
+    "target": "TestSpeedCostProbes"
+  }
+]

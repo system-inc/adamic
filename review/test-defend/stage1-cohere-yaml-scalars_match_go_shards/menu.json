@@ -1,0 +1,29 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/yaml/gaps/stringUnitScan.ts",
+    "line": 10,
+    "old": "index < text.length;",
+    "new": "index < text.length - 1;",
+    "menu": "off-by-one scan bound",
+    "target": "TestSpeedCostProbes"
+  },
+  {
+    "id": "D2",
+    "file": "stage1/cohere/yaml/unistContext.ts",
+    "line": 843,
+    "old": "this.make('root', this.range(0, this.text.length))",
+    "new": "this.make('root', this.range(0, this.text.length + 1))",
+    "menu": "off-by-one root source bound",
+    "target": "TestUnistMatchesGo"
+  },
+  {
+    "id": "D3",
+    "file": "stage1/cohere/yaml/widthTables.ts",
+    "line": 126,
+    "old": "[0x30000, 0x3fffd]",
+    "new": "[0x30000, 0x3fffc]",
+    "menu": "off-by-one wide range upper endpoint",
+    "target": "TestWidthsMatchGo"
+  }
+]
