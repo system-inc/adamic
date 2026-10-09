@@ -656,3 +656,5 @@ Measured timings:
   }
 }
 ```
+
+Baseline skips outside this unit: TestOriginalCycleLedger, TestOptionalWideningCensus, TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];. Reasons and uniqueness limits are in limitations.md.
