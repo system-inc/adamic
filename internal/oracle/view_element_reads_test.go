@@ -73,3 +73,8 @@ func TestCheckedViewKeysAlias(t *testing.T) {
 	t.Parallel()
 	checkedViewElementFixture(t, "keys_alias", "field read failed: keys(view) (field count) is not a number; expected number, found string")
 }
+
+func TestCheckedViewValues(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "values", "field read failed: Object.values(view) (field count) expected 7, found number 9")
+}

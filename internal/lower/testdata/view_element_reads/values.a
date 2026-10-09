@@ -1,0 +1,7 @@
+interface Root { readonly kind: 1; }
+interface View extends Root { readonly count: 7; }
+const raw = { kind: 1 as const, count: 9 };
+const base: Root = raw;
+const view = base as View;
+const values: number[] = Object.values(view);
+console.log(values.join(','));

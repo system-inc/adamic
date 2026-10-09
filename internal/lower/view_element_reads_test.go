@@ -106,3 +106,9 @@ func TestViewKeysAliasControl(t *testing.T) {
 	source := viewElementFixture(t, "keys_alias")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
 }
+
+func TestViewValuesControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "values")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 9", "count: 7", 1))
+}

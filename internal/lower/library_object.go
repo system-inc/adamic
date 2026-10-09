@@ -85,7 +85,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		if value.Type() != ir.Object || l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) || checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
 		}
-		if name == "keys" {
+		if name == "keys" || name == "values" {
 			value, err = l.checkedViewMembers(node, written[0], value, "")
 			if err != nil {
 				return nil, true, err
