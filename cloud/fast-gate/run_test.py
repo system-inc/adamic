@@ -2667,3 +2667,78 @@ class PlantedRedSortProof(unittest.TestCase):
         self.assertEqual(result.errors, [])
         self.assertEqual(len(result.failures), 1, 'all-mains mutant survived the proof')
         self.assertIn('0 != 1', result.failures[0][1])
+
+
+class SharedUnitHashCommand(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.tree = os.path.join(self.directory.name, 'tree')
+        os.makedirs(self.tree)
+        for path, content in {
+                'go.mod': 'module example.com/shared\n\ngo 1.23\n',
+                'p/p.go': 'package p\nconst Answer = 1\n',
+                'q/q.go': 'package q\nconst Answer = 1\n',
+                'runtime/input.txt': 'runtime input\n'}.items():
+            target = os.path.join(self.tree, path)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            with open(target, 'w') as handle:
+                handle.write(content)
+        realRun(['git', 'init', '-q', self.tree], check=True, timeout=10)
+        self.command = [sys.executable, os.path.join(os.path.dirname(run.__file__), 'input_hashes.py'),
+                        '--tree', self.tree, '--units', '-']
+        self.unit_list = [{'package': 'example.com/shared/p', 'test': 'TestAnswer'},
+                          {'package': 'example.com/shared/q', 'test': 'TestOther'},
+                          {'unit': 'runtime-phase', 'inputs': {'packages': [], 'paths': ['runtime']}}]
+
+    def cli(self, units, tree=None):
+        command = list(self.command)
+        if tree:
+            command[command.index('--tree') + 1] = tree
+        result = realRun(command, input=''.join(json.dumps(row)+'\n' for row in units),
+                         capture_output=True, text=True, timeout=30)
+        return result, [json.loads(line) for line in result.stdout.splitlines()]
+
+    def test_cli_exactly_matches_gate_ledger_for_every_row_kind(self):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=self.tree, full=False)
+        gate.planned, gate.exits = ['tests', 'runtime-phase'], {'tests': 0, 'runtime-phase': 0}
+        gate.result = {field: [dict(self.unit_list[0])] for field in
+                       ('units', 'test_outcomes', 'product_units', 'cache_drain_units')}
+        with mock.patch.dict(run.phaseInputProviders,
+                             {'runtime-phase': lambda tree, unit, full: self.unit_list[2]['inputs'].copy()}):
+            gate.recordInputHashes()
+        rows = [row for field in ('units', 'test_outcomes', 'product_units', 'cache_drain_units', 'phase_units')
+                for row in gate.result[field]]
+        result, computed = self.cli(rows)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(computed), len(rows))
+        for recorded, fresh in zip(rows, computed):
+            self.assertEqual({key: recorded[key] for key in fresh}, fresh)
+        # The ledger's unit list alone, with frozen declarations, is sufficient.
+        listed = [{key: row[key] for key in ('unit', 'inputs')} for row in rows]
+        self.assertEqual(self.cli(listed)[1], computed)
+
+    def test_moved_tree_rehash_changes_only_affected_units(self):
+        from input_hashes import hash_units
+        result, before = self.cli(self.unit_list)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        moved = os.path.join(self.directory.name, 'moved-main')
+        shutil.copytree(self.tree, moved)
+        result, same = self.cli(self.unit_list, moved)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(same, before, 'checkout location must not enter unit identities')
+        with open(os.path.join(moved, 'p/p.go'), 'w') as handle:
+            handle.write('package p\nconst Answer = 2\n')
+        result, after = self.cli(before, moved)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        changed = [row['unit'] for old, row in zip(before, after) if old['input_hash'] != row['input_hash']]
+        self.assertEqual(changed, ['example.com/shared/p TestAnswer'])
+        self.assertEqual(after, list(hash_units(moved, before)))
+
+    def test_unavailable_inputs_emit_null_and_nonzero_exit(self):
+        result, rows = self.cli([{'package': 'example.com/missing', 'test': 'TestMissing'}])
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(rows[0]['unit'], 'example.com/missing TestMissing')
+        self.assertIsNone(rows[0]['input_hash'])
+        self.assertIn('incomplete go list closure', rows[0]['input_hash_error'])

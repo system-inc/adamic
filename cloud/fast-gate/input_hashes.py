@@ -1,9 +1,12 @@
+#!/usr/bin/env python3
 """Content identities for the gate ledger; checkout paths never enter the digest."""
+import argparse
 import glob
 import hashlib
 import json
 import os
 import subprocess
+import sys
 import time
 
 BOX_PATHS = ('cloud/fast-gate.sh cloud/fast-gate cloud/darwin-leg.sh '
@@ -112,3 +115,73 @@ class InputHashes:
         value = {'input_hash': digest.hexdigest(), 'input_paths': sorted(repository_paths), 'inputs': inputs}
         self.cache[key] = value
         return value
+
+
+def hash_units(tree, units, full=False, phase_inputs=None):
+    """The shared gate/integration entry point: one identity result per unit.
+
+    Accept --list-units --with-inputs rows, recorded ledger rows, or plain unit
+    strings. Supplied declarations stay fixed when rehashing a moved tree; Go
+    closures and content are always recomputed on that tree. Never reuse a
+    supplied input_hash. Missing evidence emits null and an error.
+    """
+    identities = InputHashes(tree)
+    for unit in units:
+        row = {'unit': unit} if isinstance(unit, str) else unit
+        if not isinstance(row, dict):
+            raise ValueError('each unit must be a string or a JSON object')
+        name = row.get('unit') or ('%s %s' % (row.get('package', ''), row.get('test', ''))).strip()
+        result = {'unit': name}
+        try:
+            identities.check_time()
+            if not isinstance(name, str) or not name:
+                raise ValueError('unit needs a name or package/test')
+            inputs = row.get('inputs')
+            if inputs is None:
+                if row.get('package'):
+                    inputs = {'packages': [row['package']], 'paths': []}
+                else:
+                    package, separator, test = name.partition(' ')
+                    if separator and '/' in package:
+                        inputs = {'packages': [package], 'paths': []}
+                    else:
+                        if phase_inputs is None:
+                            from run import phaseInputs
+                            phase_inputs = phaseInputs
+                        inputs = phase_inputs(tree, name, full)['inputs']
+            if not isinstance(inputs, dict) or any(
+                    not isinstance(inputs.get(field), list) or
+                    any(not isinstance(value, str) for value in inputs[field])
+                    for field in ('packages', 'paths')):
+                raise ValueError('inputs must declare packages and paths as string lists')
+            result.update(identities.hash(inputs))
+        except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
+            result.update(input_hash=None, input_hash_error=str(error))
+        yield result
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Compute the same per-unit content hashes the gate records.')
+    parser.add_argument('--tree', required=True, help='checkout whose contents to hash')
+    parser.add_argument('--units', required=True, help='JSONL or plain unit list; - reads stdin')
+    parser.add_argument('--full', action='store_true', help='whole-gate declarations for phase names without inputs')
+    args = parser.parse_args()
+    def rows(handle):
+        for line in handle:
+            line = line.strip()
+            if line:
+                yield json.loads(line) if line.startswith(('{', '"', '[')) else line
+    failed = False
+    handle = sys.stdin if args.units == '-' else open(args.units)
+    try:
+        for row in hash_units(args.tree, rows(handle), args.full):
+            print(json.dumps(row, sort_keys=True), flush=True)
+            failed = failed or row['input_hash'] is None
+    finally:
+        if handle is not sys.stdin:
+            handle.close()
+    return 1 if failed else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

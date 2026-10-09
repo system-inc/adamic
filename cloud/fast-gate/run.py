@@ -50,7 +50,7 @@ import time
 import datetime
 import traceback
 
-from input_hashes import InputHashes, tools_fingerprint
+from input_hashes import hash_units, tools_fingerprint
 from sort_reds import sort_record
 
 module = "github.com/system-inc/adamic"
@@ -2356,46 +2356,36 @@ class Gate:
             handle.write(line + ("; " + suffix if suffix else "") + "\n")
 
     def recordInputHashes(self):
-        identities = InputHashes(self.arguments.tree)
-        errors = []
-        def attach(row, inputs):
-            try:
-                row.update(identities.hash(inputs))
-            except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
-                row["input_hash"] = None
-                row["input_hash_error"] = str(error)
-                errors.append(str(error))
-        for field in ("units", "test_outcomes", "product_units", "cache_drain_units"):
-            for row in self.result.get(field, []):
-                attach(row, {"packages": [row["package"]], "paths": []})
+        rows = [row for field in ("units", "test_outcomes", "product_units", "cache_drain_units")
+                for row in self.result.get(field, [])]
         phases = []
         for phase in self.planned:
             if phase == "tests" or (phase == "products" and self.result.get("product_units")) or (phase in ("audit", "upload") and self.result.get("cache_drain_units")):
                 continue
-            rows = self.result.get(phase + "_units", [])
+            phaseRows = self.result.get(phase + "_units", [])
             codes = self.result.get(phase + "_exits", {})
-            if not rows and codes:
-                rows = [{"name": name, "exit": code, "status": "passed" if code == 0 else "failed"}
-                        for name, code in sorted(codes.items())]
-            if not rows:
-                rows = [{"name": phase, "exit": self.exits.get(phase),
-                         "status": "not run" if phase not in self.exits else
-                                   ("passed" if self.exits[phase] == 0 else "failed")}]
-            for row in rows:
+            if not phaseRows and codes:
+                phaseRows = [{"name": name, "exit": code, "status": "passed" if code == 0 else "failed"}
+                             for name, code in sorted(codes.items())]
+            if not phaseRows:
+                phaseRows = [{"name": phase, "exit": self.exits.get(phase),
+                              "status": "not run" if phase not in self.exits else
+                                        ("passed" if self.exits[phase] == 0 else "failed")}]
+            for row in phaseRows:
                 unit = "" if row["name"] == phase else row["name"]
                 if phase == "catalog" and unit:
                     unit = str(int(unit.split()[0]))
-                line = phase + (" " + unit if unit else "")
-                row["unit"] = line
-                try:
-                    identities.check_time()
-                    inputs = phaseInputs(self.arguments.tree, line, self.arguments.full)["inputs"]
-                    attach(row, inputs)
-                except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
-                    row.update(input_hash=None, input_hash_error=str(error))
-                    errors.append(str(error))
+                row["unit"] = phase + (" " + unit if unit else "")
                 phases.append(row)
         self.result["phase_units"] = phases
+        rows += phases
+        # CLI and gate use this same function and the same phase-input providers.
+        results = hash_units(self.arguments.tree, rows, self.arguments.full, phaseInputs)
+        errors = []
+        for row, identity in zip(rows, results):
+            row.update(identity)
+            if identity.get("input_hash_error"):
+                errors.append(identity["input_hash_error"])
         if errors:
             self.result["input_hash_errors"] = sorted(set(errors))
 
