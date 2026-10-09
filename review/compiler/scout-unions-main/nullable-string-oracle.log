@@ -1,0 +1,87 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestNullableStringFieldCheckMutant
+=== PAUSE TestNullableStringFieldCheckMutant
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestNullableStringFieldCheckMutant
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNullableStringFieldCheckMutant
+    scout_unions_test.go:33: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNullableStringFieldCheckMutant
+    oracle_test.go:596: gate cache native hit
+    scout_unions_test.go:43: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNullableStringFieldCheckMutant
+    scout_unions_test.go:61: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a
+=== NAME  TestNullableStringFieldCheckMutant
+    scout_unions_test.go:68: Dropped field tag check mutant caught: JavaScript exits 0 and prints undefined; checked baseline panics with exit 70
+--- PASS: TestNullableStringFieldCheckMutant (6.96s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a (6.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_hir_optional_boolean.a (7.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_string_stale_field.a (7.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a (7.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_source_content.a (1.57s)
+PASS
+gate cache: native hits=5 misses=10
+gate cache: node hits=2 misses=11
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.499s

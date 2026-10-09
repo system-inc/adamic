@@ -1,0 +1,53 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:753: gate cache node hit
+    oracle_test.go:753: gate cache node miss
+--- FAIL: TestNativeAgreesWithNode (0.54s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a (0.39s)
+panic: native: no conversion from 4 to 3 [recovered, repanicked]
+
+goroutine 34 [running]:
+testing.tRunner.func1.2({0x1d6d3d0, 0x2582c4c529d0})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1d6d3d0?, 0x2582c4c529d0?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/native.converted(0x2582c508a380?, 0x3, {0x2582c4c473c8, 0x13})
+	/workspace/adamic/internal/native/union.go:24 +0x499
+github.com/system-inc/adamic/internal/native.(*emitter).coalesce(0x2582c508a380, {{0x1e26d80, 0x2582c59bca00}, {0x1e26dc0, 0x2582c4c316c0}, {0x0, 0x0}, 0x3})
+	/workspace/adamic/internal/native/emit_branches.go:154 +0x2ff
+github.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x2582c508a380, {0x1e26ee0?, 0x2582c59b4a40?})
+	/workspace/adamic/internal/native/emit_expressions.go:270 +0x9bed
+github.com/system-inc/adamic/internal/native.(*emitter).value(0x2582c508a380, {0x1e26ee0, 0x2582c59b4a40})
+	/workspace/adamic/internal/native/borrow.go:41 +0x249
+github.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x2582c508a380, {0x1e27220?, 0x2582c59be1c8?})
+	/workspace/adamic/internal/native/emit_expressions.go:139 +0xbb06
+github.com/system-inc/adamic/internal/native.(*emitter).value(0x2582c508a380, {0x1e27220, 0x2582c59be1c8})
+	/workspace/adamic/internal/native/borrow.go:41 +0x249
+github.com/system-inc/adamic/internal/native.(*emitter).statement(0x2582c508a380, {0x1e26d20?, 0x2582c59be1e0?})
+	/workspace/adamic/internal/native/emit_statements.go:73 +0x855
+github.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x2582c508a380, 0x2582c59b2a40)
+	/workspace/adamic/internal/native/emit_statements.go:59 +0x65
+github.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x2582c51788b5, 0x8}, {0x0, 0x0}, {0x0, 0x0, 0x0}, 0x0, ...})
+	/workspace/adamic/internal/native/emit_functions.go:113 +0x1139
+github.com/system-inc/adamic/internal/native.cProgram(0x2582c5284a80, 0xffffffffffffffff)
+	/workspace/adamic/internal/native/emit.go:96 +0x13f3
+github.com/system-inc/adamic/internal/native.C(...)
+	/workspace/adamic/internal/native/emit.go:23
+github.com/system-inc/adamic/internal/oracle.cachedNative(0x2582c502e248, 0x2582c5284a80, 0x0)
+	/workspace/adamic/internal/oracle/cache_test.go:334 +0xe5
+github.com/system-inc/adamic/internal/oracle.natively(0x2582c502e248, 0x2582c5284a80)
+	/workspace/adamic/internal/oracle/oracle_test.go:596 +0x170
+github.com/system-inc/adamic/internal/oracle.TestNativeAgreesWithNode.func1(0x2582c502e248)
+	/workspace/adamic/internal/oracle/oracle_test.go:754 +0x34d
+testing.tRunner(0x2582c502e248, 0x2582c4c7f340)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 21
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.505s
+FAIL

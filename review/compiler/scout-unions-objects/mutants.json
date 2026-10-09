@@ -1,0 +1,106 @@
+[
+  [
+    "object-boundary",
+    "internal/lower/nullable_objects.go",
+    "if contextual == nil {",
+    "if true {",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a"
+  ],
+  [
+    "object-tag",
+    "internal/lower/nullable_objects.go",
+    "Right: ir.Unary{Operator: ir.Not, Operand: null}",
+    "Right: ir.BooleanConstant{Value: true}",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a"
+  ],
+  [
+    "object-optional",
+    "internal/lower/nullable_objects.go",
+    "WhenTrue: ir.Undefined{Of: ir.Object}",
+    "WhenTrue: ir.ObjectLiteral{Fields: []ir.Field{{Name: \"text\", Value: ir.StringConstant{Index: l.constant(\"mutant\")}}}}",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a"
+  ],
+  [
+    "object-null-field",
+    "internal/lower/nullable_objects.go",
+    "if l.includesNull(observed) {\n\t\tresult =",
+    "if false && l.includesNull(observed) {\n\t\tresult =",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a"
+  ],
+  [
+    "string-check",
+    "internal/lower/boxed_scalar_fields.go",
+    "ir.Unary{Operator: ir.Not, Operand: matches}",
+    "ir.BooleanConstant{}",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a"
+  ],
+  [
+    "string-tag",
+    "internal/lower/boxed_scalar_fields.go",
+    "name = \"string\"",
+    "name = \"number\"",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a"
+  ],
+  [
+    "local-nullish",
+    "internal/lower/locals.go",
+    "observing := comparedWithUndefined(node)",
+    "if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 { read = ir.Box{Value: ir.StringConstant{Index: l.constant(\"mutant\")}} }\n\t\tobserving := comparedWithUndefined(node)",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a"
+  ],
+  [
+    "regex-adapter",
+    "internal/lower/nullable_objects.go",
+    "if l.regexReplacementArgument(node) {",
+    "if false && l.regexReplacementArgument(node) {",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/callback.a"
+  ],
+  [
+    "shared-view",
+    "internal/lower/expression.go",
+    "if l.nullableObjectViewHazard(node, contextual) {",
+    "if false && l.nullableObjectViewHazard(node, contextual) {",
+    "./internal/oracle",
+    "^TestNullableObjectStorageArray$"
+  ],
+  [
+    "lookup",
+    "internal/lower/expression.go",
+    "if value.Type() == ir.Object && l.nullableObjectUnion",
+    "if false && value.Type() == ir.Object && l.nullableObjectUnion",
+    "./internal/oracle",
+    "^TestNullableObjectStorageLookup$"
+  ],
+  [
+    "local-equality",
+    "internal/lower/locals.go",
+    " || unionEqualityObservation(node)",
+    "",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a"
+  ],
+  [
+    "object-local-runtime",
+    "internal/lower/locals.go",
+    "if l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {",
+    "if false && l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_local.a"
+  ],
+  [
+    "object-local",
+    "internal/lower/locals.go",
+    "if l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {",
+    "if false && l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a"
+  ]
+]

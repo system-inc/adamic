@@ -262,6 +262,8 @@ func zeroValue(of ir.Type) ir.Expression {
 		return ir.NumberConstant{}
 	case ir.Boolean:
 		return ir.BooleanConstant{}
+	case ir.MaybeBoolean:
+		return ir.MaybeOf{Of: ir.MaybeBoolean}
 	case ir.MaybeNumber:
 		// A field of number | undefined left without a value is undefined, as JavaScript leaves it.
 		return ir.MaybeOf{Of: ir.MaybeNumber}
