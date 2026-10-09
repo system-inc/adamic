@@ -1,0 +1,26 @@
+{
+  "target": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "jobs": 1,
+  "total_wall_seconds": 0.07225983997341245,
+  "load_before": "18.63 15.61 21.59 71/942 3590508",
+  "load_after": "18.63 15.61 21.59 55/969 3590657",
+  "entries": [
+    {
+      "number": 15,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 0.0020427099952939898,
+      "load_before": "18.63 15.61 21.59 56/971 3590654",
+      "load_after": "18.63 15.61 21.59 61/969 3590655",
+      "messages": [
+        "15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)",
+        "15 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "15 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=18.63 15.61 21.59 56/971 3590654 -> 18.63 15.61 21.59 61/969 3590655"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "number": 6,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "worktree": "/home/ahra/full-gate/out/5e33a17b186a-20261009T224535Z/catalog-units/05-cgvag6_7/adamic-catalog-worktree-rxyx5soa/entry-06",
+  "setup_seconds": 97.00633773999289,
+  "ok": true,
+  "check_seconds": 50.58968825498596,
+  "cleanup_seconds": 8.326942429994233,
+  "wall_seconds": 157.54626337700756,
+  "load_before": "18.63 15.61 21.59 58/928 3590478",
+  "load_after": "85.92 43.92 31.24 81/1316 3689701",
+  "messages": [
+    "06 constructor-capture-region: applies-and-fails-as-recorded",
+    "06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "06 wall=157.546s setup=97.006s check=50.590s cleanup=8.327s load=18.63 15.61 21.59 58/928 3590478 -> 85.92 43.92 31.24 81/1316 3689701"
+  ]
+}
