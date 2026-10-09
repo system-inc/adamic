@@ -1,0 +1,7 @@
+PROGRAM  CONTESTANT  STATUS  WALL ms median / p10 / p90  RSS KiB median / p10 / p90  VS ORACLE
+emit  node-tsc  identical  198.74 / 184.77 / 221.75  56808.00 / 56681.60 / 56884.80  oracle
+emit  tsgo  identical  8.00 / 7.21 / 12.33  18016.00 / 17824.00 / 18144.00  win
+emit  adamic-native  pending  186.70 / 181.15 / 191.53  56808.00 / 56681.60 / 56886.40  pending (stand-in)
+diagnostics  node-tsc  identical  138.53 / 131.70 / 148.23  54248.00 / 54120.00 / 54480.00  oracle
+diagnostics  tsgo  identical  6.87 / 6.31 / 9.37  16864.00 / 16480.00 / 16966.40  win
+diagnostics  adamic-native  pending  145.85 / 140.45 / 155.82  54376.00 / 54222.40 / 54916.00  pending (stand-in)

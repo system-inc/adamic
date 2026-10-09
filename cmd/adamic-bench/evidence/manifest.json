@@ -1,0 +1,63 @@
+{
+  "programs": [
+    {
+      "name": "emit",
+      "directory": "programs/emit",
+      "emit_dir": "out"
+    },
+    {
+      "name": "diagnostics",
+      "directory": "programs/diagnostics",
+      "emit_dir": "out"
+    }
+  ],
+  "contestants": [
+    {
+      "name": "node-tsc",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/bench-tools/node_modules/typescript/lib/tsc.js",
+        "-p",
+        "tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "version_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "-e",
+        "console.log('Node '+process.version+'; TypeScript '+require('/workspace/bench-tools/node_modules/typescript/package.json').version)"
+      ]
+    },
+    {
+      "name": "tsgo",
+      "command": [
+        "/workspace/bench-tools/node_modules/@typescript/native-preview-linux-x64/lib/tsgo",
+        "-p",
+        "tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "version_command": [
+        "/workspace/bench-tools/node_modules/@typescript/native-preview-linux-x64/lib/tsgo",
+        "--version"
+      ]
+    },
+    {
+      "name": "adamic-native",
+      "pending": true,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/bench-tools/node_modules/typescript/lib/tsc.js",
+        "-p",
+        "tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "version_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "-e",
+        "console.log('Node '+process.version+'; TypeScript '+require('/workspace/bench-tools/node_modules/typescript/package.json').version)"
+      ]
+    }
+  ]
+}
