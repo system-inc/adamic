@@ -55,7 +55,6 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 	if requested := formatfilesSelectedShard(t); requested >= 0 && requested != selected {
 		t.Skip("another shard selected")
 	}
-	t.Parallel()
 	casesPath, goAnswers := formatfilesAskedCases(t)
 	shards := formatfilesPartition(t, casesPath, goAnswers)
 	portSource := portDirectory(t, nil)

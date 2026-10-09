@@ -6,6 +6,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"hash/fnv"
 	"os"
 	"os/exec"
@@ -198,6 +201,7 @@ func formatfilesBinary(t *testing.T, program *ir.Program, mutant *mutant) string
 }
 
 func TestFormatfilesShardPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	// Route real case/answer blocks through the same partitioner as the oracle
 	// comparison, then plant exactly one disagreement in the routed answers.
 	path := filepath.Join(t.TempDir(), "cases.txt")
@@ -228,38 +232,134 @@ func TestFormatfilesShardPlantedDisagreement(t *testing.T) {
 
 // The gate discovers these top-level leaves with go test -list. Each one runs
 // on its own instance, and ADAMIC_TEST_SHARD=i/32 can select the same unit.
-func TestThePortParsesAsGoCohereDoes_000(t *testing.T) { formatfilesCheckShard(t, 0) }
-func TestThePortParsesAsGoCohereDoes_001(t *testing.T) { formatfilesCheckShard(t, 1) }
-func TestThePortParsesAsGoCohereDoes_002(t *testing.T) { formatfilesCheckShard(t, 2) }
-func TestThePortParsesAsGoCohereDoes_003(t *testing.T) { formatfilesCheckShard(t, 3) }
-func TestThePortParsesAsGoCohereDoes_004(t *testing.T) { formatfilesCheckShard(t, 4) }
-func TestThePortParsesAsGoCohereDoes_005(t *testing.T) { formatfilesCheckShard(t, 5) }
-func TestThePortParsesAsGoCohereDoes_006(t *testing.T) { formatfilesCheckShard(t, 6) }
-func TestThePortParsesAsGoCohereDoes_007(t *testing.T) { formatfilesCheckShard(t, 7) }
-func TestThePortParsesAsGoCohereDoes_008(t *testing.T) { formatfilesCheckShard(t, 8) }
-func TestThePortParsesAsGoCohereDoes_009(t *testing.T) { formatfilesCheckShard(t, 9) }
-func TestThePortParsesAsGoCohereDoes_010(t *testing.T) { formatfilesCheckShard(t, 10) }
-func TestThePortParsesAsGoCohereDoes_011(t *testing.T) { formatfilesCheckShard(t, 11) }
-func TestThePortParsesAsGoCohereDoes_012(t *testing.T) { formatfilesCheckShard(t, 12) }
-func TestThePortParsesAsGoCohereDoes_013(t *testing.T) { formatfilesCheckShard(t, 13) }
-func TestThePortParsesAsGoCohereDoes_014(t *testing.T) { formatfilesCheckShard(t, 14) }
-func TestThePortParsesAsGoCohereDoes_015(t *testing.T) { formatfilesCheckShard(t, 15) }
-func TestThePortParsesAsGoCohereDoes_016(t *testing.T) { formatfilesCheckShard(t, 16) }
-func TestThePortParsesAsGoCohereDoes_017(t *testing.T) { formatfilesCheckShard(t, 17) }
-func TestThePortParsesAsGoCohereDoes_018(t *testing.T) { formatfilesCheckShard(t, 18) }
-func TestThePortParsesAsGoCohereDoes_019(t *testing.T) { formatfilesCheckShard(t, 19) }
-func TestThePortParsesAsGoCohereDoes_020(t *testing.T) { formatfilesCheckShard(t, 20) }
-func TestThePortParsesAsGoCohereDoes_021(t *testing.T) { formatfilesCheckShard(t, 21) }
-func TestThePortParsesAsGoCohereDoes_022(t *testing.T) { formatfilesCheckShard(t, 22) }
-func TestThePortParsesAsGoCohereDoes_023(t *testing.T) { formatfilesCheckShard(t, 23) }
-func TestThePortParsesAsGoCohereDoes_024(t *testing.T) { formatfilesCheckShard(t, 24) }
-func TestThePortParsesAsGoCohereDoes_025(t *testing.T) { formatfilesCheckShard(t, 25) }
-func TestThePortParsesAsGoCohereDoes_026(t *testing.T) { formatfilesCheckShard(t, 26) }
-func TestThePortParsesAsGoCohereDoes_027(t *testing.T) { formatfilesCheckShard(t, 27) }
-func TestThePortParsesAsGoCohereDoes_028(t *testing.T) { formatfilesCheckShard(t, 28) }
-func TestThePortParsesAsGoCohereDoes_029(t *testing.T) { formatfilesCheckShard(t, 29) }
-func TestThePortParsesAsGoCohereDoes_030(t *testing.T) { formatfilesCheckShard(t, 30) }
-func TestThePortParsesAsGoCohereDoes_031(t *testing.T) { formatfilesCheckShard(t, 31) }
+func TestThePortParsesAsGoCohereDoes_000(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 0)
+}
+func TestThePortParsesAsGoCohereDoes_001(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 1)
+}
+func TestThePortParsesAsGoCohereDoes_002(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 2)
+}
+func TestThePortParsesAsGoCohereDoes_003(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 3)
+}
+func TestThePortParsesAsGoCohereDoes_004(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 4)
+}
+func TestThePortParsesAsGoCohereDoes_005(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 5)
+}
+func TestThePortParsesAsGoCohereDoes_006(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 6)
+}
+func TestThePortParsesAsGoCohereDoes_007(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 7)
+}
+func TestThePortParsesAsGoCohereDoes_008(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 8)
+}
+func TestThePortParsesAsGoCohereDoes_009(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 9)
+}
+func TestThePortParsesAsGoCohereDoes_010(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 10)
+}
+func TestThePortParsesAsGoCohereDoes_011(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 11)
+}
+func TestThePortParsesAsGoCohereDoes_012(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 12)
+}
+func TestThePortParsesAsGoCohereDoes_013(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 13)
+}
+func TestThePortParsesAsGoCohereDoes_014(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 14)
+}
+func TestThePortParsesAsGoCohereDoes_015(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 15)
+}
+func TestThePortParsesAsGoCohereDoes_016(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 16)
+}
+func TestThePortParsesAsGoCohereDoes_017(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 17)
+}
+func TestThePortParsesAsGoCohereDoes_018(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 18)
+}
+func TestThePortParsesAsGoCohereDoes_019(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 19)
+}
+func TestThePortParsesAsGoCohereDoes_020(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 20)
+}
+func TestThePortParsesAsGoCohereDoes_021(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 21)
+}
+func TestThePortParsesAsGoCohereDoes_022(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 22)
+}
+func TestThePortParsesAsGoCohereDoes_023(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 23)
+}
+func TestThePortParsesAsGoCohereDoes_024(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 24)
+}
+func TestThePortParsesAsGoCohereDoes_025(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 25)
+}
+func TestThePortParsesAsGoCohereDoes_026(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 26)
+}
+func TestThePortParsesAsGoCohereDoes_027(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 27)
+}
+func TestThePortParsesAsGoCohereDoes_028(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 28)
+}
+func TestThePortParsesAsGoCohereDoes_029(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 29)
+}
+func TestThePortParsesAsGoCohereDoes_030(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 30)
+}
+func TestThePortParsesAsGoCohereDoes_031(t *testing.T) {
+	t.Parallel()
+	formatfilesCheckShard(t, 31)
+}
 
 func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	t.Parallel()
@@ -274,23 +374,47 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	table, err := parser.ParseFile(token.NewFileSet(), "formatfiles_shards_test.go", source, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
 	names := make(map[int]bool)
-	for _, line := range strings.Split(string(source), "\n") {
-		suffix, ok := strings.CutPrefix(line, "func TestThePortParsesAsGoCohereDoes_")
+	for _, declaration := range table.Decls {
+		fn, ok := declaration.(*ast.FuncDecl)
 		if !ok {
 			continue
 		}
-		number, _, ok := strings.Cut(suffix, "(")
-		index, err := strconv.Atoi(number)
-		if !ok || err != nil || index < 0 || index >= len(parts) || names[index] {
-			t.Fatalf("invalid leaf declaration %q", line)
+		suffix, ok := strings.CutPrefix(fn.Name.Name, "TestThePortParsesAsGoCohereDoes_")
+		if !ok {
+			continue
 		}
-
-		if !strings.Contains(line, "formatfilesCheckShard(t, "+strconv.Itoa(index)+")") {
-			t.Fatalf("leaf %d calls the wrong shard: %s", index, line)
+		index, err := strconv.Atoi(suffix)
+		if err != nil || index < 0 || index >= len(parts) || names[index] {
+			t.Fatalf("invalid leaf declaration %q", fn.Name.Name)
+		}
+		if len(fn.Body.List) != 2 {
+			t.Fatalf("unexpected leaf body %s", fn.Name.Name)
+		}
+		statement, ok := fn.Body.List[1].(*ast.ExprStmt)
+		if !ok {
+			t.Fatal("missing shard call")
+		}
+		call, ok := statement.X.(*ast.CallExpr)
+		if !ok || len(call.Args) != 2 {
+			t.Fatal("invalid shard call")
+		}
+		callee, ok := call.Fun.(*ast.Ident)
+		if !ok || callee.Name != "formatfilesCheckShard" {
+			t.Fatal("wrong shard runner")
+		}
+		literal, ok := call.Args[1].(*ast.BasicLit)
+		if !ok || literal.Value != strconv.Itoa(index) {
+			t.Fatalf("leaf %d calls the wrong shard", index)
 		}
 		names[index] = true
 	}
+
 	if len(names) != len(parts) {
 		t.Fatalf("%d leaves, %d partitions", len(names), len(parts))
 	}
