@@ -209,4 +209,3 @@ func TestBundledParserDifference(t *testing.T) {
 func TestFileDriver(t *testing.T) {
 	fileDriverGet(t)
 }
-
