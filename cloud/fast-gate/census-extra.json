@@ -216,10 +216,10 @@
     ]
   },
   {
-    "file": "internal/oracle/wasi_host_test.go",
+    "file": "internal/oracle/wasi_input_test.go",
     "test": "TestWASIInputAgreesWithNode",
     "id": "TestWASIInputAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 47,
+    "line": 127,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\n\t\tif entry != nil && entry.IsDir() {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn err\n\t}\n\trelative, err := filepath.Rel(directory, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tinformation, err := entry.Info()\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tfound[relative] = fmt.Sprintf(\"directory %v\", information.Mode().Perm())\n\t\treturn nil\n\t}\n\tcontents, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tfound[relative] = fmt.Sprintf(\"file %v %q\", information.Mode().Perm(), contents)\n\treturn nil\n})",
@@ -1356,6 +1356,576 @@
     "provides": "The factory hook product builds run this worker as a subprocess (-test.run=^TestFactoryHooks_NativeBuildWorker$) with ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE; standalone it has no source and is not an independent gate check.",
     "opt_in_off": [
       "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE"
+    ]
+  },
+  {
+    "file": "cmd/adamic/exports_test.go",
+    "test": "TestWASIExports",
+    "id": "TestWASIExports:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 49,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(table)"
+    ],
+    "callers": [
+      "TestWASIExports"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "cmd/adamic/wasm_release_test.go",
+    "test": "TestWASIReleaseSections",
+    "id": "TestWASIReleaseSections:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 16,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(output)"
+    ],
+    "callers": [
+      "TestWASIReleaseSections"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_input_test.go",
+    "test": "TestWASIInputRunnerCatchesMutants",
+    "id": "TestWASIInputRunnerCatchesMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 214,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
+    ],
+    "callers": [
+      "TestWASIInputRunnerCatchesMutants"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_input_test.go",
+    "test": "TestWASIWalkBehaviorCatchesMutants",
+    "id": "TestWASIWalkBehaviorCatchesMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 257,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
+    ],
+    "callers": [
+      "TestWASIWalkBehaviorCatchesMutants"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_shim_test.go",
+    "test": "TestWASIShimAgreesWithNode",
+    "id": "TestWASIShimAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 16,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.Getenv(\"ADAMIC_SHIM_INVENTORY_ONLY\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIShimAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_shim_test.go",
+    "test": "TestWASIShimCheckedWitnessControl",
+    "id": "TestWASIShimCheckedWitnessControl:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 83,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIShimCheckedWitnessControl"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_shim_test.go",
+    "test": "TestWASIShimContractsAndMutants",
+    "id": "TestWASIShimContractsAndMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 122,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(filepath.Join(repository, \"internal/native/wasm/shim.mjs\"))"
+    ],
+    "callers": [
+      "TestWASIShimContractsAndMutants"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_shim_test.go",
+    "test": "TestWASIShimRequest",
+    "id": "TestWASIShimRequest:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 196,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
+    ],
+    "callers": [
+      "TestWASIShimRequest"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/native/wasm_service_test.go",
+    "test": "TestWASIService",
+    "id": "TestWASIService:362f333fa4b72ea7c25a5bb02fd791f13e6995ff1db70c6bcd5e8b503ce3da89",
+    "line": 17,
+    "condition": "os.Getenv(\"ADAMIC_TEST_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.ReadFile(responses)",
+      "os.ReadFile(source)"
+    ],
+    "callers": [
+      "TestWASIService"
+    ],
+    "message": "\"set ADAMIC_TEST_WASI=1, source cloud/setup.sh --wasi-sdk's environment, and use Node 24\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_TEST_WASI"
+    ]
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "runWASIUnit",
+    "id": "TestWASIUnit00,TestWASIUnit01,TestWASIUnit02,TestWASIUnit03,TestWASIUnit04,TestWASIUnit05,TestWASIUnit06,TestWASIUnit07,TestWASIUnit08,TestWASIUnit09,TestWASIUnit10,TestWASIUnit11,TestWASIUnit12,TestWASIUnit13,TestWASIUnit14,TestWASIUnit15,TestWASIUnit16,TestWASIUnit17,TestWASIUnit18,TestWASIUnit19,TestWASIUnit20,TestWASIUnit21,TestWASIUnit22,TestWASIUnit23,TestWASIUnit24,TestWASIUnit25,TestWASIUnit26,TestWASIUnit27,TestWASIUnit28,TestWASIUnit29,TestWASIUnit30,TestWASIUnit31,TestWASIUnit32,TestWASIUnit33,TestWASIUnit34,TestWASIUnit35:362f333fa4b72ea7c25a5bb02fd791f13e6995ff1db70c6bcd5e8b503ce3da89",
+    "line": 49,
+    "condition": "os.Getenv(\"ADAMIC_TEST_WASI\") != \"1\"",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.Getenv(name)",
+      "os.Open(path)",
+      "os.ReadFile(module)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIUnit00",
+      "TestWASIUnit01",
+      "TestWASIUnit02",
+      "TestWASIUnit03",
+      "TestWASIUnit04",
+      "TestWASIUnit05",
+      "TestWASIUnit06",
+      "TestWASIUnit07",
+      "TestWASIUnit08",
+      "TestWASIUnit09",
+      "TestWASIUnit10",
+      "TestWASIUnit11",
+      "TestWASIUnit12",
+      "TestWASIUnit13",
+      "TestWASIUnit14",
+      "TestWASIUnit15",
+      "TestWASIUnit16",
+      "TestWASIUnit17",
+      "TestWASIUnit18",
+      "TestWASIUnit19",
+      "TestWASIUnit20",
+      "TestWASIUnit21",
+      "TestWASIUnit22",
+      "TestWASIUnit23",
+      "TestWASIUnit24",
+      "TestWASIUnit25",
+      "TestWASIUnit26",
+      "TestWASIUnit27",
+      "TestWASIUnit28",
+      "TestWASIUnit29",
+      "TestWASIUnit30",
+      "TestWASIUnit31",
+      "TestWASIUnit32",
+      "TestWASIUnit33",
+      "TestWASIUnit34",
+      "TestWASIUnit35"
+    ],
+    "message": "\"WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH\"",
+    "class": "required-input",
+    "provides": "Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification. The gate sets ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 on every test run (cloud/fast-gate/run.py gateEnvironment), so this skip in a gate record is a lost input, never a lane the gate leaves off.",
+    "opt_in_off": [
+      "ADAMIC_TEST_WASI"
+    ]
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "runWASIUnit",
+    "id": "TestWASIUnit00,TestWASIUnit01,TestWASIUnit02,TestWASIUnit03,TestWASIUnit04,TestWASIUnit05,TestWASIUnit06,TestWASIUnit07,TestWASIUnit08,TestWASIUnit09,TestWASIUnit10,TestWASIUnit11,TestWASIUnit12,TestWASIUnit13,TestWASIUnit14,TestWASIUnit15,TestWASIUnit16,TestWASIUnit17,TestWASIUnit18,TestWASIUnit19,TestWASIUnit20,TestWASIUnit21,TestWASIUnit22,TestWASIUnit23,TestWASIUnit24,TestWASIUnit25,TestWASIUnit26,TestWASIUnit27,TestWASIUnit28,TestWASIUnit29,TestWASIUnit30,TestWASIUnit31,TestWASIUnit32,TestWASIUnit33,TestWASIUnit34,TestWASIUnit35:e331d554fc45e12edd105c0ed30539b5b8161c822ca013eeb9b559b9a29e4822",
+    "line": 53,
+    "condition": "sysroot == \"\"",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.Getenv(name)",
+      "os.Open(path)",
+      "os.ReadFile(module)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIUnit00",
+      "TestWASIUnit01",
+      "TestWASIUnit02",
+      "TestWASIUnit03",
+      "TestWASIUnit04",
+      "TestWASIUnit05",
+      "TestWASIUnit06",
+      "TestWASIUnit07",
+      "TestWASIUnit08",
+      "TestWASIUnit09",
+      "TestWASIUnit10",
+      "TestWASIUnit11",
+      "TestWASIUnit12",
+      "TestWASIUnit13",
+      "TestWASIUnit14",
+      "TestWASIUnit15",
+      "TestWASIUnit16",
+      "TestWASIUnit17",
+      "TestWASIUnit18",
+      "TestWASIUnit19",
+      "TestWASIUnit20",
+      "TestWASIUnit21",
+      "TestWASIUnit22",
+      "TestWASIUnit23",
+      "TestWASIUnit24",
+      "TestWASIUnit25",
+      "TestWASIUnit26",
+      "TestWASIUnit27",
+      "TestWASIUnit28",
+      "TestWASIUnit29",
+      "TestWASIUnit30",
+      "TestWASIUnit31",
+      "TestWASIUnit32",
+      "TestWASIUnit33",
+      "TestWASIUnit34",
+      "TestWASIUnit35"
+    ],
+    "message": "\"WASI toolchain missing: WASI_SYSROOT is not set\"",
+    "class": "required-input",
+    "provides": "When ADAMIC_TEST_WASI=1, WASI_SYSROOT must name the wasi-sdk 27.0 share/wasi-sysroot directory; SDK clang/linker/compiler builtins, Go and Node 24 must be usable on PATH. This prerequisite skip is required-input, including a native clang lacking libclang_rt.builtins.a.",
+    "opt_in_on": [
+      "ADAMIC_TEST_WASI"
+    ],
+    "opt_in_off": [
+      "WASI_SYSROOT"
+    ]
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "runWASIUnit",
+    "id": "TestWASIUnit00,TestWASIUnit01,TestWASIUnit02,TestWASIUnit03,TestWASIUnit04,TestWASIUnit05,TestWASIUnit06,TestWASIUnit07,TestWASIUnit08,TestWASIUnit09,TestWASIUnit10,TestWASIUnit11,TestWASIUnit12,TestWASIUnit13,TestWASIUnit14,TestWASIUnit15,TestWASIUnit16,TestWASIUnit17,TestWASIUnit18,TestWASIUnit19,TestWASIUnit20,TestWASIUnit21,TestWASIUnit22,TestWASIUnit23,TestWASIUnit24,TestWASIUnit25,TestWASIUnit26,TestWASIUnit27,TestWASIUnit28,TestWASIUnit29,TestWASIUnit30,TestWASIUnit31,TestWASIUnit32,TestWASIUnit33,TestWASIUnit34,TestWASIUnit35:c21b865ade4f7ec33e3c43e989d4915bb320441b56260e70d1b404d8e6ee400c",
+    "line": 57,
+    "condition": "_, err := exec.LookPath(tool); err != nil",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.Getenv(name)",
+      "os.Open(path)",
+      "os.ReadFile(module)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIUnit00",
+      "TestWASIUnit01",
+      "TestWASIUnit02",
+      "TestWASIUnit03",
+      "TestWASIUnit04",
+      "TestWASIUnit05",
+      "TestWASIUnit06",
+      "TestWASIUnit07",
+      "TestWASIUnit08",
+      "TestWASIUnit09",
+      "TestWASIUnit10",
+      "TestWASIUnit11",
+      "TestWASIUnit12",
+      "TestWASIUnit13",
+      "TestWASIUnit14",
+      "TestWASIUnit15",
+      "TestWASIUnit16",
+      "TestWASIUnit17",
+      "TestWASIUnit18",
+      "TestWASIUnit19",
+      "TestWASIUnit20",
+      "TestWASIUnit21",
+      "TestWASIUnit22",
+      "TestWASIUnit23",
+      "TestWASIUnit24",
+      "TestWASIUnit25",
+      "TestWASIUnit26",
+      "TestWASIUnit27",
+      "TestWASIUnit28",
+      "TestWASIUnit29",
+      "TestWASIUnit30",
+      "TestWASIUnit31",
+      "TestWASIUnit32",
+      "TestWASIUnit33",
+      "TestWASIUnit34",
+      "TestWASIUnit35"
+    ],
+    "message": "\"WASI toolchain missing: %s: %v\"",
+    "class": "required-input",
+    "provides": "When ADAMIC_TEST_WASI=1, WASI_SYSROOT must name the wasi-sdk 27.0 share/wasi-sysroot directory; SDK clang/linker/compiler builtins, Go and Node 24 must be usable on PATH. This prerequisite skip is required-input, including a native clang lacking libclang_rt.builtins.a.",
+    "opt_in_on": [
+      "ADAMIC_TEST_WASI",
+      "WASI_SYSROOT"
+    ]
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "runWASIUnit",
+    "id": "TestWASIUnit00,TestWASIUnit01,TestWASIUnit02,TestWASIUnit03,TestWASIUnit04,TestWASIUnit05,TestWASIUnit06,TestWASIUnit07,TestWASIUnit08,TestWASIUnit09,TestWASIUnit10,TestWASIUnit11,TestWASIUnit12,TestWASIUnit13,TestWASIUnit14,TestWASIUnit15,TestWASIUnit16,TestWASIUnit17,TestWASIUnit18,TestWASIUnit19,TestWASIUnit20,TestWASIUnit21,TestWASIUnit22,TestWASIUnit23,TestWASIUnit24,TestWASIUnit25,TestWASIUnit26,TestWASIUnit27,TestWASIUnit28,TestWASIUnit29,TestWASIUnit30,TestWASIUnit31,TestWASIUnit32,TestWASIUnit33,TestWASIUnit34,TestWASIUnit35:ab517074b39ce9a04d300b62cb0376874d6d269fd76acec08584916b675e7e9f",
+    "line": 77,
+    "condition": "output, err := exec.Command(clang, append(append([]string{}, flags...), probe, \"-o\", filepath.Join(directory, \"probe.wasm\"))...).CombinedOutput(); err != nil",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.Getenv(name)",
+      "os.Open(path)",
+      "os.ReadFile(module)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIUnit00",
+      "TestWASIUnit01",
+      "TestWASIUnit02",
+      "TestWASIUnit03",
+      "TestWASIUnit04",
+      "TestWASIUnit05",
+      "TestWASIUnit06",
+      "TestWASIUnit07",
+      "TestWASIUnit08",
+      "TestWASIUnit09",
+      "TestWASIUnit10",
+      "TestWASIUnit11",
+      "TestWASIUnit12",
+      "TestWASIUnit13",
+      "TestWASIUnit14",
+      "TestWASIUnit15",
+      "TestWASIUnit16",
+      "TestWASIUnit17",
+      "TestWASIUnit18",
+      "TestWASIUnit19",
+      "TestWASIUnit20",
+      "TestWASIUnit21",
+      "TestWASIUnit22",
+      "TestWASIUnit23",
+      "TestWASIUnit24",
+      "TestWASIUnit25",
+      "TestWASIUnit26",
+      "TestWASIUnit27",
+      "TestWASIUnit28",
+      "TestWASIUnit29",
+      "TestWASIUnit30",
+      "TestWASIUnit31",
+      "TestWASIUnit32",
+      "TestWASIUnit33",
+      "TestWASIUnit34",
+      "TestWASIUnit35"
+    ],
+    "message": "\"WASI toolchain missing or unusable (sysroot, linker, builtins): %v\\n%s\"",
+    "class": "required-input",
+    "provides": "When ADAMIC_TEST_WASI=1, WASI_SYSROOT must name the wasi-sdk 27.0 share/wasi-sysroot directory; SDK clang/linker/compiler builtins, Go and Node 24 must be usable on PATH. This prerequisite skip is required-input, including a native clang lacking libclang_rt.builtins.a.",
+    "opt_in_on": [
+      "ADAMIC_TEST_WASI",
+      "WASI_SYSROOT"
+    ]
+  },
+  {
+    "file": "internal/native/wasm_test.go",
+    "test": "runWASIUnit",
+    "id": "TestWASIUnit00,TestWASIUnit01,TestWASIUnit02,TestWASIUnit03,TestWASIUnit04,TestWASIUnit05,TestWASIUnit06,TestWASIUnit07,TestWASIUnit08,TestWASIUnit09,TestWASIUnit10,TestWASIUnit11,TestWASIUnit12,TestWASIUnit13,TestWASIUnit14,TestWASIUnit15,TestWASIUnit16,TestWASIUnit17,TestWASIUnit18,TestWASIUnit19,TestWASIUnit20,TestWASIUnit21,TestWASIUnit22,TestWASIUnit23,TestWASIUnit24,TestWASIUnit25,TestWASIUnit26,TestWASIUnit27,TestWASIUnit28,TestWASIUnit29,TestWASIUnit30,TestWASIUnit31,TestWASIUnit32,TestWASIUnit33,TestWASIUnit34,TestWASIUnit35:f69cd3364c297e515a7579901e72251584219181e3d65f6db4443ff8a7833420",
+    "line": 81,
+    "condition": "output, err := exec.Command(\"node\", \"--disable-warning=ExperimentalWarning\", \"--input-type=module\", \"-e\",\n\t\"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)\").CombinedOutput(); err != nil",
+    "reads": [
+      "exec.LookPath(tool)",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"ADAMIC_WASI_ARTIFACT\")",
+      "os.Getenv(\"ADAMIC_WASI_RUNTIME\")",
+      "os.Getenv(\"WASI_SYSROOT\")",
+      "os.Getenv(name)",
+      "os.Open(path)",
+      "os.ReadFile(module)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIUnit00",
+      "TestWASIUnit01",
+      "TestWASIUnit02",
+      "TestWASIUnit03",
+      "TestWASIUnit04",
+      "TestWASIUnit05",
+      "TestWASIUnit06",
+      "TestWASIUnit07",
+      "TestWASIUnit08",
+      "TestWASIUnit09",
+      "TestWASIUnit10",
+      "TestWASIUnit11",
+      "TestWASIUnit12",
+      "TestWASIUnit13",
+      "TestWASIUnit14",
+      "TestWASIUnit15",
+      "TestWASIUnit16",
+      "TestWASIUnit17",
+      "TestWASIUnit18",
+      "TestWASIUnit19",
+      "TestWASIUnit20",
+      "TestWASIUnit21",
+      "TestWASIUnit22",
+      "TestWASIUnit23",
+      "TestWASIUnit24",
+      "TestWASIUnit25",
+      "TestWASIUnit26",
+      "TestWASIUnit27",
+      "TestWASIUnit28",
+      "TestWASIUnit29",
+      "TestWASIUnit30",
+      "TestWASIUnit31",
+      "TestWASIUnit32",
+      "TestWASIUnit33",
+      "TestWASIUnit34",
+      "TestWASIUnit35"
+    ],
+    "message": "\"WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\\n%s\"",
+    "class": "required-input",
+    "provides": "When ADAMIC_TEST_WASI=1, WASI_SYSROOT must name the wasi-sdk 27.0 share/wasi-sysroot directory; SDK clang/linker/compiler builtins, Go and Node 24 must be usable on PATH. This prerequisite skip is required-input, including a native clang lacking libclang_rt.builtins.a.",
+    "opt_in_on": [
+      "ADAMIC_TEST_WASI",
+      "WASI_SYSROOT"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_engines_test.go",
+    "test": "requireWasmtime",
+    "id": "TestWasmtimeAgreesWithNode,TestWasmtimeCheckedWitness,TestWasmtimeOracleCatchesMutants:ea265cf26652bfd1e3af61caaa3cffc58fadceaac6ce504b012cc6c8c6e0d545",
+    "line": 18,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASMTIME\") != \"1\"",
+    "reads": [
+      "exec.LookPath(\"wasmtime\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASMTIME\")"
+    ],
+    "callers": [
+      "TestWasmtimeAgreesWithNode",
+      "TestWasmtimeCheckedWitness",
+      "TestWasmtimeOracleCatchesMutants"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASMTIME=1\"",
+    "class": "opt-in-lane",
+    "provides": "The wasmtime second-engine lane (docs/wasm-limits.md's wasmtime witness): bash cloud/setup.sh --wasmtime installs wasmtime 38.0.3, and ADAMIC_ORACLE_WASMTIME=1 runs it with the WASI lane's switches. No gate sets it or installs wasmtime (cloud/fast-gate/tools.txt declares wasmtime optional, d97a443a9a); platforms runs it by hand. The gate's required WASI oracle (TestWASIAgreesWithNode under node:wasi) holds the same fixtures; only the second engine's agreement is left to that lane.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASMTIME"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_engines_test.go",
+    "test": "TestWasmtimeAgreesWithNode",
+    "id": "TestWasmtimeAgreesWithNode:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9",
+    "line": 105,
+    "condition": "!fixture.lowers",
+    "reads": [
+      "exec.LookPath(\"wasmtime\")",
+      "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\n\t\tif entry != nil && entry.IsDir() {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn err\n\t}\n\trelative, err := filepath.Rel(directory, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tinformation, err := entry.Info()\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tfound[relative] = fmt.Sprintf(\"directory %v\", information.Mode().Perm())\n\t\treturn nil\n\t}\n\tcontents, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tfound[relative] = fmt.Sprintf(\"file %v %q\", information.Mode().Perm(), contents)\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASMTIME\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWasmtimeAgreesWithNode"
+    ],
+    "message": "\"fixture does not lower\"",
+    "class": "not-applicable",
+    "provides": "The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7)."
+  },
+  {
+    "file": "internal/oracle/wasi_shim_test.go",
+    "test": "TestWASIShimAgreesWithNode",
+    "id": "TestWASIShimAgreesWithNode:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9",
+    "line": 27,
+    "condition": "!fixture.lowers",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.Getenv(\"ADAMIC_SHIM_INVENTORY_ONLY\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIShimAgreesWithNode"
+    ],
+    "message": "\"fixture does not lower\"",
+    "class": "not-applicable",
+    "provides": "The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).",
+    "opt_in_on": [
+      "ADAMIC_ORACLE_WASI"
     ]
   }
 ]
