@@ -1,0 +1,26 @@
+[
+  [
+    "D01",
+    "internal/lower/invariance.go",
+    "if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {",
+    "if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(l.withoutUndefined(target), source)) {",
+    "Ignore undefined in mutable property write compatibility",
+    "widening"
+  ],
+  [
+    "D02",
+    "internal/lower/library_node_fs_file.go",
+    "if !discarded && !returned {",
+    "if !discarded && !returned && false {",
+    "Disable fs void-value rejection condition",
+    "void"
+  ],
+  [
+    "D03",
+    "internal/lower/library_node_fs_file.go",
+    "!ok || b.Value {",
+    "!ok || b.Value && false {",
+    "Disable bigint-true Stats rejection while preserving ordinary Stats",
+    "pinned"
+  ]
+]

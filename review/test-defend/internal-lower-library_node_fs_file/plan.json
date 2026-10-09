@@ -1,0 +1,34 @@
+[
+  {
+    "id": "D1",
+    "file": "internal/lower/library_node.go",
+    "line": 44,
+    "old": "parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindInterfaceDeclaration",
+    "new": "parent.Kind == ast.KindEnumDeclaration || parent.Kind == ast.KindInterfaceDeclaration",
+    "target": "TestNodeLibraryDistinguishesReceiverOwners"
+  },
+  {
+    "id": "Q1",
+    "file": "internal/lower/proven_relations.go",
+    "line": 42,
+    "old": "exact := origin != nil && origin.Kind == ast.KindObjectLiteralExpression",
+    "new": "exact := origin != nil && origin.Kind == ast.KindNewExpression",
+    "target": "TestNodeLibraryQualifiedTypeAssertion"
+  },
+  {
+    "id": "Q2",
+    "file": "internal/lower/proven_relations.go",
+    "line": 22,
+    "old": "\tif field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != \"\" {\n\t\treturn refuse(\"optional field \"+field+\" has no proven compatible presence/type\", \"keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\")\n\t}\n",
+    "new": "",
+    "target": "TestNodeLibraryQualifiedTypeAssertion"
+  },
+  {
+    "id": "Q3",
+    "file": "internal/lower/proven_relations.go",
+    "line": 42,
+    "old": "exact := origin != nil && origin.Kind == ast.KindObjectLiteralExpression",
+    "new": "exact := origin != nil && origin.Kind != ast.KindObjectLiteralExpression",
+    "target": "TestNodeLibraryQualifiedTypeAssertion"
+  }
+]

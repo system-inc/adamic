@@ -1,0 +1,26 @@
+[
+  [
+    "widening",
+    "^TestNodeFSFileDoesNotAuthorizeMutableWidening$"
+  ],
+  [
+    "nevermap",
+    "^TestEmptyNeverMapCannotGainWritableInhabitants$"
+  ],
+  [
+    "void",
+    "^TestNodeFSFileRefusesVoidValues$"
+  ],
+  [
+    "effects",
+    "^TestNodeFSFileRefusesOptionEffects$"
+  ],
+  [
+    "pinned",
+    "^TestNodeFSFileRefusesPinnedUnsupportedOverloads$"
+  ],
+  [
+    "family",
+    "^(TestNodeFSFileOptionsBorrow|TestNodeFSFileNamespaceImport|TestNodeFSFileBufferBorrow|TestNodeFSFileScratchOptionsBorrow)$"
+  ]
+]
