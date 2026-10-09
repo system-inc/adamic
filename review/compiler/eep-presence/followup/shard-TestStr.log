@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:39:01.75470769Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:39:01.777961766Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed"}
+{"Time":"2026-10-09T17:39:01.778166577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"=== RUN   TestStringEnumsStayClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:01.778250922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"=== PAUSE TestStringEnumsStayClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:01.778257038Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed"}
+{"Time":"2026-10-09T17:39:01.778261653Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed"}
+{"Time":"2026-10-09T17:39:01.778264112Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"=== CONT  TestStringEnumsStayClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:01.919279644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"--- PASS: TestStringEnumsStayClosed (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:01.919335031Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Elapsed":0.14}
+{"Time":"2026-10-09T17:39:01.919364603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:01.922405433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.167s\n"}
+{"Time":"2026-10-09T17:39:01.922442458Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.168}

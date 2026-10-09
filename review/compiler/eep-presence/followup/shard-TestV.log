@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:39:27.093994314Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:39:27.10330468Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser"}
+{"Time":"2026-10-09T17:39:27.103387681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser","Output":"=== RUN   TestViewObjectContractsAreAvailableToEraser\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.103427488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser","Output":"=== PAUSE TestViewObjectContractsAreAvailableToEraser\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.103431993Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser"}
+{"Time":"2026-10-09T17:39:27.103436915Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate"}
+{"Time":"2026-10-09T17:39:27.103439734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate","Output":"=== RUN   TestViewObjectWritesNeedSourceCertificate\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.103443546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate","Output":"=== PAUSE TestViewObjectWritesNeedSourceCertificate\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.103446292Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate"}
+{"Time":"2026-10-09T17:39:27.103449457Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser"}
+{"Time":"2026-10-09T17:39:27.103452421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser","Output":"=== CONT  TestViewObjectContractsAreAvailableToEraser\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.103694887Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate"}
+{"Time":"2026-10-09T17:39:27.103704558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate","Output":"=== CONT  TestViewObjectWritesNeedSourceCertificate\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.253679249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser","Output":"--- PASS: TestViewObjectContractsAreAvailableToEraser (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.320508829Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectContractsAreAvailableToEraser","Elapsed":0.15}
+{"Time":"2026-10-09T17:39:27.320599449Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate","Output":"--- PASS: TestViewObjectWritesNeedSourceCertificate (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.320750806Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestViewObjectWritesNeedSourceCertificate","Elapsed":0.22}
+{"Time":"2026-10-09T17:39:27.320757249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:39:27.324368284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.230s\n"}
+{"Time":"2026-10-09T17:39:27.324397907Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.23}

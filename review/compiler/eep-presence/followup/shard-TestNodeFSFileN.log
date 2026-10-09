@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:36:33.945634891Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:36:33.955789164Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport"}
+{"Time":"2026-10-09T17:36:33.955906518Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"=== RUN   TestNodeFSFileNamespaceImport\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:33.955940349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"=== PAUSE TestNodeFSFileNamespaceImport\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:33.955943904Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport"}
+{"Time":"2026-10-09T17:36:33.955948195Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport"}
+{"Time":"2026-10-09T17:36:33.955950894Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"=== CONT  TestNodeFSFileNamespaceImport\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:34.358964502Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"--- PASS: TestNodeFSFileNamespaceImport (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:34.359069026Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Elapsed":0.4}
+{"Time":"2026-10-09T17:36:34.359099748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:34.363108235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.417s\n"}
+{"Time":"2026-10-09T17:36:34.363147994Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.418}

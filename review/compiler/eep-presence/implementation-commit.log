@@ -1,0 +1,11 @@
+[compiler/eep-presence 4478575d] Refuse unsupported tuple lengths and class presence hazards
+ 10 files changed, 184 insertions(+)
+ create mode 100644 internal/lower/eep_presence.go
+ create mode 100644 internal/lower/eep_presence_test.go
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v1.a
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v2.a
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v5.a
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z-classfeat_method_view.a
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z-classfeat_static_virtual.a
+ create mode 100644 internal/lower/testdata/eep_presence/eep1m5z.a

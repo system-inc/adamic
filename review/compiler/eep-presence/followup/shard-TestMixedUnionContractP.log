@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:35:49.972060761Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:35:49.994004299Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase"}
+{"Time":"2026-10-09T17:35:49.994090141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:49.994181962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:49.994185466Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase"}
+{"Time":"2026-10-09T17:35:49.994245994Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined"}
+{"Time":"2026-10-09T17:35:49.994248881Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"=== RUN   TestMixedUnionContractPhantomVoidIsUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:49.994265596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:49.994267621Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined"}
+{"Time":"2026-10-09T17:35:49.994283156Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase"}
+{"Time":"2026-10-09T17:35:49.994285175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:49.995248017Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined"}
+{"Time":"2026-10-09T17:35:49.995265959Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"=== CONT  TestMixedUnionContractPhantomVoidIsUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:50.102364606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:50.11701308Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Elapsed":0.1}
+{"Time":"2026-10-09T17:35:50.117072327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:50.11708587Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Elapsed":0.12}
+{"Time":"2026-10-09T17:35:50.117089492Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:35:50.137008379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.164s\n"}
+{"Time":"2026-10-09T17:35:50.137048354Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.165}

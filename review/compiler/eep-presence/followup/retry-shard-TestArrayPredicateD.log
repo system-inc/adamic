@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:38:16.605617213Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:38:16.646734802Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples"}
+{"Time":"2026-10-09T17:38:16.646819526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples","Output":"=== RUN   TestArrayPredicateDoesNotMisclassifyNativeTuples\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:16.646860091Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples","Output":"=== PAUSE TestArrayPredicateDoesNotMisclassifyNativeTuples\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:16.646864382Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples"}
+{"Time":"2026-10-09T17:38:16.646913568Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples"}
+{"Time":"2026-10-09T17:38:16.646917248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples","Output":"=== CONT  TestArrayPredicateDoesNotMisclassifyNativeTuples\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:16.88084154Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples","Output":"--- PASS: TestArrayPredicateDoesNotMisclassifyNativeTuples (0.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:16.880874215Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateDoesNotMisclassifyNativeTuples","Elapsed":0.23}
+{"Time":"2026-10-09T17:38:16.880898449Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:16.88743061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.281s\n"}
+{"Time":"2026-10-09T17:38:16.887470956Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.282}

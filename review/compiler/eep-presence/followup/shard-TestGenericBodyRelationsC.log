@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T17:33:51.011329549Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:33:51.068635225Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus"}
+{"Time":"2026-10-09T17:33:51.06901204Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus","Output":"=== RUN   TestGenericBodyRelationsCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:51.069359327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus","Output":"=== PAUSE TestGenericBodyRelationsCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:51.069365818Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus"}
+{"Time":"2026-10-09T17:33:51.069390028Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus"}
+{"Time":"2026-10-09T17:33:51.069393415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus","Output":"=== CONT  TestGenericBodyRelationsCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:51.06939711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus","Output":"    generic_body_relations_census_test.go:28: set GENERIC_BODY_CONFIG and GENERIC_BODY_OUTPUT for the relation inventory\n"}
+{"Time":"2026-10-09T17:33:51.069446623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus","Output":"--- SKIP: TestGenericBodyRelationsCensus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:51.069450571Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsCensus","Elapsed":0}
+{"Time":"2026-10-09T17:33:51.069536759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:51.071352817Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.032s\n"}
+{"Time":"2026-10-09T17:33:51.071408868Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.06}

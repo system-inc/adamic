@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:36:40.472845999Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:36:40.490032398Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow"}
+{"Time":"2026-10-09T17:36:40.490117174Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow","Output":"=== RUN   TestNodeFSFileScratchOptionsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:40.490151238Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow","Output":"=== PAUSE TestNodeFSFileScratchOptionsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:40.490154825Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow"}
+{"Time":"2026-10-09T17:36:40.49015869Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed"}
+{"Time":"2026-10-09T17:36:40.490161607Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"=== RUN   TestNodeFSFileScratchOverloadsAreNamed\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:40.490166595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"=== PAUSE TestNodeFSFileScratchOverloadsAreNamed\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:40.490169517Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed"}
+{"Time":"2026-10-09T17:36:40.490176258Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow"}
+{"Time":"2026-10-09T17:36:40.490179195Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow","Output":"=== CONT  TestNodeFSFileScratchOptionsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:40.490182556Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed"}
+{"Time":"2026-10-09T17:36:40.490185432Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"=== CONT  TestNodeFSFileScratchOverloadsAreNamed\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:41.653387279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow","Output":"--- PASS: TestNodeFSFileScratchOptionsBorrow (1.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:41.980227417Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOptionsBorrow","Elapsed":1.16}
+{"Time":"2026-10-09T17:36:41.980299454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"--- PASS: TestNodeFSFileScratchOverloadsAreNamed (1.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:41.980307453Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Elapsed":1.49}
+{"Time":"2026-10-09T17:36:41.98031183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:41.996869981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t1.524s\n"}
+{"Time":"2026-10-09T17:36:41.99692407Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.524}
