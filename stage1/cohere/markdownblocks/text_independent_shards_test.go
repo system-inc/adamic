@@ -28,7 +28,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Each independent phase is killed at 90s; leaf callers start after setup and admission.
+// Each shard is killed at 90s, after shared setup and admission.
 func textDeadline(t *testing.T) func() {
 	return textPhaseDeadline(t, t.Name())
 }
@@ -53,6 +53,16 @@ func textBounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
 	t.Cleanup(cancel)
+	return textCommand(t, ctx, name, arguments...)
+}
+
+func textSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	ctx, cancel := markdownLayoutSetupContext(t.Context())
+	t.Cleanup(cancel)
+	return textCommand(t, ctx, name, arguments...)
+}
+
+func textCommand(t *testing.T, ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -109,7 +119,7 @@ func textShardFor(key string, count int) int {
 
 func textVerifyLeaves(t *testing.T) {
 	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "text_shards_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "text_independent_shards_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -259,14 +269,11 @@ type textSetupState struct {
 var textSetupOnce sync.Once
 var textSetupShared textSetupState
 
-// The serial TestMarkdownTextSplitting_Setup initializes this before parallel
-// leaves resume. A filtered run that omits Setup uses the same separately bounded
-// setup phase; its leaf deadline is still started only after readiness.
+// Every shard prepares shared products once per process before its own deadline.
+// Shared setup has no deadline; Loom bounds the complete unit.
 func textReadySetup(t *testing.T) textSetupState {
 	t.Helper()
 	textSetupOnce.Do(func() {
-		stop := textPhaseDeadline(t, "TestMarkdownTextSplitting_Setup")
-		defer stop()
 		started := time.Now()
 		root, inputs := textSplittingInputs(t)
 		products := textBuildProducts(t, root)
@@ -283,80 +290,100 @@ func textReadySetup(t *testing.T) textSetupState {
 type textProducts struct{ main, goBinary, sanitized, release, backend string }
 
 func textBuildProducts(t *testing.T, root string) textProducts {
+	return textBuildProduct(t, root, "")
+}
+
+// Product declarations and shard setup use exactly the same recipes and keys.
+func textBuildProduct(t *testing.T, root, target string) textProducts {
 	t.Helper()
 	started := time.Now()
 	tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
 	goFlags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")}
 	files := []string{"go.mod", "cohere", "internal", "stage1/cohere/markdownblocks", "oracle"}
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_probe.ts")
-	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-lowered", Files: files, Toolchain: tools}, func(dir string) error {
-		program, err := loweredResult(main)
+	products := textProducts{main: main}
+	if target == "" || target == "lowered" || target == "sanitized" || target == "release" {
+		lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-lowered", Files: files, Toolchain: tools}, func(dir string) error {
+			program, err := loweredResult(main)
+			if err != nil {
+				return err
+			}
+			if err = os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+		})
+		source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
 		if err != nil {
-			return err
+			t.Fatal(err)
 		}
-		if err = os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
+		products.backend = filepath.Join(lowerDir, "program.mjs")
+		for _, sanitize := range []bool{true, false} {
+			if target != "" && (target == "lowered" || (sanitize && target != "sanitized") || (!sanitize && target != "release")) {
+				continue
+			}
+			options := native.Options{Sanitize: sanitize}
+			inputs := buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: []string{"internal/native"}, Flags: append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED")), Toolchain: tools}
+			dir := buildcache.Product(t, inputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+			if sanitize {
+				products.sanitized = filepath.Join(dir, "port")
+			} else {
+				products.release = filepath.Join(dir, "port")
+			}
 		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
-	})
-	source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
-	if err != nil {
-		t.Fatal(err)
 	}
-	products := textProducts{main: main, backend: filepath.Join(lowerDir, "program.mjs")}
-	for _, sanitize := range []bool{true, false} {
-		options := native.Options{Sanitize: sanitize}
-		inputs := buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: []string{"internal/native"}, Flags: append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED")), Toolchain: tools}
-		dir := buildcache.Product(t, inputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
-		if sanitize {
-			products.sanitized = filepath.Join(dir, "port")
-		} else {
-			products.release = filepath.Join(dir, "port")
-		}
+	if target == "" || target == "go" {
+		goDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-go", Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/text_go.go", "stage1/cohere/markdownblocks/testdata/text_bridge.go"}, Flags: append(goFlags, "go build", "overlay text_go.go,text_bridge.go"), Toolchain: tools[:1]}, func(dir string) error {
+			cohere := filepath.Join(root, "cohere")
+			mainPath := filepath.Join(cohere, "cmd/adamic_text/main.go")
+			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"), filepath.Join(cohere, "internal/format/markdown/adamic_text.go"): filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_bridge.go")}})
+			if err != nil {
+				return err
+			}
+			overlayPath := filepath.Join(dir, "overlay.json")
+			if err = os.WriteFile(overlayPath, overlay, 0644); err != nil {
+				return err
+			}
+			command := textSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-text"), mainPath)
+			command.Dir = cohere
+			output, err := textCombinedOutput(command)
+			if err != nil {
+				return fmt.Errorf("Go splitText: %w\n%s", err, output)
+			}
+			return nil
+		})
+		products.goBinary = filepath.Join(goDir, "go-text")
 	}
-	goDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-go", Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/text_go.go", "stage1/cohere/markdownblocks/testdata/text_bridge.go"}, Flags: append(goFlags, "go build", "overlay text_go.go,text_bridge.go"), Toolchain: tools[:1]}, func(dir string) error {
-		cohere := filepath.Join(root, "cohere")
-		mainPath := filepath.Join(cohere, "cmd/adamic_text/main.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"), filepath.Join(cohere, "internal/format/markdown/adamic_text.go"): filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_bridge.go")}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err = os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		command := textBounded(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-text"), mainPath)
-		command.Dir = cohere
-		output, err := textCombinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("Go splitText: %w\n%s", err, output)
-		}
-		return nil
-	})
-	products.goBinary = filepath.Join(goDir, "go-text")
 	// Regeneration is independent of case partitioning and executes once, after its build inputs.
-	formatterDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-formatter", Files: []string{"cohere"}, Flags: goFlags, Toolchain: tools[:1]}, func(dir string) error {
-		command := textBounded(t, "go", "build", "-o", filepath.Join(dir, "cohere"), "./command/cohere")
-		command.Dir = filepath.Join(root, "cohere")
-		output, err := textCombinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("formatter: %w\n%s", err, output)
-		}
-		return nil
-	})
-	generatorDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-generator", Files: []string{"go.mod", "stage1/cohere/markdownblocks/tools/generate_classes"}, Flags: goFlags, Toolchain: tools[:1]}, func(dir string) error {
-		command := textBounded(t, "go", "build", "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")
+	var formatterDir, generatorDir string
+	if target == "" || target == "formatter" {
+		formatterDir = buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-formatter", Files: []string{"cohere"}, Flags: goFlags, Toolchain: tools[:1]}, func(dir string) error {
+			command := textSetupCommand(t, "go", "build", "-o", filepath.Join(dir, "cohere"), "./command/cohere")
+			command.Dir = filepath.Join(root, "cohere")
+			output, err := textCombinedOutput(command)
+			if err != nil {
+				return fmt.Errorf("formatter: %w\n%s", err, output)
+			}
+			return nil
+		})
+	}
+	if target == "" || target == "generator" {
+		generatorDir = buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-generator", Files: []string{"go.mod", "stage1/cohere/markdownblocks/tools/generate_classes"}, Flags: goFlags, Toolchain: tools[:1]}, func(dir string) error {
+			command := textSetupCommand(t, "go", "build", "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")
+			command.Dir = root
+			output, err := textCombinedOutput(command)
+			if err != nil {
+				return fmt.Errorf("generator: %w\n%s", err, output)
+			}
+			return nil
+		})
+	}
+	if target == "" {
+		command := textSetupCommand(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
 		command.Dir = root
-		output, err := textCombinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("generator: %w\n%s", err, output)
+		if output, err := textCombinedOutput(command); err != nil {
+			t.Fatalf("regeneration: %v\n%s", err, output)
 		}
-		return nil
-	})
-	command := textBounded(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
-	command.Dir = root
-	if output, err := textCombinedOutput(command); err != nil {
-		t.Fatalf("regeneration: %v\n%s", err, output)
 	}
 	t.Logf("text input preparation including builds %.3fs", time.Since(started).Seconds())
 	return products
