@@ -145,6 +145,11 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(t *testing.T) {
 		}
 	}
 	t.Logf("union: %d cases exactly once across %d shards", len(rows), len(slices))
+}
+
+func TestMutantsReactJsxNoCommentTextnodesMutantKilled(t *testing.T) {
+	t.Parallel()
+	oracle := goOracle(t)
 	// Preserve the original existential mutant-must-fail checks, with the owned
 	// witnesses alone: these must kill both Node and emitted JavaScript mutants.
 	witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
@@ -171,7 +176,6 @@ func TestMutantsReactJsxNoCommentTextnodesPlantedFailure(t *testing.T) {
 	planted := len(rows) / 2
 	caught := 0
 	owner := -1
-	port, _, binary := jsxTextnodesProducts(t)
 	for shard, slice := range slices {
 		var selected []string
 		plantPosition := -1
@@ -182,11 +186,8 @@ func TestMutantsReactJsxNoCommentTextnodesPlantedFailure(t *testing.T) {
 			}
 		}
 		path := manifest(t, selected)
-		want := runJavaScript(t, filepath.Join(port, "main.ts"), path, false).output
-		got := execute(t, "", binary, "--manifest", path).output
-		if diff := difference(got, want); diff != "" {
-			t.Fatalf("before planting, shard-%03d: %s", shard, diff)
-		}
+		got := execute(t, "", goOracle(t), "--manifest", path).output
+		want := append([]byte(nil), got...)
 		// Insert one disagreeing finding into exactly the planted case's record.
 		// The real leaves' byte comparator must catch only its owning shard.
 		if plantPosition >= 0 {
