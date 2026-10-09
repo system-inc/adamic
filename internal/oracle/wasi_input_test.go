@@ -33,7 +33,12 @@ process.exitCode = wasi.start(instance);`, binary, "root", filepath.Dir(binary)}
 // Exact named observations, never a blanket permission to disagree.
 func expectedEngineBehavior(t *testing.T, path string, expected run, how inputRun, wasmtime bool) (run, bool) {
 	t.Helper()
+	// Limits are pinned for fixtures directly in testdata; a same-named file in a subdirectory, such as
+	// regexp_replace/arguments.a, is a different program and answers to Node unchanged.
 	name := filepath.Base(path)
+	if filepath.Base(filepath.Dir(path)) != "testdata" {
+		name = ""
+	}
 	limited := false
 	replace := func(old, changed string) {
 		t.Helper()
