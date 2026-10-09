@@ -1,0 +1,8 @@
+FIRST FAILURE (tests, at 166.5 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup
+=== RUN   TestVolumeConfigGuardAndMutant_Setup
+    volume_config_guard_shards_test.go:369: build volume-guard-stage0 8192f479f073 miss 16.54
+    volume_config_guard_shards_test.go:85: build volume-guard-archive-checker f76ba9de4375 miss 19.29
+cooked: TestVolumeConfigGuardAndMutant_Setup exceeded 90s (over budget)
+
+(box load 109.4 on 64 cores at first failure)
