@@ -1,0 +1,5 @@
+FIRST FAILURE (a-check, at 38.9 s):
+a-check failed for 3 files:
+stage3/interface-downcasts/untagged/fixtures/binding-name-source-absent.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/stage3/interface-downcasts/untagged/fixtures/binding-name-source-absent.a:19:12: Adamic 0.1 refuses an unproven relation from { readonly kind: "Holder"; } to Holder: )
+stage3/interface-downcasts/untagged/fixtures/option-element-source-absent.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/stage3/interface-downcasts/untagged/fixtures/option-element-source-absent.a:12:12: Adamic 0.1 refuses an unproven relation from { readonly kind: "Holder"; } to Holder)
+stage3/interface-downcasts/untagged/fixtures/structural-source-absent.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/stage3/interface-downcasts/untagged/fixtures/structural-source-absent.a:9:12: Adamic 0.1 refuses an unproven relation from { readonly kind: "Holder"; } to Holder: opt)
