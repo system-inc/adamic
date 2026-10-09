@@ -440,14 +440,6 @@ if [ "$testOnly" = yes ]; then
 		echo "held for the star: ${held}" >&2
 		exit 3
 	fi
-	# The checks that take seconds (@system_adamic, Oct 9 03:51Z): gofmt, declared tools, the t.Parallel
-	# analyzer and a bounded go vet, so a violator is refused here instead of reddening every gate on main.
-	laneCommit=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "lane checks for ${gated:0:8}")
-	if ! laneChecks=$(python3 "$directory/lane-checks.py" "$old" "$tree" "$laneCommit" 2>&1); then
-		echo "refused: the lane's checks: $(printf '%s' "$laneChecks" | head -n 5 | paste -sd ' ' -)" >&2
-		exit 1
-	fi
-	branches="${branches}; ${laneChecks}"
 	landingSubject="Land test-only ${gated:0:8} over main ${old:0:8}"
 	landingBody="Every path it changes against main is a test, testdata, review evidence, a shard table or ruled harness,
 so it lands with no gate (Kirk, Oct 8); Loom's next whole-suite run of main is its check."
@@ -484,6 +476,16 @@ else
 	landingBody="The tree is ${gated:0:8}'s, as gated, plus $(printf '%s\n' "$recordPaths" | grep -c . || true) record and test-only paths from main."
 	echo "Landing ${gated:0:8} over main ${old:0:8}, which moved only by record and test-only commits."
 fi
+
+# The checks that take seconds (@system_adamic, Oct 9 03:51Z), on every landing (developer tools: the fast
+# gate runs cmd/adamic-gate's t.Parallel analyzer only when a change reaches that package): gofmt, declared
+# tools, the analyzer and a bounded go vet, so a violator is refused here instead of reddening main.
+laneCommit=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "lane checks for ${gated:0:8}")
+if ! laneChecks=$(python3 "$directory/lane-checks.py" "$old" "$tree" "$laneCommit" 2>&1); then
+	echo "refused: the lane's checks: $(printf '%s' "$laneChecks" | head -n 5 | paste -sd ' ' -)" >&2
+	exit 1
+fi
+branches="${branches}; ${laneChecks}"
 
 # One commit per landing, first parent the old main and second the landed sha, its tree exactly the
 # landing's, its numbers as trailers (@system_adamic, Oct 9, from Kirk: the velocity table left main).

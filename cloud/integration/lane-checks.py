@@ -80,7 +80,7 @@ if testPackages and not problems:
             vetted = run("go", "vet", *testPackages, cwd=laneTree, timeout=vetSeconds, env=goEnvironment)
             # A finding names a file and position; a package that can't load here (it needs the cohere
             # submodule, say) is the gate's to vet, not a reason to refuse.
-            loading = re.compile(r"replacement directory|no required module|cannot find module|does not exist|missing go\.sum|is not in std|cannot load")
+            loading = re.compile(r"replacement directory|no required module|cannot find module|does not exist|no such file or directory|go\.mod|missing go\.sum|is not in std|cannot load")
             findings = [line for line in (vetted.stdout + vetted.stderr).splitlines() if re.search(r"\.go:\d+:\d+: ", line) and not loading.search(line)]
             if findings:
                 problems.append("go vet: " + " | ".join(findings[:5])[:600])
