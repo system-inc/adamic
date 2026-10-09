@@ -2,9 +2,7 @@ package markdownblocks
 
 import (
 	"bytes"
-	"context"
 	"crypto/sha256"
-	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -12,15 +10,14 @@ import (
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
-	"time"
 )
 
 const testMarkdownListLayoutShards = 16
@@ -32,15 +29,16 @@ type listLayoutProducts struct {
 }
 
 func listLayoutBucket(key string) int {
-	sum := sha256.Sum256([]byte(key))
-	return int(binary.LittleEndian.Uint64(sum[:8]) % testMarkdownListLayoutShards)
+	for shard, indices := range testgrain.Assign([]string{key}, testMarkdownListLayoutShards) {
+		if len(indices) > 0 {
+			return shard
+		}
+	}
+	panic("unassigned list identity")
 }
 
-var listLayoutBuildOnce sync.Once
-var listLayoutOnce sync.Once
 var listLayoutShared listLayoutProducts
 var listLayoutBuckets [][]auditInput
-var listLayoutContexts sync.Map
 
 type listLayoutManifest struct {
 	Paths      []string
@@ -85,76 +83,54 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 
 func buildListLayoutSetup(t *testing.T) {
 	t.Helper()
-	listLayoutBuildOnce.Do(func() {
-		finish := listLayoutDeadline(t, "setup")
-		defer finish()
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		directory := buildcache.Product(t, listLayoutSetupInputs(t), func(directory string) error {
-			products := prepareListLayoutProducts(t, root, directory)
-			mutants := make([]string, len(products.mutants))
-			for i, path := range products.mutants {
-				relative, err := filepath.Rel(directory, path)
-				if err != nil {
-					return err
-				}
-				mutants[i] = relative
-			}
-			manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
-			// Go binaries are stored inside this product; native products have their own stable cache paths.
-			for i := 0; i < 2; i++ {
-				relative, err := filepath.Rel(directory, manifest.Paths[i])
-				if err != nil {
-					return err
-				}
-				manifest.Paths[i] = relative
-			}
-			data, err := json.Marshal(manifest)
+	testgrain.Setup(t, "wave1/buildListLayoutSetup", func() (bool, error) {
+		buildListLayoutSetupPrepare(t)
+		return true, nil
+	})
+}
+func buildListLayoutSetupPrepare(t *testing.T) {
+	t.Helper()
+
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := buildcache.Product(t, listLayoutSetupInputs(t), func(directory string) error {
+		products := prepareListLayoutProducts(t, root, directory)
+		mutants := make([]string, len(products.mutants))
+		for i, path := range products.mutants {
+			relative, err := filepath.Rel(directory, path)
 			if err != nil {
 				return err
 			}
-			return os.WriteFile(filepath.Join(directory, "manifest.json"), data, 0644)
-		})
-		listLayoutOnce.Do(func() { loadListLayoutSetup(t, directory) })
+			mutants[i] = relative
+		}
+		manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
+		// Go binaries are stored inside this product; native products have their own stable cache paths.
+		for i := 0; i < 2; i++ {
+			relative, err := filepath.Rel(directory, manifest.Paths[i])
+			if err != nil {
+				return err
+			}
+			manifest.Paths[i] = relative
+		}
+		data, err := json.Marshal(manifest)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "manifest.json"), data, 0644)
 	})
+	loadListLayoutSetup(t, directory)
 }
 
 // Not parallel: publish the shared build product before parallel corpus shards resume.
 func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
 
-// Shards may fetch completed products, but a miss must be built by the setup test.
+// Filtered shards use the same shared preparation as the setup test.
 func listLayoutSetup(t *testing.T) listLayoutProducts {
 	t.Helper()
-	listLayoutOnce.Do(func() {
-		directory, err := buildcache.Get(listLayoutSetupInputs(t), func(string) error {
-			return fmt.Errorf("shared setup cache miss: run TestMarkdownListLayout_Setup first")
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-		loadListLayoutSetup(t, directory)
-	})
-	if listLayoutShared.sanitized == "" {
-		t.Fatal("shared setup unavailable")
-	}
+	buildListLayoutSetup(t)
 	return listLayoutShared
-}
-
-// One deadline spans the entire unit; every child inherits its remaining time.
-func listLayoutDeadline(t *testing.T, unit string) func() {
-	t.Helper()
-	started := time.Now()
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	listLayoutContexts.Store(t, ctx)
-	timer := time.AfterFunc(90*time.Second, func() { cancel(); panic("cooked: Markdown list layout " + unit + " exceeded 90s") })
-	return func() {
-		timer.Stop()
-		cancel()
-		listLayoutContexts.Delete(t)
-		t.Logf("Markdown list layout %s: %.3fs", unit, time.Since(started).Seconds())
-	}
 }
 
 func TestMarkdownListLayoutUnion(t *testing.T) {
@@ -164,49 +140,39 @@ func TestMarkdownListLayoutUnion(t *testing.T) {
 		t.Fatal(err)
 	}
 	inputs, _ := listLayoutInputs(t, root)
-	shards := []func(*testing.T){TestMarkdownListLayout_000, TestMarkdownListLayout_001, TestMarkdownListLayout_002, TestMarkdownListLayout_003, TestMarkdownListLayout_004, TestMarkdownListLayout_005, TestMarkdownListLayout_006, TestMarkdownListLayout_007, TestMarkdownListLayout_008, TestMarkdownListLayout_009, TestMarkdownListLayout_010, TestMarkdownListLayout_011, TestMarkdownListLayout_012, TestMarkdownListLayout_013, TestMarkdownListLayout_014, TestMarkdownListLayout_015}
-	if len(shards) != testMarkdownListLayoutShards {
-		t.Fatalf("enumerated %d shards, want %d", len(shards), testMarkdownListLayoutShards)
+	identities := make([]string, len(inputs))
+	for i, input := range inputs {
+		identities[i] = input.Name
 	}
-	buckets := make([][]int, testMarkdownListLayoutShards)
-	for index, input := range inputs {
-		shard := listLayoutBucket(input.Name)
-		buckets[shard] = append(buckets[shard], index)
+	assignments := testgrain.Assign(identities, testMarkdownListLayoutShards)
+	testgrain.Union(t, "TestMarkdownListLayout", testMarkdownListLayoutShards, assignments, len(inputs))
+	if len(inputs) == 0 {
+		t.Fatal("empty list corpus")
 	}
-	seen := make([]int, len(inputs))
-	caught := 0
+	caught := make(map[int]bool)
 	planted := len(inputs) / 2
-	catcher := -1
-	for shard, bucket := range buckets {
-		for _, index := range bucket {
-			seen[index]++
-			got := []byte(inputs[index].Text)
+	owner := listLayoutBucket(inputs[planted].Name)
+	for shard, indices := range assignments {
+		for _, i := range indices {
+			got := []byte(inputs[i].Text)
 			want := append([]byte(nil), got...)
-			if index == planted {
+			if i == planted {
 				want = append(want, '!')
 			}
 			if !bytes.Equal(got, want) {
-				caught++
-				catcher = shard
+				caught[shard] = true
 			}
 		}
 	}
-	for index, n := range seen {
-		if n != 1 {
-			t.Fatalf("case %d covered %d times", index, n)
-		}
-	}
-	if caught != 1 || catcher != listLayoutBucket(inputs[planted].Name) {
-		t.Fatalf("planted disagreement caught by %d shards", caught)
-	}
-	t.Logf("union=%d; planted failure %q caught by TestMarkdownListLayout_%03d", len(inputs), inputs[planted].Name, catcher)
+	testgrain.CaughtByExactly(t, caught, owner)
+	t.Logf("union=%d; planted failure %q caught by TestMarkdownListLayout_%03d", len(inputs), inputs[planted].Name, owner)
 }
 
 func runListLayoutShard(t *testing.T, shard int) {
 	t.Helper()
 	products := listLayoutSetup(t)
-	finish := listLayoutDeadline(t, fmt.Sprintf("shard-%03d", shard))
-	defer finish()
+	testgrain.Unit(t)
+
 	fixture := listLayoutShardFixture(t, products, listLayoutBuckets[shard])
 	for i, mutant := range products.mutants {
 		result := listLayoutNode(t, mutant, fixture.mutantNativeCases)
@@ -743,29 +709,10 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	}
 }
 
-// Each explicit child has a portable deadline; cancellation includes spawned compilers.
+// Explicit children share the active setup or unit process-group tracking.
 func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	parent := t.Context()
-	if deadline, ok := listLayoutContexts.Load(t); ok {
-		parent = deadline.(context.Context)
-	}
-	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	return command
+	return testgrain.CommandContext(t, t.Context(), name, arguments...)
 }
 
 func listLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
@@ -830,10 +777,16 @@ func loadListLayoutSetup(t *testing.T, directory string) {
 		t.Fatal(err)
 	}
 	inputs, _ := listLayoutInputs(t, root)
+
+	identities := make([]string, len(inputs))
+	for i, input := range inputs {
+		identities[i] = input.Name
+	}
 	listLayoutBuckets = make([][]auditInput, testMarkdownListLayoutShards)
-	for _, input := range inputs {
-		shard := listLayoutBucket(input.Name)
-		listLayoutBuckets[shard] = append(listLayoutBuckets[shard], input)
+	for shard, indices := range testgrain.Assign(identities, testMarkdownListLayoutShards) {
+		for _, i := range indices {
+			listLayoutBuckets[shard] = append(listLayoutBuckets[shard], inputs[i])
+		}
 	}
 }
 

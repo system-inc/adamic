@@ -2,23 +2,16 @@ package markdownblocks
 
 import (
 	"bytes"
-	"context"
 	"crypto/sha256"
-	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"go/ast"
-	"go/parser"
-	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
-	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -26,59 +19,28 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 )
 
-// Each independent phase is killed at 90s; leaf callers start after setup and admission.
+// Sibling leaf callers start their Unit after setup and admission.
 func textDeadline(t *testing.T) func() {
-	return textPhaseDeadline(t, t.Name())
+	testgrain.Unit(t)
+	return func() {}
 }
 
-func textPhaseDeadline(t *testing.T, name string) func() {
-	timer := time.AfterFunc(90*time.Second, func() {
-		textActiveCommands.Range(func(key, value any) bool {
-			if value == t {
-				_ = key.(*exec.Cmd).Cancel()
-			}
-			return true
-		})
-		panic("cooked: " + name + " exceeded 90s hard deadline")
-	})
-	return func() { timer.Stop() }
-}
-
-// Each child has a context ceiling, and cancellation kills its compiler descendants.
-var textActiveCommands sync.Map
-
+// Commands belong to the active setup or unit.
 func textBounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	textActiveCommands.Store(command, t)
-	return command
+	return testgrain.CommandContext(t, t.Context(), name, arguments...)
 }
 
 func textCombinedOutput(command *exec.Cmd) ([]byte, error) {
-	defer textActiveCommands.Delete(command)
 	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
 func textExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
 	command := textBounded(t, name, arguments...)
-	defer textActiveCommands.Delete(command)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -103,54 +65,22 @@ func textOnNode(t *testing.T, path string, arguments ...string) run {
 }
 
 func textShardFor(key string, count int) int {
-	sum := sha256.Sum256([]byte(key))
-	return int(binary.BigEndian.Uint64(sum[:8]) % uint64(count))
+	for shard, indices := range testgrain.Assign([]string{key}, count) {
+		if len(indices) > 0 {
+			return shard
+		}
+	}
+	panic("unassigned text identity")
 }
 
 func textVerifyLeaves(t *testing.T) {
 	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "text_shards_test.go", nil, 0)
-	if err != nil {
-		t.Fatal(err)
+	setup := textReadySetup(t)
+	identities := make([]string, len(setup.inputs))
+	for index, input := range setup.inputs {
+		identities[index] = input.Name
 	}
-	seen := make(map[int]bool)
-	for _, decl := range file.Decls {
-		function, ok := decl.(*ast.FuncDecl)
-		if !ok {
-			continue
-		}
-		suffix, ok := strings.CutPrefix(function.Name.Name, "TestMarkdownTextSplitting_")
-		if !ok {
-			continue
-		}
-		index, err := strconv.Atoi(suffix)
-		if err != nil || len(suffix) != 3 || index < 0 || index >= testMarkdownTextSplittingShards || seen[index] {
-			t.Fatalf("invalid top-level shard %s", function.Name.Name)
-		}
-		if len(function.Body.List) != 2 {
-			t.Fatalf("shard %s must have t.Parallel followed by one dispatcher", function.Name.Name)
-		}
-		expression, ok := function.Body.List[1].(*ast.ExprStmt)
-		if !ok {
-			t.Fatal("invalid shard dispatcher")
-		}
-		call, ok := expression.X.(*ast.CallExpr)
-		if !ok || len(call.Args) != 2 {
-			t.Fatal("invalid shard call")
-		}
-		callee, ok := call.Fun.(*ast.Ident)
-		if !ok || callee.Name != "textSplittingShard" {
-			t.Fatal("invalid shard helper")
-		}
-		literal, ok := call.Args[1].(*ast.BasicLit)
-		if !ok || literal.Value != strconv.Itoa(index) {
-			t.Fatal("shard name and slice differ")
-		}
-		seen[index] = true
-	}
-	if len(seen) != testMarkdownTextSplittingShards {
-		t.Fatalf("enumerated %d top-level shards, want %d", len(seen), testMarkdownTextSplittingShards)
-	}
+	testgrain.Union(t, "TestMarkdownTextSplitting", testMarkdownTextSplittingShards, testgrain.Assign(identities, testMarkdownTextSplittingShards), len(identities))
 }
 
 func textVerifyCorpus(t *testing.T, inputs []auditInput) {
@@ -182,39 +112,25 @@ func textShardInputs(t *testing.T, inputs []auditInput, count int) [][]auditInpu
 	if count != testMarkdownTextSplittingShards {
 		t.Fatal("planner shard count differs from enumeration")
 	}
-	shards := make([][]auditInput, count)
-	expected := make(map[string]bool, len(inputs))
-	for _, input := range inputs {
-		if expected[input.Name] {
-			t.Fatalf("repeated unsplit case id %q", input.Name)
-		}
-		expected[input.Name] = true
-		index := textShardFor(input.Name, count)
-		shards[index] = append(shards[index], input)
-	}
-	seen := make(map[string]bool, len(inputs))
-	total := 0
-	for index, shard := range shards {
-		for _, input := range shard {
-			if !expected[input.Name] || seen[input.Name] || textShardFor(input.Name, count) != index {
-				t.Fatalf("invalid union case %q in shard-%03d", input.Name, index)
-			}
-			seen[input.Name] = true
-			total++
-		}
-	}
-	if total != len(inputs) || len(seen) != len(expected) {
-		t.Fatal("shard union differs from live enumeration")
-	}
 	if len(inputs) == 0 {
 		t.Fatal("empty corpus")
 	}
-	for name := range expected {
-		if !seen[name] {
-			t.Fatalf("missing case %q", name)
+	identities := make([]string, len(inputs))
+	seen := make(map[string]bool, len(inputs))
+	for index, input := range inputs {
+		if seen[input.Name] {
+			t.Fatalf("repeated unsplit case id %q", input.Name)
+		}
+		seen[input.Name] = true
+		identities[index] = input.Name
+	}
+	shards := make([][]auditInput, count)
+	for shard, indices := range testgrain.Assign(identities, count) {
+		for _, index := range indices {
+			shards[shard] = append(shards[shard], inputs[index])
 		}
 	}
-	t.Logf("live union: %d unique cases, %d shards", total, count)
+	t.Logf("live union: %d unique cases, %d shards", len(inputs), count)
 	return shards
 }
 
@@ -253,31 +169,23 @@ type textSetupState struct {
 	inputs   []auditInput
 	shards   [][]auditInput
 	products textProducts
-	ready    bool
 }
 
-var textSetupOnce sync.Once
-var textSetupShared textSetupState
-
 // The serial TestMarkdownTextSplitting_Setup initializes this before parallel
-// leaves resume. A filtered run that omits Setup uses the same separately bounded
-// setup phase; its leaf deadline is still started only after readiness.
+// leaves resume. Filtered leaves share this unbounded preparation before starting Unit.
 func textReadySetup(t *testing.T) textSetupState {
 	t.Helper()
-	textSetupOnce.Do(func() {
-		stop := textPhaseDeadline(t, "TestMarkdownTextSplitting_Setup")
-		defer stop()
-		started := time.Now()
-		root, inputs := textSplittingInputs(t)
-		products := textBuildProducts(t, root)
-		shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
-		textSetupShared = textSetupState{root: root, inputs: inputs, shards: shards, products: products, ready: true}
-		t.Logf("shared text setup ready in %.3fs", time.Since(started).Seconds())
+	return testgrain.Setup(t, "wave1/textReadySetup", func() (textSetupState, error) {
+		return textReadySetupPrepare(t), nil
 	})
-	if !textSetupShared.ready {
-		t.Fatal("shared text setup did not complete")
-	}
-	return textSetupShared
+}
+
+func textReadySetupPrepare(t *testing.T) textSetupState {
+	t.Helper()
+	root, inputs := textSplittingInputs(t)
+	products := textBuildProducts(t, root)
+	shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
+	return textSetupState{root: root, inputs: inputs, shards: shards, products: products}
 }
 
 type textProducts struct{ main, goBinary, sanitized, release, backend string }
@@ -399,7 +307,7 @@ func TestMarkdownTextShardDisagreement(t *testing.T) {
 	key := "sequence/a中a"
 	inputs := []auditInput{{Name: key, Text: "a中a"}, {Name: "sequence/aaa", Text: "aaa"}}
 	shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
-	caught := []int{}
+	caught := make(map[int]bool)
 	for index, shard := range shards {
 		for _, input := range shard {
 			want := []byte("tokens\n")
@@ -408,14 +316,12 @@ func TestMarkdownTextShardDisagreement(t *testing.T) {
 				got = []byte("planted disagreement\n")
 			}
 			if textOutputDifference([]auditInput{input}, got, want) != nil {
-				caught = append(caught, index)
+				caught[index] = true
 			}
 		}
 	}
 	owner := textShardFor(key, testMarkdownTextSplittingShards)
-	if len(caught) != 1 || caught[0] != owner {
-		t.Fatalf("planted disagreement caught by %v, want only shard-%03d", caught, owner)
-	}
+	testgrain.CaughtByExactly(t, caught, owner)
 	t.Logf("planted disagreement caught only by shard-%03d", owner)
 }
 

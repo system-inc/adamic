@@ -6,9 +6,7 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
-	"hash/fnv"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
@@ -22,15 +20,14 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testNodeTableIsLinkOnlyShards = 8
 
-var nodeTableLowerOnce, nodeTableEmitOnce, nodeTableNativeOnce sync.Once
 var nodeTableLowerDirectory, nodeTableEmitDirectory, nodeTableNativePath string
 
-var nodeTableOnce sync.Once
 var nodeTableRows []string
 var nodeTableAssignments [][]int
 
@@ -79,75 +76,78 @@ func nodeTableInputs(t *testing.T) buildcache.Inputs {
 	return buildcache.Inputs{Name: "lint-node-table-lowered-ir", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "gob IR"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 }
 func nodeTableLowered(t *testing.T) string {
+	return testgrain.Setup(t, "node-table/nodeTableLowered", func() (string, error) { return nodeTableLoweredPrepare(t), nil })
+}
+func nodeTableLoweredPrepare(t *testing.T) string {
 	t.Helper()
-	nodeTableLowerOnce.Do(func() {
-		inputs := buildcache.Inputs{Name: "lint-node-table-lowered-ir", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "gob IR"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
-		lowered := buildcache.Product(t, inputs, func(out string) error {
-			program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
-			if err != nil {
-				return err
-			}
-			result, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
-			}
-			file, err := os.Create(filepath.Join(out, "program.gob"))
-			if err != nil {
-				return err
-			}
-			defer file.Close()
-			return gob.NewEncoder(file).Encode(result)
-		})
-		nodeTableLowerDirectory = lowered
+	inputs := buildcache.Inputs{Name: "lint-node-table-lowered-ir", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "gob IR"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	lowered := buildcache.Product(t, inputs, func(out string) error {
+		program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+		if err != nil {
+			return err
+		}
+		result, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		file, err := os.Create(filepath.Join(out, "program.gob"))
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		return gob.NewEncoder(file).Encode(result)
 	})
+	nodeTableLowerDirectory = lowered
 	if nodeTableLowerDirectory == "" {
 		t.Fatal("nodeTableLowered setup incomplete")
 	}
 	return nodeTableLowerDirectory
 }
 func nodeTableEmitted(t *testing.T) string {
+	return testgrain.Setup(t, "node-table/nodeTableEmitted", func() (string, error) { return nodeTableEmittedPrepare(t), nil })
+}
+func nodeTableEmittedPrepare(t *testing.T) string {
 	t.Helper()
-	nodeTableEmitOnce.Do(func() {
-		lowered := nodeTableLowered(t)
-		inputs := nodeTableInputs(t)
-		inputs.Name = "lint-node-table-emitted-c-serial-v2"
-		inputs.Flags = append(inputs.Flags, "native.C")
-		emitted := buildcache.Product(t, inputs, func(out string) error {
-			file, err := os.Open(filepath.Join(lowered, "program.gob"))
-			if err != nil {
-				return err
-			}
-			defer file.Close()
-			var program ir.Program
-			if err := gob.NewDecoder(file).Decode(&program); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(&program)), 0644)
-		})
-		nodeTableEmitDirectory = emitted
+	lowered := nodeTableLowered(t)
+	inputs := nodeTableInputs(t)
+	inputs.Name = "lint-node-table-emitted-c-serial-v2"
+	inputs.Flags = append(inputs.Flags, "native.C")
+	emitted := buildcache.Product(t, inputs, func(out string) error {
+		file, err := os.Open(filepath.Join(lowered, "program.gob"))
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		var program ir.Program
+		if err := gob.NewDecoder(file).Decode(&program); err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(&program)), 0644)
 	})
+	nodeTableEmitDirectory = emitted
 	if nodeTableEmitDirectory == "" {
 		t.Fatal("nodeTableEmitted setup incomplete")
 	}
 	return nodeTableEmitDirectory
 }
 func nodeTableNative(t *testing.T) string {
+	return testgrain.Setup(t, "node-table/nodeTableNative", func() (string, error) { return nodeTableNativePrepare(t), nil })
+}
+func nodeTableNativePrepare(t *testing.T) string {
 	t.Helper()
-	nodeTableNativeOnce.Do(func() {
-		emitted := nodeTableEmitted(t)
-		inputs := nodeTableInputs(t)
-		inputs.Name = "lint-node-table-native"
-		inputs.Flags = append(native.Flags(native.Options{Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		binary := buildcache.Product(t, inputs, func(out string) error {
-			source, err := os.ReadFile(filepath.Join(emitted, "lint.c"))
-			if err != nil {
-				return err
-			}
-			return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Split: true, Jobs: 4})
-		})
-		nodeTableNativePath = filepath.Join(binary, "scanner")
+	emitted := nodeTableEmitted(t)
+	inputs := nodeTableInputs(t)
+	inputs.Name = "lint-node-table-native"
+	inputs.Flags = append(native.Flags(native.Options{Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	binary := buildcache.Product(t, inputs, func(out string) error {
+		source, err := os.ReadFile(filepath.Join(emitted, "lint.c"))
+		if err != nil {
+			return err
+		}
+		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Split: true, Jobs: 4})
 	})
+	nodeTableNativePath = filepath.Join(binary, "scanner")
 	if nodeTableNativePath == "" {
 		t.Fatal("nodeTableNative setup incomplete")
 	}
@@ -162,131 +162,108 @@ func TestNodeTableIsLinkOnly(t *testing.T) { nodeTableSetup(t) }
 
 func nodeTableSetup(t *testing.T) {
 	t.Helper()
-	nodeTableOnce.Do(func() {
-		started := time.Now()
-		defer func() {
-			t.Logf("TestNodeTableIsLinkOnly (setup corpus): %.3fs", time.Since(started).Seconds())
-		}()
-		prepareRegistry(t, packageDirectory)
-		// GoBuild is absent on this main: retain the original overlay builder.
-		oracleInputs := buildcache.Inputs{Name: "lint-node-table-oracle", Files: append(nodeTableSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"), Flags: []string{"go build overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")}, Toolchain: []string{runtime.Version()}}
-		oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error { _, err := goOracleIn(packageDirectory, out); return err })
-		oracle := filepath.Join(oracleProduct, "oracle")
-		// Copy generated cases out of the setup test's TempDir: top-level parallel
-		// shards outlive that test. Captured products already have cache lifetime.
-		corpus, err := os.MkdirTemp(sharedDirectory, "node-table-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		for index, row := range generated(t) {
-			fields := strings.SplitN(row, "\t", 2)
-			data, err := os.ReadFile(fields[0])
-			if err != nil {
-				t.Fatal(err)
-			}
-			path := filepath.Join(corpus, fmt.Sprintf("case-%03d", index), filepath.Base(fields[0]))
-			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-				t.Fatal(err)
-			}
-			if err := os.WriteFile(path, data, 0644); err != nil {
-				t.Fatal(err)
-			}
-			if len(fields) == 2 {
-				path += "\t" + fields[1]
-			}
-			nodeTableRows = append(nodeTableRows, path)
-		}
-		captureInputs := buildcache.Inputs{Name: "lint-node-table-capture", Files: []string{"cohere", "stage1/cohere/lint/testdata", "go.mod", "go.work"}, Flags: []string{"captureUpstream all asserted cases", "three workers", "go test -p=1 -count=1 -timeout=90s"}, Toolchain: []string{runtime.Version()}}
-		// Registry descriptors decide which upstream assertions are in the live corpus.
-		for _, file := range portFiles(t) {
-			if strings.HasSuffix(file, "rule.json") {
-				captureInputs.Files = append(captureInputs.Files, "stage1/cohere/lint/"+file)
-			}
-		}
-		captured := buildcache.Product(t, captureInputs, func(out string) error {
-			rows, err := nodeTableCaptureUpstream(packageDirectory, out)
-			if err != nil {
-				return err
-			}
-			for i, row := range rows {
-				fields := strings.SplitN(row, "\t", 2)
-				relative, err := filepath.Rel(out, fields[0])
-				if err != nil {
-					return err
-				}
-				rows[i] = relative + "\t" + fields[1]
-			}
-			data, err := json.Marshal(rows)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(out, "rows.json"), data, 0644)
-		})
-		data, err := os.ReadFile(filepath.Join(captured, "rows.json"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		var rows []string
-		if err := json.Unmarshal(data, &rows); err != nil {
-			t.Fatal(err)
-		}
-		for _, row := range rows {
-			if strings.HasSuffix(row, "\tunsupported-recovery") {
-				continue
-			}
-			fields := strings.SplitN(row, "\t", 2)
-			nodeTableRows = append(nodeTableRows, filepath.Join(captured, fields[0])+"\t"+fields[1])
-		}
-		nodeTableRows = recoveryRows(t, oracle, nodeTableRows)
-		nodeTableAssignments = make([][]int, testNodeTableIsLinkOnlyShards)
-		for index, row := range nodeTableRows {
-			fields := strings.SplitN(row, "\t", 2)
-			source, err := os.ReadFile(fields[0])
-			if err != nil {
-				t.Fatal(err)
-			}
-			key := fmt.Sprintf("%q\n%q\n", filepath.Base(fields[0]), source)
-			if len(fields) == 2 {
-				key += fields[1]
-			}
-			shard := nodeTableShard(key)
-			nodeTableAssignments[shard] = append(nodeTableAssignments[shard], index)
-		}
-		if err := nodeTableUnion(nodeTableRows, nodeTableAssignments); err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("union: %d live cases, each exactly once across %d shards", len(nodeTableRows), testNodeTableIsLinkOnlyShards)
+	testgrain.Setup(t, "wave1/nodeTableSetup", func() (bool, error) {
+		nodeTableSetupPrepare(t)
+		return true, nil
 	})
-	if nodeTableAssignments == nil {
-		t.Fatal("node table setup incomplete")
+}
+func nodeTableSetupPrepare(t *testing.T) {
+	t.Helper()
+
+	prepareRegistry(t, packageDirectory)
+	// GoBuild is absent on this main: retain the original overlay builder.
+	oracleInputs := buildcache.Inputs{Name: "lint-node-table-oracle", Files: append(nodeTableSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"), Flags: []string{"go build overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")}, Toolchain: []string{runtime.Version()}}
+	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error { _, err := rulesAgreeGoOracleIn(t, packageDirectory, out); return err })
+	oracle := filepath.Join(oracleProduct, "oracle")
+	// Copy generated cases out of the setup test's TempDir: top-level parallel
+	// shards outlive that test. Captured products already have cache lifetime.
+	corpus, err := os.MkdirTemp(sharedDirectory, "node-table-")
+	if err != nil {
+		t.Fatal(err)
 	}
+	for index, row := range generated(t) {
+		fields := strings.SplitN(row, "\t", 2)
+		data, err := os.ReadFile(fields[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(corpus, fmt.Sprintf("case-%03d", index), filepath.Base(fields[0]))
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			t.Fatal(err)
+		}
+		if len(fields) == 2 {
+			path += "\t" + fields[1]
+		}
+		nodeTableRows = append(nodeTableRows, path)
+	}
+	captureInputs := buildcache.Inputs{Name: "lint-node-table-capture", Files: []string{"cohere", "stage1/cohere/lint/testdata", "go.mod", "go.work"}, Flags: []string{"captureUpstream all asserted cases", "three workers", "go test -p=1 -count=1 -timeout=0"}, Toolchain: []string{runtime.Version()}}
+	// Registry descriptors decide which upstream assertions are in the live corpus.
+	for _, file := range portFiles(t) {
+		if strings.HasSuffix(file, "rule.json") {
+			captureInputs.Files = append(captureInputs.Files, "stage1/cohere/lint/"+file)
+		}
+	}
+	captured := buildcache.Product(t, captureInputs, func(out string) error {
+		rows, err := nodeTableCaptureUpstream(t, packageDirectory, out)
+		if err != nil {
+			return err
+		}
+		for i, row := range rows {
+			fields := strings.SplitN(row, "\t", 2)
+			relative, err := filepath.Rel(out, fields[0])
+			if err != nil {
+				return err
+			}
+			rows[i] = relative + "\t" + fields[1]
+		}
+		data, err := json.Marshal(rows)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(out, "rows.json"), data, 0644)
+	})
+	data, err := os.ReadFile(filepath.Join(captured, "rows.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []string
+	if err := json.Unmarshal(data, &rows); err != nil {
+		t.Fatal(err)
+	}
+	for _, row := range rows {
+		if strings.HasSuffix(row, "\tunsupported-recovery") {
+			continue
+		}
+		fields := strings.SplitN(row, "\t", 2)
+		nodeTableRows = append(nodeTableRows, filepath.Join(captured, fields[0])+"\t"+fields[1])
+	}
+	nodeTableRows = grainLintRecoveryRows(t, oracle, nodeTableRows)
+	identities := make([]string, len(nodeTableRows))
+	for index, row := range nodeTableRows {
+		fields := strings.SplitN(row, "\t", 2)
+		source, err := os.ReadFile(fields[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		key := fmt.Sprintf("%q\n%q\n", filepath.Base(fields[0]), source)
+		if len(fields) == 2 {
+			key += fields[1]
+		}
+		identities[index] = key
+	}
+	nodeTableAssignments = testgrain.Assign(identities, testNodeTableIsLinkOnlyShards)
 }
 
 func nodeTableShard(key string) int {
-	h := fnv.New64a()
-	h.Write([]byte(key))
-	return int(h.Sum64() % testNodeTableIsLinkOnlyShards)
-}
-
-func nodeTableUnion(rows []string, assignments [][]int) error {
-	if len(assignments) != testNodeTableIsLinkOnlyShards {
-		return fmt.Errorf("shard count %d, want %d", len(assignments), testNodeTableIsLinkOnlyShards)
-	}
-	seen := make([]bool, len(rows))
-	count := 0
-	for _, indices := range assignments {
-		for _, index := range indices {
-			if index < 0 || index >= len(rows) || seen[index] {
-				return fmt.Errorf("unknown or repeated case %d", index)
-			}
-			seen[index] = true
-			count++
+	for shard, indices := range testgrain.Assign([]string{key}, testNodeTableIsLinkOnlyShards) {
+		if len(indices) > 0 {
+			return shard
 		}
 	}
-	if count != len(rows) {
-		return fmt.Errorf("union %d, live enumeration %d", count, len(rows))
-	}
-	return nil
+	panic("unassigned node table identity")
 }
 
 func nodeTableEqual(got, want []byte) error {
@@ -299,6 +276,7 @@ func nodeTableEqual(got, want []byte) error {
 func nodeTableRunShard(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_NODE_TABLE_PROBE") == "1" {
+		testgrain.Unit(t)
 		if shard == nodeTableShard("case 7") {
 			if err := nodeTableEqual([]byte("planted disagreement"), []byte("case 7")); err != nil {
 				t.Fatal(err)
@@ -306,39 +284,24 @@ func nodeTableRunShard(t *testing.T, shard int) {
 		}
 		return
 	}
-	// A filtered shard owns preparation: no other top-level test is a prerequisite.
-	// Corpus capture and native products are independent and share process-once
-	// builders. Loom's whole-unit 90s limit includes both; the leaf clock does not.
-	setupStarted := time.Now()
-	var products sync.WaitGroup
-	products.Add(1)
-	var binary string
-	go func() { defer products.Done(); binary = nodeTableNative(t) }()
-	defer products.Wait()
+
+	// Setup stages sharing t run sequentially: each owns and finishes its child groups.
 	nodeTableSetup(t)
-	products.Wait()
-	if binary == "" {
-		t.Fatal("native preparation incomplete")
-	}
-	t.Logf("TestNodeTableIsLinkOnly (setup): %.3fs", time.Since(setupStarted).Seconds())
-	started := time.Now()
-	deadline := time.AfterFunc(60*time.Second, func() { panic(t.Name() + ": shard work exceeded 60s; split smaller") })
-	defer deadline.Stop()
+	binary := nodeTableNative(t)
+	testgrain.Unit(t)
+
 	rows := make([]string, 0, len(nodeTableAssignments[shard]))
 	for _, index := range nodeTableAssignments[shard] {
 		rows = append(rows, nodeTableRows[index])
 	}
 	path := manifest(t, rows)
-	plain := execute(t, "", binary, "--manifest", path)
-	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
+	plain := grainLintExecute(t, "", binary, "--manifest", path)
+	t.Logf("shard %03d: cases=%d bytes=%d", shard, len(rows), len(plain.output))
+	junk := grainLintExecute(t, "", binary, "--manifest", path, "--junk-rows")
 	if err := nodeTableEqual(junk.output, plain.output); err != nil {
 		t.Fatal(err)
 	}
-	elapsed := time.Since(started)
-	t.Logf("shard %03d: %.3fs cases=%d bytes=%d cooked=%t", shard, elapsed.Seconds(), len(rows), len(plain.output), elapsed >= 60*time.Second)
-	if elapsed >= 60*time.Second {
-		t.Fatal("cooked: split this shard smaller")
-	}
+
 }
 func TestNodeTableIsLinkOnly_000(t *testing.T) { t.Parallel(); nodeTableRunShard(t, 0) }
 func TestNodeTableIsLinkOnly_001(t *testing.T) { t.Parallel(); nodeTableRunShard(t, 1) }
@@ -353,50 +316,28 @@ func TestNodeTableIsLinkOnly_007(t *testing.T) { t.Parallel(); nodeTableRunShard
 // One changed case must be caught by exactly one owner; union corruption fails.
 func TestNodeTableIsLinkOnlyUnionAndPlantedFailure(t *testing.T) {
 	t.Parallel()
-	listed := []string{"TestNodeTableIsLinkOnly_000", "TestNodeTableIsLinkOnly_001", "TestNodeTableIsLinkOnly_002", "TestNodeTableIsLinkOnly_003", "TestNodeTableIsLinkOnly_004", "TestNodeTableIsLinkOnly_005", "TestNodeTableIsLinkOnly_006", "TestNodeTableIsLinkOnly_007"}
-	command := exec.Command(os.Args[0], "-test.list=^TestNodeTableIsLinkOnly_[0-9]+$")
-	output, err := command.Output()
-	if err != nil {
-		t.Fatal(err)
-	}
-	if strings.Join(strings.Fields(string(output)), "\n") != strings.Join(listed, "\n") || len(listed) != testNodeTableIsLinkOnlyShards {
-		t.Fatalf("top-level enumeration differs: %s", output)
-	}
-	rows := []string{"case 7"}
-	assignments := make([][]int, testNodeTableIsLinkOnlyShards)
-	owner := nodeTableShard(rows[0])
-	assignments[owner] = []int{0}
-	if err := nodeTableUnion(rows, assignments); err != nil {
-		t.Fatal(err)
-	}
-	caught := 0
-	for shard, name := range listed {
-		command := exec.Command(os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+	nodeTableSetup(t)
+	testgrain.Union(t, "TestNodeTableIsLinkOnly", testNodeTableIsLinkOnlyShards, nodeTableAssignments, len(nodeTableRows))
+	owner := nodeTableShard("case 7")
+	caught := make(map[int]bool)
+	for shard := 0; shard < testNodeTableIsLinkOnlyShards; shard++ {
+		name := fmt.Sprintf("TestNodeTableIsLinkOnly_%03d", shard)
+		ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
+		command := testgrain.CommandContext(t, ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=10s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_NODE_TABLE_PROBE=1")
 		output, err := command.CombinedOutput()
+		cancel()
 		if err != nil {
-			caught++
-			if shard != owner || bytes.Count(output, []byte("--- FAIL:")) != 1 || !bytes.Contains(output, []byte("planted disagreement")) {
+			caught[shard] = true
+			if bytes.Count(output, []byte("--- FAIL:")) != 1 || !bytes.Contains(output, []byte("planted disagreement")) {
 				t.Fatalf("wrong failure: %s", output)
 			}
-		} else if shard == owner {
-			t.Fatal("planted failure survived")
 		}
 	}
-	if caught != 1 {
-		t.Fatalf("planted disagreement caught %d times", caught)
-	}
+	testgrain.CaughtByExactly(t, caught, owner)
 	t.Logf("planted disagreement case 7 caught only by TestNodeTableIsLinkOnly_%03d", owner)
-	assignments[owner] = nil
-	if nodeTableUnion(rows, assignments) == nil {
-		t.Fatal("missing case accepted")
-	}
-	assignments[owner] = []int{0, 0}
-	if nodeTableUnion(rows, assignments) == nil {
-		t.Fatal("duplicate case accepted")
-	}
 }
-func nodeTableCaptureUpstream(sourceRoot, directory string) ([]string, error) {
+func nodeTableCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return nil, err
@@ -446,7 +387,7 @@ func nodeTableCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		go func() {
 			defer workers.Done()
 			for name := range jobs {
-				if _, err := run(root, environment, "go", "test", "-p=1", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=90s"); err != nil {
+				if _, err := rulesAgreeCaptureRun(t, root, environment, "test", "-p=1", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0"); err != nil {
 					failures <- err
 				}
 			}

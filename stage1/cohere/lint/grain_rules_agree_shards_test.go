@@ -4,17 +4,13 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"hash/fnv"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -23,12 +19,12 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testRulesAgreeShards = 16
-const rulesAgreeKill = 90 * time.Second
 
 type rulesAgreeProducts struct {
 	directory, oracle, binary, module string
@@ -36,12 +32,6 @@ type rulesAgreeProducts struct {
 	assignments                       [][]int
 }
 
-var rulesAgreeSetupOnce sync.Once
-var rulesAgreeReady *rulesAgreeProducts
-
-var rulesAgreeOnce sync.Once
-var rulesAgreeLowerOnce sync.Once
-var rulesAgreeNativeOnce sync.Once
 var rulesAgreePrepared *rulesAgreeProducts
 var rulesAgreeLoweredDirectory, rulesAgreeBinaryDirectory string
 var rulesAgreeBuildInputs buildcache.Inputs
@@ -141,40 +131,44 @@ func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 
 func rulesAgreeLowered(t *testing.T) string {
 	t.Helper()
-	rulesAgreeLowerOnce.Do(func() {
-		directory := packageDirectory
-		prepareRegistry(t, directory)
-		inputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-lowered",
-			Files:     rulesAgreeSourceInputs(t),
-			Flags:     []string{"load.Load: default checker mode", "lower.Lower: default options", "native.C", "javascript.JavaScript"},
-			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
-		}
-		rulesAgreeBuildInputs = inputs
-		rulesAgreeLoweredDirectory = buildcache.Product(t, inputs, func(output string) error {
-			phase := time.Now()
-			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-			if err != nil {
-				return err
-			}
-			t.Logf("rules load: %.3fs", time.Since(phase).Seconds())
-			phase = time.Now()
-			result, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
-			}
-			t.Logf("rules lower: %.3fs", time.Since(phase).Seconds())
-			phase = time.Now()
-			if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(result)), 0644); err != nil {
-				return err
-			}
-			t.Logf("rules native emit: %.3fs", time.Since(phase).Seconds())
-			phase = time.Now()
-			defer func() { t.Logf("rules JavaScript emit: %.3fs", time.Since(phase).Seconds()) }()
-			return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
-		})
-
+	return testgrain.Setup(t, "wave1/rulesAgreeLowered", func() (string, error) {
+		return rulesAgreeLoweredPrepare(t), nil
 	})
+}
+func rulesAgreeLoweredPrepare(t *testing.T) string {
+	t.Helper()
+	directory := packageDirectory
+	prepareRegistry(t, directory)
+	inputs := buildcache.Inputs{
+		Name:      "lint-rules-agree-lowered",
+		Files:     rulesAgreeSourceInputs(t),
+		Flags:     []string{"load.Load: default checker mode", "lower.Lower: default options", "native.C", "javascript.JavaScript"},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
+	rulesAgreeBuildInputs = inputs
+	rulesAgreeLoweredDirectory = buildcache.Product(t, inputs, func(output string) error {
+		phase := time.Now()
+		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if err != nil {
+			return err
+		}
+		t.Logf("rules load: %.3fs", time.Since(phase).Seconds())
+		phase = time.Now()
+		result, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		t.Logf("rules lower: %.3fs", time.Since(phase).Seconds())
+		phase = time.Now()
+		if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(result)), 0644); err != nil {
+			return err
+		}
+		t.Logf("rules native emit: %.3fs", time.Since(phase).Seconds())
+		phase = time.Now()
+		defer func() { t.Logf("rules JavaScript emit: %.3fs", time.Since(phase).Seconds()) }()
+		return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
+	})
+
 	if rulesAgreeLoweredDirectory == "" {
 		t.Fatal("lowered setup did not complete")
 	}
@@ -183,54 +177,64 @@ func rulesAgreeLowered(t *testing.T) string {
 
 func rulesAgreeNative(t *testing.T) string {
 	t.Helper()
-	lowered := rulesAgreeLowered(t)
-	rulesAgreeNativeOnce.Do(func() {
-		inputs := rulesAgreeBuildInputs
-		inputs.Name = "lint-rules-agree-native-sanitized"
-		inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
-			"Split=true", "Jobs=4",
-			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
-			"ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"),
-			"ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		rulesAgreeBinaryDirectory = buildcache.Product(t, inputs, func(output string) error {
-			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-			if err != nil {
-				return err
-			}
-			started := time.Now()
-			defer func() { t.Logf("rules clang: %.3fs", time.Since(started).Seconds()) }()
-			return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
-		})
-
+	return testgrain.Setup(t, "wave1/rulesAgreeNative", func() (string, error) {
+		return rulesAgreeNativePrepare(t), nil
 	})
+}
+func rulesAgreeNativePrepare(t *testing.T) string {
+	t.Helper()
+	lowered := rulesAgreeLowered(t)
+	inputs := rulesAgreeBuildInputs
+	inputs.Name = "lint-rules-agree-native-sanitized"
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
+		"Split=true", "Jobs=4",
+		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		"ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"),
+		"ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	rulesAgreeBinaryDirectory = buildcache.Product(t, inputs, func(output string) error {
+		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		if err != nil {
+			return err
+		}
+		started := time.Now()
+		defer func() { t.Logf("rules clang: %.3fs", time.Since(started).Seconds()) }()
+		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+	})
+
 	if rulesAgreeBinaryDirectory == "" {
 		t.Fatal("native setup did not complete")
 	}
 	return rulesAgreeBinaryDirectory
 }
 
-var rulesAgreeOracleOnce, rulesAgreeCaptureOnce sync.Once
 var rulesAgreeOracleDirectory, rulesAgreeCaptureDirectory string
 
 func rulesAgreeOracle(t *testing.T) string {
 	t.Helper()
-	rulesAgreeOracleOnce.Do(func() {
-		directory := packageDirectory
-		// GoBuild is not present on this main. Cache the original overlay build
-		// as a Product so a filtered shard never recompiles everyone's oracle.
-		oracleInputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-go-oracle",
-			Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
-			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
-			Toolchain: []string{runtime.Version()},
-		}
-		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
-			_, err := rulesAgreeGoOracleIn(directory, output)
-			return err
-		})
+	return testgrain.Setup(t, "wave1/rulesAgreeOracle", func() (string, error) {
+		return rulesAgreeOraclePrepare(
 
+			// GoBuild is not present on this main. Cache the original overlay build
+			// as a Product so a filtered shard never recompiles everyone's oracle.
+			t), nil
 	})
+}
+func rulesAgreeOraclePrepare(t *testing.T) string {
+	t.Helper()
+	directory := packageDirectory
+
+	oracleInputs := buildcache.Inputs{
+		Name:      "lint-rules-agree-go-oracle",
+		Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
+		Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
+		Toolchain: []string{runtime.Version()},
+	}
+	rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
+		_, err := rulesAgreeGoOracleIn(t, directory, output)
+		return err
+	})
+
 	if rulesAgreeOracleDirectory == "" {
 		t.Fatal("oracle preparation failed")
 	}
@@ -239,35 +243,39 @@ func rulesAgreeOracle(t *testing.T) string {
 
 func rulesAgreeCapture(t *testing.T) string {
 	t.Helper()
-	rulesAgreeCaptureOnce.Do(func() {
-		directory := packageDirectory
-		captureInputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-capture",
-			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
-			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
-			Toolchain: []string{runtime.Version()},
-		}
-		rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
-			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
-			if err != nil {
-				return err
-			}
-			for index, row := range captured {
-				fields := strings.SplitN(row, "\t", 2)
-				relative, err := filepath.Rel(output, fields[0])
-				if err != nil {
-					return err
-				}
-				captured[index] = relative + "\t" + fields[1]
-			}
-			data, err := json.Marshal(captured)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(output, "rows.json"), data, 0644)
-		})
-
+	return testgrain.Setup(t, "wave1/rulesAgreeCapture", func() (string, error) {
+		return rulesAgreeCapturePrepare(t), nil
 	})
+}
+func rulesAgreeCapturePrepare(t *testing.T) string {
+	t.Helper()
+	directory := packageDirectory
+	captureInputs := buildcache.Inputs{
+		Name:      "lint-rules-agree-capture",
+		Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
+		Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
+		Toolchain: []string{runtime.Version()},
+	}
+	rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
+		captured, err := rulesAgreeCaptureUpstream(t, directory, output)
+		if err != nil {
+			return err
+		}
+		for index, row := range captured {
+			fields := strings.SplitN(row, "\t", 2)
+			relative, err := filepath.Rel(output, fields[0])
+			if err != nil {
+				return err
+			}
+			captured[index] = relative + "\t" + fields[1]
+		}
+		data, err := json.Marshal(captured)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(output, "rows.json"), data, 0644)
+	})
+
 	if rulesAgreeCaptureDirectory == "" {
 		t.Fatal("capture preparation failed")
 	}
@@ -276,50 +284,54 @@ func rulesAgreeCapture(t *testing.T) string {
 
 func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
-	rulesAgreeOnce.Do(func() {
-		directory := packageDirectory
-		oracleDirectory := rulesAgreeOracle(t)
-		oracle := filepath.Join(oracleDirectory, "oracle")
-		corpus, err := os.MkdirTemp(sharedDirectory, "rules-agree-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		var rows []string
-		for index, row := range generated(t) {
-			fields := strings.SplitN(row, "\t", 2)
-			source, err := os.ReadFile(fields[0])
-			if err != nil {
-				t.Fatal(err)
-			}
-			path := filepath.Join(corpus, fmt.Sprintf("generated-%03d", index), filepath.Base(fields[0]))
-			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-				t.Fatal(err)
-			}
-			if err := os.WriteFile(path, source, 0644); err != nil {
-				t.Fatal(err)
-			}
-			if len(fields) == 2 {
-				path += "\t" + fields[1]
-			}
-			rows = append(rows, path)
-		}
-		captureDirectory := rulesAgreeCapture(t)
-		data, err := os.ReadFile(filepath.Join(captureDirectory, "rows.json"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		var captured []string
-		if err := json.Unmarshal(data, &captured); err != nil {
-			t.Fatal(err)
-		}
-		for _, row := range captured {
-			fields := strings.SplitN(row, "\t", 2)
-			rows = append(rows, filepath.Join(captureDirectory, fields[0])+"\t"+fields[1])
-		}
-
-		assignments := rulesAgreeAssignments(t, rows)
-		rulesAgreePrepared = &rulesAgreeProducts{directory: directory, oracle: oracle, rows: rows, assignments: assignments}
+	return testgrain.Setup(t, "wave1/rulesAgreeCorpus", func() (*rulesAgreeProducts, error) {
+		return rulesAgreeCorpusPrepare(t), nil
 	})
+}
+func rulesAgreeCorpusPrepare(t *testing.T) *rulesAgreeProducts {
+	t.Helper()
+	directory := packageDirectory
+	oracleDirectory := rulesAgreeOracle(t)
+	oracle := filepath.Join(oracleDirectory, "oracle")
+	corpus, err := os.MkdirTemp(sharedDirectory, "rules-agree-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rows []string
+	for index, row := range generated(t) {
+		fields := strings.SplitN(row, "\t", 2)
+		source, err := os.ReadFile(fields[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(corpus, fmt.Sprintf("generated-%03d", index), filepath.Base(fields[0]))
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, source, 0644); err != nil {
+			t.Fatal(err)
+		}
+		if len(fields) == 2 {
+			path += "\t" + fields[1]
+		}
+		rows = append(rows, path)
+	}
+	captureDirectory := rulesAgreeCapture(t)
+	data, err := os.ReadFile(filepath.Join(captureDirectory, "rows.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var captured []string
+	if err := json.Unmarshal(data, &captured); err != nil {
+		t.Fatal(err)
+	}
+	for _, row := range captured {
+		fields := strings.SplitN(row, "\t", 2)
+		rows = append(rows, filepath.Join(captureDirectory, fields[0])+"\t"+fields[1])
+	}
+
+	assignments := rulesAgreeAssignments(t, rows)
+	rulesAgreePrepared = &rulesAgreeProducts{directory: directory, oracle: oracle, rows: rows, assignments: assignments}
 	if rulesAgreePrepared == nil {
 		t.Fatal("corpus setup did not complete")
 	}
@@ -330,114 +342,74 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 // Filtered single-shard runs use this same preparation path and persistent cache.
 func rulesAgreeSetup(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
+	return testgrain.Setup(t, "wave1/rulesAgreeSetup", func() (*rulesAgreeProducts, error) {
+		return rulesAgreeSetupPrepare(t), nil
+	})
+}
+
+func rulesAgreeSetupPrepare(t *testing.T) *rulesAgreeProducts {
+	t.Helper()
 	if path := os.Getenv("ADAMIC_RULES_AGREE_PROBE"); path != "" {
 		return rulesAgreeProbeProducts(t, path)
 	}
-	rulesAgreeSetupOnce.Do(func() {
-		started := time.Now()
-		var corpus *rulesAgreeProducts
-		var binary, lowered string
-		var workers sync.WaitGroup
-		workers.Add(2)
-		go func() {
-			defer workers.Done()
-			lowered = rulesAgreeLowered(t)
-			binary = rulesAgreeNative(t)
-		}()
-		go func() {
-			defer workers.Done()
-			corpus = rulesAgreeCorpus(t)
-		}()
-		workers.Wait()
-		if t.Failed() || corpus == nil {
-			t.Fatal("RulesAgree preparation failed")
-		}
-		ready := *corpus
-		ready.binary = filepath.Join(binary, "scanner")
-		ready.module = filepath.Join(lowered, "lint.mjs")
-		rulesAgreeReady = &ready
-		t.Logf("TestRulesAgree_Setup: %.3fs", time.Since(started).Seconds())
-	})
-	if rulesAgreeReady == nil {
-		t.Fatal("shared RulesAgree setup did not complete")
-	}
-	return rulesAgreeReady
+
+	// Setup stages sharing t run sequentially: one stage cannot clean up another's children.
+	corpus := rulesAgreeCorpus(t)
+	lowered := rulesAgreeLowered(t)
+	binary := rulesAgreeNative(t)
+	ready := *corpus
+	ready.binary = filepath.Join(binary, "scanner")
+	ready.module = filepath.Join(lowered, "lint.mjs")
+	return &ready
 }
 
 // The hash includes source, fixture basename, and all options. Temporary
 // capture roots and corpus ordering never affect assignment.
 func rulesAgreeAssignments(t *testing.T, rows []string) [][]int {
 	t.Helper()
-	assignments := make([][]int, testRulesAgreeShards)
+	identities := make([]string, len(rows))
 	for index, row := range rows {
 		fields := strings.SplitN(row, "\t", 2)
 		source, err := os.ReadFile(fields[0])
 		if err != nil {
 			t.Fatal(err)
 		}
-		hash := fnv.New64a()
-		fmt.Fprintf(hash, "%q\n%q\n", filepath.Base(fields[0]), source)
+		identity := fmt.Sprintf("%q\n%q\n", filepath.Base(fields[0]), source)
 		if len(fields) == 2 {
-			fmt.Fprintf(hash, "%q", fields[1])
+			identity += fmt.Sprintf("%q", fields[1])
 		}
-		shard := int(hash.Sum64() % testRulesAgreeShards)
-		assignments[shard] = append(assignments[shard], index)
+		identities[index] = identity
 	}
-	return assignments
+	return testgrain.Assign(identities, testRulesAgreeShards)
 }
 
 func rulesAgreeRunShard(t *testing.T, shard int) {
 	t.Helper()
 	products := rulesAgreeSetup(t)
-	started := time.Now()
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic(fmt.Sprintf("%s cooked: over budget at 90s; split smaller", t.Name())) })
-	defer deadline.Stop()
-	defer func() {
-		t.Logf("shard-%03d: %.3fs cooked=%t cases=%d", shard, time.Since(started).Seconds(), time.Since(started) >= 60*time.Second, len(products.assignments[shard]))
-	}()
+	testgrain.Unit(t)
+	t.Logf("shard-%03d: cases=%d", shard, len(products.assignments[shard]))
 	var rows []string
 	for _, index := range products.assignments[shard] {
 		row := products.rows[index]
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
-			checkRecoveryRefusal(t, products.oracle, products.binary, products.directory, row)
+			grainLintCheckRecoveryRefusal(t, products.oracle, products.binary, products.directory, row)
 		} else {
 			rows = append(rows, row)
 		}
 	}
 	if len(rows) > 0 {
-		compareWithJavaScript(t, products.oracle, products.binary, products.directory, manifest(t, recoveryRows(t, products.oracle, rows)), products.module)
-	}
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: shard over 60s budget; split smaller")
+		grainLintCompareWithJavaScript(t, products.oracle, products.binary, products.directory, manifest(t, grainLintRecoveryRows(t, products.oracle, rows)), products.module)
 	}
 }
 
 func TestRulesAgreeUnion(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
 	products := rulesAgreeCorpus(t)
-	t.Logf("union (setup corpus): %.3fs", time.Since(started).Seconds())
-	started = time.Now()
-	defer func() { t.Logf("union (own work): %.3fs", time.Since(started).Seconds()) }()
-	functions := []func(*testing.T){TestRulesAgree_000, TestRulesAgree_001, TestRulesAgree_002, TestRulesAgree_003, TestRulesAgree_004, TestRulesAgree_005, TestRulesAgree_006, TestRulesAgree_007, TestRulesAgree_008, TestRulesAgree_009, TestRulesAgree_010, TestRulesAgree_011, TestRulesAgree_012, TestRulesAgree_013, TestRulesAgree_014, TestRulesAgree_015}
-	if len(functions) != testRulesAgreeShards || len(products.assignments) != testRulesAgreeShards {
-		t.Fatal("shard enumeration differs from const")
-	}
-	seen := make([]int, len(products.rows))
-	for _, indices := range products.assignments {
-		for _, index := range indices {
-			seen[index]++
-		}
-	}
-	for index, count := range seen {
-		if count != 1 {
-			t.Fatalf("case %d covered %d times", index, count)
-		}
-	}
-	if len(seen) == 0 {
+	testgrain.Union(t, "TestRulesAgree", testRulesAgreeShards, products.assignments, len(products.rows))
+	if len(products.rows) == 0 {
 		t.Fatal("empty live corpus")
 	}
-	t.Logf("union: %d cases, each exactly once, %d top-level shards", len(seen), testRulesAgreeShards)
+	t.Logf("union: %d cases, each exactly once, %d top-level shards", len(products.rows), testRulesAgreeShards)
 }
 
 // Probe children run the ordinary shard selection and comparator on one real
@@ -463,8 +435,7 @@ func rulesAgreeProbeProducts(t *testing.T, path string) *rulesAgreeProducts {
 func TestRulesAgreePlantedFailure(t *testing.T) {
 	t.Parallel()
 	products := rulesAgreeSetup(t)
-	started := time.Now()
-	defer func() { t.Logf("planted failure (own work): %.3fs", time.Since(started).Seconds()) }()
+	testgrain.Unit(t)
 	planted := -1
 	for index, row := range products.rows {
 		if !strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -492,11 +463,19 @@ func TestRulesAgreePlantedFailure(t *testing.T) {
 	if err := os.WriteFile(path, data, 0644); err != nil {
 		t.Fatal(err)
 	}
-	caught, owner := 0, -1
+	caught := make(map[int]bool)
+	owner := -1
+	for shard, indices := range products.assignments {
+		for _, index := range indices {
+			if index == planted {
+				owner = shard
+			}
+		}
+	}
 	for shard := 0; shard < testRulesAgreeShards; shard++ {
 		name := fmt.Sprintf("TestRulesAgree_%03d", shard)
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
+		ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
+		command := testgrain.CommandContext(t, ctx, os.Args[0], "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
 		command.Env = append(os.Environ(), "ADAMIC_RULES_AGREE_PROBE="+path)
 		output, err := command.CombinedOutput()
 		expired := ctx.Err()
@@ -508,13 +487,10 @@ func TestRulesAgreePlantedFailure(t *testing.T) {
 			if bytes.Count(output, []byte("--- FAIL: "+name)) != 1 || !bytes.Contains(output, []byte("emitted JavaScript:")) || !bytes.Contains(output, []byte(marker)) {
 				t.Fatalf("wrong planted failure in %s: %v\n%s", name, err, output)
 			}
-			caught++
-			owner = shard
+			caught[shard] = true
 		}
 	}
-	if caught != 1 {
-		t.Fatalf("planted failure caught %d times", caught)
-	}
+	testgrain.CaughtByExactly(t, caught, owner)
 	t.Logf("planted output disagreement: case %d caught exactly once by TestRulesAgree_%03d", planted, owner)
 }
 
@@ -583,7 +559,7 @@ func TestRulesAgree_015(t *testing.T) {
 	rulesAgreeRunShard(t, 15)
 }
 
-func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
+func rulesAgreeGoOracleIn(t *testing.T, sourceRoot, directory string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return "", err
@@ -627,7 +603,7 @@ func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
 	}
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := rulesAgreeCaptureRun(root, nil, args...); err != nil {
+	if _, err := rulesAgreeCaptureRun(t, root, nil, args...); err != nil {
 		return "", err
 	}
 	return binary, nil
@@ -635,22 +611,11 @@ func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
 
 // Shared Go compilation and capture have no setup deadline.
 // Preserve the child CPU guard and kill the entire compiler process group.
-func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
+func rulesAgreeCaptureRun(t *testing.T, directory string, environment []string, args ...string) ([]byte, error) {
+	command := testgrain.Command(t, "go", args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	command.Env = append(command.Env, "PWD="+directory)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
 	output, err := os.CreateTemp(sharedDirectory, "rules-agree-command-")
 	if err != nil {
 		return nil, err
@@ -661,9 +626,6 @@ func rulesAgreeCaptureRun(directory string, environment []string, args ...string
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
 	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("go %v: %v\n%s", args, err, &stderr)
 	}
@@ -724,7 +686,7 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			destination := filepath.Join(capture, name)
 			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
 			started := time.Now()
-			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0")
+			_, failures[index] = rulesAgreeCaptureRun(t, root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0")
 			t.Logf("capture package %s: %.3fs", name, time.Since(started).Seconds())
 		}()
 	}
@@ -825,4 +787,134 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	return rows, nil
+}
+
+func grainLintExecute(t *testing.T, directory, name string, args ...string) execution {
+	t.Helper()
+	command := testgrain.Command(t, name, args...)
+	command.Dir = directory
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
+	duration := time.Since(started)
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{data, duration}
+}
+
+func grainLintRecoveryRows(t *testing.T, oracle string, rows []string) []string {
+	t.Helper()
+	if len(rows) == 0 {
+		return rows
+	}
+	answer := grainLintExecute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	flags := strings.Fields(string(answer.output))
+	if len(flags) != len(rows) {
+		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := make([]string, len(rows))
+	for index, row := range rows {
+		result[index] = row
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result
+}
+
+func grainLintNode(t *testing.T, directory, manifest string, count bool) execution {
+	t.Helper()
+	prepareRegistry(t, directory)
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest}
+	if count {
+		args = append(args, "--count")
+	}
+	return grainLintExecute(t, "", "node", args...)
+}
+
+func grainLintRunJavaScript(t *testing.T, module, manifest string, count bool) execution {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
+	if count {
+		args = append(args, "--count")
+	}
+	return grainLintExecute(t, "", "node", args...)
+}
+
+func grainLintCompareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
+	t.Helper()
+	want := grainLintExecute(t, "", oracle, "--manifest", path)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{{"Node", grainLintNode(t, directory, path, false)}, {"emitted JavaScript", grainLintRunJavaScript(t, module, path, false)}, {"native", grainLintExecute(t, "", binary, "--manifest", path)}} {
+		if diff := difference(side.run.output, want.output); diff != "" {
+			t.Fatalf("%s: %s", side.name, diff)
+		}
+	}
+	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
+	return want.output
+}
+
+func grainLintCheckRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
+	t.Helper()
+	recovered := manifest(t, []string{strings.TrimSuffix(row, "unsupported-recovery") + "recovery"})
+	answer := grainLintExecute(t, "", oracle, "--manifest", recovered)
+	t.Logf("Go recovered output: %s", answer.output)
+	path := manifest(t, []string{row})
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, side := range []struct {
+		name string
+		args []string
+	}{
+		{binary, []string{"--manifest", path}},
+		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
+	} {
+		command := testgrain.Command(t, side.name, side.args...)
+		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		command.Stdout = output
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		err = testguard.Run(command, 2*time.Second, testguard.Ceiling)
+		cpuGuard := strings.Contains(fmt.Sprint(err), "child CPU hang guard exceeded")
+		output.Close()
+		if err == nil || (!cpuGuard && !strings.Contains(stderr.String(), "adamic: panic:")) {
+			t.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
+		}
+		t.Logf("explicit unsupported recovery: %s: CPU-guard=%t: %v: %s", side.name, cpuGuard, err, stderr.String())
+	}
 }

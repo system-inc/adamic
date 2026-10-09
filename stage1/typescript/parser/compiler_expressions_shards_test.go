@@ -3,12 +3,12 @@ package parser
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
-	"hash/fnv"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
@@ -16,39 +16,28 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 )
 
 const testCompilerExpressionsAgreeShards = 16
 
 func compilerExpressionsPartition(t *testing.T, paths []string) [][]string {
 	t.Helper()
+	identities := compilerExpressionsIdentities(paths)
 	shards := make([][]string, testCompilerExpressionsAgreeShards)
-	seen := make(map[string]int)
-	for _, path := range paths {
-		if path == "" {
-			continue
+	for shard, indices := range testgrain.Assign(identities, testCompilerExpressionsAgreeShards) {
+		for _, i := range indices {
+			shards[shard] = append(shards[shard], paths[i])
 		}
-		// Compiler filenames are stable even when the checkout moves.
-		key := filepath.ToSlash(filepath.Base(path))
-		hash := fnv.New32a()
-		hash.Write([]byte(key))
-		index := int(hash.Sum32() % uint32(len(shards)))
-		shards[index] = append(shards[index], path)
-		seen[path]++
-	}
-	count := 0
-	for _, shard := range shards {
-		for _, path := range shard {
-			if seen[path] != 1 {
-				t.Fatalf("case %q occurs %d times", path, seen[path])
-			}
-			count++
-		}
-	}
-	if count != len(paths) {
-		t.Fatalf("union %d != enumeration %d", count, len(paths))
 	}
 	return shards
+}
+func compilerExpressionsIdentities(paths []string) []string {
+	identities := make([]string, len(paths))
+	for i, path := range paths {
+		identities[i] = filepath.ToSlash(filepath.Base(path))
+	}
+	return identities
 }
 
 func compilerExpressionsLower(t *testing.T, absolute string) string {
@@ -85,90 +74,78 @@ func compilerExpressionsNative(t *testing.T, absolute string) string {
 	return filepath.Join(product, "parser")
 }
 
-var compilerExpressionsProducts struct {
-	once                     sync.Once
+type compilerExpressionsProducts struct {
 	oracle, binary, absolute string
+	paths                    []string
 }
 
 func compilerExpressionsSetup(t *testing.T) (string, string, string) {
-	t.Helper()
-	compilerExpressionsProducts.once.Do(func() {
-		started := time.Now()
-		// Setup has no deadline; Loom still bounds the complete unit.
-		// Preserve the pinned corpus prerequisite even for a setup-only invocation.
-		compilerManifest(t)
+	products := compilerExpressionsReady(t)
+	return products.oracle, products.binary, products.absolute
+}
+func compilerExpressionsReady(t *testing.T) compilerExpressionsProducts {
+	return testgrain.Setup(t, "compiler-expressions/ready", func() (compilerExpressionsProducts, error) {
+		manifest, files := compilerExpressionsManifest(t)
+		data, err := os.ReadFile(manifest)
+		if err != nil {
+			return compilerExpressionsProducts{}, err
+		}
+		paths := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
+		if len(paths) != files || files == 0 {
+			return compilerExpressionsProducts{}, fmt.Errorf("enumeration differs or is empty")
+		}
 		absolute, err := filepath.Abs(".")
 		if err != nil {
-			t.Fatal(err)
+			return compilerExpressionsProducts{}, err
 		}
-		compilerExpressionsProducts.oracle = wholeMutantBuildOracleProduct(t)
-		compilerExpressionsProducts.absolute = absolute
-		compilerExpressionsProducts.binary = compilerExpressionsNative(t, absolute)
-		t.Logf("TestCompilerExpressionsAgree_Setup: %.3fs", time.Since(started).Seconds())
+		oracle := compilerExpressionsOracle(t)
+		binary := compilerExpressionsNative(t, absolute)
+		return compilerExpressionsProducts{oracle: oracle, binary: binary, absolute: absolute, paths: paths}, nil
 	})
-	return compilerExpressionsProducts.oracle, compilerExpressionsProducts.binary, compilerExpressionsProducts.absolute
 }
 
 func compilerExpressionsEnumeration(t *testing.T) ([][]string, string, int) {
-	t.Helper()
-	path, files := compilerManifest(t)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	paths := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
-	if len(paths) != files || files == 0 {
-		t.Fatal("enumeration differs or is empty")
-	}
-	shards := compilerExpressionsPartition(t, paths)
-	if len(shards) != testCompilerExpressionsAgreeShards {
-		t.Fatal("shard enumeration differs")
-	}
-	return shards, paths[0], files
+	products := compilerExpressionsReady(t)
+	return compilerExpressionsPartition(t, products.paths), products.paths[0], len(products.paths)
 }
 
 func TestCompilerExpressionsAgreeUnion(t *testing.T) {
 	t.Parallel()
-	functions := []func(*testing.T){TestCompilerExpressionsAgree_000, TestCompilerExpressionsAgree_001, TestCompilerExpressionsAgree_002, TestCompilerExpressionsAgree_003, TestCompilerExpressionsAgree_004, TestCompilerExpressionsAgree_005, TestCompilerExpressionsAgree_006, TestCompilerExpressionsAgree_007, TestCompilerExpressionsAgree_008, TestCompilerExpressionsAgree_009, TestCompilerExpressionsAgree_010, TestCompilerExpressionsAgree_011, TestCompilerExpressionsAgree_012, TestCompilerExpressionsAgree_013, TestCompilerExpressionsAgree_014, TestCompilerExpressionsAgree_015}
-	if len(functions) != testCompilerExpressionsAgreeShards {
-		t.Fatal("top-level shard enumeration differs")
-	}
-	shards, planted, files := compilerExpressionsEnumeration(t)
-	count, catches, caught := 0, 0, -1
-	for index, shard := range shards {
-		for _, path := range shard {
-			count++
+	products := compilerExpressionsReady(t)
+	assignments := testgrain.Assign(compilerExpressionsIdentities(products.paths), testCompilerExpressionsAgreeShards)
+	testgrain.Union(t, "TestCompilerExpressionsAgree", testCompilerExpressionsAgreeShards, assignments, len(products.paths))
+	caught := make(map[int]bool)
+	owner := -1
+	for shard, indices := range assignments {
+		for _, i := range indices {
 			want := []byte("case 0\nexpression\nreference\n")
 			got := append([]byte(nil), want...)
-			if path == planted {
+			if i == 0 {
 				got[len("case 0\n")] ^= 1
+				owner = shard
 			}
 			if difference(got, want) != "" {
-				catches++
-				caught = index
+				caught[shard] = true
 			}
 		}
 	}
-	if count != files || catches != 1 {
-		t.Fatalf("union=%d/%d planted catches=%d", count, files, catches)
-	}
-	t.Logf("union=%d each exactly once; planted disagreement %s caught by shard-%03d", count, filepath.Base(planted), caught)
+	testgrain.CaughtByExactly(t, caught, owner)
+	t.Logf("union=%d each exactly once; planted disagreement %s caught by shard-%03d", len(products.paths), filepath.Base(products.paths[0]), owner)
 }
 
 func compilerExpressionsShard(t *testing.T, index int) {
 	t.Helper()
 	// A selected shard prepares its products itself before its own deadline.
 	oracle, binary, absolute := compilerExpressionsSetup(t)
-	started := time.Now()
-	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked: shard-%03d exceeded 90s", index)) })
-	defer timer.Stop()
+	testgrain.Unit(t)
+
 	shards, planted, _ := compilerExpressionsEnumeration(t)
 	paths := shards[index]
 	manifest := filepath.Join(t.TempDir(), "compiler.txt")
 	if err := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	want := execute(t, "", oracle, "--manifest", manifest)
+	want := compilerExpressionsExecute(t, "", oracle, "--manifest", manifest)
 	for caseIndex, path := range paths {
 		if path != planted {
 			continue
@@ -185,15 +162,16 @@ func compilerExpressionsShard(t *testing.T, index int) {
 		}
 		t.Logf("planted disagreement caught by shard-%03d for %s", index, filepath.Base(planted))
 	}
-	got := node(t, absolute, manifest, false)
+	got := compilerExpressionsNode(t, absolute, manifest, false)
 	if diff := difference(got.output, want.output); diff != "" {
 		t.Fatalf("Node: %s", diff)
 	}
-	got = execute(t, "", binary, "--manifest", manifest)
+	got = compilerExpressionsExecute(t, "", binary, "--manifest", manifest)
 	if diff := difference(got.output, want.output); diff != "" {
 		t.Fatalf("native: %s", diff)
 	}
-	t.Logf("shard-%03d: %d whole compiler files, %d identical expression tree bytes; %.3fs cooked=false", index, len(paths), len(want.output), time.Since(started).Seconds())
+
+	t.Logf("shard-%03d: %d whole compiler files, %d identical expression tree bytes", index, len(paths), len(want.output))
 }
 
 func TestCompilerExpressionsAgree_000(t *testing.T) {
@@ -274,4 +252,107 @@ func TestCompilerExpressionsAgree_014(t *testing.T) {
 func TestCompilerExpressionsAgree_015(t *testing.T) {
 	t.Parallel()
 	compilerExpressionsShard(t, 15)
+}
+
+func compilerExpressionsExecute(t *testing.T, directory, name string, args ...string) execution {
+	t.Helper()
+	command := testgrain.Command(t, name, args...)
+	command.Dir = directory
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = command.Run()
+	duration := time.Since(started)
+	if err != nil || stderr.Len() != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{data, duration}
+}
+
+func compilerExpressionsNode(t *testing.T, directory, manifest string, count bool) execution {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest}
+	if count {
+		args = append(args, "--count")
+	}
+	return compilerExpressionsExecute(t, "", "node", args...)
+}
+
+func compilerExpressionsManifest(t *testing.T) (string, int) {
+	t.Helper()
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
+	}
+	output, err := testgrain.Command(t, "git", "-C", source, "rev-parse", "HEAD").Output()
+	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
+		t.Fatalf("corpus pin differs: %q %v", output, err)
+	}
+	var manifest strings.Builder
+	files := 0
+	err = filepath.WalkDir(filepath.Join(source, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+			manifest.WriteString(path + "\n")
+			files++
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "compiler.txt")
+	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path, files
+}
+
+func compilerExpressionsOracle(t *testing.T) string {
+	t.Helper()
+	files := append(wholeMutantBuildFiles(t), "stage1/typescript/parser/testdata/oracle.go")
+	inputs := buildcache.Inputs{Name: "typescript-parser-oracle", Files: files, Flags: wholeMutantBuildFlags(), Toolchain: []string{buildcache.Tool("go", "version")}}
+	directory := buildcache.Product(t, inputs, func(dir string) error {
+		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+		if err != nil {
+			return err
+		}
+		side, err := filepath.Abs("testdata/oracle.go")
+		if err != nil {
+			return err
+		}
+		virtual := filepath.Join(root, "adamic_parser_oracle.go")
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+		if err != nil {
+			return err
+		}
+		path := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		command := testgrain.Command(t, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command.Dir = root
+		output, err := command.CombinedOutput()
+		if err != nil {
+			return fmt.Errorf("oracle: %w\n%s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(directory, "oracle")
 }

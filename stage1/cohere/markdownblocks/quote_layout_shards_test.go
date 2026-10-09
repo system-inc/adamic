@@ -2,24 +2,22 @@ package markdownblocks
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"hash/fnv"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 )
 
 const testMarkdownQuoteLayoutShards = 12
@@ -31,34 +29,25 @@ type quoteLayoutProducts struct {
 	inputs                                 buildcache.Inputs
 }
 
-func quoteLayoutShard(name string) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(name))
-	return int(h.Sum64() % testMarkdownQuoteLayoutShards)
-}
-
-var quoteLayoutOnce sync.Once
-var quoteLayoutShared quoteLayoutProducts
-
 func quoteLayoutSetup(t *testing.T) quoteLayoutProducts {
-	quoteLayoutOnce.Do(func() {
-		started := time.Now()
-		// Shared setup has no deadline; Loom bounds the whole unit.
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		quoteLayoutShared = quoteLayoutBuild(t, root)
-		t.Logf("TestMarkdownQuoteLayout (setup): %.3fs", time.Since(started).Seconds())
+	t.Helper()
+	return testgrain.Setup(t, "wave1/quoteLayoutSetup", func() (quoteLayoutProducts, error) {
+		return quoteLayoutSetupPrepare(t), nil
 	})
-	if quoteLayoutShared.goBinary == "" {
+}
+func quoteLayoutSetupPrepare(t *testing.T) quoteLayoutProducts {
+
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	products := quoteLayoutBuild(t, root)
+
+	if products.goBinary == "" {
 		t.Fatal("quote layout setup failed")
 	}
-	return quoteLayoutShared
+	return products
 }
-
-var quoteLayoutNativeOnce sync.Once
-var quoteLayoutNativeShared quoteLayoutProducts
 
 // Shared products are also prepared by independently selected shards.
 func TestMarkdownQuoteLayoutNative(t *testing.T) {
@@ -67,36 +56,33 @@ func TestMarkdownQuoteLayoutNative(t *testing.T) {
 }
 
 func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {
-	quoteLayoutNativeOnce.Do(func() {
-		started := time.Now()
-		// Shared setup has no deadline; Loom bounds the whole unit.
-		buildProducts := products
-		var builds sync.WaitGroup
-		for _, sanitize := range []bool{true, false} {
-			builds.Add(1)
-			go func() {
-				defer builds.Done()
-				dir := quoteLayoutNativeProduct(t, buildProducts, sanitize)
-				if sanitize {
-					products.sanitized = filepath.Join(dir, "port")
-				} else {
-					products.release = filepath.Join(dir, "port")
-				}
-			}()
-		}
+	return testgrain.Setup(t, "markdown-quote/native", func() (quoteLayoutProducts, error) { return quoteLayoutNativeSetupPrepare(t, products), nil })
+}
+func quoteLayoutNativeSetupPrepare(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {
 
-		builds.Wait()
-		quoteLayoutNativeShared = products
-		t.Logf("TestMarkdownQuoteLayoutNative (setup): %.3fs", time.Since(started).Seconds())
-	})
-	if quoteLayoutNativeShared.sanitized == "" || quoteLayoutNativeShared.release == "" {
+	// Shared setup has no deadline; Loom bounds the whole unit.
+	buildProducts := products
+	var builds sync.WaitGroup
+	for _, sanitize := range []bool{true, false} {
+		builds.Add(1)
+		go func() {
+			defer builds.Done()
+			dir := quoteLayoutNativeProduct(t, buildProducts, sanitize)
+			if sanitize {
+				products.sanitized = filepath.Join(dir, "port")
+			} else {
+				products.release = filepath.Join(dir, "port")
+			}
+		}()
+	}
+
+	builds.Wait()
+
+	if products.sanitized == "" || products.release == "" {
 		t.Fatal("quote native setup failed")
 	}
-	return quoteLayoutNativeShared
+	return products
 }
-
-var quoteLayoutReadyOnce sync.Once
-var quoteLayoutReadyShared quoteLayoutProducts
 
 // Setup exercises the same preparation used by independently selected shards.
 func TestMarkdownQuoteLayout_Setup(t *testing.T) {
@@ -106,67 +92,58 @@ func TestMarkdownQuoteLayout_Setup(t *testing.T) {
 
 func quoteLayoutReady(t *testing.T) quoteLayoutProducts {
 	t.Helper()
-	quoteLayoutReadyOnce.Do(func() {
-		started := time.Now()
-		// Shared setup has no deadline; Loom bounds the whole unit.
-		quoteLayoutReadyShared = quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
-		t.Logf("TestMarkdownQuoteLayout_Setup: %.3fs", time.Since(started).Seconds())
+	return testgrain.Setup(t, "wave1/quoteLayoutReady", func() (quoteLayoutProducts, error) {
+		return quoteLayoutReadyPrepare(t), nil
 	})
-	if quoteLayoutReadyShared.goBinary == "" || quoteLayoutReadyShared.goLayout == "" || quoteLayoutReadyShared.sanitized == "" || quoteLayoutReadyShared.release == "" {
+}
+func quoteLayoutReadyPrepare(t *testing.T) quoteLayoutProducts {
+	t.Helper()
+
+	products := quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
+
+	if products.goBinary == "" || products.goLayout == "" || products.sanitized == "" || products.release == "" {
 		t.Fatal("quote shared setup failed")
 	}
-	return quoteLayoutReadyShared
+	return products
 }
 
-func quoteLayoutEnumerate(t *testing.T) ([]auditInput, [testMarkdownQuoteLayoutShards][]int) {
+func quoteLayoutEnumerate(t *testing.T) ([]auditInput, [][]int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs, _ := blockCorpus(t, root, "whitespace")
-	var shards [testMarkdownQuoteLayoutShards][]int
+	identities := make([]string, len(inputs))
 	for index, input := range inputs {
-		shard := quoteLayoutShard(input.Name)
-		shards[shard] = append(shards[shard], index)
+		identities[index] = input.Name
 	}
-	return inputs, shards
+	return inputs, testgrain.Assign(identities, testMarkdownQuoteLayoutShards)
 }
 
 func TestMarkdownQuoteLayoutUnion(t *testing.T) {
 	t.Parallel()
 	inputs, shards := quoteLayoutEnumerate(t)
-	seen := make([]int, len(inputs))
-	planted, plantedShard, total := 0, -1, 0
+	testgrain.Union(t, "TestMarkdownQuoteLayout", testMarkdownQuoteLayoutShards, shards, len(inputs))
 	if len(inputs) == 0 {
 		t.Fatal("empty quote corpus")
 	}
+	caught := make(map[int]bool)
+	owner := -1
 	for shard, indices := range shards {
 		for _, index := range indices {
-			seen[index]++
-			total++
 			expected := []byte(inputs[index].Text)
 			actual := append([]byte(nil), expected...)
 			if index == 0 {
 				actual = append(actual, 0)
+				owner = shard
 			}
 			if !quoteLayoutBytesEqual(actual, expected) {
-				planted++
-				plantedShard = shard
+				caught[shard] = true
 			}
 		}
 	}
-	for index, count := range seen {
-		if count != 1 {
-			t.Fatalf("case %q covered %d times", inputs[index].Name, count)
-		}
-	}
-	if len(shards) != testMarkdownQuoteLayoutShards || total != len(inputs) {
-		t.Fatal("quote shard enumeration mismatch")
-	}
-	if planted != 1 {
-		t.Fatalf("planted disagreement caught %d times", planted)
-	}
-	t.Logf("union %d cases, each exactly once; planted disagreement %q caught only by shard-%03d", total, inputs[0].Name, plantedShard)
+	testgrain.CaughtByExactly(t, caught, owner)
+	t.Logf("union %d cases, each exactly once; planted disagreement %q caught only by shard-%03d", len(inputs), inputs[0].Name, owner)
 }
 
 func quoteLayoutBytesEqual(actual, expected []byte) bool { return bytes.Equal(actual, expected) }
@@ -175,8 +152,7 @@ func quoteLayoutRunShard(t *testing.T, shard int) {
 	t.Helper()
 	// Each shard prepares shared products itself before its own clock starts.
 	products := quoteLayoutReady(t)
-	deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: " + t.Name() + " exceeded 90s") })
-	defer deadline.Stop()
+	testgrain.Unit(t)
 	inputs, shards := quoteLayoutEnumerate(t)
 	cases := make([]auditInput, 0, len(shards[shard]))
 	for _, index := range shards[shard] {
@@ -205,6 +181,9 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 }
 
 func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProducts {
+	return testgrain.Setup(t, "markdown-quote/product/"+target, func() (quoteLayoutProducts, error) { return quoteLayoutBuildProductPrepare(t, root, target), nil })
+}
+func quoteLayoutBuildProductPrepare(t *testing.T, root, target string) quoteLayoutProducts {
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -541,38 +520,16 @@ func quoteLayoutFixture(t *testing.T, inputs []auditInput, products quoteLayoutP
 	}
 }
 
-// quoteLayoutCommand gives children their own deadline and process group so
-// cancellation reaches the compilers spawned by Go as well as the Go process.
+// Child groups belong to the active setup or Unit.
 func quoteLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	t.Cleanup(cancel)
-	return quoteLayoutContextCommand(ctx, name, arguments...)
+	return testgrain.Command(t, name, arguments...)
 }
 
 // Setup keeps process-group cancellation without a deadline of its own.
 func quoteLayoutSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
-	t.Cleanup(cancel)
-	return quoteLayoutContextCommand(ctx, name, arguments...)
-}
-
-func quoteLayoutContextCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	return command
+	return testgrain.Command(t, name, arguments...)
 }
 
 func quoteLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
