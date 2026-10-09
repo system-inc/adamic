@@ -1,8 +1,10 @@
 package fresh_test
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -57,7 +59,31 @@ func checkFreshProgram(t *testing.T, path string) {
 		t.Fatal(err)
 	}
 	needsWrites := absolute == floorPath
+	// The root copies of these sources are checker-refusal witnesses, also
+	// pinned by TestScout19Slice2ExpectedRefusals. No accepted IR exists to prove.
+	name := filepath.Base(path)
+	checkerRefusal := name == "scout19_slice2_create_set.a" || name == "scout19_slice2_range.a"
+	if checkerRefusal {
+		root, readErr := os.ReadFile(absolute)
+		if readErr != nil {
+			t.Fatal(readErr)
+		}
+		canonical, readErr := os.ReadFile(filepath.Join(filepath.Dir(absolute), "scout19_slice2_refused", name))
+		if readErr != nil {
+			t.Fatal(readErr)
+		}
+		if !bytes.Equal(root, canonical) {
+			t.Fatalf("%s differs from its pinned checker-refusal fixture", path)
+		}
+	}
 	program, err := load.Load([]string{absolute})
+	if checkerRefusal {
+		if err == nil || !strings.Contains(err.Error(), "TS2345") || !strings.Contains(err.Error(), "| undefined") || (name == "scout19_slice2_create_set.a" && !strings.Contains(err.Error(), "TS2322")) {
+			t.Fatalf("%s: expected pinned generic undefined checker refusal, got %v", path, err)
+		}
+		t.Logf("Load declined with pinned generic undefined diagnostic: %v", err)
+		return
+	}
 	if err != nil {
 		t.Fatalf("%s: Load: %v", path, err)
 	}

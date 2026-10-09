@@ -326,11 +326,11 @@ func TestNativeAgreementRejectsWrongExit(t *testing.T) {
 	t.Parallel()
 	// Only native shows the planted exit status after printing the correct answer.
 	message := recordNativeAgreementFailure(t, "console.log('computed');", func(code string) string {
-		index := strings.LastIndex(code, "return 0;")
+		index := strings.LastIndex(code, "return adamic_process_status();")
 		if index < 0 {
 			t.Fatal("native main has no successful exit to mutate")
 		}
-		return code[:index] + strings.Replace(code[index:], "return 0;", "return 7;", 1)
+		return code[:index] + strings.Replace(code[index:], "return adamic_process_status();", "return 7;", 1)
 	})
 	if !strings.Contains(message, "Native backend exit = 7, source Node = 0") {
 		t.Fatalf("planted native exit was not caught by exit comparison: %q", message)

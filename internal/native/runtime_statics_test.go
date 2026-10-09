@@ -179,7 +179,7 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 	}
 	parts = append(parts, declaration[start:])
 	var result []runtimeStatic
-	baseConst := false
+	baseConst, baseFunction := false, false
 	for partIndex, part := range parts {
 		end := len(part)
 		for i, token := range part {
@@ -190,6 +190,17 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 		}
 		head := part[:end]
 		if len(head) == 0 {
+			continue
+		}
+		// These aliases in adamic.h denote function types, not pointer types.
+		// A declaration through either alias is a prototype unless it has a *.
+		functionAlias, pointer := baseFunction, false
+		for _, token := range head {
+			functionAlias = functionAlias || token.text == "adamic_code_function" || token.text == "adamic_counted_code_function"
+			pointer = pointer || token.text == "*"
+		}
+		baseFunction = functionAlias
+		if functionAlias && !pointer {
 			continue
 		}
 		// Ordinary function prototypes have no storage. Function pointers do.
@@ -313,13 +324,18 @@ void prototype(void (*argument)(void));
 static int array[2] = {1, 2};
 struct pair { int field; } record;
 void more(void) { static struct { int field; } local_record; }
+static adamic_code_function declared_function;
+static adamic_counted_code_function counted_function;
+static adamic_code_function *function_pointer;
+static adamic_code_function *mixed_pointer, mixed_prototype;
+static adamic_code_function first_prototype, *second_pointer;
 static int *const fixed_pointer = 0, scalar;
 static struct pair *maker(void) { static int nested; return 0; }`
 	var names []string
 	for _, variable := range runtimeStorage("probe.c", source) {
 		names = append(names, variable.name)
 	}
-	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar,nested" {
+	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,function_pointer,mixed_pointer,second_pointer,scalar,nested" {
 		t.Fatalf("storage inventory = %s", got)
 	}
 }
