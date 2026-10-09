@@ -1,0 +1,681 @@
+{
+  "base": "e77a4ae41f473c149aee910c51b73637686a804a",
+  "cpu_quota": "4 CPUs",
+  "go": "go1.27.1",
+  "warm_compile_wall_s": 120.335,
+  "products": [
+    {
+      "unit": "TestProduct_checker",
+      "wall": 98.39,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_checker_asan",
+      "wall": 10.586,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_checker",
+      "wall": 7.665,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_checker_asan",
+      "wall": 6.831,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_lowered",
+      "wall": 17.869,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_native",
+      "wall": 14.766,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_native_asan",
+      "wall": 21.642,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_oracle",
+      "wall": 24.333,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_record",
+      "wall": 3.907,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_corpus_stage0",
+      "wall": 2.056,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_facts_cost_go",
+      "wall": 9.976,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_facts_cost_lowered",
+      "wall": 2.156,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_facts_cost_native",
+      "wall": 5.872,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_controls_lowered",
+      "wall": 1.611,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_controls_native",
+      "wall": 8.242,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_controls_native_asan",
+      "wall": 20.198,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_missing_binding",
+      "wall": 24.468,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_mutant_binding_slot",
+      "wall": 30.011,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_mutant_first_binding",
+      "wall": 24.77,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_profile_mutant_scope_containment",
+      "wall": 25.253,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_query_cost_lowered",
+      "wall": 2.611,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_query_cost_native",
+      "wall": 6.028,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_six_lowered",
+      "wall": 9.896,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_six_oracle",
+      "wall": 6.387,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_stage0",
+      "wall": 2.621,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_suite",
+      "wall": 8.21,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_suite_asan",
+      "wall": 16.188,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_type_symbol_archive",
+      "wall": 11.419,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_type_symbol_fixtures",
+      "wall": 1.4,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_type_symbol_native",
+      "wall": 24.787,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_type_symbol_oracle",
+      "wall": 6.723,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_type_symbol_truth",
+      "wall": 1.88,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_typeaware_lowered",
+      "wall": 7.151,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_typeaware_native",
+      "wall": 7.856,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_typeaware_native_asan",
+      "wall": 14.872,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_typeaware_oracle",
+      "wall": 6.614,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_apparent_shape",
+      "wall": 10.573,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_apparent_shape_native",
+      "wall": 24.361,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_archive_checker",
+      "wall": 3.63,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_archive_checker_asan",
+      "wall": 3.563,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_assignable_types",
+      "wall": 10.301,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_assignable_types_native",
+      "wall": 4.152,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_base_shapes",
+      "wall": 10.12,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_base_shapes_native",
+      "wall": 4.258,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_call_count",
+      "wall": 10.188,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_call_count_native",
+      "wall": 4.293,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_call_parameters",
+      "wall": 10.259,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_call_parameters_native",
+      "wall": 4.12,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_call_returns",
+      "wall": 10.249,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_call_returns_native",
+      "wall": 5.805,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_contextual_shape",
+      "wall": 11.25,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_contextual_shape_native",
+      "wall": 4.276,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_enum_types",
+      "wall": 10.211,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_enum_types_native",
+      "wall": 4.291,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_oracle",
+      "wall": 6.706,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_property_info",
+      "wall": 10.372,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_property_info_native",
+      "wall": 4.279,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_property_shape",
+      "wall": 10.265,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_property_shape_native",
+      "wall": 4.157,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_released_handle_native",
+      "wall": 6.448,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_released_registry",
+      "wall": 6.746,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_released_registry_native",
+      "wall": 4.166,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_released_source",
+      "wall": 2.295,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_scope_locals",
+      "wall": 10.267,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_scope_locals_native",
+      "wall": 4.512,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_symbol_origin",
+      "wall": 10.243,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_symbol_origin_native",
+      "wall": 4.361,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_type_origin",
+      "wall": 10.154,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_type_origin_native",
+      "wall": 4.156,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_volume",
+      "wall": 4.153,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_volume_asan",
+      "wall": 11.876,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_volume_source",
+      "wall": 2.095,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_widened_shape",
+      "wall": 10.317,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_agreement_widened_shape_native",
+      "wall": 4.229,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_archive_checker",
+      "wall": 2.345,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_archive_checker_asan",
+      "wall": 2.117,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_archive_strict_this_checker",
+      "wall": 10.563,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_oracle",
+      "wall": 3.508,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_stage0",
+      "wall": 3.667,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_strict_this_native",
+      "wall": 26.03,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_volume",
+      "wall": 25.703,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_guard_volume_asan",
+      "wall": 37.338,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_lowered",
+      "wall": 18.557,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_native",
+      "wall": 9.515,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_native_asan",
+      "wall": 21.404,
+      "returncode": 0
+    },
+    {
+      "unit": "TestProduct_volume_oracle",
+      "wall": 3.145,
+      "returncode": 0
+    }
+  ],
+  "units": [
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_003",
+      "run": 1,
+      "wall": 24.748,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_003",
+      "run": 2,
+      "wall": 23.692,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_005",
+      "run": 1,
+      "wall": 16.122,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_005",
+      "run": 2,
+      "wall": 12.331,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_008",
+      "run": 1,
+      "wall": 17.347,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_008",
+      "run": 2,
+      "wall": 13.224,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_006",
+      "run": 1,
+      "wall": 19.427,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_006",
+      "run": 2,
+      "wall": 14.941,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_007",
+      "run": 1,
+      "wall": 18.189,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_007",
+      "run": 2,
+      "wall": 13.596,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_001",
+      "run": 1,
+      "wall": 7.536,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_001",
+      "run": 2,
+      "wall": 7.686,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_014",
+      "run": 1,
+      "wall": 7.32,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_014",
+      "run": 2,
+      "wall": 7.629,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_000",
+      "run": 1,
+      "wall": 7.663,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_000",
+      "run": 2,
+      "wall": 7.479,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_004",
+      "run": 1,
+      "wall": 11.453,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_004",
+      "run": 2,
+      "wall": 9.404,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_010",
+      "run": 1,
+      "wall": 20.31,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_010",
+      "run": 2,
+      "wall": 12.028,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_002",
+      "run": 1,
+      "wall": 7.844,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_002",
+      "run": 2,
+      "wall": 7.8,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_009",
+      "run": 1,
+      "wall": 10.501,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutants_009",
+      "run": 2,
+      "wall": 10.128,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutantsUnion",
+      "run": 1,
+      "wall": 7.838,
+      "returncode": 0
+    },
+    {
+      "unit": "TestTypeAwareAgreementAndMutantsUnion",
+      "run": 2,
+      "wall": 8.061,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_014",
+      "run": 1,
+      "wall": 5.07,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_014",
+      "run": 2,
+      "wall": 4.88,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_006",
+      "run": 1,
+      "wall": 4.952,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_006",
+      "run": 2,
+      "wall": 4.8,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_002",
+      "run": 1,
+      "wall": 4.699,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_002",
+      "run": 2,
+      "wall": 4.871,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_010",
+      "run": 1,
+      "wall": 4.708,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_010",
+      "run": 2,
+      "wall": 5.022,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "run": 1,
+      "wall": 5.002,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "run": 2,
+      "wall": 5.022,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_012",
+      "run": 1,
+      "wall": 4.912,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_012",
+      "run": 2,
+      "wall": 4.884,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_Setup",
+      "run": 1,
+      "wall": 4.756,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_Setup",
+      "run": 2,
+      "wall": 4.664,
+      "returncode": 0
+    }
+  ],
+  "status": "Measurements ongoing; no test changes. TestProduct_checker exceeds product 60s budget."
+}
