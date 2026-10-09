@@ -14,6 +14,26 @@
 
 #include <math.h>
 
+// ir.Type representation tags; checked against Go by TestIRTypeTags.
+enum adamic_ir_type {
+ adamic_ir_Number = 1,
+ adamic_ir_Boolean = 2,
+ adamic_ir_String = 3,
+ adamic_ir_Object = 4,
+ adamic_ir_Array = 5,
+ adamic_ir_Map = 6,
+ adamic_ir_MaybeNumber = 7,
+ adamic_ir_Closure = 8,
+ adamic_ir_MaybeBoolean = 9,
+ adamic_ir_Union = 10,
+ adamic_ir_Weak = 11,
+ adamic_ir_Uint8Array = 12,
+ adamic_ir_Int32Array = 13,
+ adamic_ir_Float64Array = 14,
+ adamic_ir_Uint16Array = 15,
+ adamic_ir_Promise = 16,
+};
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
