@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+type EmitHint=number;
+interface Node {readonly value:number;}
+interface Base {readonly onEmitNode:unknown;}
+interface Target {onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;}
+function probe(value:Base):void {const context=value as Target;context.onEmitNode(1,{value:7},(hint:EmitHint,node:Node):void=>{});console.log("done");}
+probe({onEmitNode:():void=>{}});

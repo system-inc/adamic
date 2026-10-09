@@ -81,11 +81,18 @@ func (l *lowering) viewCallableCallContract(node *ast.Node, signatures []*checke
 	if len(signatures) == 0 {
 		signatures = l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)), checker.SignatureKindCall)
 	}
-	// A generic view supplies its witness at this reached call, never at the
+	// A generic or overloaded view supplies its witness at this reached call, never at the
 	// read. Require the checker resolution to belong to the declared signature.
-	if len(signatures) == 1 && len(signatures[0].TypeParameters()) != 0 {
+	if len(signatures) > 1 || len(signatures) == 1 && len(signatures[0].TypeParameters()) != 0 {
 		resolved := l.checker.GetResolvedSignature(node)
-		if resolved == nil || resolved.Declaration() == nil || resolved.Declaration() != signatures[0].Declaration() {
+		if resolved == nil || resolved.Declaration() == nil {
+			return 0
+		}
+		declared := false
+		for _, signature := range signatures {
+			declared = declared || signature.Declaration() == resolved.Declaration()
+		}
+		if !declared {
 			return 0
 		}
 		signatures = []*checker.Signature{resolved}
