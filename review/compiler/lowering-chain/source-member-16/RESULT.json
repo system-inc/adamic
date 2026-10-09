@@ -1,0 +1,218 @@
+{
+  "base": "10328fb55766a27a2868959827c495c4278ad40f",
+  "merged_main": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+  "docs_commit": "a918e7fc",
+  "implementation_commit": "5d8f670a",
+  "merge_commit": "ba05fa10",
+  "scratch_ref": "4cf6791a",
+  "scratch_merge": "ffd9a59121eb34385cae9455cce93f97fd797783",
+  "scratch_next_stop": "adamic: /tmp/generators-tsc-adapted/src/compiler/core.ts:356:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+  "test_leaves": 58,
+  "maximum_seconds": 10.17,
+  "cpu_max": "400000 100000",
+  "nproc": 5,
+  "mutants": [
+    {
+      "mutant": "skip-finally",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler-generators-main/skip-finally/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestGeneratorCancellation$",
+        "-timeout",
+        "60s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "caught": true,
+      "witness": "stdout differs"
+    },
+    {
+      "mutant": "delegate-return",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler-generators-main/delegate-return/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestGeneratorDelegate$",
+        "-timeout",
+        "60s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "caught": true,
+      "witness": "stdout differs"
+    },
+    {
+      "mutant": "defer-default",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler-generators-main/defer-default/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestGeneratorDefaults$",
+        "-timeout",
+        "60s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "caught": true,
+      "witness": "stdout differs"
+    },
+    {
+      "mutant": "first-next-argument",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler-generators-main/first-next-argument/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestGeneratorBasic$",
+        "-timeout",
+        "60s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "caught": true,
+      "witness": "stdout differs"
+    },
+    {
+      "mutant": "forget-pattern-parameter",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler-generators-main/forget-pattern-parameter/overlay.json",
+        "./internal/lower",
+        "-run",
+        "^TestGeneratorDestructuredParameterCycle$",
+        "-timeout",
+        "60s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "caught": true,
+      "witness": "want the retained whole parameter's cycle refusal"
+    },
+    {
+      "mutant": "admit-cycle",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler-generators-main/admit-cycle/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestGeneratorCycleFrame$",
+        "-timeout",
+        "60s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "caught": true,
+      "witness": "LeakSanitizer"
+    }
+  ],
+  "ownership_mutants": [
+    "TestGeneratorParameterBorrowMutant: AddressSanitizer heap-use-after-free",
+    "TestGeneratorLocalBorrowMutant: AddressSanitizer heap-use-after-free"
+  ],
+  "a_check": {
+    "a_check": {
+      "internal/oracle/testdata/generators/basic.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/cancellation.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/captures.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/checker.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/close.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/completions.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/default_error.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/defaults.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/delegate.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/delegate_throw.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/first_reference.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/map_iterator.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/owned.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/reentrant.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/generators/throw.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/notyet/generator_cycle.a": {
+        "outcome": "refused",
+        "expected": "refused cycle-capable generator frame slot saved without weak",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/generator_cycle.a:4:6: Adamic 0.1 refuses cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator"
+      }
+    }
+  }
+}

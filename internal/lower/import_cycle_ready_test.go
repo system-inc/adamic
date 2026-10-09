@@ -92,7 +92,11 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 			runner := filepath.Join("..", "..", "oracle", "node.mjs")
 			for _, path := range []string{entry, generated} {
 				ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-				command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", runner, path)
+				arguments := []string{"--disable-warning=ExperimentalWarning", runner}
+				if probe.fails {
+					arguments = append(arguments, "--terminal-check")
+				}
+				command := exec.CommandContext(ctx, "node", append(arguments, path)...)
 				run(command)
 				cancel()
 			}

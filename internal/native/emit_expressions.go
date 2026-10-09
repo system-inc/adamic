@@ -12,14 +12,19 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.IteratorField:
+		return e.iteratorField(expression)
+	case ir.IteratorMethod:
+		return e.iteratorMethod(expression)
+	case ir.CheckedJSON:
+		return e.checkedJSON(expression)
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
 	case ir.HasProperty:
 		value := e.value(expression.Object)
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_has_property(%s, %s)", value, cString(expression.Name)))
 	case ir.DynamicProperty:
-		value := e.value(expression.Object)
-		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
+		return e.dynamicProperty(expression)
 	case ir.NodeFSFile:
 		return e.nodeFSFile(expression)
 	case ir.NodeBufferCall:
@@ -48,6 +53,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
+	case ir.GeneratorFrame:
+		e.line("/* generator frame: every reference slot owns its value */")
+		return e.value(expression.Value)
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
 	case ir.BooleanConstant:
@@ -125,6 +133,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.line("(void)%s;", value)
 			return e.snapshot(ir.Boolean, "false")
 		}
+		if expression.Class < 0 {
+			name := map[int]string{-1: "error", -2: "range_error", -3: "type_error"}[expression.Class]
+			return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_%s_class)", value, name))
+		}
 		if expression.Exact {
 			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &adamic_class_%d)", value, value, expression.Class))
 		}
@@ -144,6 +156,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Object.Type() == ir.Array {
+			return e.nodeArrayProperty(expression)
+		}
+		if e.program.JSONCheckedFields[expression.Name] && expression.View == "" && expression.Readiness == "" && ir.JSONReadType(expression.Type()) {
+			return e.checkedJSONProperty(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -225,6 +243,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
+		if expression.Proven {
+			return fmt.Sprintf("(%s).%s", e.value(expression.Value), member(expression.Type()))
+		}
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
 		e.line("if (!%s.present) {", value)
@@ -294,7 +315,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				if e.program.PackedCountNeeded(expression.Function) {
 					constructor = "adamic_counted_closure_canonical"
 				}
-				return e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+				closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+				e.line("%s->source_length = %d;", closure, target.SourceLength)
+				return closure
 			}
 		}
 		constructor := "adamic_closure_new"
@@ -302,6 +325,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			constructor = "adamic_counted_closure_new"
 		}
 		closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
+		e.line("%s->source_length = %d;", closure, target.SourceLength)
 		if e.program.Functions[expression.Function].Receiver {
 			e.line("%s->receiver = true;", closure)
 		}
@@ -440,6 +464,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
+		if e.program.JSONCheckedArrays && !expression.Array.Type().IsTypedArray() && ir.JSONReadType(expression.Type()) {
+			return e.checkedJSONArrayIndex(expression)
+		}
 		if expression.Array.Type().IsTypedArray() {
 			array := e.value(expression.Array)
 			index := e.value(expression.Index)
@@ -611,6 +638,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if len(expression.Metadata) != 0 {
+			return e.nodeArrayLiteral(expression)
+		}
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread
 		}
@@ -618,6 +648,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
 			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			e.line("%s->element_type = %d;", array, expression.Element)
 			for index, element := range expression.Elements {
 				value := e.value(element)
 				switch {
@@ -636,6 +667,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			elements = append(elements, e.value(element))
 		}
 		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		e.line("%s->element_type = %d;", array, expression.Element)
 		for _, element := range elements {
 			if expression.Element.IsReference() {
 				element = retained(element)

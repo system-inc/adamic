@@ -47,6 +47,14 @@ func (e *emitter) box(value ir.Expression) string {
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
 func (e *emitter) narrow(narrow ir.Narrow) string {
 	value := e.value(narrow.Value)
+	if narrow.Checked {
+		kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "map", ir.Closure: "closure"}
+		kind, supported := kinds[narrow.To.Present()]
+		if !supported {
+			panic("compiler bug: unsupported placeholder present arm")
+		}
+		e.line("if (%s == NULL || %s == &adamic_null || %s->kind != adamic_kind_%s) adamic_panic(%s, %d);", value, value, value, kind, cString(narrow.Message), len(narrow.Message))
+	}
 	switch narrow.To {
 	case ir.Number:
 		return e.snapshot(ir.Number, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))

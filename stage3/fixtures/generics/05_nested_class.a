@@ -1,0 +1,14 @@
+// Supplemental task bxpmash regression; not presented as a tsc class reduction.
+class ArenaIndex<Tag> {
+    readonly value: Tag;
+    constructor(value: Tag) { this.value = value; }
+}
+class Arena<Tag> {
+    push(value: Tag): ArenaIndex<Tag> { return new ArenaIndex<Tag>(value); }
+}
+const text = 'arena'.repeat(3);
+const arena = new Arena<string>();
+const index = arena.push(text);
+console.log(`${index.value} ${index.value === text}`);
+const numbers = new Arena<number>();
+console.log(`${numbers.push(0).value}`);

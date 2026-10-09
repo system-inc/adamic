@@ -1,0 +1,1 @@
+interface Item{readonly id:number;}const items:readonly (Item|undefined)[]=[{id:1},undefined];console.log(items.map((x:Item|undefined|number):string=>x===undefined?'undefined':typeof x==='number'?`${x}`:`${x.id}`).join(','));

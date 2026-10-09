@@ -1,0 +1,116 @@
+{
+  "cpuQuota": 4,
+  "nproc": 5,
+  "tests": [
+    {
+      "test": "TestJSONStringifyShorthandWrongBindingMutant",
+      "seconds": 14,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCall193",
+      "seconds": 14.39,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCallPropagation",
+      "seconds": 14.39,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCall79",
+      "seconds": 14.45,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCallComputed",
+      "seconds": 0.82,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCallRequired",
+      "seconds": 0.8,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCallVariants",
+      "seconds": 1.01,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestJSONStringifyShorthand",
+      "seconds": 0.69,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestCallSpreadEvaluatedTwiceMutant",
+      "seconds": 6.6,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestCallSpreadArray",
+      "seconds": 25.89,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCallFlowEdges",
+      "seconds": 0.03,
+      "log": "review/compiler/optional-calls-main/logs/members.jsonl.gz"
+    },
+    {
+      "test": "TestStep18DetachedMethod",
+      "seconds": 0.27,
+      "log": "review/compiler/optional-calls-main/logs/step18-final.jsonl.gz"
+    },
+    {
+      "test": "TestStep18StorageTypeLie",
+      "seconds": 0.56,
+      "log": "review/compiler/optional-calls-main/logs/step18-final.jsonl.gz"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "seconds": 0.03,
+      "log": "review/compiler/optional-calls-main/logs/step18-final.jsonl.gz"
+    },
+    {
+      "test": "TestStep18CallableReceiverContract",
+      "seconds": 0.1,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestStep18UnknownDetachedCallable",
+      "seconds": 0.13,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries",
+      "seconds": 0,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestStep18DetachedCallableOrigins",
+      "seconds": 0.18,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestStep18OptionalMethodPaths",
+      "seconds": 0.58,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestOptionalAfterCallFlowEdges",
+      "seconds": 0.03,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestCallTargetReaders",
+      "seconds": 11.8,
+      "log": "review/compiler/optional-calls-main/logs/scoped.jsonl.gz"
+    },
+    {
+      "test": "TestStep18OptionalMethodPaths",
+      "seconds": 0.53,
+      "log": "review/compiler/optional-calls-main/logs/parallel-leaf.jsonl.gz"
+    }
+  ]
+}

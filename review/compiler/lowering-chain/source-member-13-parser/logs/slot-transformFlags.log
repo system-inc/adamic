@@ -1,0 +1,8 @@
+=== RUN   TestParserNodeArrayLayout
+=== PAUSE TestParserNodeArrayLayout
+=== CONT  TestParserNodeArrayLayout
+    node_array_layout_test.go:30: wrong slot for transformFlags: {FieldContract:{Name:transformFlags DeclaredType:TransformFlags Of:1 Optional:false} Slot:4 PresenceBit:3 InitializationBit:3}
+--- FAIL: TestParserNodeArrayLayout (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.010s
+FAIL

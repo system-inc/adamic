@@ -1,0 +1,166 @@
+=== RUN   TestArrayPredicateCannotInventAnElementContract
+=== PAUSE TestArrayPredicateCannotInventAnElementContract
+=== RUN   TestArrayPredicateCoexistsWithUnknownReflection
+=== PAUSE TestArrayPredicateCoexistsWithUnknownReflection
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestTasteRepresentationLimitsStayExplicit
+=== PAUSE TestTasteRepresentationLimitsStayExplicit
+=== RUN   TestUnknownReflectionRefusals
+=== PAUSE TestUnknownReflectionRefusals
+=== CONT  TestArrayPredicateCannotInventAnElementContract
+=== CONT  TestTasteRepresentationLimitsStayExplicit
+=== RUN   TestTasteRepresentationLimitsStayExplicit/union_scalar_field
+=== CONT  TestUnknownReflectionRefusals
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== CONT  TestArrayPredicateCoexistsWithUnknownReflection
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== PAUSE TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== PAUSE TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== RUN   TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== PAUSE TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== PAUSE TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== RUN   TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== PAUSE TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== RUN   TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== PAUSE TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== RUN   TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== PAUSE TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== RUN   TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== PAUSE TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== RUN   TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== PAUSE TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== RUN   TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== PAUSE TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== RUN   TestTasteRepresentationLimitsStayExplicit/evolving_different_objects
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestTasteRepresentationLimitsStayExplicit/explicit_any
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestTasteRepresentationLimitsStayExplicit/computed_enum
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestTasteRepresentationLimitsStayExplicit/enum_prototype
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+--- PASS: TestArrayPredicateCoexistsWithUnknownReflection (0.34s)
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestTasteRepresentationLimitsStayExplicit/merged_enum
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+--- PASS: TestArrayPredicateCannotInventAnElementContract (0.42s)
+=== CONT  TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== CONT  TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+--- PASS: TestTasteRepresentationLimitsStayExplicit (0.42s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/union_scalar_field (0.11s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/evolving_different_objects (0.11s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/explicit_any (0.06s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/computed_enum (0.05s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/enum_prototype (0.05s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/merged_enum (0.04s)
+=== CONT  TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== CONT  TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+--- PASS: TestObjectRefusalsExplainSoundness (0.00s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.12s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.10s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.04s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.03s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.05s)
+=== CONT  TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== CONT  TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== CONT  TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== CONT  TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== CONT  TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== CONT  TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== CONT  TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== CONT  TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+--- PASS: TestUnknownReflectionRefusals (0.00s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_} (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_} (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code())); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code()); (0.08s)
+    --- PASS: TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code)); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>()); (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_} (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null}); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_} (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_} (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{})); (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_} (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.634s

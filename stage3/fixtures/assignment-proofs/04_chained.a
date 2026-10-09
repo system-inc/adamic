@@ -1,0 +1,15 @@
+// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
+// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
+let a: string | undefined;
+let b: string | undefined;
+let calls = 0;
+function compute(): string {
+    calls += 1;
+    return `value${calls}`;
+}
+function assignBoth(): string {
+    const value = compute();
+    return a = b = value;
+}
+const result: string = assignBoth();
+console.log(`${result} ${a} ${b} ${calls}`);

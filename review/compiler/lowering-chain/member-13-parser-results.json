@@ -1,0 +1,510 @@
+{
+  "branch": "compiler/step24-parser-main",
+  "source": "e503868c680ce67691e602446539f64f463d4e95",
+  "tests": [
+    {
+      "test": "TestParserStackGuardCost",
+      "result": "pass",
+      "seconds": 24.72,
+      "log": "member-13-parser-cost-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionBeforeEscape",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionBeforeReturn",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionBothBranches",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionLoopMayNotRun",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionWrongPayloadAssertion",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionOneBranch",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserNodeArraySchemaFailsClosed",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserNodeArrayPresence",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserNodeArrayLayout",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionEarlyReturn",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionAlias",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionCaptured",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryCompletionShortCircuit",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserFactoryReadBeforeCompletion",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionBackendOwnKeyOrder",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionBackendNodeArrayJson",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionBackendNodeArrayLength",
+      "result": "pass",
+      "seconds": 0.41,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionBackendNodeArrayKeys",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+      "result": "pass",
+      "seconds": 7.18,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionRuntimeMutantSynthesizedKey",
+      "result": "pass",
+      "seconds": 7.23,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionRuntimeMutantDeclarationOrder",
+      "result": "pass",
+      "seconds": 7.24,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserStackGuardCost",
+      "result": "skip",
+      "seconds": 0,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserStackGuardMutant",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserSpeculationMisfit",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionNullPlaceholderDelivered",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserStackTinyLimit",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserStackLegal",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserStackPathological",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserSpeculationRewindMutant",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserSpeculationSourcesNamedTryparse",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserSpeculationSourcesTruthinessRewind",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionUnsetUse",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserAheadCounts",
+      "result": "pass",
+      "seconds": 2.06,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserSpeculationSourcesArrowTryparse",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceFactoryUnset",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayUnset",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayLength",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserProgramRegionLifetime",
+      "result": "skip",
+      "seconds": 0,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayKeys",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayJson",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceOwnKeyOrder",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserAheadNodeArraySourcePresence",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserSpeculationSourcesNamedLookahead",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserAheadFactoryBoundariesEscaped",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserAheadFactoryCompleteControl",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserAheadNodeArraySourceFields",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-13-parser-tests.jsonl"
+    },
+    {
+      "test": "TestParserAheadFactoryBoundariesComplete",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-13-parser-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/parser-next/speculation/named-lookahead.a",
+        "after": [
+          "5",
+          "5",
+          "1",
+          "7",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-next/speculation/named-tryparse.a",
+        "after": [
+          "3",
+          "3",
+          "10",
+          "16",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-next/speculation/arrow-tryparse.a",
+        "after": [
+          "3",
+          "3",
+          "8",
+          "11",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-next/speculation/truthiness-rewind.a",
+        "after": [
+          "34",
+          "34",
+          "46",
+          "85",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-next/speculation/misfit.a",
+        "after": [
+          "1",
+          "0",
+          "2",
+          "1",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-next/stack/legal.a",
+        "after": [
+          "7",
+          "7",
+          "0",
+          "1728",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-next/stack/benchmark.a",
+        "after": [
+          "7",
+          "7",
+          "0",
+          "17200008",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/factories/already-complete.a",
+        "after": [
+          "1",
+          "1",
+          "4",
+          "4",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/factories/complete.a",
+        "after": [
+          "1",
+          "1",
+          "5",
+          "4",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/factories/escaped.a",
+        "after": [
+          "1",
+          "1",
+          "3",
+          "4",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/factory-unset.a",
+        "after": [
+          "3",
+          "3",
+          "13",
+          "20",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/factory-use.a",
+        "after": [
+          "1",
+          "0",
+          "2",
+          "3",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/own-key-order.a",
+        "after": [
+          "28",
+          "28",
+          "17",
+          "37",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/node-array-keys.a",
+        "after": [
+          "15",
+          "15",
+          "12",
+          "16",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/node-array-json.a",
+        "after": [
+          "2",
+          "2",
+          "5",
+          "9",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/node-array-length.a",
+        "after": [
+          "4",
+          "4",
+          "4",
+          "9",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/node-array-unset.a",
+        "after": [
+          "4",
+          "4",
+          "19",
+          "30",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/node-array/fields.a",
+        "after": [
+          "12",
+          "12",
+          "10",
+          "23",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/parser-ahead/rulings/null-placeholder-pending.a",
+        "after": [
+          "2",
+          "2",
+          "4",
+          "8",
+          "2",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1203
+  }
+}

@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic.a
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "undefined\nnull\nnumber13\nbooleantrue\nTEXT4\nobject\nerror6\nfunction\nnominal8\nreturn0\nnew1\nbreak\n42\ntrue object\nfalse object\n", stderr ""
+        native: exit 0, stdout "null\nnumber13\nbooleantrue\nTEXT4\nobject\nerror6\nfunction\nnominal8\nreturn0\nnew1\nbreak\n42\ntrue object\nfalse object\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic.a (0.51s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.529s
+FAIL

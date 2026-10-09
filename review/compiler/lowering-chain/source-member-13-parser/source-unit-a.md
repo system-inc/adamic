@@ -1,0 +1,24 @@
+Built: speculative source reductions, checked unknown result specialization and the refreshed placeholder merge for step 24 #1s2ws6y.
+Commits: merge 351a0fdc; Unit A delivery 1c06a80d158350cc2f782afe198324e46b6338d9.
+Commands and outputs: focused parser oracles, counts recording, a-check and focused vet pass; evidence is in evidence/.
+Mutants: unchecked result fails TestParserSpeculationMisfit in both backends; skipped rewind differs from Node in TestParserSpeculationRewindMutant.
+Uncovered: Program-region lifetime remains pending step 06 #7g4qv2b; arbitrary contextual, nested, class and callable result specialization is not implemented; captured unknown callbacks remain NotYet.
+
+The refreshed rehearsal 678d94f9 includes delivered placeholder c8f858b9. Merge conflicts retained both construction absence and placeholder readiness, both local save mechanisms, and both sides' counts. No other lane branch was merged.
+
+Cleared marks: factory-unset presence/optional/save transport and checked scalar use, node-array-unset absent scalar extras, completed/escaped base factories, and null-placeholder-pending. Each passes TestParserConstructionSource, TestParserConstructionUseCheck, TestParserConstructionNullPlaceholderDelivered or TestParserAheadFactorySource against Node and both real backends with sanitizers. The null witness now observes null! as null and the unwritten field as undefined. The old field-name collision refusal has been removed. Construction key order, array JSON and length also pass. Historical pending logs are retained as historical evidence.
+
+Source census: parser.ts at TypeScript 050880ce, SHA256 7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f. Counting direct identifier calls by callback syntax gives lookAhead/named 55, tryParse/named 12, tryParse/arrow 8. The three reductions select parser.ts:2774 (named predicate nextTokenCanFollowDefaultKeyword), :4602 (named parseKeywordAndNoDot yielding node or undefined), and :5229 (arrow invoking parsePossibleParenthesizedArrowFunctionExpression). The original saved-state implementation is :2256-2305. The census script and full lines are recorded. These are reductions of the call shapes, not a whole-parser execution claim.
+
+The rewind fixture restores position, token, diagnostics length and pending error. Failed tryParse restores position for 0, -0, NaN, empty string, false, null and undefined. Number 1, nonempty text, arrays and objects commit. A direct unknown result consumed as Parsed | undefined checks its required scalar fields once at the boundary. A string consumed as number stops with exit 70 naming callback misfit and its call site. Proven generic returns require no additional specialization check. Existing checked field views remain on later field reads; the boundary does not claim a mutation-stable certificate.
+
+Commands (all output to logs):
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^(TestParserSpeculation|TestParserConstruction|TestParserAheadFactory|TestParserAheadNodeArray)' -count=1 -v: pass.
+- go test -overlay /tmp/step24-speculation-overlay.json ./internal/oracle -run '^TestParserSpeculationMisfit$' -count=1 -v: expected failure after changing Narrow.Checked from true to false. Native prints a misinterpreted number and JavaScript prints wrong; neither emits the pinned stop.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts: pass. Five added rows only; no existing row changed. named-lookahead records closure and saved scalar calls; named-tryparse records optional node ownership; arrow-tryparse records unknown node boxing and checked specialization; truthiness-rewind records boxed scalar cases and scanner saves; misfit records the one allocation still held when the check stops.
+- gofmt on changed Go files; go vet ./internal/lower ./internal/oracle: pass.
+- STEP24_RECORD=/tmp/step24-next-unit-a-pre-push.json python3 stage3/parser-ahead/check-local.py: pass for parser-ahead and parser-next .a files, local record only.
+
+Setup initially failed because unresolved merge markers were still present. After resolving them, GOPROXY=https://proxy.golang.org|direct bash cloud/setup.sh passed: Go 0.022s, Node 0.024s, submodules 0.069s, clang 0.162s, build 25.939s, total 26.232s. nproc is 5, cgroup quota is 4 processors. Toolchain source is /workspace/adamic-tools/env.sh.
+
+Design question: a callback capturing unknown currently reaches the separate captured-Union NotYet boundary. This reduction uses a module save slot to test the same source speculation algorithm without changing closure representation. Supporting the original unknown-capture shape needs that representation separately; it is not recorded as pass. Reparse-specific diagnostics preservation is not exercised here. Tree lifetime across rewind remains pending on the Program region.

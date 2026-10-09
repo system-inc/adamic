@@ -1,0 +1,4 @@
+interface Option { readonly type: 'list' | 'object'; }
+function convertJsonOption(value: any): Option { return value; }
+console.log(convertJsonOption({type: 'list'}).type);
+console.log(convertJsonOption({type: 'object'}).type);

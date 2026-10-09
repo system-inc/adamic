@@ -1,0 +1,5 @@
+function fail(): string {console.log('default');throw new Error('default failed');}
+function* failing(value:string=fail()): Generator<string,string,undefined> {yield value;return 'done';}
+try {const g=failing();console.log('created');g.next();} catch(error) {console.log('call threw');}
+function* unpack({name}:{name:string}): Generator<string,string,undefined> {yield name;return 'done';}
+const g=unpack({name:'destructured'});console.log(`${g.next().value}`);

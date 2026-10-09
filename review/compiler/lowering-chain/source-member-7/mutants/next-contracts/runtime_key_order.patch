@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/checked_json.c
++++ b/internal/native/runtime/checked_json.c
+@@ -102,7 +102,7 @@
+    // Object.keys sorts array-index keys before ordinary strings. Ordinary
+    // fixed shapes already have insertion order; only numeric names need a snapshot.
+    bool numeric=false;
+-   for(size_t i=0;i<object->shape->count;i++) if(object->shape->names[i][0]>='0' && object->shape->names[i][0]<='9') numeric=true;
++   for(size_t i=0;i<object->shape->count;i++) if(object->shape->names[i][0]>='0' && object->shape->names[i][0]<='9') numeric=false;
+    adamic_array *keys=numeric ? adamic_object_keys(object) : NULL;
+    size_t count=keys==NULL ? object->shape->count : keys->length;
+    for (size_t at = 0; at < count; at++) {

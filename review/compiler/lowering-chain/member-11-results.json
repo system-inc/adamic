@@ -1,0 +1,102 @@
+{
+  "branch": "tsgo.go file-only patch",
+  "source": "4e97369532e6bae0c074a9be81562da9feccff3d",
+  "tests": [
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 3.87,
+      "log": "member-11-before-release-repeat-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 6.87,
+      "log": "member-11-after-sanitized-cold-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 0.19,
+      "log": "member-11-after-release-repeat-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 6.65,
+      "log": "member-11-before-sanitized-repeat-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 3.65,
+      "log": "member-11-after-release-cold-tests.jsonl"
+    },
+    {
+      "test": "TestSharedProductPublication",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-11-focused-tests.jsonl"
+    },
+    {
+      "test": "TestSixBuildCallbackUsesProductDirectory",
+      "result": "pass",
+      "seconds": 0.01,
+      "log": "member-11-focused-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareTopShardPlantedFailure",
+      "result": "pass",
+      "seconds": 0.02,
+      "log": "member-11-focused-tests.jsonl"
+    },
+    {
+      "test": "TestTSGoBuildSeesTheProgramsFeatures",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-11-focused-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-11-after-sanitized-repeat-tests.jsonl"
+    },
+    {
+      "test": "TestSharedProductPublication",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-11-before-helper-tests.jsonl"
+    },
+    {
+      "test": "TestSixBuildCallbackUsesProductDirectory",
+      "result": "pass",
+      "seconds": 0.01,
+      "log": "member-11-before-helper-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareTopShardPlantedFailure",
+      "result": "pass",
+      "seconds": 0.02,
+      "log": "member-11-before-helper-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 3.89,
+      "log": "member-11-before-release-cold-tests.jsonl"
+    },
+    {
+      "test": "TestTypeAwareNativeBuildChild",
+      "result": "pass",
+      "seconds": 7.03,
+      "log": "member-11-before-sanitized-cold-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [],
+    "changed": [],
+    "removed": [],
+    "rows": 1158
+  }
+}

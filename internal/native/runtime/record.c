@@ -1,5 +1,6 @@
 // record.c: own enumerable string properties, using Map's counted ordered hash table.
 #include "adamic.h"
+#include "namespace.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -98,6 +99,7 @@ void adamic_record_define(adamic_record *record, adamic_string *key, adamic_valu
 }
 
 void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value) {
+	adamic_namespace_check_write(record, key);
 	if (named(key, "__proto__")) {
 		static const char message[] = "NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property";
 		adamic_panic(message, sizeof message - 1);
@@ -217,7 +219,7 @@ bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string
 	return false;
 }
 
-bool adamic_record_is(const adamic_object *object) { return object->shape == &record_shape; }
+bool adamic_record_is(const adamic_object *object) { return object->shape == &record_shape || adamic_namespace_is(object); }
 
 adamic_value adamic_record_view(const adamic_record *record, const char *name, unsigned char wanted, const char *type, const char *expression) {
  adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
@@ -228,6 +230,7 @@ adamic_value adamic_record_view(const adamic_record *record, const char *name, u
   if (wanted == 1 && value->kind == adamic_kind_number) return (adamic_value){.number = ((const adamic_number_box *)value)->number};
   if (wanted == 2 && value->kind == adamic_kind_boolean) return (adamic_value){.boolean = ((const adamic_boolean_box *)value)->boolean};
   if (wanted == 3 && value->kind == adamic_kind_string) return *slot;
+  if (adamic_namespace_is(record) && ((wanted == 4 && value->kind == adamic_kind_object) || (wanted == 5 && value->kind == adamic_kind_array) || (wanted == 6 && value->kind == adamic_kind_map) || (wanted == 8 && value->kind == adamic_kind_closure))) return *slot;
  }
  const char *actual = value == NULL ? "undefined" : value->kind == adamic_kind_number ? "number" : value->kind == adamic_kind_boolean ? "boolean" : value->kind == adamic_kind_string ? "string" : "object";
  size_t capacity = strlen(expression) + strlen(type) + strlen(actual) + 100;

@@ -148,25 +148,24 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 	}
 }
 
+// Explicit any violates the .a promise even in an unread readonly field.
+// Keep Node's unchecked source observation independently of the ruled refusal.
 func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong"} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
-			program, path := interfaceFixture(t, "untagged/fixtures/class-data-"+variant)
-			node := onNode(t, path)
-			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
-				t.Fatal(difference)
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures/class-data-"+variant+".a"))
+			if err != nil {
+				t.Fatal(err)
 			}
-			want := node
-			if variant != "good" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+			_, err = lowered(t, path)
+			want := path + ":1:98: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use"
+			if err == nil || err.Error() != want {
+				t.Fatalf("want exact ruled refusal %q, got %v", want, err)
 			}
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
-				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s", backend, difference)
-				}
+			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+				t.Fatal("source Node: " + difference)
 			}
 		})
 	}
@@ -196,22 +195,25 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 	}
 }
 
-func TestCheckedViewUntaggedArrayPending(t *testing.T) {
+// These sources remain unchanged. The ruled .a policy stops their any
+// annotations before reaching the still unsupported V3 array representation.
+func TestCheckedViewUntaggedArrayAnyRefusal(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
-			path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
-			loaded, err := load.Load([]string{path})
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures/array-union-"+variant+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
-				t.Fatalf("array admission must stay NotYet: %v", err)
+			_, err = lowered(t, path)
+			want := path + ":3:91: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use"
+			if err == nil || err.Error() != want {
+				t.Fatalf("want exact ruled refusal %q, got %v", want, err)
 			}
-			// Array membership needs V3 element-kind metadata and hole-aware reads.
-			t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
+			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
 		})
 	}
 }

@@ -1,0 +1,32 @@
+{
+  "compiler_commit": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+  "measurement_helpers_commit": "ec0b16c0",
+  "full_audit_commit": "f1502d13",
+  "panic_fixture": {
+    "outer_span": [
+      0,
+      40
+    ],
+    "duplicate_outer_span": [
+      0,
+      40
+    ],
+    "nested_span": [
+      10,
+      20
+    ],
+    "residual_ranges": [
+      [
+        0,
+        15
+      ],
+      [
+        25,
+        40
+      ]
+    ],
+    "expected_bytes": 30,
+    "drop_panic_mutant_bytes": 0
+  },
+  "binary_sha256": "89150ec485a7a99af1e4a7ea65b46be5526eca6405427f769efa4871fa57da0e"
+}

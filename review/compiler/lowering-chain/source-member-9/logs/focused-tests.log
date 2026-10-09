@@ -1,0 +1,65 @@
+=== RUN   TestFunctionAdamicUnusedAnnotationRefused
+=== PAUSE TestFunctionAdamicUnusedAnnotationRefused
+=== RUN   TestFunctionAdamicLengthAnnotationRefused
+=== PAUSE TestFunctionAdamicLengthAnnotationRefused
+=== RUN   TestFunctionTypeScriptUnusedAccepted
+=== PAUSE TestFunctionTypeScriptUnusedAccepted
+=== RUN   TestFunctionTypeScriptLengthAgreesWithNode
+=== PAUSE TestFunctionTypeScriptLengthAgreesWithNode
+=== RUN   TestFunctionTypeScriptCallRefused
+=== PAUSE TestFunctionTypeScriptCallRefused
+=== RUN   TestFunctionCallSignatureAgreesWithNode
+=== PAUSE TestFunctionCallSignatureAgreesWithNode
+=== RUN   TestFunctionAdamicCallAnnotationRefused
+=== PAUSE TestFunctionAdamicCallAnnotationRefused
+=== RUN   TestMergedFieldAdamicUnusedRefused
+=== PAUSE TestMergedFieldAdamicUnusedRefused
+=== RUN   TestMergedFieldAdamicReadRefused
+=== PAUSE TestMergedFieldAdamicReadRefused
+=== RUN   TestMergedFieldTypeScriptUnusedAccepted
+=== PAUSE TestMergedFieldTypeScriptUnusedAccepted
+=== RUN   TestMergedFieldTypeScriptMissingChecked
+=== PAUSE TestMergedFieldTypeScriptMissingChecked
+=== RUN   TestMergedFieldTypeScriptComputedChecked
+=== PAUSE TestMergedFieldTypeScriptComputedChecked
+=== RUN   TestMergedFieldAdamicInitializedAgreesWithNode
+=== PAUSE TestMergedFieldAdamicInitializedAgreesWithNode
+=== RUN   TestMergedFieldTypeScriptInitializedAgreesWithNode
+=== PAUSE TestMergedFieldTypeScriptInitializedAgreesWithNode
+=== RUN   TestMergedFieldAdamicComputedRefused
+=== PAUSE TestMergedFieldAdamicComputedRefused
+=== CONT  TestFunctionAdamicUnusedAnnotationRefused
+=== CONT  TestMergedFieldAdamicReadRefused
+=== CONT  TestFunctionTypeScriptCallRefused
+=== CONT  TestMergedFieldAdamicInitializedAgreesWithNode
+=== CONT  TestMergedFieldAdamicComputedRefused
+--- PASS: TestFunctionAdamicUnusedAnnotationRefused (0.19s)
+=== CONT  TestMergedFieldAdamicUnusedRefused
+--- PASS: TestMergedFieldAdamicComputedRefused (0.20s)
+=== CONT  TestFunctionAdamicCallAnnotationRefused
+--- PASS: TestMergedFieldAdamicReadRefused (0.20s)
+=== CONT  TestFunctionCallSignatureAgreesWithNode
+--- PASS: TestFunctionTypeScriptCallRefused (0.25s)
+=== CONT  TestFunctionTypeScriptUnusedAccepted
+--- PASS: TestFunctionAdamicCallAnnotationRefused (0.13s)
+=== CONT  TestFunctionTypeScriptLengthAgreesWithNode
+--- PASS: TestMergedFieldAdamicUnusedRefused (0.19s)
+=== CONT  TestMergedFieldTypeScriptMissingChecked
+--- PASS: TestMergedFieldAdamicInitializedAgreesWithNode (0.59s)
+=== CONT  TestMergedFieldTypeScriptComputedChecked
+--- PASS: TestFunctionCallSignatureAgreesWithNode (0.56s)
+=== CONT  TestFunctionAdamicLengthAnnotationRefused
+--- PASS: TestFunctionTypeScriptUnusedAccepted (0.53s)
+=== CONT  TestMergedFieldTypeScriptUnusedAccepted
+--- PASS: TestMergedFieldTypeScriptMissingChecked (0.50s)
+=== CONT  TestMergedFieldTypeScriptInitializedAgreesWithNode
+--- PASS: TestFunctionAdamicLengthAnnotationRefused (0.16s)
+--- PASS: TestFunctionTypeScriptLengthAgreesWithNode (0.60s)
+--- PASS: TestMergedFieldTypeScriptComputedChecked (0.52s)
+--- PASS: TestMergedFieldTypeScriptUnusedAccepted (0.40s)
+--- PASS: TestMergedFieldTypeScriptInitializedAgreesWithNode (0.41s)
+PASS
+gate cache: native hits=0 misses=22
+gate cache: node hits=0 misses=23
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.299s

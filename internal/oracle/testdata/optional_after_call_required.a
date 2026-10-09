@@ -1,0 +1,12 @@
+// Required access still throws, and a catch can take its TypeError.
+interface Link { readonly next: Link | undefined; }
+let chain: Link | undefined = { next: undefined };
+function drop(): void { chain = chain?.next; }
+drop();
+try {
+    console.log(`${chain.next === undefined}`);
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error.name}: ${error.message}`);
+    }
+}

@@ -1,0 +1,27 @@
+=== RUN   TestParserConstructionBackends
+=== RUN   TestParserConstructionBackends/own-key-order.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"; source lowering remains pending
+=== RUN   TestParserConstructionBackends/node-array-keys.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "0,1\nfalse\n0,1,end,pos,transformFlags,hasTrailingComma\ntrue\n"; source lowering remains pending
+=== RUN   TestParserConstructionBackends/node-array-json.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "[1,2]\n"; source lowering remains pending
+=== RUN   TestParserConstructionBackends/node-array-length.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "2\n2\n2\n"; source lowering remains pending
+--- PASS: TestParserConstructionBackends (1.13s)
+    --- PASS: TestParserConstructionBackends/own-key-order.a (0.30s)
+    --- PASS: TestParserConstructionBackends/node-array-keys.a (0.28s)
+    --- PASS: TestParserConstructionBackends/node-array-json.a (0.28s)
+    --- PASS: TestParserConstructionBackends/node-array-length.a (0.28s)
+=== RUN   TestParserConstructionRuntimeMutants
+=== RUN   TestParserConstructionRuntimeMutants/synthesized_key
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "2,10,kind,alpha,beta\ntrue\n2,10,kind,alpha,beta\n2,10,kind,alpha,beta\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"alpha\":3,\"beta\":21}\n", Node "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"
+=== RUN   TestParserConstructionRuntimeMutants/declaration_order
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "kind\nfalse\n2,10,kind,alpha,beta\n2,10,kind,alpha,beta\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"alpha\":3,\"beta\":21}\n", Node "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"
+=== RUN   TestParserConstructionRuntimeMutants/array_extras_in_JSON
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "[1,2,-1]\n", Node "[1,2]\n"
+--- PASS: TestParserConstructionRuntimeMutants (17.20s)
+    --- PASS: TestParserConstructionRuntimeMutants/synthesized_key (5.61s)
+    --- PASS: TestParserConstructionRuntimeMutants/declaration_order (5.73s)
+    --- PASS: TestParserConstructionRuntimeMutants/array_extras_in_JSON (5.86s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	18.342s

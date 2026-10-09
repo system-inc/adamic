@@ -1,0 +1,4 @@
+interface Config { readonly value: number; }
+function getRaw(): any { return {value: 14}; }
+const config: Config = getRaw();
+console.log(String(config.value));

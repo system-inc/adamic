@@ -1,0 +1,6 @@
+interface Config { readonly value: number; }
+function convert(raw: any): Config { return raw; }
+const raw = {value: 14};
+const config = convert(raw);
+Object.assign(raw, {value: 15});
+console.log(String(config.value));

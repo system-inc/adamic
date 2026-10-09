@@ -1,0 +1,18 @@
+=== RUN   TestStep21ErrorBoundaries
+=== PAUSE TestStep21ErrorBoundaries
+=== CONT  TestStep21ErrorBoundaries
+=== RUN   TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent');
+=== PAUSE TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent');
+=== RUN   TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent');
+=== PAUSE TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent');
+=== RUN   TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`);
+=== PAUSE TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`);
+=== CONT  TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent');
+=== CONT  TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`);
+=== CONT  TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent');
+--- PASS: TestStep21ErrorBoundaries (0.00s)
+    --- PASS: TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent'); (0.06s)
+    --- PASS: TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`); (0.06s)
+    --- PASS: TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent'); (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.069s

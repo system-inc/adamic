@@ -1,0 +1,47 @@
+{
+  "base": "bb37f6fbce79ca47e94cc00d03829c4374e84a67",
+  "scope": "ES modules; namespace merges in its exporting module and is shared through imports",
+  "checks": [
+    {
+      "command": "go test ./internal/oracle -run '^TestNamespaceObjectAgreement/imports/main$' -count=1",
+      "exit": 0,
+      "log": "shared-import-oracle.log.gz"
+    },
+    {
+      "command": "go test ./internal/oracle -run 'TestNativeAgreesWithNode/stage3/namespace-value/imports/main.a' -count=1",
+      "exit": 0,
+      "log": "shared-import-control.log.gz"
+    },
+    {
+      "command": "go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts",
+      "exit": 0,
+      "log": "shared-import-counts.log.gz"
+    },
+    {
+      "command": "python3 stage3/namespace-value/evidence/run-a-check.py",
+      "exit": 0,
+      "log": "shared-import-a-check.log.gz"
+    }
+  ],
+  "counts_changed": {
+    "stage3/namespace-value/imports/main.a": {
+      "before": [
+        11,
+        11,
+        10,
+        20,
+        7,
+        0
+      ],
+      "after": [
+        15,
+        15,
+        17,
+        30,
+        7,
+        0
+      ]
+    }
+  },
+  "implementation_changed": false
+}

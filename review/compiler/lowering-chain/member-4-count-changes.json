@@ -1,0 +1,95 @@
+{
+  "added": [
+    {
+      "row": "stage3/fixtures/generics/01_identity.a",
+      "after": [
+        "3",
+        "3",
+        "3",
+        "7",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/02_optional_return.a",
+      "after": [
+        "5",
+        "5",
+        "3",
+        "9",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/03_callback_return.a",
+      "after": [
+        "8",
+        "8",
+        "3",
+        "11",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/05_nested_class.a",
+      "after": [
+        "8",
+        "8",
+        "5",
+        "16",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/09_recursive_optional.a",
+      "after": [
+        "3",
+        "3",
+        "1",
+        "4",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/10_identifier_multimap.a",
+      "after": [
+        "11",
+        "11",
+        "29",
+        "38",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/14_optional_literal_union.a",
+      "after": [
+        "3",
+        "3",
+        "0",
+        "3",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/generics/15_array_callback.a",
+      "after": [
+        "18",
+        "18",
+        "7",
+        "27",
+        "4",
+        "0"
+      ]
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "rows": 1057
+}

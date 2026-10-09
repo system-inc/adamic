@@ -1,0 +1,67 @@
+// program.ts:798 and transformers/destructuring.ts:301, followed by authored ownership stress.
+interface Pending {
+    name: string;
+    original: string;
+    count: number;
+}
+function pending(index: number): Pending {
+    return { name: `name:${index}`, original: `original:${index}`, count: index };
+}
+let opens = 0;
+function records(): Pending[] {
+    opens++;
+    return [pending(1), pending(2)];
+}
+const closures: (() => string)[] = [];
+const items = records();
+for (const { name: label, original, count } of items) {
+    console.log(`${label}/${original}/${count}`);
+    closures.push(() => `${label}/${original}`);
+    if (count === 1) {
+        items.push(pending(3));
+        continue;
+    }
+    if (count === 3) {
+        break;
+    }
+}
+for (const closure of closures) {
+    console.log(closure());
+}
+console.log(`opens:${opens}`);
+let emptyOpens = 0;
+function empty(): Pending[] {
+    emptyOpens++;
+    return [];
+}
+for (const { name } of empty()) {
+    console.log(name);
+}
+console.log(`empty:${emptyOpens}`);
+function early(): string {
+    for (const { name } of records()) {
+        return name;
+    }
+    return 'empty';
+}
+console.log(early());
+try {
+    for (const { name, original } of records()) {
+        throw new Error(`${name}/${original}`);
+    }
+}
+catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message);
+    }
+}
+let source = [pending(4), pending(5)];
+for (const { name, count } of source) {
+    source = [];
+    console.log(`${name}/${count}`);
+}
+const popped = [pending(6)];
+for (const { name, original } of popped) {
+    popped.pop();
+    console.log(`${name}/${original}`);
+}
