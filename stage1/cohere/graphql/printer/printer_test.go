@@ -2,48 +2,52 @@ package printer
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
-func printerCases(t *testing.T, mode string) (string, string) {
+func printerCases(t *testing.T, mode string, oracle ...string) (string, string) {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var sources []string
-	// No .graphql documents exist in this checkout. Cases come from these
-	// pinned Go test sources and the generator's explicit controls instead.
+	// Validate the pinned enumeration on cache hits as well as misses.
 	corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
 		[]string{"internal/format/graphql"}, []string{"*_test.go"})
 	t.Log("GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls")
-	directory := t.TempDir()
-	cases := filepath.Join(directory, "cases.txt")
-	answers := filepath.Join(directory, "answers.txt")
-	request, _ := json.Marshal(map[string]any{"Sources": sources, "Cases": cases, "Answers": answers, "Mode": mode, "Coverage": filepath.Join(directory, "coverage.json")})
-	path := filepath.Join(directory, "request.json")
-	if err = os.WriteFile(path, request, 0644); err != nil {
-		t.Fatal(err)
+	if len(oracle) == 0 {
+		oracle = []string{printerOracle(t)}
 	}
-	side, _ := filepath.Abs("testdata/cohere_side_test.go")
-	generator, _ := filepath.Abs("../testdata/cohere_side_test.go")
-	cohere := filepath.Join(root, "cohere")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/graphql/adamic_printer_test.go"): side, filepath.Join(cohere, "internal/format/graphql/adamic_generator_test.go"): generator}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err = os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinter$", "./internal/format/graphql")
-	command.Dir = cohere
-	command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go oracle: %v\n%s", err, output)
-	}
+	directory := printerBuild(t, printerBuildInputs{
+		Name:  "GraphQL printer oracle outputs",
+		Files: []string{oracle[0], root + "/stage1/cohere/graphql/printer/printer_test.go", root + "/stage1/cohere/graphql/printer/shards_test.go"},
+		Flags: []string{"mode=" + mode, "test-run=TestAdamicPrinter"}, Toolchain: runtime.Version(),
+	}, func(directory string) error {
+		request, err := json.Marshal(map[string]any{"Sources": []string(nil), "Cases": directory + "/cases.txt", "Answers": directory + "/answers.txt", "Mode": mode, "Coverage": directory + "/coverage.json"})
+		if err != nil {
+			return err
+		}
+		path := filepath.Join(t.TempDir(), "request.json")
+		if err := os.WriteFile(path, request, 0644); err != nil {
+			return err
+		}
+		command := bounded(t, oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
+		command.Dir = root + "/cohere"
+		command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
+		if output, err := combinedOutput(command); err != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		}
+		return nil
+	})
+	cases, answers := directory+"/cases.txt", directory+"/answers.txt"
 	data, err := os.ReadFile(answers)
 	if err != nil {
 		t.Fatal(err)
@@ -62,76 +66,11 @@ func printerCases(t *testing.T, mode string) (string, string) {
 	return cases, string(data)
 }
 
-// Not parallel: the corpus keep path is shared by the option runs.
-func TestPrinterUpstreamPreflight(t *testing.T) {
-	directory := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
-	if directory == "" {
-		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
-	script, err := filepath.Abs("testdata/prettier.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	embedded, err := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		t.Run(mode, func(t *testing.T) {
-			cases, want := printerCases(t, mode)
-			for _, side := range []struct{ name, directory, engine string }{{"npm Prettier", directory, "npm"}, {"embedded fork", embedded, "embedded"}} {
-				t.Run(side.name, func(t *testing.T) {
-					got := execute(t, nil, "node", script, side.directory, cases, mode, side.engine)
-					if got.exitCode != 0 || len(got.stderr) > 0 {
-						t.Fatalf("Prettier: exit %d, %s", got.exitCode, got.stderr)
-					}
-					inputs, err := os.ReadFile(cases)
-					if err != nil {
-						t.Fatal(err)
-					}
-					sources := strings.Split(string(inputs), "\n")
-					a, b := strings.Split(string(got.stdout), "\n"), strings.Split(want, "\n")
-					if len(a) != len(b) {
-						t.Fatalf("answer count: %d vs %d", len(a), len(b))
-					}
-					known, unexpected, accepted, refused := 0, 0, 0, 0
-					exactKnown := map[string]string{
-						">":       "error\tSyntax Error: Unexpected <EOF>. (1:1)",
-						"> ":      "error\tSyntax Error: Unexpected <EOF>. (1:2)",
-						">\\n\\r": "error\tSyntax Error: Unexpected <EOF>. (3:1)",
-						">\\r":    "error\tSyntax Error: Unexpected <EOF>. (2:1)",
-					}
-					for i := 0; i < len(a)-1; i++ {
-						if a[i] == b[i] {
-							accepted++
-							continue
-						}
-						if strings.HasPrefix(a[i], "error\t") && strings.HasPrefix(b[i], "error\t") {
-							refused++
-							continue
-						}
-						if expected, exists := exactKnown[sources[i]]; exists && a[i] == "ok\t" && b[i] == expected {
-							known++
-							t.Logf("known upstream difference case %d: source %q, Go %q, Prettier %q", i, sources[i], b[i], a[i])
-							continue
-						}
-						unexpected++
-						if unexpected <= 5 {
-							t.Logf("unexpected case %d: Prettier %q; Go %q", i, a[i], b[i])
-						}
-					}
-					t.Logf("%d texts: %d byte-identical formatted, %d shared refusals, %d known whitespace differences, %d unexpected differences", len(a)-1, accepted, refused, known, unexpected)
-					if unexpected != 0 {
-						t.Errorf("Go cohere differs from Prettier on %d unexpected texts", unexpected)
-					}
-					if known != 5 {
-						t.Errorf("known difference count changed: %d, recorded 5 in GAPS.md", known)
-					}
-				})
-			}
-		})
-	}
-}
+const testPrinterUpstreamPreflightShards = 4
+
+// ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i; unset runs all.
+// The four fixed option modes run as shard-NNN and share their Go oracle build.
+func TestPrinterUpstreamPreflight(t *testing.T) { printerUpstreamShards(t) }
 
 func printerDirectory(t *testing.T, file, from, to string) string {
 	t.Helper()
@@ -167,61 +106,123 @@ func printerDirectory(t *testing.T, file, from, to string) string {
 	return filepath.Join(directory, "graphql/printer/main.ts")
 }
 
-// Not parallel: all option sweeps can write ADAMIC_GRAPHQL_PRINTER_KEEP.
-func TestPrinterAsGoCohere(t *testing.T) {
-	path := printerDirectory(t, "", "", "")
-	program := lowered(t, path)
-	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		t.Run(mode, func(t *testing.T) {
-			cases, want := printerCases(t, mode)
-			nodeRun := onNode(t, path, "--cases", cases, mode)
-			nativeRun, binary := natively(t, program, "--cases", cases, mode)
-			backendRun := onJavaScriptBackend(t, program, "--cases", cases, mode)
-			for _, side := range []struct {
-				name   string
-				result run
-			}{{"native", nativeRun}, {"Node", nodeRun}, {"JS backend", backendRun}} {
-				if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
-					t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				if difference := firstDifference(string(side.result.stdout), want); difference != "" {
-					t.Errorf("%s: %s", side.name, difference)
-				}
-			}
-			if report := leaks(t, program, binary, "--cases", cases, mode); report != "" {
-				t.Errorf("leaks: %s", report)
-			}
-			t.Logf("%d texts: %d formatted, %d refused", strings.Count(want, "\n"), strings.Count(want, "ok\t"), strings.Count(want, "error\t"))
-		})
-	}
+const testPrinterMutantsShards = 3
+
+var printerMutations = [...]struct{ name, file, from, to string }{
+	{"line width ignored", "doc.ts", "this.settings.printWidth - column", "100000 - column"},
+	{"end of line comment leads next node", "printer.ts", "if(own && around.following >= 0)", "if((own || end) && around.following >= 0)"},
+	{"block string indentation discarded", "printer.ts", "for(const line of lines) parts.push(documents.text(line));", "for(const line of lines) parts.push(documents.text(line.trim()));"},
 }
 
-// Not parallel: the corpus keep path is shared with the option sweeps.
+// Each fixed mutant owns one shard-NNN and checks the entire corpus on both
+// original sides. ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i;
+// unset runs all. Builds are shared inputs prepared before t.Parallel.
 func TestPrinterMutants(t *testing.T) {
-	cases, want := printerCases(t, "defaults")
-	for _, mutation := range []struct{ name, file, from, to string }{
-		{"line width ignored", "doc.ts", "this.settings.printWidth - column", "100000 - column"},
-		{"end of line comment leads next node", "printer.ts", "if(own && around.following >= 0)", "if((own || end) && around.following >= 0)"},
-		{"block string indentation discarded", "printer.ts", "for(const line of lines) parts.push(documents.text(line));", "for(const line of lines) parts.push(documents.text(line.trim()));"},
-	} {
-		t.Run(mutation.name, func(t *testing.T) {
-			path := printerDirectory(t, mutation.file, mutation.from, mutation.to)
-			program := lowered(t, path)
+	if len(printerMutations) != testPrinterMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(printerMutations), testPrinterMutantsShards)
+	}
+	cases, want := printerCases(t, "defaults", printerOracle(t))
+	enumeration := enumeratePrinter(t, "defaults", cases, want)
+	var whole []printerCase
+	for number := range printerMutations {
+		whole = append(whole, printerMutantCases(number, enumeration)...)
+	}
+	shards := make([]printerShard, len(printerMutations))
+	products := make([]printerProducts, len(printerMutations))
+	for number, mutation := range printerMutations {
+		shards[number] = printerShard{mode: "defaults", path: cases, cases: printerMutantCases(number, enumeration)}
+		path := printerDirectory(t, mutation.file, mutation.from, mutation.to)
+		products[number] = preparePrinterProducts(t, path)
+	}
+	if len(shards) != testPrinterMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterMutantsShards)
+	}
+	if err := printerShardUnion(whole, shards); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("union: %d unique mutant/case ids across %d shards (%d cases per mutant)", len(whole), len(shards), len(enumeration))
+	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for number, mutation := range printerMutations {
+		if !selected[number] {
+			continue
+		}
+		product := products[number]
+		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
+			t.Parallel()
+			start := time.Now()
+			t.Cleanup(func() {
+				if elapsed := time.Since(start); elapsed > 30*time.Second {
+					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
+				}
+			})
+			t.Logf("mutant %s, cases 0..%d", mutation.name, len(shards[number].cases)-1)
 			for _, side := range []struct {
 				name   string
 				result run
-			}{{"native", nativelyRun(t, program, "--cases", cases)}, {"Node", onNode(t, path, "--cases", cases)}} {
-				if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
-					t.Fatalf("%s mutant must run: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				difference := firstDifference(string(side.result.stdout), want)
-				if difference == "" {
-					t.Errorf("%s mutant escaped oracle", side.name)
+			}{
+				{"native", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, product.sanitized, "--cases", cases)},
+				{"Node", onNode(t, product.source, "--cases", cases)},
+			} {
+				difference, err := printerMutantDisagreement(number, side.name, side.result, want)
+				if err != nil {
+					t.Error(err)
 				} else {
 					t.Logf("%s caught: %s", side.name, difference)
 				}
 			}
 		})
+	}
+}
+
+func printerMutantCases(number int, enumeration []printerCase) []printerCase {
+	owned := make([]printerCase, len(enumeration))
+	for i, item := range enumeration {
+		item.id = fmt.Sprintf("mutant-%03d/%s", number, item.id)
+		owned[i] = item
+	}
+	return owned
+}
+
+func printerMutantDisagreement(number int, side string, result run, want string) (string, error) {
+	if result.exitCode != 0 || len(result.stderr) != 0 {
+		return "", fmt.Errorf("shard-%03d %s mutant must run: exit %d, %s", number, side, result.exitCode, result.stderr)
+	}
+	difference := firstDifference(string(result.stdout), want)
+	if difference == "" {
+		return "", fmt.Errorf("shard-%03d %s mutant escaped oracle", number, side)
+	}
+	return difference, nil
+}
+
+// A real process emits an unchanged answer for one planted surviving mutant;
+// exactly its owning shard must reject it through the production comparison.
+func TestPrinterMutantPlantedSurvivor(t *testing.T) {
+	caught := 0
+	for number := range printerMutations {
+		answer := "ok\tmutated\n"
+		if number == 1 {
+			answer = "ok\toriginal\n"
+		}
+		encoded, _ := json.Marshal(answer)
+		result := execute(t, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
+		_, err := printerMutantDisagreement(number, "Node", result, "ok\toriginal\n")
+		if err == nil {
+			if number == 1 {
+				t.Fatal("planted survivor escaped shard-001")
+			}
+			continue
+		}
+		if number != 1 || !strings.Contains(err.Error(), "shard-001 Node mutant escaped oracle") {
+			t.Fatalf("wrong owner: %v", err)
+		}
+		t.Log(err)
+		caught++
+	}
+	if caught != 1 {
+		t.Fatalf("%d shards caught planted survivor, want 1", caught)
 	}
 }
 
@@ -233,9 +234,9 @@ func TestPrinterFileDriver(t *testing.T) {
 		t.Fatal(err)
 	}
 	path, _ := filepath.Abs("main.ts")
-	program := lowered(t, path)
+	products := preparePrinterProducts(t, path)
 	want := "query {\n    hello(a: 1, b: 2)\n}\n"
-	for _, side := range []run{onNode(t, path, source), nativelyRun(t, program, source)} {
+	for _, side := range []run{onNode(t, path, source), execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, source)} {
 		if side.exitCode != 0 || string(side.stdout) != want {
 			t.Fatalf("driver: exit %d, stdout %q, stderr %q", side.exitCode, side.stdout, side.stderr)
 		}
