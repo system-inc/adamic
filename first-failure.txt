@@ -1,0 +1,20 @@
+FIRST FAILURE (tests, at 1080.0 s):
+github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_6484
+=== RUN   TestCompilerAndStage1Agree_6484
+=== PAUSE TestCompilerAndStage1Agree_6484
+=== CONT  TestCompilerAndStage1Agree_6484
+    compiler_stage1_split_test.go:13360: corpus-files: upstream /home/ahra/adamic-tools/gate-inputs/typescript root src/compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8 count 77
+    compiler_stage1_split_test.go:13360: corpus-files: repository ../../.. root stage1 pin 65c68100f5e19c92f7e6f57ecdab5ed8d6ae1762 count 791
+    compiler_stage1_split_test.go:13360: compiler corpus stage1: excluded 244 tracked files under testdata/, validation/, evidence/; retained 547 sources
+    compiler_stage1_split_test.go:182: build compiler-agreement-go-oracle 5c59e13f8011 hit 0.93
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-true 6b3ce492a616 hit 0.85
+    compiler_stage1_split_test.go:13360: preparation: 1.880s
+panic: TestCompilerAndStage1Agree_6484: own work exceeded 90s
+
+goroutine 95 [running]:
+github.com/system-inc/adamic/stage1/cohere/lint.compilerAgreementShard.func1()
+	/home/ahra/fast-gate/tree/stage1/cohere/lint/compiler_stage1_split_test.go:368 +0x47
+created by time.goFunc
+	/home/ahra/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+(box load 29.0 on 64 cores at first failure)
