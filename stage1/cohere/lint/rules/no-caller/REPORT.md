@@ -8,7 +8,7 @@ The descriptor subscribes to PropertyAccessExpression and declares node:true. Th
 
 The real upstream test functions are TestNoCallerFires, TestNoCallerStaysSilent, TestNoCallerReadsTheReceiver and TestNoCallerReportsTheProperty. Prefix TestNoCaller captures all four, including tests that inspect ranges directly. The owned witness fires on both forbidden properties, nested parenthesized arguments and optional access, and includes clean computed and other-receiver accesses. Go and all backends agree on selected and all-rule rows.
 
-Upstream NoCaller defines no typed options struct and ignores its any parameter. The adapter therefore decodes field 5 as JSON into any, preserving explicit payloads instead of returning nil. The dedicated Go overlay test verifies empty object, a nonempty object, array, absent payload and malformed JSON. No options-dependent rule behavior is invented. Witness-options support (29c41e102) is not yet an ancestor of this base; no options sidecar is needed for this optionless rule. The first direct adapter-test invocation failed on Go's internal-package boundary; using the same cohere overlay mechanism as the shared oracle passed. Both logs are retained.
+Upstream NoCaller defines no typed options struct and ignores its any parameter. The adapter therefore decodes field 5 as JSON into any, preserving explicit payloads instead of returning nil. No options-dependent rule behavior is invented. Witness-options support (29c41e102) is not yet an ancestor of this base; no options sidecar is needed for this optionless rule. A dedicated adapter test was removed (#q3j506d): it built only under the lintoracle tag, which no gate passes, so it never ran, and it checked a payload the rule ignores.
 
 Commands, all test output directly to logs:
 
@@ -21,8 +21,6 @@ gofmt -l stage1/cohere/lint/rules/no-caller/*.go
 go vet ./stage1/cohere/lint/...
 go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestRulesAgree)$' -count=1 -timeout 30m -v
 go test ./stage1/cohere/lint -run '^TestMutants$/^no-caller-property$' -count=1 -timeout 30m -v
-cd cohere
-go test -overlay=/tmp/no-caller-options-overlay.json adamic_no_caller_options.go adamic_no_caller_options_test.go -count=1 -v
 ```
 
 TestRulesAgree: 141.21s, 13,055,010 identical bytes. TestOwnedWitnesses: 19.77s, 92,342 identical bytes. The existing shared corpus explicitly records malformed parser-recovery limitations unrelated to no-caller; those remain refusal tests rather than lint-parity claims. The no-caller-property mutation replaces callee with length in the forbidden-name condition, so it compiles and runs but drops real callee findings. Caught on all three port backends: TestMutants 62.623s (owned subtest 29.65s). No compiler failure is counted as killing this mutant.
