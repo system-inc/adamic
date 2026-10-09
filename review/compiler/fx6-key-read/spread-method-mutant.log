@@ -1,0 +1,8 @@
+=== RUN   TestViewSpreadMethodRefused
+=== PAUSE TestViewSpreadMethodRefused
+=== CONT  TestViewSpreadMethodRefused
+    view_element_reads_test.go:88: want checked method spread refused, got <nil>
+--- FAIL: TestViewSpreadMethodRefused (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.047s
+FAIL

@@ -59,6 +59,36 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if refused != nil {
 			return true
 		}
+		var members *ast.Node
+		switch part.Kind {
+		case ast.KindSpreadAssignment:
+			members = part.AsSpreadAssignment().Expression
+		case ast.KindBinaryExpression:
+			if part.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword {
+				members = part.AsBinaryExpression().Right
+			}
+		case ast.KindCallExpression:
+			call := part.AsCallExpression()
+			callee := ast.SkipParentheses(call.Expression)
+			if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") && len(call.Arguments.Nodes) != 0 {
+				switch callee.Name().Text() {
+				case "keys", "values", "entries":
+					members = call.Arguments.Nodes[0]
+				}
+			}
+		}
+		if members != nil {
+			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(members))) {
+				if !fields[field.Name] {
+					continue
+				}
+				for _, declaration := range field.Declarations {
+					if declaration.Kind == ast.KindMethodDeclaration || declaration.Kind == ast.KindMethodSignature {
+						refused = l.notYet(part, "a checked view member operation on a method without an own data slot")
+					}
+				}
+			}
+		}
 		// Optional receivers and optional/accessor slots still need a representation
 		// conversion that the V1 checked read boundary cannot emit.
 		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {

@@ -61,7 +61,7 @@ func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expressio
 		}
 		prototype := false
 		for _, declaration := range field.Declarations {
-			if declaration.Kind == ast.KindMethodDeclaration || declaration.Name() != nil && declaration.Name().Kind == ast.KindPrivateIdentifier {
+			if declaration.Kind == ast.KindMethodDeclaration || declaration.Kind == ast.KindMethodSignature || declaration.Name() != nil && declaration.Name().Kind == ast.KindPrivateIdentifier {
 				prototype = true
 			}
 		}

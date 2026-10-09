@@ -1,0 +1,11 @@
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -79,7 +79,7 @@
+ 		}
+ 		if members != nil {
+ 			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(members))) {
+-				if !fields[field.Name] {
++				if true {
+ 					continue
+ 				}
+ 				for _, declaration := range field.Declarations {

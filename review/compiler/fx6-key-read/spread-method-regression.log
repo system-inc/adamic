@@ -1,0 +1,56 @@
+=== RUN   TestViewSpreadMethodRefused
+=== PAUSE TestViewSpreadMethodRefused
+=== CONT  TestViewSpreadMethodRefused
+--- PASS: TestViewSpreadMethodRefused (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.068s
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a (0.69s)
+PASS
+gate cache: native hits=3 misses=6
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.750s
