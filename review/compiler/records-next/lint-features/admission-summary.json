@@ -1,0 +1,123 @@
+{
+  "base": "f5236b48ee11d680c5288e3074c2fec6ad26a09a",
+  "head": "eb1b31827320883bf9eba5aac38159014c4ded6d",
+  "verdict": "pass",
+  "complete_corpus": true,
+  "admitted": 24,
+  "omitted": 0,
+  "diff_count": 40,
+  "phase_seconds": {
+    "base_build": 33.806745112,
+    "checkout": 3.146474652,
+    "checkout_and_provision": 3.704075568,
+    "classification": 133.073901937,
+    "head_build": 60.285858427,
+    "manifest_and_verification": 12.033272011,
+    "provision": 0.557598492,
+    "runtime": 14.017823436,
+    "total": 256.926614707
+  },
+  "classes": {
+    "newly-accepted": 24,
+    "accepted-by-both": 977,
+    "refused-by-both": 146
+  },
+  "new_admissions": [
+    {
+      "path": "internal/oracle/testdata/detached_own_objects.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/detached_own_parser.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/detached_own_records.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_census.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_compare_missing_scalar.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_discarded.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_for_in.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_guarded_snapshot.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_json_replacer_duplicates.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_intrinsics.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_operations.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_options.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_union.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_narrowed_reference.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_operations.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_optional.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_ownership.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_partial_undefined.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_partial_views.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_scalars.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_type_only_composition.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_type_only_scanner.a",
+      "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_type_only_value.a",
+      "agree": true
+    },
+    {
+      "path": "stage3/records-maplike-main/corePublic-MapLike.a",
+      "agree": true
+    }
+  ]
+}
