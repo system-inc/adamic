@@ -33,8 +33,8 @@ Discovery uses `go list ./...` and `go test -json -list . ./...`, including exam
 seed tests. Packages with no tests are build-only units. Ordinary units are top-level tests;
 the following audited parents have independently selectable, enumerable children:
 
-- `internal/oracle`: `TestNativeAgreesWithNode`, `TestInputAgreesWithNode`, and
-  `TestFreshWriteProbesStayRefused`.
+- `internal/oracle`: `TestInputAgreesWithNode` and `TestFreshWriteProbesStayRefused`
+  (`TestNativeAgreesWithNode` splits itself into shard tests, #v5fgqc4).
 - `stage1/cohere/typeaware`: the 15 literal `changes` rows of `TestVolumeAgreementAndMutants`.
 - `internal/native`: `TestNormalizeMatchesNode` and `TestStringIndexMatchesNode`.
 - `stage1/cohere/lint`: `TestMutants` and `TestVolumeMutants`.
