@@ -1,0 +1,27 @@
+{
+  "target": "f71bbe97f35b6e18baa19ad459a5ace3b13a4048",
+  "jobs": 1,
+  "total_wall_seconds": 113.69267790099548,
+  "load_before": "16.25 16.57 23.40 81/952 2018973",
+  "load_after": "67.37 35.39 29.46 78/1285 2087434",
+  "entries": [
+    {
+      "number": 1,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "f71bbe97f35b6e18baa19ad459a5ace3b13a4048",
+      "worktree": "/home/ahra/full-gate/out/f71bbe97f35b-20261009T150820Z/catalog-units/00-oqiilb7_/adamic-catalog-worktree-y8kt_qb2/entry-01",
+      "setup_seconds": 76.93507323699305,
+      "ok": true,
+      "check_seconds": 25.267977447001613,
+      "cleanup_seconds": 9.320656857002177,
+      "wall_seconds": 113.63722822099226,
+      "load_before": "16.25 16.57 23.40 57/949 2019088",
+      "load_after": "67.37 35.39 29.46 78/1286 2087434",
+      "messages": [
+        "01 shared-slice-append: applies-and-fails-as-recorded",
+        "01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "01 wall=113.637s setup=76.935s check=25.268s cleanup=9.321s load=16.25 16.57 23.40 57/949 2019088 -> 67.37 35.39 29.46 78/1286 2087434"
+      ]
+    }
+  ]
+}
