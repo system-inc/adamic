@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -55,11 +57,18 @@ func checkPending(row Row) error {
 // skip can't outlive its reason. Every pending skip is listed by name. Without landed, a pending skip can't
 // be checked and counts as unclassified.
 func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Landed) error {
+	return CheckLogOn(input, output, rows, landed, runtime.GOOS)
+}
+
+// CheckLogOn is CheckLogAwaiting for a log whose tests ran on platform, a GOOS value that rows with platforms are
+// held to. The whole log is read before any skip is classed, because a sibling's pass can come after the skip.
+func CheckLogOn(input io.Reader, output io.Writer, rows []Row, landed Landed, platform string) error {
+	type logEvent struct{ Action, Package, Test, Output string }
+	var events []logEvent
+	passed := map[string]bool{}
 	decoder := json.NewDecoder(input)
-	messages := map[string]string{}
-	required, unknown, total, pending, overdue := 0, 0, 0, 0, 0
 	for {
-		var event struct{ Action, Package, Test, Output string }
+		var event logEvent
 		err := decoder.Decode(&event)
 		if err == io.EOF {
 			break
@@ -67,6 +76,16 @@ func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Land
 		if err != nil {
 			return fmt.Errorf("test log: %w", err)
 		}
+		switch event.Action {
+		case "output", "skip":
+			events = append(events, event)
+		case "pass":
+			passed[event.Package+"/"+event.Test] = true
+		}
+	}
+	messages := map[string]string{}
+	required, unknown, total, pending, overdue := 0, 0, 0, 0, 0
+	for _, event := range events {
 		k := event.Package + "/" + event.Test
 		if event.Action == "output" {
 			messages[k] += event.Output
@@ -100,6 +119,13 @@ func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Land
 			}
 			candidates = matched
 		}
+		// A lone candidate is held to its reason too, so a by-name row can't take a different skip of the same test.
+		// A pending row is held to its reason by checkPending and by main instead.
+		if len(candidates) == 1 && candidates[0].Class != "pending" {
+			if literal, ok := declaredReason(candidates[0]); ok && !skipReasonMatches(literal, messages[k]) {
+				candidates = nil
+			}
+		}
 		if found := awaitsInOutput.FindStringSubmatch(messages[k]); len(candidates) == 0 && found != nil {
 			target := found[1]
 			if strings.HasPrefix(target, "#") {
@@ -130,6 +156,12 @@ func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Land
 			continue
 		}
 		row := candidates[0]
+		if why := unmet(row, event.Package, platform, passed); why != "" {
+			unknown++
+			fmt.Fprintf(output, "unknown\t%s\t%s\n", event.Package, event.Test)
+			fmt.Fprintf(output, "  %s reads unknown: %s\n", event.Test, why)
+			continue
+		}
 		if row.Class == "pending" {
 			if landed == nil || checkPending(row) != nil {
 				unknown++
@@ -170,6 +202,35 @@ func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Land
 	return nil
 }
 func base(path string) string { parts := strings.Split(path, "/"); return parts[len(parts)-1] }
+
+// unmet says why a conditional row doesn't hold for this skip, or "" when it does (or has no condition).
+func unmet(row Row, pkg, platform string, passed map[string]bool) string {
+	if !conditional(row) {
+		return ""
+	}
+	if row.Class != "not-applicable" {
+		return fmt.Sprintf("row %s carries a condition but is class %q, not not-applicable", row.ID, row.Class)
+	}
+	if len(row.Platforms) > 0 && !slices.Contains(row.Platforms, platform) {
+		return fmt.Sprintf("not-applicable only on %s, and this log is from %s", strings.Join(row.Platforms, ", "), platform)
+	}
+	for _, sibling := range row.Siblings {
+		if !passed[pkg+"/"+sibling] {
+			return fmt.Sprintf("its sibling %s, which runs the work it leaves, has no pass in this log", sibling)
+		}
+	}
+	return ""
+}
+
+// declaredReason is a row's skip reason when the census can hold a skip's output to it: a string literal whose
+// only directives are %d, which skipReasonMatches understands. Other rows keep matching by name alone.
+func declaredReason(row Row) (string, bool) {
+	literal, err := strconv.Unquote(row.Message)
+	if err != nil || literal == "" || strings.Count(literal, "%") != strings.Count(literal, "%d") {
+		return "", false
+	}
+	return literal, true
+}
 
 // Skipf's numeric exit code changes the rendered message, not the declared site.
 // Other unsupported format directives still fail closed when sites are ambiguous.

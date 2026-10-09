@@ -460,3 +460,125 @@ func TestPendingSkipsCantOutliveTheirReason(t *testing.T) {
 		}
 	}
 }
+
+// skipEvents is one skip's reason and its skip event, as go test -json writes them.
+func skipEvents(pkg, test, reason string) string {
+	return fmt.Sprintf("{\"Action\":\"output\",\"Package\":%q,\"Test\":%q,\"Output\":%q}\n{\"Action\":\"skip\",\"Package\":%q,\"Test\":%q}\n", pkg, test, "    probe_test.go:9: "+reason+"\n", pkg, test)
+}
+
+// A row with siblings holds only while every sibling passes in the same log, wherever in the log that pass is
+// (@system_adamic, Oct 9: a phase-group shard is not-applicable only beside the sibling that runs its work).
+func TestASiblingConditionNeedsTheSiblingsPass(t *testing.T) {
+	t.Parallel()
+	pkg := "github.com/system-inc/adamic/probe"
+	rows := []Row{{File: "probe/probe_test.go", ID: "bench", Class: "not-applicable", Callers: []string{"TestProbe_002"},
+		Message: `"set BENCH=1"`, Siblings: []string{"TestProbe_001"}, Provides: "round 1 runs the work"}}
+	check := func(log string, rows []Row) (string, error) {
+		var output bytes.Buffer
+		err := CheckLog(strings.NewReader(log), &output, rows)
+		return output.String(), err
+	}
+	skip := skipEvents(pkg, "TestProbe_002", "set BENCH=1")
+	verdict := func(action, pkg, test string) string {
+		return fmt.Sprintf("{\"Action\":%q,\"Package\":%q,\"Test\":%q}\n", action, pkg, test)
+	}
+	if output, err := check(skip+verdict("pass", pkg, "TestProbe_001"), rows); err != nil || !strings.Contains(output, "not-applicable\t"+pkg+"\tTestProbe_002") || !strings.Contains(output, "unknown=0") {
+		t.Fatalf("a sibling passing after the skip: %v %s", err, output)
+	}
+	for name, log := range map[string]string{
+		"absent":         skip,
+		"skipped":        skip + verdict("skip", pkg, "TestProbe_001"),
+		"failed":         skip + verdict("fail", pkg, "TestProbe_001"),
+		"only a subtest": skip + verdict("pass", pkg, "TestProbe_001/inner"),
+		"other package":  skip + verdict("pass", "github.com/system-inc/adamic/other", "TestProbe_001"),
+	} {
+		if output, err := check(log, rows); err == nil || !strings.Contains(output, "unknown\t"+pkg+"\tTestProbe_002\n") || !strings.Contains(output, "TestProbe_001") {
+			t.Errorf("sibling %s: the shard passed: %v %s", name, err, output)
+		}
+	}
+	two := append([]Row{}, rows...)
+	two[0].Siblings = []string{"TestProbe_000", "TestProbe_001"}
+	if output, err := check(skip+verdict("pass", pkg, "TestProbe_001"), two); err == nil || !strings.Contains(output, "TestProbe_000") {
+		t.Fatalf("one of two siblings missing passed: %v %s", err, output)
+	}
+	measured := append([]Row{}, rows...)
+	measured[0].Class = "measurement"
+	if output, err := check(skip+verdict("pass", pkg, "TestProbe_001"), measured); err == nil || !strings.Contains(output, "unknown=1") {
+		t.Fatalf("a condition on a row that isn't not-applicable passed: %v %s", err, output)
+	}
+}
+
+// A row with platforms holds only on a log from one of them (@system_adamic, Oct 9: a Darwin-only product is
+// not-applicable on Linux).
+func TestAPlatformConditionHoldsOnlyThere(t *testing.T) {
+	t.Parallel()
+	pkg := "github.com/system-inc/adamic/probe"
+	rows := []Row{{File: "probe/probe_test.go", ID: "darwin", Class: "not-applicable", Callers: []string{"TestProduct_DarwinLeaks"},
+		Message: `"Darwin-only product"`, Platforms: []string{"linux"}, Provides: "runs on the Mac leg"}}
+	log := skipEvents(pkg, "TestProduct_DarwinLeaks", "Darwin-only product")
+	for _, platform := range []string{"linux", "darwin", "windows"} {
+		var output bytes.Buffer
+		err := CheckLogOn(strings.NewReader(log), &output, rows, nil, platform)
+		if platform == "linux" && (err != nil || !strings.Contains(output.String(), "not-applicable\t")) {
+			t.Fatalf("linux: %v %s", err, &output)
+		}
+		if platform != "linux" && (err == nil || !strings.Contains(output.String(), "unknown=1")) {
+			t.Fatalf("%s: a Linux-only row passed: %v %s", platform, err, &output)
+		}
+	}
+}
+
+// A lone candidate row is held to its declared reason, so naming a test can't swallow a different skip of it
+// (a missing required input in a test whose row says opt-in). Rows whose reason the census can't read keep
+// matching by name.
+func TestALoneRowIsHeldToItsReason(t *testing.T) {
+	t.Parallel()
+	pkg := "github.com/system-inc/adamic/probe"
+	row := Row{File: "probe/probe_test.go", ID: "manifest", Class: "opt-in-lane", Callers: []string{"TestVolume_003"},
+		Message: `"ADAMIC_VOLUME_REPOSITORY_MANIFEST is not configured"`, Provides: "the heavy-unit lane"}
+	check := func(row Row, reason string) (string, error) {
+		var output bytes.Buffer
+		err := CheckLog(strings.NewReader(skipEvents(pkg, "TestVolume_003", reason)), &output, []Row{row})
+		return output.String(), err
+	}
+	if output, err := check(row, "ADAMIC_VOLUME_REPOSITORY_MANIFEST is not configured"); err != nil || !strings.Contains(output, "opt-in-lane\t") {
+		t.Fatalf("its own reason: %v %s", err, output)
+	}
+	if output, err := check(row, "ADAMIC_TYPESCRIPT_SOURCE is not configured"); err == nil || !strings.Contains(output, "unknown=1") {
+		t.Fatalf("another reason passed under the row's name: %v %s", err, output)
+	}
+	numeric := row
+	numeric.Message = `"Node exit %d"`
+	if output, err := check(numeric, "Node exit 70"); err != nil {
+		t.Fatalf("a numeric reason: %v %s", err, output)
+	}
+	if output, err := check(numeric, "Node exit missing"); err == nil {
+		t.Fatalf("a non-numeric exit passed: %s", output)
+	}
+	for _, message := range []string{"why", "", `"missing %s"`} {
+		unread := row
+		unread.Message = message
+		if output, err := check(unread, "anything at all"); err != nil {
+			t.Fatalf("a row with unreadable reason %q stopped matching by name: %v %s", message, err, output)
+		}
+	}
+}
+
+// Conditions are declarations, like class and provision: the scan never produces them, so they are not stale
+// metadata, and they belong only to not-applicable rows.
+func TestConditionsAreDeclaredForNotApplicableRows(t *testing.T) {
+	t.Parallel()
+	scanned := Row{File: "probe_test.go", ID: "TestProbe:hash", Condition: "round > rounds", Callers: []string{"TestProbe_002"}}
+	declared := scanned
+	declared.Class = "not-applicable"
+	declared.Provides = "round 1 runs the work"
+	declared.Siblings = []string{"TestProbe_001"}
+	declared.Platforms = []string{"linux"}
+	if err := Validate([]Row{scanned}, []Row{declared}); err != nil {
+		t.Fatal(err)
+	}
+	declared.Class = "opt-in-lane"
+	if err := Validate([]Row{scanned}, []Row{declared}); err == nil || !strings.Contains(err.Error(), "needs class not-applicable") {
+		t.Fatalf("a conditional opt-in-lane row accepted: %v", err)
+	}
+}

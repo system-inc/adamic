@@ -328,5 +328,1034 @@
     "class": "pending",
     "provides": "Pending (@system_adamic, Oct 8 22:43Z): the entries acceptance bucket, until codex/step12-entries-fixtures lands its expectations; compiler renames the skip to the awaits wording on the next slice (#whkxbc7).",
     "awaits": "codex/step12-entries-fixtures"
+  },
+  {
+    "file": "stage1/cohere/typeaware/volume_profile_Corpora_test.go",
+    "test": "volumeProfileCorporaRun",
+    "id": "volumeProfileCorporaRun:219c5f14744b577c1592719b9668d6a90685b972eb6928649c0eeacd8b59c1c1:repository",
+    "line": 481,
+    "condition": "!s.enabled",
+    "reads": [
+      "filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\trelative, err := filepath.Rel(h.repository, path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tinputs.Files = append(inputs.Files, filepath.ToSlash(relative))\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_NATIVE_JOBS\")",
+      "os.Getenv(\"ADAMIC_NATIVE_SPLIT\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.Getenv(\"ADAMIC_VOLUME_COMPILER_MANIFEST\")",
+      "os.Getenv(\"ADAMIC_VOLUME_REPOSITORY_MANIFEST\")",
+      "os.ReadFile(corpus.manifest)",
+      "os.ReadFile(filepath.Join(directory, \"products.json\"))",
+      "os.ReadFile(lowered)",
+      "os.ReadFile(out.Name())",
+      "os.ReadFile(path)",
+      "os.ReadFile(report.Name())",
+      "os.Stat(filepath.Join(h.repository, \"go.sum\"))",
+      "os.Stat(path)"
+    ],
+    "callers": [
+      "TestVolumeProfileCorpora_000",
+      "TestVolumeProfileCorpora_001",
+      "TestVolumeProfileCorpora_002",
+      "TestVolumeProfileCorpora_003",
+      "TestVolumeProfileCorpora_004",
+      "TestVolumeProfileCorpora_005",
+      "TestVolumeProfileCorpora_006",
+      "TestVolumeProfileCorpora_007",
+      "TestVolumeProfileCorpora_008",
+      "TestVolumeProfileCorpora_009",
+      "TestVolumeProfileCorpora_010",
+      "TestVolumeProfileCorpora_011",
+      "TestVolumeProfileCorpora_012",
+      "TestVolumeProfileCorpora_013",
+      "TestVolumeProfileCorpora_014",
+      "TestVolumeProfileCorpora_015",
+      "TestVolumeProfileCorpora_016",
+      "TestVolumeProfileCorpora_017",
+      "TestVolumeProfileCorpora_018",
+      "TestVolumeProfileCorpora_019",
+      "TestVolumeProfileCorpora_020",
+      "TestVolumeProfileCorpora_021",
+      "TestVolumeProfileCorpora_022",
+      "TestVolumeProfileCorpora_023",
+      "TestVolumeProfileCorpora_024",
+      "TestVolumeProfileCorpora_025",
+      "TestVolumeProfileCorpora_026",
+      "TestVolumeProfileCorpora_027",
+      "TestVolumeProfileCorpora_028",
+      "TestVolumeProfileCorpora_029",
+      "TestVolumeProfileCorpora_030",
+      "TestVolumeProfileCorpora_031",
+      "TestVolumeProfileCorpora_032",
+      "TestVolumeProfileCorpora_033",
+      "TestVolumeProfileCorpora_034",
+      "TestVolumeProfileCorpora_035",
+      "TestVolumeProfileCorpora_036",
+      "TestVolumeProfileCorpora_037",
+      "TestVolumeProfileCorpora_038",
+      "TestVolumeProfileCorpora_039",
+      "TestVolumeProfileCorpora_040",
+      "TestVolumeProfileCorpora_041",
+      "TestVolumeProfileCorpora_042",
+      "TestVolumeProfileCorpora_043",
+      "TestVolumeProfileCorpora_044",
+      "TestVolumeProfileCorpora_045",
+      "TestVolumeProfileCorpora_046",
+      "TestVolumeProfileCorpora_047",
+      "TestVolumeProfileCorpora_048",
+      "TestVolumeProfileCorpora_049",
+      "TestVolumeProfileCorpora_050",
+      "TestVolumeProfileCorpora_051",
+      "TestVolumeProfileCorpora_052",
+      "TestVolumeProfileCorpora_053",
+      "TestVolumeProfileCorpora_054",
+      "TestVolumeProfileCorpora_055",
+      "TestVolumeProfileCorpora_056",
+      "TestVolumeProfileCorpora_057",
+      "TestVolumeProfileCorpora_058",
+      "TestVolumeProfileCorpora_059",
+      "TestVolumeProfileCorpora_060",
+      "TestVolumeProfileCorpora_061",
+      "TestVolumeProfileCorpora_062",
+      "TestVolumeProfileCorpora_063"
+    ],
+    "message": "\"set ADAMIC_VOLUME_REPOSITORY_MANIFEST\"",
+    "class": "opt-in-lane",
+    "provides": "Volume profile corpus, repository shards 000-063 (sanitize off and on): runs only with ADAMIC_VOLUME_REPOSITORY_MANIFEST. Its home is the heavy-unit class, #m9es0rv on devtools/heavy-units: a declared heavy unit that sets the volume manifests and runs the volume corpus on main's whole gate. No gate sets them until that lands (@system_adamic, Oct 9).",
+    "awaits": "devtools/heavy-units"
+  },
+  {
+    "file": "stage1/cohere/typeaware/volume_profile_Corpora_test.go",
+    "test": "volumeProfileCorporaRun",
+    "id": "volumeProfileCorporaRun:219c5f14744b577c1592719b9668d6a90685b972eb6928649c0eeacd8b59c1c1:compiler",
+    "line": 481,
+    "condition": "!s.enabled",
+    "reads": [
+      "filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\trelative, err := filepath.Rel(h.repository, path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tinputs.Files = append(inputs.Files, filepath.ToSlash(relative))\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_NATIVE_JOBS\")",
+      "os.Getenv(\"ADAMIC_NATIVE_SPLIT\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.Getenv(\"ADAMIC_VOLUME_COMPILER_MANIFEST\")",
+      "os.Getenv(\"ADAMIC_VOLUME_REPOSITORY_MANIFEST\")",
+      "os.ReadFile(corpus.manifest)",
+      "os.ReadFile(filepath.Join(directory, \"products.json\"))",
+      "os.ReadFile(lowered)",
+      "os.ReadFile(out.Name())",
+      "os.ReadFile(path)",
+      "os.ReadFile(report.Name())",
+      "os.Stat(filepath.Join(h.repository, \"go.sum\"))",
+      "os.Stat(path)"
+    ],
+    "callers": [
+      "TestVolumeProfileCorpora_064",
+      "TestVolumeProfileCorpora_065",
+      "TestVolumeProfileCorpora_066",
+      "TestVolumeProfileCorpora_067",
+      "TestVolumeProfileCorpora_068",
+      "TestVolumeProfileCorpora_069",
+      "TestVolumeProfileCorpora_070",
+      "TestVolumeProfileCorpora_071",
+      "TestVolumeProfileCorpora_072",
+      "TestVolumeProfileCorpora_073",
+      "TestVolumeProfileCorpora_074",
+      "TestVolumeProfileCorpora_075",
+      "TestVolumeProfileCorpora_076",
+      "TestVolumeProfileCorpora_077",
+      "TestVolumeProfileCorpora_078",
+      "TestVolumeProfileCorpora_079",
+      "TestVolumeProfileCorpora_080",
+      "TestVolumeProfileCorpora_081",
+      "TestVolumeProfileCorpora_082",
+      "TestVolumeProfileCorpora_083",
+      "TestVolumeProfileCorpora_084",
+      "TestVolumeProfileCorpora_085",
+      "TestVolumeProfileCorpora_086",
+      "TestVolumeProfileCorpora_087",
+      "TestVolumeProfileCorpora_088",
+      "TestVolumeProfileCorpora_089",
+      "TestVolumeProfileCorpora_090",
+      "TestVolumeProfileCorpora_091",
+      "TestVolumeProfileCorpora_092",
+      "TestVolumeProfileCorpora_093",
+      "TestVolumeProfileCorpora_094",
+      "TestVolumeProfileCorpora_095",
+      "TestVolumeProfileCorpora_096",
+      "TestVolumeProfileCorpora_097",
+      "TestVolumeProfileCorpora_098",
+      "TestVolumeProfileCorpora_099",
+      "TestVolumeProfileCorpora_100",
+      "TestVolumeProfileCorpora_101",
+      "TestVolumeProfileCorpora_102",
+      "TestVolumeProfileCorpora_103",
+      "TestVolumeProfileCorpora_104",
+      "TestVolumeProfileCorpora_105",
+      "TestVolumeProfileCorpora_106",
+      "TestVolumeProfileCorpora_107",
+      "TestVolumeProfileCorpora_108",
+      "TestVolumeProfileCorpora_109",
+      "TestVolumeProfileCorpora_110",
+      "TestVolumeProfileCorpora_111",
+      "TestVolumeProfileCorpora_112",
+      "TestVolumeProfileCorpora_113",
+      "TestVolumeProfileCorpora_114",
+      "TestVolumeProfileCorpora_115",
+      "TestVolumeProfileCorpora_116",
+      "TestVolumeProfileCorpora_117",
+      "TestVolumeProfileCorpora_118",
+      "TestVolumeProfileCorpora_119",
+      "TestVolumeProfileCorpora_120",
+      "TestVolumeProfileCorpora_121",
+      "TestVolumeProfileCorpora_122",
+      "TestVolumeProfileCorpora_123",
+      "TestVolumeProfileCorpora_124",
+      "TestVolumeProfileCorpora_125",
+      "TestVolumeProfileCorpora_126",
+      "TestVolumeProfileCorpora_127",
+      "TestVolumeProfileCorpora_128",
+      "TestVolumeProfileCorpora_129",
+      "TestVolumeProfileCorpora_130",
+      "TestVolumeProfileCorpora_131",
+      "TestVolumeProfileCorpora_132",
+      "TestVolumeProfileCorpora_133",
+      "TestVolumeProfileCorpora_134",
+      "TestVolumeProfileCorpora_135",
+      "TestVolumeProfileCorpora_136",
+      "TestVolumeProfileCorpora_137",
+      "TestVolumeProfileCorpora_138",
+      "TestVolumeProfileCorpora_139",
+      "TestVolumeProfileCorpora_140",
+      "TestVolumeProfileCorpora_141",
+      "TestVolumeProfileCorpora_142",
+      "TestVolumeProfileCorpora_143",
+      "TestVolumeProfileCorpora_144",
+      "TestVolumeProfileCorpora_145",
+      "TestVolumeProfileCorpora_146",
+      "TestVolumeProfileCorpora_147",
+      "TestVolumeProfileCorpora_148",
+      "TestVolumeProfileCorpora_149",
+      "TestVolumeProfileCorpora_150",
+      "TestVolumeProfileCorpora_151",
+      "TestVolumeProfileCorpora_152",
+      "TestVolumeProfileCorpora_153",
+      "TestVolumeProfileCorpora_154",
+      "TestVolumeProfileCorpora_155",
+      "TestVolumeProfileCorpora_156",
+      "TestVolumeProfileCorpora_157",
+      "TestVolumeProfileCorpora_158",
+      "TestVolumeProfileCorpora_159",
+      "TestVolumeProfileCorpora_160",
+      "TestVolumeProfileCorpora_161",
+      "TestVolumeProfileCorpora_162",
+      "TestVolumeProfileCorpora_163",
+      "TestVolumeProfileCorpora_164",
+      "TestVolumeProfileCorpora_165",
+      "TestVolumeProfileCorpora_166",
+      "TestVolumeProfileCorpora_167",
+      "TestVolumeProfileCorpora_168",
+      "TestVolumeProfileCorpora_169",
+      "TestVolumeProfileCorpora_170",
+      "TestVolumeProfileCorpora_171",
+      "TestVolumeProfileCorpora_172",
+      "TestVolumeProfileCorpora_173",
+      "TestVolumeProfileCorpora_174",
+      "TestVolumeProfileCorpora_175",
+      "TestVolumeProfileCorpora_176",
+      "TestVolumeProfileCorpora_177",
+      "TestVolumeProfileCorpora_178",
+      "TestVolumeProfileCorpora_179",
+      "TestVolumeProfileCorpora_180",
+      "TestVolumeProfileCorpora_181",
+      "TestVolumeProfileCorpora_182",
+      "TestVolumeProfileCorpora_183",
+      "TestVolumeProfileCorpora_184",
+      "TestVolumeProfileCorpora_185",
+      "TestVolumeProfileCorpora_186",
+      "TestVolumeProfileCorpora_187",
+      "TestVolumeProfileCorpora_188",
+      "TestVolumeProfileCorpora_189",
+      "TestVolumeProfileCorpora_190",
+      "TestVolumeProfileCorpora_191",
+      "TestVolumeProfileCorpora_192",
+      "TestVolumeProfileCorpora_193",
+      "TestVolumeProfileCorpora_194",
+      "TestVolumeProfileCorpora_195",
+      "TestVolumeProfileCorpora_196",
+      "TestVolumeProfileCorpora_197",
+      "TestVolumeProfileCorpora_198",
+      "TestVolumeProfileCorpora_199",
+      "TestVolumeProfileCorpora_200",
+      "TestVolumeProfileCorpora_201",
+      "TestVolumeProfileCorpora_202",
+      "TestVolumeProfileCorpora_203",
+      "TestVolumeProfileCorpora_204",
+      "TestVolumeProfileCorpora_205",
+      "TestVolumeProfileCorpora_206",
+      "TestVolumeProfileCorpora_207",
+      "TestVolumeProfileCorpora_208",
+      "TestVolumeProfileCorpora_209",
+      "TestVolumeProfileCorpora_210",
+      "TestVolumeProfileCorpora_211",
+      "TestVolumeProfileCorpora_212",
+      "TestVolumeProfileCorpora_213",
+      "TestVolumeProfileCorpora_214",
+      "TestVolumeProfileCorpora_215",
+      "TestVolumeProfileCorpora_216",
+      "TestVolumeProfileCorpora_217"
+    ],
+    "message": "\"set ADAMIC_VOLUME_COMPILER_MANIFEST\"",
+    "class": "opt-in-lane",
+    "provides": "Volume profile corpus, compiler shards 064-217 (sanitize off and on): runs only with ADAMIC_VOLUME_COMPILER_MANIFEST. Its home is the heavy-unit class, #m9es0rv on devtools/heavy-units: a declared heavy unit that sets the volume manifests and runs the volume corpus on main's whole gate. No gate sets them until that lands (@system_adamic, Oct 9).",
+    "awaits": "devtools/heavy-units"
+  },
+  {
+    "file": "stage1/cohere/typeaware/split_volume_products_test.go",
+    "test": "TestVolumeProfileCorpora_Setup",
+    "id": "TestVolumeProfileCorpora_Setup:57827db2b7082439061b4c6ae302bc6e9fe5b5742085ac812293001ab213c307",
+    "line": 38,
+    "condition": "os.Getenv(\"ADAMIC_VOLUME_REPOSITORY_MANIFEST\") == \"\" && os.Getenv(\"ADAMIC_VOLUME_COMPILER_MANIFEST\") == \"\"",
+    "reads": [
+      "filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\trelative, err := filepath.Rel(h.repository, path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tinputs.Files = append(inputs.Files, filepath.ToSlash(relative))\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_NATIVE_JOBS\")",
+      "os.Getenv(\"ADAMIC_NATIVE_SPLIT\")",
+      "os.Getenv(\"ADAMIC_VOLUME_COMPILER_MANIFEST\")",
+      "os.Getenv(\"ADAMIC_VOLUME_REPOSITORY_MANIFEST\")",
+      "os.ReadFile(filepath.Join(directory, \"products.json\"))",
+      "os.ReadFile(lowered)",
+      "os.ReadFile(path)",
+      "os.Stat(filepath.Join(h.repository, \"go.sum\"))",
+      "os.Stat(path)"
+    ],
+    "callers": [
+      "TestVolumeProfileCorpora_Setup"
+    ],
+    "message": "\"set a corpus manifest\"",
+    "class": "opt-in-lane",
+    "provides": "The volume profile corpus's shared setup: needs ADAMIC_VOLUME_REPOSITORY_MANIFEST or ADAMIC_VOLUME_COMPILER_MANIFEST. Its home is the heavy-unit class, #m9es0rv on devtools/heavy-units: a declared heavy unit that sets the volume manifests and runs the volume corpus on main's whole gate. No gate sets them until that lands (@system_adamic, Oct 9).",
+    "awaits": "devtools/heavy-units"
+  },
+  {
+    "file": "stage1/cohere/typeaware/volume_agreement_corpus_shards_test.go",
+    "test": "volumeAgreementCorpusFiles",
+    "id": "volumeAgreementCorpusFiles:d4d5d46bcd975531282bf60002b3c98b5a6ce55f395356b4152bd2e27be146d1:repository",
+    "line": 45,
+    "condition": "manifest == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
+      "os.Getenv(\"ADAMIC_VOLUME_REPOSITORY_MANIFEST\")",
+      "os.ReadFile(manifest)"
+    ],
+    "callers": [
+      "TestVolumeAgreementRepository_000",
+      "TestVolumeAgreementRepository_001",
+      "TestVolumeAgreementRepository_002",
+      "TestVolumeAgreementRepository_003",
+      "TestVolumeAgreementRepository_004",
+      "TestVolumeAgreementRepository_005",
+      "TestVolumeAgreementRepository_006",
+      "TestVolumeAgreementRepository_007",
+      "TestVolumeAgreementRepository_008",
+      "TestVolumeAgreementRepository_009",
+      "TestVolumeAgreementRepository_010",
+      "TestVolumeAgreementRepository_011",
+      "TestVolumeAgreementRepository_012",
+      "TestVolumeAgreementRepository_013",
+      "TestVolumeAgreementRepository_014",
+      "TestVolumeAgreementRepository_015",
+      "TestVolumeAgreementRepository_016",
+      "TestVolumeAgreementRepository_017",
+      "TestVolumeAgreementRepository_018",
+      "TestVolumeAgreementRepository_019",
+      "TestVolumeAgreementRepository_020",
+      "TestVolumeAgreementRepository_021",
+      "TestVolumeAgreementRepository_022",
+      "TestVolumeAgreementRepository_023",
+      "TestVolumeAgreementRepository_024",
+      "TestVolumeAgreementRepository_025",
+      "TestVolumeAgreementRepository_026",
+      "TestVolumeAgreementRepository_027",
+      "TestVolumeAgreementRepository_028",
+      "TestVolumeAgreementRepository_029",
+      "TestVolumeAgreementRepository_030",
+      "TestVolumeAgreementRepository_031",
+      "TestVolumeAgreementRepositoryUnion"
+    ],
+    "message": "\"ADAMIC_VOLUME_REPOSITORY_MANIFEST is not configured\"",
+    "class": "opt-in-lane",
+    "provides": "Volume agreement over the repository corpus, shards 000-031 and their union: runs only with ADAMIC_VOLUME_REPOSITORY_MANIFEST. Its home is the heavy-unit class, #m9es0rv on devtools/heavy-units: a declared heavy unit that sets the volume manifests and runs the volume corpus on main's whole gate. No gate sets them until that lands (@system_adamic, Oct 9).",
+    "opt_in_off": [
+      "ADAMIC_VOLUME_REPOSITORY_MANIFEST"
+    ],
+    "awaits": "devtools/heavy-units"
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-assignable",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_034",
+      "TestSixRuleAgreementAndMutants_035"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/assignable rounds 2-3 (round 1, cost/assignable-1, is TestSixRuleAgreementAndMutants_033): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_033 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_033"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-declarations",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_037",
+      "TestSixRuleAgreementAndMutants_038"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/declarations rounds 2-3 (round 1, cost/declarations-1, is TestSixRuleAgreementAndMutants_036): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_036 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_036"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-signature",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_040",
+      "TestSixRuleAgreementAndMutants_041"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/signature rounds 2-3 (round 1, cost/signature-1, is TestSixRuleAgreementAndMutants_039): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_039 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_039"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-raw-type",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_043",
+      "TestSixRuleAgreementAndMutants_044"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/raw-type rounds 2-3 (round 1, cost/raw-type-1, is TestSixRuleAgreementAndMutants_042): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_042 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_042"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-nullable",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_046",
+      "TestSixRuleAgreementAndMutants_047"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/nullable rounds 2-3 (round 1, cost/nullable-1, is TestSixRuleAgreementAndMutants_045): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_045 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_045"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-union",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_049",
+      "TestSixRuleAgreementAndMutants_050"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/union rounds 2-3 (round 1, cost/union-1, is TestSixRuleAgreementAndMutants_048): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_048 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_048"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-signature-shape",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_052",
+      "TestSixRuleAgreementAndMutants_053"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/signature-shape rounds 2-3 (round 1, cost/signature-shape-1, is TestSixRuleAgreementAndMutants_051): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_051 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_051"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-raw-shape",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_055",
+      "TestSixRuleAgreementAndMutants_056"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/raw-shape rounds 2-3 (round 1, cost/raw-shape-1, is TestSixRuleAgreementAndMutants_054): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_054 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_054"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-type-shape",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_058",
+      "TestSixRuleAgreementAndMutants_059"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/type-shape rounds 2-3 (round 1, cost/type-shape-1, is TestSixRuleAgreementAndMutants_057): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_057 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_057"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-options",
+    "line": 429,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_061",
+      "TestSixRuleAgreementAndMutants_062"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule cost/options rounds 2-3 (round 1, cost/options-1, is TestSixRuleAgreementAndMutants_060): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_060 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_060"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-00",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_064",
+      "TestSixRuleAgreementAndMutants_065",
+      "TestSixRuleAgreementAndMutants_066"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-00 rounds 1-3 (agreement/compiler-00, the same files, is TestSixRuleAgreementAndMutants_063): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_063 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_063"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-01",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_068",
+      "TestSixRuleAgreementAndMutants_069",
+      "TestSixRuleAgreementAndMutants_070"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-01 rounds 1-3 (agreement/compiler-01, the same files, is TestSixRuleAgreementAndMutants_067): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_067 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_067"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-02",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_072",
+      "TestSixRuleAgreementAndMutants_073",
+      "TestSixRuleAgreementAndMutants_074"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-02 rounds 1-3 (agreement/compiler-02, the same files, is TestSixRuleAgreementAndMutants_071): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_071 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_071"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-03",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_076",
+      "TestSixRuleAgreementAndMutants_077",
+      "TestSixRuleAgreementAndMutants_078"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-03 rounds 1-3 (agreement/compiler-03, the same files, is TestSixRuleAgreementAndMutants_075): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_075 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_075"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-04",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_080",
+      "TestSixRuleAgreementAndMutants_081",
+      "TestSixRuleAgreementAndMutants_082"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-04 rounds 1-3 (agreement/compiler-04, the same files, is TestSixRuleAgreementAndMutants_079): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_079 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_079"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-05",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_084",
+      "TestSixRuleAgreementAndMutants_085",
+      "TestSixRuleAgreementAndMutants_086"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-05 rounds 1-3 (agreement/compiler-05, the same files, is TestSixRuleAgreementAndMutants_083): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_083 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_083"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-06",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_088",
+      "TestSixRuleAgreementAndMutants_089",
+      "TestSixRuleAgreementAndMutants_090"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-06 rounds 1-3 (agreement/compiler-06, the same files, is TestSixRuleAgreementAndMutants_087): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_087 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_087"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "test": "prepareSixRuleAgreementAndMutants",
+    "id": "prepareSixRuleAgreementAndMutants:926812b14950757abb9cb99a2a0ecd4f216f2aa13bc917f58d0eada25815390e:bench-compiler-07",
+    "line": 473,
+    "condition": "len(group) == 0 || rounds != 3",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestSixRuleAgreementAndMutants_092",
+      "TestSixRuleAgreementAndMutants_093",
+      "TestSixRuleAgreementAndMutants_094"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Six-rule bench/compiler-07 rounds 1-3 (agreement/compiler-07, the same files, is TestSixRuleAgreementAndMutants_091): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestSixRuleAgreementAndMutants_091 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestSixRuleAgreementAndMutants_091"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/typeaware_test.go",
+    "test": "prepareTypeAwareAgreementAndMutants",
+    "id": "prepareTypeAwareAgreementAndMutants:ea9d0287fee5ffc54b25fc4839c7cfb99932d9ce461e5e8a0567c257ec6c373c:cost-query",
+    "line": 553,
+    "condition": "round > rounds",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")"
+    ],
+    "callers": [
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013"
+    ],
+    "message": "\"set ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Type-aware cost/query rounds 2-3 (round 1, cost/query-1, is TestTypeAwareAgreementAndMutants_011): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestTypeAwareAgreementAndMutants_011 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestTypeAwareAgreementAndMutants_011"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/typeaware_test.go",
+    "test": "prepareTypeAwareAgreementAndMutants",
+    "id": "prepareTypeAwareAgreementAndMutants:b65af4af07915f787e47f7bedf2bf38ebdee45305c4374a93ddb5880ae9b63f9:bench-compiler",
+    "line": 605,
+    "condition": "rounds != 3 || len(paths) == 0",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Type-aware bench/compiler rounds 1-3 (agreement/compiler, the same files, is TestTypeAwareAgreementAndMutants_014): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestTypeAwareAgreementAndMutants_014 runs its work, so it is not-applicable here only while that sibling passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestTypeAwareAgreementAndMutants_014"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/typeaware_test.go",
+    "test": "prepareTypeAwareAgreementAndMutants",
+    "id": "prepareTypeAwareAgreementAndMutants:b65af4af07915f787e47f7bedf2bf38ebdee45305c4374a93ddb5880ae9b63f9:bench-generated",
+    "line": 605,
+    "condition": "rounds != 3 || len(paths) == 0",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_BENCH\")",
+      "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")"
+    ],
+    "callers": [
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020"
+    ],
+    "message": "\"set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1\"",
+    "class": "not-applicable",
+    "provides": "Type-aware bench/generated rounds 1-3 (agreement/generated is TestTypeAwareAgreementAndMutants_000; the round also skips without the compiler corpus, which agreement/compiler, TestTypeAwareAgreementAndMutants_014, proves was supplied): a timing round that runs only with ADAMIC_TYPEAWARE_BENCH=1, which the fast gate never sets. TestTypeAwareAgreementAndMutants_000, TestTypeAwareAgreementAndMutants_014 runs its work, so it is not-applicable here only while each of them passes in the same log; without that it reads unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_014"
+    ]
+  },
+  {
+    "file": "bridge/tsgo/units_test.go",
+    "test": "runBridgeCase",
+    "id": "runBridgeCase:4f83fbf63794201d559dc365550d88bcf924320d9fcab35eed3da74ae1243220:oracle",
+    "line": 58,
+    "condition": "!bridgeCaseActive(index)",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TEST_SHARD\")",
+      "os.Getenv(\"ADAMIC_TSGO_CORPUS\")",
+      "os.Getenv(\"ADAMIC_UNIT_BUDGET\")"
+    ],
+    "callers": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities"
+    ],
+    "message": "\"piece belongs to another corpus mode or shard\"",
+    "class": "not-applicable",
+    "provides": "The Oracle bridge pieces over the checker, parser, types and utilities corpus files run only in the ADAMIC_TSGO_CORPUS mode; the gate runs the sample mode, where TestBridgeOracleSample runs the same check on sample.ts. Not-applicable only while TestBridgeOracleSample passes in the same log; without it they read unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestBridgeOracleSample"
+    ]
+  },
+  {
+    "file": "bridge/tsgo/units_test.go",
+    "test": "runBridgeCase",
+    "id": "runBridgeCase:4f83fbf63794201d559dc365550d88bcf924320d9fcab35eed3da74ae1243220:timinground1",
+    "line": 58,
+    "condition": "!bridgeCaseActive(index)",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TEST_SHARD\")",
+      "os.Getenv(\"ADAMIC_TSGO_CORPUS\")",
+      "os.Getenv(\"ADAMIC_UNIT_BUDGET\")"
+    ],
+    "callers": [
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities"
+    ],
+    "message": "\"piece belongs to another corpus mode or shard\"",
+    "class": "not-applicable",
+    "provides": "The TimingRound1 bridge pieces over the checker, parser, types and utilities corpus files run only in the ADAMIC_TSGO_CORPUS mode; the gate runs the sample mode, where TestBridgeTimingRound1Sample runs the same check on sample.ts. Not-applicable only while TestBridgeTimingRound1Sample passes in the same log; without it they read unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestBridgeTimingRound1Sample"
+    ]
+  },
+  {
+    "file": "bridge/tsgo/units_test.go",
+    "test": "runBridgeCase",
+    "id": "runBridgeCase:4f83fbf63794201d559dc365550d88bcf924320d9fcab35eed3da74ae1243220:timinground2",
+    "line": 58,
+    "condition": "!bridgeCaseActive(index)",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TEST_SHARD\")",
+      "os.Getenv(\"ADAMIC_TSGO_CORPUS\")",
+      "os.Getenv(\"ADAMIC_UNIT_BUDGET\")"
+    ],
+    "callers": [
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities"
+    ],
+    "message": "\"piece belongs to another corpus mode or shard\"",
+    "class": "not-applicable",
+    "provides": "The TimingRound2 bridge pieces over the checker, parser, types and utilities corpus files run only in the ADAMIC_TSGO_CORPUS mode; the gate runs the sample mode, where TestBridgeTimingRound2Sample runs the same check on sample.ts. Not-applicable only while TestBridgeTimingRound2Sample passes in the same log; without it they read unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestBridgeTimingRound2Sample"
+    ]
+  },
+  {
+    "file": "bridge/tsgo/units_test.go",
+    "test": "runBridgeCase",
+    "id": "runBridgeCase:4f83fbf63794201d559dc365550d88bcf924320d9fcab35eed3da74ae1243220:timinground3",
+    "line": 58,
+    "condition": "!bridgeCaseActive(index)",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TEST_SHARD\")",
+      "os.Getenv(\"ADAMIC_TSGO_CORPUS\")",
+      "os.Getenv(\"ADAMIC_UNIT_BUDGET\")"
+    ],
+    "callers": [
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "message": "\"piece belongs to another corpus mode or shard\"",
+    "class": "not-applicable",
+    "provides": "The TimingRound3 bridge pieces over the checker, parser, types and utilities corpus files run only in the ADAMIC_TSGO_CORPUS mode; the gate runs the sample mode, where TestBridgeTimingRound3Sample runs the same check on sample.ts. Not-applicable only while TestBridgeTimingRound3Sample passes in the same log; without it they read unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestBridgeTimingRound3Sample"
+    ]
+  },
+  {
+    "file": "bridge/tsgo/units_test.go",
+    "test": "runBridgeCase",
+    "id": "runBridgeCase:4f83fbf63794201d559dc365550d88bcf924320d9fcab35eed3da74ae1243220:wrongposition",
+    "line": 58,
+    "condition": "!bridgeCaseActive(index)",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TEST_SHARD\")",
+      "os.Getenv(\"ADAMIC_TSGO_CORPUS\")",
+      "os.Getenv(\"ADAMIC_UNIT_BUDGET\")"
+    ],
+    "callers": [
+      "TestBridgeWrongPositionChecker",
+      "TestBridgeWrongPositionParser",
+      "TestBridgeWrongPositionTypes",
+      "TestBridgeWrongPositionUtilities"
+    ],
+    "message": "\"piece belongs to another corpus mode or shard\"",
+    "class": "not-applicable",
+    "provides": "The WrongPosition bridge pieces over the checker, parser, types and utilities corpus files run only in the ADAMIC_TSGO_CORPUS mode; the gate runs the sample mode, where TestBridgeWrongPositionSample runs the same check on sample.ts. Not-applicable only while TestBridgeWrongPositionSample passes in the same log; without it they read unknown (@system_adamic, Oct 9).",
+    "siblings": [
+      "TestBridgeWrongPositionSample"
+    ]
+  },
+  {
+    "file": "stage1/cohere/css/setup_products_test.go",
+    "test": "TestProduct_CSSParserDarwinLeaks",
+    "id": "TestProduct_CSSParserDarwinLeaks:c25bf1830cfbf9413673dfec69544a474d2a30e77d371825c69128882094f2e1",
+    "line": 75,
+    "condition": "runtime.GOOS != \"darwin\"",
+    "reads": [
+      "filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tif entry.Name() == \".git\" {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn nil\n\t}\n\tcontent, err := os.ReadFile(name)\n\tif err != nil {\n\t\treturn err\n\t}\n\trelative, err := filepath.Rel(path, name)\n\tif err != nil {\n\t\treturn err\n\t}\n\tfmt.Fprintf(hash, \"%s\\x00%x\\n\", filepath.ToSlash(relative), sha256.Sum256(content))\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_NATIVE_SPLIT\")",
+      "os.ReadFile(filepath.Join(\"..\", slice, entry.Name()))",
+      "os.ReadFile(name)",
+      "os.ReadFile(program.c)"
+    ],
+    "callers": [
+      "TestProduct_CSSParserDarwinLeaks"
+    ],
+    "message": "\"Darwin-only product\"",
+    "class": "not-applicable",
+    "provides": "The CSS parser's macOS leaks product runs only on darwin (runtime.GOOS guard), where the Mac leg runs it. Not-applicable on a Linux log; on any other platform it reads unknown (@system_adamic, Oct 9).",
+    "platforms": [
+      "linux"
+    ]
+  },
+  {
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "test": "TestProduct_CSSPrinterDarwinLeaks",
+    "id": "TestProduct_CSSPrinterDarwinLeaks:c25bf1830cfbf9413673dfec69544a474d2a30e77d371825c69128882094f2e1",
+    "line": 143,
+    "condition": "runtime.GOOS != \"darwin\"",
+    "reads": [
+      "filepath.WalkDir(source, func(path string, entry fs.DirEntry, walkErr error) error {\n\tif walkErr != nil {\n\t\treturn walkErr\n\t}\n\trelative, err := filepath.Rel(source, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\ttarget := filepath.Join(destination, relative)\n\tinfo, err := entry.Info()\n\tif err != nil {\n\t\treturn err\n\t}\n\tswitch {\n\tcase entry.IsDir():\n\t\treturn os.MkdirAll(target, info.Mode().Perm())\n\tcase entry.Type()&fs.ModeSymlink != 0:\n\t\tlink, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn os.Symlink(link, target)\n\tdefault:\n\t\tdata, err := os.ReadFile(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn os.WriteFile(target, data, info.Mode().Perm())\n\t}\n})",
+      "os.Getenv(\"ADAMIC_NATIVE_SPLIT\")",
+      "os.ReadFile(filepath.Join(\"..\", slice, entry.Name()))",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestProduct_CSSPrinterDarwinLeaks"
+    ],
+    "message": "\"macOS leaks requires an unsanitized executable\"",
+    "class": "not-applicable",
+    "provides": "The CSS printer's macOS leaks product (an unsanitized executable), runs only on darwin (runtime.GOOS guard), where the Mac leg runs it. Not-applicable on a Linux log; on any other platform it reads unknown (@system_adamic, Oct 9).",
+    "platforms": [
+      "linux"
+    ]
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_asgo_test.go",
+    "test": "TestProduct_GraphQLPrinterRelease",
+    "id": "TestProduct_GraphQLPrinterRelease:c25bf1830cfbf9413673dfec69544a474d2a30e77d371825c69128882094f2e1",
+    "line": 161,
+    "condition": "runtime.GOOS != \"darwin\"",
+    "reads": [
+      "filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Name() == \".git\" || entry.Name() == \"node_modules\" {\n\t\tif entry.IsDir() {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn nil\n\t}\n\tif entry.Type().IsRegular() {\n\t\tseen[path] = true\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_NATIVE_SPLIT\")",
+      "os.ReadFile(file)",
+      "os.ReadFile(filepath.Join(group.source, name))",
+      "os.ReadFile(lowered + \"/port.c\")"
+    ],
+    "callers": [
+      "TestProduct_GraphQLPrinterRelease"
+    ],
+    "message": "\"Darwin leak check only\"",
+    "class": "not-applicable",
+    "provides": "The GraphQL printer's release product, built for the macOS leak check, runs only on darwin (runtime.GOOS guard), where the Mac leg runs it. Not-applicable on a Linux log; on any other platform it reads unknown (@system_adamic, Oct 9).",
+    "platforms": [
+      "linux"
+    ]
+  },
+  {
+    "file": "stage1/cohere/typeaware/typeaware_commands_test.go",
+    "test": "TestTypeAwareNativeBuildChild",
+    "id": "TestTypeAwareNativeBuildChild:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
+    "line": 116,
+    "condition": "path == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_TYPEAWARE_NATIVE_REQUEST\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestTypeAwareNativeBuildChild"
+    ],
+    "message": "\"native build subprocess only\"",
+    "class": "not-applicable",
+    "provides": "typeAwareBuildNative runs this child as a subprocess (-test.run=^TestTypeAwareNativeBuildChild$) with ADAMIC_TYPEAWARE_NATIVE_REQUEST naming its build; standalone it has no request and is not an independent gate check.",
+    "opt_in_off": [
+      "ADAMIC_TYPEAWARE_NATIVE_REQUEST"
+    ]
+  },
+  {
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+    "test": "TestFactoryHooks_NativeBuildWorker",
+    "id": "TestFactoryHooks_NativeBuildWorker:cacbc43896e081c308250312651495dd2731dd783f95c57bc8358495a88ce7a4",
+    "line": 309,
+    "condition": "sourcePath == \"\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT\")",
+      "os.Getenv(\"ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE\")",
+      "os.ReadFile(sourcePath)"
+    ],
+    "callers": [
+      "TestFactoryHooks_NativeBuildWorker"
+    ],
+    "message": "\"invoked only by factory hook product builds\"",
+    "class": "not-applicable",
+    "provides": "The factory hook product builds run this worker as a subprocess (-test.run=^TestFactoryHooks_NativeBuildWorker$) with ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE; standalone it has no source and is not an independent gate check.",
+    "opt_in_off": [
+      "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE"
+    ]
   }
 ]

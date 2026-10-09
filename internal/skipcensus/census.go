@@ -32,8 +32,20 @@ type Row struct {
 	OptInOn   []string `json:"opt_in_on,omitempty"`
 	OptInOff  []string `json:"opt_in_off,omitempty"`
 	// Awaits names the branch a pending skip waits on (class "pending"); its message says "awaits <branch>".
+	// An opt-in-lane row cites the branch that gives its lane a home the same way; only pending rows are checked against main.
 	Awaits string `json:"awaits,omitempty"`
+	// Siblings name the top-level tests, in the skip's own package, that run the work this skip leaves to them
+	// (@system_adamic, Oct 9). The row holds only when every sibling has a pass in the same log; otherwise the
+	// skip reads unknown, since nothing in the record did that work.
+	Siblings []string `json:"siblings,omitempty"`
+	// Platforms are the GOOS values on which the skip is not-applicable (@system_adamic, Oct 9). On a log from
+	// any other platform the skip reads unknown.
+	Platforms []string `json:"platforms,omitempty"`
 }
+
+// conditional says whether a row holds only under a sibling or platform condition. Such a row is not-applicable
+// or nothing: the condition says why the skip leaves no hole, and every other class has its own reason.
+func conditional(r Row) bool { return len(r.Siblings) > 0 || len(r.Platforms) > 0 }
 
 type function struct {
 	name, file   string
@@ -303,6 +315,9 @@ func Validate(actual, declared []Row) error {
 		if len(r.OptInOn) > 0 && r.Class != "required-input" && !(r.Class == "not-applicable" && refusedFixture(r)) {
 			return fmt.Errorf("skip after opt-in %s (%s) must be required-input", k, strings.Join(r.OptInOn, ", "))
 		}
+		if conditional(r) && r.Class != "not-applicable" {
+			return fmt.Errorf("a sibling or platform condition on %s needs class not-applicable", k)
+		}
 		if r.Provides == "" {
 			return fmt.Errorf("missing provision or rationale for %s", k)
 		}
@@ -324,6 +339,9 @@ func Validate(actual, declared []Row) error {
 		b.Class = ""
 		a.Provides = ""
 		b.Provides = ""
+		// Conditions are declared, never scanned.
+		a.Siblings, b.Siblings = nil, nil
+		a.Platforms, b.Platforms = nil, nil
 		aj, _ := json.Marshal(a)
 		bj, _ := json.Marshal(b)
 		if !bytes.Equal(aj, bj) {

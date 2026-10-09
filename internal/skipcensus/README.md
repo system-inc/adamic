@@ -21,6 +21,18 @@ skips exit nonzero. Required providers name the variable and input, including
 ADAMIC_TYPESCRIPT_SOURCE for TestCompilerAndStage1Agree. Lines do not affect
 identity. No cache is added.
 
+## Conditional rows
+
+A not-applicable row can hold only under a condition (@system_adamic, Oct 9).
+`siblings` names top-level tests in the skip's package that run the work the
+skip leaves; the row holds only when each has a pass in the same log, and the
+skip reads unknown otherwise. `platforms` names the GOOS values the skip is
+not-applicable on; the command takes the log's platform from `-goos`, by
+default the machine it runs on. A lone candidate row is held to its declared
+reason when the message is a literal (directives only `%d`), so a row naming a
+test can't take a different skip of that test; pending rows keep their own
+reason check.
+
 ## Observed proofs
 
 `go test -v -count=1 ./internal/skipcensus/...` and

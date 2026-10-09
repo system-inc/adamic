@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 
 	"github.com/system-inc/adamic/internal/skipcensus"
@@ -19,6 +20,7 @@ func main() {
 	scan := flag.Bool("scan", false, "print AST census instead of checking a log")
 	extra := flag.String("extra", "", "more declarations for checking the log only, for skips in the gated tree that the -root tree doesn't have")
 	repository := flag.String("git", "", "a checkout whose origin answers whether a pending skip's awaited branch is on main")
+	platform := flag.String("goos", runtime.GOOS, "the platform the log's tests ran on, which rows' platforms are held to (default: this machine's)")
 	flag.Parse()
 	if *scan {
 		rows, err := skipcensus.Scan(*root)
@@ -72,7 +74,7 @@ func main() {
 	if *repository != "" {
 		landed = landedOnMain(*repository)
 	}
-	if err := skipcensus.CheckLogAwaiting(log, os.Stdout, rows, landed); err != nil {
+	if err := skipcensus.CheckLogOn(log, os.Stdout, rows, landed, *platform); err != nil {
 		fatal(err)
 	}
 }
