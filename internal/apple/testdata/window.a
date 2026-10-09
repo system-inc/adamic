@@ -1,0 +1,67 @@
+// window.a: a window, a view, a label and a button made through AppKit, their state read back, and
+// the button's closure run by clicks, each step printed. window.m makes the same calls in
+// Objective-C and prints the same lines: the two must agree (witness_test.go).
+
+import { Application } from 'apple/appkit/application';
+import { Button } from 'apple/appkit/button';
+import { TextField } from 'apple/appkit/text-field';
+import { View } from 'apple/appkit/view';
+import { Window } from 'apple/appkit/window';
+
+const application = Application.shared;
+console.log(`policy: ${application.setActivationPolicy('Accessory')}`);
+
+const window = new Window({ contentRectangle: { x: 40, y: 40, width: 320, height: 200 }, styleMask: ['Titled', 'Closable', 'Resizable'], backing: 'Buffered', defer: true });
+console.log(`untitled: [${window.title}]`);
+window.title = 'Adamic';
+console.log(`title: ${window.title} (${window.title.length} units, ${window.title.charCodeAt(5)} last)`);
+
+// Non-ASCII and astral text crosses as UTF-16, and so does a lone surrogate, unit for unit.
+window.title = 'Ken ✓ 𝔸';
+console.log(`title: ${window.title} (${window.title.length} units)`);
+window.title = 'a\uD800b';
+console.log(`lone surrogate: ${window.title.length} units, ${window.title.charCodeAt(1)}`);
+
+// Many crossings, each a string Apple keeps a copy of and Adamic's NSString let go of.
+let units = 0;
+for (let index = 0; index < 64; index++) {
+	window.title = `Ken ✓ ${index}`;
+	units += window.title.length;
+}
+console.log(`units: ${units}`);
+
+const content = new View({ frame: { x: 0, y: 0, width: 320, height: 200 } });
+console.log(`content hidden: ${content.isHidden}`);
+const label = TextField.label({ with: 'ready' });
+label.setFrame({ x: 20, y: 120, width: 280, height: 24 });
+
+let presses = 0;
+const button = new Button({
+	title: 'Press',
+	action: () => {
+		presses += 1;
+		label.stringValue = `pressed ${presses}`;
+	},
+});
+button.setFrame({ x: 20, y: 20, width: 120, height: 32 });
+console.log(`button: ${button.title}`);
+button.title = 'Count';
+console.log(`button: ${button.title}`);
+
+content.addSubview(label);
+content.addSubview(button);
+window.contentView = content;
+console.log(`content view: ${window.contentView === undefined ? 'missing' : 'set'}`);
+// An object Apple hands back is the value Adamic gave it: one object, one value.
+console.log(`same view: ${window.contentView === content}, same application: ${Application.shared === application}, other view: ${window.contentView === label}`);
+
+console.log(`label: ${label.stringValue}`);
+button.performClick(undefined);
+console.log(`label: ${label.stringValue}`);
+button.performClick(undefined);
+button.performClick(undefined);
+console.log(`label: ${label.stringValue}, presses: ${presses}`);
+
+console.log(`visible: ${window.isVisible}`);
+window.close();
+console.log(`visible: ${window.isVisible}`);

@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/oracletest"
 )
 
 // A result is evidence, not a saved verdict: ordinary fixture comparisons and counts still run.
@@ -199,7 +200,7 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
-		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go")
+		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/oracle/json_decode.mjs", repository+"/oracle/json_encode.mjs", repository+"/oracle/json_types.go", repository+"/internal/native/native.go", repository+"/internal/native/library.go")
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -449,13 +450,15 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 }
 
 func TestMain(main *testing.M) {
-	status := main.Run()
-	if gate.cache != nil {
-		for index, kind := range resultKinds {
-			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+	os.Exit(oracletest.Run(func() int {
+		status := main.Run()
+		if gate.cache != nil {
+			for index, kind := range resultKinds {
+				fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+			}
 		}
-	}
-	os.Exit(status)
+		return status
+	}))
 }
 
 // Changing generated C is the lowering-change case: the source and both toolchains stay put.

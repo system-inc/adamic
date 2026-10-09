@@ -1,0 +1,35 @@
+// counter.a: a SwiftUI app written in Adamic. The number is a State, the button's closure sets it,
+// and setting it renders the view again. Build it with `adamic build examples/apple/counter.a`.
+
+import { Application } from 'apple/appkit/application';
+import { Window } from 'apple/appkit/window';
+import { Host } from 'apple/swiftui/host';
+import { State, renderWhenStateChanges } from 'apple/swiftui/state';
+import { button, text, verticalStack, type View } from 'apple/swiftui/views';
+
+const count = new State<number>(0);
+
+function body(): View {
+	return verticalStack({ spacing: 16 }, [
+		text(`${count.value}`).font('LargeTitle'),
+		text(count.value === 1 ? 'press, counted in Adamic' : 'presses, counted in Adamic').font('Caption'),
+		button('Add one', () => {
+			count.set(count.value + 1);
+		}),
+	]).padding(32);
+}
+
+const host = new Host(body());
+renderWhenStateChanges(() => {
+	host.render(body());
+});
+
+const application = Application.shared;
+application.setActivationPolicy('Regular');
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 320, height: 240 }, styleMask: ['Titled', 'Closable', 'Miniaturizable'], backing: 'Buffered', defer: false });
+window.title = 'Adamic and SwiftUI';
+window.contentView = host.view();
+window.center();
+window.makeKeyAndOrderFront(undefined);
+application.activate();
+application.run();
