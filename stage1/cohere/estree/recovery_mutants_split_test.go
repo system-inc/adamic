@@ -148,19 +148,18 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 	cases := recoveryMutantLiveSlices(t, sources)[shard]
 	planted := os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR")
 	if planted != "" {
-		for _, m := range recoveryMutations {
-			if recoveryMutantOwner(m.name) == shard {
-				got := []byte("disagreement")
-				if m.name == planted {
-					got = []byte("oracle")
-				}
-				if failure := recoveryComparison([]byte("oracle"), got, true); failure != "" {
-					t.Fatal(m.name + ": " + failure)
-				}
+		for _, c := range cases {
+			got := []byte("disagreement")
+			if c.id == planted {
+				got = []byte("oracle")
+			}
+			if failure := recoveryComparison([]byte("oracle"), got, true); failure != "" {
+				t.Fatal(c.id + ": " + failure)
 			}
 		}
 		return
 	}
+
 	if len(cases) == 0 {
 		return
 	}
@@ -199,7 +198,7 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	planted := recoveryMutations[0].name
+	planted := recoveryMutantLiveSlices(t, recoveredGrammar())[recoveryMutantOwner(recoveryMutations[0].name)][0].id
 	var output []byte
 	err = nil
 	for shard := 0; shard < testRecoveryMutantsShards; shard++ {
@@ -231,7 +230,7 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 		}
 
 	}
-	owner := fmt.Sprintf("TestRecoveryMutants_%03d", recoveryMutantOwner(planted))
+	owner := fmt.Sprintf("TestRecoveryMutants_%03d", recoveryMutantOwner(strings.SplitN(planted, "/", 2)[0]))
 	prefix := "--- FAIL: TestRecoveryMutants_"
 	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), "--- FAIL: "+owner+" ") || !strings.Contains(string(output), "mutant survived") {
 		t.Fatalf("planted survivor must fail only %s: %v\n%s", owner, err, output)
