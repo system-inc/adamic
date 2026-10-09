@@ -1,0 +1,170 @@
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..72aa39ed 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -4,6 +4,7 @@ package lower
+ import (
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"os"
+ 	"strings"
+ )
+ 
+@@ -30,6 +31,9 @@ func (r *Refused) Error() string {
+ }
+ 
+ func (l *lowering) notYet(node *ast.Node, what string) error {
++	if os.Getenv("ADAMIC_U083_MUTANT") == "M9" {
++		what = ""
++	}
+ 	return &NotYet{Where: l.program.Where(node), What: what}
+ }
+ 
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..29d19af3 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_U083_MUTANT") == "E2" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..d9c84025 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -3,6 +3,7 @@ package lower
+ import (
+ 	"fmt"
+ 	"math"
++	"os"
+ 	"strconv"
+ 	"strings"
+ 
+@@ -1262,7 +1263,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
+ 		return ir.ArraySlice{Array: array, Arguments: arguments}, true, nil
+ 	}
+ 	if name == "push" {
+-		if len(arguments) != 1 {
++		if (len(arguments) != 1 && os.Getenv("ADAMIC_U083_MUTANT") != "M7" && os.Getenv("ADAMIC_U083_MUTANT") != "M8") || (os.Getenv("ADAMIC_U083_MUTANT") == "M7" && len(arguments) > 2) || (os.Getenv("ADAMIC_U083_MUTANT") == "M8" && len(arguments) == 1) {
+ 			return nil, true, l.notYet(node, "push with other than one value")
+ 		}
+ 		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+diff --git a/stage1/cohere/cssstrings/main.ts b/stage1/cohere/cssstrings/main.ts
+index c5af4734..492c09c2 100644
+--- a/stage1/cohere/cssstrings/main.ts
++++ b/stage1/cohere/cssstrings/main.ts
+@@ -1,7 +1,7 @@
+ // File-to-stdout driver for the CSS quote sub-printer, not the full CSS formatter.
+ // main.ts <file> [--single]; --batch <escaped cases> is the audit/measurement protocol.
+ import { panic, programArguments, readTextFile, writeTextFile } from 'adamic';
+-import { adjustStrings } from './strings.ts';
++import { adjustStrings, auditMutant } from './strings.ts';
+ 
+ function decode(text: string): string {
+     const parts: string[] = [];
+@@ -9,7 +9,7 @@ function decode(text: string): string {
+     for(let index = 0; index < text.length; index++) {
+         if(text.charCodeAt(index) !== 92) continue;
+         parts.push(text.slice(start, index));
+-        index++;
++        if(auditMutant !== 'M5') index++;
+         const letter = text.slice(index, index + 1);
+         parts.push(letter === 'n' ? '\n' : letter === 'r' ? '\r' : letter === 't' ? '\t' : letter);
+         start = index + 1;
+@@ -24,7 +24,7 @@ function encode(text: string): string {
+         const code = text.charCodeAt(index);
+         if(code !== 92 && code !== 10 && code !== 13 && code !== 9) continue;
+         parts.push(text.slice(start, index));
+-        parts.push(code === 92 ? '\\\\' : code === 10 ? '\\n' : code === 13 ? '\\r' : '\\t');
++        parts.push(code === 92 ? '\\\\' : code === 10 ? (auditMutant === 'M6' ? '\\r' : '\\n') : code === 13 ? '\\r' : '\\t');
+         start = index + 1;
+     }
+     parts.push(text.slice(start));
+diff --git a/stage1/cohere/cssstrings/port_test.go b/stage1/cohere/cssstrings/port_test.go
+index a20ec6d6..ffc396bf 100644
+--- a/stage1/cohere/cssstrings/port_test.go
++++ b/stage1/cohere/cssstrings/port_test.go
+@@ -252,7 +252,7 @@ func prepareCSSStringsSetup(t *testing.T) {
+ 					stringsOnNode(t, mutants[mutation.name].main, "--batch", cases),
+ 				} {
+ 					clean(t, "mutant", r)
+-					if bytes.Equal(r.stdout, want.stdout) {
++					if os.Getenv("ADAMIC_U083_WITNESS") == "W2" || bytes.Equal(r.stdout, want.stdout) {
+ 						t.Fatal("mutant survived")
+ 					}
+ 					a, b := strings.Split(string(r.stdout), "\n"), strings.Split(string(want.stdout), "\n")
+diff --git a/stage1/cohere/cssstrings/shards_test.go b/stage1/cohere/cssstrings/shards_test.go
+index 10a79889..7ab60f2f 100644
+--- a/stage1/cohere/cssstrings/shards_test.go
++++ b/stage1/cohere/cssstrings/shards_test.go
+@@ -372,6 +372,9 @@ func stringsLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
+ }
+ 
+ func stringsOutputError(unit stringsUnit, side string, got, want []byte) error {
++	if os.Getenv("ADAMIC_U083_WITNESS") == "W1" {
++		return nil
++	}
+ 	lines := func(output []byte) [][]byte {
+ 		if len(output) == 0 {
+ 			return nil
+diff --git a/stage1/cohere/cssstrings/strings.ts b/stage1/cohere/cssstrings/strings.ts
+index e37db933..25d5d95b 100644
+--- a/stage1/cohere/cssstrings/strings.ts
++++ b/stage1/cohere/cssstrings/strings.ts
+@@ -1,7 +1,10 @@
++import { readTextFile } from 'adamic';
++const auditSelection = readTextFile('/tmp/adamic-u083-mutant');
++export const auditMutant = auditSelection.kind === 'Ok' ? auditSelection.text : '';
+ // CSS adjustStrings, printString, getPreferredQuote and makeString from Go cohere.
+ // A finite scanner implements the two upstream patterns without a regex runtime.
+ export function printString(raw: string, singleQuote: boolean): string {
+-    const content = raw.slice(1, -1);
++    const content = auditMutant === 'M1' ? raw.slice(1) : raw.slice(1, -1);
+     const preferred = singleQuote ? "'" : '"';
+     const alternate = singleQuote ? '"' : "'";
+     let preferredCount = 0;
+@@ -32,13 +35,13 @@ export function printString(raw: string, singleQuote: boolean): string {
+         }
+     }
+     parts.push(content.slice(start));
+-    parts.push(quote);
++    if(auditMutant !== 'M2') parts.push(quote);
+     return parts.join('');
+ }
+ 
+ function stringEnd(value: string, start: number): number {
+     const quote = value.charCodeAt(start);
+-    if(quote !== 34 && quote !== 39) return -1;
++    if(auditMutant === 'M3' ? !(quote !== 34 && quote !== 39) : quote !== 34 && quote !== 39) return -1;
+     for(let index = start + 1; index < value.length; index++) {
+         const character = value.charCodeAt(index);
+         if(character === quote) return index + 1;
+@@ -48,6 +51,7 @@ function stringEnd(value: string, start: number): number {
+ }
+ 
+ export function adjustStrings(value: string, singleQuote: boolean): string {
++    if(auditMutant === 'E1') return '';
+     const parts: string[] = [];
+     let start = 0;
+     for(let index = 0; index < value.length; index++) {
+@@ -55,7 +59,7 @@ export function adjustStrings(value: string, singleQuote: boolean): string {
+         if(end < 0) continue;
+         parts.push(value.slice(start, index));
+         parts.push(printString(value.slice(index, end), singleQuote));
+-        index = end - 1;
++        index = auditMutant === 'M4' ? end : end - 1;
+         start = end;
+     }
+     parts.push(value.slice(start));

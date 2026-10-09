@@ -1,0 +1,210 @@
+{
+  "rows": [
+    {
+      "test": "TestCSSStrings",
+      "package": "stage1/cohere/cssstrings",
+      "file": "port_test.go; shards_test.go; top_level_shards_test.go",
+      "seconds": 24.931,
+      "oracle": "Go cohere CSS adjustStrings through bridge; Node and JS/native port outputs compared to Go. Census and built-in witnesses use self checks.",
+      "oracle_kind": "external-run",
+      "kills": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8"
+      ],
+      "unique_kills": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "last_proven_fail": "M8: port_test.go:169: build cssstrings port lowering and backends: /workspace/adamic/stage1/cohere/cssstrings/strings.ts:23:13: stage 0 can't lower push with other than one value yet",
+      "verdict": "sacred",
+      "subsumed_by": [],
+      "mutants_in_matrix": 9,
+      "vacuous": false,
+      "evidence": "selector file /tmp/adamic-u083-mutant=; env {'ADAMIC_U083_MUTANT': 'M8', 'ADAMIC_U083_WITNESS': '', 'ADAMIC_NATIVE_SPLIT': 'u083-M8'}; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/cssstrings/ -run . > M8.log 2>&1; port_test.go:169: build cssstrings port lowering and backends: /workspace/adamic/stage1/cohere/cssstrings/strings.ts:23:13: stage 0 can't lower push with other than one value yet"
+    },
+    {
+      "test": "TestMultiPushGap",
+      "package": "stage1/cohere/cssstrings",
+      "file": "gaps_test.go",
+      "seconds": 0.117,
+      "oracle": "Self-authored NotYet.What string; Node executes fixture and must print self-authored ab newline. Compiler refusal expectation has no outside authority.",
+      "oracle_kind": "self",
+      "kills": [
+        "M7",
+        "M8",
+        "M9"
+      ],
+      "unique_kills": [
+        "M7",
+        "M9"
+      ],
+      "last_proven_fail": "M9: gaps_test.go:29: gap changed: /workspace/adamic/stage1/cohere/cssstrings/gaps/1_multi_push.ts:2:1: stage 0 can't lower  yet; update GAPS.md and remove the workaround if closed",
+      "verdict": "sacred",
+      "subsumed_by": [],
+      "mutants_in_matrix": 9,
+      "vacuous": false,
+      "evidence": "selector file /tmp/adamic-u083-mutant=; env {'ADAMIC_U083_MUTANT': 'M9', 'ADAMIC_U083_WITNESS': '', 'ADAMIC_NATIVE_SPLIT': 'u083-M9'}; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/cssstrings/ -run . > M9.log 2>&1; gaps_test.go:29: gap changed: /workspace/adamic/stage1/cohere/cssstrings/gaps/1_multi_push.ts:2:1: stage 0 can't lower  yet; update GAPS.md and remove the workaround if closed"
+    },
+    {
+      "test": "TestCSSStringsPlantedDisagreement",
+      "package": "stage1/cohere/cssstrings",
+      "file": "shards_test.go",
+      "seconds": 10.746,
+      "oracle": "Self-authored synthetic case IDs and exactly-one-failure assertion on checker child.",
+      "oracle_kind": "self",
+      "kills": [
+        "W1"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W1: shards_test.go:485: probe exit 0 stderr",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 9,
+      "vacuous": false,
+      "evidence": "selector file /tmp/adamic-u083-mutant=; env {'ADAMIC_U083_MUTANT': '', 'ADAMIC_U083_WITNESS': 'W1'}; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/cssstrings/ -run . > W1.log 2>&1; shards_test.go:485: probe exit 0 stderr"
+    }
+  ],
+  "matrix": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 4,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 27.344,
+      "cooked": false
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 35,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 29.295,
+      "cooked": false
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 41,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 24.69,
+      "cooked": false
+    },
+    {
+      "id": "M4",
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 58,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 32.428,
+      "cooked": false
+    },
+    {
+      "id": "M5",
+      "file": "stage1/cohere/cssstrings/main.ts",
+      "line": 12,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 29.157,
+      "cooked": false
+    },
+    {
+      "id": "M6",
+      "file": "stage1/cohere/cssstrings/main.ts",
+      "line": 27,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 35.013,
+      "cooked": false
+    },
+    {
+      "id": "M7",
+      "file": "internal/lower/object.go",
+      "line": 1265,
+      "failed_rows": [
+        "TestMultiPushGap"
+      ],
+      "wall_seconds": 34.42,
+      "cooked": false
+    },
+    {
+      "id": "M8",
+      "file": "internal/lower/object.go",
+      "line": 1265,
+      "failed_rows": [
+        "TestCSSStrings",
+        "TestMultiPushGap"
+      ],
+      "wall_seconds": 5.304,
+      "cooked": false
+    },
+    {
+      "id": "M9",
+      "file": "internal/lower/diagnostics.go",
+      "line": 33,
+      "failed_rows": [
+        "TestMultiPushGap"
+      ],
+      "wall_seconds": 30.24,
+      "cooked": false
+    },
+    {
+      "id": "E1",
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 50,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 21.539,
+      "cooked": false
+    },
+    {
+      "id": "E2",
+      "file": "internal/lower/lower.go",
+      "line": 20,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 3.587,
+      "cooked": false
+    },
+    {
+      "id": "W1",
+      "file": "stage1/cohere/cssstrings/shards_test.go",
+      "line": 374,
+      "failed_rows": [
+        "TestCSSStringsPlantedDisagreement"
+      ],
+      "wall_seconds": 31.354,
+      "cooked": false
+    },
+    {
+      "id": "W2",
+      "file": "stage1/cohere/cssstrings/port_test.go",
+      "line": 255,
+      "failed_rows": [
+        "TestCSSStrings"
+      ],
+      "wall_seconds": 27.953,
+      "cooked": false
+    }
+  ],
+  "recorded_run_wall": 526.66
+}

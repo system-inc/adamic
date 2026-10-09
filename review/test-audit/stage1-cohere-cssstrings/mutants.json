@@ -1,0 +1,106 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 4,
+    "before": "    const content = raw.slice(1, -1);",
+    "after": "    const content = raw.slice(1);",
+    "menu": "off-by-one slice bound"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 35,
+    "before": "    parts.push(quote);",
+    "after": "",
+    "menu": "drop closing-quote statement"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 41,
+    "before": "    if(quote !== 34 && quote !== 39) return -1;",
+    "after": "    if(!(quote !== 34 && quote !== 39)) return -1;",
+    "menu": "flip quote-recognition condition"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 58,
+    "before": "        index = end - 1;",
+    "after": "        index = end;",
+    "menu": "off-by-one scanner cursor"
+  },
+  {
+    "id": "M5",
+    "file": "stage1/cohere/cssstrings/main.ts",
+    "line": 12,
+    "before": "        index++;",
+    "after": "",
+    "menu": "drop decode escape advance"
+  },
+  {
+    "id": "M6",
+    "file": "stage1/cohere/cssstrings/main.ts",
+    "line": 27,
+    "before": "code === 10 ? '\\\\n'",
+    "after": "code === 10 ? '\\\\r'",
+    "menu": "change encoded newline constant"
+  },
+  {
+    "id": "M7",
+    "file": "internal/lower/object.go",
+    "line": 1265,
+    "before": "if len(arguments) != 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+    "after": "if len(arguments) > 2 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+    "menu": "loosen push arity bound"
+  },
+  {
+    "id": "M8",
+    "file": "internal/lower/object.go",
+    "line": 1265,
+    "before": "if len(arguments) != 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+    "after": "if len(arguments) == 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+    "menu": "flip push arity condition"
+  },
+  {
+    "id": "M9",
+    "file": "internal/lower/diagnostics.go",
+    "line": 33,
+    "before": "return &NotYet{Where: l.program.Where(node), What: what}",
+    "after": "return &NotYet{Where: l.program.Where(node), What: \"\"}",
+    "menu": "change returned diagnostic option"
+  },
+  {
+    "id": "E1",
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 50,
+    "before": "export function adjustStrings(value: string, singleQuote: boolean): string {",
+    "after": "export function adjustStrings(value: string, singleQuote: boolean): string { return '';",
+    "menu": "empty-answer probe for port"
+  },
+  {
+    "id": "E2",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "before": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "after": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) { return nil, nil",
+    "menu": "empty-answer probe for gap checker"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/cssstrings/shards_test.go",
+    "line": 374,
+    "before": "func stringsOutputError(unit stringsUnit, side string, got, want []byte) error {",
+    "after": "func stringsOutputError(unit stringsUnit, side string, got, want []byte) error { return nil",
+    "menu": "allowed witness comparison weakening"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/cssstrings/port_test.go",
+    "line": 255,
+    "before": "if bytes.Equal(r.stdout, want.stdout) {",
+    "after": "if true {",
+    "menu": "allowed built-in witness comparison always declares agreement"
+  }
+]

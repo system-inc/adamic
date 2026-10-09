@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssstrings/main.ts
++++ b/stage1/cohere/cssstrings/main.ts
+@@ -24,7 +24,7 @@
+         const code = text.charCodeAt(index);
+         if(code !== 92 && code !== 10 && code !== 13 && code !== 9) continue;
+         parts.push(text.slice(start, index));
+-        parts.push(code === 92 ? '\\\\' : code === 10 ? '\\n' : code === 13 ? '\\r' : '\\t');
++        parts.push(code === 92 ? '\\\\' : code === 10 ? '\\r' : code === 13 ? '\\r' : '\\t');
+         start = index + 1;
+     }
+     parts.push(text.slice(start));

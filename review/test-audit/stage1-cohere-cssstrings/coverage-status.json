@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-coverpkg=./internal/lower",
+    "-coverprofile=review/test-audit/stage1-cohere-cssstrings/lower.cover",
+    "./stage1/cohere/cssstrings/",
+    "-run",
+    "."
+  ],
+  "exit": 0,
+  "wall_seconds": 41.214
+}

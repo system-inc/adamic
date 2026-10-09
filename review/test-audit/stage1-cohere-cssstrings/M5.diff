@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssstrings/main.ts
++++ b/stage1/cohere/cssstrings/main.ts
+@@ -9,7 +9,7 @@
+     for(let index = 0; index < text.length; index++) {
+         if(text.charCodeAt(index) !== 92) continue;
+         parts.push(text.slice(start, index));
+-        index++;
++
+         const letter = text.slice(index, index + 1);
+         parts.push(letter === 'n' ? '\n' : letter === 'r' ? '\r' : letter === 't' ? '\t' : letter);
+         start = index + 1;

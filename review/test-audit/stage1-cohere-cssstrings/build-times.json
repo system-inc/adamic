@@ -1,0 +1,686 @@
+[
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends b552d2e9d358 hit 1.12"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:170: build cssstrings_sanitized 128dedf8d1f1 hit 0.03"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:171: build cssstrings_native-fast c5190e519502 hit 0.02"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends acf051cfe274 miss 1.15"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 366e5cded388 hit 0.02"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 4103f36e3f60 miss 1.08"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 8f8d4f336c2a hit 0.02"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 64b870d97d1f miss 1.09"
+  },
+  {
+    "run": "timing-family-1",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized 4e583fd550e3 hit 0.01"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends b552d2e9d358 hit 1.09"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:170: build cssstrings_sanitized 128dedf8d1f1 hit 0.02"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:171: build cssstrings_native-fast c5190e519502 hit 0.02"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 670953f3e3a2 miss 1.07"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 366e5cded388 hit 0.02"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 595d9e468202 miss 1.08"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 8f8d4f336c2a hit 0.02"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 03bf834cd7a6 miss 1.09"
+  },
+  {
+    "run": "timing-family-2",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized 4e583fd550e3 hit 0.02"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends b552d2e9d358 hit 1.08"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:170: build cssstrings_sanitized 128dedf8d1f1 hit 0.02"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:171: build cssstrings_native-fast c5190e519502 hit 0.02"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends e0d237bbd8a2 miss 1.05"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 366e5cded388 hit 0.01"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends f6719535e287 miss 1.10"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 8f8d4f336c2a hit 0.02"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 1a20b6792e49 miss 1.00"
+  },
+  {
+    "run": "timing-family-3",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized 4e583fd550e3 hit 0.02"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends b552d2e9d358 hit 0.98"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:170: build cssstrings_sanitized 128dedf8d1f1 hit 0.02"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:171: build cssstrings_native-fast c5190e519502 hit 0.01"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 968514b9e5c3 miss 0.98"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 366e5cded388 hit 0.01"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 883f8d00cdab miss 0.97"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 8f8d4f336c2a hit 0.02"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends b99c69290886 miss 1.00"
+  },
+  {
+    "run": "timing-witness-1",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized 4e583fd550e3 hit 0.02"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends b552d2e9d358 hit 1.07"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:170: build cssstrings_sanitized 128dedf8d1f1 hit 0.02"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:171: build cssstrings_native-fast c5190e519502 hit 0.02"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends a36a33dab3a3 miss 1.10"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 366e5cded388 hit 0.02"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends e4d2d51815cb miss 1.08"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 8f8d4f336c2a hit 0.02"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 89c563f70d42 miss 1.11"
+  },
+  {
+    "run": "timing-witness-2",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized 4e583fd550e3 hit 0.02"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends b552d2e9d358 hit 1.18"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:170: build cssstrings_sanitized 128dedf8d1f1 hit 0.03"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:171: build cssstrings_native-fast c5190e519502 hit 0.02"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends c0c88bb4b709 miss 1.11"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 366e5cded388 hit 0.02"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 4208c5426cb0 miss 1.07"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 8f8d4f336c2a hit 0.02"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 30c89c9d6f87 miss 1.03"
+  },
+  {
+    "run": "timing-witness-3",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized 4e583fd550e3 hit 0.02"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 miss 1.13"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a miss 0.26"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e miss 0.12"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends bb2c6c356cda miss 1.03"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d miss 0.26"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends e70f1c9af204 miss 1.01"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a miss 0.25"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends dc9c1629a715 miss 1.01"
+  },
+  {
+    "run": "switch-control",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc miss 0.25"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 1.02"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.02"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.01"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 27f6093dab9a miss 1.05"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.02"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 7dad6bd33402 miss 1.00"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.02"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends c46c37155d74 miss 1.06"
+  },
+  {
+    "run": "M1",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 0.99"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.01"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 6a98c5be7f96 miss 0.99"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.01"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 72a9ed052a74 miss 1.01"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.01"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends ecfd48b3e34f miss 0.97"
+  },
+  {
+    "run": "M2",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 1.03"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.02"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.02"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends f6678e41a77c miss 1.02"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.01"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends d0a82cd72c9d miss 1.05"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.02"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 43d5d64b9683 miss 1.05"
+  },
+  {
+    "run": "M3",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 1.00"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.02"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 887bccd71ec3 miss 1.08"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.02"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 9085fe289f8c miss 1.13"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.01"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 4cea9274b2f2 miss 1.04"
+  },
+  {
+    "run": "M4",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.01"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 0.96"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.02"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 4bb7fa84a06f miss 1.02"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.01"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 27bba7f7fbb7 miss 1.01"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.01"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 572b3e546dfe miss 0.97"
+  },
+  {
+    "run": "M5",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 1.09"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.02"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 0c41922e3cec miss 1.09"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.02"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends cba364ff5b81 miss 1.17"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.02"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 083201fd3e35 miss 1.33"
+  },
+  {
+    "run": "M6",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 428de93fecc6 miss 1.05"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:170: build cssstrings_sanitized a715d6c703e2 miss 0.27"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:171: build cssstrings_native-fast 704bac3c0878 miss 0.12"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends c9463eed0858 miss 1.05"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized e5454d49e751 miss 0.26"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends af33d8ebfc21 miss 1.13"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized d6dfd54d6dd9 miss 0.29"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 878ecc97ce4d miss 1.10"
+  },
+  {
+    "run": "M7",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized cd45a8235f18 miss 0.29"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends a9b86fc7de78 miss 0.98"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:170: build cssstrings_sanitized 08363a1c0142 miss 0.25"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:171: build cssstrings_native-fast c4b12a393e2e miss 0.12"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 7509d08c7dc0 miss 1.00"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized c31564433bb3 miss 0.26"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 249798017a84 miss 0.98"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized 67151ebe03d3 miss 0.26"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 41208c3088b8 miss 0.99"
+  },
+  {
+    "run": "M9",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized bb2f58d66657 miss 0.26"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 0.93"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.01"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 09a2e44e35a5 miss 0.96"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.01"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 8cd92d2bf750 miss 1.06"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.02"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 315e032c0e12 miss 1.00"
+  },
+  {
+    "run": "E1",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.01"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 0.98"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.02"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 3721737e85d1 miss 1.04"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.02"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends 025f9bf84501 miss 1.02"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.02"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends c248cdb3738b miss 0.98"
+  },
+  {
+    "run": "W1",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 0.99"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.01"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends b579ea2b8a36 miss 0.97"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.02"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends d5646912a245 miss 1.00"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.01"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends f4a0f666325e miss 1.00"
+  },
+  {
+    "run": "W2",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:169: build cssstrings_port_lowering_and_backends 24966e9e8c87 hit 0.94"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:170: build cssstrings_sanitized f11c29c3bf4a hit 0.01"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:171: build cssstrings_native-fast e6025d4e673e hit 0.02"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:177: build cssstrings_quote-tie_lowering_and_backends 7f332431e5a3 miss 1.10"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:179: build cssstrings_quote-tie-sanitized 262aff18240d hit 0.01"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:177: build cssstrings_escaped-closing-quote_lowering_and_backends bca3078ace9b miss 1.10"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:179: build cssstrings_escaped-closing-quote-sanitized c99a19c0d69a hit 0.02"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:177: build cssstrings_preserve-original-escape_lowering_and_backends 840370cb233e miss 1.00"
+  },
+  {
+    "run": "switch-final-control",
+    "output": "port_test.go:179: build cssstrings_preserve-original-escape-sanitized b6082297f8bc hit 0.02"
+  }
+]

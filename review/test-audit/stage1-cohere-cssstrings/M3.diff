@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssstrings/strings.ts
++++ b/stage1/cohere/cssstrings/strings.ts
+@@ -38,7 +38,7 @@
+ 
+ function stringEnd(value: string, start: number): number {
+     const quote = value.charCodeAt(start);
+-    if(quote !== 34 && quote !== 39) return -1;
++    if(!(quote !== 34 && quote !== 39)) return -1;
+     for(let index = start + 1; index < value.length; index++) {
+         const character = value.charCodeAt(index);
+         if(character === quote) return index + 1;

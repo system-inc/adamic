@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssstrings/strings.ts
++++ b/stage1/cohere/cssstrings/strings.ts
+@@ -55,7 +55,7 @@
+         if(end < 0) continue;
+         parts.push(value.slice(start, index));
+         parts.push(printString(value.slice(index, end), singleQuote));
+-        index = end - 1;
++        index = end;
+         start = end;
+     }
+     parts.push(value.slice(start));

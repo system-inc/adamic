@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssstrings/strings.ts
++++ b/stage1/cohere/cssstrings/strings.ts
+@@ -32,7 +32,7 @@
+         }
+     }
+     parts.push(content.slice(start));
+-    parts.push(quote);
++
+     return parts.join('');
+ }
+ 
