@@ -1,0 +1,9 @@
+D1-build-asan 62.30930226300552 1 []
+D1-build-native 26.29106046000379 1 []
+D1-setup 48.55966354699922 1 []
+D1-matrix-0 94.11499725199974 25 ['TestTypeAwareAgreementAndMutants_000']
+Traceback (most recent call last):
+  File "/workspace/typeaware-mutant.py", line 20, in <module>
+    if len(r['states'])!=len(g['rows']):raise RuntimeError('incomplete matrix '+r['id'])
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: incomplete matrix D1-matrix-0

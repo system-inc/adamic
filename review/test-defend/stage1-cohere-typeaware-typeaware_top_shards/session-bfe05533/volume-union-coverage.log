@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T15:14:10.067070441Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T15:14:10.083261424Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion"}
+{"Time":"2026-10-09T15:14:10.083679514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Output":"=== RUN   TestVolumeConfigGuardAndMutantUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:14:10.083729439Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Output":"=== PAUSE TestVolumeConfigGuardAndMutantUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:14:10.083732711Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion"}
+{"Time":"2026-10-09T15:14:10.083739565Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion"}
+{"Time":"2026-10-09T15:14:10.083741663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Output":"=== CONT  TestVolumeConfigGuardAndMutantUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:14:10.083744024Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Output":"    volume_config_guard_self_prepare_test.go:177: planted failure caught by TestVolumeConfigGuardAndMutant_013\n"}
+{"Time":"2026-10-09T15:14:10.083750505Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Output":"    volume_config_guard_self_prepare_test.go:184: union=52, each exactly once\n"}
+{"Time":"2026-10-09T15:14:10.083776931Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Output":"--- PASS: TestVolumeConfigGuardAndMutantUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:14:10.083779852Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutantUnion","Elapsed":0}
+{"Time":"2026-10-09T15:14:10.083795267Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:14:10.084301059Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"coverage: [no statements]\n"}
+{"Time":"2026-10-09T15:14:10.085020856Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.016s\tcoverage: [no statements]\n"}
+{"Time":"2026-10-09T15:14:10.085069438Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.018}

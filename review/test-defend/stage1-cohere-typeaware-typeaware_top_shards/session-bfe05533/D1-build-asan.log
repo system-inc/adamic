@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T15:03:21.650058547Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T15:03:21.663312609Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan"}
+{"Time":"2026-10-09T15:03:21.663484412Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"=== RUN   TestProduct_typeaware_native_asan\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:03:21.663542512Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"=== PAUSE TestProduct_typeaware_native_asan\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:03:21.663545705Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan"}
+{"Time":"2026-10-09T15:03:21.663648891Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan"}
+{"Time":"2026-10-09T15:03:21.663651794Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"=== CONT  TestProduct_typeaware_native_asan\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:03:26.676704465Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"    typeaware_test.go:159: phase command checker-asan 3.153047s\n"}
+{"Time":"2026-10-09T15:03:28.62698504Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"    typeaware_test.go:185: phase load native-asan 0.090730s\n"}
+{"Time":"2026-10-09T15:03:29.574843619Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"    typeaware_test.go:192: phase lowering native-asan 0.947771s\n"}
+{"Time":"2026-10-09T15:03:39.756428264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"    typeaware_test.go:198: phase emission native-asan 10.181529s\n"}
+{"Time":"2026-10-09T15:04:20.005933594Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"    typeaware_test.go:225: phase clang native-asan 38.458260s\n"}
+{"Time":"2026-10-09T15:04:20.156721684Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Output":"--- PASS: TestProduct_typeaware_native_asan (58.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:04:20.156773639Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_native_asan","Elapsed":58.49}
+{"Time":"2026-10-09T15:04:20.158426905Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:04:20.165357969Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t58.514s\n"}
+{"Time":"2026-10-09T15:04:20.165550854Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":58.516}
