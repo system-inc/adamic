@@ -1,0 +1,48 @@
+[
+  {
+    "test": "TestNumbersFormatExactlyAsJavaScriptDoes",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/dtoa.c:619",
+        "change": "(buffer[(*length) - 1] - '0') % 2 != 0 -> (buffer[(*length) - 1] - '0') % 2 == 0",
+        "rows_failed": [
+          "TestToStringWithARadixMatchesNode",
+          "TestMathAndToFixedMatchJavaScript",
+          "TestNumbersFormatExactlyAsJavaScriptDoes",
+          "TestToExponentialAndToPrecisionMatchNode",
+          "TestPowersOfTwoFormatAsJavaScriptDoes"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/dtoa.c:591",
+        "change": "in_delta_room_minus = bignum_less(numerator, delta_minus); -> in_delta_room_minus = bignum_less_equal(numerator, delta_minus);",
+        "rows_failed": [
+          "TestToStringWithARadixMatchesNode",
+          "TestMathAndToFixedMatchJavaScript",
+          "TestNumbersFormatExactlyAsJavaScriptDoes",
+          "TestToExponentialAndToPrecisionMatchNode"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/dtoa.c:596",
+        "change": "in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) > 0; -> in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) >= 0;",
+        "rows_failed": [
+          "TestMathAndToFixedMatchJavaScript",
+          "TestNumbersFormatExactlyAsJavaScriptDoes",
+          "TestPowersOfTwoFormatAsJavaScriptDoes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-number/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestDecodeCacheLockDeadline|TestToExponentialAndToPrecisionMatchNode|TestToExponentialAndToPrecisionOutOfRangePanic|TestRuntimeKeyKeepsBoundaries|TestStringLengthLimit|TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNumbersFormatExactlyAsJavaScriptDoes|TestNumbersParseExactlyAsJavaScriptDoes|TestArtifactInputsAndReuse|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRegExpNativeStepLimitBoundary|TestRuntimeStringEquality|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$; number_test.go:113: c3624f424f88c74b: native \"-41229566412733020\", Node \"-41229566412733016\""
+  }
+]

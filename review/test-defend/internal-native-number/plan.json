@@ -1,0 +1,20 @@
+[
+  {
+    "id": "D1",
+    "line": 619,
+    "old": "(buffer[(*length) - 1] - '0') % 2 != 0",
+    "new": "(buffer[(*length) - 1] - '0') % 2 == 0"
+  },
+  {
+    "id": "D2",
+    "line": 591,
+    "old": "in_delta_room_minus = bignum_less(numerator, delta_minus);",
+    "new": "in_delta_room_minus = bignum_less_equal(numerator, delta_minus);"
+  },
+  {
+    "id": "D3",
+    "line": 596,
+    "old": "in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) > 0;",
+    "new": "in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) >= 0;"
+  }
+]

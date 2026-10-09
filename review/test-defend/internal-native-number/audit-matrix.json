@@ -1,0 +1,66 @@
+{
+  "bounded": true,
+  "rows": [
+    "TestNumbersFormatExactlyAsJavaScriptDoes",
+    "TestNumbersParseExactlyAsJavaScriptDoes",
+    "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "TestArtifactInputsAndReuse",
+    "TestMathAndToFixedMatchJavaScript",
+    "TestDecodeCacheLockDeadline"
+  ],
+  "columns": {
+    "M01": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "M02": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "M03": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "M04": [],
+    "M05": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "M06": [
+      "TestNumbersParseExactlyAsJavaScriptDoes"
+    ],
+    "M07": [
+      "TestNumbersParseExactlyAsJavaScriptDoes"
+    ],
+    "M08": [
+      "TestNumbersParseExactlyAsJavaScriptDoes"
+    ],
+    "M09": [
+      "TestNumbersParseExactlyAsJavaScriptDoes"
+    ],
+    "M10": [
+      "TestArtifactInputsAndReuse"
+    ],
+    "M11": [],
+    "M12": [
+      "TestArtifactInputsAndReuse"
+    ],
+    "E01": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "E02": [
+      "TestNumbersParseExactlyAsJavaScriptDoes"
+    ],
+    "E03": [
+      "TestNumbersParseExactlyAsJavaScriptDoes"
+    ],
+    "E04": [
+      "TestArtifactInputsAndReuse"
+    ]
+  },
+  "unknown": "Every omitted package row; no package or repo uniqueness proven"
+}

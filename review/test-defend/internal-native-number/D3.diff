@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -593,7 +593,7 @@
+ 		if (is_even) {
+ 			in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) >= 0;
+ 		} else {
+-			in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) > 0;
++			in_delta_room_plus = bignum_plus_compare(numerator, delta_plus, denominator) >= 0;
+ 		}
+ 		if (!in_delta_room_minus && !in_delta_room_plus) {
+ 			// Prepare for next iteration.

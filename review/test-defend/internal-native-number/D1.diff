@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -616,7 +616,7 @@
+ 				buffer[(*length) - 1]++;
+ 			} else {
+ 				// Halfway case. Round towards even.
+-				if ((buffer[(*length) - 1] - '0') % 2 != 0) {
++				if ((buffer[(*length) - 1] - '0') % 2 == 0) {
+ 					buffer[(*length) - 1]++;
+ 				}
+ 			}
