@@ -234,6 +234,35 @@ class FailClosed(unittest.TestCase):
         # Nothing but git ran: no build, vet or test.
         self.assertEqual([command[0] for command in launched if command[0] != "git"], [])
 
+    def test_emission_that_differs_between_two_runs_is_red_at_determinism(self):
+        # Oct 9: one tree emitted a 43,250-line main.c on one box and 5,470 lines on another. Stage 0 emits each smoke
+        # fixture twice, in two processes; an emitter ordering by a map differs between them.
+        os.makedirs(os.path.join(self.tree, "internal/oracle/testdata"), exist_ok=True)
+        with open(os.path.join(self.tree, "internal/oracle/testdata/a.a"), "w") as handle:
+            handle.write("console.log(1);\n")
+        calls = []
+
+        def steady(gate, binary, path):
+            calls.append(path)
+            return 0, "int main(void) {}\n"
+
+        def mapOrdered(gate, binary, path):
+            calls.append(path)
+            return 0, "static void f(void);\nint main(void) {}\n" if len(calls) % 2 else "int main(void) {}\nstatic void f(void);\n"
+
+        for full in (False, True):
+            with self.subTest(full=full):
+                calls.clear()
+                with mock.patch.object(run.Gate, "emitC", steady):
+                    gate, status, result = self.gate(full=full)
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertEqual(calls, ["internal/oracle/testdata/a.a"] * 2)
+                self.assertEqual(list(result["emission_sha256"]), ["internal/oracle/testdata/a.a"])
+                with mock.patch.object(run.Gate, "emitC", mapOrdered):
+                    gate, status, result = self.gate(full=full)
+                self.assertIn("first failure at determinism", status)
+                self.assertIn("internal/oracle/testdata/a.a (exit 0 and 0, first difference at line 1)", gate.failure["detail"])
+
     def test_a_stage_that_reports_nothing_is_red(self):
         for silent, stageName in (("build", "build"), ("vet", "vet"), ("testSplit", "tests"), ("checkCensus", "census")):
             with self.subTest(stage=stageName):
