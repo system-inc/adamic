@@ -1,7 +1,7 @@
 Built: #41bkfdw wave 3 moves 65 source rows onto shared Node agreement, including five internal-fact rows.
-Commits: unit 81b9df15; evidence 37ec839d; current-main merges a28550fc and d6032098, onto origin/main 7911f07b.
-Checks: named-file tests PASS 5.502s; TestCallTargetReaders PASS 0.643s; lane checks PASS 4.9s.
-Mutants: arguments-count and finite-field both fail converted tests on stdout, while original tests pass.
+Commits: unit 81b9df15; runner refactor 79cebcb0; evidence 37ec839d and 74147c05; current-main merge 7260bcc5 onto origin/main 7d544715.
+Checks: named-file tests PASS 5.794s; TestCallTargetReaders PASS 0.733s; lane checks PASS 1.2s.
+Mutants: arguments-count and finite-field fail converted tests on stdout while originals pass; predicate-bodyless fails all four preserved refusal rows in both versions.
 Uncovered: 11 acceptance conversions skipped; 3 internal-fact conversions skipped; native-only erasure cost is no longer asserted.
 
 The census covers every source row, rather than call sites: 302 total, 71 accept, 198 refuse, 33 IR-only. Sixty acceptance rows and five internal-fact rows now execute through the JavaScript backend and source Node. Eleven acceptance rows retain their original checks with reasons in rows.md. All refusal rows remain. No new oracle fixtures were added, so no unit counts.md refresh was needed.
@@ -43,7 +43,7 @@ export GOPROXY='https://proxy.golang.org|direct'
 timeout 60 git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | timeout 180 python3 -
 ```
 
-Output: `lane checks 4.9 s: gofmt and tools on 8 Go files, t.Parallel on 1 test packages; vet 1 packages`.
+Output: `lane checks 1.2 s: gofmt and tools on 9 Go files, t.Parallel on 1 test packages; vet 1 packages`.
 The checkout only tracks main by default, so explicit refspecs were needed once to populate origin/devtools/fast-gate and origin/cloud/merge-tree. No main or area branch was pushed.
 
 Toolchain setup passed. nproc: 5, cgroup quota: 4 CPUs. Node ready 0.025s; Go ready 0.040s; clang ready 0.228s; markdown dependencies ready 1.005s; submodules ready 17.990s; Go build ready 229.060s; cache warm 229.162s; done 229.190s. The emitted environment path was /workspace/adamic-tools/env.sh; /opt/adamic-tools/env.sh was absent. The first gofmt attempt before sourcing that path reported command not found; sourcing it fixed the tool lookup. setup.log preserves all timing lines.

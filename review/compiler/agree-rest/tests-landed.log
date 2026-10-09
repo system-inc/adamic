@@ -70,6 +70,7 @@
 === PAUSE TestProvenRelationsErase
 === CONT  TestArgumentsLengthRefusals
 === CONT  TestDefaultTaggedInterfaceNeedsNoFlag
+=== CONT  TestConditionAssertionAdmission
 === RUN   TestArgumentsLengthRefusals/indexing
 === PAUSE TestArgumentsLengthRefusals/indexing
 === RUN   TestArgumentsLengthRefusals/aliasing
@@ -77,29 +78,14 @@
 === RUN   TestArgumentsLengthRefusals/passing
 === PAUSE TestArgumentsLengthRefusals/passing
 === RUN   TestArgumentsLengthRefusals/returning
-=== CONT  TestCensusPredicateInteractionBoundary
 === PAUSE TestArgumentsLengthRefusals/returning
 === RUN   TestArgumentsLengthRefusals/spreading
 === PAUSE TestArgumentsLengthRefusals/spreading
-=== RUN   TestArgumentsLengthRefusals/writing_object
-=== PAUSE TestArgumentsLengthRefusals/writing_object
-=== RUN   TestArgumentsLengthRefusals/writing_length
-=== PAUSE TestArgumentsLengthRefusals/writing_length
-=== RUN   TestArgumentsLengthRefusals/incrementing_length
-=== PAUSE TestArgumentsLengthRefusals/incrementing_length
-=== RUN   TestArgumentsLengthRefusals/compound_length
-=== PAUSE TestArgumentsLengthRefusals/compound_length
-=== RUN   TestArgumentsLengthRefusals/arrow
-=== PAUSE TestArgumentsLengthRefusals/arrow
-=== RUN   TestArgumentsLengthRefusals/parenthesized_write
-=== PAUSE TestArgumentsLengthRefusals/parenthesized_write
 === CONT  TestPredicateUseRegions
-=== CONT  TestProvenRelationsErase
 === RUN   TestPredicateUseRegions/unused
 === PAUSE TestPredicateUseRegions/unused
 === RUN   TestPredicateUseRegions/true
 === PAUSE TestPredicateUseRegions/true
-=== CONT  TestConditionAssertionAdmission
 === RUN   TestPredicateUseRegions/false
 === PAUSE TestPredicateUseRegions/false
 === RUN   TestPredicateUseRegions/both
@@ -107,29 +93,131 @@
 === RUN   TestPredicateUseRegions/return_continuation
 === PAUSE TestPredicateUseRegions/return_continuation
 === RUN   TestPredicateUseRegions/throw_continuation
+=== RUN   TestArgumentsLengthRefusals/writing_object
+=== PAUSE TestArgumentsLengthRefusals/writing_object
 === PAUSE TestPredicateUseRegions/throw_continuation
+=== RUN   TestArgumentsLengthRefusals/writing_length
 === RUN   TestPredicateUseRegions/false_continuation
+=== PAUSE TestArgumentsLengthRefusals/writing_length
 === PAUSE TestPredicateUseRegions/false_continuation
+=== RUN   TestArgumentsLengthRefusals/incrementing_length
 === RUN   TestPredicateUseRegions/const_result_alias
 === PAUSE TestPredicateUseRegions/const_result_alias
 === RUN   TestPredicateUseRegions/compound_result_alias
 === PAUSE TestPredicateUseRegions/compound_result_alias
+=== PAUSE TestArgumentsLengthRefusals/incrementing_length
 === RUN   TestPredicateUseRegions/short_circuit
+=== RUN   TestArgumentsLengthRefusals/compound_length
 === PAUSE TestPredicateUseRegions/short_circuit
+=== PAUSE TestArgumentsLengthRefusals/compound_length
+=== RUN   TestArgumentsLengthRefusals/arrow
+=== PAUSE TestArgumentsLengthRefusals/arrow
+=== RUN   TestArgumentsLengthRefusals/parenthesized_write
+=== PAUSE TestArgumentsLengthRefusals/parenthesized_write
 === RUN   TestPredicateUseRegions/closure_read
 === PAUSE TestPredicateUseRegions/closure_read
 === RUN   TestPredicateUseRegions/indexed_spelling
 === PAUSE TestPredicateUseRegions/indexed_spelling
 === RUN   TestPredicateUseRegions/indexed_argument
+=== CONT  TestDefaultTaggedInterfaceAdmission
 === PAUSE TestPredicateUseRegions/indexed_argument
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
 === RUN   TestPredicateUseRegions/computed_index
+=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
 === PAUSE TestPredicateUseRegions/computed_index
 === RUN   TestPredicateUseRegions/loop_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
 === PAUSE TestPredicateUseRegions/loop_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
 === RUN   TestPredicateUseRegions/later_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
 === PAUSE TestPredicateUseRegions/later_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
 === RUN   TestPredicateUseRegions/replacement
+=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
 === PAUSE TestPredicateUseRegions/replacement
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefiniteAssignmentSoundNeighbors
+=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefiniteAssignmentUsesReadiness
+=== CONT  TestEveryNeedsCallbackEffects
+--- PASS: TestEveryNeedsCallbackEffects (0.10s)
+=== CONT  TestCensusBooleanDeadBranch
+--- PASS: TestDefaultTaggedInterfaceNeedsNoFlag (0.28s)
+=== CONT  TestCensusRestMutableElements
+--- PASS: TestConditionAssertionAdmission (0.29s)
+=== CONT  TestCensusSmallFiniteKeyRead
+=== NAME  TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements2911961587/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (0.05s)
+=== CONT  TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== PAUSE TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== PAUSE TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== PAUSE TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+=== PAUSE TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateInteractionEscapes/function_alias
+=== PAUSE TestCensusPredicateInteractionEscapes/function_alias
+=== RUN   TestCensusPredicateInteractionEscapes/callback_escape
+=== PAUSE TestCensusPredicateInteractionEscapes/callback_escape
+=== RUN   TestCensusPredicateInteractionEscapes/exported_function
+=== PAUSE TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionBoundary
+--- PASS: TestCensusBooleanDeadBranch (0.26s)
+=== CONT  TestArrayPredicateCoexistsWithUnknownReflection
+--- PASS: TestCensusPredicateInteractionBoundary (0.15s)
+=== CONT  TestUnknownArrayPredicateRefusesUnrepresentedObservations
+--- PASS: TestCensusSmallFiniteKeyRead (0.20s)
+=== CONT  TestArrayPredicateDoesNotMisclassifyNativeTuples
+--- PASS: TestUnknownArrayPredicateRefusesUnrepresentedObservations (0.11s)
+=== CONT  TestArrayPredicateCannotInventAnElementContract
+--- PASS: TestArrayPredicateDoesNotMisclassifyNativeTuples (0.11s)
+=== CONT  TestArrayPredicatePreservesDeclaredElementContract
+--- PASS: TestDefiniteAssignmentUsesReadiness (0.70s)
+=== CONT  TestArgumentsLengthReadKeepsReaderFact
+--- PASS: TestDefiniteAssignmentSoundNeighbors (0.91s)
+=== CONT  TestArgumentsLengthRefusalFixtures
+=== RUN   TestArgumentsLengthRefusalFixtures/indexing
+=== PAUSE TestArgumentsLengthRefusalFixtures/indexing
+=== RUN   TestArgumentsLengthRefusalFixtures/aliasing
+=== PAUSE TestArgumentsLengthRefusalFixtures/aliasing
+=== RUN   TestArgumentsLengthRefusalFixtures/passing
+=== PAUSE TestArgumentsLengthRefusalFixtures/passing
+=== RUN   TestArgumentsLengthRefusalFixtures/returning
+=== PAUSE TestArgumentsLengthRefusalFixtures/returning
+=== RUN   TestArgumentsLengthRefusalFixtures/spreading
+=== PAUSE TestArgumentsLengthRefusalFixtures/spreading
+=== RUN   TestArgumentsLengthRefusalFixtures/writing
+=== PAUSE TestArgumentsLengthRefusalFixtures/writing
+=== RUN   TestArgumentsLengthRefusalFixtures/arrow
+=== PAUSE TestArgumentsLengthRefusalFixtures/arrow
+=== CONT  TestArgumentsLengthReadNeighbors
+--- PASS: TestArgumentsLengthReadKeepsReaderFact (0.23s)
 === CONT  TestProvenRelationsRefuse
 === RUN   TestProvenRelationsRefuse/satisfies_mutable_array
 === PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
@@ -161,29 +249,8 @@
 === PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
 === RUN   TestProvenRelationsRefuse/satisfies_nested_optional
 === PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
-=== CONT  TestPredicateOverloadCallback
---- PASS: TestCensusPredicateInteractionBoundary (0.13s)
-=== CONT  TestEveryNeedsCallbackEffects
---- PASS: TestEveryNeedsCallbackEffects (0.05s)
-=== CONT  TestPredicateCallbackContracts
-=== RUN   TestPredicateCallbackContracts/inferred_arrow
-=== PAUSE TestPredicateCallbackContracts/inferred_arrow
-=== RUN   TestPredicateCallbackContracts/inferred_opaque
-=== PAUSE TestPredicateCallbackContracts/inferred_opaque
-=== RUN   TestPredicateCallbackContracts/inferred_named
-=== PAUSE TestPredicateCallbackContracts/inferred_named
-=== RUN   TestPredicateCallbackContracts/arrow
-=== PAUSE TestPredicateCallbackContracts/arrow
-=== RUN   TestPredicateCallbackContracts/named
-=== PAUSE TestPredicateCallbackContracts/named
-=== RUN   TestPredicateCallbackContracts/unproven
-=== PAUSE TestPredicateCallbackContracts/unproven
-=== RUN   TestPredicateCallbackContracts/lying
-=== PAUSE TestPredicateCallbackContracts/lying
-=== RUN   TestPredicateCallbackContracts/reassigned
-=== PAUSE TestPredicateCallbackContracts/reassigned
-=== CONT  TestPredicateUsesBelongToEachCall
---- PASS: TestConditionAssertionAdmission (0.25s)
+=== CONT  TestProvenRelationsErase
+--- PASS: TestArrayPredicateCannotInventAnElementContract (0.41s)
 === CONT  TestAViewThatCantWriteIsNotRefused
 === RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
@@ -209,38 +276,12 @@
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
 === RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
---- PASS: TestPredicateUsesBelongToEachCall (0.07s)
 === RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
-=== CONT  TestATupleSeenAsAnArrayIsNotYet
 === RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_initializer
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_initializer
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_assignment
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_assignment
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_argument
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_argument
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_return
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_return
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_field
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_field
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_element
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_element
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_map's_value
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_map's_value
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
 === RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
 === RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
 === RUN   TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
@@ -263,32 +304,6 @@
 === PAUSE TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
 === RUN   TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
 === PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
-=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
-=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
-=== CONT  TestArrayPredicateCannotInventAnElementContract
-=== CONT  TestAMethodReadAsAValueIsRefused
-=== RUN   TestAMethodReadAsAValueIsRefused/held_in_a_variable
-=== PAUSE TestAMethodReadAsAValueIsRefused/held_in_a_variable
-=== RUN   TestAMethodReadAsAValueIsRefused/passed_as_a_callback
-=== PAUSE TestAMethodReadAsAValueIsRefused/passed_as_a_callback
-=== RUN   TestAMethodReadAsAValueIsRefused/in_parentheses
-=== PAUSE TestAMethodReadAsAValueIsRefused/in_parentheses
-=== RUN   TestAMethodReadAsAValueIsRefused/read_through_this
-=== PAUSE TestAMethodReadAsAValueIsRefused/read_through_this
-=== RUN   TestAMethodReadAsAValueIsRefused/an_interface's_method
-=== PAUSE TestAMethodReadAsAValueIsRefused/an_interface's_method
-=== RUN   TestAMethodReadAsAValueIsRefused/an_array's_method
-=== PAUSE TestAMethodReadAsAValueIsRefused/an_array's_method
-=== RUN   TestAMethodReadAsAValueIsRefused/not_called_on_its_object
-=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_on_its_object
-=== RUN   TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
-=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
-=== RUN   TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
-=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
-=== RUN   TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
-=== PAUSE TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
 === CONT  TestPredicateBodyProof
 === RUN   TestPredicateBodyProof/condition_assertion
 === PAUSE TestPredicateBodyProof/condition_assertion
@@ -326,47 +341,75 @@
 === PAUSE TestPredicateBodyProof/assertion
 === RUN   TestPredicateBodyProof/disabled_assertion
 === PAUSE TestPredicateBodyProof/disabled_assertion
-=== CONT  TestCensusBooleanDeadBranch
---- PASS: TestDefaultTaggedInterfaceNeedsNoFlag (0.27s)
-=== CONT  TestDefaultTaggedInterfaceAdmission
-=== RUN   TestDefaultTaggedInterfaceAdmission/complete
-=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
-=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
-=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
-=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
-=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
-=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
-=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
-=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
-=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
-=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
-=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
-=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
-=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
-=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
-=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
-=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
-=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
-=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
-=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
-=== RUN   TestDefaultTaggedInterfaceAdmission/spread
-=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
-=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
-=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
-=== RUN   TestDefaultTaggedInterfaceAdmission/generic
-=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
-=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
-=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
-=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
-=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
-=== CONT  TestDefiniteAssignmentSoundNeighbors
---- PASS: TestPredicateOverloadCallback (0.30s)
-=== CONT  TestDefiniteAssignmentUsesReadiness
---- PASS: TestCensusBooleanDeadBranch (0.24s)
-=== CONT  TestArrayPredicateCoexistsWithUnknownReflection
---- PASS: TestArrayPredicateCannotInventAnElementContract (0.39s)
-=== CONT  TestArrayPredicateDoesNotMisclassifyNativeTuples
---- PASS: TestProvenRelationsErase (0.71s)
+=== CONT  TestAMethodReadAsAValueIsRefused
+=== RUN   TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== PAUSE TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== RUN   TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+=== PAUSE TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+=== RUN   TestAMethodReadAsAValueIsRefused/in_parentheses
+=== PAUSE TestAMethodReadAsAValueIsRefused/in_parentheses
+=== RUN   TestAMethodReadAsAValueIsRefused/read_through_this
+=== PAUSE TestAMethodReadAsAValueIsRefused/read_through_this
+=== RUN   TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== PAUSE TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== RUN   TestAMethodReadAsAValueIsRefused/an_array's_method
+=== PAUSE TestAMethodReadAsAValueIsRefused/an_array's_method
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== RUN   TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== CONT  TestATupleSeenAsAnArrayIsNotYet
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_return
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_return
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_element
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_element
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== CONT  TestPredicateOverloadCallback
+--- PASS: TestPredicateOverloadCallback (0.24s)
+=== CONT  TestPredicateCallbackContracts
+=== RUN   TestPredicateCallbackContracts/inferred_arrow
+=== PAUSE TestPredicateCallbackContracts/inferred_arrow
+=== RUN   TestPredicateCallbackContracts/inferred_opaque
+=== PAUSE TestPredicateCallbackContracts/inferred_opaque
+=== RUN   TestPredicateCallbackContracts/inferred_named
+=== PAUSE TestPredicateCallbackContracts/inferred_named
+=== RUN   TestPredicateCallbackContracts/arrow
+=== PAUSE TestPredicateCallbackContracts/arrow
+=== RUN   TestPredicateCallbackContracts/named
+=== PAUSE TestPredicateCallbackContracts/named
+=== RUN   TestPredicateCallbackContracts/unproven
+=== PAUSE TestPredicateCallbackContracts/unproven
+=== RUN   TestPredicateCallbackContracts/lying
+=== PAUSE TestPredicateCallbackContracts/lying
+=== RUN   TestPredicateCallbackContracts/reassigned
+=== PAUSE TestPredicateCallbackContracts/reassigned
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix
 === RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/var
 === PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/var
@@ -509,11 +552,8 @@
 === PAUSE TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider
 === RUN   TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
 === PAUSE TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
-=== CONT  TestCensusSmallFiniteKeyRead
---- PASS: TestArrayPredicateDoesNotMisclassifyNativeTuples (0.10s)
-=== CONT  TestCensusRestMutableElements
-    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements436630478/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
---- PASS: TestCensusRestMutableElements (0.06s)
+=== CONT  TestPredicateUsesBelongToEachCall
+--- PASS: TestPredicateUsesBelongToEachCall (0.04s)
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
 === RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
 === PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
@@ -572,74 +612,36 @@
 === RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
 === PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
 === CONT  TestConsoleLowersToWriteLine
---- PASS: TestConsoleLowersToWriteLine (0.05s)
-=== CONT  TestCensusOverloadRelation
-=== RUN   TestCensusOverloadRelation/parameter_contravariance
-=== PAUSE TestCensusOverloadRelation/parameter_contravariance
-=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
-=== PAUSE TestCensusOverloadRelation/generic_parameter_constraints
-=== RUN   TestCensusOverloadRelation/mutable_parameters
-=== PAUSE TestCensusOverloadRelation/mutable_parameters
-=== RUN   TestCensusOverloadRelation/result_covariance
-=== PAUSE TestCensusOverloadRelation/result_covariance
-=== CONT  TestCensusPredicateInteractionEscapes
-=== RUN   TestCensusPredicateInteractionEscapes/function_alias
-=== PAUSE TestCensusPredicateInteractionEscapes/function_alias
-=== RUN   TestCensusPredicateInteractionEscapes/callback_escape
-=== PAUSE TestCensusPredicateInteractionEscapes/callback_escape
-=== RUN   TestCensusPredicateInteractionEscapes/exported_function
-=== PAUSE TestCensusPredicateInteractionEscapes/exported_function
-=== CONT  TestArgumentsLengthReadKeepsReaderFact
---- PASS: TestCensusSmallFiniteKeyRead (0.20s)
-=== CONT  TestArrayPredicatePreservesDeclaredElementContract
---- PASS: TestDefiniteAssignmentUsesReadiness (0.70s)
-=== CONT  TestArgumentsLengthRefusalFixtures
-=== RUN   TestArgumentsLengthRefusalFixtures/indexing
-=== PAUSE TestArgumentsLengthRefusalFixtures/indexing
-=== RUN   TestArgumentsLengthRefusalFixtures/aliasing
-=== PAUSE TestArgumentsLengthRefusalFixtures/aliasing
-=== RUN   TestArgumentsLengthRefusalFixtures/passing
-=== PAUSE TestArgumentsLengthRefusalFixtures/passing
-=== RUN   TestArgumentsLengthRefusalFixtures/returning
-=== PAUSE TestArgumentsLengthRefusalFixtures/returning
-=== RUN   TestArgumentsLengthRefusalFixtures/spreading
-=== PAUSE TestArgumentsLengthRefusalFixtures/spreading
-=== RUN   TestArgumentsLengthRefusalFixtures/writing
-=== PAUSE TestArgumentsLengthRefusalFixtures/writing
-=== RUN   TestArgumentsLengthRefusalFixtures/arrow
-=== PAUSE TestArgumentsLengthRefusalFixtures/arrow
-=== CONT  TestUnknownArrayPredicateRefusesUnrepresentedObservations
---- PASS: TestArgumentsLengthReadKeepsReaderFact (0.21s)
-=== CONT  TestArgumentsLengthReadNeighbors
---- PASS: TestUnknownArrayPredicateRefusesUnrepresentedObservations (0.13s)
+--- PASS: TestConsoleLowersToWriteLine (0.03s)
 === CONT  TestArgumentsLengthRefusals/indexing
---- PASS: TestDefiniteAssignmentSoundNeighbors (0.87s)
 === CONT  TestArgumentsLengthRefusals/writing_length
+=== CONT  TestArgumentsLengthRefusals/parenthesized_write
+=== CONT  TestArgumentsLengthRefusals/arrow
+=== CONT  TestArgumentsLengthRefusals/compound_length
+--- PASS: TestArrayPredicateCoexistsWithUnknownReflection (1.21s)
+=== CONT  TestArgumentsLengthRefusals/incrementing_length
+=== CONT  TestArgumentsLengthRefusals/returning
+--- PASS: TestProvenRelationsErase (0.67s)
 === CONT  TestArgumentsLengthRefusals/writing_object
 === CONT  TestArgumentsLengthRefusals/spreading
-=== CONT  TestArgumentsLengthRefusals/returning
 === CONT  TestArgumentsLengthRefusals/passing
 === CONT  TestArgumentsLengthRefusals/aliasing
-=== CONT  TestArgumentsLengthRefusals/arrow
-=== CONT  TestArgumentsLengthRefusals/parenthesized_write
-=== CONT  TestArgumentsLengthRefusals/compound_length
-=== CONT  TestArgumentsLengthRefusals/incrementing_length
 === CONT  TestPredicateUseRegions/unused
+--- PASS: TestArrayPredicatePreservesDeclaredElementContract (1.09s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/complete
+=== CONT  TestPredicateUseRegions/replacement
 --- PASS: TestArgumentsLengthRefusals (0.00s)
     --- PASS: TestArgumentsLengthRefusals/indexing (0.06s)
-    --- PASS: TestArgumentsLengthRefusals/writing_object (0.03s)
-    --- PASS: TestArgumentsLengthRefusals/writing_length (0.08s)
-    --- PASS: TestArgumentsLengthRefusals/spreading (0.06s)
-    --- PASS: TestArgumentsLengthRefusals/returning (0.07s)
-    --- PASS: TestArgumentsLengthRefusals/passing (0.06s)
-    --- PASS: TestArgumentsLengthRefusals/aliasing (0.05s)
+    --- PASS: TestArgumentsLengthRefusals/writing_length (0.05s)
     --- PASS: TestArgumentsLengthRefusals/parenthesized_write (0.07s)
-    --- PASS: TestArgumentsLengthRefusals/arrow (0.09s)
+    --- PASS: TestArgumentsLengthRefusals/arrow (0.05s)
     --- PASS: TestArgumentsLengthRefusals/compound_length (0.05s)
-    --- PASS: TestArgumentsLengthRefusals/incrementing_length (0.05s)
-=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
---- PASS: TestArrayPredicateCoexistsWithUnknownReflection (1.00s)
-=== CONT  TestPredicateUseRegions/replacement
+    --- PASS: TestArgumentsLengthRefusals/incrementing_length (0.04s)
+    --- PASS: TestArgumentsLengthRefusals/returning (0.04s)
+    --- PASS: TestArgumentsLengthRefusals/writing_object (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/spreading (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/aliasing (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/passing (0.08s)
 === CONT  TestPredicateUseRegions/later_read
 === CONT  TestPredicateUseRegions/loop_read
 === CONT  TestPredicateUseRegions/computed_index
@@ -655,87 +657,127 @@
 === CONT  TestPredicateUseRegions/both
 === CONT  TestPredicateUseRegions/false
 === CONT  TestPredicateUseRegions/true
+=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
+=== CONT  TestDefaultTaggedInterfaceAdmission/generic
+--- PASS: TestArgumentsLengthReadNeighbors (1.09s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
+--- PASS: TestPredicateUseRegions (0.00s)
+    --- PASS: TestPredicateUseRegions/unused (0.07s)
+    --- PASS: TestPredicateUseRegions/replacement (0.05s)
+    --- PASS: TestPredicateUseRegions/later_read (0.06s)
+    --- PASS: TestPredicateUseRegions/loop_read (0.08s)
+    --- PASS: TestPredicateUseRegions/computed_index (0.07s)
+    --- PASS: TestPredicateUseRegions/indexed_argument (0.06s)
+    --- PASS: TestPredicateUseRegions/indexed_spelling (0.05s)
+    --- PASS: TestPredicateUseRegions/short_circuit (0.06s)
+    --- PASS: TestPredicateUseRegions/closure_read (0.07s)
+    --- PASS: TestPredicateUseRegions/compound_result_alias (0.07s)
+    --- PASS: TestPredicateUseRegions/const_result_alias (0.04s)
+    --- PASS: TestPredicateUseRegions/throw_continuation (0.05s)
+    --- PASS: TestPredicateUseRegions/false_continuation (0.06s)
+    --- PASS: TestPredicateUseRegions/return_continuation (0.05s)
+    --- PASS: TestPredicateUseRegions/both (0.05s)
+    --- PASS: TestPredicateUseRegions/false (0.03s)
+    --- PASS: TestPredicateUseRegions/true (0.04s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/spread
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
+=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+=== CONT  TestCensusOverloadRelation/parameter_contravariance
+=== CONT  TestCensusPredicateInteractionEscapes/function_alias
+=== CONT  TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusOverloadRelation/mutable_parameters
+=== CONT  TestCensusOverloadRelation/generic_parameter_constraints
+=== CONT  TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionEscapes/callback_escape
+=== CONT  TestArgumentsLengthRefusalFixtures/indexing
+--- PASS: TestCensusOverloadRelation (0.00s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.03s)
+    --- PASS: TestCensusOverloadRelation/result_covariance (0.06s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.09s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.06s)
+=== CONT  TestArgumentsLengthRefusalFixtures/spreading
+=== CONT  TestArgumentsLengthRefusalFixtures/arrow
+--- PASS: TestCensusPredicateInteractionEscapes (0.00s)
+    --- PASS: TestCensusPredicateInteractionEscapes/function_alias (0.05s)
+    --- PASS: TestCensusPredicateInteractionEscapes/callback_escape (0.04s)
+    --- PASS: TestCensusPredicateInteractionEscapes/exported_function (0.05s)
+=== CONT  TestArgumentsLengthRefusalFixtures/writing
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.00s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.22s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.24s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.23s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.21s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.28s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.24s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.24s)
+=== CONT  TestArgumentsLengthRefusalFixtures/passing
+=== CONT  TestArgumentsLengthRefusalFixtures/returning
+=== CONT  TestArgumentsLengthRefusalFixtures/aliasing
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
 === CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
 === CONT  TestProvenRelationsRefuse/satisfies_nested_optional
 === CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
 === CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
---- PASS: TestPredicateUseRegions (0.01s)
-    --- PASS: TestPredicateUseRegions/unused (0.07s)
-    --- PASS: TestPredicateUseRegions/replacement (0.06s)
-    --- PASS: TestPredicateUseRegions/later_read (0.06s)
-    --- PASS: TestPredicateUseRegions/loop_read (0.06s)
-    --- PASS: TestPredicateUseRegions/computed_index (0.07s)
-    --- PASS: TestPredicateUseRegions/indexed_spelling (0.04s)
-    --- PASS: TestPredicateUseRegions/indexed_argument (0.05s)
-    --- PASS: TestPredicateUseRegions/closure_read (0.05s)
-    --- PASS: TestPredicateUseRegions/short_circuit (0.06s)
-    --- PASS: TestPredicateUseRegions/compound_result_alias (0.08s)
-    --- PASS: TestPredicateUseRegions/false_continuation (0.05s)
-    --- PASS: TestPredicateUseRegions/const_result_alias (0.10s)
-    --- PASS: TestPredicateUseRegions/throw_continuation (0.05s)
-    --- PASS: TestPredicateUseRegions/false (0.04s)
-    --- PASS: TestPredicateUseRegions/return_continuation (0.07s)
-    --- PASS: TestPredicateUseRegions/both (0.06s)
-    --- PASS: TestPredicateUseRegions/true (0.05s)
 === CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
 === CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+--- PASS: TestArgumentsLengthRefusalFixtures (0.00s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/indexing (0.10s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/spreading (0.09s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/writing (0.12s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/arrow (0.13s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/passing (0.11s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/aliasing (0.13s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/returning (0.14s)
 === CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
 === CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
 === CONT  TestProvenRelationsRefuse/upcast_nominal_identity
 === CONT  TestProvenRelationsRefuse/upcast_function_parameter
 === CONT  TestProvenRelationsRefuse/satisfies_function_parameter
---- PASS: TestArrayPredicatePreservesDeclaredElementContract (1.10s)
 === CONT  TestProvenRelationsRefuse/satisfies_mutable_field
 === CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
 === CONT  TestProvenRelationsRefuse/upcast_mutable_array
-=== CONT  TestPredicateCallbackContracts/inferred_arrow
-=== CONT  TestPredicateCallbackContracts/named
-=== CONT  TestPredicateCallbackContracts/reassigned
-=== CONT  TestPredicateCallbackContracts/lying
---- PASS: TestProvenRelationsRefuse (0.00s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.07s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.04s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.04s)
-    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.05s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.06s)
-    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.06s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.04s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.04s)
-    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.05s)
-    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.05s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.05s)
-    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.07s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.04s)
-    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.04s)
-    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.08s)
-=== CONT  TestPredicateCallbackContracts/unproven
-=== CONT  TestPredicateCallbackContracts/inferred_named
-=== CONT  TestPredicateCallbackContracts/arrow
---- PASS: TestArgumentsLengthReadNeighbors (1.11s)
-=== CONT  TestPredicateCallbackContracts/inferred_opaque
 === CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
-=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_initializer
-=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
-=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
-=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
-=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
---- PASS: TestPredicateCallbackContracts (0.00s)
-    --- PASS: TestPredicateCallbackContracts/reassigned (0.04s)
-    --- PASS: TestPredicateCallbackContracts/unproven (0.04s)
-    --- PASS: TestPredicateCallbackContracts/lying (0.05s)
-    --- PASS: TestPredicateCallbackContracts/named (0.18s)
-    --- PASS: TestPredicateCallbackContracts/inferred_opaque (0.07s)
-    --- PASS: TestPredicateCallbackContracts/inferred_arrow (0.28s)
-    --- PASS: TestPredicateCallbackContracts/inferred_named (0.20s)
-    --- PASS: TestPredicateCallbackContracts/arrow (0.21s)
 === CONT  TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
 === CONT  TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
 === CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map
+--- PASS: TestProvenRelationsRefuse (0.00s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.06s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.09s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.07s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.04s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.03s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.04s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.06s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.06s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.07s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.06s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.07s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.04s)
 === CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
 === CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
 === CONT  TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
 === CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
 === CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
 === CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
 === CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
 === CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
@@ -749,168 +791,158 @@
 === CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
 === CONT  TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
 === CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== CONT  TestPredicateBodyProof/condition_assertion
+=== CONT  TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== CONT  TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateBodyProof/assertion
+=== CONT  TestPredicateBodyProof/empty_assertion
+=== CONT  TestPredicateBodyProof/default_changes_input
+=== CONT  TestPredicateBodyProof/recursive
+=== CONT  TestPredicateBodyProof/alias_mutation
+--- PASS: TestAViewThatCantWriteIsNotRefused (0.00s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.24s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.20s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.22s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.04s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.07s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.20s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.04s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.06s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.21s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.04s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.20s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.20s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.29s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.31s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.19s)
+=== CONT  TestPredicateBodyProof/mutation
+=== CONT  TestPredicateBodyProof/true_branch_lies
+=== CONT  TestPredicateBodyProof/false_branch_lies
+=== CONT  TestPredicateBodyProof/helper
+=== CONT  TestPredicateBodyProof/kind_helpers_fixed_point
+=== CONT  TestPredicateBodyProof/kind
+=== CONT  TestPredicateBodyProof/typeof
+=== CONT  TestPredicateBodyProof/diagnostic_work_on_failure
+=== CONT  TestPredicateBodyProof/condition_mutation
+=== CONT  TestPredicateBodyProof/empty_condition_assertion
+=== CONT  TestPredicateBodyProof/returning_fail
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== CONT  TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+--- PASS: TestPredicateBodyProof (0.00s)
+    --- PASS: TestPredicateBodyProof/condition_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/disabled_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/empty_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/default_changes_input (0.06s)
+    --- PASS: TestPredicateBodyProof/alias_mutation (0.07s)
+    --- PASS: TestPredicateBodyProof/recursive (0.07s)
+    --- PASS: TestPredicateBodyProof/true_branch_lies (0.07s)
+    --- PASS: TestPredicateBodyProof/false_branch_lies (0.06s)
+    --- PASS: TestPredicateBodyProof/mutation (0.11s)
+    --- PASS: TestPredicateBodyProof/kind (0.05s)
+    --- PASS: TestPredicateBodyProof/helper (0.09s)
+    --- PASS: TestPredicateBodyProof/kind_helpers_fixed_point (0.08s)
+    --- PASS: TestPredicateBodyProof/typeof (0.10s)
+    --- PASS: TestPredicateBodyProof/condition_mutation (0.06s)
+    --- PASS: TestPredicateBodyProof/diagnostic_work_on_failure (0.08s)
+    --- PASS: TestPredicateBodyProof/empty_condition_assertion (0.05s)
+    --- PASS: TestPredicateBodyProof/returning_fail (0.05s)
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== CONT  TestAMethodReadAsAValueIsRefused/an_array's_method
+=== CONT  TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== CONT  TestAMethodReadAsAValueIsRefused/read_through_this
+=== CONT  TestAMethodReadAsAValueIsRefused/in_parentheses
+=== CONT  TestAMethodReadAsAValueIsRefused/passed_as_a_callback
 === CONT  TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
 === CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
 === CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+--- PASS: TestAMethodReadAsAValueIsRefused (0.00s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/held_in_a_variable (0.05s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function (0.03s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/an_interface's_method (0.06s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/an_array's_method (0.06s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/in_parentheses (0.04s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/read_through_this (0.05s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/passed_as_a_callback (0.04s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow (0.20s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_on_its_object (0.21s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_through_parentheses (0.23s)
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_map's_value
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_return
 === CONT  TestATupleSeenAsAnArrayIsNotYet/an_element
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_field
---- PASS: TestAViewThatCantWriteIsNotRefused (0.00s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.04s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.20s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.20s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.23s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.23s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.22s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.25s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.21s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.19s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.25s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.24s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.23s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.20s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.18s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.19s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.24s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.06s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.05s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.19s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.05s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.06s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.20s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.22s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.21s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.20s)
-    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.22s)
 === CONT  TestATupleSeenAsAnArrayIsNotYet/an_assignment
 === CONT  TestATupleSeenAsAnArrayIsNotYet/an_argument
 === CONT  TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
-=== CONT  TestAMethodReadAsAValueIsRefused/held_in_a_variable
-=== CONT  TestAMethodReadAsAValueIsRefused/an_array's_method
-=== CONT  TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
-=== CONT  TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== CONT  TestPredicateCallbackContracts/inferred_arrow
+=== CONT  TestPredicateCallbackContracts/named
+=== CONT  TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/lying
 --- PASS: TestATupleSeenAsAnArrayIsNotYet (0.00s)
     --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_initializer (0.04s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body (0.03s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array (0.04s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple (0.08s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field (0.03s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays (0.03s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field (0.07s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_return (0.04s)
     --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_map's_value (0.06s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_element (0.04s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_return (0.06s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_field (0.06s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_assignment (0.06s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_argument (0.07s)
-    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_cast_literal (0.06s)
-=== CONT  TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
-=== CONT  TestAMethodReadAsAValueIsRefused/not_called_on_its_object
-=== CONT  TestAMethodReadAsAValueIsRefused/read_through_this
-=== CONT  TestAMethodReadAsAValueIsRefused/an_interface's_method
-=== CONT  TestAMethodReadAsAValueIsRefused/in_parentheses
-=== CONT  TestAMethodReadAsAValueIsRefused/passed_as_a_callback
-=== CONT  TestPredicateBodyProof/condition_assertion
-=== CONT  TestPredicateBodyProof/false_branch_lies
-=== CONT  TestPredicateBodyProof/disabled_assertion
-=== CONT  TestPredicateBodyProof/assertion
-=== CONT  TestPredicateBodyProof/empty_assertion
-=== CONT  TestPredicateBodyProof/default_changes_input
---- PASS: TestAMethodReadAsAValueIsRefused (0.00s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/held_in_a_variable (0.07s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/an_array's_method (0.05s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function (0.05s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/read_through_this (0.06s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/an_interface's_method (0.08s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/in_parentheses (0.05s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/passed_as_a_callback (0.04s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow (0.21s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_through_parentheses (0.22s)
-    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_on_its_object (0.20s)
-=== CONT  TestPredicateBodyProof/recursive
-=== CONT  TestPredicateBodyProof/alias_mutation
-=== CONT  TestPredicateBodyProof/mutation
-=== CONT  TestPredicateBodyProof/true_branch_lies
-=== CONT  TestPredicateBodyProof/typeof
-=== CONT  TestPredicateBodyProof/helper
-=== CONT  TestPredicateBodyProof/kind_helpers_fixed_point
-=== CONT  TestPredicateBodyProof/kind
-=== CONT  TestPredicateBodyProof/condition_mutation
-=== CONT  TestPredicateBodyProof/diagnostic_work_on_failure
-=== CONT  TestPredicateBodyProof/empty_condition_assertion
-=== CONT  TestPredicateBodyProof/returning_fail
-=== CONT  TestDefaultTaggedInterfaceAdmission/complete
-=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
-=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
-=== CONT  TestDefaultTaggedInterfaceAdmission/generic
---- PASS: TestPredicateBodyProof (0.00s)
-    --- PASS: TestPredicateBodyProof/condition_assertion (0.04s)
-    --- PASS: TestPredicateBodyProof/false_branch_lies (0.05s)
-    --- PASS: TestPredicateBodyProof/assertion (0.04s)
-    --- PASS: TestPredicateBodyProof/disabled_assertion (0.07s)
-    --- PASS: TestPredicateBodyProof/empty_assertion (0.05s)
-    --- PASS: TestPredicateBodyProof/default_changes_input (0.04s)
-    --- PASS: TestPredicateBodyProof/alias_mutation (0.05s)
-    --- PASS: TestPredicateBodyProof/recursive (0.07s)
-    --- PASS: TestPredicateBodyProof/mutation (0.05s)
-    --- PASS: TestPredicateBodyProof/typeof (0.05s)
-    --- PASS: TestPredicateBodyProof/true_branch_lies (0.07s)
-    --- PASS: TestPredicateBodyProof/kind (0.04s)
-    --- PASS: TestPredicateBodyProof/kind_helpers_fixed_point (0.04s)
-    --- PASS: TestPredicateBodyProof/condition_mutation (0.04s)
-    --- PASS: TestPredicateBodyProof/helper (0.06s)
-    --- PASS: TestPredicateBodyProof/diagnostic_work_on_failure (0.04s)
-    --- PASS: TestPredicateBodyProof/returning_fail (0.05s)
-    --- PASS: TestPredicateBodyProof/empty_condition_assertion (0.08s)
-=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
-=== CONT  TestDefaultTaggedInterfaceAdmission/spread
-=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
-=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
-=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
-=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
-=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
-=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
-=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
-=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
-=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_element (0.03s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_field (0.03s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_assignment (0.03s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_cast_literal (0.04s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_argument (0.05s)
+=== CONT  TestPredicateCallbackContracts/unproven
+=== CONT  TestPredicateCallbackContracts/inferred_named
+=== CONT  TestPredicateCallbackContracts/arrow
+=== CONT  TestPredicateCallbackContracts/inferred_opaque
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/var
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+--- PASS: TestPredicateCallbackContracts (0.00s)
+    --- PASS: TestPredicateCallbackContracts/reassigned (0.07s)
+    --- PASS: TestPredicateCallbackContracts/lying (0.07s)
+    --- PASS: TestPredicateCallbackContracts/unproven (0.08s)
+    --- PASS: TestPredicateCallbackContracts/inferred_opaque (0.07s)
+    --- PASS: TestPredicateCallbackContracts/inferred_arrow (0.20s)
+    --- PASS: TestPredicateCallbackContracts/named (0.23s)
+    --- PASS: TestPredicateCallbackContracts/inferred_named (0.19s)
+    --- PASS: TestPredicateCallbackContracts/arrow (0.21s)
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
---- PASS: TestDefaultTaggedInterfaceAdmission (0.00s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.07s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.07s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.07s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.06s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.23s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.21s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.14s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.05s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.25s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.17s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.05s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.04s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.04s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.22s)
-    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.22s)
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
-=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
@@ -918,133 +950,133 @@
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
-=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/!
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/delete
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/==
-=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/!
-=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
 === CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_object_spread
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_parameter's_default
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's
---- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix (0.00s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/var (0.03s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called (0.07s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back (0.06s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype (0.08s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next (0.05s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it (0.06s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak (0.06s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness (0.07s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number (0.09s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch (0.08s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set (0.07s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/== (0.07s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this) (0.11s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/delete (0.07s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built) (0.08s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/! (0.07s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/async (0.04s)
-    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number (0.05s)
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_shorthand_property
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring
+--- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix (0.00s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/var (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this) (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/! (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built) (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/== (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/delete (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/async (0.08s)
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one
 === CONT  TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only
 === CONT  TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_class_target
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_method's_return
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property
 === CONT  TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_union_source
 === CONT  TestAMutableLocationSeenWiderIsRefused/an_as
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_union_target
-=== CONT  TestAMutableLocationSeenWiderIsRefused/an_object_spread
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_class_target
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_method's_return
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed
-=== CONT  TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer
 === CONT  TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_union_source
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_union_target
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
 --- PASS: TestAMutableLocationSeenWiderIsRefused (0.00s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array (0.03s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_parameter's_default (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_shorthand_property (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_parameter's_default (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_object_spread (0.11s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable (0.07s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type (0.07s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array (0.09s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak (0.08s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe (0.07s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_as (0.07s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element (0.05s)
     --- PASS: TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider (0.06s)
     --- PASS: TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array (0.07s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array (0.07s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_shorthand_property (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring (0.05s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable (0.03s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only (0.05s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class (0.07s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element (0.03s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot (0.05s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_class_target (0.05s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array (0.03s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_method's_return (0.07s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe (0.05s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_object_spread (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring (0.07s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_class_target (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider (0.04s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed (0.07s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider (0.08s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_method's_return (0.09s)
     --- PASS: TestAMutableLocationSeenWiderIsRefused/a_union_source (0.06s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly (0.08s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_as (0.07s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field (0.04s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_union_target (0.10s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer (0.05s)
-    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed (0.06s)
-=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
-=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_union_target (0.05s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch (0.06s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter (0.07s)
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
-=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
@@ -1063,65 +1095,34 @@
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
 === CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
-=== CONT  TestCensusOverloadRelation/parameter_contravariance
-=== CONT  TestCensusPredicateInteractionEscapes/function_alias
-=== CONT  TestCensusOverloadRelation/result_covariance
-=== CONT  TestCensusOverloadRelation/mutable_parameters
 --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function (0.06s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only (0.06s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (0.07s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function (0.04s)
     --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes (0.08s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only (0.04s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value (0.04s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only (0.08s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (0.09s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?. (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error (0.11s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples (0.03s)
     --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array (0.04s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?. (0.08s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples (0.06s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.03s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object (0.03s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object (0.07s)
     --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union (0.07s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback (0.05s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined (0.08s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback (0.04s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback (0.03s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions (0.03s)
     --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never (0.04s)
-    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions (0.05s)
-=== CONT  TestCensusOverloadRelation/generic_parameter_constraints
-=== CONT  TestCensusPredicateInteractionEscapes/exported_function
-=== CONT  TestCensusPredicateInteractionEscapes/callback_escape
-=== CONT  TestArgumentsLengthRefusalFixtures/indexing
---- PASS: TestCensusOverloadRelation (0.00s)
-    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.04s)
-    --- PASS: TestCensusOverloadRelation/result_covariance (0.06s)
-    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.06s)
-    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.05s)
-=== CONT  TestArgumentsLengthRefusalFixtures/arrow
-=== CONT  TestArgumentsLengthRefusalFixtures/spreading
-=== CONT  TestArgumentsLengthRefusalFixtures/writing
---- PASS: TestCensusPredicateInteractionEscapes (0.00s)
-    --- PASS: TestCensusPredicateInteractionEscapes/function_alias (0.07s)
-    --- PASS: TestCensusPredicateInteractionEscapes/exported_function (0.05s)
-    --- PASS: TestCensusPredicateInteractionEscapes/callback_escape (0.04s)
-=== CONT  TestArgumentsLengthRefusalFixtures/passing
-=== CONT  TestArgumentsLengthRefusalFixtures/returning
-=== CONT  TestArgumentsLengthRefusalFixtures/aliasing
---- PASS: TestArgumentsLengthRefusalFixtures (0.00s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/writing (0.08s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/indexing (0.11s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/spreading (0.11s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/arrow (0.11s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/passing (0.09s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/aliasing (0.07s)
-    --- PASS: TestArgumentsLengthRefusalFixtures/returning (0.08s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays (0.07s)
 PASS
-ok  	github.com/system-inc/adamic/internal/lower	5.502s
+ok  	github.com/system-inc/adamic/internal/lower	5.794s
