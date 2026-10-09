@@ -1,0 +1,226 @@
+=== RUN   TestParserFactoryCompletion
+=== RUN   TestParserFactoryCompletion/before_return
+=== RUN   TestParserFactoryCompletion/alias
+=== RUN   TestParserFactoryCompletion/both_branches
+=== RUN   TestParserFactoryCompletion/one_branch
+=== RUN   TestParserFactoryCompletion/before_escape
+=== RUN   TestParserFactoryCompletion/wrong_payload_assertion
+=== RUN   TestParserFactoryCompletion/early_return
+=== RUN   TestParserFactoryCompletion/loop_may_not_run
+=== RUN   TestParserFactoryCompletion/captured
+=== RUN   TestParserFactoryCompletion/short_circuit
+--- PASS: TestParserFactoryCompletion (0.38s)
+    --- PASS: TestParserFactoryCompletion/before_return (0.05s)
+    --- PASS: TestParserFactoryCompletion/alias (0.04s)
+    --- PASS: TestParserFactoryCompletion/both_branches (0.04s)
+    --- PASS: TestParserFactoryCompletion/one_branch (0.04s)
+    --- PASS: TestParserFactoryCompletion/before_escape (0.04s)
+    --- PASS: TestParserFactoryCompletion/wrong_payload_assertion (0.03s)
+    --- PASS: TestParserFactoryCompletion/early_return (0.03s)
+    --- PASS: TestParserFactoryCompletion/loop_may_not_run (0.03s)
+    --- PASS: TestParserFactoryCompletion/captured (0.04s)
+    --- PASS: TestParserFactoryCompletion/short_circuit (0.03s)
+=== RUN   TestParserFactoryReadBeforeCompletion
+--- PASS: TestParserFactoryReadBeforeCompletion (0.03s)
+=== RUN   TestParserFactoryBindingHoisting
+=== PAUSE TestParserFactoryBindingHoisting
+=== RUN   TestParserNodeArrayLayout
+--- PASS: TestParserNodeArrayLayout (0.00s)
+=== RUN   TestParserNodeArrayPresence
+--- PASS: TestParserNodeArrayPresence (0.00s)
+=== RUN   TestParserNodeArraySchemaFailsClosed
+--- PASS: TestParserNodeArraySchemaFailsClosed (0.00s)
+=== CONT  TestParserFactoryBindingHoisting
+--- PASS: TestParserFactoryBindingHoisting (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.456s
+=== RUN   TestParserHasNoUnusedOptionalMethodThunks
+=== PAUSE TestParserHasNoUnusedOptionalMethodThunks
+=== RUN   TestParserConstructionBackends
+=== RUN   TestParserConstructionBackends/own-key-order.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+=== RUN   TestParserConstructionBackends/node-array-keys.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "0,1\nfalse\n0,1,end,pos,transformFlags,hasTrailingComma\ntrue\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+=== RUN   TestParserConstructionBackends/node-array-json.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "[1,2]\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+=== RUN   TestParserConstructionBackends/node-array-length.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "2\n2\n2\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+--- PASS: TestParserConstructionBackends (7.09s)
+    --- PASS: TestParserConstructionBackends/own-key-order.a (6.22s)
+    --- PASS: TestParserConstructionBackends/node-array-keys.a (0.30s)
+    --- PASS: TestParserConstructionBackends/node-array-json.a (0.29s)
+    --- PASS: TestParserConstructionBackends/node-array-length.a (0.28s)
+=== RUN   TestParserConstructionRuntimeMutants
+=== RUN   TestParserConstructionRuntimeMutants/synthesized_key
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "2,10,kind,alpha,beta\ntrue\n2,10,kind,alpha,beta\n2,10,kind,alpha,beta\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"alpha\":3,\"beta\":21}\n", Node "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"
+=== RUN   TestParserConstructionRuntimeMutants/declaration_order
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "kind\nfalse\n2,10,kind,alpha,beta\n2,10,kind,alpha,beta\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"alpha\":3,\"beta\":21}\n", Node "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"
+=== RUN   TestParserConstructionRuntimeMutants/array_extras_in_JSON
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "[1,2,-1]\n", Node "[1,2]\n"
+--- PASS: TestParserConstructionRuntimeMutants (19.48s)
+    --- PASS: TestParserConstructionRuntimeMutants/synthesized_key (6.10s)
+    --- PASS: TestParserConstructionRuntimeMutants/declaration_order (6.26s)
+    --- PASS: TestParserConstructionRuntimeMutants/array_extras_in_JSON (7.12s)
+=== CONT  TestParserHasNoUnusedOptionalMethodThunks
+--- PASS: TestParserHasNoUnusedOptionalMethodThunks (7.93s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	34.510s
+=== RUN   TestParserNonNullSourceExtension
+=== PAUSE TestParserNonNullSourceExtension
+=== RUN   TestParserAheadCounts
+--- PASS: TestParserAheadCounts (13.95s)
+=== RUN   TestParserAheadFactoryBoundaries
+=== RUN   TestParserAheadFactoryBoundaries/complete
+    parser_ahead_test.go:35: base factory source matches both backends; rehearsal pending codex/placeholder-nonnull
+=== RUN   TestParserAheadFactoryBoundaries/escaped
+    parser_ahead_test.go:35: base factory source matches both backends; rehearsal pending codex/placeholder-nonnull
+--- PASS: TestParserAheadFactoryBoundaries (0.67s)
+    --- PASS: TestParserAheadFactoryBoundaries/complete (0.33s)
+    --- PASS: TestParserAheadFactoryBoundaries/escaped (0.33s)
+=== RUN   TestParserAheadFactoryCompleteControl
+    parser_ahead_test.go:82: factory payload mutant caught in native and JavaScript by source Node stdout
+--- PASS: TestParserAheadFactoryCompleteControl (0.54s)
+=== RUN   TestParserAheadNodeArraySource
+=== RUN   TestParserAheadNodeArraySource/fields
+    parser_ahead_test.go:110: all four NodeArray metadata fields match source Node; rehearsal pending codex/placeholder-nonnull
+=== RUN   TestParserAheadNodeArraySource/presence
+    parser_ahead_test.go:116: pending: source Node contract only; fixed array metadata and presence lowering are absent
+--- PASS: TestParserAheadNodeArraySource (0.50s)
+    --- PASS: TestParserAheadNodeArraySource/fields (0.35s)
+    --- PASS: TestParserAheadNodeArraySource/presence (0.15s)
+=== RUN   TestParserConstructionSource
+=== RUN   TestParserConstructionSource/factory-unset
+    parser_construction_test.go:34: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/own-key-order
+    parser_construction_test.go:34: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-keys
+    parser_construction_test.go:34: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-json
+    parser_construction_test.go:34: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-length
+    parser_construction_test.go:34: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-unset
+    parser_construction_test.go:34: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+--- PASS: TestParserConstructionSource (2.15s)
+    --- PASS: TestParserConstructionSource/factory-unset (0.35s)
+    --- PASS: TestParserConstructionSource/own-key-order (0.37s)
+    --- PASS: TestParserConstructionSource/node-array-keys (0.33s)
+    --- PASS: TestParserConstructionSource/node-array-json (0.37s)
+    --- PASS: TestParserConstructionSource/node-array-length (0.36s)
+    --- PASS: TestParserConstructionSource/node-array-unset (0.37s)
+=== RUN   TestParserConstructionUnsetUse
+    parser_construction_test.go:60: undefined presence observation is accepted; declared string use stops naming field, factory and use
+--- PASS: TestParserConstructionUnsetUse (0.30s)
+=== RUN   TestParserConstructionNullPlaceholderDelivered
+--- PASS: TestParserConstructionNullPlaceholderDelivered (0.33s)
+=== RUN   TestParserNamespaceReceiver
+=== PAUSE TestParserNamespaceReceiver
+=== RUN   TestParserNamespaceClass
+=== PAUSE TestParserNamespaceClass
+=== RUN   TestParserCallableNamespace
+=== PAUSE TestParserCallableNamespace
+=== RUN   TestParserCallableNamespaceMutant
+=== PAUSE TestParserCallableNamespaceMutant
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== RUN   TestParserNamespaceReceiverMutant
+=== PAUSE TestParserNamespaceReceiverMutant
+=== RUN   TestParserSpeculationSources
+=== RUN   TestParserSpeculationSources/named-lookahead
+    parser_speculation_test.go:53: Node stdout "true\n0|0\n"; native sanitizers/leaks and JavaScript agree
+=== RUN   TestParserSpeculationSources/named-tryparse
+    parser_speculation_test.go:53: Node stdout "keyword\nabsent\n1\n"; native sanitizers/leaks and JavaScript agree
+=== RUN   TestParserSpeculationSources/arrow-tryparse
+    parser_speculation_test.go:53: Node stdout "parsed\n1\n"; native sanitizers/leaks and JavaScript agree
+=== RUN   TestParserSpeculationSources/truthiness-rewind
+    parser_speculation_test.go:53: Node stdout "absent\n11|7|3|false\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\ntruthy|12\ntruthy|12\ntruthy|12\ntruthy|12\n"; native sanitizers/leaks and JavaScript agree
+--- PASS: TestParserSpeculationSources (1.51s)
+    --- PASS: TestParserSpeculationSources/named-lookahead (0.34s)
+    --- PASS: TestParserSpeculationSources/named-tryparse (0.39s)
+    --- PASS: TestParserSpeculationSources/arrow-tryparse (0.37s)
+    --- PASS: TestParserSpeculationSources/truthiness-rewind (0.41s)
+=== RUN   TestParserSpeculationMisfit
+--- PASS: TestParserSpeculationMisfit (0.35s)
+=== RUN   TestParserSpeculationRewindMutant
+    parser_speculation_test.go:104: skipped scanner-position rewind caught by Node stdout in both backends
+--- PASS: TestParserSpeculationRewindMutant (0.35s)
+=== RUN   TestParserStackLegal
+    parser_stack_test.go:53: 859 nested parentheses: source Node, native sanitizers/leaks and JavaScript print 859|1719
+--- PASS: TestParserStackLegal (0.36s)
+=== RUN   TestParserStackPathological
+    parser_stack_test.go:72: source Node outcome: exit 70, stderr "adamic: panic: RangeError: Maximum call stack size exceeded in parseNested\n"; native named guard pinned separately
+--- PASS: TestParserStackPathological (0.52s)
+=== RUN   TestParserStackTinyLimit
+--- PASS: TestParserStackTinyLimit (0.37s)
+=== RUN   TestParserStackGuardMutant
+    parser_stack_test.go:118: removed guard compiles and executes: exit 1, AddressSanitizer: stack-overflow
+--- PASS: TestParserStackGuardMutant (0.27s)
+=== RUN   TestParserStackGuardCost
+    parser_stack_test.go:124: set ADAMIC_MEASURE_STACK_GUARD=1 for the local cost record
+--- SKIP: TestParserStackGuardCost (0.00s)
+=== CONT  TestParserNonNullSourceExtension
+=== CONT  TestParserCallableNamespaceMutant
+=== CONT  TestParserNamespaceClass
+=== RUN   TestParserNamespaceClass/stage3/namespace-parser-stops/native-namespace-class.a
+=== PAUSE TestParserNamespaceClass/stage3/namespace-parser-stops/native-namespace-class.a
+=== RUN   TestParserNamespaceClass/internal/oracle/testdata/namespace_class_registration.a
+=== PAUSE TestParserNamespaceClass/internal/oracle/testdata/namespace_class_registration.a
+=== CONT  TestParserNamespaceClass/stage3/namespace-parser-stops/native-namespace-class.a
+=== CONT  TestParserNamespaceReceiverMutant
+=== CONT  TestParserCallableNamespace
+=== RUN   TestParserCallableNamespace/stage3/namespace-parser-stops/native-callable-namespace.a
+=== PAUSE TestParserCallableNamespace/stage3/namespace-parser-stops/native-callable-namespace.a
+=== RUN   TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a
+=== PAUSE TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a
+=== CONT  TestParserCallableNamespace/stage3/namespace-parser-stops/native-callable-namespace.a
+=== NAME  TestParserNamespaceClass/stage3/namespace-parser-stops/native-namespace-class.a
+    parser_namespaces_test.go:112: stage3/namespace-parser-stops/native-namespace-class.a: both backends match Node stdout="class declaration loaded\n" exit=0
+=== CONT  TestParserNamespaceReceiver
+=== RUN   TestParserNamespaceReceiver/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+=== PAUSE TestParserNamespaceReceiver/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+=== RUN   TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a
+=== PAUSE TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a
+=== CONT  TestParserNamespaceClass/internal/oracle/testdata/namespace_class_registration.a
+=== NAME  TestParserCallableNamespaceMutant
+    parser_namespaces_test.go:85: javascript attached function confused with callable root caught by Node stdout
+    parser_namespaces_test.go:85: native attached function confused with callable root caught by Node stdout
+--- PASS: TestParserCallableNamespaceMutant (0.79s)
+=== CONT  TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a
+=== NAME  TestParserCallableNamespace/stage3/namespace-parser-stops/native-callable-namespace.a
+    parser_namespaces_test.go:112: stage3/namespace-parser-stops/native-callable-namespace.a: both backends match Node stdout="callable namespace loaded\n" exit=0
+=== CONT  TestParserNamespaceClassRegistrationMutant
+=== NAME  TestParserNonNullSourceExtension
+    non_null_parser_test.go:59: parser indexed-value mutant caught by Node stdout in both backends
+--- PASS: TestParserNonNullSourceExtension (1.17s)
+=== CONT  TestParserNamespaceReceiver/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:146: native missing constructor registration stopped: {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 82 101 102 101 114 101 110 99 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] exitCode:70}
+    parser_namespaces_test.go:146: javascript missing constructor registration stopped: {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 82 101 102 101 114 101 110 99 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] exitCode:70}
+--- PASS: TestParserNamespaceClassRegistrationMutant (0.65s)
+=== CONT  TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a
+=== NAME  TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a
+    parser_namespaces_test.go:112: internal/oracle/testdata/namespace_callable_properties.a: both backends match Node stdout="log:first\nerror:3:second\nerror:3:third\ntrue:true:true:function:3\nprint:fourth\n7:true\n" exit=0
+--- PASS: TestParserCallableNamespace (0.00s)
+    --- PASS: TestParserCallableNamespace/stage3/namespace-parser-stops/native-callable-namespace.a (0.82s)
+    --- PASS: TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a (0.69s)
+=== NAME  TestParserNamespaceClass/internal/oracle/testdata/namespace_class_registration.a
+    parser_namespaces_test.go:112: internal/oracle/testdata/namespace_class_registration.a: both backends match Node stdout="0:1:false\nconstruct;construct;\n" exit=0
+--- PASS: TestParserNamespaceClass (0.00s)
+    --- PASS: TestParserNamespaceClass/stage3/namespace-parser-stops/native-namespace-class.a (0.78s)
+    --- PASS: TestParserNamespaceClass/internal/oracle/testdata/namespace_class_registration.a (0.74s)
+=== NAME  TestParserNamespaceReceiver/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+    parser_namespaces_test.go:112: stage3/namespace-parser-stops/native-namespace-object-receiver.a: both backends match Node stdout="receiver declaration loaded\n" exit=0
+=== NAME  TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a
+    parser_namespaces_test.go:112: internal/oracle/testdata/namespace_method_receiver.a: both backends match Node stdout="7:99\n11\n" exit=0
+--- PASS: TestParserNamespaceReceiver (0.00s)
+    --- PASS: TestParserNamespaceReceiver/stage3/namespace-parser-stops/native-namespace-object-receiver.a (6.02s)
+    --- PASS: TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a (5.75s)
+=== NAME  TestParserNamespaceReceiverMutant
+    parser_namespaces_test.go:177: native namespace receiver substituted for method receiver: Node stdout catches clean exit 0
+    parser_namespaces_test.go:177: javascript namespace receiver substituted for method receiver: Node stdout catches clean exit 0
+--- PASS: TestParserNamespaceReceiverMutant (7.23s)
+PASS
+gate cache: native hits=0 misses=28
+gate cache: node hits=0 misses=63
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	29.430s

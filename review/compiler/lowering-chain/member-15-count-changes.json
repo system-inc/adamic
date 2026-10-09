@@ -1,0 +1,392 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/callback_widening/boolean-map.a",
+      "after": [
+        "8",
+        "8",
+        "8",
+        "14",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/library-map.a",
+      "after": [
+        "11",
+        "11",
+        "14",
+        "19",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/nullable-object-map.a",
+      "after": [
+        "9",
+        "9",
+        "16",
+        "21",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-arguments.a",
+      "after": [
+        "14",
+        "14",
+        "8",
+        "18",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-capture.a",
+      "after": [
+        "26",
+        "26",
+        "15",
+        "35",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-every.a",
+      "after": [
+        "8",
+        "8",
+        "11",
+        "17",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-filter.a",
+      "after": [
+        "15",
+        "15",
+        "11",
+        "22",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-find.a",
+      "after": [
+        "8",
+        "8",
+        "8",
+        "14",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-findIndex.a",
+      "after": [
+        "10",
+        "10",
+        "8",
+        "16",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-findLast.a",
+      "after": [
+        "10",
+        "10",
+        "8",
+        "16",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-forEach.a",
+      "after": [
+        "13",
+        "13",
+        "11",
+        "25",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-generic-map.a",
+      "after": [
+        "15",
+        "15",
+        "12",
+        "22",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-generic.a",
+      "after": [
+        "13",
+        "13",
+        "8",
+        "18",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-index.a",
+      "after": [
+        "16",
+        "16",
+        "10",
+        "22",
+        "11",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-map.a",
+      "after": [
+        "15",
+        "15",
+        "11",
+        "21",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-named-sort.a",
+      "after": [
+        "13",
+        "13",
+        "15",
+        "27",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-reduce-accumulator.a",
+      "after": [
+        "12",
+        "12",
+        "14",
+        "24",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-reduce.a",
+      "after": [
+        "16",
+        "16",
+        "18",
+        "32",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-some.a",
+      "after": [
+        "7",
+        "7",
+        "8",
+        "13",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-sort.a",
+      "after": [
+        "17",
+        "17",
+        "11",
+        "24",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-throw.a",
+      "after": [
+        "14",
+        "14",
+        "11",
+        "20",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/number-toSorted.a",
+      "after": [
+        "14",
+        "14",
+        "14",
+        "26",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-every.a",
+      "after": [
+        "8",
+        "8",
+        "23",
+        "26",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-filter.a",
+      "after": [
+        "15",
+        "15",
+        "25",
+        "31",
+        "13",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-find.a",
+      "after": [
+        "9",
+        "9",
+        "17",
+        "22",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-forEach.a",
+      "after": [
+        "13",
+        "13",
+        "26",
+        "37",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-generic-map.a",
+      "after": [
+        "15",
+        "15",
+        "24",
+        "31",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-generic.a",
+      "after": [
+        "13",
+        "13",
+        "20",
+        "27",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-map.a",
+      "after": [
+        "15",
+        "15",
+        "23",
+        "30",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-reduce.a",
+      "after": [
+        "16",
+        "16",
+        "33",
+        "44",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-some.a",
+      "after": [
+        "8",
+        "8",
+        "17",
+        "20",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/object-sort.a",
+      "after": [
+        "16",
+        "16",
+        "28",
+        "37",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/optional-number-map.a",
+      "after": [
+        "10",
+        "10",
+        "8",
+        "16",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/optional-object-map.a",
+      "after": [
+        "9",
+        "9",
+        "16",
+        "21",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/callback_widening/string-map.a",
+      "after": [
+        "8",
+        "8",
+        "14",
+        "16",
+        "8",
+        "0"
+      ]
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "rows": 1241
+}

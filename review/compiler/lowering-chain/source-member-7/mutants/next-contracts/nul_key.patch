@@ -1,0 +1,11 @@
+--- a/internal/lower/checked_json.go
++++ b/internal/lower/checked_json.go
+@@ -242,7 +242,7 @@
+ 			return "a computed key in a checked JSON dictionary (own-key metadata)"
+ 		}
+ 		name := node.Name().Text()
+-		if strings.ContainsRune(name, 0) {
++		if false {
+ 			return "a NUL key in a checked JSON dictionary (native own-key metadata)"
+ 		}
+ 		if name == "__proto__" {

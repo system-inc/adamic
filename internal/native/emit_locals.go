@@ -59,7 +59,7 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("adamic_release(%s);", old)
 }
 
-// checkReady panics as JavaScript throws when a global is touched before its declaration has run.
+// checkReady throws as JavaScript throws when a global is touched before its declaration has run.
 func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
 
 func (e *emitter) localReady(local int) string {
@@ -78,8 +78,12 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
 	}
 	e.line("if (!%s) {", e.localReady(local))
-	e.line("\tstatic const char message[] = %s;", cString(message))
-	e.line("\tadamic_panic(message, sizeof message - 1);")
+	if expression == "" && !e.program.Locals[local].Hoisted {
+		e.readinessError(fmt.Sprintf("Cannot access '%s' before initialization", e.program.Locals[local].Name))
+	} else {
+		e.line("\tstatic const char message[] = %s;", cString(message))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+	}
 	e.line("}")
 }
 
@@ -87,6 +91,11 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 // copied (a string retained) the moment JavaScript would read it; and from inside a function it's
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
+	if read.Unset && e.program.Locals[read.Local].Global && !e.program.Locals[read.Local].Hoisted {
+		e.line("if (!%s_declared) {", readyName(read.Local))
+		e.readinessError(fmt.Sprintf("Cannot access '%s' before initialization", e.program.Locals[read.Local].Name))
+		e.line("}")
+	}
 	name := e.localName(read.Local)
 	if read.Checked {
 		e.checkReady(read.Local)

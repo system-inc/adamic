@@ -1,0 +1,799 @@
+{
+  "branch": "compiler/iteration-main",
+  "source": "518eca83",
+  "tests": [
+    {
+      "test": "TestIteratorMapperIndexHasNumberRepresentation",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorDeclaredNextHasNoRuntimeMethod",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorOptionalCloseResultMustBeObject",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorBuiltInStorageViewsArePending/const_storage:number[]=[1,2];",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorSymbolKeysAreNotStringKeys",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;}",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorViewsDispatchHiddenReturn",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorViewsDispatchReceivers",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorBuiltInStorageViewsArePending/const_storage:readonly_[number,number]=[1,2];",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source];",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;}",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;}",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;}",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorBuiltInStorageViewsArePending/const_storage=new_Set([1,2]).values();",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorBuiltInStorageViewsArePending",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}});",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;}",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorGapsAreExplicit",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorDescriptorReasons/declare_or_abstract_class_field",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIteratorDescriptorReasons",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/next_reread/javascript",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20ArrayViewVariance",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchPendingStops/non_object_step",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/accessor_binding.a",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchPendingStops/non_object_iterator",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/[1]",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/collections.a",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchPendingStops/non_callable_next",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/delegated_generator.a",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/Uint8Array.prototype",
+      "result": "pass",
+      "seconds": 0.21,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchPendingStops/non_object_close",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchPendingStops",
+      "result": "pass",
+      "seconds": 1.01,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/generator.a",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestClassWrongOutput107/iterators_override_this",
+      "result": "pass",
+      "seconds": 1.12,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/Set.prototype",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/iterable_view.a",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/Map.prototype",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/String.prototype",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/Array.prototype",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/object_binding.a",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/object_binding_stress.a",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/new_Set<number>()",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()",
+      "result": "pass",
+      "seconds": 0.21,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/object_iteration.a",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestClassWrongOutput107/iterators_hidden_return",
+      "result": "pass",
+      "seconds": 0.9,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestClassWrongOutput107",
+      "result": "pass",
+      "seconds": 2.02,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites/new_String('x')",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IntrinsicIteratorWrites",
+      "result": "pass",
+      "seconds": 0.02,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/strings.a",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/user_forwarding.a",
+      "result": "pass",
+      "seconds": 0.14,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/intrinsic_iterator_write.a",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/intrinsic_iterator_alias.a",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/intrinsic_iterator_prototype.a",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/array_view_stress.a",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/array_view_weak.a",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/test262_array_views.a",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes/array_view_variance.a",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestStep20IterationOutcomes",
+      "result": "pass",
+      "seconds": 3.08,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/next_reread/native",
+      "result": "pass",
+      "seconds": 6.67,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/next_reread",
+      "result": "pass",
+      "seconds": 6.95,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/completion_value_enters_body/javascript",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/completion_value_enters_body/native",
+      "result": "pass",
+      "seconds": 0.36,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/completion_value_enters_body",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_skipped_on_break/javascript",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_skipped_on_break/native",
+      "result": "pass",
+      "seconds": 0.3,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_skipped_on_break",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_on_next_throw/javascript",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_on_next_throw/native",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_on_next_throw",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_throw_replaces_original/javascript",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_throw_replaces_original/native",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_throw_replaces_original",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_skipped_on_outer_continue/javascript",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_skipped_on_outer_continue/native",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants/close_skipped_on_outer_continue",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-5-tests.jsonl"
+    },
+    {
+      "test": "TestIterationDispatchMutants",
+      "result": "pass",
+      "seconds": 9.3,
+      "log": "member-5-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/fixtures/iteration-dispatch/class.a",
+        "after": [
+          "22",
+          "22",
+          "11",
+          "22",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/object.a",
+        "after": [
+          "26",
+          "26",
+          "14",
+          "28",
+          "11",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/break.a",
+        "after": [
+          "20",
+          "20",
+          "11",
+          "18",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/return.a",
+        "after": [
+          "21",
+          "21",
+          "11",
+          "18",
+          "13",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+        "after": [
+          "44",
+          "44",
+          "22",
+          "38",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/body_throw.a",
+        "after": [
+          "22",
+          "22",
+          "17",
+          "24",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/next_throw.a",
+        "after": [
+          "12",
+          "12",
+          "13",
+          "16",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+        "after": [
+          "22",
+          "22",
+          "20",
+          "26",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+        "after": [
+          "20",
+          "20",
+          "16",
+          "21",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/cached_next.a",
+        "after": [
+          "29",
+          "29",
+          "17",
+          "34",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/completion.a",
+        "after": [
+          "20",
+          "20",
+          "10",
+          "20",
+          "11",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/done_throw.a",
+        "after": [
+          "13",
+          "13",
+          "14",
+          "16",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/value_throw.a",
+        "after": [
+          "13",
+          "13",
+          "14",
+          "16",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration-dispatch/method_getters.a",
+        "after": [
+          "26",
+          "26",
+          "16",
+          "24",
+          "15",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a",
+        "after": [
+          "57",
+          "57",
+          "31",
+          "49",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a",
+        "after": [
+          "28",
+          "28",
+          "16",
+          "20",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/collections.a",
+        "after": [
+          "35",
+          "35",
+          "24",
+          "47",
+          "11",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/strings.a",
+        "after": [
+          "20",
+          "20",
+          "14",
+          "27",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/object_iteration.a",
+        "after": [
+          "5",
+          "5",
+          "1",
+          "6",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/array_view_stress.a",
+        "after": [
+          "34",
+          "34",
+          "50",
+          "72",
+          "16",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/test262_array_views.a",
+        "after": [
+          "11",
+          "11",
+          "25",
+          "38",
+          "11",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/array_view_weak.a",
+        "after": [
+          "5",
+          "5",
+          "8",
+          "13",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/iteration/user_forwarding.a",
+        "after": [
+          "22",
+          "22",
+          "7",
+          "17",
+          "14",
+          "0"
+        ]
+      }
+    ],
+    "changed": [
+      {
+        "row": "internal/oracle/testdata/user_iterators.a",
+        "before": [
+          "663",
+          "663",
+          "455",
+          "904",
+          "64",
+          "0"
+        ],
+        "after": [
+          "1050",
+          "1050",
+          "677",
+          "994",
+          "97",
+          "0"
+        ],
+        "reason": "Only conflict counts.md, regenerated once preserving both parents. Added 23 executable proofs. Two existing user_iterators rows change because runtime method binding now owns receiver cells and cached next closures; the terminal TDZ row stops at its observed panic. All old and new Node observations pass, six dispatch IR mutants and four production array-view mutants caught. Historical evidence moved to review and touched tests marked parallel."
+      },
+      {
+        "row": "internal/oracle/testdata/user_iterators_rest_tdz.a",
+        "before": [
+          "5",
+          "0",
+          "5",
+          "3",
+          "5",
+          "0"
+        ],
+        "after": [
+          "11",
+          "3",
+          "7",
+          "3",
+          "8",
+          "0"
+        ],
+        "reason": "Only conflict counts.md, regenerated once preserving both parents. Added 23 executable proofs. Two existing user_iterators rows change because runtime method binding now owns receiver cells and cached next closures; the terminal TDZ row stops at its observed panic. All old and new Node observations pass, six dispatch IR mutants and four production array-view mutants caught. Historical evidence moved to review and touched tests marked parallel."
+      }
+    ],
+    "removed": [],
+    "rows": 1080
+  }
+}

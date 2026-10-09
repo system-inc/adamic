@@ -1,0 +1,8 @@
+let value: string = null!;
+if (value) console.log("present"); else console.log("null unset");
+value = undefined!;
+if (value) console.log("present"); else console.log("undefined unset");
+value = "";
+if (value) console.log("present"); else console.log("empty present");
+value = "written" + " value";
+if (value) console.log("written"); else console.log("unset");

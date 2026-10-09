@@ -1,0 +1,238 @@
+[
+  {
+    "file": "runtime-arguments.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\n2,3\n1\n-1\n-1\n-1\n6\n6\n8\n-2\n2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-methods.a",
+    "node": {
+      "exit": 0,
+      "stdout": "first1:3\nsecond2:4\nfresh3:6\n4\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-order.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nselected2:arg1\n2 1\nselected3:arg2\nabsent\n2\nselected4:arg3\nabsent\n3\nfinished\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-values.a",
+    "node": {
+      "exit": 0,
+      "stdout": "-1\n5\ntrue\nfalse\n-2\n7\n-3\n-3\n9\nabsent\nbox1\n-4\n11\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-cross-chain.a",
+    "node": {
+      "exit": 0,
+      "stdout": "selected1\nabsent\n1 true\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-return-descriptor.a",
+    "node": {
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-bound-methods.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nclass1:1\nliteral2:2\nabsent\n2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-bound-method-arguments.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nabsent\nreader1:4::0\nreader1:4:word1:2\n1\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-bound-method-replacement.a",
+    "node": {
+      "exit": 0,
+      "stdout": "original1:argument2\nreplacement:next\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/runtime-bound-method-replacement.a:8:2: Adamic 0.1 refuses a method read as a value (report would lose its object, and this with it); call it in an arrow that keeps the object: (value) => original.report(value) (unbound-method)\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "existing unbound-method refusal",
+    "where": "docs/step-18/fixtures/runtime-bound-method-replacement.a:8:2"
+  },
+  {
+    "file": "runtime-bound-method-selection.a",
+    "node": {
+      "exit": 0,
+      "stdout": "selected:argument1\nabsent\nmethod2:argument1\nmethod2:next\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-discarded-reference.a",
+    "node": {
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-index.a",
+    "node": {
+      "exit": 0,
+      "stdout": "-1\n5\n2 1\nabsent\nh\n2\n-1\n3 2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-intrinsics.a",
+    "node": {
+      "exit": 0,
+      "stdout": "-1\n7\n1 true\nabsent\nabsent\nWORD\nvisited\nfalse\n-1\nfalse\ntrue\n1\ntrue\n12\n1\nabsent\nMAPPED\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-callable.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nvalue1\nabsent\nabsent\nreceiver2:argument1\n1\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-method-continuation.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nabsent\nbound1:1\n1 1 true\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-present-undefined.a",
+    "node": {
+      "exit": 70,
+      "stdout": "absent\n",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-parentheses.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-parentheses-write.a",
+    "node": {
+      "exit": 70,
+      "stdout": "right hand side\n",
+      "stderr": "adamic: panic: TypeError: Cannot set properties of undefined (setting 'text')\n"
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  }
+]

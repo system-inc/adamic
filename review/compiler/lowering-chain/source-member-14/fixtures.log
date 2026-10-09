@@ -1,0 +1,105 @@
+=== RUN   TestMiscompile2AErrorSpread
+=== PAUSE TestMiscompile2AErrorSpread
+=== RUN   TestMiscompile2AOptionalError
+=== PAUSE TestMiscompile2AOptionalError
+=== RUN   TestMiscompile2AMaybeSetter
+=== PAUSE TestMiscompile2AMaybeSetter
+=== RUN   TestMiscompile2ALongName
+=== PAUSE TestMiscompile2ALongName
+=== RUN   TestMiscompile2ADerivedSymbol
+=== PAUSE TestMiscompile2ADerivedSymbol
+=== RUN   TestMiscompile2AOverrideSource
+=== PAUSE TestMiscompile2AOverrideSource
+=== RUN   TestMiscompile2AConstructorArrow
+=== PAUSE TestMiscompile2AConstructorArrow
+=== RUN   TestMiscompile2AConstructorNumberArrow
+=== PAUSE TestMiscompile2AConstructorNumberArrow
+=== RUN   TestMiscompile2AErrorSubclassSpread
+=== PAUSE TestMiscompile2AErrorSubclassSpread
+=== RUN   TestMiscompile2AControls
+=== PAUSE TestMiscompile2AControls
+=== RUN   TestMiscompile2AMarker
+=== PAUSE TestMiscompile2AMarker
+=== CONT  TestMiscompile2AErrorSpread
+=== CONT  TestMiscompile2AConstructorArrow
+=== CONT  TestMiscompile2AMarker
+=== CONT  TestMiscompile2AOverrideSource
+=== CONT  TestMiscompile2ADerivedSymbol
+    miscompile_2a_test.go:52: gate cache node hit
+    miscompile_2a_test.go:52: Node: exit=0 stdout="1,2\n"
+=== NAME  TestMiscompile2AOverrideSource
+    miscompile_2a_test.go:56: gate cache node hit
+    miscompile_2a_test.go:56: Node: exit=0 stdout="300\n3\n"
+=== NAME  TestMiscompile2AConstructorArrow
+    miscompile_2a_test.go:60: gate cache node hit
+    miscompile_2a_test.go:60: Node: exit=0 stdout="undefined:NaN|set\n"
+=== NAME  TestMiscompile2AMarker
+    miscompile_2a_test.go:104: gate cache node hit
+=== NAME  TestMiscompile2AErrorSpread
+    miscompile_2a_test.go:36: gate cache node hit
+    miscompile_2a_test.go:36: Node: exit=0 stdout="no name no message\n"
+=== NAME  TestMiscompile2ADerivedSymbol
+    miscompile_2a_test.go:52: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a:3:2: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet
+--- PASS: TestMiscompile2ADerivedSymbol (1.84s)
+=== CONT  TestMiscompile2ALongName
+=== NAME  TestMiscompile2AOverrideSource
+    miscompile_2a_test.go:56: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_override_source.a:15:38: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet
+--- PASS: TestMiscompile2AOverrideSource (1.84s)
+=== CONT  TestMiscompile2AMaybeSetter
+=== NAME  TestMiscompile2AConstructorArrow
+    miscompile_2a_test.go:60: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this
+--- PASS: TestMiscompile2AConstructorArrow (1.88s)
+=== CONT  TestMiscompile2AOptionalError
+=== NAME  TestMiscompile2AErrorSpread
+    miscompile_2a_test.go:36: /workspace/adamic/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a:4:25: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet
+--- PASS: TestMiscompile2AErrorSpread (1.91s)
+=== CONT  TestMiscompile2AErrorSubclassSpread
+=== NAME  TestMiscompile2AMarker
+    miscompile_2a_test.go:104: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestMiscompile2AMarker (2.20s)
+=== CONT  TestMiscompile2AControls
+=== NAME  TestMiscompile2AOptionalError
+    miscompile_2a_test.go:40: gate cache node hit
+    miscompile_2a_test.go:40: Node: exit=0 stdout="[] [m]\n"
+=== NAME  TestMiscompile2AErrorSubclassSpread
+    miscompile_2a_test.go:69: gate cache node hit
+    miscompile_2a_test.go:69: Node: exit=0 stdout="no name no message\n"
+=== NAME  TestMiscompile2AMaybeSetter
+    miscompile_2a_test.go:44: gate cache node hit
+    miscompile_2a_test.go:44: Node: exit=0 stdout="3\n"
+=== NAME  TestMiscompile2ALongName
+    miscompile_2a_test.go:48: gate cache node hit
+    miscompile_2a_test.go:48: Node: exit=0 stdout="2\n"
+=== NAME  TestMiscompile2AControls
+    miscompile_2a_test.go:100: gate cache node hit
+=== NAME  TestMiscompile2AMaybeSetter
+    miscompile_2a_test.go:44: /workspace/adamic/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a:4:2: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet
+--- PASS: TestMiscompile2AMaybeSetter (0.80s)
+=== CONT  TestMiscompile2AConstructorNumberArrow
+=== NAME  TestMiscompile2AOptionalError
+    miscompile_2a_test.go:40: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a:1:62: stage 0 can't lower new Error with a possibly undefined message; use message ?? '' yet
+--- PASS: TestMiscompile2AOptionalError (0.76s)
+=== NAME  TestMiscompile2AErrorSubclassSpread
+    miscompile_2a_test.go:69: /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:2:16: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet
+--- PASS: TestMiscompile2AErrorSubclassSpread (0.74s)
+=== NAME  TestMiscompile2AControls
+    miscompile_2a_test.go:100: gate cache node hit
+=== NAME  TestMiscompile2ALongName
+    miscompile_2a_test.go:48: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a:1:42: stage 0 can't lower a property name longer than 4095 bytes; shorten the name until native metadata supports long strings yet
+--- PASS: TestMiscompile2ALongName (0.86s)
+=== NAME  TestMiscompile2AControls
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestMiscompile2AControls (0.51s)
+=== NAME  TestMiscompile2AConstructorNumberArrow
+    miscompile_2a_test.go:64: gate cache node hit
+    miscompile_2a_test.go:64: Node: exit=0 stdout="NaN\nNaN,NaN\n"
+    miscompile_2a_test.go:64: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this
+--- PASS: TestMiscompile2AConstructorNumberArrow (0.23s)
+PASS
+gate cache: native hits=4 misses=0
+gate cache: node hits=13 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.975s

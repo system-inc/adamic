@@ -1,0 +1,18 @@
+[
+  {
+    "mutant": "drop-unset-use",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/lowering-chain/member-13-parser-mutants/drop-unset-use.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserConstructionUnsetUse$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 16.170020504003332
+  }
+]

@@ -1,0 +1,179 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestPlaceholderUseChecks
+=== PAUSE TestPlaceholderUseChecks
+=== RUN   TestPlaceholderNonliteralAssertionStillChecks
+=== PAUSE TestPlaceholderNonliteralAssertionStillChecks
+=== RUN   TestPlaceholderFlowMutants
+=== PAUSE TestPlaceholderFlowMutants
+=== RUN   TestPlaceholderNullTagMutant
+=== PAUSE TestPlaceholderNullTagMutant
+=== RUN   TestPlaceholderSpreadReadinessMutant
+=== PAUSE TestPlaceholderSpreadReadinessMutant
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestPlaceholderFlowMutants
+=== CONT  TestPlaceholderNullTagMutant
+=== CONT  TestPlaceholderNonliteralAssertionStillChecks
+=== CONT  TestPlaceholderSpreadReadinessMutant
+=== RUN   TestPlaceholderFlowMutants/before_use
+=== PAUSE TestPlaceholderFlowMutants/before_use
+=== RUN   TestPlaceholderFlowMutants/saved_leak
+=== PAUSE TestPlaceholderFlowMutants/saved_leak
+=== RUN   TestPlaceholderFlowMutants/null_before_use
+=== PAUSE TestPlaceholderFlowMutants/null_before_use
+=== RUN   TestPlaceholderFlowMutants/null_saved_leak
+=== PAUSE TestPlaceholderFlowMutants/null_saved_leak
+=== RUN   TestPlaceholderFlowMutants/assignment_result
+=== PAUSE TestPlaceholderFlowMutants/assignment_result
+=== RUN   TestPlaceholderFlowMutants/return_assignment
+=== PAUSE TestPlaceholderFlowMutants/return_assignment
+=== RUN   TestPlaceholderFlowMutants/alias_reset
+=== PAUSE TestPlaceholderFlowMutants/alias_reset
+=== CONT  TestPlaceholderUseChecks
+=== RUN   TestPlaceholderUseChecks/before_use
+=== PAUSE TestPlaceholderUseChecks/before_use
+=== RUN   TestPlaceholderUseChecks/saved_leak
+=== PAUSE TestPlaceholderUseChecks/saved_leak
+=== RUN   TestPlaceholderUseChecks/null_before_use
+=== PAUSE TestPlaceholderUseChecks/null_before_use
+=== RUN   TestPlaceholderUseChecks/null_saved_leak
+=== PAUSE TestPlaceholderUseChecks/null_saved_leak
+=== RUN   TestPlaceholderUseChecks/assignment_result
+=== PAUSE TestPlaceholderUseChecks/assignment_result
+=== RUN   TestPlaceholderUseChecks/return_assignment
+=== PAUSE TestPlaceholderUseChecks/return_assignment
+=== RUN   TestPlaceholderUseChecks/alias_reset
+=== PAUSE TestPlaceholderUseChecks/alias_reset
+=== CONT  TestPlaceholderFlowMutants/before_use
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== CONT  TestPlaceholderFlowMutants/alias_reset
+--- PASS: TestPlaceholderNonliteralAssertionStillChecks (0.49s)
+=== CONT  TestPlaceholderFlowMutants/return_assignment
+=== NAME  TestPlaceholderFlowMutants/before_use
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "before\nunset\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderFlowMutants/assignment_result
+=== NAME  TestPlaceholderFlowMutants/alias_reset
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderFlowMutants/null_saved_leak
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:200: null collapsed to undefined caught by Node: stdout "false|true|true|false\nfalse|true\nfalse|false\n"
+--- PASS: TestPlaceholderNullTagMutant (0.77s)
+=== CONT  TestPlaceholderFlowMutants/null_before_use
+=== NAME  TestPlaceholderFlowMutants/return_assignment
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderFlowMutants/saved_leak
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:249: copy readiness mutant caught by Node exit 0: native and JavaScript exit 70
+--- PASS: TestPlaceholderSpreadReadinessMutant (1.18s)
+=== CONT  TestPlaceholderUseChecks/before_use
+=== NAME  TestPlaceholderFlowMutants/assignment_result
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderUseChecks/alias_reset
+=== NAME  TestPlaceholderFlowMutants/null_saved_leak
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "present\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderUseChecks/return_assignment
+=== NAME  TestPlaceholderFlowMutants/null_before_use
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "before\nset\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderUseChecks/assignment_result
+=== CONT  TestPlaceholderUseChecks/null_saved_leak
+=== CONT  TestPlaceholderUseChecks/null_before_use
+=== CONT  TestPlaceholderUseChecks/saved_leak
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+=== NAME  TestPlaceholderFlowMutants/saved_leak
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutants (0.01s)
+    --- PASS: TestPlaceholderFlowMutants/before_use (0.65s)
+    --- PASS: TestPlaceholderFlowMutants/alias_reset (0.65s)
+    --- PASS: TestPlaceholderFlowMutants/return_assignment (0.68s)
+    --- PASS: TestPlaceholderFlowMutants/assignment_result (0.64s)
+    --- PASS: TestPlaceholderFlowMutants/null_saved_leak (0.64s)
+    --- PASS: TestPlaceholderFlowMutants/null_before_use (0.63s)
+    --- PASS: TestPlaceholderFlowMutants/saved_leak (0.71s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+--- PASS: TestPlaceholderUseChecks (0.00s)
+    --- PASS: TestPlaceholderUseChecks/before_use (0.46s)
+    --- PASS: TestPlaceholderUseChecks/alias_reset (0.45s)
+    --- PASS: TestPlaceholderUseChecks/return_assignment (0.44s)
+    --- PASS: TestPlaceholderUseChecks/assignment_result (0.40s)
+    --- PASS: TestPlaceholderUseChecks/null_before_use (0.36s)
+    --- PASS: TestPlaceholderUseChecks/null_saved_leak (0.46s)
+    --- PASS: TestPlaceholderUseChecks/saved_leak (0.43s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+--- PASS: TestNativeAgreesWithNode (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a (0.63s)
+PASS
+gate cache: native hits=0 misses=58
+gate cache: node hits=0 misses=72
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.357s

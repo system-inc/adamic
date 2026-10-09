@@ -1,0 +1,121 @@
+[
+  {
+    "file": "accessor_binding.a",
+    "origin": "authored soundness counterexample",
+    "kind": "NotYet",
+    "reason": "a for...of destructuring an object",
+    "stdout": "name:1\noriginal:1\nname:1/original:1\nname:2\noriginal:2\nbinding:2\n"
+  },
+  {
+    "file": "collections.a",
+    "origin": "core.ts:1627; builderState.ts:486; executeCommandLine.ts:1175; core.ts:1731",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "a\nb\n1\n2\na:1\nb:2\n4\n5\n4:4\n5:5\n"
+  },
+  {
+    "file": "delegated_generator.a",
+    "origin": "core.ts:437",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "3\n4\n"
+  },
+  {
+    "file": "generator.a",
+    "origin": "core.ts:538",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "7\n"
+  },
+  {
+    "file": "iterable_view.a",
+    "origin": "core.ts:1337",
+    "kind": "NotYet",
+    "reason": "an iterable object view of built-in storage needing a protocol adapter",
+    "stdout": "1,2\n"
+  },
+  {
+    "file": "object_binding.a",
+    "origin": "program.ts:798",
+    "kind": "NotYet",
+    "reason": "a for...of destructuring an object",
+    "stdout": "source:3:4:problem\n"
+  },
+  {
+    "file": "object_binding_stress.a",
+    "origin": "program.ts:798; transformers/destructuring.ts:301, plus authored stress",
+    "kind": "NotYet",
+    "reason": "a for...of destructuring an object",
+    "stdout": "name:1/original:1/1\nname:2/original:2/2\nname:3/original:3/3\nname:1/original:1\nname:2/original:2\nname:3/original:3\nopens:1\nempty:1\nname:1\nname:1/original:1\nname:4/4\nname:5/5\nname:6/original:6\n"
+  },
+  {
+    "file": "object_iteration.a",
+    "origin": "binder.ts:432; types.ts:1589",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "1\n2\n"
+  },
+  {
+    "file": "strings.a",
+    "origin": "core.ts:1337, concrete string specialization",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "1:65\n2:55357\n1:55296\n1:90\n"
+  },
+  {
+    "file": "user_forwarding.a",
+    "origin": "core.ts:1736",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "4\n5\n"
+  },
+  {
+    "file": "intrinsic_iterator_write.a",
+    "origin": "authored counterexample for ruling 1",
+    "kind": "Refused",
+    "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)",
+    "stdout": "9\n"
+  },
+  {
+    "file": "intrinsic_iterator_alias.a",
+    "origin": "authored counterexample for ruling 1",
+    "kind": "Refused",
+    "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)",
+    "stdout": "8\n"
+  },
+  {
+    "file": "intrinsic_iterator_prototype.a",
+    "origin": "authored counterexample for ruling 1",
+    "kind": "Refused",
+    "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)",
+    "stdout": "7\n"
+  },
+  {
+    "file": "array_view_stress.a",
+    "origin": "binder.ts:432; types.ts:1589, plus authored mutation and ownership stress",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "node:1\nnode:2\nnode:4\nnode:1\nnode:2\nnode:4\nnode:9\nnode:5\nnode:6\ncalls:1\nnode:7\nnode:9\n"
+  },
+  {
+    "file": "array_view_weak.a",
+    "origin": "authored contextual Weak element ownership counterexample",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "node:1\nnode:1\n"
+  },
+  {
+    "file": "test262_array_views.a",
+    "origin": "test262 2e0a56762801e275a9fdf96dc49d90ba0cddcf63, four array iteration cases",
+    "kind": "accepted",
+    "reason": "",
+    "stdout": "test262 array views passed\n"
+  },
+  {
+    "file": "array_view_variance.a",
+    "origin": "authored mutable element variance counterexample",
+    "kind": "Refused",
+    "reason": "a value of type Slot\u003cLarge\u003e[] seen as NodeArray\u003cSlot\u003cSmall\u003e\u003e, which can write Small where Large is read",
+    "stdout": "undefined\n"
+  }
+]

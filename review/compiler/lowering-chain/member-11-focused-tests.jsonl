@@ -1,0 +1,40 @@
+{"Time":"2026-10-09T06:10:46.662909394Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T06:10:46.675013693Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication"}
+{"Time":"2026-10-09T06:10:46.675129166Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"=== RUN   TestSharedProductPublication\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675173943Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"=== PAUSE TestSharedProductPublication\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675177319Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication"}
+{"Time":"2026-10-09T06:10:46.675181845Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory"}
+{"Time":"2026-10-09T06:10:46.675184539Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"=== RUN   TestSixBuildCallbackUsesProductDirectory\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675193002Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"=== PAUSE TestSixBuildCallbackUsesProductDirectory\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675195536Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory"}
+{"Time":"2026-10-09T06:10:46.67519844Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T06:10:46.675200694Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== RUN   TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675203568Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== PAUSE TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675205951Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T06:10:46.675208696Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication"}
+{"Time":"2026-10-09T06:10:46.675212521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"=== CONT  TestSharedProductPublication\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675289607Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T06:10:46.675295185Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== CONT  TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.675434444Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory"}
+{"Time":"2026-10-09T06:10:46.675442386Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"=== CONT  TestSixBuildCallbackUsesProductDirectory\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.679237011Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"--- PASS: TestSharedProductPublication (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.688750903Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Elapsed":0}
+{"Time":"2026-10-09T06:10:46.68882916Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"--- PASS: TestSixBuildCallbackUsesProductDirectory (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.694035663Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Elapsed":0.01}
+{"Time":"2026-10-09T06:10:46.694081102Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"--- PASS: TestTypeAwareTopShardPlantedFailure (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.694088553Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Elapsed":0.02}
+{"Time":"2026-10-09T06:10:46.694091447Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:46.694305068Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.031s\n"}
+{"Time":"2026-10-09T06:10:46.694322043Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.031}
+{"Time":"2026-10-09T06:10:54.823156013Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:10:54.832809482Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-09T06:10:54.832881349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== RUN   TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:54.832891555Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== PAUSE TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:54.832893798Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-09T06:10:54.832949206Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-09T06:10:54.832963828Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== CONT  TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:54.939777889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"--- PASS: TestTSGoBuildSeesTheProgramsFeatures (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:54.939871028Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Elapsed":0.11}
+{"Time":"2026-10-09T06:10:54.939879211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:54.942168539Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.119s\n"}
+{"Time":"2026-10-09T06:10:54.942207407Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.119}

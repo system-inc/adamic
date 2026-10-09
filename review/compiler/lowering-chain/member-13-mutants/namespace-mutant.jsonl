@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T06:51:38.9654033Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T06:51:38.974066949Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse"}
+{"Time":"2026-10-09T06:51:38.974194691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"=== RUN   TestPlaceholderNamespaceUnsetUse\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:38.974230074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"=== PAUSE TestPlaceholderNamespaceUnsetUse\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:38.97423394Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse"}
+{"Time":"2026-10-09T06:51:38.974237635Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse"}
+{"Time":"2026-10-09T06:51:38.97424037Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"=== CONT  TestPlaceholderNamespaceUnsetUse\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:39.312061046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"    placeholder_nonnull_test.go:313: exit codes differ\n","OutputType":"error"}
+{"Time":"2026-10-09T06:51:39.312686736Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"--- FAIL: TestPlaceholderNamespaceUnsetUse (0.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:39.312694247Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Elapsed":0.34}
+{"Time":"2026-10-09T06:51:39.312722279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:39.312732625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T06:51:39.312735319Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T06:51:39.312737112Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T06:51:39.314619168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.349s\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:39.314636304Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.349}

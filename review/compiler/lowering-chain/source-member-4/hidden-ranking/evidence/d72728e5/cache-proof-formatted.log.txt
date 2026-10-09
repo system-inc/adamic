@@ -1,0 +1,3 @@
+PASS: actual failed-initializer rollback, subsequent lowering, packed facts equal fresh program, unknown private fields refused
+CAUGHT: removed-cache-entry by latent state copy: unexported IR field argumentFacts
+CAUGHT: skip-all-private by unreviewed private field accepted

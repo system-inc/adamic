@@ -1,0 +1,6 @@
+type Step = {done?: false; value: number} | {done: true; value: string};
+interface Cursor {next(): Step; return(): {done: true; value: string};}
+interface Source {[Symbol.iterator](): Cursor;}
+const cursor = {index: 0, next(): Step {this.index += 1; if(this.index > 2) {return {done: true, value: `complete:${this.index}`};} return {done: false, value: this.index};}, return(): {done: true; value: string} {console.log('closed'); return {done:true,value:'completion'};}};
+const source: Source = {[Symbol.iterator](): Cursor {return cursor;}};
+for(const value of source) {console.log(`${value}`);}

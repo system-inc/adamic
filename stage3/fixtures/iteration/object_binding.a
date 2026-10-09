@@ -1,0 +1,5 @@
+// Reduced from program.ts:798: fields of relatedInformation.
+const relatedInformation = [{ file: 'source', start: 3, length: 4, messageText: 'problem' }];
+for (const { file, start, length, messageText } of relatedInformation) {
+    console.log(`${file}:${start}:${length}:${messageText}`);
+}

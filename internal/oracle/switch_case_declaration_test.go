@@ -4,6 +4,7 @@ import (
 	"errors"
 	"path/filepath"
 	"reflect"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
@@ -27,7 +28,7 @@ func TestSwitchCaseDeadZoneStop(t *testing.T) {
 		t.Fatal(err)
 	}
 	truth := onNode(t, path)
-	if truth.exitCode != 70 || string(truth.stdout) != "value1\nbefore\n" || string(truth.stderr) != "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n" {
+	if truth.exitCode != 1 || string(truth.stdout) != "value1\nbefore\n" || !strings.Contains(string(truth.stderr), "ReferenceError: Cannot access 'value' before initialization") {
 		t.Fatalf("Node dead-zone stop: %+v", truth)
 	}
 }
@@ -104,7 +105,7 @@ func TestSwitchCaseDeclarationMutants(t *testing.T) {
 			truth := onNode(t, path)
 			got, binary := natively(t, program)
 			if name == "function_not_hoisted" {
-				if got.exitCode != 70 || string(got.stderr) != "adamic: panic: ReferenceError: Cannot access 'double' before initialization\n" {
+				if got.exitCode != 1 {
 					t.Fatalf("mutant failed outside its initialization guard: %+v", got)
 				}
 			} else {

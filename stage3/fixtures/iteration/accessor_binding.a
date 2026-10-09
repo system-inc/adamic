@@ -1,0 +1,35 @@
+// Authored accessor counterexample to the reduced object-binding shape.
+interface EntryView {
+    readonly name: string;
+    readonly original: string;
+}
+class Entry {
+    readonly index: number;
+    constructor(index: number) {
+        this.index = index;
+    }
+    get name(): string {
+        console.log(`name:${this.index}`);
+        return `name:${this.index}`;
+    }
+    get original(): string {
+        console.log(`original:${this.index}`);
+        if (this.index === 2) {
+            throw new Error(`binding:${this.index}`);
+        }
+        return `original:${this.index}`;
+    }
+}
+function visit(entries: EntryView[]): void {
+    for (const { name, original } of entries) {
+        console.log(`${name}/${original}`);
+    }
+}
+try {
+    visit([new Entry(1), new Entry(2)]);
+}
+catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message);
+    }
+}

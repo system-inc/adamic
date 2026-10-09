@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T06:10:12.231577743Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T06:10:12.239092877Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareNativeBuildChild"}
+{"Time":"2026-10-09T06:10:12.239165266Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareNativeBuildChild","Output":"=== RUN   TestTypeAwareNativeBuildChild\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:18.887454329Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareNativeBuildChild","Output":"--- PASS: TestTypeAwareNativeBuildChild (6.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:18.887512246Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareNativeBuildChild","Elapsed":6.65}
+{"Time":"2026-10-09T06:10:18.887543293Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:10:18.888867029Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t6.657s\n"}
+{"Time":"2026-10-09T06:10:18.888908651Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":6.657}

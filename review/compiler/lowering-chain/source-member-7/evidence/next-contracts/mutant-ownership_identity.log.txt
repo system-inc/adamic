@@ -1,0 +1,11 @@
+=== RUN   TestCheckedJSONPreservesIdentityAndOperandWrites
+=== RUN   TestCheckedJSONPreservesIdentityAndOperandWrites/identity
+    checked_json_test.go:25: validation must preserve the self-reaching value and its write: [{Kind:1 Site:1 Name:next Function:-1 Proven:true Why:}]
+=== RUN   TestCheckedJSONPreservesIdentityAndOperandWrites/operand_write
+    checked_json_test.go:25: validation must preserve the self-reaching value and its write: []
+--- FAIL: TestCheckedJSONPreservesIdentityAndOperandWrites (0.00s)
+    --- FAIL: TestCheckedJSONPreservesIdentityAndOperandWrites/identity (0.00s)
+    --- FAIL: TestCheckedJSONPreservesIdentityAndOperandWrites/operand_write (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.007s
+FAIL

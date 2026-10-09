@@ -1,0 +1,8 @@
+=== RUN   TestFunctionAdamicUnusedAnnotationRefused
+=== PAUSE TestFunctionAdamicUnusedAnnotationRefused
+=== CONT  TestFunctionAdamicUnusedAnnotationRefused
+    function_rulings_main_test.go:94: want Refused, got <nil>
+--- FAIL: TestFunctionAdamicUnusedAnnotationRefused (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.042s
+FAIL

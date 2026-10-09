@@ -1,0 +1,8 @@
+=== RUN   TestParserNodeArrayLayout
+=== PAUSE TestParserNodeArrayLayout
+=== CONT  TestParserNodeArrayLayout
+    node_array_layout_test.go:30: wrong slot for end: {FieldContract:{Name:end DeclaredType:number Of:1 Optional:false} Slot:2 PresenceBit:1 InitializationBit:1}
+--- FAIL: TestParserNodeArrayLayout (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.007s
+FAIL

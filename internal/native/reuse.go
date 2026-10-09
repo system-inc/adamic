@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"slices"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
@@ -294,7 +295,7 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 			if expression.Replacement != nil {
 				reached = true
 			}
-		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
 			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
 			// in a function this calls, touches finds it.
 			reached = true
@@ -336,7 +337,7 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 					if expression.Replacement != nil {
 						found = true
 					}
-				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
+				case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 					found = true
 				}
 			}, statement)
@@ -370,11 +371,19 @@ func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 	return name
 }
 
-// checkDefined emits ir.Defined's check of a value: NULL panics with the message.
+// checkDefined emits the failed read as a catchable TypeError, or an invariant panic.
 func (e *emitter) checkDefined(value string, message string) {
 	e.line("if (%s == NULL) {", value)
-	e.line("\tstatic const char message[] = %s;", cString(message))
-	e.line("\tadamic_panic(message, sizeof message - 1);")
+	if (ir.Defined{Message: message}).Throws() {
+		e.line("\tstatic adamic_string error_message = ADAMIC_STRING(%s);", cString(strings.TrimPrefix(message, "TypeError: ")))
+		thrown, _ := converted(ir.Object, ir.Union, "adamic_error_new_kind(&error_message, \"TypeError\")")
+		e.line("\tadamic_thrown = %s;", thrown)
+		e.line("\tadamic_exception_pending = true;")
+		e.checkThrown()
+	} else {
+		e.line("\tstatic const char message[] = %s;", cString(message))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+	}
 	e.line("}")
 }
 
@@ -559,7 +568,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
 		}
 		if e.program.UninitializedFields[field.Name] {
-			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
 		}
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.

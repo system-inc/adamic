@@ -1,0 +1,2 @@
+interface Item {readonly id:number;}
+const cells=[{id:1},{id:2},{id:3}];cells.reverse();cells.sort((a:Item | number,b:Item | number):number => (typeof a==='number'?a:a.id)-(typeof b==='number'?b:b.id));console.log(cells.map(x => `${x.id}`).join(","));

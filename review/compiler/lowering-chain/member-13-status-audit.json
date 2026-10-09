@@ -1,0 +1,12 @@
+[
+  {
+    "file": "stage3/fixtures/assertions/status.json",
+    "node_preserved": true,
+    "change": "Refused non-null assertion becomes Refused captured callable cycle; Node evidence unchanged"
+  },
+  {
+    "file": "stage3/fixtures/host/status.json",
+    "node_preserved": true,
+    "change": "Refused non-null assertion becomes Refused captured callable cycle; Node evidence unchanged"
+  }
+]

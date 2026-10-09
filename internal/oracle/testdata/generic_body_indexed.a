@@ -1,0 +1,5 @@
+function read<T extends { readonly value: number }>(source: T['value']): T['value'] {
+	const value: T['value'] = source;
+	return value;
+}
+console.log(`${read<{ readonly value: 1 }>(1)}`);

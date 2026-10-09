@@ -1,0 +1,15 @@
+interface Host { label: string; callback: ((value: string) => string) | undefined }
+const host: Host = {
+    label: `host${1}`,
+    callback: function(this: {readonly label: string}, value: string): string { return `${this.label}:${value}`; },
+};
+function replace(): string {
+    console.log('arg');
+    host.callback = (value: string): string => `replacement:${value}`;
+    return `value${2}`;
+}
+function invoke(value: Host): void { console.log(value.callback?.(replace()) ?? 'absent'); }
+invoke(host);
+invoke(host);
+host.callback = undefined;
+invoke(host);

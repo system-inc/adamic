@@ -1,0 +1,5 @@
+function read(): number { return value; }
+try { console.log(`${read()}`); }
+catch (error) { if (error instanceof ReferenceError) console.log(`${error.name}: ${error.message}`); else throw error; }
+const value = 42;
+console.log(`${read()}`);

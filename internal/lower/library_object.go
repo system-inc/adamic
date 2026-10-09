@@ -16,6 +16,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
+	if len(written) > 0 && l.hasNamespaceObjects() && (name == "freeze" || name == "defineProperty" || name == "defineProperties" || name == "getOwnPropertyDescriptor" || name == "getOwnPropertyDescriptors") {
+		return nil, true, l.notYet(node, "descriptor reflection on an escaped namespace object (Object."+name+")")
+	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
 		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
@@ -61,6 +64,20 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
+		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
+			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+				value, err := l.expression(written[0])
+				if err != nil {
+					return nil, true, err
+				}
+				call.Arguments = []ir.Expression{value}
+				call.Returns = ir.Array
+				return call, true, nil
+			}
+		}
+		if l.errorAncestry(l.checker.GetTypeAtLocation(written[0])) {
+			return nil, true, l.notYet(written[0], "Object."+name+" on Error (its inherited name and non-enumerable own descriptors need presence representation)")
+		}
 		// Assignment and freezing retain their existing exact-shape requirement.
 		// A plain const's literal initializer proves the complete shape, including field presence.
 		shape := ast.SkipParentheses(written[0])
@@ -75,12 +92,19 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				return nil, true, err
 			}
 		}
-		if name != "keys" && name != "values" && name != "entries" && !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if name != "keys" && name != "values" && name != "entries" && !(name == "hasOwn" && l.namespaceType(l.checker.GetTypeAtLocation(written[0]))) && !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
 		if err != nil {
 			return nil, true, err
+		}
+		if name == "keys" && value.Type() == ir.Array {
+			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+				call.Arguments = []ir.Expression{value}
+				call.Returns = ir.Array
+				return call, true, nil
+			}
 		}
 		if value.Type() != ir.Object || l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) || checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
@@ -234,7 +258,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 }
 
 // objectCanFreeze is conservative across aliases and calls. A try around a write in a program
-// that freezes objects is NotYet until library TypeErrors participate in exception cleanup.
+// that freezes objects needs checked writes and catchable library TypeErrors.
 func (l *lowering) objectCanFreeze() bool {
 	found := false
 	walk(l.result.Main, func(node any) bool {

@@ -1,0 +1,8 @@
+=== RUN   TestParserNodeArrayLayout
+=== PAUSE TestParserNodeArrayLayout
+=== CONT  TestParserNodeArrayLayout
+    node_array_layout_test.go:30: wrong slot for hasTrailingComma: {FieldContract:{Name:hasTrailingComma DeclaredType:boolean Of:2 Optional:false} Slot:3 PresenceBit:2 InitializationBit:2}
+--- FAIL: TestParserNodeArrayLayout (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.007s
+FAIL

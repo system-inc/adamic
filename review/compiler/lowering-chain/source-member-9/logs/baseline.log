@@ -1,0 +1,91 @@
+=== RUN   TestRefusalRulingsBaseline
+=== PAUSE TestRefusalRulingsBaseline
+=== CONT  TestRefusalRulingsBaseline
+=== RUN   TestRefusalRulingsBaseline/function-unused.a
+    refusal_rulings_baseline_test.go:14: gate cache node hit
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="ok\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=0 stdout="ok\n" stderr=""
+=== RUN   TestRefusalRulingsBaseline/function-unused.ts
+    refusal_rulings_baseline_test.go:14: gate cache node hit
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="ok\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=0 stdout="ok\n" stderr=""
+=== RUN   TestRefusalRulingsBaseline/function-length.a
+    refusal_rulings_baseline_test.go:14: gate cache node miss
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="undefined undefined\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native build: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2562552638/main.c:67:55: error: incompatible pointer types passing 'adamic_closure *' (aka 'struct adamic_closure *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           67 |         double adamic_temporary_11 = adamic_function_0_arity(adamic_temporary_10);
+              |                                                              ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-2562552638/main.c:20:55: note: passing argument to parameter 'adamic_local_0_given' here
+           20 | static double adamic_function_0_arity(adamic_object * adamic_local_0_given) {
+              |                                                       ^
+        /tmp/adamic-gate/adamic-build-2562552638/main.c:70:55: error: incompatible pointer types passing 'adamic_closure *' (aka 'struct adamic_closure *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           70 |         double adamic_temporary_14 = adamic_function_0_arity(adamic_temporary_13);
+              |                                                              ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-2562552638/main.c:20:55: note: passing argument to parameter 'adamic_local_0_given' here
+           20 | static double adamic_function_0_arity(adamic_object * adamic_local_0_given) {
+              |                                                       ^
+        2 errors generated.
+=== RUN   TestRefusalRulingsBaseline/function-length.ts
+    refusal_rulings_baseline_test.go:14: gate cache node miss
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="undefined undefined\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native build: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3295223412/main.c:67:55: error: incompatible pointer types passing 'adamic_closure *' (aka 'struct adamic_closure *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           67 |         double adamic_temporary_11 = adamic_function_0_arity(adamic_temporary_10);
+              |                                                              ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-3295223412/main.c:20:55: note: passing argument to parameter 'adamic_local_0_given' here
+           20 | static double adamic_function_0_arity(adamic_object * adamic_local_0_given) {
+              |                                                       ^
+        /tmp/adamic-gate/adamic-build-3295223412/main.c:70:55: error: incompatible pointer types passing 'adamic_closure *' (aka 'struct adamic_closure *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           70 |         double adamic_temporary_14 = adamic_function_0_arity(adamic_temporary_13);
+              |                                                              ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-3295223412/main.c:20:55: note: passing argument to parameter 'adamic_local_0_given' here
+           20 | static double adamic_function_0_arity(adamic_object * adamic_local_0_given) {
+              |                                                       ^
+        2 errors generated.
+=== RUN   TestRefusalRulingsBaseline/function-call.a
+    refusal_rulings_baseline_test.go:13: lower: /tmp/adamic-gate/TestRefusalRulingsBaselinefunction-call.a1487380378/001/main.a:1:36: stage 0 can't lower a call to an Identifier yet
+=== RUN   TestRefusalRulingsBaseline/function-call.ts
+    refusal_rulings_baseline_test.go:13: lower: /tmp/adamic-gate/TestRefusalRulingsBaselinefunction-call.ts731505312/001/main.ts:1:36: stage 0 can't lower a call to an Identifier yet
+=== RUN   TestRefusalRulingsBaseline/merge-unused.a
+    refusal_rulings_baseline_test.go:14: gate cache node hit
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="ok\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=0 stdout="ok\n" stderr=""
+=== RUN   TestRefusalRulingsBaseline/merge-unused.ts
+    refusal_rulings_baseline_test.go:14: gate cache node hit
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="ok\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=0 stdout="ok\n" stderr=""
+=== RUN   TestRefusalRulingsBaseline/merge-read.a
+    refusal_rulings_baseline_test.go:14: gate cache node miss
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="undefined\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=70 stdout="" stderr="adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+=== RUN   TestRefusalRulingsBaseline/merge-read.ts
+    refusal_rulings_baseline_test.go:14: gate cache node miss
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="undefined\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=70 stdout="" stderr="adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+=== RUN   TestRefusalRulingsBaseline/merge-present.a
+    refusal_rulings_baseline_test.go:14: gate cache node miss
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="7\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=0 stdout="7\n" stderr=""
+=== RUN   TestRefusalRulingsBaseline/merge-present.ts
+    refusal_rulings_baseline_test.go:14: gate cache node miss
+    refusal_rulings_baseline_test.go:14: js exit=0 stdout="7\n" stderr=""
+    refusal_rulings_baseline_test.go:15: native exit=0 stdout="7\n" stderr=""
+--- PASS: TestRefusalRulingsBaseline (1.89s)
+    --- PASS: TestRefusalRulingsBaseline/function-unused.a (0.22s)
+    --- PASS: TestRefusalRulingsBaseline/function-unused.ts (0.18s)
+    --- PASS: TestRefusalRulingsBaseline/function-length.a (0.11s)
+    --- PASS: TestRefusalRulingsBaseline/function-length.ts (0.10s)
+    --- PASS: TestRefusalRulingsBaseline/function-call.a (0.03s)
+    --- PASS: TestRefusalRulingsBaseline/function-call.ts (0.03s)
+    --- PASS: TestRefusalRulingsBaseline/merge-unused.a (0.17s)
+    --- PASS: TestRefusalRulingsBaseline/merge-unused.ts (0.17s)
+    --- PASS: TestRefusalRulingsBaseline/merge-read.a (0.22s)
+    --- PASS: TestRefusalRulingsBaseline/merge-read.ts (0.22s)
+    --- PASS: TestRefusalRulingsBaseline/merge-present.a (0.22s)
+    --- PASS: TestRefusalRulingsBaseline/merge-present.ts (0.23s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.903s

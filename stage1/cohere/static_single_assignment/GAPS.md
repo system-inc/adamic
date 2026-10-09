@@ -49,9 +49,7 @@ const found = states.get(0)?.definitions.get(1);
 gaps/2_call_through_optional_chain.ts:8:15: stage 0 can't lower a call through ?. (an optional call) yet        (Node prints 7 undefined)
 ```
 
-Stage 0 knows it: `internal/lower/lower_test.go` pins the same message for a method called through `?.`. It's here because the port met it.
-
-**Around it:** `renameReturns` (construct.ts) reads the block's state first and asks it only when there is one.
+**Closed:** optional-chain lowering saves the state, skips the lookup when it is absent, and preserves Map's lookup contract. The gap test now requires native output `7 undefined`, with sanitizers and no leaks. `renameReturns` (construct.ts) uses the original optional chain again; its workaround is removed.
 
 ## The cycle rule's cost
 

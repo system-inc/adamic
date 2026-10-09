@@ -1,0 +1,4 @@
+namespace State { export let z = 1; }
+namespace State { export let a = 2; }
+const held = State;
+console.log(Object.keys(held).join(","));

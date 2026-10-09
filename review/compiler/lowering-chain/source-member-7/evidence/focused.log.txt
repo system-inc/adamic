@@ -1,0 +1,122 @@
+=== RUN   TestCheckedAny
+=== RUN   TestCheckedAny/property
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="node\n" stderr="" exit=0; backends stdout="node\n" stderr="" exit=0
+=== RUN   TestCheckedAny/property_misfit
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:65: gate cache node hit
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "14\n"
+    checked_any_test.go:96: source Node stdout="14\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: config.value needs string, found number\n" exit=70
+=== RUN   TestCheckedAny/parameter
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="15\n" stderr="" exit=0; backends stdout="15\n" stderr="" exit=0
+=== RUN   TestCheckedAny/parameter_misfit
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:65: gate cache node hit
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "wrong1\n"
+    checked_any_test.go:96: source Node stdout="wrong1\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: value needs number, found string\n" exit=70
+=== RUN   TestCheckedAny/arithmetic
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="15\n" stderr="" exit=0; backends stdout="15\n" stderr="" exit=0
+=== RUN   TestCheckedAny/arithmetic_misfit
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:65: gate cache node hit
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "wrong1\n"
+    checked_any_test.go:96: source Node stdout="wrong1\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: value needs number, found string\n" exit=70
+=== RUN   TestCheckedAny/boolean
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="false\n" stderr="" exit=0; backends stdout="false\n" stderr="" exit=0
+=== RUN   TestCheckedAny/transport
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="number\nstring\n" stderr="" exit=0; backends stdout="number\nstring\n" stderr="" exit=0
+=== RUN   TestCheckedAny/validated
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="node\ndiagnostic: expected string\n" stderr="" exit=0; backends stdout="node\ndiagnostic: expected string\n" stderr="" exit=0
+=== RUN   TestCheckedAny/config_validated
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n" stderr="" exit=0; backends stdout="node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n" stderr="" exit=0
+=== RUN   TestCheckedAny/property_null_misfit
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:81: gate cache node hit
+    checked_any_test.go:89: null receiver mutant caught: JavaScript exit=70 stderr="adamic: panic: TypeError: Cannot read properties of null (reading 'value')\n"; native exit=70 stderr="adamic: panic: dynamic property read on null or undefined\n"
+    checked_any_test.go:96: source Node stdout="" stderr="adamic: panic: TypeError: Cannot read properties of null (reading 'value')\n" exit=70; backends stdout="" stderr="adamic: panic: checked any: config needs non-null property receiver, found null\n" exit=70
+=== RUN   TestCheckedAny/string_length
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="3\n1\n" stderr="" exit=0; backends stdout="3\n1\n" stderr="" exit=0
+=== RUN   TestCheckedAny/assertion
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:96: source Node stdout="15\n" stderr="" exit=0; backends stdout="15\n" stderr="" exit=0
+=== RUN   TestCheckedAny/assertion_misfit
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:65: gate cache node hit
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "wrong1\n"
+    checked_any_test.go:96: source Node stdout="wrong1\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: 'wrong' as any needs number, found string\n" exit=70
+=== RUN   TestCheckedAny/stale_misfit
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:65: gate cache node hit
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "14\n"
+    checked_any_test.go:96: source Node stdout="14\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: value needs string, found number\n" exit=70
+=== RUN   TestCheckedAny/config_diagnostics
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n" stderr="" exit=0; backends stdout="true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n" stderr="" exit=0
+--- PASS: TestCheckedAny (4.29s)
+    --- PASS: TestCheckedAny/property (0.31s)
+    --- PASS: TestCheckedAny/property_misfit (0.24s)
+    --- PASS: TestCheckedAny/parameter (0.26s)
+    --- PASS: TestCheckedAny/parameter_misfit (0.23s)
+    --- PASS: TestCheckedAny/arithmetic (0.24s)
+    --- PASS: TestCheckedAny/arithmetic_misfit (0.26s)
+    --- PASS: TestCheckedAny/boolean (0.26s)
+    --- PASS: TestCheckedAny/transport (0.23s)
+    --- PASS: TestCheckedAny/validated (0.24s)
+    --- PASS: TestCheckedAny/config_validated (0.26s)
+    --- PASS: TestCheckedAny/property_null_misfit (0.38s)
+    --- PASS: TestCheckedAny/string_length (0.25s)
+    --- PASS: TestCheckedAny/assertion (0.27s)
+    --- PASS: TestCheckedAny/assertion_misfit (0.26s)
+    --- PASS: TestCheckedAny/stale_misfit (0.25s)
+    --- PASS: TestCheckedAny/config_diagnostics (0.35s)
+=== RUN   TestCheckedAnyUnsupportedContracts
+=== RUN   TestCheckedAnyUnsupportedContracts/structural
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsstructural3139389500/001/boundary.ts:1:55: stage 0 can't lower checked any used as { value: number; } (a scalar tag does not establish this contract) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/callable
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractscallable3188180265/001/boundary.ts:1:44: stage 0 can't lower a call to an Identifier yet
+=== RUN   TestCheckedAnyUnsupportedContracts/prototype
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsprototype648476387/001/boundary.ts:1:54: stage 0 can't lower a dynamic primitive prototype property (callable descriptors) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/literal_result
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsliteral_result1849379603/001/boundary.ts:1:44: stage 0 can't lower checked any used as 1 (a scalar tag does not establish this contract) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/array_view
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsarray_view1480385490/001/boundary.ts:1:15: stage 0 can't lower a value of type any[] yet
+=== RUN   TestCheckedAnyUnsupportedContracts/field_view
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsfield_view851431488/001/boundary.ts:1:53: stage 0 can't lower an any field in a typed object (dynamic slot adaptation is not established) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/staged_field
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsstaged_field3075967774/001/boundary.ts:2:45: stage 0 can't lower a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads) yet
+--- PASS: TestCheckedAnyUnsupportedContracts (0.21s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/structural (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/callable (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/prototype (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/literal_result (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/array_view (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/field_view (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/staged_field (0.03s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=36 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.510s
