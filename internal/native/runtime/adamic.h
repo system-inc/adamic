@@ -421,7 +421,7 @@ typedef struct adamic_array {
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
 	// An interior fixed layout, owned by this allocation, never a wrapper.
-	adamic_object *metadata;
+	adamic_object *metadata; // Never retained, never escapes as a value; retaining then releasing its zero-count header frees interior array storage.
 } adamic_array;
 adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras);
 adamic_array *adamic_node_array_keys(const adamic_array *array);

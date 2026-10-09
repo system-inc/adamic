@@ -1,0 +1,191 @@
+[
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+    "sha256": "a3e359099215288bcda467d841620642a6c5438f187ea34b615a9244e89edb96",
+    "node": {
+      "exit": 0,
+      "stdout": "missing\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'value' is unset at assignment via source.value\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'value' is unset at assignment via source.value\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+    "sha256": "aea38b33c7c7d69d480f36f2d9085d561f6f0e4b066aed3d537f52cfb366677c",
+    "node": {
+      "exit": 0,
+      "stdout": "missing\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'target' is unset at assignment result via target = value\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'target' is unset at assignment result via target = value\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+    "sha256": "2a584b906643006c31238d1f66c6512368b3ac7f01e40da1e425dbfdd0579bde",
+    "node": {
+      "exit": 0,
+      "stdout": "before\nunset\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+    "sha256": "be446786dd8cff3c75cd47f63d7ecc081ce94188600308b6aa72ce6b999fee6b",
+    "node": {
+      "exit": 0,
+      "stdout": "before\nset\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "before\n",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+    "sha256": "ae34cc94244bc08b07d01e2a3b83a8b6e0e322037099c9b5e8037f6231292af9",
+    "node": {
+      "exit": 0,
+      "stdout": "present\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via saved\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via saved\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+    "sha256": "8dae05151f30455411da485778ed1ee5f04fcaba9d7719b97283d5b1a926b761",
+    "node": {
+      "exit": 0,
+      "stdout": "missing\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'target' is unset at return via target = value\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'target' is unset at return via target = value\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+    "sha256": "c8ab5676c003b08e57ff4f9067455b837e5e2597ff5e92d47361a3822144450b",
+    "node": {
+      "exit": 0,
+      "stdout": "missing\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via saved\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via saved\n"
+    },
+    "agreement": false,
+    "listed": true
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/factory-use.a",
+    "sha256": "69bc92f705cff5369dafcaa7f42f6338569c132a80d0783607775446b64b7e54",
+    "node": {
+      "exit": 70,
+      "stdout": "true\n",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'toUpperCase')\n"
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "true\n",
+      "stderr": "adamic: panic: unset use failed: field 'text', factory 'createBaseNode', use 'node.text' at /tmp/delta-negatives-slice5/stage3/parser-ahead/rulings/factory-use.a:5:13; expected string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "true\n",
+      "stderr": "adamic: panic: unset use failed: field 'text', factory 'createBaseNode', use 'node.text' at /tmp/delta-negatives-slice5/stage3/parser-ahead/rulings/factory-use.a:5:13; expected string\n"
+    },
+    "agreement": true,
+    "listed": false
+  },
+  {
+    "path": "stage3/parser-next/speculation/misfit.a",
+    "sha256": "1209cb3741181e653d4c0d6099e8f03b8284c74328958a7eb2fedb512a9c8487",
+    "node": {
+      "exit": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: speculative result failed: callback misfit at /tmp/delta-negatives-slice5/stage3/parser-next/speculation/misfit.a:3:14; expected number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: speculative result failed: callback misfit at /tmp/delta-negatives-slice5/stage3/parser-next/speculation/misfit.a:3:14; expected number\n"
+    },
+    "agreement": false,
+    "listed": true
+  }
+]
