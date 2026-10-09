@@ -29,3 +29,5 @@ Final lower fixture seconds: P35 0.29, P36 0.29, P37 0.14, P38 0.14, P38Number 0
 Setup: GOPROXY=https://proxy.golang.org|direct; bash cloud/setup.sh. Timing lines: Go ready 0.064s, Node ready 0.085s, clang ready 0.514s, markdown ready 1.103s, submodules ready 26.074s, Go build ready 305.162s, done 305.370s. nproc=5; cgroup quota=4 CPUs. The printed environment path was /workspace/adamic-tools/env.sh; /opt/adamic-tools/env.sh does not exist here. The required full lower run initially found missing @types/node; npm ci --prefix stage3/api installed the pinned dependencies, after which it passed. No dependency manifests changed.
 
 Delivery advances task #1fk58py's valid-program view correctness work, items 134 and 136. Item 137 and Node agreement for the deliberately wrong original p51 are not claimed. No full repository gate was run.
+
+Integration lane checks passed: lane checks 1.2 s: gofmt and tools on 7 Go files, t.Parallel on 2 test packages; vet 2 packages. The checkout initially fetched only main; explicit tracking ref fetches made origin/devtools/fast-gate and origin/cloud/merge-tree available, then the required literal lane-check command passed.
