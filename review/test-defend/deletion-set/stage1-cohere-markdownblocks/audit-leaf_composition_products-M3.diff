@@ -1,0 +1,9 @@
+--- a/stage1/cohere/markdownblocks/root.ts
++++ b/stage1/cohere/markdownblocks/root.ts
+@@ -96,6 +96,5 @@
+         }
+         parts.push(document);
+     }
+-    parts.push(arena.hardline());
+     return arena.concat(parts);
+ }

@@ -1,0 +1,67 @@
+[
+  {
+    "mutant": "audit-leaf_composition_products-M1",
+    "wall_seconds": 269.114,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "audit-leaf_composition_products-M2",
+    "wall_seconds": 389.517,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "audit-leaf_composition_products-M3",
+    "wall_seconds": 246.211,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "audit-mdast_errors-M1",
+    "wall_seconds": 459.447,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "audit-structure_layout_shards-M1",
+    "wall_seconds": 172.474,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "audit-structure_layout_shards-M2",
+    "wall_seconds": 307.915,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-leaf_composition_products-layout-D1",
+    "wall_seconds": 301.273,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-leaf_composition_products-layout-D3",
+    "wall_seconds": 136.481,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-mdast_errors-D2",
+    "wall_seconds": 684.783,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-mdast_errors-D3",
+    "wall_seconds": 96.307,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-mdast_errors-D4",
+    "wall_seconds": 269.842,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-structure_layout_shards-D3",
+    "wall_seconds": 112.373,
+    "stopped_after_clean_failure": true
+  },
+  {
+    "mutant": "defend-structure_layout_shards-D4",
+    "wall_seconds": 112.384,
+    "stopped_after_clean_failure": true
+  }
+]

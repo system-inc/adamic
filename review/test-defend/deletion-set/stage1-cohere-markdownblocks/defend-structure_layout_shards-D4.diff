@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/tables.ts
++++ b/stage1/cohere/markdownblocks/tables.ts
+@@ -48,7 +48,7 @@
+     const delimiter: string[] = [];
+     for(let index = 0; index < widths.length && index < header.length; index++) {
+         const align = frame.align[index] ?? '';
+-        const first = align === 'center' || align === 'left' ? ':' : '-';
++        const first = align === 'center' || align === 'right' ? ':' : '-';
+         const last = align === 'center' || align === 'right' ? ':' : '-';
+         delimiter.push(first + '-'.repeat((widths[index] ?? panic('delimiter width')) - 2) + last);
+     }

@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/markdownblocks/codeblocks.ts b/stage1/cohere/markdownblocks/codeblocks.ts
+index 847b5a90..5dcc67de 100644
+--- a/stage1/cohere/markdownblocks/codeblocks.ts
++++ b/stage1/cohere/markdownblocks/codeblocks.ts
+@@ -31,7 +31,7 @@ export function printCodeBlock(arena: DocumentArena, frame: CodeBlockInterface):
+         return arena.align(alignment, arena.concat([arena.text(alignment), arena.concat(body)]));
+     }
+     const style = fenceStyle(frame.value);
+-    const metadata = frame.metadata === '' ? '' : ` ${frame.metadata}`;
++    const metadata = '';
+     return arena.concat([
+         arena.text(style),
+         arena.text(frame.language),

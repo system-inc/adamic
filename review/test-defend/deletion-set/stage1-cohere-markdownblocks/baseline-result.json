@@ -1,0 +1,10 @@
+{
+  "exit": 0,
+  "package_seconds": 904.913,
+  "command_wall_seconds_from_log_birth_and_last_write": 909.285,
+  "top_level_selected": 711,
+  "top_level_failures": [],
+  "skip": "^(TestMarkdownLayout|TestMarkdownListLayout|TestMarkdownStructureLayout|TestMarkdownTableLayout|TestMdastIdentifierWitnesses)(Union|$|_|/)|^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$",
+  "fresh_cache": "/tmp/deletion-markdown/cache/baseline",
+  "ADAMIC_GATE_UNCACHED": "1"
+}

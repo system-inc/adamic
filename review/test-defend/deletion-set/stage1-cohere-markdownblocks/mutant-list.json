@@ -1,0 +1,268 @@
+[
+  {
+    "mutant": "audit-leaf_composition_products-M1",
+    "original_mutant": "M1",
+    "file_line": "stage1/cohere/markdownblocks/codeblocks.ts:20",
+    "file": "review/test-audit/stage1-cohere-markdownblocks-leaf_composition_products/M1.diff",
+    "branch": "test-audit/stage1-cohere-markdownblocks-leaf_composition_products",
+    "candidates_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "other_rows_failed": [],
+    "recorded_rows_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/audit-leaf_composition_products-M1.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "audit-leaf_composition_products-M2",
+    "original_mutant": "M2",
+    "file_line": "stage1/cohere/markdownblocks/htmlblocks.ts:15",
+    "file": "review/test-audit/stage1-cohere-markdownblocks-leaf_composition_products/M2.diff",
+    "branch": "test-audit/stage1-cohere-markdownblocks-leaf_composition_products",
+    "candidates_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "other_rows_failed": [],
+    "recorded_rows_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/audit-leaf_composition_products-M2.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "audit-leaf_composition_products-M3",
+    "original_mutant": "M3",
+    "file_line": "stage1/cohere/markdownblocks/root.ts:99",
+    "file": "review/test-audit/stage1-cohere-markdownblocks-leaf_composition_products/M3.diff",
+    "branch": "test-audit/stage1-cohere-markdownblocks-leaf_composition_products",
+    "candidates_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "other_rows_failed": [],
+    "recorded_rows_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/audit-leaf_composition_products-M3.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "audit-mdast_errors-M1",
+    "original_mutant": "M1",
+    "file_line": "stage1/cohere/markdownblocks/mdastCompile.ts:620",
+    "file": "review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M1.diff",
+    "branch": "test-audit/stage1-cohere-markdownblocks-mdast_errors",
+    "candidates_failed": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "other_rows_failed": [
+      "TestNativeMdastConstruction"
+    ],
+    "recorded_rows_failed": [
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/audit-mdast_errors-M1.diff",
+    "stale": false,
+    "apply_check": "",
+    "gathered_hunk_header_line": "stage1/cohere/markdownblocks/mdastCompile.ts:617"
+  },
+  {
+    "mutant": "audit-structure_layout_shards-M1",
+    "original_mutant": "M1",
+    "file_line": "stage1/cohere/markdownblocks/width.ts:23",
+    "file": "review/test-audit/stage1-cohere-markdownblocks-structure_layout_shards/M1.diff",
+    "branch": "test-audit/stage1-cohere-markdownblocks-structure_layout_shards",
+    "candidates_failed": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family"
+    ],
+    "other_rows_failed": [
+      "TestMarkdownUnicodeWidths",
+      "TestMarkdownWhitespaceLayout family"
+    ],
+    "recorded_rows_failed": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family",
+      "TestMarkdownWhitespaceLayout family",
+      "TestMarkdownUnicodeWidths"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/audit-structure_layout_shards-M1.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "audit-structure_layout_shards-M2",
+    "original_mutant": "M2",
+    "file_line": "stage1/cohere/markdownblocks/structure.ts:51",
+    "file": "review/test-audit/stage1-cohere-markdownblocks-structure_layout_shards/M2.diff",
+    "branch": "test-audit/stage1-cohere-markdownblocks-structure_layout_shards",
+    "candidates_failed": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family"
+    ],
+    "other_rows_failed": [
+      "TestMarkdownWhitespaceLayout family"
+    ],
+    "recorded_rows_failed": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family",
+      "TestMarkdownWhitespaceLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/audit-structure_layout_shards-M2.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-leaf_composition_products-layout-D1",
+    "original_mutant": "D1",
+    "file_line": "stage1/cohere/markdownblocks/codeblocks.ts:34",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/session-2b1be383-layout/D1.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-leaf_composition_products",
+    "candidates_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "other_rows_failed": [],
+    "recorded_rows_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-leaf_composition_products-layout-D1.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-leaf_composition_products-layout-D3",
+    "original_mutant": "D3",
+    "file_line": "stage1/cohere/markdownblocks/root.ts:76",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/session-2b1be383-layout/D3.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-leaf_composition_products",
+    "candidates_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "other_rows_failed": [],
+    "recorded_rows_failed": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-leaf_composition_products-layout-D3.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-mdast_errors-D2",
+    "original_mutant": "D2",
+    "file_line": "stage1/cohere/markdownblocks/identifierCaseValues.ts:5",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-mdast_errors/session-2b1be383/D2.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-mdast_errors",
+    "candidates_failed": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "other_rows_failed": [
+      "TestMdastIdentifierScalars"
+    ],
+    "recorded_rows_failed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-mdast_errors-D2.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-mdast_errors-D3",
+    "original_mutant": "D3",
+    "file_line": "stage1/cohere/markdownblocks/identifierCaseValues.ts:13",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-mdast_errors/session-2b1be383/D3.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-mdast_errors",
+    "candidates_failed": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "other_rows_failed": [
+      "TestMdastIdentifierScalars"
+    ],
+    "recorded_rows_failed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-mdast_errors-D3.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-mdast_errors-D4",
+    "original_mutant": "D4",
+    "file_line": "stage1/cohere/markdownblocks/mdastCompile.ts:109",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-mdast_errors/session-2b1be383/D4.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-mdast_errors",
+    "candidates_failed": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "other_rows_failed": [
+      "TestNativeMdastConstruction"
+    ],
+    "recorded_rows_failed": [
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-mdast_errors-D4.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-structure_layout_shards-D3",
+    "original_mutant": "D3",
+    "file_line": "stage1/cohere/markdownblocks/structure.ts:25",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-structure_layout_shards/D3.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-structure_layout_shards",
+    "candidates_failed": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family"
+    ],
+    "other_rows_failed": [
+      "TestMarkdownLeafComposition family"
+    ],
+    "recorded_rows_failed": [
+      "TestMarkdownLeafComposition family",
+      "TestMarkdownTableLayout family",
+      "TestMarkdownStructureLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-structure_layout_shards-D3.diff",
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "defend-structure_layout_shards-D4",
+    "original_mutant": "D4",
+    "file_line": "stage1/cohere/markdownblocks/tables.ts:51",
+    "file": "review/test-defend/stage1-cohere-markdownblocks-structure_layout_shards/D4.diff",
+    "branch": "test-defend/stage1-cohere-markdownblocks-structure_layout_shards",
+    "candidates_failed": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family"
+    ],
+    "other_rows_failed": [
+      "TestMarkdownLeafComposition family"
+    ],
+    "recorded_rows_failed": [
+      "TestMarkdownLeafComposition family",
+      "TestMarkdownTableLayout family",
+      "TestMarkdownStructureLayout family"
+    ],
+    "diff": "review/test-defend/deletion-set/stage1-cohere-markdownblocks/defend-structure_layout_shards-D4.diff",
+    "stale": false,
+    "apply_check": ""
+  }
+]

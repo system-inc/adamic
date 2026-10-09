@@ -1,0 +1,14 @@
+{
+  "main": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "branches": {
+    "test-audit/stage1-cohere-markdownblocks-leaf_composition_products": "c3ae782fafe2d9958c3c786318bb3cc9af44e882",
+    "test-audit/stage1-cohere-markdownblocks-mdast_errors": "fe0627f264a67af61ec4110ade83d9b00f4b075e",
+    "test-audit/stage1-cohere-markdownblocks-structure_layout_shards": "c8217021506f966b78746832e866f92c621f8d0d",
+    "test-defend/stage1-cohere-markdownblocks-leaf_composition_products": "943bd8202dc0c202a4cba7fa5ed8594d97331829",
+    "test-defend/stage1-cohere-markdownblocks-mdast_errors": "9ca81725f2dc4affc0603efce590b845b6ac05fd",
+    "test-defend/stage1-cohere-markdownblocks-structure_layout_shards": "6729f12044941b8ac66c00260dd8c98eeacda7da"
+  },
+  "submodules": "7945d102a6c18dd36adf9114a758ce646e8b2359 cohere (7945d102)",
+  "nproc": "5",
+  "baseline_skip": "^(TestMarkdownLayout|TestMarkdownListLayout|TestMarkdownStructureLayout|TestMarkdownTableLayout|TestMdastIdentifierWitnesses)(Union|$|_|/)|^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+}

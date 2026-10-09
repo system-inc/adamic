@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/markdownblocks/root.ts b/stage1/cohere/markdownblocks/root.ts
+index 9bbd134e..21145199 100644
+--- a/stage1/cohere/markdownblocks/root.ts
++++ b/stage1/cohere/markdownblocks/root.ts
+@@ -73,7 +73,7 @@ export function printRoot(arena: DocumentArena, source: string, children: readon
+             const last = children[rangeEnd] ?? panic('ignore end child');
+             document = arena.concat([
+                 arena.text(child.value),
+-                arena.text(source.slice(child.endOffset, last.startOffset)),
++                arena.text(source.slice(child.endOffset + 1, last.startOffset)),
+                 arena.text(last.value),
+             ]);
+         }

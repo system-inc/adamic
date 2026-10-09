@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/mdastCompile.ts
++++ b/stage1/cohere/markdownblocks/mdastCompile.ts
+@@ -106,7 +106,7 @@
+         const node = this.top();
+         if(this.inReference) {
+             node.type += 'Reference';
+-            node.referenceType = this.referenceType === '' ? 'shortcut' : this.referenceType;
++            node.referenceType = this.referenceType === '' ? 'collapsed' : this.referenceType;
+             node.url = '';
+             node.title = '';
+             node.hasTitle = false;

@@ -1,0 +1,11 @@
+Baseline clean main detached, pinned submodule, warm env.sh, ADAMIC_GATE_UNCACHED=1 and fresh per-run product cache. Baseline wall 909.285s, binary 904.913s, 711 passing top-level tests, zero skips or failures.
+Selected list and apply checks were written before the baseline. All 13 diffs apply unchanged to current main.
+The supplied skip expression misses TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownRootLayout and the Union names; replay skips those too to remove complete candidate families. As requested, prefix _Setup rows also remain skipped. Exact skip expression is in provenance.json.
+Stopped runs contain only observed failures; other rows remain unasked. A clean non-witness failure suffices to show a remaining catcher. Passing mutants must complete. Witness failures and attributable panics are separately recorded.
+Initial disk /tmp 6.4GB free, /workspace 5.5GB; removed only earlier named unit scratch under /tmp. After cleanup /tmp6.5GB. The /tmp filesystem itself is8.8GB so15GB free is unattainable. No tools or repository directories were deleted.
+IDs are namespaced by branch and session to avoid M1/D1 collisions. Standalone diffs and prior recorded rows are in mutant-list.json; precise new commands/caches/wall seconds and observed rows are in matrix.json. No production or test changes are committed.
+TestMarkdownListLayout: no gathered mutant ever failed this row; it guards nothing demonstrated in the supplied evidence
+TestMarkdownTableLayout: no gathered mutant ever failed this row; it guards nothing demonstrated in the supplied evidence
+Environment restart interrupted the Python monitor during defend-mdast_errors-D2. Its Go process survived and recorded a clean failure in TestMdastIdentifierScalars. The run was stopped, the production edit reversed, and the saved result recovered before the last four replays. Its longer wall time includes the interruption.
+Total measured mutant replay wall seconds:3558.121. Baseline wall seconds:909.285.
+All 13 replays retain a clean non-witness catch; no stale diff, panic or broken replay. All production edits restored before publication.
