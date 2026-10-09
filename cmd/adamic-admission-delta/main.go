@@ -4,12 +4,16 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 )
@@ -35,19 +39,32 @@ type manifest struct {
 }
 type entry struct {
 	program
-	Corpus string      `json:"corpus"`
-	Class  string      `json:"class"`
-	Base   observation `json:"base_compile"`
-	Head   observation `json:"compile"`
+	Corpus            string       `json:"corpus"`
+	Class             string       `json:"class"`
+	Base              observation  `json:"base_compile"`
+	Head              observation  `json:"compile"`
+	Node              *observation `json:"node,omitempty"`
+	JavaScript        *observation `json:"javascript,omitempty"`
+	Native            *observation `json:"native,omitempty"`
+	JavaScriptCompile *observation `json:"javascript_compile,omitempty"`
+	NativeCompile     *observation `json:"native_compile,omitempty"`
+	Agree             *bool        `json:"agree,omitempty"`
+	Sampled           bool         `json:"sampled"`
 }
 type report struct {
-	Base          string  `json:"base"`
-	Head          string  `json:"head"`
-	GeneratorBlob string  `json:"generator_blob"`
-	ManifestBlob  string  `json:"manifest_blob"`
-	Admitted      int     `json:"admitted"`
-	Programs      []entry `json:"programs"`
-	Verdict       string  `json:"verdict"`
+	Base              string   `json:"base"`
+	Head              string   `json:"head"`
+	GeneratorBlob     string   `json:"generator_blob"`
+	ManifestBlob      string   `json:"manifest_blob"`
+	Admitted          int      `json:"admitted"`
+	Programs          []entry  `json:"programs"`
+	Verdict           string   `json:"verdict"`
+	Corpora           []corpus `json:"corpora"`
+	SamplingSeed      string   `json:"sampling_seed"`
+	SamplingSize      int      `json:"sampling_size"`
+	Omitted           int      `json:"omitted"`
+	BudgetSeconds     float64  `json:"budget_seconds"`
+	BudgetUsedSeconds float64  `json:"budget_used_seconds"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -122,6 +139,7 @@ func run(args []string) error {
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	corpusDir := flags.String("corpus", "", "ad hoc corpus directory relative to head")
+	budget := flags.Float64("budget", 0, "runtime budget in seconds; 0 means all, witnesses always run")
 	asJSON := flags.Bool("json", false, "emit JSON to stdout")
 	limit := flags.Duration("timeout", 10*time.Second, "per-command timeout")
 	if err := flags.Parse(args); err != nil {
@@ -129,6 +147,9 @@ func run(args []string) error {
 	}
 	if *base == "" {
 		return fmt.Errorf("--base is required")
+	}
+	if *budget < 0 {
+		return fmt.Errorf("budget must be nonnegative")
 	}
 	if *limit <= 0 {
 		return fmt.Errorf("timeout must be positive")
@@ -240,6 +261,9 @@ func run(args []string) error {
 			return err
 		}
 	}
+	result.Corpora = m.Corpora
+	result.SamplingSeed = result.Head
+	result.BudgetSeconds = *budget
 	for _, c := range m.Corpora {
 		for _, p := range c.Programs {
 			clean := filepath.ToSlash(filepath.Clean(p.Path))
@@ -267,6 +291,47 @@ func run(args []string) error {
 			result.Programs = append(result.Programs, record)
 		}
 	}
+
+	selected, omitted := sample(result.Programs, result.Head, *budget, *limit)
+	result.Omitted = omitted
+	if omitted > 0 && result.Verdict == "pass" {
+		result.Verdict = "sampled"
+	}
+	started := time.Now()
+	for _, index := range selected {
+		record := &result.Programs[index]
+		record.Sampled = true
+		source := filepath.Join(headTree, record.Path)
+		node := execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
+		record.Node = &node
+		jsCompile := execute(headTree, *limit, h, "js", record.Path)
+		jsPath := filepath.Join(scratch, fmt.Sprintf("program-%d.mjs", index))
+		javascript := observation{Exit: -1, Error: "JavaScript compilation failed"}
+		if jsCompile.Exit == 0 && jsCompile.Error == "" {
+			if e := os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); e != nil {
+				return e
+			}
+			javascript = execute(headTree, *limit, "node", jsPath)
+		}
+		jsCompile.Stdout = ""
+		record.JavaScriptCompile = &jsCompile
+		record.JavaScript = &javascript
+		nativePath := filepath.Join(scratch, fmt.Sprintf("program-%d", index))
+		nativeCompile := execute(headTree, *limit, h, "build", record.Path, "-o", nativePath)
+		native := observation{Exit: -1, Error: "native compilation failed"}
+		if nativeCompile.Exit == 0 && nativeCompile.Error == "" {
+			native = execute(headTree, *limit, nativePath)
+		}
+		record.NativeCompile = &nativeCompile
+		record.Native = &native
+		agree := outputsAgree(node, javascript, native)
+		record.Agree = &agree
+		if !agree {
+			result.Verdict = "fail"
+		}
+	}
+	result.SamplingSize = len(selected)
+	result.BudgetUsedSeconds = time.Since(started).Seconds()
 	if *asJSON {
 		if err = json.NewEncoder(os.Stdout).Encode(result); err != nil {
 			return err
@@ -277,8 +342,42 @@ func run(args []string) error {
 			fmt.Printf("%s %s\n", p.Class, p.Path)
 		}
 	}
-	if result.Verdict != "pass" {
+	if result.Verdict == "fail" {
 		return fmt.Errorf("admission delta failed")
 	}
 	return nil
+}
+
+// Each selected program reserves five command timeouts. Witnesses override the budget.
+func sample(programs []entry, seed string, seconds float64, limit time.Duration) ([]int, int) {
+	witnesses := []int{}
+	others := []int{}
+	for i, p := range programs {
+		if p.Class != "newly-accepted" {
+			continue
+		}
+		if p.Corpus == "witnesses" {
+			witnesses = append(witnesses, i)
+		} else {
+			others = append(others, i)
+		}
+	}
+	sort.Slice(others, func(i, j int) bool { return programs[others[i]].Path < programs[others[j]].Path })
+	digest := sha256.Sum256([]byte(seed))
+	random := rand.New(rand.NewSource(int64(binary.LittleEndian.Uint64(digest[:8]))))
+	random.Shuffle(len(others), func(i, j int) { others[i], others[j] = others[j], others[i] })
+	take := len(others)
+	if seconds > 0 {
+		capacity := int(seconds/(5*limit.Seconds())) - len(witnesses)
+		if capacity < 0 {
+			capacity = 0
+		}
+		if take > capacity {
+			take = capacity
+		}
+	}
+	return append(witnesses, others[:take]...), len(others) - take
+}
+func outputsAgree(a, b, c observation) bool {
+	return a.Error == "" && b.Error == "" && c.Error == "" && a.Exit >= 0 && a.Exit == b.Exit && a.Exit == c.Exit && a.Stdout == b.Stdout && a.Stdout == c.Stdout
 }

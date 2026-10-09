@@ -1,0 +1,6 @@
+interface Base { readonly tag: 'value'; }
+interface View { readonly tag: 'value'; readonly payload: Readonly<Record<string, number>>; }
+const raw = { tag: 'value' as const, payload: { answer: 42 } };
+const base: Base = raw;
+const view = base as View;
+console.log(view.payload.answer);
