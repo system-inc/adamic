@@ -14,6 +14,7 @@ import (
 )
 
 // Opt-in artifacts outlive t.TempDir so callgrind and the timing runner use the same snapshot.
+// Not parallel: ADAMIC_SCANNER_PROFILE_DIR artifact paths.
 func TestProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_SCANNER_PROFILE_DIR")
 	if directory == "" {
@@ -89,6 +90,7 @@ func TestProfileArtifacts(t *testing.T) {
 
 // The measured release builds, not just sanitized builds, must retain the entire answer protocol.
 func TestProfileSnapshotsAgree(t *testing.T) {
+	t.Parallel()
 	asked := os.Getenv("ADAMIC_SCANNER_PROFILE_SNAPSHOTS")
 	if asked == "" {
 		t.Skip("set ADAMIC_SCANNER_PROFILE_SNAPSHOTS to the artifact directories")
