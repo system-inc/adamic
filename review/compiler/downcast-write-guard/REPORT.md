@@ -1,5 +1,5 @@
 Closed u057 M4 with existing guard TestDefaultTaggedSourceViews/default-literal; no new test was needed.
-Delivery: evidence-only commit on compiler/downcast-write-guard, based on 62286991694debbb14fdb981d8f0957636c90dbc.
+Delivery: evidence-only commit on compiler/downcast-write-guard, based initially on 62286991694debbb14fdb981d8f0957636c90dbc, then merged current main fc31f9f15f95d841d4cd230a37ba55852866f2c8.
 Clean focused command passed (0.376 s); M4 focused command failed (0.315 s), stdout other\n, exit 0.
 M4 was caught by the existing pinned exit-70 literal-field expectation, then restored.
 Not covered: full oracle/repository replay, new alias-write coverage, three-row floors; the brief's existing-guard stop condition applies.
@@ -31,3 +31,5 @@ Commands (all test output saved to logs):
 Lane checks are recorded in lane-checks.log after the evidence commit. The checkout's remote fetch mapping names only main, so explicit remote-tracking refs for devtools/fast-gate and cloud/merge-tree were fetched before running the prescribed command.
 
 Roadmap contribution: closes task #4bnpyxj's u057 M4 audit gap by proving the existing outside-slice guard catches it. No broader coverage-map or uniqueness claim is made.
+
+Delivery follow-up: evidence commits ca91e7cc and 014d7306; current main fc31f9f1 merged as ad3f6a15. That main change touches iteration tests and evidence only. The uncached focused clean command was repeated on the merge tree into merged-clean.log and passed. All worker changes remain review evidence only. No new test leaves.

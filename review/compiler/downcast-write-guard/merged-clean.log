@@ -1,0 +1,13 @@
+=== RUN   TestDefaultTaggedSourceViews
+=== PAUSE TestDefaultTaggedSourceViews
+=== CONT  TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== PAUSE TestDefaultTaggedSourceViews/default-literal
+=== CONT  TestDefaultTaggedSourceViews/default-literal
+--- PASS: TestDefaultTaggedSourceViews (0.00s)
+    --- PASS: TestDefaultTaggedSourceViews/default-literal (0.36s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.368s
