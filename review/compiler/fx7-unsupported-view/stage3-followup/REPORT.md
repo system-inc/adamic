@@ -33,3 +33,7 @@ Reproduced the integration red after merging current main. An initial test
 started while merge was running failed package compilation; the post-merge
 reproduction and all subsequent observations used the completed merge.
 See COMMANDS.txt and the adjacent logs for commands and raw evidence.
+
+Lane checks pass: 1.4 s, gofmt and tools on 6 Go files, t.Parallel on
+2 test packages, vet 2 packages. The first lane attempt lacked gofmt on PATH;
+sourcing the toolchain environment fixed it.

@@ -13,3 +13,4 @@ Old compiler build exits 0; fixture build exits 1, no native output.
 timeout 300 go test ./internal/lower -count=1 -timeout 240s
 timeout 120 go test ./internal/ir -run TestCallTargetReaders -count=1 -timeout 90s
 Revert mutant: apply ../revert.diff and rerun the fixture command; expected test exit 1 observed, creation-site status assertion catches read-site NotYet. EXIT trap restores compiler sources.
+source /workspace/adamic-tools/env.sh; timeout 180 bash -c 'git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'
