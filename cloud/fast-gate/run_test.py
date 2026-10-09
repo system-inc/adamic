@@ -8,6 +8,7 @@ all-pass case proves the harness can go green at all. Run: python3 -m unittest c
 """
 
 import io
+import re
 import shutil
 import json
 import os
@@ -1948,3 +1949,41 @@ class PhaseUnitTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WASIUnits(unittest.TestCase):
+    """Main 7e403e44 split TestWASI's fixtures into top-level units: the whole gate's wasi phase enumerates them by
+    name instead of crashing on the missing TestWASI (Oct 9 06:35Z: every pool whole gate's --list-units died)."""
+
+    def tree(self, source):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        os.makedirs(os.path.join(directory.name, "internal/native"))
+        with open(os.path.join(directory.name, "internal/native/wasm_test.go"), "w") as handle:
+            handle.write(source)
+        return directory.name
+
+    def test_top_level_units_are_the_phase_s_units(self):
+        tree = self.tree("package native\n\nfunc TestWASIUnit00(t *testing.T) {\n\trunWASIUnit(t, 0)\n}\n\n"
+                         "func TestWASIUnit01(t *testing.T) {\n\trunWASIUnit(t, 1)\n}\n")
+        self.assertEqual(run.wasiFixtures(tree), ["TestWASIUnit00", "TestWASIUnit01"])
+        self.assertTrue(re.fullmatch(run.wasiSkip, "TestWASIUnit01"))
+        self.assertTrue(re.fullmatch(run.wasiSkip, "TestWASI"))
+        self.assertFalse(re.fullmatch(run.wasiSkip, "TestWASIRequest"))
+
+    def test_the_old_shape_still_enumerates_its_fixtures(self):
+        tree = self.tree('func TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"a.a",\n\t}\n\tt.Run(fixture, f)\n\tt.Run("requests", f)\n}\n')
+        self.assertEqual(run.wasiFixtures(tree), ["a.a", "requests"])
+
+    def test_neither_shape_refuses(self):
+        with self.assertRaises(ValueError):
+            run.wasiFixtures(self.tree("package native\n"))
+
+    def test_a_unit_runs_by_its_own_name(self):
+        tree = self.tree("func TestWASIUnit07(t *testing.T) {\n\trunWASIUnit(t, 7)\n}\n")
+        seen = {}
+        gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=tree), selectedUnits=lambda phase, names: names,
+                                     phaseUnits=lambda phase, names, commands, execute: seen.update(zip(names, commands)))
+        run.Gate.wasiSplit(gate, io.StringIO())
+        command = seen["TestWASIUnit07"]
+        self.assertEqual(command[command.index("-run") + 1], "^TestWASIUnit07$")

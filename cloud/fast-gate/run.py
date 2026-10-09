@@ -605,7 +605,7 @@ class Gate:
                    # on purpose, and a wall-clock package timeout there is the per-test fragility at a larger
                    # size. Hangs belong to stall guards that count from output; a package over an hour is
                    # named in the status line as slow, so it never reads as a quiet pass.
-                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(packagesAtOnce), "-skip", "^TestWASI$"] + packages, log, {"GOMAXPROCS": str(threadsEach)}),
+                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(packagesAtOnce), "-skip", wasiSkip] + packages, log, {"GOMAXPROCS": str(threadsEach)}),
                    self.guarded("wasi", self.wasiSplit, log, wasi),
                    self.guarded("stage3", self.stage3),
                    # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
@@ -970,7 +970,7 @@ class Gate:
     def wasiSplit(self, log, environment=None):
         names = self.selectedUnits("wasi", wasiFixtures(self.arguments.tree))
         commands = [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
-                     "-p", "1", "-parallel", "1", "-run", fixturePattern(["TestWASI"], [name]),
+                     "-p", "1", "-parallel", "1", "-run", "^%s$" % name if wasiUnit.fullmatch(name) else fixturePattern(["TestWASI"], [name]),
                      "./internal/native"] for name in names]
         def execute(name, command, scratch):
             events = []
@@ -983,10 +983,10 @@ class Gate:
                         pass
             variables = dict(environment or {}, TMPDIR=scratch, GOMAXPROCS="1", GOFLAGS="-p=1")
             code = self.stream("wasi/" + name, command, UnitLog(), environment=variables)
-            wanted = "TestWASI/" + name
+            wanted = name if wasiUnit.fullmatch(name) else "TestWASI/" + name
             passed = any(event.get("Test") == wanted and event.get("Action") == "pass" for event in events)
             unexpected = sorted({event["Test"] for event in events if event.get("Action") == "run"
-                                 and event.get("Test", "").startswith("TestWASI/")
+                                 and (event.get("Test", "").startswith("TestWASI/") or wasiUnit.fullmatch(event.get("Test", "").split("/")[0]))
                                  and event["Test"] != wanted and not wanted.startswith(event["Test"] + "/")})
             return {"exit": code, "ok": code == 0 and passed and not unexpected, "test": wanted,
                     "unexpected": unexpected,
@@ -1700,7 +1700,7 @@ class Gate:
 
     def slotted(self, command, log, importPath, name, tally):
         environment = None
-        if name == "TestWASI" and os.environ.get("WASI_SYSROOT"):
+        if (name == "TestWASI" or wasiUnit.fullmatch(name)) and importPath == module + "/internal/native" and os.environ.get("WASI_SYSROOT"):
             # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
             environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
         code = self.stream("tests", command, log, self.packageDirectories[importPath], environment)
@@ -2328,9 +2328,16 @@ def slotCPUs():
 
 
 def wasiFixtures(tree):
-    """Read the compiler-owned fixture inventory; refuse changes we cannot enumerate."""
+    """Read the compiler-owned fixture inventory; refuse changes we cannot enumerate. Since main 7e403e44 the
+    fixtures are top-level units (TestWASIUnit00 and on, each a slice of the inventory): those are the phase's
+    units, run by name, and the tests stage skips them (wasiSkip)."""
     with open(os.path.join(tree, "internal/native/wasm_test.go")) as handle:
         source = handle.read()
+    if "func TestWASI(t *testing.T) {" not in source:
+        units = re.findall(r"^func (TestWASIUnit[0-9]+)\(t \*testing\.T\) \{", source, re.M)
+        if not units or len(set(units)) != len(units):
+            raise ValueError("cannot enumerate TestWASI fixtures or TestWASIUnit units")
+        return units
     body = source.split("func TestWASI(t *testing.T) {", 1)[1].split("\nfunc ", 1)[0]
     inventory = re.search(r'fixtures := \[\]string\{(.*?)\n\t\}', body, re.S)
     if inventory is None:
@@ -2345,6 +2352,11 @@ def wasiFixtures(tree):
     if not fixtures or len(set(fixtures)) != len(fixtures):
         raise ValueError("empty or duplicate TestWASI fixtures")
     return fixtures
+
+
+# TestWASI's fixtures as top-level units (main 7e403e44 on), and the tests stage's skip that leaves them to the wasi phase.
+wasiUnit = re.compile(r"TestWASIUnit[0-9]+")
+wasiSkip = "^TestWASI(Unit[0-9]+)?$"
 
 
 def fixturePattern(prefix, fixtures):
