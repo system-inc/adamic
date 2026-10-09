@@ -1,0 +1,16 @@
+// a-check: type error TS18048
+// Reduced from TypeScript 6.0.3, src/compiler/checker.ts:12022-12035.
+// getSourceFileOfNode overload reduced from src/compiler/utilities.ts:980.
+export {};
+interface SourceFile { endFlowNode: number; }
+interface Symbol { declarations?: SourceFile[]; }
+function getSourceFileOfNode(node: SourceFile): SourceFile;
+function getSourceFileOfNode(node: SourceFile | undefined): SourceFile | undefined;
+function getSourceFileOfNode(node: SourceFile | undefined): SourceFile | undefined {
+    return node;
+}
+function getFlowTypeFromCommonJSExport(symbol: Symbol) {
+    const file = getSourceFileOfNode(symbol.declarations![0]);
+    return file.endFlowNode;
+}
+console.log(getFlowTypeFromCommonJSExport({ declarations: [{ endFlowNode: 42 }] }));

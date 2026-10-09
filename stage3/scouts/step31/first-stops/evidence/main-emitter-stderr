@@ -1,0 +1,41 @@
+/tmp/step31-train-emitter-slice/src/compiler/moduleNameResolver.ts:1549:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.
+  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.
+    Types of property 'value' are incompatible.
+      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.
+        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'originalPath' are incompatible.
+            Type 'string | undefined' is not assignable to type 'string | true'.
+              Type 'undefined' is not assignable to type 'string | true'.
+/tmp/step31-train-emitter-slice/src/compiler/moduleNameResolver.ts:156:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'originalPath' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-emitter-slice/src/compiler/moduleNameResolver.ts:24:13: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'peerDependencies' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-emitter-slice/src/compiler/moduleNameResolver.ts:344:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.
+/tmp/step31-train-emitter-slice/src/compiler/sourcemap.ts:194:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+/tmp/step31-train-emitter-slice/src/compiler/sys.ts:1172:43: error TS18046: 'e' is of type 'unknown'.
+/tmp/step31-train-emitter-slice/src/compiler/sys.ts:1487:69: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.
+/tmp/step31-train-emitter-slice/src/compiler/sys.ts:1506:13: error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.
+  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string; message?: string; }; }'.
+        Types of property 'error' are incompatible.
+          Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.
+/tmp/step31-train-emitter-slice/src/compiler/sys.ts:1597:56: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'.
+/tmp/step31-train-emitter-slice/src/compiler/transformer.ts:161:9: error TS2532: Object is possibly 'undefined'.
+/tmp/step31-train-emitter-slice/src/compiler/transformer.ts:189:9: error TS2532: Object is possibly 'undefined'.
+/tmp/step31-train-emitter-slice/src/compiler/transformer.ts:357:9: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.
+/tmp/step31-train-emitter-slice/src/compiler/transformer.ts:358:9: error TS2322: Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.
+/tmp/step31-train-emitter-slice/src/compiler/transformer.ts:359:9: error TS2322: Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'.
+/tmp/step31-train-emitter-slice/src/compiler/transformer.ts:408:9: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'.

@@ -1,0 +1,36 @@
+// a-check: type error TS2322
+// Reduced from TypeScript 6.0.3, src/compiler/moduleNameResolver.ts:2771-2783.
+// Resolved and toSearchResult from moduleNameResolver.ts:155 and :3414.
+interface Resolved {
+    path: string;
+    extension: string;
+    packageId: string | undefined;
+    originalPath?: string | true;
+    resolvedUsingTsExtension: boolean | undefined;
+}
+interface ResolvedModule {
+    resolvedFileName: string;
+    extension: string;
+    packageId: string | undefined;
+    originalPath?: string;
+    resolvedUsingTsExtension?: boolean;
+}
+type SearchResult<T> = { value: T | undefined } | undefined;
+function toSearchResult<T>(value: T | undefined): SearchResult<T> {
+    return value !== undefined ? { value } : undefined;
+}
+function loadTarget(result: { resolvedModule?: ResolvedModule }): SearchResult<Resolved> {
+    return toSearchResult(
+        result.resolvedModule ? {
+            path: result.resolvedModule.resolvedFileName,
+            extension: result.resolvedModule.extension,
+            packageId: result.resolvedModule.packageId,
+            originalPath: result.resolvedModule.originalPath,
+            resolvedUsingTsExtension: result.resolvedModule.resolvedUsingTsExtension,
+        } : undefined,
+    );
+}
+const result = loadTarget({ resolvedModule: { resolvedFileName: "index.ts", extension: ".ts", packageId: undefined } });
+console.log(result?.value?.path);
+console.log(Object.keys(result?.value ?? {}).join(","));
+console.log(result?.value?.originalPath === undefined);

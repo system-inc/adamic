@@ -1,0 +1,223 @@
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:10894:30: error TS18048: 'file' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:12846:47: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:12850:49: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'.
+  Type 'undefined' is not assignable to type 'Declaration'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:13503:66: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14005:9: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14555:41: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14557:22: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14557:47: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14560:51: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14561:42: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14564:43: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:14566:52: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:15549:70: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:15553:62: error TS2322: Type '(Symbol | undefined)[] | undefined' is not assignable to type 'Symbol[] | undefined'.
+  Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+    Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+      Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:16750:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:16806:29: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:17522:15: error TS2322: Type '(Type | undefined)[]' is not assignable to type 'Type[]'.
+  Type 'Type | undefined' is not assignable to type 'Type'.
+    Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:1760:36: error TS2488: Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:17904:25: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:19455:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:19478:50: error TS2345: Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.
+  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'debugInfo' are incompatible.
+      Type '(() => string) | undefined' is not assignable to type '() => string'.
+        Type 'undefined' is not assignable to type '() => string'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:20294:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'errors' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:21358:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:21358:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:24832:13: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:24834:9: error TS2322: Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.
+  Type 'undefined' is not assignable to type 'Symbol[]'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:34150:33: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+      Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+        Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:34151:79: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:37290:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:41709:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:4171:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:42377:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:42600:86: error TS2379: Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'value' are incompatible.
+    Type 'Type | undefined' is not assignable to type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:4424:33: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(string | undefined)[]' is not assignable to parameter of type 'readonly string[]'.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:44974:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:44974:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:44988:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:45019:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.
+  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'errors' are incompatible.
+      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+        Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:45594:64: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.
+  Type 'undefined' is not assignable to type '__String'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:45596:167: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.
+  Type 'undefined' is not assignable to type '__String'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:4895:9: error TS2375: Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'aliasesToMakeVisible' are incompatible.
+    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.
+      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:49013:121: error TS2532: Object is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:50325:110: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:50390:21: error TS18048: 's' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:50392:25: error TS18048: 'merged' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:50393:41: error TS18048: 'merged' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51286:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51287:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51289:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51290:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51292:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51293:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51295:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51296:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51298:14: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51299:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51301:42: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51303:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:51306:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:53121:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'readFile' are incompatible.
+    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.
+      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:53189:7: error TS2420: Class 'SymbolTrackerImpl' incorrectly implements interface 'SymbolTracker'.
+  Types of property 'moduleResolverHost' are incompatible.
+    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:543:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.
+  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'typeArguments' are incompatible.
+            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.
+              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:639:9: error TS2322: Type '(call: CallLikeExpression, editingArgument: Node) => (Signature | undefined)[]' is not assignable to type '(call: CallLikeExpression, editingArgument: Node) => Signature[]'.
+  Type '(Signature | undefined)[]' is not assignable to type 'Signature[]'.
+    Type 'Signature | undefined' is not assignable to type 'Signature'.
+      Type 'undefined' is not assignable to type 'Signature'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:6697:133: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'questionToken' are incompatible.
+    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.
+      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:6942:62: error TS2379: Argument of type '{ reportTruncationError?: () => void; reportNonlocalAugmentation?: (containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void; ... 10 more ...; moduleResolverHost: (ModuleSpecifierResolutionHost & ...) | undefined; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'moduleResolverHost' are incompatible.
+    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:7426:17: error TS2322: Type 'Set<number | undefined>' is not assignable to type 'Set<number>'.
+  Type 'number | undefined' is not assignable to type 'number'.
+    Type 'undefined' is not assignable to type 'number'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:7721:21: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8223:17: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8451:37: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8882:63: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8882:86: error TS18048: 'm' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8886:97: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8893:67: error TS18048: 'm' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8893:79: error TS18048: 'm' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8913:53: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8921:90: error TS18048: 'n' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8922:69: error TS18048: 's' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8923:69: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8924:47: error TS18048: 's' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8924:93: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8925:122: error TS18048: 's' is possibly 'undefined'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8926:103: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:8930:50: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:9179:83: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:9180:51: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:9184:76: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+      Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+        Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:9196:86: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/step31-train-checker-slice/src/compiler/checker.ts:9801:33: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'modifiers' are incompatible.
+    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.
+      Type 'undefined' is not assignable to type 'readonly Modifier[]'.
+/tmp/step31-train-checker-slice/src/compiler/moduleNameResolver.ts:156:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'originalPath' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-checker-slice/src/compiler/moduleNameResolver.ts:1729:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.
+  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.
+    Types of property 'value' are incompatible.
+      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.
+        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'originalPath' are incompatible.
+            Type 'string | undefined' is not assignable to type 'string | true'.
+              Type 'undefined' is not assignable to type 'string | true'.
+/tmp/step31-train-checker-slice/src/compiler/moduleNameResolver.ts:24:13: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'peerDependencies' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/step31-train-checker-slice/src/compiler/moduleNameResolver.ts:344:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.
