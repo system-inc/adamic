@@ -62,6 +62,7 @@ func goSchema(t *testing.T, cases string) []byte {
 	return run(t, "", nil, goBinary, cases)
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSchemaMatchesGo(t *testing.T) {
 	cases, files, count := schemaCases(t)
 	expected := goSchema(t, cases)
@@ -112,6 +113,7 @@ func TestSchemaMatchesGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d Schema answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSchemaMutants(t *testing.T) {
 	cases, _, _ := schemaCases(t)
 	expected := goSchema(t, cases)

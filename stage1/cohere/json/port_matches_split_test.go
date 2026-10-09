@@ -27,18 +27,18 @@ import (
 )
 
 // Fixed buckets retain their identities when the repository corpus grows.
-const testPortMatchesGoCohereShards = 128
+const testPortMatchesGoCohereSplitShards = 128
 
 func portMatchesBucket(name string) int {
 	h := fnv.New64a()
 	_, _ = h.Write([]byte(name))
-	return int(h.Sum64() % testPortMatchesGoCohereShards)
+	return int(h.Sum64() % testPortMatchesGoCohereSplitShards)
 }
 
 func portMatchesPartition(t *testing.T) [][]textCase {
 	t.Helper()
 	cases := sampledCorpusCases(t, 32)
-	shards := make([][]textCase, testPortMatchesGoCohereShards)
+	shards := make([][]textCase, testPortMatchesGoCohereSplitShards)
 	seen := make(map[string]textCase, len(cases))
 	for _, item := range cases {
 		if _, exists := seen[item.Name]; exists {
@@ -73,7 +73,7 @@ func portMatchesPartition(t *testing.T) [][]textCase {
 			declared[f.Name.Name] = true
 		}
 	}
-	for n := 0; n < testPortMatchesGoCohereShards; n++ {
+	for n := 0; n < testPortMatchesGoCohereSplitShards; n++ {
 		name := fmt.Sprintf("TestPortMatchesGoCohere_%03d", n)
 		if !declared[name] {
 			t.Fatalf("missing %s", name)
@@ -216,7 +216,7 @@ func portMatchesAnswers(t *testing.T, protocol string, count int) []answer {
 }
 
 // A single changed oracle answer must be caught by exactly its owning shard.
-func TestPortMatchesGoCohereUnion(t *testing.T) {
+func TestPortMatchesGoCohereSplitUnion(t *testing.T) {
 	t.Parallel()
 	shards := portMatchesPartition(t)
 	var planted string
