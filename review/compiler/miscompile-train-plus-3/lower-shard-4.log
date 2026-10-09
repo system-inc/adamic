@@ -1,0 +1,1291 @@
+=== RUN   TestAgreementAcceptsExpectedPanic
+=== PAUSE TestAgreementAcceptsExpectedPanic
+=== RUN   TestAgreementStaticInitializerWitness
+=== PAUSE TestAgreementStaticInitializerWitness
+=== RUN   TestArgumentsLengthRefusals
+=== PAUSE TestArgumentsLengthRefusals
+=== RUN   TestArgumentsLengthReadKeepsReaderFact
+=== PAUSE TestArgumentsLengthReadKeepsReaderFact
+=== RUN   TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== PAUSE TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableProducerMethodShorthandRefused
+=== PAUSE TestCallableProducerMethodShorthandRefused
+=== RUN   TestCallableProducerExtraOptionalAdapted
+=== PAUSE TestCallableProducerExtraOptionalAdapted
+=== RUN   TestCallableProducerP60
+=== PAUSE TestCallableProducerP60
+=== RUN   TestCallableUnionResultAgreement
+=== PAUSE TestCallableUnionResultAgreement
+=== RUN   TestCensusMarkerResultIsAssignable
+=== PAUSE TestCensusMarkerResultIsAssignable
+=== RUN   TestCensusOverloadBinderGuards
+=== PAUSE TestCensusOverloadBinderGuards
+=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries
+=== PAUSE TestCensusPredicateMarkerKeepsProofBoundaries
+=== RUN   TestCensusRestMutableElements
+=== PAUSE TestCensusRestMutableElements
+=== RUN   TestTsgoHonorsNoCheckInAdamicFiles
+=== PAUSE TestTsgoHonorsNoCheckInAdamicFiles
+=== RUN   TestClassFeaturesAccessorRefusals
+=== PAUSE TestClassFeaturesAccessorRefusals
+=== RUN   TestClassFeaturesNarrowedAccessor
+=== PAUSE TestClassFeaturesNarrowedAccessor
+=== RUN   TestInheritanceKeepsCheckerConstructorRules
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes
+=== RUN   TestInheritanceGenericMonomorphizations
+=== PAUSE TestInheritanceGenericMonomorphizations
+=== RUN   TestInheritanceGenericViewsKeepNominalArguments
+=== PAUSE TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestInheritanceNativeSignatureLimits
+=== PAUSE TestInheritanceNativeSignatureLimits
+=== RUN   TestClassWrongOutputIteratorReceiver
+=== PAUSE TestClassWrongOutputIteratorReceiver
+=== RUN   TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== PAUSE TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== RUN   TestDefiniteAssignmentUsesReadiness
+=== PAUSE TestDefiniteAssignmentUsesReadiness
+=== RUN   TestEntriesAllocationProof
+=== PAUSE TestEntriesAllocationProof
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestEnumReverseMappingUsesSingleSlot
+=== PAUSE TestEnumReverseMappingUsesSingleSlot
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestEnumIdentityAcrossModules
+=== PAUSE TestEnumIdentityAcrossModules
+=== RUN   TestFSRemoveDefaultRetryDelayLowers
+=== PAUSE TestFSRemoveDefaultRetryDelayLowers
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX7P06
+=== PAUSE TestFX7P06
+=== RUN   TestFX7P77
+=== PAUSE TestFX7P77
+=== RUN   TestGenericJSONUnionArrayIsNotYet
+=== PAUSE TestGenericJSONUnionArrayIsNotYet
+=== RUN   TestInputSpreadCoverage
+=== PAUSE TestInputSpreadCoverage
+=== RUN   TestIteratorViewsCannotHideReturn
+=== PAUSE TestIteratorViewsCannotHideReturn
+=== RUN   TestLiteralMethodCapturesCannotMakeCycles
+=== PAUSE TestLiteralMethodCapturesCannotMakeCycles
+=== RUN   TestRepresentedMethodReplacementIsNotYet
+=== PAUSE TestRepresentedMethodReplacementIsNotYet
+=== RUN   TestIteratorSymbolKeysAreNotStringKeys
+=== PAUSE TestIteratorSymbolKeysAreNotStringKeys
+=== RUN   TestLibraryMethodValues
+=== PAUSE TestLibraryMethodValues
+=== RUN   TestNodeFSFileOptionsBorrow
+=== PAUSE TestNodeFSFileOptionsBorrow
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileBufferBorrow
+=== PAUSE TestNodeFSFileBufferBorrow
+=== RUN   TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== PAUSE TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestATupleSeenAsAnArrayIsNotYet
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== PAUSE TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== RUN   TestNamespaceLimitsStayLoud
+=== PAUSE TestNamespaceLimitsStayLoud
+=== RUN   TestDebugNamespaceMergedCapabilities
+=== PAUSE TestDebugNamespaceMergedCapabilities
+=== RUN   TestEmptyNeverMapCannotGainWritableInhabitants
+=== PAUSE TestEmptyNeverMapCannotGainWritableInhabitants
+=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots
+=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== PAUSE TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalWideningSpreadOverwrite
+=== PAUSE TestOptionalWideningSpreadOverwrite
+=== RUN   TestOverrideOptionalRefusesNativeSignature
+=== PAUSE TestOverrideOptionalRefusesNativeSignature
+=== RUN   TestParameterPropertyValueMatchesNode
+=== PAUSE TestParameterPropertyValueMatchesNode
+=== RUN   TestPredicateBodyProof
+=== PAUSE TestPredicateBodyProof
+=== RUN   TestPredicateOverloadCallback
+=== PAUSE TestPredicateOverloadCallback
+=== RUN   TestPredicateBodiesAreProven
+=== PAUSE TestPredicateBodiesAreProven
+=== RUN   TestNullishPrototypeReadsAreRejectedByChecker
+=== PAUSE TestNullishPrototypeReadsAreRejectedByChecker
+=== RUN   TestProvenRelationsRefuse
+=== PAUSE TestProvenRelationsRefuse
+=== RUN   TestRegExpSourceNode
+=== PAUSE TestRegExpSourceNode
+=== RUN   TestRepresentationClockSourceCheckedTypes
+=== PAUSE TestRepresentationClockSourceCheckedTypes
+=== RUN   TestScalarUnionViewMaybeNumberTransitions
+=== PAUSE TestScalarUnionViewMaybeNumberTransitions
+=== RUN   TestReadinessErrorIncludesReceiverExpression
+=== PAUSE TestReadinessErrorIncludesReceiverExpression
+=== RUN   TestSwitchEmptyElseFallsThrough
+=== PAUSE TestSwitchEmptyElseFallsThrough
+=== RUN   TestTrainPlusRefusalP26
+=== PAUSE TestTrainPlusRefusalP26
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementDestructuredControl
+=== PAUSE TestViewElementDestructuredControl
+=== RUN   TestViewInControl
+=== PAUSE TestViewInControl
+=== RUN   TestViewEntriesControl
+=== PAUSE TestViewEntriesControl
+=== RUN   TestViewElementP72NumberControl
+=== PAUSE TestViewElementP72NumberControl
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestTupleObjectViewOrdinaryTuple
+=== PAUSE TestTupleObjectViewOrdinaryTuple
+=== RUN   TestMixedUnionContractRecursiveMember
+=== PAUSE TestMixedUnionContractRecursiveMember
+=== RUN   TestUntaggedViewStructuralFallback
+=== PAUSE TestUntaggedViewStructuralFallback
+=== RUN   TestSupportedViewMembersAgree
+=== PAUSE TestSupportedViewMembersAgree
+=== CONT  TestAgreementAcceptsExpectedPanic
+=== CONT  TestEnumNeverDefault
+=== CONT  TestNamespaceAmbientHostInitialization
+=== CONT  TestIteratorViewsCannotHideReturn
+=== CONT  TestCensusRestMutableElements
+--- PASS: TestIteratorViewsCannotHideReturn (0.08s)
+=== CONT  TestSupportedViewMembersAgree
+=== NAME  TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements3241399962/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (0.08s)
+=== CONT  TestUntaggedViewStructuralFallback
+--- PASS: TestUntaggedViewStructuralFallback (0.00s)
+=== CONT  TestMixedUnionContractRecursiveMember
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+--- PASS: TestMixedUnionContractRecursiveMember (0.09s)
+=== CONT  TestTupleObjectViewOrdinaryTuple
+--- PASS: TestAgreementAcceptsExpectedPanic (0.25s)
+=== CONT  TestViewSnapshotMaybeBoolean
+--- PASS: TestEnumNeverDefault (0.25s)
+=== CONT  TestViewElementP72NumberControl
+--- PASS: TestTupleObjectViewOrdinaryTuple (0.24s)
+=== CONT  TestViewEntriesControl
+--- PASS: TestViewElementP72NumberControl (0.26s)
+=== CONT  TestViewInControl
+--- PASS: TestViewSnapshotMaybeBoolean (0.27s)
+=== CONT  TestViewElementDestructuredControl
+--- PASS: TestViewEntriesControl (0.21s)
+=== CONT  TestViewElementP05CorrectControl
+--- PASS: TestViewInControl (0.21s)
+=== CONT  TestViewDiagnosticP64
+--- PASS: TestViewElementDestructuredControl (0.23s)
+=== CONT  TestTypedArrayFromEmptyArray
+--- PASS: TestViewDiagnosticP64 (0.06s)
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+--- PASS: TestSupportedViewMembersAgree (0.71s)
+=== CONT  TestTupleRecognitionP68
+--- PASS: TestViewElementP05CorrectControl (0.24s)
+=== CONT  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: .a: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a:7:14: view type has an unsupported member: value
+=== RUN   TestTypedArraysLower/Int32Array
+=== NAME  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: .ts: /tmp/adamic-gate/TestTrainPlusRefusalP263349669032/001/fxspptb_oct9_native_p26_callable_or_undefined.ts:7:14: view type has an unsupported member: value
+--- PASS: TestTrainPlusRefusalP26 (0.12s)
+=== CONT  TestSwitchEmptyElseFallsThrough
+=== NAME  TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath2143103364/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+=== RUN   TestTypedArraysLower/Float64Array
+--- PASS: TestTypedArrayFromEmptyArray (0.44s)
+=== CONT  TestReadinessErrorIncludesReceiverExpression
+--- PASS: TestSwitchEmptyElseFallsThrough (0.19s)
+=== CONT  TestScalarUnionViewMaybeNumberTransitions
+--- PASS: TestReadinessErrorIncludesReceiverExpression (0.10s)
+=== CONT  TestRepresentationClockSourceCheckedTypes
+    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI
+--- PASS: TestRepresentationClockSourceCheckedTypes (0.03s)
+=== CONT  TestRegExpSourceNode
+--- PASS: TestTypedArraysLower (0.54s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.19s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.19s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.16s)
+=== CONT  TestProvenRelationsRefuse
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_array
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_array
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_array
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== RUN   TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== PAUSE TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== RUN   TestProvenRelationsRefuse/satisfies_function_parameter
+=== PAUSE TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_function_parameter
+=== PAUSE TestProvenRelationsRefuse/upcast_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/upcast_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/upcast_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestNullishPrototypeReadsAreRejectedByChecker
+--- PASS: TestRegExpSourceNode (0.05s)
+=== CONT  TestPredicateBodiesAreProven
+--- PASS: TestTupleRecognitionP68 (0.77s)
+=== CONT  TestPredicateOverloadCallback
+--- PASS: TestScalarUnionViewMaybeNumberTransitions (0.52s)
+=== CONT  TestPredicateBodyProof
+=== RUN   TestPredicateBodyProof/condition_assertion
+=== PAUSE TestPredicateBodyProof/condition_assertion
+=== RUN   TestPredicateBodyProof/returning_fail
+=== PAUSE TestPredicateBodyProof/returning_fail
+=== RUN   TestPredicateBodyProof/empty_condition_assertion
+=== PAUSE TestPredicateBodyProof/empty_condition_assertion
+=== RUN   TestPredicateBodyProof/condition_mutation
+=== PAUSE TestPredicateBodyProof/condition_mutation
+=== RUN   TestPredicateBodyProof/diagnostic_work_on_failure
+=== PAUSE TestPredicateBodyProof/diagnostic_work_on_failure
+=== RUN   TestPredicateBodyProof/typeof
+=== PAUSE TestPredicateBodyProof/typeof
+=== RUN   TestPredicateBodyProof/kind
+=== PAUSE TestPredicateBodyProof/kind
+=== RUN   TestPredicateBodyProof/kind_helpers_fixed_point
+=== PAUSE TestPredicateBodyProof/kind_helpers_fixed_point
+=== RUN   TestPredicateBodyProof/helper
+=== PAUSE TestPredicateBodyProof/helper
+=== RUN   TestPredicateBodyProof/false_branch_lies
+=== PAUSE TestPredicateBodyProof/false_branch_lies
+=== RUN   TestPredicateBodyProof/true_branch_lies
+=== PAUSE TestPredicateBodyProof/true_branch_lies
+=== RUN   TestPredicateBodyProof/mutation
+=== PAUSE TestPredicateBodyProof/mutation
+=== RUN   TestPredicateBodyProof/alias_mutation
+=== PAUSE TestPredicateBodyProof/alias_mutation
+=== RUN   TestPredicateBodyProof/recursive
+=== PAUSE TestPredicateBodyProof/recursive
+=== RUN   TestPredicateBodyProof/default_changes_input
+=== PAUSE TestPredicateBodyProof/default_changes_input
+=== RUN   TestPredicateBodyProof/empty_assertion
+=== PAUSE TestPredicateBodyProof/empty_assertion
+=== RUN   TestPredicateBodyProof/assertion
+=== PAUSE TestPredicateBodyProof/assertion
+=== RUN   TestPredicateBodyProof/disabled_assertion
+=== PAUSE TestPredicateBodyProof/disabled_assertion
+=== CONT  TestParameterPropertyValueMatchesNode
+--- PASS: TestPredicateOverloadCallback (0.25s)
+=== CONT  TestOverrideOptionalRefusesNativeSignature
+--- PASS: TestOverrideOptionalRefusesNativeSignature (0.06s)
+=== CONT  TestOptionalWideningSpreadOverwrite
+--- PASS: TestOptionalWideningSpreadOverwrite (0.05s)
+=== CONT  TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation
+=== NAME  TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:38: independent ownership refusal: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationcwd2198165092/002/main.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- PASS: TestNamespaceAmbientHostInitialization (1.95s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (0.90s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (0.96s)
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.04s)
+=== CONT  TestNestedCallbackCycleIsRefused
+--- PASS: TestPredicateBodiesAreProven (0.62s)
+=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal
+--- PASS: TestNestedEnvironmentCycleIncludesDisjointSlots (0.06s)
+=== CONT  TestEmptyNeverMapCannotGainWritableInhabitants
+--- PASS: TestNestedCallbackCycleIsRefused (0.06s)
+=== CONT  TestDebugNamespaceMergedCapabilities
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_log.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_log.a
+=== RUN   TestDebugNamespaceMergedCapabilities/class_merge.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/class_merge.a
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_class.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/computed_enum
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record
+--- PASS: TestEmptyNeverMapCannotGainWritableInhabitants (0.05s)
+=== CONT  TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== RUN   TestNamespaceLimitsStayLoud/reopened_enum
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation
+--- PASS: TestNamespaceEnumInitializationIndependentOfModuleAnalysis (0.07s)
+=== CONT  TestNodeFSFileBufferBorrow
+=== RUN   TestNamespaceLimitsStayLoud/early_enum
+--- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.26s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.04s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal (0.07s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation (0.05s)
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestATupleSeenAsAnArrayIsNotYet
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_return
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_return
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_element
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_element
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== RUN   TestNamespaceLimitsStayLoud/mutable_object_escape
+--- PASS: TestParameterPropertyValueMatchesNode (0.52s)
+=== CONT  TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestNamespaceLimitsStayLoud/object_value
+--- PASS: TestInheritanceGenericViewsKeepNominalArguments (0.07s)
+=== CONT  TestEntriesAllocationProof
+=== RUN   TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== PAUSE TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== RUN   TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== PAUSE TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== RUN   TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== PAUSE TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== RUN   TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestDefiniteAssignmentUsesReadiness
+=== RUN   TestNamespaceLimitsStayLoud/reflection
+=== RUN   TestNamespaceLimitsStayLoud/reopening
+=== RUN   TestNamespaceLimitsStayLoud/function_merge_escape
+=== RUN   TestNamespaceLimitsStayLoud/class_merge
+=== RUN   TestNamespaceLimitsStayLoud/destructured_state
+=== RUN   TestNamespaceLimitsStayLoud/nested_object_var
+=== RUN   TestNamespaceLimitsStayLoud/rest_object_var
+=== RUN   TestNamespaceLimitsStayLoud/default_object_var
+--- PASS: TestNullishPrototypeReadsAreRejectedByChecker (1.54s)
+=== CONT  TestClockGenericReturnsT01DeclinesBrandedPrimitives
+--- PASS: TestNodeFSFileBufferBorrow (0.70s)
+=== CONT  TestClassWrongOutputIteratorReceiver
+=== RUN   TestNamespaceLimitsStayLoud/computed_member
+=== RUN   TestNamespaceLimitsStayLoud/replace_function
+--- PASS: TestClockGenericReturnsT01DeclinesBrandedPrimitives (0.09s)
+=== CONT  TestInheritanceNativeSignatureLimits
+=== RUN   TestInheritanceNativeSignatureLimits/optional_added
+=== PAUSE TestInheritanceNativeSignatureLimits/optional_added
+=== RUN   TestInheritanceNativeSignatureLimits/boolean_default_added
+=== PAUSE TestInheritanceNativeSignatureLimits/boolean_default_added
+=== RUN   TestInheritanceNativeSignatureLimits/generic_default_added
+=== PAUSE TestInheritanceNativeSignatureLimits/generic_default_added
+=== RUN   TestInheritanceNativeSignatureLimits/parameter_count
+=== PAUSE TestInheritanceNativeSignatureLimits/parameter_count
+=== RUN   TestInheritanceNativeSignatureLimits/void_to_number_result
+=== PAUSE TestInheritanceNativeSignatureLimits/void_to_number_result
+=== RUN   TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== PAUSE TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== CONT  TestCallableProducerMethodShorthandRefused
+=== RUN   TestNamespaceLimitsStayLoud/early_call
+=== RUN   TestNamespaceLimitsStayLoud/early_read
+=== NAME  TestCallableProducerMethodShorthandRefused
+    callable_producers_assignable_test.go:39: /tmp/adamic-gate/TestCallableProducerMethodShorthandRefused3550023038/001/main.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet
+--- PASS: TestCallableProducerMethodShorthandRefused (0.13s)
+=== CONT  TestCensusPredicateMarkerKeepsProofBoundaries
+=== RUN   TestNamespaceLimitsStayLoud/block_var
+=== RUN   TestNamespaceLimitsStayLoud/nested_early_read
+--- PASS: TestDefiniteAssignmentUsesReadiness (0.86s)
+=== CONT  TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadBinderGuards/constraint
+=== PAUSE TestCensusOverloadBinderGuards/constraint
+=== RUN   TestCensusOverloadBinderGuards/parameter
+=== PAUSE TestCensusOverloadBinderGuards/parameter
+=== RUN   TestCensusOverloadBinderGuards/result
+=== PAUSE TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusMarkerResultIsAssignable
+=== RUN   TestNamespaceLimitsStayLoud/explicit_receiver
+--- PASS: TestCensusMarkerResultIsAssignable (0.04s)
+=== CONT  TestCallableUnionResultAgreement
+=== RUN   TestNamespaceLimitsStayLoud/ambient
+--- PASS: TestCensusPredicateMarkerKeepsProofBoundaries (0.20s)
+=== CONT  TestCallableProducerP60
+--- PASS: TestNamespaceLimitsStayLoud (1.23s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_enum (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopened_enum (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_enum (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/mutable_object_escape (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/object_value (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/reflection (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopening (0.11s)
+    --- PASS: TestNamespaceLimitsStayLoud/function_merge_escape (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/class_merge (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/destructured_state (0.13s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_object_var (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/rest_object_var (0.03s)
+    --- PASS: TestNamespaceLimitsStayLoud/default_object_var (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_member (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/replace_function (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_call (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_read (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/block_var (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_early_read (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/explicit_receiver (0.02s)
+    --- PASS: TestNamespaceLimitsStayLoud/ambient (0.07s)
+=== CONT  TestCallableProducerExtraOptionalAdapted
+--- PASS: TestClassWrongOutputIteratorReceiver (0.73s)
+=== CONT  TestFX6P35
+--- PASS: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (1.48s)
+=== CONT  TestInputSpreadCoverage
+=== RUN   TestInputSpreadCoverage/fileStatus_alias.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_alias.a
+=== RUN   TestInputSpreadCoverage/fileStatus_array.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_array.a
+=== RUN   TestInputSpreadCoverage/fileStatus_local.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_local.a
+=== RUN   TestInputSpreadCoverage/fileStatus_nested.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_nested.a
+=== RUN   TestInputSpreadCoverage/fileStatus_parentheses.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_parentheses.a
+=== RUN   TestInputSpreadCoverage/fileStatus_tuple.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_tuple.a
+=== RUN   TestInputSpreadCoverage/programArguments_alias.a
+=== PAUSE TestInputSpreadCoverage/programArguments_alias.a
+=== RUN   TestInputSpreadCoverage/programArguments_array.a
+=== PAUSE TestInputSpreadCoverage/programArguments_array.a
+=== RUN   TestInputSpreadCoverage/programArguments_local.a
+=== PAUSE TestInputSpreadCoverage/programArguments_local.a
+=== RUN   TestInputSpreadCoverage/programArguments_nested.a
+=== PAUSE TestInputSpreadCoverage/programArguments_nested.a
+=== RUN   TestInputSpreadCoverage/programArguments_parentheses.a
+=== PAUSE TestInputSpreadCoverage/programArguments_parentheses.a
+=== RUN   TestInputSpreadCoverage/programArguments_tuple.a
+=== PAUSE TestInputSpreadCoverage/programArguments_tuple.a
+=== RUN   TestInputSpreadCoverage/readDirectory_alias.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_alias.a
+=== RUN   TestInputSpreadCoverage/readDirectory_array.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_array.a
+=== RUN   TestInputSpreadCoverage/readDirectory_local.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_local.a
+=== RUN   TestInputSpreadCoverage/readDirectory_nested.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_nested.a
+=== RUN   TestInputSpreadCoverage/readDirectory_parentheses.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_parentheses.a
+=== RUN   TestInputSpreadCoverage/readDirectory_tuple.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_tuple.a
+=== RUN   TestInputSpreadCoverage/readTextFile_alias.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_alias.a
+=== RUN   TestInputSpreadCoverage/readTextFile_array.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_array.a
+=== RUN   TestInputSpreadCoverage/readTextFile_local.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_local.a
+=== RUN   TestInputSpreadCoverage/readTextFile_nested.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_nested.a
+=== RUN   TestInputSpreadCoverage/readTextFile_parentheses.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_parentheses.a
+=== RUN   TestInputSpreadCoverage/readTextFile_tuple.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_tuple.a
+=== RUN   TestInputSpreadCoverage/utf8At_alias.a
+=== PAUSE TestInputSpreadCoverage/utf8At_alias.a
+=== RUN   TestInputSpreadCoverage/utf8At_array.a
+=== PAUSE TestInputSpreadCoverage/utf8At_array.a
+=== RUN   TestInputSpreadCoverage/utf8At_later.a
+=== PAUSE TestInputSpreadCoverage/utf8At_later.a
+=== RUN   TestInputSpreadCoverage/utf8At_local.a
+=== PAUSE TestInputSpreadCoverage/utf8At_local.a
+=== RUN   TestInputSpreadCoverage/utf8At_multiple.a
+=== PAUSE TestInputSpreadCoverage/utf8At_multiple.a
+=== RUN   TestInputSpreadCoverage/utf8At_nested.a
+=== PAUSE TestInputSpreadCoverage/utf8At_nested.a
+=== RUN   TestInputSpreadCoverage/utf8At_parentheses.a
+=== PAUSE TestInputSpreadCoverage/utf8At_parentheses.a
+=== RUN   TestInputSpreadCoverage/utf8At_tuple.a
+=== PAUSE TestInputSpreadCoverage/utf8At_tuple.a
+=== RUN   TestInputSpreadCoverage/utf8Length_alias.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_alias.a
+=== RUN   TestInputSpreadCoverage/utf8Length_array.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_array.a
+=== RUN   TestInputSpreadCoverage/utf8Length_empty.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_empty.a
+=== RUN   TestInputSpreadCoverage/utf8Length_local.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_local.a
+=== RUN   TestInputSpreadCoverage/utf8Length_nested.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_nested.a
+=== RUN   TestInputSpreadCoverage/utf8Length_parentheses.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_parentheses.a
+=== RUN   TestInputSpreadCoverage/utf8Length_tuple.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_tuple.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_alias.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_alias.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_array.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_array.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_later.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_later.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_local.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_local.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_multiple.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_multiple.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_nested.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_nested.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_tuple.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_tuple.a
+=== CONT  TestGenericJSONUnionArrayIsNotYet
+--- PASS: TestCallableProducerP60 (0.42s)
+=== CONT  TestFX7P77
+--- PASS: TestCallableUnionResultAgreement (0.50s)
+=== CONT  TestFX7P06
+--- PASS: TestGenericJSONUnionArrayIsNotYet (0.06s)
+=== CONT  TestFX6P51
+--- PASS: TestFX6P35 (0.23s)
+=== CONT  TestInheritanceKeepsCheckerConstructorRules
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== CONT  TestInheritanceGenericMonomorphizations
+--- PASS: TestCallableProducerExtraOptionalAdapted (0.57s)
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== CONT  TestUnknownArrayPredicateRefusesUnrepresentedObservations
+--- PASS: TestUnknownArrayPredicateRefusesUnrepresentedObservations (0.12s)
+=== CONT  TestCallableContractSpreadRefused
+--- PASS: TestFX6P51 (0.29s)
+=== CONT  TestCallableContractWideProducer
+--- PASS: TestCallableContractSpreadRefused (0.06s)
+=== CONT  TestClassFeaturesAccessorRefusals
+--- PASS: TestInheritanceGenericMonomorphizations (0.26s)
+=== CONT  TestClassFeaturesNarrowedAccessor
+--- PASS: TestClassFeaturesNarrowedAccessor (0.07s)
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestFSRemoveDefaultRetryDelayLowers
+--- PASS: TestClassFeaturesAccessorRefusals (0.25s)
+=== CONT  TestEnumIdentityAcrossModules
+--- PASS: TestEnumIdentityAcrossModules (0.06s)
+=== CONT  TestArgumentsLengthRefusals
+=== RUN   TestArgumentsLengthRefusals/indexing
+=== PAUSE TestArgumentsLengthRefusals/indexing
+=== RUN   TestArgumentsLengthRefusals/aliasing
+=== PAUSE TestArgumentsLengthRefusals/aliasing
+=== RUN   TestArgumentsLengthRefusals/passing
+=== PAUSE TestArgumentsLengthRefusals/passing
+=== RUN   TestArgumentsLengthRefusals/returning
+=== PAUSE TestArgumentsLengthRefusals/returning
+=== RUN   TestArgumentsLengthRefusals/spreading
+=== PAUSE TestArgumentsLengthRefusals/spreading
+=== RUN   TestArgumentsLengthRefusals/writing_object
+=== PAUSE TestArgumentsLengthRefusals/writing_object
+=== RUN   TestArgumentsLengthRefusals/writing_length
+=== PAUSE TestArgumentsLengthRefusals/writing_length
+=== RUN   TestArgumentsLengthRefusals/incrementing_length
+=== PAUSE TestArgumentsLengthRefusals/incrementing_length
+=== RUN   TestArgumentsLengthRefusals/compound_length
+=== PAUSE TestArgumentsLengthRefusals/compound_length
+=== RUN   TestArgumentsLengthRefusals/arrow
+=== PAUSE TestArgumentsLengthRefusals/arrow
+=== RUN   TestArgumentsLengthRefusals/parenthesized_write
+=== PAUSE TestArgumentsLengthRefusals/parenthesized_write
+=== CONT  TestArgumentsLengthReadKeepsReaderFact
+--- PASS: TestFX7P77 (0.77s)
+=== CONT  TestEnumReverseMappingUsesSingleSlot
+--- PASS: TestFX7P06 (0.78s)
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+--- PASS: TestArgumentsLengthReadKeepsReaderFact (0.21s)
+=== CONT  TestTsgoHonorsNoCheckInAdamicFiles
+--- PASS: TestTsgoHonorsNoCheckInAdamicFiles (0.15s)
+=== CONT  TestLibraryMethodValues
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== RUN   TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== RUN   TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== PAUSE TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== RUN   TestLibraryMethodValues/console.log([].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([].map(String).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== RUN   TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== PAUSE TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileOptionsBorrow
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: member_tags
+--- PASS: TestEnumReverseMappingUsesSingleSlot (0.25s)
+=== CONT  TestAgreementStaticInitializerWitness
+--- PASS: TestCallableContractWideProducer (0.75s)
+=== CONT  TestRepresentedMethodReplacementIsNotYet
+--- PASS: TestFSRemoveDefaultRetryDelayLowers (0.67s)
+=== CONT  TestIteratorSymbolKeysAreNotStringKeys
+--- PASS: TestRepresentedMethodReplacementIsNotYet (0.06s)
+=== CONT  TestLiteralMethodCapturesCannotMakeCycles
+--- PASS: TestLiteralMethodCapturesCannotMakeCycles (0.05s)
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
+=== CONT  TestFlagEnumInlineIteration
+--- PASS: TestIteratorSymbolKeysAreNotStringKeys (0.06s)
+=== CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: coalesce
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_optional
+--- PASS: TestAgreementStaticInitializerWitness (0.29s)
+=== CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== CONT  TestProvenRelationsRefuse/upcast_nominal_identity
+--- PASS: TestFlagEnumInlineIteration (0.28s)
+=== CONT  TestProvenRelationsRefuse/upcast_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_function_parameter
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_array
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: arithmetic
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_field
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== CONT  TestPredicateBodyProof/condition_assertion
+=== CONT  TestPredicateBodyProof/false_branch_lies
+--- PASS: TestProvenRelationsRefuse (0.00s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.07s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.03s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.05s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.04s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.03s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.06s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.07s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.09s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.11s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.05s)
+=== CONT  TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateBodyProof/assertion
+=== CONT  TestPredicateBodyProof/empty_assertion
+=== CONT  TestPredicateBodyProof/default_changes_input
+=== CONT  TestPredicateBodyProof/recursive
+=== CONT  TestPredicateBodyProof/alias_mutation
+=== CONT  TestPredicateBodyProof/mutation
+=== CONT  TestPredicateBodyProof/true_branch_lies
+=== CONT  TestPredicateBodyProof/typeof
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: signed_flags
+=== CONT  TestPredicateBodyProof/helper
+=== CONT  TestPredicateBodyProof/kind_helpers_fixed_point
+=== CONT  TestPredicateBodyProof/kind
+=== CONT  TestPredicateBodyProof/condition_mutation
+=== CONT  TestPredicateBodyProof/diagnostic_work_on_failure
+=== CONT  TestPredicateBodyProof/empty_condition_assertion
+=== CONT  TestPredicateBodyProof/returning_fail
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_log.a
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_class.a
+--- PASS: TestPredicateBodyProof (0.00s)
+    --- PASS: TestPredicateBodyProof/condition_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/false_branch_lies (0.08s)
+    --- PASS: TestPredicateBodyProof/disabled_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/assertion (0.08s)
+    --- PASS: TestPredicateBodyProof/empty_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/default_changes_input (0.07s)
+    --- PASS: TestPredicateBodyProof/recursive (0.05s)
+    --- PASS: TestPredicateBodyProof/alias_mutation (0.06s)
+    --- PASS: TestPredicateBodyProof/mutation (0.07s)
+    --- PASS: TestPredicateBodyProof/true_branch_lies (0.06s)
+    --- PASS: TestPredicateBodyProof/helper (0.04s)
+    --- PASS: TestPredicateBodyProof/typeof (0.07s)
+    --- PASS: TestPredicateBodyProof/kind_helpers_fixed_point (0.08s)
+    --- PASS: TestPredicateBodyProof/kind (0.08s)
+    --- PASS: TestPredicateBodyProof/condition_mutation (0.07s)
+    --- PASS: TestPredicateBodyProof/diagnostic_work_on_failure (0.05s)
+    --- PASS: TestPredicateBodyProof/empty_condition_assertion (0.04s)
+    --- PASS: TestPredicateBodyProof/returning_fail (0.07s)
+=== CONT  TestDebugNamespaceMergedCapabilities/class_merge.a
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: cast
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+--- PASS: TestDebugNamespaceMergedCapabilities (0.00s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/class_merge.a (0.05s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_log.a (0.27s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_class.a (0.31s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: containers
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.07s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.04s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.07s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.06s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.07s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.06s)
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_element
+--- PASS: TestNodeFSFileOptionsBorrow (1.51s)
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_field
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_return
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: optional_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+--- PASS: TestATupleSeenAsAnArrayIsNotYet (0.00s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_initializer (0.08s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field (0.10s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays (0.08s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_map's_value (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_element (0.05s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_return (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_field (0.07s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_argument (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_assignment (0.06s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_cast_literal (0.05s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+--- PASS: TestNumericEnumsAreOpen (2.07s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+--- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?. (0.09s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions (0.04s)
+=== CONT  TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== CONT  TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.00s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.07s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_} (0.04s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.05s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_} (0.05s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.09s)
+=== CONT  TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== CONT  TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestInheritanceNativeSignatureLimits/optional_added
+=== CONT  TestInheritanceNativeSignatureLimits/parameter_count
+=== CONT  TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== CONT  TestInheritanceNativeSignatureLimits/void_to_number_result
+=== CONT  TestInheritanceNativeSignatureLimits/generic_default_added
+--- PASS: TestEntriesAllocationProof (0.00s)
+    --- PASS: TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.06s)
+    --- PASS: TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.05s)
+    --- PASS: TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1}); (0.07s)
+    --- PASS: TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source); (0.05s)
+    --- PASS: TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.05s)
+    --- PASS: TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source); (0.08s)
+=== CONT  TestInheritanceNativeSignatureLimits/boolean_default_added
+=== CONT  TestCensusOverloadBinderGuards/constraint
+=== CONT  TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadBinderGuards/parameter
+=== CONT  TestInputSpreadCoverage/fileStatus_alias.a
+--- PASS: TestInheritanceNativeSignatureLimits (0.00s)
+    --- PASS: TestInheritanceNativeSignatureLimits/optional_added (0.05s)
+    --- PASS: TestInheritanceNativeSignatureLimits/parameter_count (0.07s)
+    --- PASS: TestInheritanceNativeSignatureLimits/number_to_optional_result (0.07s)
+    --- PASS: TestInheritanceNativeSignatureLimits/boolean_default_added (0.06s)
+    --- PASS: TestInheritanceNativeSignatureLimits/generic_default_added (0.07s)
+    --- PASS: TestInheritanceNativeSignatureLimits/void_to_number_result (0.09s)
+=== CONT  TestInputSpreadCoverage/readTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/readTextFile_parentheses.a
+=== CONT  TestInputSpreadCoverage/readTextFile_nested.a
+--- PASS: TestCensusOverloadBinderGuards (0.00s)
+    --- PASS: TestCensusOverloadBinderGuards/constraint (0.04s)
+    --- PASS: TestCensusOverloadBinderGuards/result (0.04s)
+    --- PASS: TestCensusOverloadBinderGuards/parameter (0.05s)
+=== CONT  TestInputSpreadCoverage/readTextFile_local.a
+=== CONT  TestInputSpreadCoverage/readTextFile_array.a
+=== CONT  TestInputSpreadCoverage/readTextFile_alias.a
+=== CONT  TestInputSpreadCoverage/readDirectory_tuple.a
+=== CONT  TestInputSpreadCoverage/readDirectory_parentheses.a
+=== CONT  TestInputSpreadCoverage/readDirectory_nested.a
+=== CONT  TestInputSpreadCoverage/readDirectory_local.a
+=== CONT  TestInputSpreadCoverage/readDirectory_array.a
+=== CONT  TestInputSpreadCoverage/readDirectory_alias.a
+=== CONT  TestInputSpreadCoverage/programArguments_tuple.a
+=== CONT  TestInputSpreadCoverage/programArguments_parentheses.a
+=== CONT  TestInputSpreadCoverage/programArguments_nested.a
+=== CONT  TestInputSpreadCoverage/programArguments_local.a
+=== CONT  TestInputSpreadCoverage/programArguments_array.a
+=== CONT  TestInputSpreadCoverage/programArguments_alias.a
+=== CONT  TestInputSpreadCoverage/fileStatus_tuple.a
+=== CONT  TestInputSpreadCoverage/fileStatus_parentheses.a
+=== CONT  TestInputSpreadCoverage/fileStatus_nested.a
+=== CONT  TestInputSpreadCoverage/fileStatus_local.a
+=== CONT  TestInputSpreadCoverage/fileStatus_array.a
+=== CONT  TestInputSpreadCoverage/utf8Length_nested.a
+=== CONT  TestInputSpreadCoverage/utf8At_alias.a
+=== CONT  TestInputSpreadCoverage/utf8Length_local.a
+=== CONT  TestInputSpreadCoverage/utf8Length_empty.a
+=== CONT  TestInputSpreadCoverage/utf8Length_array.a
+=== CONT  TestInputSpreadCoverage/utf8Length_alias.a
+=== CONT  TestInputSpreadCoverage/utf8At_tuple.a
+=== CONT  TestInputSpreadCoverage/utf8At_parentheses.a
+=== CONT  TestInputSpreadCoverage/utf8At_nested.a
+=== CONT  TestInputSpreadCoverage/utf8At_multiple.a
+=== CONT  TestInputSpreadCoverage/utf8At_local.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_alias.a
+=== CONT  TestInputSpreadCoverage/utf8At_later.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_later.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_array.a
+=== CONT  TestInputSpreadCoverage/utf8At_array.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_nested.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_multiple.a
+=== CONT  TestInputSpreadCoverage/utf8Length_tuple.a
+=== CONT  TestInputSpreadCoverage/utf8Length_parentheses.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_local.a
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+--- PASS: TestInputSpreadCoverage (0.01s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_alias.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_nested.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_parentheses.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_local.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_array.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_tuple.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_alias.a (0.03s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_tuple.a (0.03s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_parentheses.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_local.a (0.03s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_nested.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_array.a (0.03s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_alias.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/programArguments_local.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/programArguments_parentheses.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/programArguments_nested.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/programArguments_array.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/programArguments_tuple.a (0.08s)
+    --- PASS: TestInputSpreadCoverage/programArguments_alias.a (0.03s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_tuple.a (0.03s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_parentheses.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_nested.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_local.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_array.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_nested.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/utf8At_alias.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_empty.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_local.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_array.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/utf8At_tuple.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_alias.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8At_parentheses.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8At_nested.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8At_multiple.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/utf8At_local.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/utf8At_later.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_alias.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_later.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_array.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8At_array.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_parentheses.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_nested.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_tuple.a (0.05s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_tuple.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_multiple.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_parentheses.a (0.04s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_local.a (0.06s)
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+--- PASS: TestInheritanceKeepsCheckerConstructorRules (0.00s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/abstract_construction (0.03s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing (0.04s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/this_before_super (0.07s)
+=== CONT  TestEnumSlotViews/variable
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+--- PASS: TestInheritanceRejectsUnsupportedConstructorShapes (0.00s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object (0.05s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch (0.06s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/computed_base (0.07s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/declare_field (0.07s)
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+=== CONT  TestArgumentsLengthRefusals/indexing
+=== CONT  TestArgumentsLengthRefusals/writing_length
+=== CONT  TestArgumentsLengthRefusals/parenthesized_write
+=== CONT  TestArgumentsLengthRefusals/arrow
+=== CONT  TestArgumentsLengthRefusals/compound_length
+=== CONT  TestArgumentsLengthRefusals/incrementing_length
+=== CONT  TestArgumentsLengthRefusals/returning
+=== CONT  TestArgumentsLengthRefusals/writing_object
+=== CONT  TestArgumentsLengthRefusals/spreading
+=== CONT  TestArgumentsLengthRefusals/passing
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/object_assign (0.04s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.03s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.04s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.04s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.06s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.08s)
+    --- PASS: TestEnumSlotViews/variable (0.22s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.26s)
+    --- PASS: TestEnumSlotViews/map_alias (0.26s)
+    --- PASS: TestEnumSlotViews/class_field (0.20s)
+    --- PASS: TestEnumSlotViews/optional_union (0.26s)
+    --- PASS: TestEnumSlotViews/override (0.25s)
+    --- PASS: TestEnumSlotViews/function_view (0.22s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.25s)
+    --- PASS: TestEnumSlotViews/array_alias (0.23s)
+    --- PASS: TestEnumSlotViews/array_literal (0.28s)
+    --- PASS: TestEnumSlotViews/compound (0.22s)
+    --- PASS: TestEnumSlotViews/increment (0.24s)
+    --- PASS: TestEnumSlotViews/argument (0.23s)
+    --- PASS: TestEnumSlotViews/assignment (0.24s)
+    --- PASS: TestEnumSlotViews/literal_property (0.28s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.25s)
+    --- PASS: TestEnumSlotViews/initializer (0.20s)
+=== CONT  TestArgumentsLengthRefusals/aliasing
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== CONT  TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== CONT  TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+--- PASS: TestArgumentsLengthRefusals (0.00s)
+    --- PASS: TestArgumentsLengthRefusals/indexing (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/writing_length (0.07s)
+    --- PASS: TestArgumentsLengthRefusals/arrow (0.05s)
+    --- PASS: TestArgumentsLengthRefusals/parenthesized_write (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/returning (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/compound_length (0.08s)
+    --- PASS: TestArgumentsLengthRefusals/incrementing_length (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/writing_object (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/passing (0.05s)
+    --- PASS: TestArgumentsLengthRefusals/aliasing (0.05s)
+    --- PASS: TestArgumentsLengthRefusals/spreading (0.07s)
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestLibraryMethodValues/console.log([].map(String).join(','));
+=== CONT  TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+--- PASS: TestLibraryMethodValues (0.00s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`); (0.22s)
+    --- PASS: TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1])); (0.25s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`); (0.25s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4])); (0.25s)
+    --- PASS: TestLibraryMethodValues/console.log([1,_2].map(String).join(',')); (0.27s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`); (0.25s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_')); (0.22s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1])); (0.28s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(',')); (0.26s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`); (0.32s)
+    --- PASS: TestLibraryMethodValues/console.log([].map(String).join(',')); (0.22s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f()); (0.23s)
+    --- PASS: TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(',')); (0.26s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+--- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads (0.00s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (0.78s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (0.87s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (0.82s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (0.78s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (0.80s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	10.070s

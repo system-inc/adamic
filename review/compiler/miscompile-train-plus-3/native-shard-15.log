@@ -1,0 +1,115 @@
+=== RUN   TestArithmeticIsNeverFused
+=== PAUSE TestArithmeticIsNeverFused
+=== RUN   TestDecodeASCIIUnit14
+=== PAUSE TestDecodeASCIIUnit14
+=== RUN   TestDecodeASCIIUnit30
+=== PAUSE TestDecodeASCIIUnit30
+=== RUN   TestDecodeASCIIWASIUnit01
+=== PAUSE TestDecodeASCIIWASIUnit01
+=== RUN   TestDecodeASCIIWASIUnit17
+=== PAUSE TestDecodeASCIIWASIUnit17
+=== RUN   TestDecodeASCIIWASIUnit33
+=== PAUSE TestDecodeASCIIWASIUnit33
+=== RUN   TestNbodyIndexedElementsBorrow
+=== PAUSE TestNbodyIndexedElementsBorrow
+=== RUN   TestRuntimeKeyKeepsBoundaries
+=== PAUSE TestRuntimeKeyKeepsBoundaries
+=== RUN   TestNormalizeLongMeasurements
+    normalize_benchmark_test.go:19: set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements
+--- SKIP: TestNormalizeLongMeasurements (0.00s)
+=== RUN   TestNormalizeMatchesNodePoints14
+=== PAUSE TestNormalizeMatchesNodePoints14
+=== RUN   TestRecordMutantsUnit03
+=== PAUSE TestRecordMutantsUnit03
+=== RUN   TestRegExpBytecodeRandomNodeUnit06
+=== PAUSE TestRegExpBytecodeRandomNodeUnit06
+=== RUN   TestRegExpBytecodeRandomNodeUnit22
+=== PAUSE TestRegExpBytecodeRandomNodeUnit22
+=== RUN   TestRegExpBytecodeRandomNodeUnit38
+=== PAUSE TestRegExpBytecodeRandomNodeUnit38
+=== RUN   TestTSGoBuildSeesTheProgramsFeatures
+=== PAUSE TestTSGoBuildSeesTheProgramsFeatures
+=== RUN   TestWASIUnit05
+    wasm_test.go:326: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit05 (0.00s)
+=== RUN   TestWASIUnit21
+    wasm_test.go:406: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit21 (0.00s)
+=== CONT  TestArithmeticIsNeverFused
+=== CONT  TestRuntimeKeyKeepsBoundaries
+=== CONT  TestDecodeASCIIWASIUnit17
+=== CONT  TestDecodeASCIIWASIUnit33
+=== CONT  TestNbodyIndexedElementsBorrow
+--- PASS: TestRuntimeKeyKeepsBoundaries (0.00s)
+=== NAME  TestDecodeASCIIWASIUnit17
+    decode_ascii_test.go:447: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.001s
+--- SKIP: TestDecodeASCIIWASIUnit17 (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit01
+    decode_ascii_test.go:367: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit01 (0.00s)
+=== CONT  TestDecodeASCIIUnit14
+=== NAME  TestDecodeASCIIWASIUnit33
+    decode_ascii_test.go:527: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit33 (0.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit22
+=== CONT  TestDecodeASCIIUnit30
+=== NAME  TestDecodeASCIIUnit14
+    decode_ascii_test.go:207: corpus phase 0.000s (including cache wait)
+=== NAME  TestDecodeASCIIUnit30
+    decode_ascii_test.go:287: corpus phase 0.004s (including cache wait)
+=== NAME  TestDecodeASCIIUnit14
+    decode_ascii_test.go:207: compile phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit30
+    decode_ascii_test.go:287: compile phase 0.002s (including cache wait)
+--- PASS: TestNbodyIndexedElementsBorrow (0.16s)
+=== CONT  TestTSGoBuildSeesTheProgramsFeatures
+--- PASS: TestTSGoBuildSeesTheProgramsFeatures (0.30s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit38
+=== NAME  TestRegExpBytecodeRandomNodeUnit22
+    regexp_test.go:481: compiling 247 patterns, 250 executions, 699849 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit38
+    regexp_test.go:561: compiling 247 patterns, 250 executions, 641327 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit22
+    regexp_test.go:481: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:481: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit22 (2.84s)
+=== CONT  TestRecordMutantsUnit03
+=== RUN   TestRecordMutantsUnit03/overwrite-key-leaked
+=== NAME  TestRegExpBytecodeRandomNodeUnit38
+    regexp_test.go:561: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:561: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit38 (3.67s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit06
+    regexp_test.go:401: compiling 249 patterns, 250 executions, 697917 C bytes
+    regexp_test.go:401: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:401: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit06 (2.99s)
+=== CONT  TestNormalizeMatchesNodePoints14
+=== NAME  TestDecodeASCIIUnit14
+    decode_ascii_test.go:207: run phase 7.718s
+    decode_ascii_test.go:207: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 7.801s
+--- PASS: TestDecodeASCIIUnit14 (7.80s)
+=== NAME  TestDecodeASCIIUnit30
+    decode_ascii_test.go:287: run phase 7.800s
+    decode_ascii_test.go:287: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 7.891s
+--- PASS: TestDecodeASCIIUnit30 (7.89s)
+=== NAME  TestNormalizeMatchesNodePoints14
+    normalize_test.go:318: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 4.033s
+--- PASS: TestNormalizeMatchesNodePoints14 (4.03s)
+=== NAME  TestRecordMutantsUnit03/overwrite-key-leaked
+    record_test.go:244: caught by LeakSanitizer
+--- PASS: TestRecordMutantsUnit03 (11.15s)
+    --- PASS: TestRecordMutantsUnit03/overwrite-key-leaked (11.15s)
+=== NAME  TestArithmeticIsNeverFused
+    contract_test.go:92: linux/amd64, -march="haswell": contraction allowed fuses, and Build never does, with or without the sanitizers
+--- PASS: TestArithmeticIsNeverFused (15.67s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	15.697s

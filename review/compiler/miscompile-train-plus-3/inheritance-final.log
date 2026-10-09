@@ -1,0 +1,7 @@
+=== RUN   TestInheritanceMemoryPlans
+=== PAUSE TestInheritanceMemoryPlans
+=== CONT  TestInheritanceMemoryPlans
+    class_inheritance_test.go:48: Reader.replace reuses its ordinary Item parameter; no checked-view member boundary applies
+--- PASS: TestInheritanceMemoryPlans (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.044s

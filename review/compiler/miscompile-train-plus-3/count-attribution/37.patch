@@ -1,0 +1,21 @@
+--- 51aa3a96
++++ 6a056842
+@@ -31,14 +31,14 @@
+ 	adamic_object_field_types(adamic_temporary_1)[1] = 1;
+ 	adamic_temporary_1->slots[1].number = (0x1.5p+05);
+ 	adamic_object * adamic_local_1_source = adamic_temporary_1;
+-	adamic_object * adamic_temporary_2 = adamic_function_1_checked_view_members(adamic_local_1_source);
+-	adamic_object * adamic_temporary_3 = adamic_object_copy(adamic_temporary_2);
++	bool adamic_temporary_2 = ((adamic_local_1_source->heap.references == 1 && !adamic_weak_held(adamic_local_1_source)) && !adamic_local_1_source->frozen);
++	adamic_object * adamic_temporary_3 = (adamic_temporary_2 ? adamic_retain(adamic_local_1_source) : adamic_object_copy(adamic_local_1_source));
+ 	adamic_value *adamic_temporary_4 = adamic_object_field(adamic_temporary_3, "value", &adamic_cache_5);
+ 	adamic_object_field_types(adamic_temporary_3)[adamic_cache_5.index] = 7;
+-	adamic_object_initialized(adamic_temporary_3)[adamic_cache_5.index] = 1;
+ 	adamic_temporary_4->number = adamic_maybe_number_pack(adamic_local_0_value);
++	adamic_temporary_3->class = NULL;
++	adamic_temporary_3->tuple = false;
+ 	adamic_object * adamic_local_2_object = adamic_temporary_3;
+-	adamic_release(adamic_temporary_2);
+ 	adamic_object * adamic_local_4_base = adamic_retain(adamic_local_2_object);
+ 	adamic_object * adamic_local_5_view = adamic_retain(adamic_local_4_base);
+ 	adamic_view_union_value adamic_temporary_6 = adamic_object_view_union_snapshot(adamic_local_5_view, "value", &adamic_cache_7, "view.value", "string | number | undefined", false);

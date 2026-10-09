@@ -1,0 +1,122 @@
+=== RUN   TestOptionalMethodThunksMatchNode
+=== PAUSE TestOptionalMethodThunksMatchNode
+=== RUN   TestDecodeASCIIUnit13
+=== PAUSE TestDecodeASCIIUnit13
+=== RUN   TestDecodeASCIIUnit29
+=== PAUSE TestDecodeASCIIUnit29
+=== RUN   TestDecodeASCIIWASIUnit00
+=== PAUSE TestDecodeASCIIWASIUnit00
+=== RUN   TestDecodeASCIIWASIUnit16
+=== PAUSE TestDecodeASCIIWASIUnit16
+=== RUN   TestDecodeASCIIWASIUnit32
+=== PAUSE TestDecodeASCIIWASIUnit32
+=== RUN   TestToExponentialAndToPrecisionOutOfRangePanic
+=== PAUSE TestToExponentialAndToPrecisionOutOfRangePanic
+=== RUN   TestRuntimeKeyIncludesEveryInput
+=== PAUSE TestRuntimeKeyIncludesEveryInput
+=== RUN   TestNodeBufferRuntimeWithoutDeclarations
+=== PAUSE TestNodeBufferRuntimeWithoutDeclarations
+=== RUN   TestNormalizeMatchesNodePoints13
+=== PAUSE TestNormalizeMatchesNodePoints13
+=== RUN   TestRecordMutantsUnit02
+=== PAUSE TestRecordMutantsUnit02
+=== RUN   TestRegExpBytecodeRandomNodeUnit05
+=== PAUSE TestRegExpBytecodeRandomNodeUnit05
+=== RUN   TestRegExpBytecodeRandomNodeUnit21
+=== PAUSE TestRegExpBytecodeRandomNodeUnit21
+=== RUN   TestRegExpBytecodeRandomNodeUnit37
+=== PAUSE TestRegExpBytecodeRandomNodeUnit37
+=== RUN   TestWASIRefusesUnsupportedOptions
+--- PASS: TestWASIRefusesUnsupportedOptions (0.00s)
+=== RUN   TestWASIUnit04
+    wasm_test.go:321: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit04 (0.00s)
+=== RUN   TestWASIUnit20
+    wasm_test.go:401: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit20 (0.00s)
+=== CONT  TestOptionalMethodThunksMatchNode
+=== CONT  TestRuntimeKeyIncludesEveryInput
+=== CONT  TestToExponentialAndToPrecisionOutOfRangePanic
+=== CONT  TestDecodeASCIIWASIUnit16
+    decode_ascii_test.go:442: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit16 (0.00s)
+=== CONT  TestDecodeASCIIUnit29
+=== CONT  TestDecodeASCIIWASIUnit00
+    decode_ascii_test.go:362: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit00 (0.00s)
+=== CONT  TestDecodeASCIIUnit13
+=== NAME  TestDecodeASCIIUnit29
+    decode_ascii_test.go:282: corpus phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit13
+    decode_ascii_test.go:202: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:202: compile phase 0.002s (including cache wait)
+=== NAME  TestDecodeASCIIUnit29
+    decode_ascii_test.go:282: compile phase 0.001s (including cache wait)
+--- PASS: TestRuntimeKeyIncludesEveryInput (0.10s)
+=== CONT  TestDecodeASCIIWASIUnit32
+    decode_ascii_test.go:522: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit32 (0.00s)
+=== CONT  TestRecordMutantsUnit02
+=== RUN   TestRecordMutantsUnit02/deleted-key-iterated
+=== RUN   TestOptionalMethodThunksMatchNode/sanitize=false
+=== PAUSE TestOptionalMethodThunksMatchNode/sanitize=false
+=== RUN   TestOptionalMethodThunksMatchNode/sanitize=true
+=== PAUSE TestOptionalMethodThunksMatchNode/sanitize=true
+=== NAME  TestOptionalMethodThunksMatchNode
+    closure_convention_test.go:257: Node catches compiled missing-thunk mutant: exit status 70, output "adamic: panic: compiler bug: a method the checker proved is there is missing\n", Node "yes yes no\nunused no\nfacade no\nbase no\n"
+=== CONT  TestRegExpBytecodeRandomNodeUnit37
+--- PASS: TestToExponentialAndToPrecisionOutOfRangePanic (0.84s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit21
+=== NAME  TestRegExpBytecodeRandomNodeUnit37
+    regexp_test.go:556: compiling 247 patterns, 250 executions, 666577 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit21
+    regexp_test.go:476: compiling 250 patterns, 250 executions, 705284 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit37
+    regexp_test.go:556: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:556: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit37 (1.55s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit05
+=== NAME  TestRegExpBytecodeRandomNodeUnit21
+    regexp_test.go:476: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:476: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit21 (1.68s)
+=== CONT  TestNodeBufferRuntimeWithoutDeclarations
+=== NAME  TestRegExpBytecodeRandomNodeUnit05
+    regexp_test.go:396: compiling 250 patterns, 250 executions, 775552 C bytes
+    regexp_test.go:396: mode=[] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestNodeBufferRuntimeWithoutDeclarations (1.29s)
+=== CONT  TestNormalizeMatchesNodePoints13
+=== NAME  TestRegExpBytecodeRandomNodeUnit05
+    regexp_test.go:396: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit05 (1.99s)
+=== CONT  TestOptionalMethodThunksMatchNode/sanitize=false
+=== CONT  TestOptionalMethodThunksMatchNode/sanitize=true
+--- PASS: TestOptionalMethodThunksMatchNode (0.28s)
+    --- PASS: TestOptionalMethodThunksMatchNode/sanitize=false (0.18s)
+    --- PASS: TestOptionalMethodThunksMatchNode/sanitize=true (0.28s)
+=== NAME  TestDecodeASCIIUnit13
+    decode_ascii_test.go:202: run phase 4.428s
+    decode_ascii_test.go:202: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.489s
+--- PASS: TestDecodeASCIIUnit13 (4.49s)
+=== NAME  TestDecodeASCIIUnit29
+    decode_ascii_test.go:282: run phase 4.496s
+    decode_ascii_test.go:282: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.566s
+--- PASS: TestDecodeASCIIUnit29 (4.57s)
+=== NAME  TestNormalizeMatchesNodePoints13
+    normalize_test.go:313: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 3.202s
+--- PASS: TestNormalizeMatchesNodePoints13 (3.20s)
+=== NAME  TestRecordMutantsUnit02/deleted-key-iterated
+    record_test.go:237: adamic: counts: allocations 21 frees 21 retains 10 releases 22 peak 12 regions 0
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit02 (8.30s)
+    --- PASS: TestRecordMutantsUnit02/deleted-key-iterated (8.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.414s

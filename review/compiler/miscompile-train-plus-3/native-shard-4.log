@@ -1,0 +1,121 @@
+=== RUN   TestPassThroughsAreNotConsumers
+=== PAUSE TestPassThroughsAreNotConsumers
+=== RUN   TestDecodeASCIIUnit03
+=== PAUSE TestDecodeASCIIUnit03
+=== RUN   TestDecodeASCIIUnit19
+=== PAUSE TestDecodeASCIIUnit19
+=== RUN   TestDecodeASCIIUnit35
+=== PAUSE TestDecodeASCIIUnit35
+=== RUN   TestDecodeASCIIWASIUnit06
+=== PAUSE TestDecodeASCIIWASIUnit06
+=== RUN   TestDecodeASCIIWASIUnit22
+=== PAUSE TestDecodeASCIIWASIUnit22
+=== RUN   TestDecodeASCIIWASIUnit38
+=== PAUSE TestDecodeASCIIWASIUnit38
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestStringLengthLimit
+=== PAUSE TestStringLengthLimit
+=== RUN   TestNormalizeMatchesNodePoints03
+=== PAUSE TestNormalizeMatchesNodePoints03
+=== RUN   TestNumbersParseExactlyAsJavaScriptDoes
+=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes
+=== RUN   TestRegExpBytecodeTest262
+=== PAUSE TestRegExpBytecodeTest262
+=== RUN   TestRegExpBytecodeRandomNodeUnit11
+=== PAUSE TestRegExpBytecodeRandomNodeUnit11
+=== RUN   TestRegExpBytecodeRandomNodeUnit27
+=== PAUSE TestRegExpBytecodeRandomNodeUnit27
+=== RUN   TestShardSelection
+=== PAUSE TestShardSelection
+=== RUN   TestSplitTokensDoNotRewriteLiterals
+=== PAUSE TestSplitTokensDoNotRewriteLiterals
+=== RUN   TestWASIUnit10
+    wasm_test.go:351: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit10 (0.00s)
+=== RUN   TestWASIUnit26
+    wasm_test.go:431: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit26 (0.00s)
+=== CONT  TestPassThroughsAreNotConsumers
+=== CONT  TestRegExpBytecodeRandomNodeUnit11
+=== CONT  TestSplitTokensDoNotRewriteLiterals
+--- PASS: TestSplitTokensDoNotRewriteLiterals (0.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit27
+=== CONT  TestShardSelection
+--- PASS: TestShardSelection (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit06
+    decode_ascii_test.go:392: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit06 (0.00s)
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestStringLengthLimit
+--- PASS: TestPassThroughsAreNotConsumers (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit38
+    decode_ascii_test.go:552: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit38 (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit22
+    decode_ascii_test.go:472: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit22 (0.00s)
+=== CONT  TestNumbersParseExactlyAsJavaScriptDoes
+=== NAME  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 32 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+=== CONT  TestRegExpBytecodeTest262
+--- PASS: TestStringLengthLimit (0.22s)
+=== CONT  TestNormalizeMatchesNodePoints03
+=== NAME  TestRegExpBytecodeRandomNodeUnit11
+    regexp_test.go:426: compiling 249 patterns, 250 executions, 632932 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit27
+    regexp_test.go:506: compiling 249 patterns, 250 executions, 601181 C bytes
+=== NAME  TestRegExpBytecodeTest262
+    regexp_test.go:53: compiling 2776 patterns, 127369 executions, 15748093 C bytes
+=== NAME  TestNumbersParseExactlyAsJavaScriptDoes
+    parse_test.go:191: 108023 texts, 0 mismatches
+--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (1.33s)
+=== CONT  TestDecodeASCIIUnit19
+    decode_ascii_test.go:232: corpus phase 0.017s (including cache wait)
+    decode_ascii_test.go:232: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit27
+    regexp_test.go:506: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:506: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit27 (1.61s)
+=== CONT  TestDecodeASCIIUnit35
+    decode_ascii_test.go:312: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:312: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit11
+    regexp_test.go:426: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:426: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit11 (1.66s)
+=== CONT  TestDecodeASCIIUnit03
+    decode_ascii_test.go:152: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:152: compile phase 0.001s (including cache wait)
+=== NAME  TestNormalizeMatchesNodePoints03
+    normalize_test.go:263: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 3.838s
+--- PASS: TestNormalizeMatchesNodePoints03 (3.84s)
+=== NAME  TestDecodeASCIIUnit03
+    decode_ascii_test.go:152: run phase 3.594s
+    decode_ascii_test.go:152: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 3.597s
+--- PASS: TestDecodeASCIIUnit03 (3.60s)
+=== NAME  TestDecodeASCIIUnit19
+    decode_ascii_test.go:232: run phase 4.170s
+    decode_ascii_test.go:232: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.188s
+--- PASS: TestDecodeASCIIUnit19 (4.19s)
+=== NAME  TestDecodeASCIIUnit35
+    decode_ascii_test.go:312: run phase 3.941s
+    decode_ascii_test.go:312: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 3.944s
+--- PASS: TestDecodeASCIIUnit35 (3.94s)
+=== NAME  TestRegExpBytecodeTest262
+    regexp_test.go:53: mode=[] native execution totals: 127369 cases, 0 disagreements
+    regexp_test.go:53: mode=[unlimited] native execution totals: 127369 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeTest262 (15.31s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	15.333s

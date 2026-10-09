@@ -1,0 +1,15 @@
+--- 51aa3a96
++++ 6a056842
+@@ -697,10 +697,8 @@
+ 	adamic_register_shape_types(&adamic_shape_10_metadata);
+ 	adamic_object_field_types(adamic_temporary_128)[0] = 1;
+ 	adamic_temporary_128->slots[0].number = (0x1p+00);
+-	adamic_object * adamic_temporary_129 = adamic_function_15_checked_view_members(adamic_temporary_128);
+-	bool adamic_temporary_130 = adamic_has_property(((adamic_heap *)(adamic_temporary_129)), "#ordinary");
+-	adamic_write_line(adamic_stdout, ((adamic_temporary_130) ? &adamic_string_true : &adamic_string_false));
+-	adamic_release(adamic_temporary_129);
++	bool adamic_temporary_129 = adamic_has_property(((adamic_heap *)(adamic_temporary_128)), "#ordinary");
++	adamic_write_line(adamic_stdout, ((adamic_temporary_129) ? &adamic_string_true : &adamic_string_false));
+ 	adamic_release(adamic_temporary_128);
+ 	return 0;
+ }
