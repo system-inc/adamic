@@ -3,7 +3,6 @@ package buildcache
 import (
 	"crypto/sha256"
 	"encoding/json"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -117,7 +116,7 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var sums []string
+	var products [][]byte
 	for _, name := range []string{"one", "elsewhere/two"} {
 		module := filepath.Join(t.TempDir(), name)
 		for _, file := range []string{"withc/main.go", "include/greeting.h"} {
@@ -146,10 +145,12 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		sums = append(sums, fmt.Sprintf("%x", sha256.Sum256(content)))
+		products = append(products, content)
 	}
-	if sums[0] != sums[1] {
-		t.Fatalf("two checkout paths at two commits built %s and %s", sums[0], sums[1])
+	// On macOS the system linker may write a different LC_UUID for the same objects (#cchsq45): identical accepts and
+	// logs a difference confined to it and the code signature there, and nowhere else.
+	if !identical(t, "two checkout paths at two commits", products[0], products[1]) {
+		t.Fatalf("two checkout paths at two commits built %x and %x", sha256.Sum256(products[0]), sha256.Sum256(products[1]))
 	}
 	arguments := reproducible([]string{"-buildmode=c-archive"})
 	if !slices.Equal(arguments, []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-buildmode=c-archive"}) {
