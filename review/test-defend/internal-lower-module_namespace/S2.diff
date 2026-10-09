@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -145,7 +145,7 @@
+ 		}
+ 		symbol := l.symbol(node.Name())
+ 		for _, declaration := range symbol.Declarations {
+-			if declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration {
++			if declaration == node || declaration.Kind == ast.KindInterfaceDeclaration {
+ 				continue
+ 			}
+ 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent == node.Parent {

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "C1",
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "old": "if node == nil || ast.IsTypeNode(node) || node != function && ast.IsFunctionLike(node) {",
+    "new": "if node == nil || ast.IsTypeNode(node) || node.Kind == ast.KindNewExpression || node != function && ast.IsFunctionLike(node) {",
+    "kind": "change condition: return early for constructor expressions",
+    "lead": "constructor expression inside reachable factory, unlike callable namespace property read",
+    "line": 51
+  },
+  {
+    "id": "A1",
+    "test": "TestNamespaceAmbientHostInitialization",
+    "file": "internal/lower/namespaces.go",
+    "old": "return l.notYet(node, \"a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration\")",
+    "new": "return l.notYet(node, \"a namespace read before initialization, directly or through a reachable call; move that read or call after the namespace declaration\")",
+    "kind": "change diagnostic constant",
+    "lead": "direct read preflight checks runtime initialization wording; callable subsumer uses reachable-call branch",
+    "line": 306
+  },
+  {
+    "id": "S1",
+    "test": "TestTscNamespaceDeclarationShapes",
+    "file": "internal/lower/namespaces.go",
+    "old": "declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration",
+    "new": "declaration == node || declaration.Kind == ast.KindTypeAliasDeclaration",
+    "kind": "change condition: stop admitting interface/namespace merges",
+    "lead": "BuilderState interface shares namespace symbol",
+    "line": 148
+  },
+  {
+    "id": "C2",
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "file": "internal/lower/namespaces.go",
+    "old": "case ast.KindClassDeclaration:\n\t\t\treturn declaration",
+    "new": "case ast.KindClassDeclaration:\n\t\t\treturn nil",
+    "kind": "return early empty callable class target",
+    "lead": "class target discovery exclusive line 363",
+    "line": 362
+  },
+  {
+    "id": "S2",
+    "test": "TestTscNamespaceDeclarationShapes",
+    "file": "internal/lower/namespaces.go",
+    "old": "declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration",
+    "new": "declaration == node || declaration.Kind == ast.KindInterfaceDeclaration",
+    "kind": "change condition: stop admitting type-alias/namespace merges",
+    "lead": "BinaryExpressionState alias shares namespace symbol",
+    "line": 148
+  },
+  {
+    "id": "C3",
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "old": "if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {",
+    "new": "if node.Kind == ast.KindCallExpression {",
+    "kind": "change condition: omit constructor call graph edges",
+    "lead": "construction edges in factory versus ordinary callable property reads",
+    "line": 106
+  },
+  {
+    "id": "S3",
+    "test": "TestTscNamespaceDeclarationShapes",
+    "file": "internal/lower/namespace_callable.go",
+    "old": "\"toString\":",
+    "new": "\"log\":",
+    "kind": "change intrinsic name constant",
+    "lead": "Debug.log nested callable namespace exports log",
+    "line": 66
+  }
+]

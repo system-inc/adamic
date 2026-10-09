@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -48,7 +48,7 @@
+ 	}
+ 	var walk func(*ast.Node)
+ 	walk = func(node *ast.Node) {
+-		if node == nil || ast.IsTypeNode(node) || node != function && ast.IsFunctionLike(node) {
++		if node == nil || ast.IsTypeNode(node) || node.Kind == ast.KindNewExpression || node != function && ast.IsFunctionLike(node) {
+ 			return
+ 		}
+ 		if branch := g.lowering.literalCallableBranch(node); branch != nil {

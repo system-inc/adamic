@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -303,7 +303,7 @@
+ 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+ 			}
+ 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+-				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
++				return l.notYet(node, "a namespace read before initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+ 			}
+ 		}
+ 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {

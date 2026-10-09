@@ -1,0 +1,156 @@
+[
+  {
+    "test": "TestModuleNamespaceLimitsStayLoud",
+    "file": "internal/lower/module_namespace_test.go",
+    "line": 15,
+    "timings": [
+      0.152,
+      0.111,
+      0.133
+    ],
+    "seconds": 0.133
+  },
+  {
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "file": "internal/lower/module_namespace_test.go",
+    "line": 52,
+    "timings": [
+      0.04,
+      0.045,
+      0.042
+    ],
+    "seconds": 0.042
+  },
+  {
+    "test": "TestCallableNamespaceLimitsStayLoud",
+    "file": "internal/lower/namespace_callable_test.go",
+    "line": 9,
+    "timings": [
+      0.161,
+      0.141,
+      0.183
+    ],
+    "seconds": 0.161
+  },
+  {
+    "test": "TestCallableNamespaceReceiverStaysLoud",
+    "file": "internal/lower/namespace_callable_test.go",
+    "line": 30,
+    "timings": [
+      0.047,
+      0.039,
+      0.037
+    ],
+    "seconds": 0.039
+  },
+  {
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "file": "internal/lower/namespace_class_test.go",
+    "line": 9,
+    "timings": [
+      0.038,
+      0.042,
+      0.046
+    ],
+    "seconds": 0.042
+  },
+  {
+    "test": "TestNamespaceReceiverArrowInheritsScope",
+    "file": "internal/lower/namespace_receiver_scope_test.go",
+    "line": 9,
+    "timings": [
+      0.041,
+      0.046,
+      0.039
+    ],
+    "seconds": 0.041
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "file": "internal/lower/namespaces_ambient_test.go",
+    "line": 14,
+    "timings": [
+      0.919,
+      0.87,
+      0.974
+    ],
+    "seconds": 0.919
+  },
+  {
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "file": "internal/lower/namespaces_ambient_test.go",
+    "line": 42,
+    "timings": [
+      0.041,
+      0.052,
+      0.05
+    ],
+    "seconds": 0.05
+  },
+  {
+    "test": "TestNamespaceCallGraphLinearWork",
+    "file": "internal/lower/namespaces_call_graph_test.go",
+    "line": 32,
+    "timings": [
+      0.071,
+      0.13,
+      0.099
+    ],
+    "seconds": 0.099
+  },
+  {
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "file": "internal/lower/namespaces_call_graph_test.go",
+    "line": 56,
+    "timings": [
+      0.038,
+      0.056,
+      0.039
+    ],
+    "seconds": 0.039
+  },
+  {
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "file": "internal/lower/namespaces_call_graph_test.go",
+    "line": 80,
+    "timings": [
+      0.039,
+      0.04,
+      0.039
+    ],
+    "seconds": 0.039
+  },
+  {
+    "test": "TestParserFactoryBindingHoisting",
+    "file": "internal/lower/namespaces_factory_test.go",
+    "line": 16,
+    "timings": [
+      0.042,
+      0.042,
+      0.045
+    ],
+    "seconds": 0.042
+  },
+  {
+    "test": "TestMissingBindingSymbolHasStructuredLocation",
+    "file": "internal/lower/namespaces_factory_test.go",
+    "line": 44,
+    "timings": [
+      0.049,
+      0.04,
+      0.041
+    ],
+    "seconds": 0.041
+  },
+  {
+    "test": "TestTscNamespaceDeclarationShapes",
+    "file": "internal/lower/namespaces_shapes_test.go",
+    "line": 12,
+    "timings": [
+      0.254,
+      0.242,
+      0.203
+    ],
+    "seconds": 0.242
+  }
+]

@@ -1,0 +1,3140 @@
+[
+  {
+    "id": "P01",
+    "test": "TestModuleNamespaceLimitsStayLoud",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestModuleNamespaceLimitsStayLoud$",
+    "exit": 1,
+    "wall_seconds": 2.0360690439997597,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:10.908833321Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.91674327Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916829159Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud",
+        "Output": "=== RUN   TestModuleNamespaceLimitsStayLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916873506Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud",
+        "Output": "=== PAUSE TestModuleNamespaceLimitsStayLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.91687605Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916878393Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916880206Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud",
+        "Output": "=== CONT  TestModuleNamespaceLimitsStayLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916883191Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916887237Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;",
+        "Output": "=== RUN   TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.91689612Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;",
+        "Output": "=== PAUSE TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916898243Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916900897Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916904853Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));",
+        "Output": "=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.91690932Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));",
+        "Output": "=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916911123Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916913496Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916915219Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);",
+        "Output": "=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916917432Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);",
+        "Output": "=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916925294Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916928399Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916931784Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;",
+        "Output": "=== RUN   TestModuleNamespaceLimitsStayLoud/performance.value_=_2;\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916934468Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;",
+        "Output": "=== PAUSE TestModuleNamespaceLimitsStayLoud/performance.value_=_2;\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916936341Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916938424Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916940186Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);",
+        "Output": "=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.91694242Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);",
+        "Output": "=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916944172Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916946185Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.916947938Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;",
+        "Output": "=== CONT  TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917186837Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917193628Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;",
+        "Output": "=== CONT  TestModuleNamespaceLimitsStayLoud/performance.value_=_2;\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917197023Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917198876Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);",
+        "Output": "=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917201259Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917202952Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);",
+        "Output": "=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917573199Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));"
+      },
+      {
+        "Time": "2026-10-09T10:35:10.917579768Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));",
+        "Output": "=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035064527Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));",
+        "Output": "    module_namespace_test.go:46: got <nil>, want NotYet ESM namespace object\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035158549Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));",
+        "Output": "--- FAIL: TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(',')); (0.11s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035172029Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035197898Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;",
+        "Output": "--- PASS: TestModuleNamespaceLimitsStayLoud/performance.value_=_2; (0.11s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035203326Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/performance.value_=_2;",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035210066Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;",
+        "Output": "    module_namespace_test.go:46: got <nil>, want NotYet ESM namespace object\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.035215715Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;",
+        "Output": "--- FAIL: TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance; (0.11s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.046981695Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T10:35:11.047056197Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);",
+        "Output": "    module_namespace_test.go:46: got <nil>, want NotYet ESM namespace object\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.047074975Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);",
+        "Output": "--- FAIL: TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`); (0.13s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.06178905Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-09T10:35:11.061828069Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);",
+        "Output": "    module_namespace_test.go:46: got <nil>, want NotYet observing its receiver\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.061841379Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);",
+        "Output": "--- FAIL: TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`); (0.14s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.061859737Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T10:35:11.061863943Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud",
+        "Output": "--- FAIL: TestModuleNamespaceLimitsStayLoud (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.061867418Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceLimitsStayLoud",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:35:11.061871865Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.065439682Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.156s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:11.065486983Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.157
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestModuleNamespaceInitializedReadProof$",
+    "exit": 0,
+    "wall_seconds": 2.0203865960002076,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:13.018904813Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:13.033755739Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceInitializedReadProof"
+      },
+      {
+        "Time": "2026-10-09T10:35:13.033857923Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceInitializedReadProof",
+        "Output": "=== RUN   TestModuleNamespaceInitializedReadProof\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:13.076510923Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceInitializedReadProof",
+        "Output": "--- PASS: TestModuleNamespaceInitializedReadProof (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:13.076560928Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestModuleNamespaceInitializedReadProof",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:13.076583472Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "PASS\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:13.080621747Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.061s\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:13.080684061Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.062
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestCallableNamespaceLimitsStayLoud",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCallableNamespaceLimitsStayLoud$",
+    "exit": 1,
+    "wall_seconds": 2.233546810000007,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:15.168133847Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.176907725Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177014085Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177052293Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177056279Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177060135Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177063269Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177067085Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177072213Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud/escape\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177077911Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud/escape\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177081346Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177084581Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177086895Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud/reflection\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177093014Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177095448Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177098452Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177100826Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud/replacement\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177104231Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177106755Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177109839Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177112213Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177121867Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177125303Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177129249Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177131552Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177134496Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.17713712Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177146685Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177149609Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early",
+        "Output": "=== RUN   TestCallableNamespaceLimitsStayLoud/early\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177154266Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early",
+        "Output": "=== PAUSE TestCallableNamespaceLimitsStayLoud/early\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177157251Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177162749Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177165423Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud/escape\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177168808Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177171712Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177181197Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177183771Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud/early\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.177405504Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.178296034Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.178326389Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.178330546Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud/replacement\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280350098Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic",
+        "Output": "    namespace_callable_test.go:24: got <nil>, want function intrinsic\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280443909Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud/intrinsic (0.10s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280448977Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280507966Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280511281Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection",
+        "Output": "=== CONT  TestCallableNamespaceLimitsStayLoud/reflection\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280578782Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement",
+        "Output": "    namespace_callable_test.go:24: got <nil>, want replacing a namespace export\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.280634456Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud/replacement (0.10s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.286185186Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/replacement",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T10:35:15.286223854Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early",
+        "Output": "    namespace_callable_test.go:24: got <nil>, want namespace read before runtime initialization\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.2862408Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud/early (0.11s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.290260557Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/early",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T10:35:15.290304463Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method",
+        "Output": "    namespace_callable_test.go:24: got <nil>, want function intrinsic\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.290439235Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.11s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.299074025Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/intrinsic_method",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T10:35:15.299122257Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape",
+        "Output": "    namespace_callable_test.go:24: got <nil>, want callable namespace object\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.299233735Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud/escape (0.12s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.315870463Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/escape",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-09T10:35:15.316085246Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection",
+        "Output": "    namespace_callable_test.go:24: got <nil>, want callable namespace object\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.316103283Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud/reflection (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.316112547Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud/reflection",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:15.316116603Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud",
+        "Output": "--- FAIL: TestCallableNamespaceLimitsStayLoud (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.316119848Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceLimitsStayLoud",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:35:15.316123043Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.320919548Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.152s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:15.320939829Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.153
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestCallableNamespaceReceiverStaysLoud",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCallableNamespaceReceiverStaysLoud$",
+    "exit": 1,
+    "wall_seconds": 2.058931485999892,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:17.332397229Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.342063575Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.342151968Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Output": "=== RUN   TestCallableNamespaceReceiverStaysLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.342182534Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Output": "=== PAUSE TestCallableNamespaceReceiverStaysLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.342184797Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.342190246Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.342192429Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Output": "=== CONT  TestCallableNamespaceReceiverStaysLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.379648956Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Output": "    namespace_callable_test.go:35: got <nil>\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.379766503Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Output": "--- FAIL: TestCallableNamespaceReceiverStaysLoud (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.379773854Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableNamespaceReceiverStaysLoud",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:17.379800414Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.381152969Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.048s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:17.381167681Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.049
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceClassEarlyConstructionStaysLoud$",
+    "exit": 1,
+    "wall_seconds": 1.944401588999881,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:19.280031746Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.289134009Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.289217374Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Output": "=== RUN   TestNamespaceClassEarlyConstructionStaysLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.289252016Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Output": "=== PAUSE TestNamespaceClassEarlyConstructionStaysLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.28925469Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.289256974Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.289258626Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Output": "=== CONT  TestNamespaceClassEarlyConstructionStaysLoud\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.325851635Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Output": "    namespace_class_test.go:14: early constructor read trusted: <nil>\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.325931054Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Output": "--- FAIL: TestNamespaceClassEarlyConstructionStaysLoud (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.32593467Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceClassEarlyConstructionStaysLoud",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:19.325971795Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.327679434Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.047s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:19.327701357Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.048
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestNamespaceReceiverArrowInheritsScope",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceReceiverArrowInheritsScope$",
+    "exit": 1,
+    "wall_seconds": 2.146965967000142,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:21.435134288Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.442534055Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.442602778Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Output": "=== RUN   TestNamespaceReceiverArrowInheritsScope\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.442631201Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Output": "=== PAUSE TestNamespaceReceiverArrowInheritsScope\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.442633445Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.442635808Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.442637481Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Output": "=== CONT  TestNamespaceReceiverArrowInheritsScope\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.476582446Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Output": "    namespace_receiver_scope_test.go:14: namespace arrow receiver escaped its scope check: <nil>\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.476673322Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Output": "--- FAIL: TestNamespaceReceiverArrowInheritsScope (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.476677449Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceReceiverArrowInheritsScope",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:21.476699342Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.476967585Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:21.476986003Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.042
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestNamespaceAmbientHostInitialization",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceAmbientHostInitialization$",
+    "exit": 1,
+    "wall_seconds": 2.882686136999837,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:23.417162339Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424283452Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424349501Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "=== RUN   TestNamespaceAmbientHostInitialization\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424369381Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "=== PAUSE TestNamespaceAmbientHostInitialization\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424393257Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424397023Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424399246Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "=== CONT  TestNamespaceAmbientHostInitialization\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.42440213Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.424404233Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Output": "=== RUN   TestNamespaceAmbientHostInitialization/realpath\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.913702055Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Output": "    namespaces_ambient_test.go:35: expected independent host member NotYet, got <nil>\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.913781985Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Output": "--- FAIL: TestNamespaceAmbientHostInitialization/realpath (0.49s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.913787774Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-09T10:35:23.913809396Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd"
+      },
+      {
+        "Time": "2026-10-09T10:35:23.91381214Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Output": "=== RUN   TestNamespaceAmbientHostInitialization/cwd\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:24.35442063Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Output": "    namespaces_ambient_test.go:35: expected independent host member NotYet, got <nil>\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:24.354477115Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Output": "--- FAIL: TestNamespaceAmbientHostInitialization/cwd (0.44s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:24.354488722Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Elapsed": 0.44
+      },
+      {
+        "Time": "2026-10-09T10:35:24.354495963Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "--- FAIL: TestNamespaceAmbientHostInitialization (0.93s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:24.354504746Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Elapsed": 0.93
+      },
+      {
+        "Time": "2026-10-09T10:35:24.35452038Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:24.359591864Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.942s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:24.359627057Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.943
+      }
+    ]
+  },
+  {
+    "id": "P01",
+    "test": "TestTscNamespaceDeclarationShapes",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestTscNamespaceDeclarationShapes$",
+    "exit": 1,
+    "wall_seconds": 2.079433773999881,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:26.211863244Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.218848773Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.218913961Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.219947185Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.219964281Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.219967506Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.219969469Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250529277Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250574615Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/BuilderState\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250595356Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/BuilderState\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250597379Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250606854Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250608937Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/JsxNames\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250611711Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/JsxNames\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250613383Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250615567Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250617249Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/ReactNames\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250619433Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/ReactNames\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250620945Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250622707Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250626413Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/BinaryExpressionState\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250638051Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/BinaryExpressionState\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250639823Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250641796Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250643469Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/Parser.JSDocParser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250645842Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/Parser.JSDocParser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250647405Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250653013Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250654816Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/Debug\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250658311Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/Debug\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250659923Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250661886Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250663299Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/Debug.log\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250665782Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/Debug.log\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250667465Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250669338Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.2506708Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/Parser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250673223Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/Parser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250674796Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250676599Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250695547Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/IncrementalParser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250698061Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/IncrementalParser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250699613Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250701326Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250702878Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled",
+        "Output": "=== RUN   TestTscNamespaceDeclarationShapes/tracingEnabled\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250707575Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled",
+        "Output": "=== PAUSE TestTscNamespaceDeclarationShapes/tracingEnabled\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250709188Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250711621Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250713234Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/BuilderState\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250715357Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.250717019Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/Debug\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.251830464Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.251842523Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/IncrementalParser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.251846829Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.251849002Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/BinaryExpressionState\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.251851266Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.251852988Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/tracingEnabled\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.322940239Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.323149003Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/BinaryExpressionState (0.07s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.32316045Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BinaryExpressionState",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:35:26.323180961Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.323183895Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/Parser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.325098916Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.325185777Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/IncrementalParser (0.07s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.325201631Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/IncrementalParser",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:35:26.325204545Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.325206749Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/Debug.log\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.333608538Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.333678733Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/BuilderState (0.08s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.333684092Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/BuilderState",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-09T10:35:26.333687917Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.333690611Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/ReactNames\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.369190386Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.369469045Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/Debug (0.12s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.369501704Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-09T10:35:26.369507503Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.36951883Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/JsxNames\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.388671728Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled",
+        "Output": "    namespaces_shapes_test.go:51: got <nil>, want NotYet no runtime container is emitted\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.388830126Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled",
+        "Output": "--- FAIL: TestTscNamespaceDeclarationShapes/tracingEnabled (0.14s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.388851488Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/tracingEnabled",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T10:35:26.388857958Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.388861894Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser",
+        "Output": "=== CONT  TestTscNamespaceDeclarationShapes/Parser.JSDocParser\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.413178195Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.41329445Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/Debug.log (0.09s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.419776741Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Debug.log",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-09T10:35:26.419899236Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.419912355Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/ReactNames (0.09s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.427232091Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/ReactNames",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-09T10:35:26.427249968Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.427320725Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/Parser (0.10s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.430606959Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-09T10:35:26.430618626Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.430624135Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/JsxNames (0.06s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.432948652Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/JsxNames",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-09T10:35:26.432964325Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser",
+        "Output": "    namespaces_shapes_test.go:46: declaration shape lowers\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.432978987Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser",
+        "Output": "--- PASS: TestTscNamespaceDeclarationShapes/Parser.JSDocParser (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.433025247Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes/Parser.JSDocParser",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:26.433028161Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes",
+        "Output": "--- FAIL: TestTscNamespaceDeclarationShapes (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.433030595Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestTscNamespaceDeclarationShapes",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:26.433033249Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.438898392Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.227s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:26.438934276Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.227
+      }
+    ]
+  },
+  {
+    "id": "P02",
+    "test": "TestNamespaceAmbientHostInitialization",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceAmbientHostInitialization$",
+    "exit": 0,
+    "wall_seconds": 2.8706805650003844,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:28.326519423Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334215596Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.33429763Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "=== RUN   TestNamespaceAmbientHostInitialization\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334324941Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "=== PAUSE TestNamespaceAmbientHostInitialization\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334327505Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334330449Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334332041Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "=== CONT  TestNamespaceAmbientHostInitialization\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334334535Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.334336598Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Output": "=== RUN   TestNamespaceAmbientHostInitialization/realpath\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.809772414Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Output": "    namespaces_ambient_test.go:37: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath1514987140/002/main.a:3:22: stage 0 can't lower node:fs.native yet\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.810104504Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Output": "--- PASS: TestNamespaceAmbientHostInitialization/realpath (0.48s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.81011511Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/realpath",
+        "Elapsed": 0.48
+      },
+      {
+        "Time": "2026-10-09T10:35:28.810134138Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd"
+      },
+      {
+        "Time": "2026-10-09T10:35:28.810137143Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Output": "=== RUN   TestNamespaceAmbientHostInitialization/cwd\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:29.304392349Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Output": "    namespaces_ambient_test.go:31: independent ownership refusal: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationcwd2056225687/002/main.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:29.304466951Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Output": "--- PASS: TestNamespaceAmbientHostInitialization/cwd (0.49s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:29.304472329Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization/cwd",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-09T10:35:29.30449932Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Output": "--- PASS: TestNamespaceAmbientHostInitialization (0.97s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:29.304502535Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientHostInitialization",
+        "Elapsed": 0.97
+      },
+      {
+        "Time": "2026-10-09T10:35:29.304507452Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "PASS\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:29.312638044Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.986s\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:29.312692846Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.986
+      }
+    ]
+  },
+  {
+    "id": "P02",
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceEnumInitializationIndependentOfModuleAnalysis$",
+    "exit": 1,
+    "wall_seconds": 2.0297745269999723,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:31.302388985Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.309841316Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.309907656Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Output": "=== RUN   TestNamespaceEnumInitializationIndependentOfModuleAnalysis\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.309929358Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Output": "=== PAUSE TestNamespaceEnumInitializationIndependentOfModuleAnalysis\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.309931722Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.309933985Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.309935528Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Output": "=== CONT  TestNamespaceEnumInitializationIndependentOfModuleAnalysis\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.342031021Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Output": "    namespaces_call_graph_test.go:86: namespace enum lost its independent refusal: <nil>\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.342122078Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Output": "--- FAIL: TestNamespaceEnumInitializationIndependentOfModuleAnalysis (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.342519226Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:31.342554759Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.343934785Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:31.34395816Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.042
+      }
+    ]
+  },
+  {
+    "id": "P03",
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceAmbientContextsDoNotExecute$",
+    "exit": 1,
+    "wall_seconds": 2.119448227000248,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:33.424187037Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.431440795Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.431529698Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Output": "=== RUN   TestNamespaceAmbientContextsDoNotExecute\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.43157751Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Output": "=== PAUSE TestNamespaceAmbientContextsDoNotExecute\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.431580104Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.431582518Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.43158434Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Output": "=== CONT  TestNamespaceAmbientContextsDoNotExecute\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.465007546Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Output": "    namespaces_ambient_test.go:54: executable namespace erased\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.465127327Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Output": "--- FAIL: TestNamespaceAmbientContextsDoNotExecute (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.465133386Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceAmbientContextsDoNotExecute",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:33.465164733Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.465330683Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:33.46535531Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.041
+      }
+    ]
+  },
+  {
+    "id": "P04",
+    "test": "TestNamespaceCallGraphLinearWork",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceCallGraphLinearWork$",
+    "exit": 1,
+    "wall_seconds": 2.172490263000327,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:35.564448927Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573030096Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573127582Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork",
+        "Output": "=== RUN   TestNamespaceCallGraphLinearWork\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573156866Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork",
+        "Output": "=== PAUSE TestNamespaceCallGraphLinearWork\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.57315929Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573161513Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573163186Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork",
+        "Output": "=== CONT  TestNamespaceCallGraphLinearWork\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573165429Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/12"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.573167232Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/12",
+        "Output": "=== RUN   TestNamespaceCallGraphLinearWork/12\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.606854691Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/12",
+        "Output": "    namespaces_call_graph_test.go:44: nonlinear function walks: got 0, want 13\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.606949814Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/12",
+        "Output": "--- FAIL: TestNamespaceCallGraphLinearWork/12 (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.606981552Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/12",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:35.607002704Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/24"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.607009394Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/24",
+        "Output": "=== RUN   TestNamespaceCallGraphLinearWork/24\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.637061624Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/24",
+        "Output": "    namespaces_call_graph_test.go:44: nonlinear function walks: got 0, want 25\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.637129055Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/24",
+        "Output": "--- FAIL: TestNamespaceCallGraphLinearWork/24 (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.637134934Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork/24",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:35.637141614Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork",
+        "Output": "--- FAIL: TestNamespaceCallGraphLinearWork (0.07s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.637143907Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphLinearWork",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:35:35.63714595Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.639860344Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.075s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:35.639911701Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.075
+      }
+    ]
+  },
+  {
+    "id": "P04",
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceCallGraphCycleUnion$",
+    "exit": 1,
+    "wall_seconds": 2.153158514000097,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:37.75033372Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.758092328Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.758160851Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Output": "=== RUN   TestNamespaceCallGraphCycleUnion\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.758182864Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Output": "=== PAUSE TestNamespaceCallGraphCycleUnion\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.758185238Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.758187371Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.758189094Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Output": "=== CONT  TestNamespaceCallGraphCycleUnion\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.793171101Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Output": "    namespaces_call_graph_test.go:67: partial cycle reach for one: 0 namespaces\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.793278062Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Output": "--- FAIL: TestNamespaceCallGraphCycleUnion (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.793281768Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:37.793302199Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.794431763Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.044s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:37.794466115Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.044
+      }
+    ]
+  },
+  {
+    "id": "P05",
+    "test": "TestParserFactoryBindingHoisting",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestParserFactoryBindingHoisting$",
+    "exit": 0,
+    "wall_seconds": 2.006216860999757,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:39.753329085Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.760464445Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.760540069Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== RUN   TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.760563634Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== PAUSE TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.760566018Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.760571116Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.760573008Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== CONT  TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.801305232Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "--- PASS: TestParserFactoryBindingHoisting (0.04s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.801409289Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:35:39.801461788Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "PASS\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.801544642Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.048s\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:39.801563791Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.048
+      }
+    ]
+  },
+  {
+    "id": "P06",
+    "test": "TestParserFactoryBindingHoisting",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestParserFactoryBindingHoisting$",
+    "exit": 0,
+    "wall_seconds": 2.0358348009999645,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:41.800473024Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.80756959Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.807643131Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== RUN   TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.807684583Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== PAUSE TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.807687077Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.807689491Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.807691083Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== CONT  TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.839738642Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "--- PASS: TestParserFactoryBindingHoisting (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.839788857Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:41.83981076Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "PASS\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.8407742Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.040s\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:41.840797985Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.04
+      }
+    ]
+  },
+  {
+    "id": "P07",
+    "test": "TestMissingBindingSymbolHasStructuredLocation",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestMissingBindingSymbolHasStructuredLocation$",
+    "exit": 1,
+    "wall_seconds": 2.003967467000166,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:43.803940998Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.811876196Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.811970428Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Output": "=== RUN   TestMissingBindingSymbolHasStructuredLocation\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.812006171Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Output": "=== PAUSE TestMissingBindingSymbolHasStructuredLocation\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.812009106Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.81201218Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.812014814Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Output": "=== CONT  TestMissingBindingSymbolHasStructuredLocation\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.843889781Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Output": "    namespaces_factory_test.go:62: got <nil>, want a structured missing-symbol diagnostic at /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation3642525640/001/main.a:1:7\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.843992795Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Output": "--- FAIL: TestMissingBindingSymbolHasStructuredLocation (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.843997683Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestMissingBindingSymbolHasStructuredLocation",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:43.84401567Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.845362506Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:43.845411159Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.041
+      }
+    ]
+  },
+  {
+    "id": "P08",
+    "test": "TestParserFactoryBindingHoisting",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestParserFactoryBindingHoisting$",
+    "exit": 0,
+    "wall_seconds": 2.3762523370000963,
+    "events": [
+      {
+        "Time": "2026-10-09T10:35:46.183429544Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/lower"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.190999768Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.191120229Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== RUN   TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.19240386Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== PAUSE TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.192418833Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.192422218Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.192424291Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "=== CONT  TestParserFactoryBindingHoisting\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.22553813Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Output": "--- PASS: TestParserFactoryBindingHoisting (0.03s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.22567123Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryBindingHoisting",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-09T10:35:46.225699332Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "PASS\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.225935252Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.042s\n"
+      },
+      {
+        "Time": "2026-10-09T10:35:46.225958727Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.043
+      }
+    ]
+  }
+]

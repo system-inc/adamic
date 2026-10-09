@@ -1,0 +1,86 @@
+[
+  {
+    "id": "C1",
+    "exit": 1,
+    "seconds": 91.54154031199869,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "cache": "/workspace/defend-module-cache/C1",
+    "vet_exit": 0,
+    "binary_seconds": 74.245
+  },
+  {
+    "id": "A1",
+    "exit": 1,
+    "seconds": 95.54076378399623,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "cache": "/workspace/defend-module-cache/A1",
+    "vet_exit": 0,
+    "binary_seconds": 78.318
+  },
+  {
+    "id": "S1",
+    "exit": 0,
+    "seconds": 98.71440096999868,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "cache": "/workspace/defend-module-cache/S1",
+    "vet_exit": 0,
+    "binary_seconds": 79.385
+  },
+  {
+    "id": "S2",
+    "exit": 1,
+    "seconds": 91.17941211699508,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "cache": "/workspace/defend-module-cache/S2",
+    "vet_exit": 0,
+    "binary_seconds": 74.934
+  }
+]
