@@ -1,118 +1,81 @@
-# base origin/main 83f3940ec77b8ba779da05ded113e9d9e7e710b6; 4-CPU cgroup quota; GOMAXPROCS=4; Go 1.27.1.
-# Test-only evidence; no test fixes. Bootstrap: SSH refused, HTTPS submodules took about 6 minutes, cold package compilation about 176s.
-# Product bootstrap: missing_binding 175.09s, checker command 135.789954s, native miss 36.24s; warm product 2.48s.
-# Commands: go test ./stage1/cohere/typeaware -run ^UNIT$ -count=1 -timeout 90s -v -test.skip ^TestProduct_; products use -timeout 600s and no test-side budget.
-# Products prebuilt sequentially; live reports kept in scratch. Evidence checkpoints change broad cache and VCS keys; type-symbol baseline consequently rebuilt (49.21s). Stable second pass pending.
-# Optional ADAMIC_TYPESCRIPT_SOURCE, ADAMIC_TYPEAWARE_BENCH, ADAMIC_VOLUME_REPOSITORY_MANIFEST unset; corpus/benchmark SKIPs are not coverage claims.
-# Loom supplied family maxima, not individual slow leaf names; no load reproduction performed. Before/after means repeated baseline, no fix.
-kind	unit	loom_family_s	alone_before_s	setup_s	own_work_s	status
-product	TestProduct_stage0	-	5.38	-	-	pass; command_wall_s=8.344
-product	TestProduct_checker	-	5.77	-	-	pass; command_wall_s=8.125
-product	TestProduct_profile_missing_binding	-	2.48	-	-	pass; command_wall_s=4.988
-leaf	TestShadowIndexMissingBindingUnion	-	0.00	-	-	pass; command_wall_s=2.052
-leaf	TestShadowIndexMissingBinding_000	113	5.09	4.092	-	pass; command_wall_s=7.922
-product	TestProduct_volume_guard_stage0	-	11.99	-	-	pass; command_wall_s=14.640
-product	TestProduct_volume_guard_oracle	-	2.53	-	-	pass; command_wall_s=5.455
-product	TestProduct_volume_guard_archive_checker	-	10.29	-	-	pass; command_wall_s=13.680
-product	TestProduct_volume_guard_archive_checker_asan	-	13.64	-	-	pass; command_wall_s=17.883
-product	TestProduct_volume_guard_archive_strict_this_checker	-	18.16	-	-	pass; command_wall_s=22.006
-product	TestProduct_volume_guard_volume	-	50.87	-	-	pass; command_wall_s=53.048
-product	TestProduct_volume_guard_volume_asan	-	77.84	-	-	pass; command_wall_s=80.944
-product	TestProduct_volume_guard_strict_this_native	-	44.15	-	-	pass; command_wall_s=47.525
-leaf	TestVolumeConfigGuardAndMutantUnion	-	0.00	-	-	pass; command_wall_s=2.152
-leaf	TestVolumeConfigGuardAndMutant_000	90-kill/106-family	15.51	-	0.212176	pass; command_wall_s=18.825
-leaf	TestVolumeConfigGuardAndMutant_001	90-kill/106-family	6.03	-	0.060130	pass; command_wall_s=8.010
-leaf	TestVolumeConfigGuardAndMutant_002	90-kill/106-family	6.07	-	0.066745	pass; command_wall_s=8.061
-leaf	TestVolumeConfigGuardAndMutant_003	90-kill/106-family	6.09	-	0.065836	pass; command_wall_s=8.129
-leaf	TestVolumeConfigGuardAndMutant_004	90-kill/106-family	6.01	-	0.068145	pass; command_wall_s=8.383
-leaf	TestVolumeConfigGuardAndMutant_005	90-kill/106-family	6.20	-	0.067347	pass; command_wall_s=8.312
-leaf	TestVolumeConfigGuardAndMutant_006	90-kill/106-family	6.26	-	0.086189	pass; command_wall_s=8.990
-leaf	TestVolumeConfigGuardAndMutant_007	90-kill/106-family	6.22	-	0.065892	pass; command_wall_s=8.932
-leaf	TestVolumeConfigGuardAndMutant_008	90-kill/106-family	5.95	-	0.073257	pass; command_wall_s=8.627
-leaf	TestVolumeConfigGuardAndMutant_009	90-kill/106-family	5.97	-	0.062994	pass; command_wall_s=8.570
-leaf	TestVolumeConfigGuardAndMutant_010	90-kill/106-family	5.94	-	0.065019	pass; command_wall_s=8.495
-leaf	TestVolumeConfigGuardAndMutant_011	90-kill/106-family	6.02	-	0.101521	pass; command_wall_s=8.467
-leaf	TestVolumeConfigGuardAndMutant_012	90-kill/106-family	6.52	-	0.075020	pass; command_wall_s=9.655
-leaf	TestVolumeConfigGuardAndMutant_013	90-kill/106-family	5.87	-	0.066498	pass; command_wall_s=8.858
-leaf	TestVolumeConfigGuardAndMutant_014	90-kill/106-family	6.01	-	0.078984	pass; command_wall_s=8.127
-leaf	TestVolumeConfigGuardAndMutant_015	90-kill/106-family	5.83	-	0.000096	pass; command_wall_s=8.056
-leaf	TestVolumeConfigGuardAndMutantPlantedFailure	-	6.14	-	0.070082	pass; command_wall_s=8.684
-product	TestProduct_type_symbol_archive	-	12.87	-	-	pass; command_wall_s=14.976
-product	TestProduct_type_symbol_native	-	37.73	-	-	pass; command_wall_s=39.751
-product	TestProduct_type_symbol_oracle	-	6.96	-	-	pass; command_wall_s=9.036
-product	TestProduct_type_symbol_fixtures	-	0.00	-	-	pass; command_wall_s=2.006
-product	TestProduct_type_symbol_truth	-	1.02	-	-	pass; command_wall_s=3.315
-leaf	TestVolumeTypeSymbolUnion	-	0.00	-	-	pass; command_wall_s=2.799
-leaf	TestVolumeTypeSymbolPlantedSurvivor	-	0.00	-	-	pass; command_wall_s=2.062
-leaf	TestVolumeTypeSymbol_000	178	49.21	-	-	pass; command_wall_s=51.073
-product	TestProduct_checker_asan	-	7.60	-	-	pass; command_wall_s=10.031
-product	TestProduct_typeaware_lowered	-	9.10	-	-	pass; command_wall_s=11.019
-product	TestProduct_typeaware_native	-	16.31	-	-	pass; command_wall_s=18.235
-product	TestProduct_typeaware_native_asan	-	22.71	-	-	pass; command_wall_s=24.598
-product	TestProduct_typeaware_oracle	-	6.71	-	-	pass; command_wall_s=8.576
-leaf	TestTypeAwareAgreementAndMutantsUnion	-	14.65	14.646448	-	pass; command_wall_s=16.543
-leaf	TestTypeAwareAgreementAndMutants_000	385-family	10.63	10.551078	0.079010	pass; command_wall_s=13.182
-leaf	TestTypeAwareAgreementAndMutants_001	385-family	10.81	10.506102	0.303186	pass; command_wall_s=12.844
-leaf	TestTypeAwareAgreementAndMutants_002	385-family	10.55	10.503414	0.051232	pass; command_wall_s=12.589
-leaf	TestTypeAwareAgreementAndMutants_003	385-family	38.68	10.303209	28.372641	pass; command_wall_s=40.711
-leaf	TestTypeAwareAgreementAndMutants_004	385-family	18.80	11.841089	6.960091	pass; command_wall_s=20.795
-leaf	TestTypeAwareAgreementAndMutants_005	385-family	28.39	10.864318	17.525028	pass; command_wall_s=30.583
-leaf	TestTypeAwareAgreementAndMutants_006	385-family	28.78	11.173771	17.610353	pass; command_wall_s=30.995
-leaf	TestTypeAwareAgreementAndMutants_007	385-family	30.09	11.847465	18.241281	pass; command_wall_s=32.359
-leaf	TestTypeAwareAgreementAndMutants_008	385-family	31.92	11.903370	20.014891	pass; command_wall_s=35.104
-leaf	TestTypeAwareAgreementAndMutants_009	385-family	15.29	10.991781	4.298317	pass; command_wall_s=18.696
-leaf	TestTypeAwareAgreementAndMutants_010	385-family	38.50	10.699034	27.796776	pass; command_wall_s=41.260
-leaf	TestTypeAwareAgreementAndMutants_011	385-family	11.26	11.128627	0.128423	pass; command_wall_s=13.985
-leaf	TestTypeAwareAgreementAndMutants_012	385-family	10.79	10.788936	0.000047	SKIP; command_wall_s=12.830
-leaf	TestTypeAwareAgreementAndMutants_013	385-family	10.90	10.898894	0.000029	SKIP; command_wall_s=12.899
-leaf	TestTypeAwareAgreementAndMutants_014	385-family	11.22	11.220278	0.000025	SKIP; command_wall_s=13.233
-leaf	TestTypeAwareAgreementAndMutants_015	385-family	11.17	11.173833	0.000100	SKIP; command_wall_s=13.278
-leaf	TestTypeAwareAgreementAndMutants_016	385-family	11.72	11.719686	0.000065	SKIP; command_wall_s=13.636
-leaf	TestTypeAwareAgreementAndMutants_017	385-family	11.01	11.006579	0.000023	SKIP; command_wall_s=13.447
-leaf	TestTypeAwareAgreementAndMutants_018	385-family	10.77	10.766338	0.000034	SKIP; command_wall_s=12.722
-leaf	TestTypeAwareAgreementAndMutants_019	385-family	11.55	11.550777	0.000036	SKIP; command_wall_s=13.486
-leaf	TestTypeAwareAgreementAndMutants_020	385-family	10.44	10.440666	0.000016	SKIP; command_wall_s=12.458
-leaf	TestTypeAwareTopShardPlantedFailure	-	0.02	-	-	pass; command_wall_s=1.949
-# Second pass so far; repeat rows use the same duration columns. No fixes. Stable revision f5f7cb29.
-repeat-product	TestProduct_stage0	-	7.58	-	-	pass; command_wall_s=9.776
-repeat-product	TestProduct_checker	-	8.24	-	-	pass; command_wall_s=10.226
-repeat-product	TestProduct_profile_missing_binding	-	1.95	-	-	pass; command_wall_s=4.290
-repeat-leaf	TestShadowIndexMissingBindingUnion	-	0.00	-	-	pass; command_wall_s=1.957
-repeat-leaf	TestShadowIndexMissingBinding_000	113	2.97	2.379	-	pass; command_wall_s=4.876
-repeat-product	TestProduct_volume_guard_stage0	-	4.42	-	-	pass; command_wall_s=6.374
-repeat-product	TestProduct_volume_guard_oracle	-	4.21	-	-	pass; command_wall_s=6.085
-repeat-product	TestProduct_volume_guard_archive_checker	-	3.46	-	-	pass; command_wall_s=5.302
-repeat-product	TestProduct_volume_guard_archive_checker_asan	-	6.88	-	-	pass; command_wall_s=9.051
-repeat-product	TestProduct_volume_guard_archive_strict_this_checker	-	6.95	-	-	pass; command_wall_s=10.451
-repeat-product	TestProduct_volume_guard_volume	-	39.14	-	-	pass; command_wall_s=41.073
-repeat-product	TestProduct_volume_guard_volume_asan	-	60.64	-	-	pass; command_wall_s=62.514
-repeat-product	TestProduct_volume_guard_strict_this_native	-	40.36	-	-	pass; command_wall_s=42.380
-repeat-leaf	TestVolumeConfigGuardAndMutantUnion	-	0.00	-	-	pass; command_wall_s=2.128
-repeat-leaf	TestVolumeConfigGuardAndMutant_000	90-kill/106-family	14.98	-	0.198792	pass; command_wall_s=16.921
-repeat-leaf	TestVolumeConfigGuardAndMutant_001	90-kill/106-family	5.92	-	0.057523	pass; command_wall_s=7.796
-repeat-leaf	TestVolumeConfigGuardAndMutant_002	90-kill/106-family	5.67	-	0.058189	pass; command_wall_s=7.588
-repeat-leaf	TestVolumeConfigGuardAndMutant_003	90-kill/106-family	6.00	-	0.070789	pass; command_wall_s=7.987
-repeat-leaf	TestVolumeConfigGuardAndMutant_004	90-kill/106-family	6.11	-	0.064956	pass; command_wall_s=8.072
-repeat-leaf	TestVolumeConfigGuardAndMutant_005	90-kill/106-family	5.77	-	0.060397	pass; command_wall_s=7.677
-repeat-leaf	TestVolumeConfigGuardAndMutant_006	90-kill/106-family	6.01	-	0.073883	pass; command_wall_s=7.958
-repeat-leaf	TestVolumeConfigGuardAndMutant_007	90-kill/106-family	5.84	-	0.056028	pass; command_wall_s=7.708
-repeat-leaf	TestVolumeConfigGuardAndMutant_008	90-kill/106-family	6.01	-	0.063272	pass; command_wall_s=7.885
-repeat-leaf	TestVolumeConfigGuardAndMutant_009	90-kill/106-family	5.80	-	0.060347	pass; command_wall_s=7.701
-repeat-leaf	TestVolumeConfigGuardAndMutant_010	90-kill/106-family	6.27	-	0.126312	pass; command_wall_s=8.175
-repeat-leaf	TestVolumeConfigGuardAndMutant_011	90-kill/106-family	6.25	-	0.060095	pass; command_wall_s=8.208
-repeat-leaf	TestVolumeConfigGuardAndMutant_012	90-kill/106-family	6.21	-	0.062437	pass; command_wall_s=8.397
-repeat-leaf	TestVolumeConfigGuardAndMutant_013	90-kill/106-family	5.91	-	0.057100	pass; command_wall_s=7.809
-repeat-leaf	TestVolumeConfigGuardAndMutant_014	90-kill/106-family	6.43	-	0.066942	pass; command_wall_s=8.357
-repeat-leaf	TestVolumeConfigGuardAndMutant_015	90-kill/106-family	6.13	-	0.000186	pass; command_wall_s=8.198
-repeat-leaf	TestVolumeConfigGuardAndMutantPlantedFailure	-	5.75	-	0.061655	pass; command_wall_s=7.877
-repeat-product	TestProduct_type_symbol_archive	-	6.78	-	-	pass; command_wall_s=9.026
-repeat-product	TestProduct_type_symbol_native	-	37.66	-	-	pass; command_wall_s=40.161
-repeat-product	TestProduct_type_symbol_oracle	-	1.03	-	-	pass; command_wall_s=4.749
-repeat-product	TestProduct_type_symbol_fixtures	-	0.00	-	-	pass; command_wall_s=1.862
-repeat-product	TestProduct_type_symbol_truth	-	1.13	-	-	pass; command_wall_s=3.132
-repeat-leaf	TestVolumeTypeSymbolUnion	-	0.00	-	-	pass; command_wall_s=1.932
-repeat-leaf	TestVolumeTypeSymbolPlantedSurvivor	-	0.00	-	-	pass; command_wall_s=1.874
-repeat-leaf	TestVolumeTypeSymbol_000	178	3.15	-	-	pass; command_wall_s=5.237
-repeat-product	TestProduct_checker_asan	-	3.68	-	-	pass; command_wall_s=5.778
-repeat-product	TestProduct_typeaware_lowered	-	9.18	-	-	pass; command_wall_s=11.504
-# #f3942er stable prebuilt repeat: TestVolumeTypeSymbol_000 3.15s; own run 0.037512s (see final report for exact phase).
+# Evidence only: no test source changes or fixes. All active default leaves passed twice under 60s.
+# Measured baseline on origin/main 83f3940ec77b8ba779da05ded113e9d9e7e710b6 plus report-only commits; repeat revisions f5f7cb29 and 86332c53.
+# 4-CPU cgroup quota 400000/100000; GOMAXPROCS=4; Go 1.27.1; sequential alone runs, Go cache warm.
+# Command: go test ./stage1/cohere/typeaware -run ^UNIT$ -count=1 -timeout 90s -v -test.skip ^TestProduct_; each declared product prebuilt alone with -timeout 600s.
+# Bootstrap: SSH refused, HTTPS submodules about 6min, cold package compilation about 176s. First missing_binding product 175.09s: checker 135.789954s, native miss 36.24s.
+# Checkpoints change broad cache/VCS keys. Type-symbol before rebuilt products (49.21s); fully prebuilt repeats fetched all products (3.15s and 3.59s). Report output held outside repo during each stable batch.
+# Optional ADAMIC_TYPESCRIPT_SOURCE, ADAMIC_TYPEAWARE_BENCH, ADAMIC_VOLUME_REPOSITORY_MANIFEST unset. Agreement _012 through _020 SKIP; these are not corpus/benchmark coverage claims.
+# Loom supplied family maxima, not individual slow leaf identities: shadow 113s; agreement 385s; guard P0 90s kill and grain 106s; type-symbol 178s. No loaded-run reproduction, so cause under load unproven.
+# Before/after are consecutive alone measurements without a fix. Setup inferred as total minus own work for guard, shadow and type-symbol (rounded Go test total); agreement logs setup directly.
+# Product finding outside assigned leaf tasks: volume_guard_volume_asan 77.84s / 60.64s with warm Go cache, PASS under 10-minute build-phase ceiling.
+# go vet ./stage1/cohere/typeaware passed. Lane checks passed at each WIP push; final check recorded in PR.
+kind	task_ids	unit	loom_family_s	before_total_s	before_setup_s	before_own_s	after_total_s	after_setup_s	after_own_s	result
+product	build-phase-finding	TestProduct_stage0	-	5.38	-	-	1.25	-	-	pass/pass
+product	build-phase-finding	TestProduct_checker	-	5.77	-	-	6.91	-	-	pass/pass
+product	build-phase-finding	TestProduct_profile_missing_binding	-	2.48	-	-	1.95	-	-	pass/pass
+leaf	#pgw1y41	TestShadowIndexMissingBindingUnion	-	0.00	-	-	0.00	-	-	pass/pass
+leaf	#pgw1y41	TestShadowIndexMissingBinding_000	113	5.09	4.092	0.998	2.97	2.379	0.591	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_stage0	-	11.99	-	-	4.42	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_oracle	-	2.53	-	-	4.21	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_archive_checker	-	10.29	-	-	3.46	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_archive_checker_asan	-	13.64	-	-	6.88	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_archive_strict_this_checker	-	18.16	-	-	6.95	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_volume	-	50.87	-	-	39.14	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_volume_asan	-	77.84	-	-	60.64	-	-	pass/pass
+product	build-phase-finding	TestProduct_volume_guard_strict_this_native	-	44.15	-	-	40.36	-	-	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutantUnion	-	0.00	-	-	0.00	-	-	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_000	90-kill/106-family	15.51	15.298	0.212176	14.98	14.781	0.198792	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_001	90-kill/106-family	6.03	5.970	0.060130	5.92	5.862	0.057523	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_002	90-kill/106-family	6.07	6.003	0.066745	5.67	5.612	0.058189	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_003	90-kill/106-family	6.09	6.024	0.065836	6.00	5.929	0.070789	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_004	90-kill/106-family	6.01	5.942	0.068145	6.11	6.045	0.064956	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_005	90-kill/106-family	6.20	6.133	0.067347	5.77	5.710	0.060397	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_006	90-kill/106-family	6.26	6.174	0.086189	6.01	5.936	0.073883	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_007	90-kill/106-family	6.22	6.154	0.065892	5.84	5.784	0.056028	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_008	90-kill/106-family	5.95	5.877	0.073257	6.01	5.947	0.063272	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_009	90-kill/106-family	5.97	5.907	0.062994	5.80	5.740	0.060347	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_010	90-kill/106-family	5.94	5.875	0.065019	6.27	6.144	0.126312	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_011	90-kill/106-family	6.02	5.918	0.101521	6.25	6.190	0.060095	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_012	90-kill/106-family	6.52	6.445	0.075020	6.21	6.148	0.062437	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_013	90-kill/106-family	5.87	5.804	0.066498	5.91	5.853	0.057100	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_014	90-kill/106-family	6.01	5.931	0.078984	6.43	6.363	0.066942	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutant_015	90-kill/106-family	5.83	5.830	0.000096	6.13	6.130	0.000186	pass/pass
+leaf	#ctmvfdy,#xtesg75	TestVolumeConfigGuardAndMutantPlantedFailure	-	6.14	-	0.070082	5.75	-	0.061655	pass/pass
+product	build-phase-finding	TestProduct_type_symbol_archive	-	12.87	-	-	7.66	-	-	pass/pass
+product	build-phase-finding	TestProduct_type_symbol_native	-	37.73	-	-	45.51	-	-	pass/pass
+product	build-phase-finding	TestProduct_type_symbol_oracle	-	6.96	-	-	1.66	-	-	pass/pass
+product	build-phase-finding	TestProduct_type_symbol_fixtures	-	0.00	-	-	0.00	-	-	pass/pass
+product	build-phase-finding	TestProduct_type_symbol_truth	-	1.02	-	-	1.88	-	-	pass/pass
+leaf	#f3942er	TestVolumeTypeSymbolUnion	-	0.00	-	-	0.00	-	-	pass/pass
+leaf	#f3942er	TestVolumeTypeSymbolPlantedSurvivor	-	0.00	-	-	0.00	-	-	pass/pass
+leaf	#f3942er	TestVolumeTypeSymbol_000	178	49.21	49.167	0.042736	3.59	3.514	0.075957	pass/pass
+product	build-phase-finding	TestProduct_checker_asan	-	7.60	-	-	7.16	-	-	pass/pass
+product	build-phase-finding	TestProduct_typeaware_lowered	-	9.10	-	-	9.27	-	-	pass/pass
+product	build-phase-finding	TestProduct_typeaware_native	-	16.31	-	-	10.79	-	-	pass/pass
+product	build-phase-finding	TestProduct_typeaware_native_asan	-	22.71	-	-	22.37	-	-	pass/pass
+product	build-phase-finding	TestProduct_typeaware_oracle	-	6.71	-	-	1.02	-	-	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutantsUnion	-	14.65	14.646448	-	10.79	10.791013	-	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_000	385-family	10.63	10.551078	0.079010	10.69	10.609488	0.077001	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_001	385-family	10.81	10.506102	0.303186	10.68	10.374067	0.306975	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_002	385-family	10.55	10.503414	0.051232	10.47	10.422610	0.051362	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_003	385-family	38.68	10.303209	28.372641	37.41	10.329995	27.078672	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_004	385-family	18.80	11.841089	6.960091	16.66	10.404824	6.252101	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_005	385-family	28.39	10.864318	17.525028	27.10	10.423954	16.680495	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_006	385-family	28.78	11.173771	17.610353	28.31	10.387175	17.919301	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_007	385-family	30.09	11.847465	18.241281	27.70	10.404841	17.293475	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_008	385-family	31.92	11.903370	20.014891	28.11	10.694045	17.416262	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_009	385-family	15.29	10.991781	4.298317	15.28	11.158007	4.125218	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_010	385-family	38.50	10.699034	27.796776	26.10	11.338545	14.764628	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_011	385-family	11.26	11.128627	0.128423	11.26	11.128778	0.135315	pass/pass
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_012	385-family	10.79	10.788936	0.000047	11.02	11.019537	0.000026	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_013	385-family	10.90	10.898894	0.000029	11.76	11.755245	0.000029	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_014	385-family	11.22	11.220278	0.000025	11.15	11.153636	0.000030	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_015	385-family	11.17	11.173833	0.000100	11.22	11.215966	0.000032	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_016	385-family	11.72	11.719686	0.000065	10.80	10.795409	0.000037	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_017	385-family	11.01	11.006579	0.000023	10.95	10.950134	0.000025	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_018	385-family	10.77	10.766338	0.000034	11.22	11.217083	0.000050	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_019	385-family	11.55	11.550777	0.000036	10.59	10.589484	0.000038	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareAgreementAndMutants_020	385-family	10.44	10.440666	0.000016	10.82	10.824670	0.000039	SKIP/SKIP
+leaf	#3f47yef	TestTypeAwareTopShardPlantedFailure	-	0.02	-	-	0.02	-	-	pass/pass
+product	build-phase-finding	TestProduct_query_cost_lowered	-	-	-	-	1.28	-	-	pass; measured once
+product	build-phase-finding	TestProduct_query_cost_native	-	-	-	-	7.89	-	-	pass; measured once
