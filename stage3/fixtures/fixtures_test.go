@@ -473,3 +473,5 @@ func fixtureShardIndex(name string, count int) int {
 	digest := sha256.Sum256([]byte(name))
 	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
 }
+
+// Narrow canary of staged tools ec73409f (#trp9kgz, #v5fgqc4): never merge.

@@ -38,3 +38,5 @@ func TestTSGoRequiresLink(t *testing.T) {
 		t.Fatal("opted-in bridge calls lost")
 	}
 }
+
+// Narrow canary of staged tools ec73409f (#trp9kgz, #v5fgqc4): never merge.

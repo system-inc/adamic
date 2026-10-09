@@ -228,3 +228,5 @@ func TestProduct_type_symbol_truth(t *testing.T) {
 
 // volume_config_guard_shards_test.go belongs to sf-volumeguard. Its declarations
 // must be supplied there; this file deliberately does not duplicate them.
+
+// Narrow canary of staged tools ec73409f (#trp9kgz, #v5fgqc4): never merge.

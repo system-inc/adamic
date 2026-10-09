@@ -107,3 +107,5 @@ func TestArgumentsLengthWrongSlotMutant(t *testing.T) {
 		})
 	}
 }
+
+// Narrow canary of staged tools ec73409f (#trp9kgz, #v5fgqc4): never merge.
