@@ -1477,9 +1477,9 @@ class Budget(unittest.TestCase):
             realRun(["git", "-C", self.tree] + command, check=True, capture_output=True)
         return run.git(self.tree, "rev-parse", "HEAD")
 
-    def budget(self, rows, units=None):
+    def budget(self, rows, units=None, census=None):
         gate = run.Gate.__new__(run.Gate)
-        gate.arguments = mock.Mock(tree=self.tree, tools=self.tree, base=self.base, sha=self.head, full=False, out=self.directory)
+        gate.arguments = mock.Mock(tree=self.tree, tools=self.tree, base=self.base, sha=self.head, full=False, out=self.directory, census=census)
         gate.result, gate.failure, gate.lock, gate.started, gate.complete, gate.processes = {}, None, threading.Lock(), time.monotonic(), True, []
         ledger = [(run.module + "/p", name, seconds, "pass") for name, seconds in rows]
         allUnits = {(package, name): (seconds, action) for package, name, seconds, action in ledger}
@@ -1522,6 +1522,10 @@ class Budget(unittest.TestCase):
         self.assertIn("TestNew/case 31.5 s", gate.failure["detail"])
         self.assertIn(os.uname().nodename, gate.failure["detail"])
         self.assertEqual(gate.result["budget_over"], [run.module + "/p TestNew/case 31.5 s"])
+        # Over another run's merged log, the seconds are that log's: the record names it, never this box.
+        gate = self.budget([("TestNew/case", 31.5)], census="/pool/merged/test.jsonl")
+        self.assertIn("measured by the units of /pool/merged/test.jsonl", gate.failure["detail"])
+        self.assertNotIn(os.uname().nodename, gate.failure["detail"])
 
     def test_an_existing_unit_over_is_drift_and_a_listed_one_is_neither(self):
         gate = self.budget([("TestOld", 45.0), ("TestListed (setup)", 200.0), ("TestListed", 300.0)],

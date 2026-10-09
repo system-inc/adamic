@@ -2332,10 +2332,16 @@ class Gate:
         drift = [row for row in offBurndown if row not in unlisted]
         def unitWords(package, name, seconds):
             return ("product " if name.startswith("TestProduct_") else "") + "%s %s %.1f s" % (package, name, seconds)
+        # A census over another run's merged log (--census) measured nothing here: its seconds are where that log's units
+        # ran, so the record names the log, never this box (Oct 9 12:56Z: the trio's pool times read 'measured on Workshop').
+        census = getattr(self.arguments, "census", None)
+        instrument = ({"box": "the units of %s" % census, "cpus": None, "load": None, "reference": "where the merged log's units ran"}
+                      if isinstance(census, str) else
+                      {"box": os.uname().nodename, "cpus": os.cpu_count(), "load": [round(value, 1) for value in os.getloadavg()],
+                       "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"})
         self.result.update({
             "budget_seconds": longTestSeconds,
-            "budget_instrument": {"box": os.uname().nodename, "cpus": os.cpu_count(), "load": [round(value, 1) for value in os.getloadavg()],
-                                  "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"},
+            "budget_instrument": instrument,
             "budget_burndown_units": listed,
             "budget_over": [unitWords(package, name, seconds) for package, name, seconds, _ in unlisted],
             "budget_drift": [unitWords(package, name, seconds) for package, name, seconds, _ in drift],
@@ -2343,9 +2349,10 @@ class Gate:
             "products_over_budget": [unitWords(package, name, seconds) for package, name, seconds, _ in products],
         })
         if unlisted and self.failure is None and not getattr(self, "stopped", None):
-            instrument = self.result["budget_instrument"]
-            self.fail("budget", "%d new test units over the %d s budget (measured on %s, %d CPUs, load %s; split each into units under %d s):\n%s" % (
-                len(unlisted), longTestSeconds, instrument["box"], instrument["cpus"], "/".join(str(value) for value in instrument["load"]), longTestSeconds,
+            measured = ("measured on %s, %d CPUs, load %s" % (instrument["box"], instrument["cpus"], "/".join(str(value) for value in instrument["load"]))
+                        if instrument["cpus"] else "measured by " + instrument["box"])
+            self.fail("budget", "%d new test units over the %d s budget (%s; split each into units under %d s):\n%s" % (
+                len(unlisted), longTestSeconds, measured, longTestSeconds,
                 "\n".join("  %s (%s)" % (unitWords(package, name, seconds), action) for package, name, seconds, action in unlisted)))
 
     def status(self, line):
