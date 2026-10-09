@@ -1,0 +1,7 @@
+github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup
+=== RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+--- FAIL: TestShardsAgree_Setup (90.06s)
+
+(box load 27.5 on 64 cores at first failure)
