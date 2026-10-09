@@ -1,0 +1,8 @@
+package json
+import("testing"; "fmt"; "strings")
+func TestU104ConstructionProbe(t *testing.T) {
+ cases:=make([]textCase,39)
+ for i:=range cases {cases[i]=textCase{Name:fmt.Sprintf("case-%d.json",i),Text:"{}"}}
+ cases[17].Text=strings.Repeat(" ",128*1024+1)
+ t.Logf("actual partition: %+v", jsonPortShards(cases))
+}

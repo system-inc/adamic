@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/upstream_parity_split_test.go
++++ b/stage1/cohere/json/upstream_parity_split_test.go
+@@ -24,7 +24,7 @@
+ 	"github.com/system-inc/adamic/internal/gatesample"
+ )
+ 
+-const testUpstreamRepositoryCorpusParitySplitShards = 16
++const testUpstreamRepositoryCorpusParitySplitShards = 15
+ 
+ var upstreamParityReports struct {
+ 	sync.Mutex

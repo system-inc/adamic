@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/upstream_parity_split_test.go
++++ b/stage1/cohere/json/upstream_parity_split_test.go
+@@ -415,7 +415,7 @@
+ 			if err := os.WriteFile(overlay, encoded, 0644); err != nil {
+ 				return err
+ 			}
+-			command := upstreamParityCommand(context.Background(), "go", "test", "-c", "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), "./internal/format/javascript")
++			command := upstreamParityCommand(context.Background(), "go", "test", "-c", "-overlay="+overlay, "-o", filepath.Join(dir, "missing-oracle"), "./internal/format/javascript")
+ 			command.Dir = cohere
+ 			output, err := childguard.CombinedOutput(command, jsonGuard)
+ 			if err != nil {

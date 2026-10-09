@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/formatter.ts
++++ b/stage1/cohere/json/formatter.ts
+@@ -34,7 +34,7 @@
+         }
+     }
+     if(value.startsWith('.')) {
+-        value = `0${value}`;
++        value = `1${value}`;
+     }
+     const exp = value.indexOf('e');
+     const split = exp < 0 || value.startsWith('0x') ? value.length : exp;

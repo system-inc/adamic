@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/shards_test.go
++++ b/stage1/cohere/json/shards_test.go
+@@ -58,7 +58,7 @@
+ 			end++
+ 		}
+ 		shards = append(shards, nativeChunk{start: start, end: end})
+-		start = end
++		start = end + 1
+ 	}
+ 	return shards
+ }

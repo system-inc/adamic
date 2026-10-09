@@ -1,0 +1,162 @@
+{
+  "baseline": [
+    {
+      "product": "json_upstream_parity_audit_oracle",
+      "key_prefix": "f0c6c299f966",
+      "seconds": 6.13,
+      "evidence": "upstream_parity_split_test.go:409: build json_upstream_parity_audit_oracle f0c6c299f966 miss 6.13"
+    },
+    {
+      "product": "json_split_Go_oracle",
+      "key_prefix": "ec7da056b64d",
+      "seconds": 11.85,
+      "evidence": "port_matches_prepared_split_test.go:599: build json_split_Go_oracle ec7da056b64d miss 11.85"
+    },
+    {
+      "product": "json_lowered_port_and_backend_sources",
+      "key_prefix": "3076ee74a851",
+      "seconds": 6.09,
+      "evidence": "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 3076ee74a851 miss 6.09"
+    },
+    {
+      "product": "json_native_release_port",
+      "key_prefix": "78fba13702a5",
+      "seconds": 6.14,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_release_port 78fba13702a5 miss 6.14"
+    },
+    {
+      "product": "json_native_ASan_UBSan_port",
+      "key_prefix": "0acf72aac160",
+      "seconds": 10.41,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port 0acf72aac160 miss 10.41"
+    }
+  ],
+  "M1": [
+    {
+      "product": "json_split_Go_oracle",
+      "key_prefix": "ec7da056b64d",
+      "seconds": 2.79,
+      "evidence": "port_matches_prepared_split_test.go:599: build json_split_Go_oracle ec7da056b64d miss 2.79"
+    },
+    {
+      "product": "json_lowered_port_and_backend_sources",
+      "key_prefix": "e573614d0038",
+      "seconds": 2.65,
+      "evidence": "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources e573614d0038 miss 2.65"
+    },
+    {
+      "product": "json_native_release_port",
+      "key_prefix": "6a87a865d381",
+      "seconds": 5.54,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_release_port 6a87a865d381 miss 5.54"
+    },
+    {
+      "product": "json_native_ASan_UBSan_port",
+      "key_prefix": "c083ce0fc5bb",
+      "seconds": 10.1,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port c083ce0fc5bb miss 10.10"
+    },
+    {
+      "product": "json_upstream_parity_audit_oracle",
+      "key_prefix": "f0c6c299f966",
+      "seconds": 3.77,
+      "evidence": "upstream_parity_split_test.go:409: build json_upstream_parity_audit_oracle f0c6c299f966 miss 3.77"
+    }
+  ],
+  "M2": [
+    {
+      "product": "json_split_Go_oracle",
+      "key_prefix": "ec7da056b64d",
+      "seconds": 2.48,
+      "evidence": "port_matches_prepared_split_test.go:599: build json_split_Go_oracle ec7da056b64d miss 2.48"
+    },
+    {
+      "product": "json_upstream_parity_audit_oracle",
+      "key_prefix": "f0c6c299f966",
+      "seconds": 3.3,
+      "evidence": "upstream_parity_split_test.go:409: build json_upstream_parity_audit_oracle f0c6c299f966 miss 3.30"
+    },
+    {
+      "product": "json_lowered_port_and_backend_sources",
+      "key_prefix": "3a15b0d403d0",
+      "seconds": 3.2,
+      "evidence": "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 3a15b0d403d0 miss 3.20"
+    },
+    {
+      "product": "json_native_release_port",
+      "key_prefix": "457179e1a4b3",
+      "seconds": 6.57,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_release_port 457179e1a4b3 miss 6.57"
+    },
+    {
+      "product": "json_native_ASan_UBSan_port",
+      "key_prefix": "afee448a39cc",
+      "seconds": 9.82,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port afee448a39cc miss 9.82"
+    }
+  ],
+  "M3": [
+    {
+      "product": "json_split_Go_oracle",
+      "key_prefix": "ec7da056b64d",
+      "seconds": 3.61,
+      "evidence": "port_matches_prepared_split_test.go:599: build json_split_Go_oracle ec7da056b64d miss 3.61"
+    },
+    {
+      "product": "json_upstream_parity_audit_oracle",
+      "key_prefix": "f0c6c299f966",
+      "seconds": 5.57,
+      "evidence": "upstream_parity_split_test.go:409: build json_upstream_parity_audit_oracle f0c6c299f966 miss 5.57"
+    },
+    {
+      "product": "json_lowered_port_and_backend_sources",
+      "key_prefix": "146f65321127",
+      "seconds": 3.28,
+      "evidence": "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 146f65321127 miss 3.28"
+    },
+    {
+      "product": "json_native_release_port",
+      "key_prefix": "799ca16d1a83",
+      "seconds": 6.01,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_release_port 799ca16d1a83 miss 6.01"
+    },
+    {
+      "product": "json_native_ASan_UBSan_port",
+      "key_prefix": "f5b3b81d5b19",
+      "seconds": 10.24,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port f5b3b81d5b19 miss 10.24"
+    }
+  ],
+  "P1": [
+    {
+      "product": "json_split_Go_oracle",
+      "key_prefix": "ec7da056b64d",
+      "seconds": 3.0,
+      "evidence": "port_matches_prepared_split_test.go:599: build json_split_Go_oracle ec7da056b64d miss 3.00"
+    },
+    {
+      "product": "json_lowered_port_and_backend_sources",
+      "key_prefix": "0d72559ed448",
+      "seconds": 2.07,
+      "evidence": "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 0d72559ed448 miss 2.07"
+    },
+    {
+      "product": "json_native_release_port",
+      "key_prefix": "bbcbce1c4386",
+      "seconds": 5.15,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_release_port bbcbce1c4386 miss 5.15"
+    },
+    {
+      "product": "json_native_ASan_UBSan_port",
+      "key_prefix": "a8cc089d3b6a",
+      "seconds": 7.8,
+      "evidence": "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port a8cc089d3b6a miss 7.80"
+    },
+    {
+      "product": "json_upstream_parity_audit_oracle",
+      "key_prefix": "f0c6c299f966",
+      "seconds": 5.52,
+      "evidence": "upstream_parity_split_test.go:409: build json_upstream_parity_audit_oracle f0c6c299f966 miss 5.52"
+    }
+  ]
+}

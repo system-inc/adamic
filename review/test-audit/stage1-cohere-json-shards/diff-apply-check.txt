@@ -1,0 +1,2 @@
+All 12 standalone diffs pass git apply --check at 0b230004fe417599dd6024385d1eb1bf8369e618.
+Go witness/construction diffs each passed go vet; native products for M1-M3 and P1 rebuilt successfully in their matrix runs.

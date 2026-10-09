@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/shards_test.go
++++ b/stage1/cohere/json/shards_test.go
+@@ -49,7 +49,7 @@
+ 	var shards []nativeChunk
+ 	for start := 0; start < len(cases); {
+ 		end, bytes := start, 0
+-		for end < len(cases) && end-start < 16 {
++		for end < len(cases) && end-start < 15 {
+ 			size := len(cases[end].Text)
+ 			if end > start && bytes+size > 128*1024 {
+ 				break

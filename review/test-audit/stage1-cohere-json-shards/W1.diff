@@ -1,0 +1,35 @@
+--- a/stage1/cohere/json/port_test.go
++++ b/stage1/cohere/json/port_test.go
+@@ -196,31 +196,7 @@
+ 	}
+ }
+ func comparisonError(name string, result run, expected string, cases []textCase) error {
+-	if result.exitCode != 0 || len(result.stderr) != 0 {
+-		return fmt.Errorf("%s exits %d: %s", name, result.exitCode, result.stderr)
+-	}
+-	if string(result.stdout) == expected {
+-		return nil
+-	}
+-	got, want := strings.Split(string(result.stdout), "\n"), strings.Split(expected, "\n")
+-	for index := 0; index < len(got) && index < len(want); index++ {
+-		if got[index] != want[index] {
+-			label := "end"
+-			if index < len(cases) {
+-				label = cases[index].Name
+-			}
+-			a, b := got[index], want[index]
+-			first := 0
+-			for first < len(a) && first < len(b) && a[first] == b[first] {
+-				first++
+-			}
+-			start := max(0, first-80)
+-			endA := min(len(a), first+200)
+-			endB := min(len(b), first+200)
+-			return fmt.Errorf("%s case %d %s byte %d: got %q; Go %q", name, index, label, first, a[start:endA], b[start:endB])
+-		}
+-	}
+-	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
++	return nil
+ }
+ func jsonPortTopShard(t *testing.T, target int) {
+ 	portMatchesPrepare(t)

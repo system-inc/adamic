@@ -1,0 +1,98 @@
+[
+  [
+    "M1",
+    "doc.ts",
+    176,
+    "command.indent + 2",
+    "command.indent + 1",
+    "change constant"
+  ],
+  [
+    "M2",
+    "formatter.ts",
+    37,
+    "value = `0${value}`;",
+    "value = `1${value}`;",
+    "change constant"
+  ],
+  [
+    "M3",
+    "formatter.ts",
+    8,
+    "base === 'package.json'",
+    "base === 'other-package.json'",
+    "change constant"
+  ],
+  [
+    "P1",
+    "formatter.ts",
+    474,
+    "format body",
+    "return empty string at entry",
+    "empty-answer probe"
+  ],
+  [
+    "W1",
+    "port_test.go",
+    198,
+    "comparisonError body",
+    "return nil",
+    "weaken witnessed check"
+  ],
+  [
+    "W2",
+    "top_upstream_proof_test.go",
+    10,
+    "jsonUpstreamBlockCheck body",
+    "return nil",
+    "weaken witnessed check"
+  ],
+  [
+    "W3",
+    "upstream_parity_split_test.go",
+    186,
+    "upstreamParityBlockCheck body",
+    "return nil",
+    "weaken witnessed check"
+  ],
+  [
+    "S1",
+    "shards_test.go",
+    53,
+    "end-start < 16",
+    "end-start < 15",
+    "construction bound"
+  ],
+  [
+    "S2",
+    "shards_test.go",
+    32,
+    "make([]nativeChunk, count)",
+    "make([]nativeChunk, count-1)",
+    "construction bound"
+  ],
+  [
+    "S3",
+    "upstream_parity_split_test.go",
+    30,
+    "SplitShards = 16",
+    "SplitShards = 15",
+    "construction constant"
+  ],
+  [
+    "S4",
+    "shards_test.go",
+    62,
+    "start = end",
+    "start = end + 1",
+    "off-by-one construction traversal"
+  ],
+  [
+    "S5",
+    "upstream_parity_split_test.go",
+    423,
+    "output oracle filename",
+    "missing-oracle",
+    "construction output constant"
+  ]
+]

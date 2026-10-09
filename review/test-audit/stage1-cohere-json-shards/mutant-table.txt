@@ -1,0 +1,100 @@
+[
+  {
+    "id": "M1",
+    "change": "--- a/stage1/cohere/json/doc.ts\n+++ b/stage1/cohere/json/doc.ts\n@@ -173,7 +173,7 @@\n                 stack.push({ doc: first, indent: command.indent, flat, offset: 0 });\n             }\n             else {\n-                const indent = node.kind === 'indent' ? command.indent + 2 : command.indent;\n+                const indent = node.kind === 'indent' ? command.indent + 1 : command.indent;\n                 for(let index = node.parts.length - 1; index >= 0; index--) {\n                     stack.push({\n                         doc: node.parts[index] ?? panic('missing concat part'),\n",
+    "failed_rows": [
+      "TestPortMatchesGoCohere agreement family",
+      "TestPortMatchesGoCohere benchmark family"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M2",
+    "change": "--- a/stage1/cohere/json/formatter.ts\n+++ b/stage1/cohere/json/formatter.ts\n@@ -34,7 +34,7 @@\n         }\n     }\n     if(value.startsWith('.')) {\n-        value = `0${value}`;\n+        value = `1${value}`;\n     }\n     const exp = value.indexOf('e');\n     const split = exp < 0 || value.startsWith('0x') ? value.length : exp;\n",
+    "failed_rows": [
+      "TestPortMatchesGoCohere agreement family",
+      "TestPortMatchesGoCohere benchmark family"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M3",
+    "change": "--- a/stage1/cohere/json/formatter.ts\n+++ b/stage1/cohere/json/formatter.ts\n@@ -5,7 +5,7 @@\n export function stringifyName(name: string): boolean {\n     const pieces = name.split('/');\n     const base = pieces[pieces.length - 1] ?? '';\n-    return base === 'package.json' || base === 'package-lock.json' || base === 'composer.json';\n+    return base === 'other-package.json' || base === 'package-lock.json' || base === 'composer.json';\n }\n function numberText(raw: string): string {\n     if(raw.length === 1) {\n",
+    "failed_rows": [
+      "TestPortMatchesGoCohere agreement family",
+      "TestPortMatchesGoCohere benchmark family"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "P1",
+    "change": "--- a/stage1/cohere/json/formatter.ts\n+++ b/stage1/cohere/json/formatter.ts\n@@ -472,11 +472,5 @@\n     }\n }\n export function format(name: string, text: string): string {\n-    const stringify = stringifyName(name);\n-    const reader = new Reader(text);\n-    const root = reader.parse(stringify);\n-    const printer = new Printer(reader, stringify);\n-    printer.attach(root);\n-    const document = printer.print(root, false);\n-    return printer.docs.print(printer.docs.concat([document, printer.docs.line(false, true)]));\n-}\n+    return '';\n+}\n",
+    "failed_rows": [
+      "TestPortMatchesGoCohere agreement family",
+      "TestPortMatchesGoCohere benchmark family"
+    ],
+    "kind": "probe"
+  },
+  {
+    "id": "W1",
+    "change": "--- a/stage1/cohere/json/port_test.go\n+++ b/stage1/cohere/json/port_test.go\n@@ -196,31 +196,7 @@\n \t}\n }\n func comparisonError(name string, result run, expected string, cases []textCase) error {\n-\tif result.exitCode != 0 || len(result.stderr) != 0 {\n-\t\treturn fmt.Errorf(\"%s exits %d: %s\", name, result.exitCode, result.stderr)\n-\t}\n-\tif string(result.stdout) == expected {\n-\t\treturn nil\n-\t}\n-\tgot, want := strings.Split(string(result.stdout), \"\\n\"), strings.Split(expected, \"\\n\")\n-\tfor index := 0; index < len(got) && index < len(want); index++ {\n-\t\tif got[index] != want[index] {\n-\t\t\tlabel := \"end\"\n-\t\t\tif index < len(cases) {\n-\t\t\t\tlabel = cases[index].Name\n-\t\t\t}\n-\t\t\ta, b := got[index], want[index]\n-\t\t\tfirst := 0\n-\t\t\tfor first < len(a) && first < len(b) && a[first] == b[first] {\n-\t\t\t\tfirst++\n-\t\t\t}\n-\t\t\tstart := max(0, first-80)\n-\t\t\tendA := min(len(a), first+200)\n-\t\t\tendB := min(len(b), first+200)\n-\t\t\treturn fmt.Errorf(\"%s case %d %s byte %d: got %q; Go %q\", name, index, label, first, a[start:endA], b[start:endB])\n-\t\t}\n-\t}\n-\treturn fmt.Errorf(\"%s output length %d, Go %d\", name, len(result.stdout), len(expected))\n+\treturn nil\n }\n func jsonPortTopShard(t *testing.T, target int) {\n \tportMatchesPrepare(t)\n",
+    "failed_rows": [
+      "TestJSONPortShardDisagreement"
+    ],
+    "kind": "witness"
+  },
+  {
+    "id": "W2",
+    "change": "--- a/stage1/cohere/json/top_upstream_proof_test.go\n+++ b/stage1/cohere/json/top_upstream_proof_test.go\n@@ -7,9 +7,6 @@\n )\n \n func jsonUpstreamBlockCheck(shard, id, got, want string) error {\n-\tif got != want {\n-\t\treturn fmt.Errorf(\"%s case %s: upstream difference identity or answer changed; update the checked-in report\", shard, id)\n-\t}\n \treturn nil\n }\n \n",
+    "failed_rows": [
+      "TestJSONUpstreamShardDisagreement"
+    ],
+    "kind": "witness"
+  },
+  {
+    "id": "W3",
+    "change": "--- a/stage1/cohere/json/upstream_parity_split_test.go\n+++ b/stage1/cohere/json/upstream_parity_split_test.go\n@@ -182,9 +182,6 @@\n }\n \n func upstreamParityBlockCheck(shard, id, got, want string) error {\n-\tif got != want {\n-\t\treturn fmt.Errorf(\"%s case %s: upstream difference identity or answer changed; update the checked-in report\", shard, id)\n-\t}\n \treturn nil\n }\n \n",
+    "failed_rows": [
+      "TestUpstreamRepositoryCorpusParityShardProof"
+    ],
+    "kind": "witness"
+  },
+  {
+    "id": "S1",
+    "change": "--- a/stage1/cohere/json/shards_test.go\n+++ b/stage1/cohere/json/shards_test.go\n@@ -49,7 +49,7 @@\n \tvar shards []nativeChunk\n \tfor start := 0; start < len(cases); {\n \t\tend, bytes := start, 0\n-\t\tfor end < len(cases) && end-start < 16 {\n+\t\tfor end < len(cases) && end-start < 15 {\n \t\t\tsize := len(cases[end].Text)\n \t\t\tif end > start && bytes+size > 128*1024 {\n \t\t\t\tbreak\n",
+    "failed_rows": [],
+    "kind": "construction"
+  },
+  {
+    "id": "S2",
+    "change": "--- a/stage1/cohere/json/shards_test.go\n+++ b/stage1/cohere/json/shards_test.go\n@@ -29,7 +29,7 @@\n \t\t}\n \t\treturn cases[i].Name < cases[j].Name\n \t})\n-\tshards := make([]nativeChunk, count)\n+\tshards := make([]nativeChunk, count-1)\n \toffset := 0\n \tfor bucket := range shards {\n \t\tstart := offset\n",
+    "failed_rows": [
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohere agreement family",
+      "TestUpstreamRepositoryCorpusParity top family"
+    ],
+    "kind": "construction"
+  },
+  {
+    "id": "S3",
+    "change": "--- a/stage1/cohere/json/upstream_parity_split_test.go\n+++ b/stage1/cohere/json/upstream_parity_split_test.go\n@@ -24,7 +24,7 @@\n \t\"github.com/system-inc/adamic/internal/gatesample\"\n )\n \n-const testUpstreamRepositoryCorpusParitySplitShards = 16\n+const testUpstreamRepositoryCorpusParitySplitShards = 15\n \n var upstreamParityReports struct {\n \tsync.Mutex\n",
+    "failed_rows": [
+      "TestUpstreamRepositoryCorpusParity preparation family"
+    ],
+    "kind": "construction"
+  },
+  {
+    "id": "S4",
+    "change": "--- a/stage1/cohere/json/shards_test.go\n+++ b/stage1/cohere/json/shards_test.go\n@@ -58,7 +58,7 @@\n \t\t\tend++\n \t\t}\n \t\tshards = append(shards, nativeChunk{start: start, end: end})\n-\t\tstart = end\n+\t\tstart = end + 1\n \t}\n \treturn shards\n }\n",
+    "failed_rows": [
+      "TestJSONPortShardUnion"
+    ],
+    "kind": "construction"
+  },
+  {
+    "id": "S5",
+    "change": "--- a/stage1/cohere/json/upstream_parity_split_test.go\n+++ b/stage1/cohere/json/upstream_parity_split_test.go\n@@ -415,7 +415,7 @@\n \t\t\tif err := os.WriteFile(overlay, encoded, 0644); err != nil {\n \t\t\t\treturn err\n \t\t\t}\n-\t\t\tcommand := upstreamParityCommand(context.Background(), \"go\", \"test\", \"-c\", \"-overlay=\"+overlay, \"-o\", filepath.Join(dir, \"oracle\"), \"./internal/format/javascript\")\n+\t\t\tcommand := upstreamParityCommand(context.Background(), \"go\", \"test\", \"-c\", \"-overlay=\"+overlay, \"-o\", filepath.Join(dir, \"missing-oracle\"), \"./internal/format/javascript\")\n \t\t\tcommand.Dir = cohere\n \t\t\toutput, err := childguard.CombinedOutput(command, jsonGuard)\n \t\t\tif err != nil {\n",
+    "failed_rows": [],
+    "kind": "construction"
+  }
+]

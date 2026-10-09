@@ -1,0 +1,16 @@
+--- a/stage1/cohere/json/formatter.ts
++++ b/stage1/cohere/json/formatter.ts
+@@ -472,11 +472,5 @@
+     }
+ }
+ export function format(name: string, text: string): string {
+-    const stringify = stringifyName(name);
+-    const reader = new Reader(text);
+-    const root = reader.parse(stringify);
+-    const printer = new Printer(reader, stringify);
+-    printer.attach(root);
+-    const document = printer.print(root, false);
+-    return printer.docs.print(printer.docs.concat([document, printer.docs.line(false, true)]));
+-}
++    return '';
++}
