@@ -1,0 +1,59 @@
+[
+  {
+    "label": "TestRegExpBytecodeTest262",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpBytecodeTest262$",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=review/test-defend/internal-native-radix/coverage/TestRegExpBytecodeTest262.out"
+    ],
+    "exit": 0,
+    "wall_seconds": 29.63288628200098
+  },
+  {
+    "label": "TestRegExpBytecodeRandomNode-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpBytecodeRandomNodeUnit[0-9]+$",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=review/test-defend/internal-native-radix/coverage/TestRegExpBytecodeRandomNode-family.out"
+    ],
+    "exit": 0,
+    "wall_seconds": 15.520363157000247
+  },
+  {
+    "label": "TestRegExpSearchNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpSearchNode$",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=review/test-defend/internal-native-radix/coverage/TestRegExpSearchNode.out"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.406226238999807
+  }
+]

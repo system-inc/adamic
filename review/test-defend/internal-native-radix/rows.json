@@ -1,0 +1,123 @@
+[
+  {
+    "test": "TestRegExpBytecodeTest262",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "prior_subsumed_by": [
+      "TestRegExpSearchNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/regexp/matcher.go:219",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/regexp/matcher.go:219",
+        "change": "Off by one: stop excluding U+2028 from dot without dotAll.",
+        "rows_failed": [
+          "TestRegExpBytecodeTest262"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestRegExpSearchNode|TestRegExpLintPatternsNode|TestRegexProgramsKeepCheckedFieldReads|TestClosureConventionRuntimeDropCount)$; regexp_test.go:53: native regex oracle ([]): exit status 1; DISAGREEMENT case=124200 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRegExpBytecodeRandomNode family",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpSearchNode",
+      "TestRegExpLintPatternsNode",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestClosureConventionRuntimeDropCount",
+      "TestRuntimeKeyKeepsBoundaries"
+    ],
+    "members": [
+      "TestRegExpBytecodeTest262"
+    ],
+    "oracle": "Recorded Node 24 test262 observations at pin 7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd. U+2028 no-match case checked against live Node this session.",
+    "oracle_kind": "external-authority"
+  },
+  {
+    "test": "TestRegExpBytecodeRandomNode family",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "prior_subsumed_by": [
+      "TestRegExpSearchNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 internal/native/runtime/regexp.c:331",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/native/runtime/regexp.c:331",
+        "change": "Flip repeat-body condition: interpret closed maximum zero as unbounded.",
+        "rows_failed": [
+          "TestRegExpBytecodeRandomNode family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestRegExpSearchNode|TestRegExpLintPatternsNode|TestRegexProgramsKeepCheckedFieldReads|TestClosureConventionRuntimeDropCount)$; regexp_test.go:446: native regex oracle ([]): exit status 1; DISAGREEMENT case=18 test=1 expected=1 lastIndex=3 expected=3 captures=1 expected=1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRegExpBytecodeRandomNode family",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpSearchNode",
+      "TestRegExpLintPatternsNode",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestClosureConventionRuntimeDropCount",
+      "TestRuntimeKeyKeepsBoundaries"
+    ],
+    "members": [
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39"
+    ],
+    "oracle": "Live Node 24 capture spans, named groups, match text and lastIndex.",
+    "oracle_kind": "external-run"
+  }
+]
