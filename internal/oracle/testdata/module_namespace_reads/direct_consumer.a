@@ -1,0 +1,2 @@
+import * as performance from './direct_provider.a';
+console.log(`${performance.value}`);

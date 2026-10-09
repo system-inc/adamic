@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-representations-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:9",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 1609210,
+      "body_end": 1610747,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "invokeOnce",
+      "parent": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:26774:5",
+      "top": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 2
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:9",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:71",
+      "reason": "a value of type Source",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:71: stage 0 can't lower a value of type Source yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:9",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:71: stage 0 can't lower a value of type Source yet",
+      "start": 1609210,
+      "end": 1610747
+    }
+  ]
+}
