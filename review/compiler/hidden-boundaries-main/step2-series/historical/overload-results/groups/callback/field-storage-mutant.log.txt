@@ -1,0 +1,6 @@
+=== RUN   TestOverloadCallbackFieldStorage
+    overload_callback_test.go:54: expected a field storage refusal, got <nil>
+--- FAIL: TestOverloadCallbackFieldStorage (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.041s
+FAIL

@@ -324,7 +324,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			if l.inheritedLibrarySymbol(property) {
 				return nil, l.prototypeRead(binding, field)
 			}
-			if property.Flags&ast.SymbolFlagsMethod != 0 {
+			if property.Flags&ast.SymbolFlagsMethod != 0 && !l.destructurableMethod(property) {
 				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
 			}
 			for _, root := range l.checker.GetRootSymbols(property) {

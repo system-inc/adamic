@@ -1,0 +1,132 @@
+package lower
+
+import (
+	"math"
+	"reflect"
+	"strconv"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// A finite key reads the same own data slots as named access. Ordinary IR calls
+// hold the receiver before evaluating the key, including a key that replaces it.
+func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.Expression, error) {
+	access := node.AsElementAccessExpression()
+	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+	members := []*checker.Type{keyType}
+	if keyType.Flags()&checker.TypeFlagsUnion != 0 {
+		members = keyType.Types()
+	}
+	names := []string{}
+	tests := []ir.Expression{}
+	fields := []*ast.Symbol{}
+	for _, member := range members {
+		var name string
+		var test ir.Expression
+		switch {
+		case member.Flags()&checker.TypeFlagsStringLiteral != 0:
+			name = member.AsLiteralType().Value().(string)
+			test = ir.StringConstant{Index: l.constant(name)}
+		case member.Flags()&checker.TypeFlagsNumberLiteral != 0:
+			number := reflect.ValueOf(member.AsLiteralType().Value()).Float()
+			if math.Trunc(number) != number || math.Abs(number) > 9007199254740991 {
+				return nil, l.notYet(node, "a computed numeric key outside exact integer names")
+			}
+			if number == 0 {
+				number = 0
+			}
+			name = strconv.FormatFloat(number, 'f', -1, 64)
+			test = ir.NumberConstant{Value: number}
+		default:
+			return nil, l.notYet(node, describe(node))
+		}
+		field := l.checker.GetPropertyOfType(receiver, name)
+		if field == nil || accessorSymbol(field) || (l.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0) || name == "__proto__" {
+			return nil, l.notYet(node, "a computed key without an own data field")
+		}
+		for _, declaration := range field.Declarations {
+			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) || declaration.Kind == ast.KindMethodDeclaration {
+				return nil, l.notYet(node, "a computed prototype or method read")
+			}
+		}
+		stored, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		if !known || censusFieldSlotless(stored) || stored == ir.Weak || l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+			return nil, l.notYet(node, "a computed field with an unsupported representation")
+		}
+		if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, alternative := range receiver.Types() {
+				own := l.checker.GetPropertyOfType(alternative, name)
+				if own == nil {
+					return nil, l.notYet(node, "a computed field absent from a receiver alternative")
+				}
+				held, known := l.representation(l.checker.GetTypeOfSymbol(own))
+				if !known || held != stored {
+					return nil, l.notYet(node, "a computed field stored differently across receiver alternatives")
+				}
+			}
+		}
+		names = append(names, name)
+		tests = append(tests, test)
+		fields = append(fields, field)
+	}
+	if len(names) == 0 {
+		return nil, l.notYet(node, "a computed key without finite alternatives")
+	}
+	result, err := l.typeOf(node)
+	if err != nil {
+		return nil, err
+	}
+	key, err := l.expression(access.ArgumentExpression)
+	if err != nil {
+		return nil, err
+	}
+	b := l.libraryArrayBuilder([]ir.Expression{object, key})
+	heldObject, heldKey := b.read(b.parameters[0]), b.read(b.parameters[1])
+	var read ir.Expression
+	for index, name := range names {
+		stored, _ := l.representation(l.checker.GetTypeOfSymbol(fields[index]))
+		read = ir.Property{Object: heldObject, Name: name, Of: stored, Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0}
+		read = fit(read, result)
+		if read.Type() != result {
+			return nil, l.notYet(node, "a computed field with differently represented alternatives")
+		}
+		b.body = append(b.body, ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: tests[index]}, Then: []ir.Statement{ir.Return{Value: read}}})
+	}
+	b.body = append(b.body, ir.Panic{Message: ir.StringConstant{Index: l.constant("computed object key outside its proven finite union")}})
+	value := b.finish("element_access_fields", read)
+	if result.IsReference() && result != ir.Union && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
+		for _, field := range fields {
+			if l.includesUndefined(l.checker.GetTypeOfSymbol(field)) {
+				return l.computedFieldPresence(node, value), nil
+			}
+		}
+	}
+	return l.defined(node, value), nil
+}
+
+// Indexed narrowing needs the declared field types: a computed access does not
+// necessarily have the symbol that the named-read presence helper uses.
+func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {
+	message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
+	at := node
+	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
+		at = at.Parent
+	}
+	if parent := at.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == at {
+		if written := parent.Parent; written != nil && written.Kind == ast.KindBinaryExpression && written.AsBinaryExpression().Left == parent && written.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+			return value
+		}
+		message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
+	}
+	if parent := at.Parent; parent != nil && parent.Kind == ast.KindElementAccessExpression && parent.AsElementAccessExpression().Expression == at {
+		key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
+		if key.Kind == ast.KindNumericLiteral || key.Kind == ast.KindStringLiteral {
+			message = "TypeError: Cannot read properties of undefined (reading '" + key.Text() + "')"
+		}
+	}
+	return ir.Defined{Value: value, Message: message}
+}

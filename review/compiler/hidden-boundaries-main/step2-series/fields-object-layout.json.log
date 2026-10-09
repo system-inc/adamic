@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:48.230544207Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:48.24227472Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet"}
+{"Time":"2026-10-09T10:23:48.242392624Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet","Output":"=== RUN   TestHiddenTNodeConstraintMutationRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:48.242421186Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet","Output":"=== PAUSE TestHiddenTNodeConstraintMutationRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:48.24242361Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet"}
+{"Time":"2026-10-09T10:23:48.242427065Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet"}
+{"Time":"2026-10-09T10:23:48.242428647Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet","Output":"=== CONT  TestHiddenTNodeConstraintMutationRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:48.331704192Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet","Output":"    hidden_boundary_generic_tnode_test.go:126: want constrained mutation refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:48.331793354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet","Output":"--- FAIL: TestHiddenTNodeConstraintMutationRemainsNotYet (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:48.331799032Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintMutationRemainsNotYet","Elapsed":0.09}
+{"Time":"2026-10-09T10:23:48.331830859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:48.33377767Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.102s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:48.333839411Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.103}

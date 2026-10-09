@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -61,7 +61,7 @@
+ 	}
+ 	if flags&checker.TypeFlagsTypeParameter != 0 {
+ 		// Concrete instantiations take precedence over the declaration's constraint.
+-		if substituted, isKnown := l.substitution[proven]; isKnown {
++		if substituted, isKnown := l.substitution[proven]; isKnown && false {
+ 			return substituted, true
+ 		}
+ 		constraint := l.checker.GetBaseConstraintOfType(proven)

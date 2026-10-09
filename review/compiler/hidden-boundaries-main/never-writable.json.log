@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:55:13.222172975Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:55:13.231430808Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening"}
+{"Time":"2026-10-09T09:55:13.231542242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening","Output":"=== RUN   TestHiddenNeverArrayRejectsWritableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:13.231681288Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening","Output":"=== PAUSE TestHiddenNeverArrayRejectsWritableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:13.231687857Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening"}
+{"Time":"2026-10-09T09:55:13.231739874Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening"}
+{"Time":"2026-10-09T09:55:13.23174358Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening","Output":"=== CONT  TestHiddenNeverArrayRejectsWritableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:13.277250718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening","Output":"    hidden_never_array_test.go:17: want writable widening refused, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:13.277480357Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening","Output":"--- FAIL: TestHiddenNeverArrayRejectsWritableWidening (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:13.277486456Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenNeverArrayRejectsWritableWidening","Elapsed":0.05}
+{"Time":"2026-10-09T09:55:13.277537301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:13.279031753Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.056s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:13.27905733Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.057}

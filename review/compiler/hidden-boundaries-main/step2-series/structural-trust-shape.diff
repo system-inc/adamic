@@ -1,0 +1,11 @@
+--- internal/lower/census_overload_proof.go
++++ internal/lower/census_overload_proof.go
+@@ -61,7 +61,7 @@
+ 	if target != nil {
+ 		promised = target
+ 	}
+-	parameters := implementation.Parameters()
++	if promised.Flags()&checker.TypeFlagsObject != 0 { return true }; parameters := implementation.Parameters()
+ 	initial := make([]*checker.Type, len(parameters))
+ 	for index, parameter := range parameters {
+ 		if !ast.IsIdentifier(parameter.Name()) || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
