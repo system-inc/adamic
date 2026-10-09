@@ -1,0 +1,11 @@
+{
+  "starting_commit": "7d113268b1903e4e47289f226e94ec2fb609e15b",
+  "audit_branch_commit": "7ffd765c12eb75c4ae6b51d4d2c11d67f7645e5a",
+  "nproc": 5,
+  "setup": "warm env.sh verified; setup skipped",
+  "disk_before": "/tmp 3.0 GB free of 8.8 GB total; /workspace 7.2 GB free",
+  "removed": "only identifiable prior /tmp/defend-checked-views, 40 KB",
+  "disk_after": "/tmp 3.0 GB free; /workspace 6.9 GB free",
+  "matrix_scope": 30,
+  "package_listed_tests": 282
+}

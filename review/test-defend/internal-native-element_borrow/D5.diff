@@ -1,0 +1,13 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -409,9 +409,7 @@
+ 	case ir.ArrayFrom:
+ 		return e.arrayFrom(expression)
+ 	case ir.ArrayReverse:
+-		array := e.value(expression.Array)
+-		e.line("adamic_array_reverse(%s);", array)
+-		return array
++		return "NULL"
+ 	case ir.ArrayConcat:
+ 		arrays := []string{e.value(expression.Array)}
+ 		for _, other := range expression.Others {

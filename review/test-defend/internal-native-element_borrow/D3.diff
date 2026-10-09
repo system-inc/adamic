@@ -1,0 +1,10 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -141,7 +141,6 @@
+ 		builder.WriteString("\n")
+ 	}
+ 	emitter.classDeclarations(&builder)
+-	builder.WriteString(bodies.String())
+ 	return builder.String()
+ }
+ 
