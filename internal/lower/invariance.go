@@ -178,6 +178,14 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			}
 			continue
 		}
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) && l.namespaceType(from) {
+			// The canonical namespace rejects writes to this slot, even through a view
+			// dropping readonly. Nested mutable contents keep their ordinary proof.
+			if found := l.widened(source, target, visited); found != nil {
+				return found
+			}
+			continue
+		}
 		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
 			// tsc ignores readonly when it relates properties, so a readonly field, which may hold
 			// something narrower than its type says (it's covariant), can be seen as a writable one,

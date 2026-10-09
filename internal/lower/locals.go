@@ -16,6 +16,13 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		name := declaration.Name()
+		if body, handled, err := l.namespaceObjectVariable(declaration); handled {
+			if err != nil {
+				return nil, err
+			}
+			statements = append(statements, body...)
+			continue
+		}
 		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 			// const [a, b] = tuple, and const { x, y } = object (collections.go).
 			destructured, err := l.destructure(name, declaration.AsVariableDeclaration().Initializer)
@@ -239,6 +246,9 @@ func (l *lowering) constant(value string) int {
 
 // localRead preserves checker narrowing for both private and qualified singleton reads.
 func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+	if value, handled, err := l.namespaceExportRead(node); handled {
+		return value, err
+	}
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
 	if l.result.Locals[local].Type == ir.Union {
 		// Where the checker has narrowed it to fewer members held one way, it's read as that.

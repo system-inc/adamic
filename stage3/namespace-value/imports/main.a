@@ -1,0 +1,9 @@
+import { State } from "./state.a";
+import { retain, update } from "./consumer.a";
+const held = retain();
+console.log(String(held === State));
+console.log(Object.keys(held).join(","));
+update();
+console.log(String(held.z));
+held.a = 4;
+console.log(String(State.a));

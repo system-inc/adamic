@@ -28,7 +28,7 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 		{"Debug.log", ""},
 		{"Parser", overloadReason},
 		{"IncrementalParser", overloadReason},
-		{"tracingEnabled", "no runtime container is emitted"},
+		{"tracingEnabled", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			path := filepath.Join("../../stage3/namespaces/shapes", test.name+".a")

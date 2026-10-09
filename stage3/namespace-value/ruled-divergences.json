@@ -1,0 +1,20 @@
+{
+  "rule": "namespace readonly member write through wider view",
+  "fixture": "stage3/namespace-value/wider-const.a",
+  "node": {
+    "stdout": "2\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": {
+    "stdout": "",
+    "stderr": "adamic: panic: namespace write failed: value is readonly\n",
+    "exit": 70
+  },
+  "javascript": {
+    "stdout": "",
+    "stderr": "adamic: panic: namespace write failed: value is readonly\n",
+    "exit": 70
+  },
+  "shared_registry_dependency": "compiler/per-backend-stops"
+}

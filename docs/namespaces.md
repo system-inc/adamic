@@ -422,6 +422,8 @@ structural controls, the reaching-access mutant and the production rerun.
 
 ## Namespace objects passed, stored or returned
 
-Namespace container values remain a temporary `NotYet` boundary. Qualified exports use live singleton slots, but there is no runtime namespace object sharing those slots. The diagnostic names the namespace, its declaration and the escaping expression, and recommends qualified member access or passing fixed namespace functions with explicit state.
+Escaped namespace values use one live object per namespace symbol. Its own keys appear when export assignments execute, and merged blocks preserve assignment order. Mutable exports share storage with qualified and internal reads. Readonly members are protected at writes through wider views with terminal exit 70; direct writes are refused.
 
-The passing controls and the three stored, passed and returned witnesses in `stage3/namespace-value` pin this distinction against Node. Object snapshots lose live reads and alias writes. This boundary does not establish a permanent language refusal; see `stage3/namespace-value/REPORT.md` for the replay and mutant evidence.
+Descriptor reflection and freezing on escaped containers remain named NotYet. Nullable exports, object spread, runtime nested namespace, class and enum exports, and generic function exports remain named NotYet where the representation is not established. Global-script linking across distinct source files is not added: the loader currently treats each source file as a module. Imported aliases share their exporting module's object.
+
+See [the live namespace report](../stage3/namespace-value/LIVE_REPORT.md) for TypeScript-emitter comparisons, independent mutants and the production replay. The earlier [boundary report](../stage3/namespace-value/REPORT.md) is historical.

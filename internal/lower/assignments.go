@@ -16,6 +16,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if body, handled, err := l.namespaceObjectAssignment(node, target, operator, isCompound); handled {
+		return body, err
+	}
 	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
@@ -173,6 +176,9 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if body, handled, err := l.namespaceObjectIncrement(node, operand, operator); handled {
+		return body, err
+	}
 	if operand.Kind == ast.KindNonNullExpression {
 		assertion := operand
 		target := ast.SkipParentheses(assertion.AsNonNullExpression().Expression)

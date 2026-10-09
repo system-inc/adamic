@@ -16,6 +16,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
+	if len(written) > 0 && l.hasNamespaceObjects() && (name == "freeze" || name == "defineProperty" || name == "defineProperties" || name == "getOwnPropertyDescriptor" || name == "getOwnPropertyDescriptors") {
+		return nil, true, l.notYet(node, "descriptor reflection on an escaped namespace object (Object."+name+")")
+	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
 		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
@@ -75,7 +78,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				return nil, true, err
 			}
 		}
-		if name != "keys" && name != "values" && name != "entries" && !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if name != "keys" && name != "values" && name != "entries" && !(name == "hasOwn" && l.namespaceType(l.checker.GetTypeAtLocation(written[0]))) && !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])

@@ -1101,6 +1101,13 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
 	}
+	if callee.Kind == ast.KindPropertyAccessExpression {
+		if owner, _ := l.namespaceExport(callee); owner != nil {
+			if _, function := l.functions[l.symbol(callee)]; function {
+				return l.callClosure(node)
+			}
+		}
+	}
 	qualified := l.namespaceMember(callee)
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)

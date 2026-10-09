@@ -13,6 +13,9 @@ type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
 var checkedViewReadAdapter checkedViewReadHook
 
 func (e *emitter) viewField(property ir.Property) string {
+	if property.Namespace {
+		return e.namespaceField(property)
+	}
 	if checkedViewReadAdapter != nil {
 		if value, handled := checkedViewReadAdapter(e, property); handled {
 			return value
@@ -20,7 +23,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	}
 	object := e.value(property.Object)
 	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function"}
 	name, supported := names[property.Of]
 	if !supported || property.Optional || property.Absent || property.Method {
 		panic("compiler bug: incomplete checked field contract")
