@@ -52,8 +52,8 @@ func textSplittingInputs(t *testing.T) (string, []auditInput) {
 	return root, inputs
 }
 
-// Not parallel: prepares the shared corpus and build products before parallel text leaves resume.
 func TestMarkdownTextSplitting_Setup(t *testing.T) {
+	t.Parallel()
 	textReadySetup(t)
 }
 
