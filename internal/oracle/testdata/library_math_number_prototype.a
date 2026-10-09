@@ -5,3 +5,48 @@ for (const value of values) {
  console.log(`${Number.prototype.valueOf.call(value)} ${1 / Number.prototype.valueOf.call(value)} ${Number.prototype.toString.call(value, 16)} ${Number.prototype.toFixed.call(value, 2)} ${Number.prototype.toExponential.call(value, 3)} ${Number.prototype.toPrecision.call(value, 4)}`);
 }
 console.log(`${Number.prototype.toString.call(Number.prototype)} ${Number.prototype.toFixed(undefined)} ${Number.prototype.toExponential()} ${Number.prototype.toPrecision()}`);
+
+// Each formatting family must throw a catchable, nominal RangeError, with Node's message.
+// Dynamic arguments retain the exceptional edges even when this iteration is valid.
+function formatProbe(method: string, value: number, digits: number): void {
+ try {
+  let result = '';
+  if (method === 'fixed') {
+   result = value.toFixed(digits);
+  } else if (method === 'exponential') {
+   result = value.toExponential(digits);
+  } else if (method === 'precision') {
+   result = value.toPrecision(digits);
+  } else {
+   result = value.toString(digits);
+  }
+  console.log(`${method} ${value} ${digits}: ${result}`);
+ } catch (error) {
+  if (error instanceof Error) {
+   console.log(`${method} ${value} ${digits}: ${error.name === 'RangeError'} ${error.name} ${error.message}`);
+  }
+ } finally {
+  console.log(`finished ${method}`);
+ }
+}
+for (const method of ['fixed', 'exponential', 'precision', 'radix']) {
+ for (const value of [0, -0, 1.005, 2.55, -0.001, 1.0000000000000002, 1e21, 1e-7, Number.MIN_VALUE, Number.MAX_VALUE, NaN, Infinity, -Infinity]) {
+  for (const digits of [-Infinity, -1, -0.5, -0, NaN, 0, 1, 2, 17, 36, 100, 100.9, 101, Infinity]) {
+   formatProbe(method, value, digits);
+  }
+ }
+}
+let formatOrder = '';
+function formatValue(): number { formatOrder += 'value'; return 1.25; }
+function formatDigits(): number { formatOrder += 'digits'; return 101; }
+function formatLeaves(): string {
+ const held = `owned${formatOrder}`;
+ try {
+  return held + formatValue().toFixed(formatDigits());
+ } finally {
+  console.log(`leaving ${held} ${formatOrder}`);
+ }
+}
+try { console.log(formatLeaves()); } catch (error) {
+ if (error instanceof Error) { console.log(`${error.name}: ${error.message}`); }
+}

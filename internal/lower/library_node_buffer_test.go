@@ -8,6 +8,12 @@ import (
 func TestNodeBufferRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
+		{"ambient SHA direct call", "declare function createSHA256Hash(data: string): string; console.log(createSHA256Hash('x'));", "createSHA256Hash"},
+		{"ambient SHA present arm", "declare function createSHA256Hash(data: string): string; function fallback(data: string): string { return data; } const crypto = true; const hash = crypto ? createSHA256Hash : fallback; console.log(hash('x'));", "createSHA256Hash"},
+		{"ambient SHA mutable guard", "declare function createSHA256Hash(data: string): string; function fallback(data: string): string { return data; } let crypto = false; const hash = crypto ? createSHA256Hash : fallback; console.log(hash('x'));", "createSHA256Hash"},
+		{"namespace alias", "import * as crypto from 'node:crypto'; const alias = crypto; console.log(typeof alias);", "node:crypto namespace read"},
+		{"namespace reflection", "import * as crypto from 'node:crypto'; console.log(Object.keys(crypto).length);", "node:crypto namespace read"},
+		{"namespace missing member", "import * as crypto from 'node:crypto'; crypto.randomBytes(2);", "node:crypto.randomBytes"},
 		{"buffer alloc", "import { Buffer } from 'node:buffer'; Buffer.alloc(2);", "node:buffer.BufferConstructor.alloc"},
 		{"buffer read", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').byteOffset);", "Buffer.byteOffset"},
 		{"hash inherited read", "import { createHash } from 'node:crypto'; console.log(createHash('sha256').writable);", "writable"},

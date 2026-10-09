@@ -1,0 +1,2 @@
+// debug.ts:594. Ownership-safe intrinsic query; compiler intrinsic provenance is still required.
+console.log(`${typeof Object.setPrototypeOf === "function"}`);

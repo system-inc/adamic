@@ -1,0 +1,32 @@
+const object = {number: 1, text: 'old'.repeat(2), flag: true};
+const same = Object.defineProperty(object, 'text', {value: 'new'.repeat(2)});
+console.log(`${same === object}`);
+console.log(`${object.text}`);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.writable ?? false}`);
+Object.defineProperty(object, 'number', {value: 9, writable: true, enumerable: true, configurable: true});
+console.log(`${object.number}`);
+Object.defineProperties(object, {text: {value: 'both'.repeat(2)}, flag: {value: false}});
+console.log(`${object.text}`);
+console.log(`${object.flag}`);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.configurable ?? false}`);
+Object.defineProperty(object, 'number', {});
+console.log(`${object.number}`);
+Object.seal(object);
+Object.defineProperty(object, 'number', {value: 10});
+console.log(`${object.number}`);
+try {Object.defineProperty(object, 'number', {configurable: true});} catch (error) {if (error instanceof Error) console.log(`${error.name + ': ' + error.message}`);}
+Object.freeze(object);
+Object.defineProperty(object, 'text', {value: 'both'.repeat(2)});
+console.log(`${object.text}`);
+try {Object.defineProperty(object, 'number', {value: 11});} catch (error) {if (error instanceof Error) console.log(`${error.name + ': ' + error.message}`);}
+const nan = {number: NaN};Object.freeze(nan);Object.defineProperty(nan, 'number', {value: NaN});console.log(`${Number.isNaN(nan.number)}`);
+const zero = {number: 0};Object.freeze(zero);
+try {Object.defineProperty(zero, 'number', {value: -0});} catch (error) {if (error instanceof Error) console.log(`${error.name}`);}
+const shortCircuit = {first: 1, second: 2};Object.freeze(shortCircuit);
+try {Object.defineProperties(shortCircuit, {first: {value: 3}, second: {value: 4}});} catch (error) {if (error instanceof Error) console.log(`${error.message}`);}
+console.log(`${shortCircuit.first}`);
+console.log(`${shortCircuit.second}`);
+const partial = {first: 1, second: 2};Object.seal(partial);
+try {Object.defineProperties(partial, {first: {value: 3}, second: {configurable: true}});} catch (error) {if (error instanceof Error) console.log(`${error.message}`);}
+console.log(`${partial.first}`);
+console.log(`${partial.second}`);

@@ -1,0 +1,5 @@
+// debug.ts:859. Class prototype callbacks may capture the mapper; compiler graph proof must establish no back-reference.
+class DebugTypeMapper { toString(): string { return "mapper"; } }
+const mapper = {kind: 1};
+Object.setPrototypeOf(mapper, DebugTypeMapper.prototype);
+console.log(`${mapper.kind}`);

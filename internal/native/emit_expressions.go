@@ -24,7 +24,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.nodeFSFile(expression)
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.NodeHostCall:
+		return e.nodeHostCall(expression)
+	case ir.ProcessCall:
+		return e.processCall(expression)
 	case ir.RegExpNew:
+		if expression.Index < 0 {
+			return e.dynamicRegExp(expression)
+		}
 		for _, argument := range expression.Arguments {
 			e.value(argument)
 		}
@@ -117,6 +124,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.MethodPresence:
+		return e.methodPresence(expression)
 	case ir.HasAccessor:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_accessor_find(%s, %s) != NULL", e.value(expression.Object), cString(expression.Name)))
 	case ir.InstanceOf:
@@ -138,7 +147,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, part := range expression.Parts {
 			parts = append(parts, e.value(part))
 		}
-		return e.own(ir.String, fmt.Sprintf("adamic_string_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		e.declarations = append(e.declarations, "#include \"library_errors.h\"")
+		result := e.own(ir.String, fmt.Sprintf("adamic_library_concat(%d, (adamic_string *const[]){%s})", len(parts), strings.Join(parts, ", ")))
+		e.checkThrown()
+		return result
 	case ir.Conditional:
 		return e.conditional(expression)
 	case ir.ObjectLiteral:
@@ -575,6 +587,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
 	case ir.HasOwn:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has(%s, %s)", e.value(expression.Object), e.value(expression.Key)))
+	case ir.ParallelMap:
+		return e.parallelMap(expression)
 	case ir.ReadTextFile:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
 	case ir.ProgramArguments:
@@ -586,6 +600,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.ReadDirectory:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
+	case ir.RealPath:
+		return e.own(ir.Object, fmt.Sprintf("adamic_real_path(%s)", e.value(expression.Path)))
 	case ir.FileStatus:
 		return e.own(ir.Object, fmt.Sprintf("adamic_file_status(%s)", e.value(expression.Path)))
 	case ir.WriteTextFile:
@@ -668,17 +684,26 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.CodePoints {
 			function = "adamic_string_from_code_points"
 		}
+		var call string
 		if expression.Spread != nil {
-			return e.own(ir.String, fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread)))
+			call = fmt.Sprintf("%s_of(%s)", function, e.value(expression.Spread))
+		} else {
+			codes := make([]string, 0, len(expression.Codes))
+			for _, code := range expression.Codes {
+				codes = append(codes, e.value(code))
+			}
+			call = function + "(0, NULL)"
+			if len(codes) != 0 {
+				call = fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", "))
+			}
 		}
-		codes := make([]string, 0, len(expression.Codes))
-		for _, code := range expression.Codes {
-			codes = append(codes, e.value(code))
+		result := e.own(ir.String, call)
+		if expression.CodePoints {
+			e.checkThrown()
 		}
-		if len(codes) == 0 {
-			return e.own(ir.String, function+"(0, NULL)")
-		}
-		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+		return result
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:
@@ -708,9 +733,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(isfinite(%s) && trunc(%s) == %s && fabs(%s) <= 9007199254740991.0)", arguments[0], arguments[0], arguments[0], arguments[0])
 	case ir.ToFixed:
+		if ir.NumberFormatMayThrow(expression) {
+			return e.libraryNumberFormat("fixed", expression.Value, expression.Digits)
+		}
 		value := e.value(expression.Value)
 		digits := e.value(expression.Digits)
-		return e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+		result := e.own(ir.String, fmt.Sprintf("adamic_number_to_fixed(%s, %s)", value, digits))
+		e.checkThrown()
+		return result
 	case ir.NumberFormat:
 		return e.numberFormat(expression)
 	}

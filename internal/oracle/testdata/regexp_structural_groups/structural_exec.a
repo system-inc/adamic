@@ -1,0 +1,13 @@
+interface Methods {
+ test(text: string): boolean;
+ exec(text: string): RegExpExecArray | null;
+}
+function make(pattern: string): RegExp { return new RegExp(pattern, 'g'); }
+function check(regex: RegExp): void {
+ const methods: Methods = regex;
+ const match = methods.exec('xa');
+ if (match !== null) console.log(`${match[0]} ${match.index} ${regex.lastIndex}`);
+ console.log(`${methods.test('xa')} ${regex.lastIndex}`);
+}
+check(/a/g);
+check(make('a'));
