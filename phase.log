@@ -1,0 +1,13 @@
+FIRST FAILURE (deferred, at 240.2 s):
+requested deferred tests that didn't run to a verdict:
+github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestRecordMutants: missing
+github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode: missing
+github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees: missing
+github.com/system-inc/adamic/internal/native TestWASI: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree: missing
+(box load 6.4 on 5 cores at first failure)
+red: 114a643952ec18af1a730a6e838f1dcb815f6223 fast gate, first failure at deferred after 240.2 s, under load (load 6.4 on 5 cores at first failure) (build=176.6s vet=5.1s smoke=56.2s; 60 units over 30 s (2522 s, 0 on the burn-down, 50 drifted over); box load 0.6 on 5 cores at start, load 6.4 on 5 cores at first failure, load 6.4 on 5 cores at end; deferred to full gate: 0 tests; branch none, session none), 0 fail, 46 pass
