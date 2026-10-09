@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -12,6 +13,9 @@ func build(path, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
 	explain := false
+	reactor := false
+	abiPath := ""
+	names := []string{}
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -23,6 +27,21 @@ func build(path, output string, arguments []string) int {
 			options.Target = arguments[index]
 		case "--explain-checks":
 			explain = true
+		case "--reactor":
+			reactor = true
+		case "--export", "--abi-json":
+			flag := arguments[index]
+			index++
+			if index >= len(arguments) {
+				fmt.Fprintln(os.Stderr, usage)
+				return 2
+			}
+			if flag == "--export" {
+				names = append(names, arguments[index])
+				reactor = true
+			} else {
+				abiPath = arguments[index]
+			}
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -39,20 +58,31 @@ func build(path, output string, arguments []string) int {
 			return 2
 		}
 	}
-	if err := native.ValidateOptions(options); err != nil {
-		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+	if (reactor || abiPath != "") && options.Target != "wasm32-wasi" {
+		fmt.Fprintln(os.Stderr, "adamic: export ABI requires wasm32-wasi")
 		return 1
 	}
 	if options.Target != "" && archive != "" {
 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
 		return 1
 	}
+	if err := native.ValidateOptions(options); err != nil {
+		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+		return 1
+	}
 	var program *ir.Program
 	var code int
 	handler := -1
+	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
-		program, handler, code = compileWASI(path)
-		options.Request = handler >= 0
+		program, exports, code = compileExports(path, names)
+		if program != nil && len(exports) == 0 && !reactor {
+			// An export alias is outside the per-function crossing set (docs/wasm-abi.md), but an
+			// aliased handleRequest still selects the request ABI, as it did before those exports.
+			program, handler, code = compileWASI(path)
+		}
+		reactor = reactor || len(exports) > 0
+		options.Request = reactor || handler >= 0
 	} else {
 		program, code = compileLibrary(path, archive != "")
 	}
@@ -77,7 +107,11 @@ func build(path, output string, arguments []string) int {
 	} else {
 		var source string
 		if options.Target == "wasm32-wasi" {
-			source, err = native.WASI(program, handler)
+			if reactor {
+				source, err = native.WASIExports(program, exports)
+			} else {
+				source, err = native.WASI(program, handler)
+			}
 		} else {
 			source = native.C(program)
 		}
@@ -88,6 +122,16 @@ func build(path, output string, arguments []string) int {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return 1
+	}
+	if abiPath != "" {
+		bytes, err := json.MarshalIndent(native.ABITable{Version: 1, Exports: exports}, "", "  ")
+		if err == nil {
+			err = os.WriteFile(abiPath, append(bytes, '\n'), 0644)
+		}
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "adamic: ABI JSON: %v\n", err)
+			return 1
+		}
 	}
 	return 0
 }
