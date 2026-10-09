@@ -1,0 +1,17 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T155139-708290e8",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "14383e9d94a34563fbca70dfbe91284dee40bbf1",
+  "branch": "cloud/land-stack-gate-shards-json-14383e9d",
+  "base": "6eef5ae586af0354d3032d36535e54cefb2da43a",
+  "candidate": "14383e9d94a34563fbca70dfbe91284dee40bbf1",
+  "gated": "54eb0d64feb44ca57696664a261d4e2b62281c43",
+  "unplanned_packages_not_run": 3,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}
