@@ -6,6 +6,7 @@ import (
 )
 
 func TestObjectSealUnsupportedShapesRemainNotYet(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`Object.freeze(new RegExp('a', 'g'));`,
 		`const map = Object.seal(new Map());`,

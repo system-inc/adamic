@@ -5,6 +5,7 @@ import (
 )
 
 func TestStringLastIndexOfPositionLower(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		"console.log(`${'ababa'.lastIndexOf('a', NaN)}`);",
 		"console.log(`${'ababa'.lastIndexOf('a', -1.9)}`);",

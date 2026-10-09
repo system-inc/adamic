@@ -7,6 +7,7 @@ import (
 )
 
 func TestNodeFSDirectorySymlinkSignatures(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`import {symlinkSync} from 'node:fs'; symlinkSync('target','link');`,
 		`import {symlinkSync} from 'node:fs'; symlinkSync('target','link','dir');`,

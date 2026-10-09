@@ -6,6 +6,7 @@ import (
 )
 
 func TestLibrarySequenceIteratorRefusals(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`console.log(Object.keys([1].values()).join(','));`,
 		"console.log(`${Object.hasOwn('abc'[Symbol.iterator](), 'next')}`);",
@@ -22,6 +23,7 @@ func TestLibrarySequenceIteratorRefusals(t *testing.T) {
 }
 
 func TestLibrarySequenceIteratorCycles(t *testing.T) {
+	t.Parallel()
 	for _, factory := range []string{"items.values()", "items[Symbol.iterator]()"} {
 		t.Run(factory, func(t *testing.T) {
 			_, err := lowerSource(t, `interface Item { iterator: ArrayIterator<Item> | undefined; }
@@ -37,6 +39,7 @@ item.iterator = `+factory+`;`)
 }
 
 func TestLibraryIteratorCustomProtocolDispatchRefused(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `const other = ['other'].values();
 const custom: ArrayIterator<string> = {
  next: (): IteratorResult<string, undefined> => ({ done: false, value: 'custom' }),
@@ -49,6 +52,7 @@ for (const value of custom) { console.log(value); break; }`)
 }
 
 func TestLibraryIteratorCompilerSlotsRefused(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
 		{`const iterator = [true].values();`, "compiler slot representation support"},
 	} {
@@ -62,6 +66,7 @@ func TestLibraryIteratorCompilerSlotsRefused(t *testing.T) {
 }
 
 func TestLibraryIteratorBuiltinOverridesRefused(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`const values = [1]; values[Symbol.iterator] = () => [9].values();`,
 		`const values = new Map<number, number>(); values[Symbol.iterator] = () => new Map<number, number>().entries();`,
@@ -83,6 +88,7 @@ func TestLibraryIteratorBuiltinOverridesRefused(t *testing.T) {
 }
 
 func TestLibraryIteratorCompletedUndefinedValue(t *testing.T) {
+	t.Parallel()
 	if _, err := lowerSource(t, "const step = [1].values().next(); if (step.done) { console.log(`${step.value === undefined}`); }"); err != nil {
 		t.Fatal(err)
 	}

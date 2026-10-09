@@ -3,6 +3,7 @@ package lower
 import "testing"
 
 func TestRegexStringCatchAndCall(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`function fail(): void { 'a'.matchAll(/a/); } try { fail(); } catch (error) { if (error instanceof Error) { console.log(error.message); } }`,
 		`function fail(): void { 'a'.replaceAll(/a/, 'b'); } try { fail(); } catch {} finally { console.log('finally'); }`,

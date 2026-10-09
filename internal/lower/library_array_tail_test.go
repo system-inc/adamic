@@ -6,6 +6,7 @@ import (
 )
 
 func TestArrayTailDefaultSortBoundaries(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`const values: (number | undefined)[] = [1, undefined]; values.sort();`,
 		`const values = [{value: 1}, {value: 2}]; values.sort();`,
@@ -23,6 +24,7 @@ func TestArrayTailDefaultSortBoundaries(t *testing.T) {
 }
 
 func TestArrayTailReduceRightBoundaries(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`const values: number[] = []; values.reduceRight((sum, value) => sum + value);`,
 		`const values = [1,2]; values.reduceRight((sum, value) => sum + value);`,

@@ -52,6 +52,7 @@ func TestRegExpSourceNode(t *testing.T) {
 }
 
 func TestRegExpRuntimeConstructionLowers(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		"const matches = /a{18446744073709551616}/.test('a');",
 		"new RegExp('x' + undefined).test('x');",

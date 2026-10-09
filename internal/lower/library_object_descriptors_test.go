@@ -7,6 +7,7 @@ import (
 )
 
 func TestObjectDescriptorProofRefusals(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ source, reason string }{
 		{`const full={n:1,hidden:'kept'};const view:{n:number}=full;Object.getOwnPropertyDescriptors(view);`, "complete plain data-property shape"},
 		{`function read(value:{n:number}):void {Object.getOwnPropertyDescriptor(value,'n');}`, "complete plain data-property shape"},
