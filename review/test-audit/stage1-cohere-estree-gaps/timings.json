@@ -1,0 +1,122 @@
+{
+  "TestParserRecoveryGap": {
+    "runs": [
+      14.887,
+      15.103,
+      15.06
+    ],
+    "median": 15.06
+  },
+  "TestRawInputGap": {
+    "runs": [
+      1.001,
+      0.981,
+      1.058
+    ],
+    "median": 1.001
+  },
+  "TestRecoveryCacheInputKeys": {
+    "runs": [
+      0.598,
+      0.64,
+      0.474
+    ],
+    "median": 0.598
+  },
+  "TestJSXMutantPlantedSurvivor": {
+    "runs": [
+      0.017,
+      0.016,
+      0.016
+    ],
+    "median": 0.016
+  },
+  "TestInterfaceTypeMethodGap": {
+    "runs": [
+      0.412,
+      0.424,
+      0.416
+    ],
+    "median": 0.416
+  },
+  "TestMiscShardUnionRejectsInvalidEnumeration": {
+    "runs": [
+      0.008,
+      0.007,
+      0.007
+    ],
+    "median": 0.007
+  },
+  "TestRecoveryNativeRecipe": {
+    "runs": [
+      0.056,
+      0.1,
+      0.055
+    ],
+    "median": 0.056
+  },
+  "TestJSXAgreement": {
+    "runs": [
+      3.998,
+      4.001,
+      3.958
+    ],
+    "median": 3.998
+  },
+  "TestMethodReplacementGap": {
+    "runs": [
+      0.114,
+      0.104,
+      0.136
+    ],
+    "median": 0.114
+  },
+  "TestMiscShardGrowthKeepsAssignments": {
+    "runs": [
+      0.009,
+      0.008,
+      0.008
+    ],
+    "median": 0.008
+  },
+  "TestInterfaceDefaultGap": {
+    "runs": [
+      0.107,
+      0.103,
+      0.107
+    ],
+    "median": 0.107
+  },
+  "TestJSXOriginalLibraries": {
+    "runs": [
+      0.98,
+      0.911,
+      0.917
+    ],
+    "median": 0.917
+  },
+  "TestPostfixValueGap": {
+    "runs": [
+      0.1,
+      0.097,
+      0.098
+    ],
+    "median": 0.098
+  },
+  "TestJSXMutant": {
+    "runs": [
+      1.427,
+      1.423,
+      1.403
+    ],
+    "median": 1.423
+  },
+  "TestJSXAgreementPlantedDisagreement": {
+    "runs": [
+      0.202,
+      0.257,
+      0.209
+    ],
+    "median": 0.209
+  }
+}

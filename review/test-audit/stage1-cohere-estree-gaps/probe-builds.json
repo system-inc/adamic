@@ -1,0 +1,26 @@
+[
+  {
+    "id": "PMain",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u086/validate-PMain --sanitize",
+    "wall_seconds": 38.961,
+    "exit": 0
+  },
+  {
+    "id": "PParser",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/gaps/parserRecovery.ts -o /tmp/u086/validate-PParser --sanitize",
+    "wall_seconds": 14.035,
+    "exit": 0
+  },
+  {
+    "id": "PUtf8",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/gaps/rawInput.ts -o /tmp/u086/validate-PUtf8 --sanitize",
+    "wall_seconds": 10.327,
+    "exit": 0
+  },
+  {
+    "id": "PLower",
+    "command": "timeout 90 go vet ./internal/lower/",
+    "wall_seconds": 0.472,
+    "exit": 0
+  }
+]

@@ -1,0 +1,36 @@
+{"Time":"2026-10-09T11:48:02.356197081Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:48:02.362717399Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap"}
+{"Time":"2026-10-09T11:48:02.362772801Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"=== RUN   TestPostfixValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.362791469Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"=== PAUSE TestPostfixValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.362793622Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap"}
+{"Time":"2026-10-09T11:48:02.362797187Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap"}
+{"Time":"2026-10-09T11:48:02.36279885Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"=== RUN   TestMethodReplacementGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.362801153Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"=== PAUSE TestMethodReplacementGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.362806111Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap"}
+{"Time":"2026-10-09T11:48:02.362808314Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap"}
+{"Time":"2026-10-09T11:48:02.362809876Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"=== RUN   TestInterfaceDefaultGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.362811819Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"=== PAUSE TestInterfaceDefaultGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.362813391Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap"}
+{"Time":"2026-10-09T11:48:02.362816396Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap"}
+{"Time":"2026-10-09T11:48:02.362818058Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"=== RUN   TestInterfaceTypeMethodGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.453418324Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"    interface_type_test.go:33: recorded lowering gap changed: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:48:02.453500366Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"--- FAIL: TestInterfaceTypeMethodGap (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.453504392Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Elapsed":0.09}
+{"Time":"2026-10-09T11:48:02.453527686Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap"}
+{"Time":"2026-10-09T11:48:02.453533915Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"=== CONT  TestPostfixValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.453542408Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap"}
+{"Time":"2026-10-09T11:48:02.45354404Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"=== CONT  TestInterfaceDefaultGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.453592532Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap"}
+{"Time":"2026-10-09T11:48:02.453595356Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"=== CONT  TestMethodReplacementGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.595085279Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"    gaps_test.go:135: recorded lowering gap changed: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:48:02.595135093Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"--- FAIL: TestInterfaceDefaultGap (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.59628208Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Elapsed":0.14}
+{"Time":"2026-10-09T11:48:02.59629538Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"    gaps_test.go:53: method replacement gap changed: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:48:02.596348488Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"--- FAIL: TestMethodReplacementGap (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.59997182Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Elapsed":0.14}
+{"Time":"2026-10-09T11:48:02.599998009Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"    gaps_test.go:33: postfix value gap changed: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:48:02.600058839Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"--- FAIL: TestPostfixValueGap (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.600099509Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Elapsed":0.15}
+{"Time":"2026-10-09T11:48:02.600102844Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.602431479Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.246s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:02.602446661Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.246}

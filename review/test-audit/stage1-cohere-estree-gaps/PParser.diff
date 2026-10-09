@@ -1,0 +1,22 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -1,3 +1,4 @@
++import { active } from '../../cohere/estree/audit_selector.ts';
+ // Expression descent follows cohere/TypeScript/tsc/internal/parser/parser.go.
+ import { panic } from 'adamic';
+ import { Scanner } from '../scanner/scanner.ts';
+@@ -1640,6 +1641,7 @@
+         return left;
+     }
+     file(): number {
++        if(active('PParser')) { return 0; }
+         const parser = this.statements();
+         const children: number[] = [];
+         while(this.kind() !== 'EndOfFile') {
+--- /dev/null
++++ b/stage1/cohere/estree/audit_selector.ts
+@@ -0,0 +1,4 @@
++import { readTextFile } from 'adamic';
++const file = readTextFile('/tmp/u086/selector');
++const selected = file.kind === 'Error' ? '' : file.text.trim();
++export function active(id: string): boolean { return selected === id; }

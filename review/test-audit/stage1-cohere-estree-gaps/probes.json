@@ -1,0 +1,73 @@
+[
+  {
+    "id": "PMain",
+    "failed_rows": [
+      "TestJSXAgreement family"
+    ],
+    "entry": "run(path) in main.ts",
+    "command": {
+      "label": "PMain",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestJSXAgreement(_[0-9]{3})?)$",
+      "env": {
+        "ADAMIC_MUTANT": "PMain",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 5.525,
+      "exit": 1
+    }
+  },
+  {
+    "id": "PParser",
+    "failed_rows": [
+      "TestParserRecoveryGap"
+    ],
+    "entry": "Parser.file()",
+    "command": {
+      "label": "PParser",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestParserRecoveryGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "PParser",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 15.131,
+      "exit": 1
+    }
+  },
+  {
+    "id": "PUtf8",
+    "failed_rows": [
+      "TestRawInputGap"
+    ],
+    "entry": "native adamic_utf8_length(text)",
+    "command": {
+      "label": "PUtf8",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestRawInputGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "PUtf8",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 2.785,
+      "exit": 1
+    }
+  },
+  {
+    "id": "PLower",
+    "failed_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap"
+    ],
+    "entry": "lower.Lower(ctx,program)",
+    "command": {
+      "label": "PLower",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "PLower",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/PLower"
+      },
+      "wall_seconds": 1.985,
+      "exit": 1
+    }
+  }
+]

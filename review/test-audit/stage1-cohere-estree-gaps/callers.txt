@@ -1,0 +1,111 @@
+stage1/cohere/estree/exports_test.go:33:			if err := miscCompare(want, got, false); err != nil {
+stage1/cohere/estree/exports_test.go:47:		return miscCompare([]byte("agree"), got, false)
+stage1/cohere/estree/exports_test.go:72:			if err := miscCompare(want, got, mustDisagree); err != nil {
+stage1/cohere/estree/exports_test.go:86:		return miscCompare([]byte("agree"), got, true)
+stage1/cohere/estree/jsx_agreement_product_shards_test.go:31:	// scalarEdgePrepare uses sync.Once and the declared shared Product recipes.
+stage1/cohere/estree/jsx_agreement_product_shards_test.go:33:	ready := scalarEdgePrepare(t)
+stage1/cohere/estree/jsx_agreement_product_shards_test.go:45:			if err := miscCompare(want, got, false); err != nil {
+stage1/cohere/estree/syntax_mutants_self_setup_test.go:53:		lowered, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/scalar_edges_split_products_test.go:51:		ir, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/scalar_edges_split_products_test.go:121:func scalarEdgePrepare(t *testing.T) scalarEdgeReady {
+stage1/cohere/estree/scalar_edges_split_products_test.go:154:	scalarEdgePrepare(t)
+stage1/cohere/estree/scalar_edges_split_products_test.go:160:	scalarEdgePrepare(t)
+stage1/cohere/estree/scalar_edges_split_products_test.go:206:	ready := scalarEdgePrepare(t)
+stage1/cohere/estree/scalar_edges_split_products_test.go:244:	ready := scalarEdgePrepare(t)
+stage1/cohere/estree/stalls_top_shards_test.go:17:func TestBoundedPortParser_000(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 0) }
+stage1/cohere/estree/stalls_top_shards_test.go:18:func TestBoundedPortParser_001(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 1) }
+stage1/cohere/estree/stalls_top_shards_test.go:19:func TestBoundedPortParser_002(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 2) }
+stage1/cohere/estree/stalls_top_shards_test.go:20:func TestBoundedPortParser_003(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 3) }
+stage1/cohere/estree/stalls_top_shards_test.go:21:func TestBoundedPortParser_004(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 4) }
+stage1/cohere/estree/stalls_top_shards_test.go:22:func TestBoundedPortParser_005(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 5) }
+stage1/cohere/estree/stalls_top_shards_test.go:23:func TestBoundedPortParser_006(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 6) }
+stage1/cohere/estree/stalls_top_shards_test.go:24:func TestBoundedPortParser_007(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 7) }
+stage1/cohere/estree/stalls_top_shards_test.go:25:func TestBoundedPortParser_008(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 8) }
+stage1/cohere/estree/stalls_top_shards_test.go:26:func TestBoundedPortParser_009(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 9) }
+stage1/cohere/estree/stalls_top_shards_test.go:27:func TestBoundedPortParser_010(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 10) }
+stage1/cohere/estree/stalls_top_shards_test.go:28:func TestBoundedPortParser_011(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 11) }
+stage1/cohere/estree/stalls_top_shards_test.go:29:func TestBoundedPortParser_012(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 12) }
+stage1/cohere/estree/stalls_top_shards_test.go:30:func TestBoundedPortParser_013(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 13) }
+stage1/cohere/estree/stalls_top_shards_test.go:31:func TestBoundedPortParser_014(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 14) }
+stage1/cohere/estree/stalls_top_shards_test.go:32:func TestBoundedPortParser_015(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 15) }
+stage1/cohere/estree/stalls_top_shards_test.go:33:func TestBoundedPortParser_016(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 16) }
+stage1/cohere/estree/stalls_top_shards_test.go:34:func TestBoundedPortParser_017(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 17) }
+stage1/cohere/estree/stalls_top_shards_test.go:35:func TestBoundedPortParser_018(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 18) }
+stage1/cohere/estree/stalls_top_shards_test.go:36:func TestBoundedPortParser_019(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 19) }
+stage1/cohere/estree/stalls_top_shards_test.go:37:func TestBoundedPortParser_020(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 20) }
+stage1/cohere/estree/stalls_top_shards_test.go:38:func TestBoundedPortParser_021(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 21) }
+stage1/cohere/estree/stalls_top_shards_test.go:39:func TestBoundedPortParser_022(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 22) }
+stage1/cohere/estree/stalls_top_shards_test.go:40:func TestBoundedPortParser_023(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 23) }
+stage1/cohere/estree/stalls_top_shards_test.go:41:func TestBoundedPortParser_024(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 24) }
+stage1/cohere/estree/stalls_top_shards_test.go:42:func TestBoundedPortParser_025(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 25) }
+stage1/cohere/estree/stalls_top_shards_test.go:43:func TestBoundedPortParser_026(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 26) }
+stage1/cohere/estree/stalls_top_shards_test.go:44:func TestBoundedPortParser_027(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 27) }
+stage1/cohere/estree/stalls_top_shards_test.go:45:func TestBoundedPortParser_028(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 28) }
+stage1/cohere/estree/stalls_top_shards_test.go:46:func TestBoundedPortParser_029(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 29) }
+stage1/cohere/estree/stalls_top_shards_test.go:47:func TestBoundedPortParser_030(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 30) }
+stage1/cohere/estree/stalls_top_shards_test.go:48:func TestBoundedPortParser_031(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 31) }
+stage1/cohere/estree/stalls_top_shards_test.go:49:func TestBoundedPortParser_032(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 32) }
+stage1/cohere/estree/stalls_top_shards_test.go:50:func TestBoundedPortParser_033(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 33) }
+stage1/cohere/estree/stalls_top_shards_test.go:51:func TestBoundedPortParser_034(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 34) }
+stage1/cohere/estree/stalls_top_shards_test.go:52:func TestBoundedPortParser_035(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 35) }
+stage1/cohere/estree/stalls_top_shards_test.go:53:func TestBoundedPortParser_036(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 36) }
+stage1/cohere/estree/stalls_top_shards_test.go:54:func TestBoundedPortParser_037(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 37) }
+stage1/cohere/estree/stalls_top_shards_test.go:55:func TestBoundedPortParser_038(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 38) }
+stage1/cohere/estree/stalls_top_shards_test.go:56:func TestBoundedPortParser_039(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 39) }
+stage1/cohere/estree/stalls_top_shards_test.go:57:func TestBoundedPortParser_040(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 40) }
+stage1/cohere/estree/stalls_top_shards_test.go:58:func TestBoundedPortParser_041(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 41) }
+stage1/cohere/estree/stalls_top_shards_test.go:59:func TestBoundedPortParser_042(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 42) }
+stage1/cohere/estree/stalls_top_shards_test.go:60:func TestBoundedPortParser_043(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 43) }
+stage1/cohere/estree/stalls_top_shards_test.go:61:func TestBoundedPortParser_044(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 44) }
+stage1/cohere/estree/stalls_top_shards_test.go:62:func TestBoundedPortParser_045(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 45) }
+stage1/cohere/estree/stalls_top_shards_test.go:63:func TestBoundedPortParser_046(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 46) }
+stage1/cohere/estree/stalls_top_shards_test.go:64:func TestBoundedPortParser_047(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 47) }
+stage1/cohere/estree/stalls_top_shards_test.go:65:func TestBoundedPortParser_048(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 48) }
+stage1/cohere/estree/stalls_top_shards_test.go:66:func TestBoundedPortParser_049(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 49) }
+stage1/cohere/estree/stalls_top_shards_test.go:67:func TestBoundedPortParser_050(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 50) }
+stage1/cohere/estree/stalls_top_shards_test.go:68:func TestBoundedPortParser_051(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 51) }
+stage1/cohere/estree/stalls_top_shards_test.go:69:func TestBoundedPortParser_052(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 52) }
+stage1/cohere/estree/stalls_top_shards_test.go:70:func TestBoundedPortParser_053(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 53) }
+stage1/cohere/estree/stalls_top_shards_test.go:71:func TestBoundedPortParser_054(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 54) }
+stage1/cohere/estree/stalls_top_shards_test.go:72:func TestBoundedPortParser_055(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 55) }
+stage1/cohere/estree/stalls_top_shards_test.go:73:func TestBoundedPortParser_056(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 56) }
+stage1/cohere/estree/stalls_top_shards_test.go:74:func TestBoundedPortParser_057(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 57) }
+stage1/cohere/estree/stalls_top_shards_test.go:75:func TestBoundedPortParser_058(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 58) }
+stage1/cohere/estree/stalls_top_shards_test.go:76:func TestBoundedPortParser_059(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 59) }
+stage1/cohere/estree/stalls_top_shards_test.go:77:func TestBoundedPortParser_060(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 60) }
+stage1/cohere/estree/stalls_top_shards_test.go:78:func TestBoundedPortParser_061(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 61) }
+stage1/cohere/estree/stalls_top_shards_test.go:79:func TestBoundedPortParser_062(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 62) }
+stage1/cohere/estree/stalls_top_shards_test.go:80:func TestBoundedPortParser_063(t *testing.T) { t.Parallel(); boundedPortParserShard(t, 63) }
+stage1/cohere/estree/stalls_top_shards_test.go:83:func TestBoundedPortParserUnion(t *testing.T) {
+stage1/cohere/estree/stalls_top_shards_test.go:85:	estreeTopUnion(t, "TestBoundedPortParser", testBoundedPortParserShards, boundedPortIDs(boundedPortCases(t)))
+stage1/cohere/estree/stalls_top_shards_test.go:171:			err = miscCompare([]byte("agree"), got, false)
+stage1/cohere/estree/interface_type_test.go:27:	_, err = lower.Lower(context.Background(), loaded)
+stage1/cohere/estree/interface_type_test.go:41:	if err = os.WriteFile(control, []byte(strings.Replace(strings.Replace(string(source), "type(minimum = 0, conditional = true)", "typeValue(minimum: number, conditional: boolean)", 1), "console.log(parse(new ParserLike()).toString());", "const parser = new ParserLike();\nconsole.log(parse({type: (minimum: number, conditional: boolean) => parser.typeValue(minimum, conditional)}).toString());", 1)), 0644); err != nil {
+stage1/cohere/estree/interface_type_test.go:48:	if _, err = lower.Lower(context.Background(), loaded); err != nil || isGap(err) {
+stage1/cohere/estree/misc_shards_test.go:113:func miscCompare(want, got []byte, mutant bool) error {
+stage1/cohere/estree/misc_shards_test.go:172:		lowered, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/estree_test.go:75:	lowered, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/recovery_lowered_recipe_test.go:40:			ir, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/stalls_test.go:29:const testBoundedPortParserShards = 64
+stage1/cohere/estree/stalls_test.go:68:func boundedPortParserShard(t *testing.T, shard int) {
+stage1/cohere/estree/stalls_test.go:72:	indexes := estreeScopedIndexes(t, testBoundedPortParserShards, ids, shard)
+stage1/cohere/estree/stalls_test.go:73:	if estreeScopedProof(t, "TestBoundedPortParser", ids, indexes) || len(indexes) == 0 {
+stage1/cohere/estree/stalls_test.go:105:				if err := miscCompare(want, got, false); err != nil {
+stage1/cohere/estree/stalls_test.go:117:func TestBoundedPortParserPlantedDisagreement(t *testing.T) {
+stage1/cohere/estree/stalls_test.go:119:	estreeTopPlantedProof(t, "TestBoundedPortParser", testBoundedPortParserShards, boundedPortIDs(boundedPortCases(t)))
+stage1/cohere/estree/three_port_mutants_deadline_shards_test.go:205:		ir, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/recovery_shards_test.go:115:		ir, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/recovery_shards_test.go:134:	binary := recoveryProduct(t, s, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, string(code)) })
+stage1/cohere/estree/gaps_test.go:31:	_, err = lower.Lower(context.Background(), program)
+stage1/cohere/estree/gaps_test.go:51:	_, err = lower.Lower(context.Background(), program)
+stage1/cohere/estree/gaps_test.go:90:	t.Logf("Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s", want, firstDifference(left, right))
+stage1/cohere/estree/gaps_test.go:94:func TestParserRecoveryGap(t *testing.T) {
+stage1/cohere/estree/gaps_test.go:132:	_, err = lower.Lower(context.Background(), loaded)
+stage1/cohere/estree/jsx_test.go:125:			if err := miscCompare(want, got, true); err != nil {
+stage1/cohere/estree/jsx_test.go:139:		return miscCompare([]byte("agree"), got, true)
+stage1/cohere/estree/recovery_cache_test.go:94:	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
+stage1/cohere/estree/recovery_cache_test.go:118:func recoveryStableNative(repo, directory, source string) error {
+stage1/cohere/estree/recovery_cache_test.go:273:	first := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
+stage1/cohere/estree/recovery_cache_test.go:275:	second := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
+stage1/cohere/estree/deep_mutants_product_shards_test.go:132:		ir, err := lower.Lower(context.Background(), program)
+stage1/cohere/estree/acceptance_grain_test.go:57:		lowered, err := lower.Lower(context.Background(), program)

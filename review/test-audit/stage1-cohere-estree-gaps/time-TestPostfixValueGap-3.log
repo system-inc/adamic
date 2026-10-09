@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:39:54.036094397Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:39:54.042622617Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap"}
+{"Time":"2026-10-09T11:39:54.042689175Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"=== RUN   TestPostfixValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:54.042912045Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"=== PAUSE TestPostfixValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:54.042919085Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap"}
+{"Time":"2026-10-09T11:39:54.042921679Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap"}
+{"Time":"2026-10-09T11:39:54.042923592Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"=== CONT  TestPostfixValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:54.132195851Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"    gaps_test.go:35: Node 7, 1; lowering: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower a PostfixUnaryExpression yet\n"}
+{"Time":"2026-10-09T11:39:54.132295188Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Output":"--- PASS: TestPostfixValueGap (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:54.132306464Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestPostfixValueGap","Elapsed":0.09}
+{"Time":"2026-10-09T11:39:54.132328006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:54.133646512Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.097s\n"}
+{"Time":"2026-10-09T11:39:54.133688074Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.098}

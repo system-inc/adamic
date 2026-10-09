@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:41:27.736219909Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:27.743762607Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement"}
+{"Time":"2026-10-09T11:41:27.743813382Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement","Output":"=== RUN   TestJSXAgreementPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:27.743829446Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement","Output":"=== PAUSE TestJSXAgreementPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:27.743831709Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement"}
+{"Time":"2026-10-09T11:41:27.743833852Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement"}
+{"Time":"2026-10-09T11:41:27.743835485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement","Output":"=== CONT  TestJSXAgreementPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:27.990308298Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement","Output":"    jsx_agreement_product_shards_test.go:121: planted case stage1/cohere/estree/jsx_test.go:jsx:source-9ba96f7b7696a8abb1f81450cf8157abfb23f6ab2fec32fe0c44048141058ebc caught only by TestJSXAgreement_027\n"}
+{"Time":"2026-10-09T11:41:27.990418001Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement","Output":"--- PASS: TestJSXAgreementPlantedDisagreement (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:27.990422547Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXAgreementPlantedDisagreement","Elapsed":0.25}
+{"Time":"2026-10-09T11:41:27.990446493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:27.992977275Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.256s\n"}
+{"Time":"2026-10-09T11:41:27.993012918Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.257}

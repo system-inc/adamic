@@ -1,0 +1,272 @@
+{"Time":"2026-10-09T11:41:47.150049526Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:47.156459741Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant"}
+{"Time":"2026-10-09T11:41:47.156568091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"=== RUN   TestJSXMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.687533565Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    jsx_test.go:116: build Go oracle: 0.530978s\n"}
+{"Time":"2026-10-09T11:41:47.703049274Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    jsx_test.go:117: build estree-misc-source-mutant d5867aa62fc2 hit 0.02\n"}
+{"Time":"2026-10-09T11:41:47.800312527Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    jsx_test.go:118: build estree-misc-sanitized-emitted a54d76456c8d hit 0.05\n"}
+{"Time":"2026-10-09T11:41:47.800359126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    jsx_test.go:118: build lowered/sanitized/emitted products: 0.097190s\n"}
+{"Time":"2026-10-09T11:41:47.816393552Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    misc_shards_test.go:358: build estree-misc-oracle-answers 1c1e2bc45c4e hit 0.00\n"}
+{"Time":"2026-10-09T11:41:47.816464437Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    misc_shards_test.go:211: setup wall: 0.660019s\n"}
+{"Time":"2026-10-09T11:41:47.816477557Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    jsx_test.go:121: union: 9 cases, 9 unique ids, 32 shards\n"}
+{"Time":"2026-10-09T11:41:47.81650676Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000"}
+{"Time":"2026-10-09T11:41:47.816509334Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000","Output":"=== RUN   TestJSXMutant/shard-000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816528893Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000","Output":"=== PAUSE TestJSXMutant/shard-000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816530916Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000"}
+{"Time":"2026-10-09T11:41:47.816536564Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001"}
+{"Time":"2026-10-09T11:41:47.816538267Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001","Output":"=== RUN   TestJSXMutant/shard-001\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81655406Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001","Output":"=== PAUSE TestJSXMutant/shard-001\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816555802Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001"}
+{"Time":"2026-10-09T11:41:47.816558607Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002"}
+{"Time":"2026-10-09T11:41:47.816560249Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002","Output":"=== RUN   TestJSXMutant/shard-002\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816576213Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002","Output":"=== PAUSE TestJSXMutant/shard-002\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81658826Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002"}
+{"Time":"2026-10-09T11:41:47.816591085Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003"}
+{"Time":"2026-10-09T11:41:47.816593118Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003","Output":"=== RUN   TestJSXMutant/shard-003\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816595441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003","Output":"=== PAUSE TestJSXMutant/shard-003\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816596923Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003"}
+{"Time":"2026-10-09T11:41:47.816598586Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004"}
+{"Time":"2026-10-09T11:41:47.816600048Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004","Output":"=== RUN   TestJSXMutant/shard-004\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816603153Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004","Output":"=== PAUSE TestJSXMutant/shard-004\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816604855Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004"}
+{"Time":"2026-10-09T11:41:47.816606598Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005"}
+{"Time":"2026-10-09T11:41:47.81660791Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005","Output":"=== RUN   TestJSXMutant/shard-005\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816610654Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005","Output":"=== PAUSE TestJSXMutant/shard-005\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816612156Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005"}
+{"Time":"2026-10-09T11:41:47.816613959Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006"}
+{"Time":"2026-10-09T11:41:47.816616853Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006","Output":"=== RUN   TestJSXMutant/shard-006\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816618956Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006","Output":"=== PAUSE TestJSXMutant/shard-006\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816620438Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006"}
+{"Time":"2026-10-09T11:41:47.816625456Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007"}
+{"Time":"2026-10-09T11:41:47.816626788Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007","Output":"=== RUN   TestJSXMutant/shard-007\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81662866Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007","Output":"=== PAUSE TestJSXMutant/shard-007\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816630152Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007"}
+{"Time":"2026-10-09T11:41:47.816631855Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008"}
+{"Time":"2026-10-09T11:41:47.816635851Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008","Output":"=== RUN   TestJSXMutant/shard-008\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816638895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008","Output":"=== PAUSE TestJSXMutant/shard-008\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816640608Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008"}
+{"Time":"2026-10-09T11:41:47.816642621Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009"}
+{"Time":"2026-10-09T11:41:47.816644173Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009","Output":"=== RUN   TestJSXMutant/shard-009\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816646066Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009","Output":"=== PAUSE TestJSXMutant/shard-009\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816647578Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009"}
+{"Time":"2026-10-09T11:41:47.816650182Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010"}
+{"Time":"2026-10-09T11:41:47.816652435Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010","Output":"=== RUN   TestJSXMutant/shard-010\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816656061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010","Output":"=== PAUSE TestJSXMutant/shard-010\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816657563Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010"}
+{"Time":"2026-10-09T11:41:47.816660477Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011"}
+{"Time":"2026-10-09T11:41:47.816662781Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011","Output":"=== RUN   TestJSXMutant/shard-011\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816666216Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011","Output":"=== PAUSE TestJSXMutant/shard-011\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816667838Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011"}
+{"Time":"2026-10-09T11:41:47.816669931Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012"}
+{"Time":"2026-10-09T11:41:47.816671554Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012","Output":"=== RUN   TestJSXMutant/shard-012\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816674438Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012","Output":"=== PAUSE TestJSXMutant/shard-012\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81667586Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012"}
+{"Time":"2026-10-09T11:41:47.816678524Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013"}
+{"Time":"2026-10-09T11:41:47.816680026Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013","Output":"=== RUN   TestJSXMutant/shard-013\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816682099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013","Output":"=== PAUSE TestJSXMutant/shard-013\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816685144Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013"}
+{"Time":"2026-10-09T11:41:47.816687577Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014"}
+{"Time":"2026-10-09T11:41:47.81668921Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014","Output":"=== RUN   TestJSXMutant/shard-014\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816692345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014","Output":"=== PAUSE TestJSXMutant/shard-014\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816693837Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014"}
+{"Time":"2026-10-09T11:41:47.816696521Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015"}
+{"Time":"2026-10-09T11:41:47.816698794Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015","Output":"=== RUN   TestJSXMutant/shard-015\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816715359Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015","Output":"=== PAUSE TestJSXMutant/shard-015\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816716931Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015"}
+{"Time":"2026-10-09T11:41:47.816720526Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016"}
+{"Time":"2026-10-09T11:41:47.816721948Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016","Output":"=== RUN   TestJSXMutant/shard-016\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816738833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016","Output":"=== PAUSE TestJSXMutant/shard-016\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816740516Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016"}
+{"Time":"2026-10-09T11:41:47.81674321Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017"}
+{"Time":"2026-10-09T11:41:47.816744652Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017","Output":"=== RUN   TestJSXMutant/shard-017\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816747196Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017","Output":"=== PAUSE TestJSXMutant/shard-017\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81675002Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017"}
+{"Time":"2026-10-09T11:41:47.816754967Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018"}
+{"Time":"2026-10-09T11:41:47.816756509Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018","Output":"=== RUN   TestJSXMutant/shard-018\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816759524Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018","Output":"=== PAUSE TestJSXMutant/shard-018\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816761216Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018"}
+{"Time":"2026-10-09T11:41:47.816765683Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019"}
+{"Time":"2026-10-09T11:41:47.816768317Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019","Output":"=== RUN   TestJSXMutant/shard-019\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816784351Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019","Output":"=== PAUSE TestJSXMutant/shard-019\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816786274Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019"}
+{"Time":"2026-10-09T11:41:47.816789418Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020"}
+{"Time":"2026-10-09T11:41:47.816791031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020","Output":"=== RUN   TestJSXMutant/shard-020\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816793554Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020","Output":"=== PAUSE TestJSXMutant/shard-020\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816795137Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020"}
+{"Time":"2026-10-09T11:41:47.816800955Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021"}
+{"Time":"2026-10-09T11:41:47.816802508Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021","Output":"=== RUN   TestJSXMutant/shard-021\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816815126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021","Output":"=== PAUSE TestJSXMutant/shard-021\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816816809Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021"}
+{"Time":"2026-10-09T11:41:47.816818752Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022"}
+{"Time":"2026-10-09T11:41:47.816820144Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022","Output":"=== RUN   TestJSXMutant/shard-022\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816822768Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022","Output":"=== PAUSE TestJSXMutant/shard-022\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81682435Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022"}
+{"Time":"2026-10-09T11:41:47.816826163Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023"}
+{"Time":"2026-10-09T11:41:47.816827434Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023","Output":"=== RUN   TestJSXMutant/shard-023\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81683092Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023","Output":"=== PAUSE TestJSXMutant/shard-023\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816832512Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023"}
+{"Time":"2026-10-09T11:41:47.816841475Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024"}
+{"Time":"2026-10-09T11:41:47.816842927Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024","Output":"=== RUN   TestJSXMutant/shard-024\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81684476Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024","Output":"=== PAUSE TestJSXMutant/shard-024\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816847895Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024"}
+{"Time":"2026-10-09T11:41:47.816850629Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025"}
+{"Time":"2026-10-09T11:41:47.816852171Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025","Output":"=== RUN   TestJSXMutant/shard-025\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816853994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025","Output":"=== PAUSE TestJSXMutant/shard-025\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816855456Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025"}
+{"Time":"2026-10-09T11:41:47.816857679Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026"}
+{"Time":"2026-10-09T11:41:47.816859141Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026","Output":"=== RUN   TestJSXMutant/shard-026\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816860924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026","Output":"=== PAUSE TestJSXMutant/shard-026\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816862566Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026"}
+{"Time":"2026-10-09T11:41:47.816864169Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027"}
+{"Time":"2026-10-09T11:41:47.816865691Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027","Output":"=== RUN   TestJSXMutant/shard-027\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816867544Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027","Output":"=== PAUSE TestJSXMutant/shard-027\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816869046Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027"}
+{"Time":"2026-10-09T11:41:47.81687202Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028"}
+{"Time":"2026-10-09T11:41:47.816873453Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028","Output":"=== RUN   TestJSXMutant/shard-028\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816875165Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028","Output":"=== PAUSE TestJSXMutant/shard-028\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816876707Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028"}
+{"Time":"2026-10-09T11:41:47.81687838Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029"}
+{"Time":"2026-10-09T11:41:47.816879802Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029","Output":"=== RUN   TestJSXMutant/shard-029\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816881514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029","Output":"=== PAUSE TestJSXMutant/shard-029\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816882987Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029"}
+{"Time":"2026-10-09T11:41:47.816886201Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030"}
+{"Time":"2026-10-09T11:41:47.816887674Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030","Output":"=== RUN   TestJSXMutant/shard-030\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816890257Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030","Output":"=== PAUSE TestJSXMutant/shard-030\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81689174Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030"}
+{"Time":"2026-10-09T11:41:47.816893402Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031"}
+{"Time":"2026-10-09T11:41:47.816894684Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031","Output":"=== RUN   TestJSXMutant/shard-031\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816896527Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031","Output":"=== PAUSE TestJSXMutant/shard-031\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816897999Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031"}
+{"Time":"2026-10-09T11:41:47.816899691Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000"}
+{"Time":"2026-10-09T11:41:47.816901143Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000","Output":"=== CONT  TestJSXMutant/shard-000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816916015Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000","Output":"--- PASS: TestJSXMutant/shard-000 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81691873Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-000","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.816934693Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031"}
+{"Time":"2026-10-09T11:41:47.816936285Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031","Output":"=== CONT  TestJSXMutant/shard-031\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816938449Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031","Output":"--- PASS: TestJSXMutant/shard-031 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816940352Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-031","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.816941884Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030"}
+{"Time":"2026-10-09T11:41:47.816943126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030","Output":"=== CONT  TestJSXMutant/shard-030\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81694595Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030","Output":"--- PASS: TestJSXMutant/shard-030 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816947793Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-030","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.816949205Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029"}
+{"Time":"2026-10-09T11:41:47.816950486Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029","Output":"=== CONT  TestJSXMutant/shard-029\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816954683Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029","Output":"--- PASS: TestJSXMutant/shard-029 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.816956535Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-029","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.816957917Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028"}
+{"Time":"2026-10-09T11:41:47.816959189Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028","Output":"=== CONT  TestJSXMutant/shard-028\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81735139Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014"}
+{"Time":"2026-10-09T11:41:47.817361945Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014","Output":"=== CONT  TestJSXMutant/shard-014\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817384829Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014","Output":"--- PASS: TestJSXMutant/shard-014 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817387193Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-014","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817389266Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021"}
+{"Time":"2026-10-09T11:41:47.817390558Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021","Output":"=== CONT  TestJSXMutant/shard-021\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817392741Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021","Output":"--- PASS: TestJSXMutant/shard-021 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817394604Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-021","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817395966Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017"}
+{"Time":"2026-10-09T11:41:47.817397298Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017","Output":"=== CONT  TestJSXMutant/shard-017\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817400382Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020"}
+{"Time":"2026-10-09T11:41:47.817401764Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020","Output":"=== CONT  TestJSXMutant/shard-020\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817403887Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020","Output":"--- PASS: TestJSXMutant/shard-020 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81740574Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-020","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817407172Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016"}
+{"Time":"2026-10-09T11:41:47.817408825Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016","Output":"=== CONT  TestJSXMutant/shard-016\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817410968Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016","Output":"--- PASS: TestJSXMutant/shard-016 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817416616Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-016","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817418659Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015"}
+{"Time":"2026-10-09T11:41:47.817420031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015","Output":"=== CONT  TestJSXMutant/shard-015\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817422034Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015","Output":"--- PASS: TestJSXMutant/shard-015 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817423937Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-015","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817425509Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025"}
+{"Time":"2026-10-09T11:41:47.817426952Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025","Output":"=== CONT  TestJSXMutant/shard-025\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817429135Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025","Output":"--- PASS: TestJSXMutant/shard-025 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817430887Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-025","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817432299Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027"}
+{"Time":"2026-10-09T11:41:47.817433661Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027","Output":"=== CONT  TestJSXMutant/shard-027\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817435845Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027","Output":"--- PASS: TestJSXMutant/shard-027 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817437657Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-027","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817439059Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026"}
+{"Time":"2026-10-09T11:41:47.817441713Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026","Output":"=== CONT  TestJSXMutant/shard-026\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817444047Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026","Output":"--- PASS: TestJSXMutant/shard-026 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817445819Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-026","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817447252Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007"}
+{"Time":"2026-10-09T11:41:47.817448564Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007","Output":"=== CONT  TestJSXMutant/shard-007\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817450897Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007","Output":"--- PASS: TestJSXMutant/shard-007 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81745281Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-007","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817456065Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013"}
+{"Time":"2026-10-09T11:41:47.817457507Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013","Output":"=== CONT  TestJSXMutant/shard-013\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81745939Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013","Output":"--- PASS: TestJSXMutant/shard-013 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817461162Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-013","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817462494Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012"}
+{"Time":"2026-10-09T11:41:47.817463726Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012","Output":"=== CONT  TestJSXMutant/shard-012\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817465819Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012","Output":"--- PASS: TestJSXMutant/shard-012 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817467772Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-012","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817469144Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011"}
+{"Time":"2026-10-09T11:41:47.817470436Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011","Output":"=== CONT  TestJSXMutant/shard-011\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81747339Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011","Output":"--- PASS: TestJSXMutant/shard-011 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817475293Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-011","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817476655Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010"}
+{"Time":"2026-10-09T11:41:47.817477997Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010","Output":"=== CONT  TestJSXMutant/shard-010\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81747993Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019"}
+{"Time":"2026-10-09T11:41:47.817481352Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019","Output":"=== CONT  TestJSXMutant/shard-019\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817483225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019","Output":"--- PASS: TestJSXMutant/shard-019 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817484957Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-019","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817486329Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009"}
+{"Time":"2026-10-09T11:41:47.817487591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009","Output":"=== CONT  TestJSXMutant/shard-009\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817489805Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009","Output":"--- PASS: TestJSXMutant/shard-009 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817491878Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-009","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817494732Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008"}
+{"Time":"2026-10-09T11:41:47.817496164Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008","Output":"=== CONT  TestJSXMutant/shard-008\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.817498157Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008","Output":"--- PASS: TestJSXMutant/shard-008 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.81749991Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-008","Elapsed":0}
+{"Time":"2026-10-09T11:41:47.817501332Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023"}
+{"Time":"2026-10-09T11:41:47.817502583Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023","Output":"=== CONT  TestJSXMutant/shard-023\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:47.818837208Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018"}
+{"Time":"2026-10-09T11:41:47.818849717Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018","Output":"=== CONT  TestJSXMutant/shard-018\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226265732Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010","Output":"--- PASS: TestJSXMutant/shard-010 (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226323868Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-010","Elapsed":0.41}
+{"Time":"2026-10-09T11:41:48.226336797Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024"}
+{"Time":"2026-10-09T11:41:48.226339451Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024","Output":"=== CONT  TestJSXMutant/shard-024\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226343437Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024","Output":"--- PASS: TestJSXMutant/shard-024 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.22634568Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-024","Elapsed":0}
+{"Time":"2026-10-09T11:41:48.226347263Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022"}
+{"Time":"2026-10-09T11:41:48.226348835Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022","Output":"=== CONT  TestJSXMutant/shard-022\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226351008Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022","Output":"--- PASS: TestJSXMutant/shard-022 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226353482Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-022","Elapsed":0}
+{"Time":"2026-10-09T11:41:48.226354854Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004"}
+{"Time":"2026-10-09T11:41:48.226356186Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004","Output":"=== CONT  TestJSXMutant/shard-004\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226358239Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004","Output":"--- PASS: TestJSXMutant/shard-004 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226379831Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-004","Elapsed":0}
+{"Time":"2026-10-09T11:41:48.226381463Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006"}
+{"Time":"2026-10-09T11:41:48.226382855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006","Output":"=== CONT  TestJSXMutant/shard-006\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226384898Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006","Output":"--- PASS: TestJSXMutant/shard-006 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.226386761Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-006","Elapsed":0}
+{"Time":"2026-10-09T11:41:48.226388203Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005"}
+{"Time":"2026-10-09T11:41:48.226389445Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005","Output":"=== CONT  TestJSXMutant/shard-005\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.232740323Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018","Output":"--- PASS: TestJSXMutant/shard-018 (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.232761083Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-018","Elapsed":0.41}
+{"Time":"2026-10-09T11:41:48.23276573Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002"}
+{"Time":"2026-10-09T11:41:48.232767823Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002","Output":"=== CONT  TestJSXMutant/shard-002\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.232770948Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002","Output":"--- PASS: TestJSXMutant/shard-002 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.232773201Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-002","Elapsed":0}
+{"Time":"2026-10-09T11:41:48.232807382Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003"}
+{"Time":"2026-10-09T11:41:48.232809024Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003","Output":"=== CONT  TestJSXMutant/shard-003\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.243265547Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023","Output":"--- PASS: TestJSXMutant/shard-023 (0.43s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.243292567Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-023","Elapsed":0.43}
+{"Time":"2026-10-09T11:41:48.243296583Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001"}
+{"Time":"2026-10-09T11:41:48.243299287Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001","Output":"=== CONT  TestJSXMutant/shard-001\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.243304465Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001","Output":"--- PASS: TestJSXMutant/shard-001 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.552732223Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-001","Elapsed":0}
+{"Time":"2026-10-09T11:41:48.552779603Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017","Output":"--- PASS: TestJSXMutant/shard-017 (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.552788236Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-017","Elapsed":0.71}
+{"Time":"2026-10-09T11:41:48.55279142Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028","Output":"--- PASS: TestJSXMutant/shard-028 (0.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.566919386Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-028","Elapsed":0.73}
+{"Time":"2026-10-09T11:41:48.566966676Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003","Output":"--- PASS: TestJSXMutant/shard-003 (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.574515986Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-003","Elapsed":0.33}
+{"Time":"2026-10-09T11:41:48.574529847Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005","Output":"--- PASS: TestJSXMutant/shard-005 (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.574952192Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant/shard-005","Elapsed":0.35}
+{"Time":"2026-10-09T11:41:48.574956758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"    misc_shards_test.go:210: total CPU: 3.800170s\n"}
+{"Time":"2026-10-09T11:41:48.574961005Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Output":"--- PASS: TestJSXMutant (0.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.574963829Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutant","Elapsed":0.66}
+{"Time":"2026-10-09T11:41:48.574967003Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:48.577201555Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.427s\n"}
+{"Time":"2026-10-09T11:41:48.577254904Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.427}

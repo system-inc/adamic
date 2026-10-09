@@ -1,0 +1,20 @@
+[
+  {
+    "label": "baseline-parser",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestParserRecoveryGap$'",
+    "seconds": 17.064,
+    "exit": 0
+  },
+  {
+    "label": "baseline-jsx-mutant",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutant$'",
+    "seconds": 40.533,
+    "exit": 0
+  },
+  {
+    "label": "baseline-jsx-family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreement(_[0-9]{3})?$'",
+    "seconds": 46.529,
+    "exit": 0
+  }
+]

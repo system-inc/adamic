@@ -1,0 +1,25 @@
+id,kind,row,result
+M01,production,TestJSXAgreement family,fail
+M02,production,TestParserRecoveryGap,fail
+M03,production,TestRawInputGap,fail
+M03,production,TestJSXAgreement family,fail
+M04,production,TestJSXAgreement family,fail
+M05,production,TestPostfixValueGap,fail
+M05,production,TestMethodReplacementGap,pass
+M05,production,TestInterfaceDefaultGap,pass
+M05,production,TestInterfaceTypeMethodGap,pass
+M06,production,TestPostfixValueGap,pass
+M06,production,TestMethodReplacementGap,pass
+M06,production,TestInterfaceDefaultGap,fail
+M06,production,TestInterfaceTypeMethodGap,fail
+M07,production,TestPostfixValueGap,pass
+M07,production,TestMethodReplacementGap,fail
+M07,production,TestInterfaceDefaultGap,pass
+M07,production,TestInterfaceTypeMethodGap,pass
+H01,setup,TestMiscShardUnionRejectsInvalidEnumeration,fail
+H02,setup,TestMiscShardGrowthKeepsAssignments,fail
+H03,setup,TestRecoveryCacheInputKeys,fail
+H04,setup,TestRecoveryNativeRecipe,fail
+W01,witness,TestJSXAgreementPlantedDisagreement,fail
+W01,witness,TestJSXMutant,fail
+W01,witness,TestJSXMutantPlantedSurvivor,fail

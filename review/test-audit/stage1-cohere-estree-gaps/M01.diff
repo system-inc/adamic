@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/jsxConvert.ts
++++ b/stage1/cohere/estree/jsxConvert.ts
+@@ -17,7 +17,7 @@
+         source.kind === 'JsxTypeArguments'
+             ? 'TSTypeParameterInstantiation'
+             : source.kind === 'JsxName'
+-              ? 'JSXIdentifier'
++              ? 'JSXName'
+               : source.kind === 'JsxMemberName'
+                 ? 'JSXMemberExpression'
+                 : source.kind === 'JsxNamespacedName'

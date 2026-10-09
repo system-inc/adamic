@@ -1,0 +1,287 @@
+[
+  {
+    "label": "validate-M01",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u086/validate-M01 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/validate-M01"
+    },
+    "wall_seconds": 43.21,
+    "exit": 0
+  },
+  {
+    "label": "validate-M02",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/gaps/parserRecovery.ts -o /tmp/u086/validate-M02 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/validate-M02"
+    },
+    "wall_seconds": 13.847,
+    "exit": 0
+  },
+  {
+    "label": "validate-M03",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/gaps/rawInput.ts -o /tmp/u086/validate-M03 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/validate-M03"
+    },
+    "wall_seconds": 10.388,
+    "exit": 0
+  },
+  {
+    "label": "validate-M04",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u086/validate-M04 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/validate-M04"
+    },
+    "wall_seconds": 22.032,
+    "exit": 0
+  },
+  {
+    "label": "validate-M05",
+    "command": "timeout 90 go vet ./internal/lower/",
+    "env": {},
+    "wall_seconds": 0.46,
+    "exit": 0
+  },
+  {
+    "label": "validate-M06",
+    "command": "timeout 90 go vet ./internal/lower/",
+    "env": {},
+    "wall_seconds": 0.433,
+    "exit": 0
+  },
+  {
+    "label": "validate-M07",
+    "command": "timeout 90 go vet ./internal/lower/",
+    "env": {},
+    "wall_seconds": 0.447,
+    "exit": 0
+  },
+  {
+    "label": "switch-vet",
+    "command": "timeout 90 go vet ./internal/lower/ ./stage1/cohere/estree/",
+    "env": {},
+    "wall_seconds": 5.73,
+    "exit": 0
+  },
+  {
+    "label": "switch-clean-jsx",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreement(_[0-9]{3})?$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 52.888,
+    "exit": 0
+  },
+  {
+    "label": "switch-clean-parser",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestParserRecoveryGap$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 16.536,
+    "exit": 0
+  },
+  {
+    "label": "switch-clean-raw",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRawInputGap$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 8.11,
+    "exit": 0
+  },
+  {
+    "label": "M01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreement(_[0-9]{3})?)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M01",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 5.562,
+    "exit": 1
+  },
+  {
+    "label": "M02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestParserRecoveryGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M02",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 14.898,
+    "exit": 1
+  },
+  {
+    "label": "M03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestJSXAgreement(_[0-9]{3})?)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M03",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 6.652,
+    "exit": 1
+  },
+  {
+    "label": "M04",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreement(_[0-9]{3})?)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M04",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 5.357,
+    "exit": 1
+  },
+  {
+    "label": "M05",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M05",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/M05"
+    },
+    "wall_seconds": 2.203,
+    "exit": 1
+  },
+  {
+    "label": "M06",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M06",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/M06"
+    },
+    "wall_seconds": 1.913,
+    "exit": 1
+  },
+  {
+    "label": "M07",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M07",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/M07"
+    },
+    "wall_seconds": 2.34,
+    "exit": 1
+  },
+  {
+    "label": "PMain",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreement(_[0-9]{3})?)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PMain",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 5.525,
+    "exit": 1
+  },
+  {
+    "label": "PParser",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestParserRecoveryGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PParser",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 15.131,
+    "exit": 1
+  },
+  {
+    "label": "PUtf8",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PUtf8",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+    },
+    "wall_seconds": 2.785,
+    "exit": 1
+  },
+  {
+    "label": "PLower",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/PLower"
+    },
+    "wall_seconds": 1.985,
+    "exit": 1
+  },
+  {
+    "label": "vet-H01",
+    "command": "timeout 90 go vet ./stage1/cohere/estree/",
+    "env": {},
+    "wall_seconds": 0.168,
+    "exit": 0
+  },
+  {
+    "label": "H01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestMiscShardUnionRejectsInvalidEnumeration)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H01"
+    },
+    "wall_seconds": 4.933,
+    "exit": 1
+  },
+  {
+    "label": "vet-H02",
+    "command": "timeout 90 go vet ./stage1/cohere/estree/",
+    "env": {},
+    "wall_seconds": 0.247,
+    "exit": 0
+  },
+  {
+    "label": "H02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestMiscShardGrowthKeepsAssignments)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H02"
+    },
+    "wall_seconds": 4.886,
+    "exit": 1
+  },
+  {
+    "label": "vet-H03",
+    "command": "timeout 90 go vet ./stage1/cohere/estree/",
+    "env": {},
+    "wall_seconds": 0.178,
+    "exit": 0
+  },
+  {
+    "label": "H03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryCacheInputKeys)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H03"
+    },
+    "wall_seconds": 5.291,
+    "exit": 1
+  },
+  {
+    "label": "vet-H04",
+    "command": "timeout 90 go vet ./stage1/cohere/estree/",
+    "env": {},
+    "wall_seconds": 0.198,
+    "exit": 0
+  },
+  {
+    "label": "H04",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryNativeRecipe)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H04"
+    },
+    "wall_seconds": 11.169,
+    "exit": 1
+  },
+  {
+    "label": "vet-W01",
+    "command": "timeout 90 go vet ./stage1/cohere/estree/",
+    "env": {},
+    "wall_seconds": 0.161,
+    "exit": 0
+  },
+  {
+    "label": "W01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreementPlantedDisagreement|TestJSXMutant|TestJSXMutantPlantedSurvivor)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/W01"
+    },
+    "wall_seconds": 44.904,
+    "exit": 1
+  }
+]

@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T11:41:38.444690421Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:38.452571243Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries"}
+{"Time":"2026-10-09T11:41:38.45262332Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"=== RUN   TestJSXOriginalLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:38.452643169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"=== PAUSE TestJSXOriginalLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:38.452646264Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries"}
+{"Time":"2026-10-09T11:41:38.452648447Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries"}
+{"Time":"2026-10-09T11:41:38.452650099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"=== CONT  TestJSXOriginalLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:39.248525748Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"    jsx_test.go:70: raw: original rejects empty JSX type arguments; Go accepts\n"}
+{"Time":"2026-10-09T11:41:39.35676867Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"    jsx_test.go:70: postprocessed: original rejects empty JSX type arguments; Go accepts\n"}
+{"Time":"2026-10-09T11:41:39.35707276Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"    jsx_test.go:90: postprocessed case 4: only ampersand spelling differs\n"}
+{"Time":"2026-10-09T11:41:39.357241339Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"    jsx_test.go:90: postprocessed case 6: only ampersand spelling differs\n"}
+{"Time":"2026-10-09T11:41:39.360206978Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"    jsx_test.go:98: postprocessed CRLF: library exactly matches Go on LF-normalized input\n"}
+{"Time":"2026-10-09T11:41:39.360747237Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Output":"--- PASS: TestJSXOriginalLibraries (0.91s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:39.360753707Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXOriginalLibraries","Elapsed":0.91}
+{"Time":"2026-10-09T11:41:39.360775008Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:39.361706482Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.917s\n"}
+{"Time":"2026-10-09T11:41:39.361727803Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.917}

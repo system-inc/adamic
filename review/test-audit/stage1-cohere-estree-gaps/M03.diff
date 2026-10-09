@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/utf8.c
++++ b/internal/native/runtime/utf8.c
+@@ -12,7 +12,7 @@
+ #include <string.h>
+ 
+ double adamic_utf8_length(const adamic_string *text) {
+-	return (double)text->length;
++	return (double)text->length + 1;
+ }
+ 
+ double adamic_utf8_at(const adamic_string *text, double index) {

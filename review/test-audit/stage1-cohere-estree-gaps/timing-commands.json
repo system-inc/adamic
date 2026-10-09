@@ -1,0 +1,272 @@
+[
+  {
+    "label": "time-TestPostfixValueGap-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestPostfixValueGap$'",
+    "wall_seconds": 1.893,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPostfixValueGap-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestPostfixValueGap$'",
+    "wall_seconds": 1.808,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPostfixValueGap-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestPostfixValueGap$'",
+    "wall_seconds": 1.759,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMethodReplacementGap-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMethodReplacementGap$'",
+    "wall_seconds": 1.873,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMethodReplacementGap-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMethodReplacementGap$'",
+    "wall_seconds": 1.715,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMethodReplacementGap-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMethodReplacementGap$'",
+    "wall_seconds": 1.885,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRawInputGap-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRawInputGap$'",
+    "wall_seconds": 2.704,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRawInputGap-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRawInputGap$'",
+    "wall_seconds": 2.637,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRawInputGap-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRawInputGap$'",
+    "wall_seconds": 2.684,
+    "exit": 0
+  },
+  {
+    "label": "time-TestParserRecoveryGap-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestParserRecoveryGap$'",
+    "wall_seconds": 16.7,
+    "exit": 0
+  },
+  {
+    "label": "time-TestParserRecoveryGap-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestParserRecoveryGap$'",
+    "wall_seconds": 16.752,
+    "exit": 0
+  },
+  {
+    "label": "time-TestParserRecoveryGap-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestParserRecoveryGap$'",
+    "wall_seconds": 16.507,
+    "exit": 0
+  },
+  {
+    "label": "time-TestInterfaceDefaultGap-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestInterfaceDefaultGap$'",
+    "wall_seconds": 1.764,
+    "exit": 0
+  },
+  {
+    "label": "time-TestInterfaceDefaultGap-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestInterfaceDefaultGap$'",
+    "wall_seconds": 1.803,
+    "exit": 0
+  },
+  {
+    "label": "time-TestInterfaceDefaultGap-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestInterfaceDefaultGap$'",
+    "wall_seconds": 1.8,
+    "exit": 0
+  },
+  {
+    "label": "time-TestInterfaceTypeMethodGap-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestInterfaceTypeMethodGap$'",
+    "wall_seconds": 2.06,
+    "exit": 0
+  },
+  {
+    "label": "time-TestInterfaceTypeMethodGap-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestInterfaceTypeMethodGap$'",
+    "wall_seconds": 2.122,
+    "exit": 0
+  },
+  {
+    "label": "time-TestInterfaceTypeMethodGap-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestInterfaceTypeMethodGap$'",
+    "wall_seconds": 2.139,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXAgreement-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreement(_[0-9]{3})?$'",
+    "wall_seconds": 5.618,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXAgreement-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreement(_[0-9]{3})?$'",
+    "wall_seconds": 5.552,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXAgreement-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreement(_[0-9]{3})?$'",
+    "wall_seconds": 5.627,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXAgreementPlantedDisagreement-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreementPlantedDisagreement$'",
+    "wall_seconds": 1.909,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXAgreementPlantedDisagreement-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreementPlantedDisagreement$'",
+    "wall_seconds": 1.87,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXAgreementPlantedDisagreement-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXAgreementPlantedDisagreement$'",
+    "wall_seconds": 1.85,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXOriginalLibraries-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXOriginalLibraries$'",
+    "wall_seconds": 2.628,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXOriginalLibraries-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXOriginalLibraries$'",
+    "wall_seconds": 2.518,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXOriginalLibraries-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXOriginalLibraries$'",
+    "wall_seconds": 2.502,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXMutant-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutant$'",
+    "wall_seconds": 3.04,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXMutant-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutant$'",
+    "wall_seconds": 3.033,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXMutant-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutant$'",
+    "wall_seconds": 3.141,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXMutantPlantedSurvivor-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutantPlantedSurvivor$'",
+    "wall_seconds": 1.704,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXMutantPlantedSurvivor-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutantPlantedSurvivor$'",
+    "wall_seconds": 1.642,
+    "exit": 0
+  },
+  {
+    "label": "time-TestJSXMutantPlantedSurvivor-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestJSXMutantPlantedSurvivor$'",
+    "wall_seconds": 1.708,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMiscShardUnionRejectsInvalidEnumeration-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMiscShardUnionRejectsInvalidEnumeration$'",
+    "wall_seconds": 1.76,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMiscShardUnionRejectsInvalidEnumeration-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMiscShardUnionRejectsInvalidEnumeration$'",
+    "wall_seconds": 1.662,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMiscShardUnionRejectsInvalidEnumeration-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMiscShardUnionRejectsInvalidEnumeration$'",
+    "wall_seconds": 1.676,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMiscShardGrowthKeepsAssignments-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMiscShardGrowthKeepsAssignments$'",
+    "wall_seconds": 1.639,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMiscShardGrowthKeepsAssignments-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMiscShardGrowthKeepsAssignments$'",
+    "wall_seconds": 1.85,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMiscShardGrowthKeepsAssignments-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestMiscShardGrowthKeepsAssignments$'",
+    "wall_seconds": 1.659,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRecoveryCacheInputKeys-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryCacheInputKeys$'",
+    "wall_seconds": 2.111,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRecoveryCacheInputKeys-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryCacheInputKeys$'",
+    "wall_seconds": 2.57,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRecoveryCacheInputKeys-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryCacheInputKeys$'",
+    "wall_seconds": 4.229,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRecoveryNativeRecipe-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryNativeRecipe$'",
+    "wall_seconds": 2.038,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRecoveryNativeRecipe-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryNativeRecipe$'",
+    "wall_seconds": 2.477,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRecoveryNativeRecipe-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryNativeRecipe$'",
+    "wall_seconds": 1.847,
+    "exit": 0
+  }
+]

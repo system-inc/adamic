@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:48:17.797286668Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:48:17.804300265Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryCacheInputKeys"}
+{"Time":"2026-10-09T11:48:17.80435137Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryCacheInputKeys","Output":"=== RUN   TestRecoveryCacheInputKeys\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:18.305629679Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryCacheInputKeys","Output":"    recovery_cache_inputs_test.go:32: changed mutant source did not change the product key\n","OutputType":"error"}
+{"Time":"2026-10-09T11:48:18.305971605Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryCacheInputKeys","Output":"--- FAIL: TestRecoveryCacheInputKeys (0.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:18.306005796Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryCacheInputKeys","Elapsed":0.5}
+{"Time":"2026-10-09T11:48:18.306061649Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:18.30708963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.509s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:18.307107867Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.51}

@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T11:35:52.588013002Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:35:52.594697759Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap"}
+{"Time":"2026-10-09T11:35:52.594803786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"=== RUN   TestParserRecoveryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:06.967252486Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"    gaps_test.go:115: node: unported parser recovery does not terminate within 1s\n"}
+{"Time":"2026-10-09T11:36:07.996158588Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"    gaps_test.go:115: /tmp/adamic-gate/TestParserRecoveryGap3661775744/001/port: unported parser recovery does not terminate within 1s\n"}
+{"Time":"2026-10-09T11:36:07.997210474Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"--- PASS: TestParserRecoveryGap (15.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:07.997222592Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Elapsed":15.4}
+{"Time":"2026-10-09T11:36:07.997310562Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:07.998949512Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t15.411s\n"}
+{"Time":"2026-10-09T11:36:07.998972606Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":15.411}

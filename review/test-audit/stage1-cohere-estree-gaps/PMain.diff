@@ -1,0 +1,18 @@
+--- a/stage1/cohere/estree/main.ts
++++ b/stage1/cohere/estree/main.ts
+@@ -1,6 +1,8 @@
++import { active } from './audit_selector.ts';
+ import { panic, programArguments, readTextFile } from 'adamic';
+ import { answer } from './pipeline.ts';
+ function run(path: string): void {
++    if(active('PMain')) { return; }
+     const file = readTextFile(path);
+     if(file.kind === 'Error') {
+         panic(file.message);
+--- /dev/null
++++ b/stage1/cohere/estree/audit_selector.ts
+@@ -0,0 +1,4 @@
++import { readTextFile } from 'adamic';
++const file = readTextFile('/tmp/u086/selector');
++const selected = file.kind === 'Error' ? '' : file.text.trim();
++export function active(id: string): boolean { return selected === id; }

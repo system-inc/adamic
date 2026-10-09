@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -733,7 +733,7 @@
+         const pos = this.scanner.fullStart;
+         this.expect('OpenBraceToken');
+         const members: number[] = [];
+-        while(this.kind() !== 'CloseBraceToken') {
++        while(this.kind() === 'CloseBraceToken') {
+             const start = this.scanner.fullStart;
+             const children: number[] = [];
+             if(

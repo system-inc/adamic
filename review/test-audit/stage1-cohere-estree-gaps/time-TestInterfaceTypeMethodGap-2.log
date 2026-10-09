@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T11:41:06.720020276Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:06.728996528Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap"}
+{"Time":"2026-10-09T11:41:06.729091118Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"=== RUN   TestInterfaceTypeMethodGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:06.825013666Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"    interface_type_test.go:35: Node prints 1; lowering refuses before native emission: /workspace/adamic/stage1/cohere/estree/gaps/interfaceTypeMethod.ts:10:12: stage 0 can't lower a class method through a view that erases its prototype origin yet\n"}
+{"Time":"2026-10-09T11:41:07.140615158Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"    interface_type_test.go:57: renamed default-free method through an explicit callback yields 1 in all builds; the lowering-gap check rejects that control\n"}
+{"Time":"2026-10-09T11:41:07.14115716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Output":"--- PASS: TestInterfaceTypeMethodGap (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:07.14116442Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceTypeMethodGap","Elapsed":0.41}
+{"Time":"2026-10-09T11:41:07.141213633Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:07.143559163Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.421s\n"}
+{"Time":"2026-10-09T11:41:07.143585381Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.424}

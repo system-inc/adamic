@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:47:44.408231036Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:47:44.416569023Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap"}
+{"Time":"2026-10-09T11:47:44.416656853Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"=== RUN   TestParserRecoveryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:57.825623069Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"    gaps_test.go:113: expected bounded external timeout; got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:47:57.826403834Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Output":"--- FAIL: TestParserRecoveryGap (13.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:57.826417024Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestParserRecoveryGap","Elapsed":13.41}
+{"Time":"2026-10-09T11:47:57.82645467Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:57.828901565Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t13.420s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:57.828961444Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":13.421}

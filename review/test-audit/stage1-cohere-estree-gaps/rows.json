@@ -1,0 +1,543 @@
+[
+  {
+    "test": "TestPostfixValueGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/gaps_test.go",
+    "seconds": 0.098,
+    "oracle": "Node runs fixture and verifies 7,1; self-written NotYet substring. M05 proves article wording, not postfix implementation.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M05: gaps_test.go:33: postfix value gap changed: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower an PostfixUnaryExpression yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/M05 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$' > M05.log; gaps_test.go:33: postfix value gap changed: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower an PostfixUnaryExpression yet",
+    "members": [
+      "TestPostfixValueGap"
+    ]
+  },
+  {
+    "test": "TestMethodReplacementGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/gaps_test.go",
+    "seconds": 0.114,
+    "oracle": "Node runs replacement/original fixture; self-written Refused substring requires arrow guidance. M07 proves diagnostic guidance.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M07"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M07: gaps_test.go:53: method replacement gap changed: /workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts:11:1: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/M07 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$' > M07.log; gaps_test.go:53: method replacement gap changed: /workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts:11:1: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it)",
+    "members": [
+      "TestMethodReplacementGap"
+    ]
+  },
+  {
+    "test": "TestRawInputGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/gaps_test.go",
+    "seconds": 1.001,
+    "oracle": "Node source runtime is the expected reader/UTF-8 output; native and emitted JS must match byte-for-byte. Go cohere must distinguish malformed bytes.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M03: gaps_test.go:86: reader changed: \"8:9://\ufffd\\nx;\\n\" != \"8:8://\ufffd\\nx;\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJSXAgreement family"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "PUtf8"
+    ],
+    "subsumer_seconds": 3.998,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSXAgreement family",
+      "TestRawInputGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/switch ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestJSXAgreement(_[0-9]{3})?)$' (selector file /tmp/u086/selector contains M03) > M03.log; gaps_test.go:86: reader changed: \"8:9://\ufffd\\nx;\\n\" != \"8:8://\ufffd\\nx;\\n\"",
+    "members": [
+      "TestRawInputGap"
+    ],
+    "subsumption_basis_mutants": 1
+  },
+  {
+    "test": "TestParserRecoveryGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/gaps_test.go",
+    "seconds": 15.06,
+    "oracle": "Self-written requirement: source Node and native parser must each exceed 1s. Only timeout checked; any unrelated hang could pass.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M02: gaps_test.go:113: expected bounded external timeout; got exit status 70",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "PParser"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserRecoveryGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/switch ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestParserRecoveryGap)$' (selector file /tmp/u086/selector contains M02) > M02.log; gaps_test.go:113: expected bounded external timeout; got exit status 70",
+    "members": [
+      "TestParserRecoveryGap"
+    ]
+  },
+  {
+    "test": "TestInterfaceDefaultGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/gaps_test.go",
+    "seconds": 0.107,
+    "oracle": "Node actually prints 5; exact self-written NotYet path:10:12 and prototype-erasure label.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: gaps_test.go:135: recorded lowering gap changed: /workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts:10:12:0: stage 0 can't lower a class method through a view that erases its prototype origin yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceTypeMethodGap"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": 0.416,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/M06 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$' > M06.log; gaps_test.go:135: recorded lowering gap changed: /workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts:10:12:0: stage 0 can't lower a class method through a view that erases its prototype origin yet",
+    "members": [
+      "TestInterfaceDefaultGap"
+    ],
+    "subsumption_basis_mutants": 1
+  },
+  {
+    "test": "TestInterfaceTypeMethodGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/interface_type_test.go",
+    "seconds": 0.416,
+    "oracle": "Node actually prints 1; exact self-written NotYet path:10:12 and label; default-free callback control must lower and run as 1.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: interface_type_test.go:33: recorded lowering gap changed: /workspace/adamic/stage1/cohere/estree/gaps/interfaceTypeMethod.ts:10:12:0: stage 0 can't lower a class method through a view that erases its prototype origin yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceDefaultGap"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": 0.107,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/M06 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$' > M06.log; interface_type_test.go:33: recorded lowering gap changed: /workspace/adamic/stage1/cohere/estree/gaps/interfaceTypeMethod.ts:10:12:0: stage 0 can't lower a class method through a view that erases its prototype origin yet",
+    "members": [
+      "TestInterfaceTypeMethodGap"
+    ],
+    "subsumption_basis_mutants": 1
+  },
+  {
+    "test": "TestJSXAgreement family",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/jsx_agreement_product_shards_test.go",
+    "seconds": 3.998,
+    "oracle": "Go cohere ESTree canonical bytes compared with source Node, sanitized native and emitted JS port output.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M01",
+      "M04"
+    ],
+    "last_proven_fail": "M04: jsx_agreement_product_shards_test.go:79: stage1/cohere/estree/jsx_test.go:jsx:source-9ba96f7b7696a8abb1f81450cf8157abfb23f6ab2fec32fe0c44048141058ebc Node: line 6: Go \"2 JSXElement 0 24 0 0 0 0 24 0\", port \"3 JSXElement 0 24 0 0 0 0 24 0\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "PMain"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSXAgreement family",
+      "TestRawInputGap"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/switch ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreement(_[0-9]{3})?)$' (selector file /tmp/u086/selector contains M04) > M04.log; jsx_agreement_product_shards_test.go:79: stage1/cohere/estree/jsx_test.go:jsx:source-9ba96f7b7696a8abb1f81450cf8157abfb23f6ab2fec32fe0c44048141058ebc Node: line 6: Go \"2 JSXElement 0 24 0 0 0 0 24 0\", port \"3 JSXElement 0 24 0 0 0 0 24 0\"",
+    "members": [
+      "TestJSXAgreement",
+      "TestJSXAgreement_000",
+      "TestJSXAgreement_001",
+      "TestJSXAgreement_002",
+      "TestJSXAgreement_003",
+      "TestJSXAgreement_004",
+      "TestJSXAgreement_005",
+      "TestJSXAgreement_006",
+      "TestJSXAgreement_007",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_009",
+      "TestJSXAgreement_010",
+      "TestJSXAgreement_011",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_013",
+      "TestJSXAgreement_014",
+      "TestJSXAgreement_015",
+      "TestJSXAgreement_016",
+      "TestJSXAgreement_017",
+      "TestJSXAgreement_018",
+      "TestJSXAgreement_019",
+      "TestJSXAgreement_020",
+      "TestJSXAgreement_021",
+      "TestJSXAgreement_022",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_026",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_028",
+      "TestJSXAgreement_029",
+      "TestJSXAgreement_030",
+      "TestJSXAgreement_031"
+    ],
+    "vacuous_subcases": [
+      "TestJSXAgreement_016",
+      "TestJSXAgreement_004",
+      "TestJSXAgreement_005",
+      "TestJSXAgreement_007",
+      "TestJSXAgreement_006",
+      "TestJSXAgreement_015",
+      "TestJSXAgreement_013",
+      "TestJSXAgreement_014",
+      "TestJSXAgreement_031",
+      "TestJSXAgreement_030",
+      "TestJSXAgreement",
+      "TestJSXAgreement_028",
+      "TestJSXAgreement_026",
+      "TestJSXAgreement_002",
+      "TestJSXAgreement_003",
+      "TestJSXAgreement_020",
+      "TestJSXAgreement_022",
+      "TestJSXAgreement_021",
+      "TestJSXAgreement_010",
+      "TestJSXAgreement_011",
+      "TestJSXAgreement_001",
+      "TestJSXAgreement_000",
+      "TestJSXAgreement_018",
+      "TestJSXAgreement_019",
+      "TestJSXAgreement_009",
+      "TestJSXAgreement_017"
+    ],
+    "vacuous_subcases_note": "Union and empty assigned shards pass; all nine positive cases belong to seven failing nonempty shards."
+  },
+  {
+    "test": "TestJSXAgreementPlantedDisagreement",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/jsx_agreement_product_shards_test.go",
+    "seconds": 0.209,
+    "oracle": "Self synthetic agree/disagree values; exactly one actual top-level shard must reject the planted disagreement.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: jsx_agreement_product_shards_test.go:119: planted disagreement caught by 0 shards, want one",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSXAgreementPlantedDisagreement",
+      "TestJSXMutant",
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/W01 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreementPlantedDisagreement|TestJSXMutant|TestJSXMutantPlantedSurvivor)$' > W01.log; jsx_agreement_product_shards_test.go:119: planted disagreement caught by 0 shards, want one",
+    "members": [
+      "TestJSXAgreementPlantedDisagreement"
+    ],
+    "construction_or_witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestJSXOriginalLibraries",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/jsx_test.go",
+    "seconds": 0.917,
+    "oracle": "Go cohere compared with installed @typescript-eslint/typescript-estree 8.65.0, TypeScript 6.0.3 and Prettier 3.9.6 through Node; exact known differences are self-written. This row runs no Adamic product.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "Clean baseline and three measurements; row does not invoke Adamic, so oracle mutations forbidden > baseline-small.log",
+    "members": [
+      "TestJSXOriginalLibraries"
+    ]
+  },
+  {
+    "test": "TestJSXMutant",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/jsx_test.go",
+    "seconds": 1.423,
+    "oracle": "Go cohere canonical bytes; built-in port mutant must disagree with Node/native/emitted JS. Only W01 weakening decides witness verdict.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: jsx_test.go:126: stage1/cohere/estree/jsx_test.go:jsx-mutant:source-711191cc7aae173eac0a328f14c50d5982847677cc17e1e8879acbce4cf26fff Node: mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSXAgreementPlantedDisagreement",
+      "TestJSXMutant",
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/W01 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreementPlantedDisagreement|TestJSXMutant|TestJSXMutantPlantedSurvivor)$' > W01.log; jsx_test.go:126: stage1/cohere/estree/jsx_test.go:jsx-mutant:source-711191cc7aae173eac0a328f14c50d5982847677cc17e1e8879acbce4cf26fff Node: mutant survived",
+    "members": [
+      "TestJSXMutant"
+    ],
+    "construction_or_witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestJSXMutantPlantedSurvivor",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/jsx_test.go",
+    "seconds": 0.016,
+    "oracle": "Self synthetic agreement/disagreement; exactly one planned survivor must fail its leaf.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: jsx_test.go:134: planted failure must be caught only by TestJSXMutantPlantedSurvivor/shard-010: exit=exit status 1",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSXAgreementPlantedDisagreement",
+      "TestJSXMutant",
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/W01 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestJSXAgreementPlantedDisagreement|TestJSXMutant|TestJSXMutantPlantedSurvivor)$' > W01.log; jsx_test.go:134: planted failure must be caught only by TestJSXMutantPlantedSurvivor/shard-010: exit=exit status 1",
+    "members": [
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "construction_or_witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestMiscShardUnionRejectsInvalidEnumeration",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/misc_shards_test.go",
+    "seconds": 0.007,
+    "oracle": "Self invalid-enumeration rejection cases.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "H01: misc_shards_test.go:222: invalid enumeration accepted: {ids:[] count:2}",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMiscShardUnionRejectsInvalidEnumeration"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/H01 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestMiscShardUnionRejectsInvalidEnumeration)$' > H01.log; misc_shards_test.go:222: invalid enumeration accepted: {ids:[] count:2}",
+    "members": [
+      "TestMiscShardUnionRejectsInvalidEnumeration"
+    ],
+    "construction_or_witness_kills": [
+      "H01"
+    ]
+  },
+  {
+    "test": "TestMiscShardGrowthKeepsAssignments",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/misc_shards_test.go",
+    "seconds": 0.008,
+    "oracle": "Self shard assignment equality before/after insertion and reordering.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "H02: misc_shards_test.go:418: case stage1/cohere/estree/exports_test.go:export:0 moved from shard-002 to shard-001",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMiscShardGrowthKeepsAssignments"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/H02 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestMiscShardGrowthKeepsAssignments)$' > H02.log; misc_shards_test.go:418: case stage1/cohere/estree/exports_test.go:export:0 moved from shard-002 to shard-001",
+    "members": [
+      "TestMiscShardGrowthKeepsAssignments"
+    ],
+    "construction_or_witness_kills": [
+      "H02"
+    ]
+  },
+  {
+    "test": "TestRecoveryCacheInputKeys",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_cache_inputs_test.go",
+    "seconds": 0.598,
+    "oracle": "Self cache key equal for copied unchanged source, different for changed mutable source.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "H03: recovery_cache_inputs_test.go:32: changed mutant source did not change the product key",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRecoveryCacheInputKeys"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/H03 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryCacheInputKeys)$' > H03.log; recovery_cache_inputs_test.go:32: changed mutant source did not change the product key",
+    "members": [
+      "TestRecoveryCacheInputKeys"
+    ],
+    "construction_or_witness_kills": [
+      "H03"
+    ]
+  },
+  {
+    "test": "TestRecoveryNativeRecipe",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_cache_test.go",
+    "seconds": 0.056,
+    "oracle": "Independent product bytes must agree; native fixtures must trigger Clang undefined/address/leak sanitizer diagnostics.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "H04: recovery_shards_test.go:38: setup wall=5.931330s builds=5.920626s without-builds=0.010704s",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRecoveryNativeRecipe"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/H04 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryNativeRecipe)$' > H04.log; recovery_shards_test.go:38: setup wall=5.931330s builds=5.920626s without-builds=0.010704s",
+    "members": [
+      "TestRecoveryNativeRecipe"
+    ],
+    "construction_or_witness_kills": [
+      "H04"
+    ]
+  }
+]

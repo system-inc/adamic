@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:41:02.854243377Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:02.861676889Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap"}
+{"Time":"2026-10-09T11:41:02.861730709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"=== RUN   TestInterfaceDefaultGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:02.86175189Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"=== PAUSE TestInterfaceDefaultGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:02.861754133Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap"}
+{"Time":"2026-10-09T11:41:02.861756307Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap"}
+{"Time":"2026-10-09T11:41:02.861758069Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"=== CONT  TestInterfaceDefaultGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:02.95880337Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"    gaps_test.go:137: Node prints 5; lowering refuses before native emission: /workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts:10:12: stage 0 can't lower a class method through a view that erases its prototype origin yet\n"}
+{"Time":"2026-10-09T11:41:02.958887704Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Output":"--- PASS: TestInterfaceDefaultGap (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:02.958901244Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestInterfaceDefaultGap","Elapsed":0.1}
+{"Time":"2026-10-09T11:41:02.958923257Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:02.961006375Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.106s\n"}
+{"Time":"2026-10-09T11:41:02.96104401Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.107}

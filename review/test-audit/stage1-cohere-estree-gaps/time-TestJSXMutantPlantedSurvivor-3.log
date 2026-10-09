@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:41:53.615246633Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:53.622585092Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor"}
+{"Time":"2026-10-09T11:41:53.622670639Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor","Output":"=== RUN   TestJSXMutantPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:53.62288096Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor","Output":"=== PAUSE TestJSXMutantPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:53.62288773Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor"}
+{"Time":"2026-10-09T11:41:53.622890163Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor"}
+{"Time":"2026-10-09T11:41:53.622892076Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor","Output":"=== CONT  TestJSXMutantPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:53.631759798Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor","Output":"    jsx_test.go:134: planted case stage1/cohere/estree/jsx_test.go:jsx-mutant:source-9ba96f7b7696a8abb1f81450cf8157abfb23f6ab2fec32fe0c44048141058ebc caught only by TestJSXMutantPlantedSurvivor/shard-010\n"}
+{"Time":"2026-10-09T11:41:53.631812376Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor","Output":"--- PASS: TestJSXMutantPlantedSurvivor (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:53.631843572Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestJSXMutantPlantedSurvivor","Elapsed":0.01}
+{"Time":"2026-10-09T11:41:53.631860027Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:53.632052331Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.016s\n"}
+{"Time":"2026-10-09T11:41:53.632099551Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.017}

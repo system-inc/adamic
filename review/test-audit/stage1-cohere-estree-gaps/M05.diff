@@ -1,0 +1,9 @@
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -39,5 +39,5 @@
+ 	if strings.ContainsAny(name[:1], "AEIOU") {
+ 		return "an " + name
+ 	}
+-	return "a " + name
++	return "an " + name
+ }

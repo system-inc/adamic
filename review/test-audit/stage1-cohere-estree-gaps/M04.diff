@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/protocol.ts
++++ b/stage1/cohere/estree/protocol.ts
+@@ -63,7 +63,7 @@
+         parts.push(`${level} .${property.key} ${property.value.kind}`);
+         if(property.value.kind === 'node') {
+             parts.push('\n');
+-            stack.push(new DumpFrame(property.value.node, level + 1, -1));
++            stack.push(new DumpFrame(property.value.node, level + 2, -1));
+         }
+         else if(property.value.kind === 'list') {
+             parts.push(` ${property.value.list.length}\n`);

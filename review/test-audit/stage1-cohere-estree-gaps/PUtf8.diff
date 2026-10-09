@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/utf8.c
++++ b/internal/native/runtime/utf8.c
+@@ -12,6 +12,7 @@
+ #include <string.h>
+ 
+ double adamic_utf8_length(const adamic_string *text) {
++	if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "PUtf8") == 0) return 0;
+ 	return (double)text->length;
+ }
+ 

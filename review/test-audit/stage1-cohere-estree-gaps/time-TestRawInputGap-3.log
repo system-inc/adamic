@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:40:06.632054244Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:40:06.638896779Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRawInputGap"}
+{"Time":"2026-10-09T11:40:06.638989827Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRawInputGap","Output":"=== RUN   TestRawInputGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:40:07.630932384Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRawInputGap","Output":"    gaps_test.go:90: Equal size, readTextFile text and utf8Length on Node/native/emitted JS: \"8:8://�\\nx;\\n\"; Go distinguishes: line 17: Go \"0 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"0 .value string \\\\ufffd\"\n"}
+{"Time":"2026-10-09T11:40:07.631701051Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRawInputGap","Output":"--- PASS: TestRawInputGap (0.99s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:40:07.631709243Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRawInputGap","Elapsed":0.99}
+{"Time":"2026-10-09T11:40:07.631730194Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:40:07.63318694Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.001s\n"}
+{"Time":"2026-10-09T11:40:07.633208251Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.001}

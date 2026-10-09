@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:39:59.470733598Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:39:59.477125806Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap"}
+{"Time":"2026-10-09T11:39:59.477199976Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"=== RUN   TestMethodReplacementGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:59.477231472Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"=== PAUSE TestMethodReplacementGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:59.477233866Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap"}
+{"Time":"2026-10-09T11:39:59.477236259Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap"}
+{"Time":"2026-10-09T11:39:59.477237822Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"=== CONT  TestMethodReplacementGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:59.60563514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"    gaps_test.go:55: Node replacement/original; Adamic: /workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts:11:1: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it); call it in an arrow that keeps the object: () =\u003e first.next() (unbound-method)\n"}
+{"Time":"2026-10-09T11:39:59.605863869Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Output":"--- PASS: TestMethodReplacementGap (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:59.605874975Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMethodReplacementGap","Elapsed":0.13}
+{"Time":"2026-10-09T11:39:59.605894384Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:39:59.607104525Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.136s\n"}
+{"Time":"2026-10-09T11:39:59.607123633Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.136}

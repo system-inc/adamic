@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:48:07.696277984Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:48:07.704482734Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMiscShardUnionRejectsInvalidEnumeration"}
+{"Time":"2026-10-09T11:48:07.704553229Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMiscShardUnionRejectsInvalidEnumeration","Output":"=== RUN   TestMiscShardUnionRejectsInvalidEnumeration\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:07.704593308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMiscShardUnionRejectsInvalidEnumeration","Output":"    misc_shards_test.go:222: invalid enumeration accepted: {ids:[] count:2}\n","OutputType":"error"}
+{"Time":"2026-10-09T11:48:07.704600969Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMiscShardUnionRejectsInvalidEnumeration","Output":"--- FAIL: TestMiscShardUnionRejectsInvalidEnumeration (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:07.704603443Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestMiscShardUnionRejectsInvalidEnumeration","Elapsed":0}
+{"Time":"2026-10-09T11:48:07.704615641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:07.704779749Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:07.70482095Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.009}
