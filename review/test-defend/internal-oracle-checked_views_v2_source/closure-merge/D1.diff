@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -11,7 +11,7 @@
+ // variables lowers const and let declarations, each to a local of its own.
+ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+ 	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
+-		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
++		return nil, &Refused{Where: l.program.Where(list), What: "let", Fix: "use const or let"}
+ 	}
+ 	statements := []ir.Statement{}
+ 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
