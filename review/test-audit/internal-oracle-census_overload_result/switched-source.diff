@@ -1,0 +1,96 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -24,7 +24,7 @@
+ // the promise. They must not bless a brand or a mutable representation change.
+ func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
+ 	produced, promised = l.concrete(produced), l.concrete(promised)
+-	if !l.censusHasUndefined(produced) || l.censusHasUndefined(promised) {
++	if auditU056Bool("M01", func() bool { return !l.censusHasUndefined(produced) }, func() bool { return l.censusHasUndefined(produced) }) || l.censusHasUndefined(promised) {
+ 		return false
+ 	}
+ 	for _, member := range produced.Types() {
+@@ -55,7 +55,7 @@
+ 		targets = append(targets, l.checker.GetTypeAtLocation(overload.TypeParameters()[index].Name()))
+ 	}
+ 	if len(sources) > 0 {
+-		l.typeMapper = newTypeMapper(sources, targets)
++		if !auditU056Selected("M05") { l.typeMapper = newTypeMapper(sources, targets) }
+ 	}
+ 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
+ 	if target != nil {
+@@ -99,7 +99,7 @@
+ 		return false
+ 	}
+ 	implementation.Body().ForEachChild(scan)
+-	if !unchanged {
++	if auditU056Bool("M06", func() bool { return !unchanged }, func() bool { return unchanged }) {
+ 		return false
+ 	}
+ 	narrowed := func(index int, flow *ast.FlowNode) *checker.Type {
+@@ -116,7 +116,7 @@
+ 		return true
+ 	}
+ 	returned := func(expression *ast.Node, flow *ast.FlowNode) bool {
+-		if !reachable(flow) {
++		if auditU056Bool("M02", func() bool { return !reachable(flow) }, func() bool { return reachable(flow) }) {
+ 			return true
+ 		}
+ 		if expression == nil {
+@@ -141,7 +141,7 @@
+ 	}
+ 	var statement func(*ast.Node, []*ast.FlowNode) ([]*ast.FlowNode, bool)
+ 	statement = func(node *ast.Node, flows []*ast.FlowNode) ([]*ast.FlowNode, bool) {
+-		if len(flows) > 256 {
++		if auditU056Bool("M03", func() bool { return len(flows) > 256 }, func() bool { return len(flows) > 0 }) {
+ 			return nil, false
+ 		}
+ 		switch node.Kind {
+@@ -167,7 +167,7 @@
+ 					}
+ 				}
+ 			}
+-			if !trusted {
++			if auditU056Bool("M04", func() bool { return !trusted }, func() bool { return trusted }) {
+ 				return nil, false
+ 			}
+ 			then, otherwise := []*ast.FlowNode{}, []*ast.FlowNode{}
+@@ -247,7 +247,7 @@
+ 			return false
+ 		}
+ 		admitted[index] = l.checker.GetTypeAtLocation(argument)
+-		if admitted[index].Flags()&checker.TypeFlagsUndefined == 0 {
++		if auditU056Bool("M09", func() bool { return admitted[index].Flags()&checker.TypeFlagsUndefined == 0 }, func() bool { return admitted[index].Flags()&checker.TypeFlagsUndefined != 0 }) {
+ 			return false
+ 		}
+ 	}
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -292,7 +292,7 @@
+ 			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
+ 				return l.predicateOverloadResult(call, value, implementation, overload)
+ 			}
+-			ordinal := 0
++			ordinal := auditU056Int("M07", 0, 1)
+ 			for _, declaration := range symbol.Declarations {
+ 				if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+ 					ordinal++
+@@ -309,7 +309,7 @@
+ 					if err != nil {
+ 						return nil, err
+ 					}
+-					message := fmt.Sprintf("overload %d of %s result: expected %s, got undefined", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised))
++					message := fmt.Sprintf(auditU056String("M08", "overload %d of %s result: expected %s, got undefined", "overload %d of %s result: expected type %s, got undefined"), ordinal, implementation.Name().Text(), l.checker.TypeToString(promised))
+ 					return ir.Coalesce{Value: value, Of: of, Panic: ir.StringConstant{Index: l.constant(message)}}, nil
+ 				}
+ 			}
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,8 @@
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++ if auditU056Selected("P02") { return &ir.Program{}, nil }
++ if auditU056Selected("P01") { return nil, nil }
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))

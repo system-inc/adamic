@@ -1,0 +1,68 @@
+[
+  {
+    "label": "bounded-baseline",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$",
+    "exit": 0,
+    "wall": 2.9091573109981255
+  },
+  {
+    "label": "TestCensusAppendResultProof.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusAppendResultProof$",
+    "exit": 0,
+    "wall": 2.382389268001134
+  },
+  {
+    "label": "TestCensusAppendResultProof.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusAppendResultProof$",
+    "exit": 0,
+    "wall": 2.5260409630027425
+  },
+  {
+    "label": "TestCensusAppendResultProof.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusAppendResultProof$",
+    "exit": 0,
+    "wall": 2.570851667998795
+  },
+  {
+    "label": "TestCensusOverloadResultStop.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusOverloadResultStop$",
+    "exit": 0,
+    "wall": 3.722117723998963
+  },
+  {
+    "label": "TestCensusOverloadResultStop.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusOverloadResultStop$",
+    "exit": 0,
+    "wall": 3.852483852999285
+  },
+  {
+    "label": "TestCensusOverloadResultStop.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusOverloadResultStop$",
+    "exit": 0,
+    "wall": 3.1717874230016605
+  },
+  {
+    "label": "TestCensusSmallStoppedSourceOnNode.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusSmallStoppedSourceOnNode$",
+    "exit": 0,
+    "wall": 2.730850585998269
+  },
+  {
+    "label": "TestCensusSmallStoppedSourceOnNode.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusSmallStoppedSourceOnNode$",
+    "exit": 0,
+    "wall": 2.6537157670027227
+  },
+  {
+    "label": "TestCensusSmallStoppedSourceOnNode.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCensusSmallStoppedSourceOnNode$",
+    "exit": 0,
+    "wall": 2.735756122998282
+  },
+  {
+    "label": "coverage",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/lower -coverprofile=review/test-audit/internal-oracle-census_overload_result/coverage.out ./internal/oracle/ -run ^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$",
+    "exit": 0,
+    "wall": 17.740230348001205
+  }
+]

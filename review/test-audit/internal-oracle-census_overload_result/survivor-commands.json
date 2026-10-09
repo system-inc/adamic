@@ -1,0 +1,17 @@
+[
+  {
+    "command": "timeout 90 go build -o /tmp/u056-recognition ./cmd/u056-audit-probe",
+    "exit": 0,
+    "wall": 17.281016199998703
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u056-recognition internal/oracle/testdata/census_append_overload.a",
+    "exit": 0,
+    "wall": 0.07647308399828034
+  },
+  {
+    "command": "ADAMIC_MUTANT=M09 /tmp/u056-recognition internal/oracle/testdata/census_append_overload.a",
+    "exit": 0,
+    "wall": 0.06173246199978166
+  }
+]

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 27,
+    "old": "!l.censusHasUndefined(produced)",
+    "new": "l.censusHasUndefined(produced)",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 119,
+    "old": "!reachable(flow)",
+    "new": "reachable(flow)",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 144,
+    "old": "len(flows) > 256",
+    "new": "len(flows) > 0",
+    "menu": "change constant",
+    "mode": "bool"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 170,
+    "old": "!trusted",
+    "new": "trusted",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 58,
+    "old": "\t\tl.typeMapper = newTypeMapper(sources, targets)\n",
+    "new": "",
+    "menu": "drop statement",
+    "mode": "drop"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 102,
+    "old": "!unchanged",
+    "new": "unchanged",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/census_small.go",
+    "line": 295,
+    "old": "\t\t\tordinal := 0",
+    "new": "\t\t\tordinal := 1",
+    "menu": "change constant",
+    "mode": "ordinal"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/census_small.go",
+    "line": 312,
+    "old": "\"overload %d of %s result: expected %s, got undefined\"",
+    "new": "\"overload %d of %s result: expected type %s, got undefined\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 250,
+    "old": "admitted[index].Flags()&checker.TypeFlagsUndefined == 0",
+    "new": "admitted[index].Flags()&checker.TypeFlagsUndefined != 0",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n}",
+    "menu": "empty-answer probe",
+    "mode": "probe"
+  },
+  {
+    "id": "P02",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn &ir.Program{}, nil\n}",
+    "menu": "empty IR companion probe",
+    "mode": "probe"
+  }
+]

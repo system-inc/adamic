@@ -1,0 +1,28 @@
+package lower
+import (
+ "context"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/adamic/internal/ir"
+ "github.com/system-inc/adamic/internal/load"
+)
+// AuditU056Recognize is a scratch observation adapter, never part of a standalone mutant.
+func AuditU056Recognize(program *load.Program) []bool {
+ file := program.Files()[0]
+ checked, release := program.Checker(context.Background(), file)
+ defer release()
+ l := &lowering{program:program, checker:checked, result:&ir.Program{}, this:-1, functionIndex:-1}
+ result := []bool{}
+ var visit ast.Visitor
+ visit = func(node *ast.Node) bool {
+  if node.Kind == ast.KindCallExpression {
+   call := node.AsCallExpression()
+   if ast.IsIdentifier(call.Expression) && call.Expression.Text()=="append" && len(call.Arguments.Nodes)==2 && ast.IsIdentifier(call.Arguments.Nodes[0]) && call.Arguments.Nodes[0].Text()=="undefined" && ast.IsIdentifier(call.Arguments.Nodes[1]) && call.Arguments.Nodes[1].Text()=="undefined" {
+    result=append(result,l.censusCallReturnsUndefined(node))
+   }
+  }
+  node.ForEachChild(visit)
+  return false
+ }
+ file.AsNode().ForEachChild(visit)
+ return result
+}

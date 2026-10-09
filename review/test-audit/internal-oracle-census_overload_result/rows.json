@@ -1,0 +1,124 @@
+[
+  {
+    "test": "TestCensusAppendResultProof",
+    "package": "internal/oracle",
+    "file": "internal/oracle/census_overload_result_test.go:21",
+    "seconds": 0.066,
+    "oracle": "Handwritten absence of strings containing of append result:. No positive IR-content or execution assertion; an empty IR program passes P02.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "last_proven_fail": "M06 census_overload_result_test.go:33: the real append body should prove its resolved results, got check \"overload 1 of append result: expected number[], got undefined\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'; census_overload_result_test.go:33: the real append body should prove its resolved results, got check \"overload 1 of append result: expected number[], got undefined\"",
+    "timing_samples": [
+      0.066,
+      0.056,
+      0.072
+    ],
+    "empty_answer_probe": "P02",
+    "nil_probe_failed_by_dereference": true,
+    "empty_ir_passes": true
+  },
+  {
+    "test": "TestCensusOverloadResultStop",
+    "package": "internal/oracle",
+    "file": "internal/oracle/census_overload_result_test.go:40",
+    "seconds": 0.6,
+    "oracle": "Untouched source actually runs on Node and must match handwritten called/undefined stdout. Native and emitted JavaScript must match handwritten stdout, exact panic stderr and exit 70. These checked backend results deliberately differ from the original source.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [
+      "M07",
+      "M08"
+    ],
+    "last_proven_fail": "M08 census_overload_result_test.go:58: native: stderr differs; got oracle.run{stdout:[]uint8{0x63, 0x61, 0x6c, 0x6c, 0x65, 0x64, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6f, 0x76, 0x65, 0x72, 0x6c, 0x6f, 0x61, 0x64, 0x20, 0x31, 0x20, 0x6f, 0x66, 0x20, 0x6c, 0x69, 0x65, 0x20, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x3a, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x74, 0x79, 0x70, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x67, 0x6f, 0x74, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, exitCode:70}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P01",
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'; census_overload_result_test.go:58: native: stderr differs; got oracle.run{stdout:[]uint8{0x63, 0x61, 0x6c, 0x6c, 0x65, 0x64, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6f, 0x76, 0x65, 0x72, 0x6c, 0x6f, 0x61, 0x64, 0x20, 0x31, 0x20, 0x6f, 0x66, 0x20, 0x6c, 0x69, 0x65, 0x20, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x3a, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x74, 0x79, 0x70, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x67, 0x6f, 0x74, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, exitCode:70}",
+    "timing_samples": [
+      1.212,
+      0.6,
+      0.476
+    ],
+    "empty_answer_probe": "P02"
+  },
+  {
+    "test": "TestCensusSmallStoppedSourceOnNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/census_small_test.go:34",
+    "seconds": 0.289,
+    "oracle": "Untouched stopped-source fixtures actually run on Node and must match handwritten stdout, zero exit and empty stderr. No Adamic lowering or backend is invoked.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "evidence": "Bounded uncached baseline and three isolated runs pass. Production mutants do not apply: this row only invokes the external Node oracle on untouched fixtures.",
+    "timing_samples": [
+      0.289,
+      0.298,
+      0.255
+    ],
+    "reason": "No Adamic production entry is reached. A meaningful production mutant cannot affect the asserted observation; mutating Node or its reference input would violate the oracle restriction. Not labeled untrue."
+  }
+]

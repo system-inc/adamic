@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -309,7 +309,7 @@
+ 					if err != nil {
+ 						return nil, err
+ 					}
+-					message := fmt.Sprintf("overload %d of %s result: expected %s, got undefined", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised))
++					message := fmt.Sprintf("overload %d of %s result: expected type %s, got undefined", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised))
+ 					return ir.Coalesce{Value: value, Of: of, Panic: ir.StringConstant{Index: l.constant(message)}}, nil
+ 				}
+ 			}

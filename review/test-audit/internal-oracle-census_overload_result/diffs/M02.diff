@@ -1,0 +1,11 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -116,7 +116,7 @@
+ 		return true
+ 	}
+ 	returned := func(expression *ast.Node, flow *ast.FlowNode) bool {
+-		if !reachable(flow) {
++		if reachable(flow) {
+ 			return true
+ 		}
+ 		if expression == nil {

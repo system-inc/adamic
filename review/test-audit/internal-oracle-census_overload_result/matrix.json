@@ -1,0 +1,192 @@
+[
+  {
+    "id": "M01",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "fail",
+      "TestCensusOverloadResultStop": "fail",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "fail"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M02",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusOverloadResultStop",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "pass",
+      "TestCensusOverloadResultStop": "fail",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "fail"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M03",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusAppendResultProof"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "fail",
+      "TestCensusOverloadResultStop": "pass",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M04",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusAppendResultProof"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "fail",
+      "TestCensusOverloadResultStop": "pass",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M05",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusAppendResultProof"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "fail",
+      "TestCensusOverloadResultStop": "pass",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M06",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusAppendResultProof"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "fail",
+      "TestCensusOverloadResultStop": "pass",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M07",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusOverloadResultStop"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "pass",
+      "TestCensusOverloadResultStop": "fail",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M08",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [
+      "TestCensusOverloadResultStop"
+    ],
+    "observations": {
+      "TestCensusAppendResultProof": "pass",
+      "TestCensusOverloadResultStop": "fail",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M09",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestNativeAgreesWithNode family (append and lie inputs only)"
+    ],
+    "failed_rows": [],
+    "observations": {
+      "TestCensusAppendResultProof": "pass",
+      "TestCensusOverloadResultStop": "pass",
+      "TestCensusSmallStoppedSourceOnNode": "pass",
+      "TestNativeAgreesWithNode family (append and lie inputs only)": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": true
+  }
+]

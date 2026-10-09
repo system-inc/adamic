@@ -1,0 +1,184 @@
+[
+  {
+    "id": "",
+    "label": "switched-control",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/baseline timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 0,
+    "wall": 18.41047447299934
+  },
+  {
+    "id": "",
+    "label": "family-baseline.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/baseline timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.1836868630016397
+  },
+  {
+    "id": "",
+    "label": "family-baseline.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/baseline timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.335919442000886
+  },
+  {
+    "id": "",
+    "label": "family-baseline.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/baseline timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.9568477169996186
+  },
+  {
+    "id": "M01",
+    "label": "M01.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 3.2932303710003907
+  },
+  {
+    "id": "M01",
+    "label": "M01.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 1,
+    "wall": 2.497526590999769
+  },
+  {
+    "id": "M02",
+    "label": "M02.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 2.85681479699997
+  },
+  {
+    "id": "M02",
+    "label": "M02.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 1,
+    "wall": 3.0885313140024664
+  },
+  {
+    "id": "M03",
+    "label": "M03.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 2.972158060001675
+  },
+  {
+    "id": "M03",
+    "label": "M03.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 2.8677586279991374
+  },
+  {
+    "id": "M04",
+    "label": "M04.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 3.0703696929995203
+  },
+  {
+    "id": "M04",
+    "label": "M04.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.0920951619991683
+  },
+  {
+    "id": "M05",
+    "label": "M05.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 2.724754501999996
+  },
+  {
+    "id": "M05",
+    "label": "M05.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.383686265002325
+  },
+  {
+    "id": "M06",
+    "label": "M06.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 2.888543111999752
+  },
+  {
+    "id": "M06",
+    "label": "M06.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.8051882079998904
+  },
+  {
+    "id": "M07",
+    "label": "M07.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 3.2795815549980034
+  },
+  {
+    "id": "M07",
+    "label": "M07.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.233565719998296
+  },
+  {
+    "id": "M08",
+    "label": "M08.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 1,
+    "wall": 2.861625533998449
+  },
+  {
+    "id": "M08",
+    "label": "M08.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 3.234049970000342
+  },
+  {
+    "id": "M09",
+    "label": "M09.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCensusAppendResultProof|TestCensusOverloadResultStop|TestCensusSmallStoppedSourceOnNode)$'",
+    "exit": 0,
+    "wall": 2.978318682999088
+  },
+  {
+    "id": "M09",
+    "label": "M09.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^census_(append_overload|overload_lie)\\.a$'",
+    "exit": 0,
+    "wall": 2.986372658997425
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusAppendResultProof",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestCensusAppendResultProof$'",
+    "exit": 1,
+    "wall": 2.4321762990002753
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusOverloadResultStop",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestCensusOverloadResultStop$'",
+    "exit": 1,
+    "wall": 2.7490558919998875
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestCensusAppendResultProof",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestCensusAppendResultProof$'",
+    "exit": 0,
+    "wall": 2.7173091270014993
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestCensusOverloadResultStop",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u056/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestCensusOverloadResultStop$'",
+    "exit": 1,
+    "wall": 2.8840812079979514
+  }
+]

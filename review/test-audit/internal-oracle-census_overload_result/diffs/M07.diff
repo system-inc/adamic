@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -292,7 +292,7 @@
+ 			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
+ 				return l.predicateOverloadResult(call, value, implementation, overload)
+ 			}
+-			ordinal := 0
++			ordinal := 1
+ 			for _, declaration := range symbol.Declarations {
+ 				if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+ 					ordinal++

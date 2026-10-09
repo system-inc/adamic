@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:50:34.860886166Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T10:50:34.87321443Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof"}
+{"Time":"2026-10-09T10:50:34.873310417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof","Output":"=== RUN   TestCensusAppendResultProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:50:34.8733759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof","Output":"=== PAUSE TestCensusAppendResultProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:50:34.873381209Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof"}
+{"Time":"2026-10-09T10:50:34.873385146Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof"}
+{"Time":"2026-10-09T10:50:34.87338775Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof","Output":"=== CONT  TestCensusAppendResultProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:50:34.915309049Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof","Output":"--- PASS: TestCensusAppendResultProof (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:50:34.915380764Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCensusAppendResultProof","Elapsed":0.04}
+{"Time":"2026-10-09T10:50:34.915405835Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:50:34.917213417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.056s\n"}
+{"Time":"2026-10-09T10:50:34.917257782Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.056}

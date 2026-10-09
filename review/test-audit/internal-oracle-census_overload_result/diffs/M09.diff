@@ -1,0 +1,11 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -247,7 +247,7 @@
+ 			return false
+ 		}
+ 		admitted[index] = l.checker.GetTypeAtLocation(argument)
+-		if admitted[index].Flags()&checker.TypeFlagsUndefined == 0 {
++		if admitted[index].Flags()&checker.TypeFlagsUndefined != 0 {
+ 			return false
+ 		}
+ 	}

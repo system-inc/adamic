@@ -1,0 +1,10 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -55,7 +55,6 @@
+ 		targets = append(targets, l.checker.GetTypeAtLocation(overload.TypeParameters()[index].Name()))
+ 	}
+ 	if len(sources) > 0 {
+-		l.typeMapper = newTypeMapper(sources, targets)
+ 	}
+ 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
+ 	if target != nil {

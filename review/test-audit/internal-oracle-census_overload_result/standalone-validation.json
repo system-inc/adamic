@@ -1,0 +1,79 @@
+[
+  {
+    "id": "M01",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.7304135060003318,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M01.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M01.json ./internal/lower/"
+  },
+  {
+    "id": "M02",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.7792123570034164,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M02.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M02.json ./internal/lower/"
+  },
+  {
+    "id": "M03",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.9088709179995931,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M03.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M03.json ./internal/lower/"
+  },
+  {
+    "id": "M04",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.8115175860002637,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M04.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M04.json ./internal/lower/"
+  },
+  {
+    "id": "M05",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.7485910430004878,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M05.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M05.json ./internal/lower/"
+  },
+  {
+    "id": "M06",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.799076523999247,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M06.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M06.json ./internal/lower/"
+  },
+  {
+    "id": "M07",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.9895699510016129,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M07.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M07.json ./internal/lower/"
+  },
+  {
+    "id": "M08",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.795501210999646,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M08.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M08.json ./internal/lower/"
+  },
+  {
+    "id": "M09",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.9038370230009605,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/M09.diff; timeout 90 go vet -overlay=/tmp/u056-vet/M09.json ./internal/lower/"
+  },
+  {
+    "id": "P01",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.7778064170015568,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/P01.diff; timeout 90 go vet -overlay=/tmp/u056-vet/P01.json ./internal/lower/"
+  },
+  {
+    "id": "P02",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "seconds": 0.7842798010024126,
+    "command": "git apply --cached --check review/test-audit/internal-oracle-census_overload_result/diffs/P02.diff; timeout 90 go vet -overlay=/tmp/u056-vet/P02.json ./internal/lower/"
+  }
+]

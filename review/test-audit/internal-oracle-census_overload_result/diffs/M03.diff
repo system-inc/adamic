@@ -1,0 +1,11 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -141,7 +141,7 @@
+ 	}
+ 	var statement func(*ast.Node, []*ast.FlowNode) ([]*ast.FlowNode, bool)
+ 	statement = func(node *ast.Node, flows []*ast.FlowNode) ([]*ast.FlowNode, bool) {
+-		if len(flows) > 256 {
++		if len(flows) > 0 {
+ 			return nil, false
+ 		}
+ 		switch node.Kind {
