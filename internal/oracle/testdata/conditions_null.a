@@ -1,0 +1,10 @@
+function probe(value: RegExpExecArray | null): void {
+    let branch = 'false';
+    if (value) { branch = 'true'; }
+    let loops = 0;
+    while (value) { loops += 1; break; }
+    for (; value;) { loops += 1; break; }
+    console.log(`${branch}:${value ? 'true' : 'false'}:${!value}:${loops}`);
+}
+probe(/a/.exec(''));
+probe(/a/.exec('a'));

@@ -118,6 +118,9 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		if kind == 0 {
 			break
 		}
+		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+			return nil, true, l.notYet(node, "an optional chain longer than one step")
+		}
 		if access.Name().Text() != "length" {
 			return nil, true, l.notYet(node, "typed array member "+access.Name().Text())
 		}
@@ -128,11 +131,20 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil
 	case ast.KindElementAccessExpression:
 		access := node.AsElementAccessExpression()
-		if l.typedArrayKind(l.checker.GetTypeAtLocation(access.Expression)) == 0 {
+		if l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) == 0 {
 			break
 		}
+		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+			value, err := l.optionalIndexContinuation(node)
+			return value, true, err
+		}
 		if access.QuestionDotToken != nil {
-			return nil, true, l.notYet(node, "optional typed array index access")
+			array, err := l.expression(access.Expression)
+			if err != nil {
+				return nil, true, err
+			}
+			value, err := l.optionalIndex(node, array)
+			return value, true, err
 		}
 		array, err := l.expression(access.Expression)
 		if err != nil {

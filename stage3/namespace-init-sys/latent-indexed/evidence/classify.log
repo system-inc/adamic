@@ -1,0 +1,610 @@
+{
+  "compiler": "5ad36d2cf4fce475ec072f3cc68e21c393dffc45",
+  "measurement_only": true,
+  "source_files": 79,
+  "source_hash_mismatches": 0,
+  "indexed_rows": 99,
+  "counts": {
+    "not reached": 21,
+    "function blocked by a refusal": 76,
+    "check emitted": 2
+  },
+  "blocking_refusals": [
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:53397:69",
+      "message": "src/compiler/checker.ts:53397:69: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 13,
+      "ids": [
+        "D082",
+        "D083",
+        "D084",
+        "D085",
+        "D086",
+        "D087",
+        "D088",
+        "D089",
+        "D090",
+        "D091",
+        "D092",
+        "D093",
+        "D094"
+      ],
+      "scopes": {
+        "function": 13
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:1881:43",
+      "message": "src/compiler/transformers/generators.ts:1881:43: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 12,
+      "ids": [
+        "D200",
+        "D201",
+        "D202",
+        "D203",
+        "D204",
+        "D205",
+        "D206",
+        "D207",
+        "D208",
+        "D209",
+        "D210",
+        "D211"
+      ],
+      "scopes": {
+        "function": 12
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/classFields.ts:365:11",
+      "message": "src/compiler/transformers/classFields.ts:365:11: stage 0 can't lower a value of type CompilerOptions yet",
+      "rows": 5,
+      "ids": [
+        "D161",
+        "D162",
+        "D163",
+        "D164",
+        "D165"
+      ],
+      "scopes": {
+        "enclosing attempt": 5
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/es2017.ts:759:56",
+      "message": "src/compiler/transformers/es2017.ts:759:56: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 5,
+      "ids": [
+        "D179",
+        "D180",
+        "D181",
+        "D182",
+        "D183"
+      ],
+      "scopes": {
+        "function": 5
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:46944:55",
+      "message": "src/compiler/checker.ts:46944:55: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 3,
+      "ids": [
+        "D071",
+        "D072",
+        "D073"
+      ],
+      "scopes": {
+        "function": 3
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:4221:52",
+      "message": "src/compiler/program.ts:4221:52: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "rows": 3,
+      "ids": [
+        "D129",
+        "D130",
+        "D131"
+      ],
+      "scopes": {
+        "function": 3
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformer.ts:528:13",
+      "message": "src/compiler/transformer.ts:528:13: Adamic 0.1 refuses optional property initializer in VariableDeclaration absent from structural source FunctionDeclaration, which can hide fields; declare initializer on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+      "rows": 3,
+      "ids": [
+        "D157",
+        "D158",
+        "D159"
+      ],
+      "scopes": {
+        "function": 3
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/esDecorators.ts:423:5",
+      "message": "src/compiler/transformers/esDecorators.ts:423:5: stage 0 can't lower a function value returning union of differently held members yet",
+      "rows": 3,
+      "ids": [
+        "D184",
+        "D185",
+        "D186"
+      ],
+      "scopes": {
+        "enclosing attempt": 3
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:2529:44",
+      "message": "src/compiler/transformers/generators.ts:2529:44: Adamic 0.1 refuses a value of type NumericLiteral seen as Mutable<LiteralExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "rows": 3,
+      "ids": [
+        "D213",
+        "D214",
+        "D215"
+      ],
+      "scopes": {
+        "function": 3
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/generators.ts:346:11",
+      "message": "src/compiler/transformers/generators.ts:346:11: stage 0 can't lower a value of type CompilerOptions yet",
+      "rows": 3,
+      "ids": [
+        "D212",
+        "D216",
+        "D217"
+      ],
+      "scopes": {
+        "enclosing attempt": 3
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/module/esnextAnd2015.ts:74:11",
+      "message": "src/compiler/transformers/module/esnextAnd2015.ts:74:11: stage 0 can't lower a value of type CompilerOptions yet",
+      "rows": 3,
+      "ids": [
+        "D227",
+        "D229",
+        "D230"
+      ],
+      "scopes": {
+        "enclosing attempt": 3
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/checker.ts:1528:9",
+      "message": "src/compiler/checker.ts:1528:9: stage 0 can't lower a value of type CompilerOptions yet",
+      "rows": 2,
+      "ids": [
+        "D095",
+        "D069"
+      ],
+      "scopes": {
+        "enclosing attempt": 2
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:22897:38",
+      "message": "src/compiler/checker.ts:22897:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 2,
+      "ids": [
+        "D060",
+        "D061"
+      ],
+      "scopes": {
+        "function": 2
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformer.ts:248:134",
+      "message": "src/compiler/transformer.ts:248:134: stage 0 can't lower a value of type CompilerOptions yet",
+      "rows": 2,
+      "ids": [
+        "D155",
+        "D156"
+      ],
+      "scopes": {
+        "enclosing attempt": 2
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/es2015.ts:4722:63",
+      "message": "src/compiler/transformers/es2015.ts:4722:63: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 2,
+      "ids": [
+        "D174",
+        "D175"
+      ],
+      "scopes": {
+        "function": 2
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/esnext.ts:357:39",
+      "message": "src/compiler/transformers/esnext.ts:357:39: Adamic 0.1 refuses optional property id in ArrayBindingPattern absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+      "rows": 2,
+      "ids": [
+        "D191",
+        "D192"
+      ],
+      "scopes": {
+        "function": 2
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:1390:79",
+      "message": "src/compiler/transformers/generators.ts:1390:79: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source ArrayBindingPattern, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+      "rows": 2,
+      "ids": [
+        "D196",
+        "D197"
+      ],
+      "scopes": {
+        "function": 2
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:3059:43",
+      "message": "src/compiler/transformers/generators.ts:3059:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 2,
+      "ids": [
+        "D220",
+        "D221"
+      ],
+      "scopes": {
+        "function": 2
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:12234:43",
+      "message": "src/compiler/checker.ts:12234:43: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D037"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:18244:32",
+      "message": "src/compiler/checker.ts:18244:32: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 1,
+      "ids": [
+        "D054"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:19372:79",
+      "message": "src/compiler/checker.ts:19372:79: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 1,
+      "ids": [
+        "D056"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:20909:57",
+      "message": "src/compiler/checker.ts:20909:57: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 1,
+      "ids": [
+        "D057"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:39094:57",
+      "message": "src/compiler/checker.ts:39094:57: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 1,
+      "ids": [
+        "D067"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:43677:16",
+      "message": "src/compiler/checker.ts:43677:16: Adamic 0.1 refuses a value of type AwaitedTypeInstantiation | Type seen as Type, which can write Symbol | undefined where Symbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "rows": 1,
+      "ids": [
+        "D068"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:51080:111",
+      "message": "src/compiler/checker.ts:51080:111: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D077"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/commandLineParser.ts:2050:13",
+      "message": "src/compiler/commandLineParser.ts:2050:13: stage 0 can't lower a record value of type TsConfigSourceFile | CompilerOptionsValue yet",
+      "rows": 1,
+      "ids": [
+        "D107"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:255:37",
+      "message": "src/compiler/debug.ts:255:37: stage 0 can't lower a value of type T | null | undefined yet",
+      "rows": 1,
+      "ids": [
+        "D119"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/sourcemap.ts:88:88",
+      "message": "src/compiler/sourcemap.ts:88:88: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "rows": 1,
+      "ids": [
+        "D151"
+      ],
+      "scopes": {
+        "enclosing attempt": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformer.ts:623:46",
+      "message": "src/compiler/transformer.ts:623:46: Adamic 0.1 refuses a value of type never[] seen as Identifier[], which can write Identifier where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "rows": 1,
+      "ids": [
+        "D160"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/classFields.ts:2451:39",
+      "message": "src/compiler/transformers/classFields.ts:2451:39: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D166"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/declarations.ts:1702:25",
+      "message": "src/compiler/transformers/declarations.ts:1702:25: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D170"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/es2015.ts:3085:57",
+      "message": "src/compiler/transformers/es2015.ts:3085:57: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D172"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/es2015.ts:4579:21",
+      "message": "src/compiler/transformers/es2015.ts:4579:21: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D173"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/es2015.ts:498:11",
+      "message": "src/compiler/transformers/es2015.ts:498:11: stage 0 can't lower a value of type CompilerOptions yet",
+      "rows": 1,
+      "ids": [
+        "D171"
+      ],
+      "scopes": {
+        "enclosing attempt": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/es2017.ts:613:38",
+      "message": "src/compiler/transformers/es2017.ts:613:38: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D178"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/esnext.ts:105:5",
+      "message": "src/compiler/transformers/esnext.ts:105:5: stage 0 can't lower a function value returning union of differently held members yet",
+      "rows": 1,
+      "ids": [
+        "D189"
+      ],
+      "scopes": {
+        "enclosing attempt": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:1313:52",
+      "message": "src/compiler/transformers/generators.ts:1313:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 1,
+      "ids": [
+        "D195"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:1680:40",
+      "message": "src/compiler/transformers/generators.ts:1680:40: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D198"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:1757:62",
+      "message": "src/compiler/transformers/generators.ts:1757:62: Adamic 0.1 refuses a value of type ContinueStatement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "rows": 1,
+      "ids": [
+        "D199"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:2998:53",
+      "message": "src/compiler/transformers/generators.ts:2998:53: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D218"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/generators.ts:3010:49",
+      "message": "src/compiler/transformers/generators.ts:3010:49: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D219"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/jsx.ts:310:20",
+      "message": "src/compiler/transformers/jsx.ts:310:20: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot SyntaxKind.PropertyAssignment; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)",
+      "rows": 1,
+      "ids": [
+        "D225"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/jsx.ts:478:47",
+      "message": "src/compiler/transformers/jsx.ts:478:47: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D226"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+      "message": "src/compiler/transformers/module/esnextAnd2015.ts:149:111: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "rows": 1,
+      "ids": [
+        "D228"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/transformers/module/esnextAnd2015.ts:253:63",
+      "message": "src/compiler/transformers/module/esnextAnd2015.ts:253:63: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+      "rows": 1,
+      "ids": [
+        "D231"
+      ],
+      "scopes": {
+        "function": 1
+      }
+    }
+  ],
+  "option_dispositions": {
+    "scheduled-check": 168,
+    "remaining-error": 5
+  }
+}

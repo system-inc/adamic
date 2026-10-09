@@ -1,0 +1,14 @@
+function enumerate(view: {readonly z: number}): void {
+ console.log(Object.keys(view).join(','));
+ console.log(Object.values(view).join(','));
+ for (const [key, value] of Object.entries(view)) console.log(`${key}:${value}`);
+}
+const source = {z: 9, '10': 10, '2': 2, end: 5};
+enumerate(source);
+
+function words(view: {readonly first: string}): void {
+ console.log(Object.values(view).join(','));
+ for (const [key, value] of Object.entries(view)) console.log(`${key}:${value}`);
+}
+const wordSource = {first: 'one', extra: 'two'};
+words(wordSource);

@@ -17,7 +17,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
-	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node)}
+	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), Record: l.entriesRecordLiteral(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
@@ -94,6 +94,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
+		}
+	}
+	if literal.Record {
+		if literal.Spread != nil {
+			return nil, l.notYet(node, "a spread into record storage")
+		}
+		for index := range literal.Fields {
+			field := &literal.Fields[index]
+			if field.Value.Type() != ir.Number && field.Value.Type() != ir.Boolean && field.Value.Type() != ir.String && field.Value.Type() != ir.Union {
+				return nil, l.notYet(node, "record allocation outside scalar storage")
+			}
+			field.Value = fit(field.Value, ir.Union)
 		}
 	}
 	if literal.SpreadMaybeUndefined {
@@ -277,10 +289,29 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return ir.Object, nil
 	}
 	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression {
-		// [] is never[] to the checker; what it will hold is the type it's written into, as in
-		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
-		// kept weakly.
-		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+		// A fresh [] has no slots yet. Use the same contextual element path as
+		// generic returns; nested literals also have a best-common destination.
+		if len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+			contexts := []*checker.Type{l.checker.GetContextualType(literal, checker.ContextFlagsNone)}
+			child := literal
+			for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+				child = child.Parent
+			}
+			if parent := child.Parent; parent != nil && parent.Kind == ast.KindArrayLiteralExpression {
+				// The checker can leave the inner literal as never[] even when
+				// the enclosing array has an explicit union-of-arrays destination.
+				contexts = append(contexts, l.literalArrayElement(l.checker.GetContextualType(parent, checker.ContextFlagsNone)))
+			}
+			contexts = append(contexts, l.impliedTarget(literal))
+			for _, contextual := range contexts {
+				if element := l.literalArrayElement(contextual); element != nil {
+					if held, known := l.kept(element); known && !slotless(held) {
+						return held, nil
+					}
+				}
+			}
+		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+			// Keep every proven nonempty contextual element representation, including weak handles.
 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
 				arrayType = contextual
 			}
@@ -314,6 +345,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return call, err
 	}
 	access := node.AsPropertyAccessExpression()
+	if l.entriesStringIndexed(access.Expression) && l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(access.Expression), node.Name().Text()) == nil && l.entriesProgramHasRecords() {
+		return nil, l.notYet(node, "an indexed record field read without a named declared property")
+	}
 	name := l.fieldName(node.Name())
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
@@ -502,6 +536,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				return ir.Unwrap{Value: read}, nil
 			}
 		}
+		if (of == ir.Union || of.IsMaybe()) && l.entriesProgramHasRecords() {
+			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
+		}
 		if of.IsMaybe() && optional {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
@@ -532,8 +569,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
 	property.Readiness = sourceExpression(node)
 	property.View = sourceExpression(node)
+	property.ViewWhere = l.program.Where(node)
+	if node.Kind == ast.KindPropertyAccessExpression {
+		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
+		property.ViewTypeID = int(declared.Id())
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
 	}
@@ -542,7 +585,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		for _, declaration := range field.Declarations {
 			if declaration.Kind == ast.KindPropertyDeclaration {
 				initializer := declaration.AsPropertyDeclaration().Initializer
-				if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+				if l.lazyAssertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
 					property.Readiness = sourceExpression(initializer)
 				}
 			}
@@ -1407,6 +1450,14 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	}
 	key, keyKnown := l.representation(arguments[0])
 	value, valueKnown := l.kept(arguments[1])
+	// never has no inhabitant to store. Empty maps can still be observed through
+	// size or a readonly wider view; an unused object slot supplies storage only.
+	if arguments[0].Flags()&checker.TypeFlagsNever != 0 {
+		key, keyKnown = ir.Object, true
+	}
+	if arguments[1].Flags()&checker.TypeFlagsNever != 0 {
+		value, valueKnown = ir.Object, true
+	}
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
@@ -1437,6 +1488,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
+		if value, handled, err := l.newClassValue(node); handled {
+			return value, err
+		}
 		return nil, l.notYet(node, "new "+describe(created.Expression))
 	}
 	key, value, err := l.mapTypes(node)
@@ -1638,6 +1692,9 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 		return nil, true, err
 	}
 	written := node.AsCallExpression().Arguments.Nodes
+	if name == "slice" || name == "lastIndexOf" {
+		return l.libraryStringMethod(node, value, name, written)
+	}
 	if len(written) > len(shape.arguments) || len(written) < len(shape.arguments)-shape.optional {
 		return nil, true, l.notYet(node, name+" with these arguments")
 	}
@@ -1709,8 +1766,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	}
 	optional := access.QuestionDotToken != nil
 	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
-		// The rest of a chain after a ?., which short-circuits with it.
-		return nil, l.notYet(node, "an optional chain longer than one step")
+		return l.optionalIndexContinuation(node)
 	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
@@ -1729,8 +1785,10 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
+	if optional && (object.Type() == ir.Array || object.Type() == ir.String || object.Type().IsTypedArray()) {
+		return l.optionalIndex(node, object)
+	}
 	if optional && object.Type() != ir.Object {
-		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.
 		return nil, l.notYet(node, "?.[] on a "+typeName(object.Type()))
 	}
 	if object.Type() == ir.String {
@@ -1755,7 +1813,15 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil
+		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
+	}
+	if object.Type() == ir.Object {
+		if value, handled, err := l.indexedTupleRead(node, object); handled {
+			return value, err
+		}
+	}
+	if object.Type() == ir.Object && !optional && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		return l.finiteElementRead(node, object)
 	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
 	if optional {
@@ -1784,6 +1850,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 
 // setIndex lowers array[index] = value, as a statement.
 func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if body, handled, err := l.entriesRecordWrite(target, valueNode); handled {
+		return body, err
+	}
 	access := target.AsElementAccessExpression()
 	array, err := l.expression(access.Expression)
 	if err != nil {
