@@ -1,0 +1,31 @@
+FIRST FAILURE (tests, at 145.7 s):
+github.stopped: pool job of 6f062085d31175050fa89c15a72437f31374859d stopped by the watcher
+stPortMatchesGoCohere_061_002
+=== PAUSE TestPortMatchesGoCohere_061_002
+=== CONT  TestPortMatchesGoCohere_061_002
+    port_matches_prepared_split_test.go:124: full corpus: 3921 cases before gate sampling
+    port_matches_prepared_split_test.go:124: corpus repository: 2827 tracked JSON files; checked against Git HEAD
+    port_matches_prepared_split_test.go:124: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    port_matches_prepared_split_test.go:124: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    port_matches_prepared_split_test.go:124: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    port_matches_prepared_split_test.go:124: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_prepared_split_test.go:124: gate-sample: TestPortMatchesGoCohere_061_002 151/3887 files, stride 32, offset 8
+    port_matches_prepared_split_test.go:124: shard union: 185 cases exactly once across 128 parent buckets
+    port_matches_prepared_split_test.go:614: build json_split_Go_oracle dcca89bb071b hit 1.92
+    port_matches_prepared_split_test.go:621: build json_lowered_port_and_backend_sources 7b41fcc956e0 hit 1.80
+    port_matches_prepared_split_test.go:636: build json_native_release_port b0a1e79a36b5 hit 0.08
+    port_matches_prepared_split_test.go:636: build json_native_ASan_UBSan_port 0236b77c5faa hit 0.08
+    top_shared_test.go:57: full corpus: 3921 cases before gate sampling
+    top_shared_test.go:57: corpus repository: 2827 tracked JSON files; checked against Git HEAD
+    top_shared_test.go:57: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    top_shared_test.go:57: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    top_shared_test.go:57: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    top_shared_test.go:57: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_prepared_split_test.go:123: TestPortMatchesGoCohere (setup): 6.261s
+    grain30_json_test.go:232: exact child union: 0 cases in 3 children; child 2 has 0 cases; agreement=false leak=true
+    grain30_json_test.go:232: oracle answer count
+--- FAIL: TestPortMatchesGoCohere_061_002 (6.27s)
+
+(box load 29.2 on 64 cores at first failure)
+red: 6f062085d31175050fa89c15a72437f31374859d fast gate, first failure at tests after 145.7 s (coverage=0.0s tools=0.2s vet=5.5s smoke=38.4s a-check-build=40.1s a-check=42.0s determinism=44.4s build=46.4s products=51.3s stage3=165.7s tests=166.5s; 6 units over 30 s (311 s, 0 on the burn-down, 6 drifted over); box load 31.3 on 64 cores at start, load 29.2 on 64 cores at first failure, load 27.3 on 64 cores at end; deferred to full gate: 0 tests; branch area/stage3, session 01a1140e-1ff3-7516-9930-4a9b610ab006; sampled: TestJSONGrain30Union 151/3887 files, stride 32, offset 8; TestMarkdownInline_0000 61/1549 files, stride 32, offset 8; TestPortMatchesGoCohereClassOrder_000 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohereClassOrder_001 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohere_001_000 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohere_001_001 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohere_001_002 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohere_004_000 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohere_004_001 151/3887 files, stride 32, offset 8; TestPortMatchesGoCohere_0075 151/3887 files, stride 32, offset 8), 2 fail, 96 pass
+stopped: superseded by afcc8d7f5bf4
