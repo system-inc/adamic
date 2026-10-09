@@ -1,0 +1,18 @@
+import type { Weak } from 'adamic';
+
+// The control for weak_union_narrowed.a: a Weak of one interface, narrowed, read after its target
+// was freed, through a local as that probe reads it.
+interface Named {
+	readonly name: string;
+}
+interface Holder {
+	kept: Weak<Named>;
+}
+let strong: Named | undefined = { name: 'n'.repeat(2) };
+const holder: Holder = { kept: strong };
+if (holder.kept !== undefined) {
+	console.log('before');
+	strong = undefined;
+	const seen = holder.kept;
+	console.log(`after: ${seen.name}`);
+}

@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -51,7 +51,7 @@
+ // lexical captures still use the existing cycle analysis and reference-counted closure environment.
+ func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
+ 	index := len(l.result.Functions)
+-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
++	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: false})
+ 	this := l.iterationLocal("this", ir.Object, index)
+ 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
+ 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})

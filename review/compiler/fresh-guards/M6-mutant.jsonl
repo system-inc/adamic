@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:03:29.106060503Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:03:29.113515315Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:03:29.113595425Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"=== RUN   TestStatAtimeSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:29.11363904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"=== PAUSE TestStatAtimeSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:29.113642465Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:03:29.113646672Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:03:29.113650588Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"=== CONT  TestStatAtimeSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:29.113657718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"    guards_test.go:29: want one unproven next field write at site 1 in function -1, got [{Kind:1 Site:1 Name:next Function:-1 Proven:true Why:}]\n","OutputType":"error"}
+{"Time":"2026-10-09T08:03:29.113667954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"--- FAIL: TestStatAtimeSelfCycleRemainsUnproven (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:29.113670678Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Elapsed":0}
+{"Time":"2026-10-09T08:03:29.113683487Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:29.11382574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fresh\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:29.113842155Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.008}

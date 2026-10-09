@@ -1,0 +1,13 @@
+diff --git a/internal/lower/prototype.go b/internal/lower/prototype.go
+index 782c8c68..d9dbe396 100644
+--- a/internal/lower/prototype.go
++++ b/internal/lower/prototype.go
+@@ -69,7 +69,7 @@ func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
+ 
+ func (l *lowering) prototypeRead(node *ast.Node, name string) error {
+ 	if name == "isPrototypeOf" {
+-		return &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
++		return &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "use instanceof for class identity or an explicit discriminant"}
+ 	}
+ 	return &Refused{Where: l.program.Where(node), What: "inherited library member " + name + " read as an own field", Fix: "prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"}
+ }

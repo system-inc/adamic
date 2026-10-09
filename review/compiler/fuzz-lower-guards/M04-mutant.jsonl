@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:24:42.923301382Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:24:42.932844863Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact"}
+{"Time":"2026-10-09T10:24:42.932925204Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact","Output":"=== RUN   TestArgumentsLengthReadKeepsReaderFact\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:42.932951423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact","Output":"=== PAUSE TestArgumentsLengthReadKeepsReaderFact\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:42.932953947Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact"}
+{"Time":"2026-10-09T10:24:42.932959455Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact"}
+{"Time":"2026-10-09T10:24:42.932961498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact","Output":"=== CONT  TestArgumentsLengthReadKeepsReaderFact\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:42.960995496Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact","Output":"    arguments_length_test.go:106: read: ArgumentsCount exists but ReadsArguments is false\n","OutputType":"error"}
+{"Time":"2026-10-09T10:24:42.961139071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact","Output":"--- FAIL: TestArgumentsLengthReadKeepsReaderFact (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:42.961266091Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArgumentsLengthReadKeepsReaderFact","Elapsed":0.03}
+{"Time":"2026-10-09T10:24:42.961307524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:42.96153217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.038s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:42.961543717Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.038}

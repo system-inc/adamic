@@ -1,0 +1,4 @@
+const values = [1, 2];
+try { console.log(values.with(0, 9).join('|')); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+const frozen = Object.freeze({ id: 3 });
+console.log(`${frozen.id}`);

@@ -1,0 +1,462 @@
+[
+  {
+    "test": "TestTracingNamespaceEscapeStaysNotYet",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestReadinessErrorIncludesReceiverExpression",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestEnumReverseMappingUsesSingleSlot",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestNamespaceFactoryBindingsAgreeWithNode",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestPrivateAndPublicStaticsAgreeWithNode",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNestedFunctionCycleIsRefused",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud/block",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud/generic",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud/dynamic_this",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceReturnedAssignmentLimits",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestEnumFlagProofsWithoutObservableLoweringEffect",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestNamespaceInitializationReachability",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestNamespaceInitializationReachability/direct",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestNamespaceInitializationReachability/helper",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestNamespaceInitializationReachability/cycle",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestNamespaceClosedCallGraphEdges",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestEnumNameEnumeration",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestEnumIdentityAcrossModules",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceReceiverRefusal",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestFlagEnumInlineIteration",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestNamespaceTypesErase",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestEnumMemberValuesAndReverseNameMatchNode",
+    "seconds": 0.5
+  },
+  {
+    "test": "TestConstEnumErasesRuntimeObject",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestFlagEnumLiteralSpellings",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestFlagEnumMemberAliases",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestFlagEnumAliasBoundaries",
+    "seconds": 1.14
+  },
+  {
+    "test": "TestEnumNeverDefault",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestEnumLimitsStayLoud",
+    "seconds": 1.03
+  },
+  {
+    "test": "TestEnumSwitchExhaustiveness",
+    "seconds": 1.17
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud",
+    "seconds": 1.48
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/computed_enum",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/reopened_enum",
+    "seconds": 0.1
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/early_enum",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/mutable_object_escape",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/object_value",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/reflection",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/reopening",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/function_merge_escape",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/class_merge",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/destructured_state",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/nested_object_var",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/rest_object_var",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/default_object_var",
+    "seconds": 0.05
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/computed_member",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/replace_function",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/early_call",
+    "seconds": 0.05
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/early_read",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/block_var",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/nested_early_read",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/explicit_receiver",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud/ambient",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud/missing_implementation",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud/body_lowering",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestFlagEnumsOpen",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestFlagEnumsOpen/complement",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestFlagEnumsOpen/cross_enum_right",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestFlagEnumsOpen/member_slot",
+    "seconds": 0.05
+  },
+  {
+    "test": "TestFlagEnumsOpen/array_view",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestFlagEnumsOpen/mutable_alias",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestFlagEnumsOpen/bare_number",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestFlagEnumsOpen/narrowed_member",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestFlagEnumsOpen/compound_xor_number",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestFlagEnumsOpen/compound_or_number",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestFlagEnumsOpen/and_numbers",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestFlagEnumsOpen/xor_number",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestFlagEnumsOpen/or_number",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestFlagEnumsOpen/cross_enum_left",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestFlagEnumsOpen/switch_default",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestFlagEnumsOpen/arithmetic_shape",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestFlagEnumsOpen/numeric_shape",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestFlagEnumsOpen/implicit",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestFlagEnumsOpen/sign_bit",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestFlagEnumsOpen/shift_update",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestFlagEnumsOpen/shift_result",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestFlagEnumsOpen/increment",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestFlagEnumsOpen/arithmetic",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities/class_merge.a",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities/debug_log.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities/debug_class.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestEnumSlotViews",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestEnumSlotViews/object_assign",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestEnumSlotViews/enum_object_writable_view",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestEnumSlotViews/structural_enum_object_array",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestEnumSlotViews/structural_string_enum_object",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestEnumSlotViews/generic_class_invariant",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestEnumSlotViews/structural_numeric_enum_object",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestEnumSlotViews/variable",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestEnumSlotViews/mutable_field_alias",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestEnumSlotViews/map_alias",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestEnumSlotViews/optional_union",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestEnumSlotViews/class_field",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestEnumSlotViews/override",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestEnumSlotViews/readonly_into_enum_array",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestEnumSlotViews/array_literal",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestEnumSlotViews/function_view",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestEnumSlotViews/compound",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestEnumSlotViews/array_alias",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestEnumSlotViews/increment",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestEnumSlotViews/argument",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestEnumSlotViews/literal_property",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestEnumSlotViews/assignment",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestEnumSlotViews/member_initializer",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestEnumSlotViews/initializer",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestFlagEnumsDomain",
+    "seconds": 3.14
+  }
+]

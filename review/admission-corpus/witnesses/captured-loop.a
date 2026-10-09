@@ -1,0 +1,1 @@
+function run():void {const values=[{value:1}]; const count=()=>values.length; for(const value of values){console.log(String(value.value));} console.log(String(count()));} run();

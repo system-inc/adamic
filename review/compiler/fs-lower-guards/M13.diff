@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -345,7 +345,7 @@
+ 		}
+ 		args = []ir.Expression{args[0], args[1], flag, mode, flush}
+ 	case "stat":
+-		throws := ir.Expression(ir.BooleanConstant{Value: true})
++		throws := ir.Expression(ir.BooleanConstant{Value: false})
+ 		if len(args) > 1 {
+ 			throws, err = option(args[1], "throwIfNoEntry", throws)
+ 			if err != nil {

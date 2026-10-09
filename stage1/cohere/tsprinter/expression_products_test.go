@@ -13,7 +13,7 @@ import (
 
 // The executable and every ordered input are inputs to corpus generation.
 // Only reference answers are cached; every tested printer still runs each case.
-func tsPrinterOracleOutputs(t *testing.T, root string, files []string, gaps, family, oracle string) string {
+func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, family, oracle string) string {
 	t.Helper()
 	test, variable := "TestAdamicExpressionCorpus", "ADAMIC_TS_EXPRESSION_REQUEST"
 	if family == "statements" {
@@ -52,6 +52,20 @@ func tsPrinterOracleOutputs(t *testing.T, root string, files []string, gaps, fam
 		t.Log(string(output))
 		return tsPrinterRewriteMetadata(directory, root, external, true)
 	})
+	return product
+}
+
+func tsPrinterOracleOutputs(t *testing.T, root string, files []string, gaps, family, oracle string) string {
+	t.Helper()
+	external := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if external != "" {
+		var err error
+		external, err = filepath.Abs(external)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	product := printerGateOnce(t, "oracle-output-"+family+"-"+statementBytesHash([]byte(strings.Join(files, "\n"))), func() string { return tsPrinterOracleProduct(t, root, files, gaps, family, oracle) })
 	// Shard preparation and caller-requested audits use a private writable copy.
 	directory := t.TempDir()
 	names := []string{"cases.txt", "answers.txt", "cases.json", "coverage.json"}
@@ -154,6 +168,7 @@ func tsPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 }
 
 func TestTSPrinterCachedMetadataRelocation(t *testing.T) {
+	t.Parallel()
 	first, second, product, copy := t.TempDir(), t.TempDir(), t.TempDir(), t.TempDir()
 	original := printerCase{Label: first + "/case.ts:3:expression", Source: "'repo/keep.ts'", Want: "typescript/keep.ts"}
 	data, _ := json.Marshal([]printerCase{original})

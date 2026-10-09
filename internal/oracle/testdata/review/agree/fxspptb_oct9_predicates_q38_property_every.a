@@ -1,0 +1,16 @@
+function isNumber(x: string | number): x is number {
+  return typeof x === "number";
+}
+interface Bag { readonly items: (string | number)[] }
+function build(): Bag {
+  const items: (string | number)[] = ["x"];
+  items.pop();
+  items.push(8);
+  return { items: items };
+}
+const bag = build();
+if (bag.items.every(isNumber)) {
+  let sum = 0;
+  for (const n of bag.items) sum += n;
+  console.log("sum " + String(sum));
+}

@@ -1,0 +1,16 @@
+function isNumber(x: string | number): x is number {
+  return typeof x === "number";
+}
+function build(): readonly (string | number)[] {
+  const items: (string | number)[] = ["x"];
+  items.pop();
+  items.push(4);
+  items.push(5);
+  return items;
+}
+const items = build();
+if (items.every(isNumber)) {
+  let sum = 0;
+  for (const v of items) sum += v;
+  console.log("sum " + String(sum));
+}

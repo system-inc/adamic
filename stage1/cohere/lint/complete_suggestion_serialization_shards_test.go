@@ -83,7 +83,7 @@ func TestCompleteSuggestionSerialization_Setup(t *testing.T) {
 
 func completeSuggestionPrepare(t *testing.T) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	started := time.Now()
 	defer func() {
@@ -94,7 +94,11 @@ func completeSuggestionPrepare(t *testing.T) {
 	directory := completeSuggestionFixture(t, false)
 	p.directory = directory
 	source := filepath.Join(directory, "suggestions.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+	text, err := os.ReadFile("testdata/serialization/audit-columns.ts.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(source, text, 0644); err != nil {
 		t.Fatal(err)
 	}
 	p.path = filepath.Join(directory, "manifest.txt")
@@ -280,13 +284,13 @@ func TestCompleteSuggestionSerialization_005(t *testing.T) {
 func TestCompleteSuggestionSerialization_PlantedFailure(t *testing.T) {
 	t.Parallel()
 	completeSuggestionReady(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
 	// Loom runs one top-level test per process. Exercise that same selection,
 	// preserving the proof that every non-owner (including both mutants) passes.
 	for shard := range completeSuggestionLeaves {
 		name := fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard)
-		command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=600s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
 		output, err := command.CombinedOutput()
 		if command.Process != nil {

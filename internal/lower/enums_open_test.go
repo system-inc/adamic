@@ -20,12 +20,27 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		{"containers", "enum E { A, B } const values: E[] = [E.A]; const numbers: number[] = values; numbers.push(77); const map = new Map<string, E>(); const wide: Map<string, number> = map; wide.set('x', 99);"},
 		{"optional_object", "enum E { A, B } function flags(box: { flags: E; other?: { flags: E } }): E { return box.other ? box.flags | box.other.flags : box.flags; }"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			if _, err := lowerSource(t, probe.source); err != nil {
-				t.Fatal(err)
-			}
-		})
+		t.Log(probe.name)
+		observation := "console.log(`${E.A}/${E[0]}`);"
+		switch probe.name {
+		case "member_tags":
+			observation = "console.log(`${a.kind}/${a.value}/${Kind[0]}`);"
+		case "coalesce":
+			observation = "console.log(`${Flags.None}/${Flags.Pair}/${Flags[3]}`);"
+		case "arithmetic":
+			observation += "console.log(`${e}`);"
+		case "signed_flags":
+			observation = "console.log(`${Flags.A}/${flags}/${Flags[1]}`);"
+		case "cast":
+			observation = "console.log(`${kind(77)}/${SyntaxKind.First}/${SyntaxKind[0]}`);"
+		case "containers":
+			observation += "console.log(`${values.join(',')}/${map.get('x')}`);"
+		case "optional_object":
+			observation += "console.log(`${flags({flags:E.A})}/${flags({flags:E.A,other:{flags:E.B}})}`);"
+		}
+		lowersAndAgreesWithNode(t, probe.source+observation)
 	}
+
 }
 
 func TestStringEnumsStayClosed(t *testing.T) {

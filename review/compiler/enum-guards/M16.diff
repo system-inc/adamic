@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_flags.go
++++ b/internal/lower/enum_flags.go
+@@ -104,7 +104,7 @@
+ 		binary := node.AsBinaryExpression()
+ 		switch binary.OperatorToken.Kind {
+ 		case ast.KindAmpersandToken:
+-			return l.flagDomainSeen(binary.Left, target, seen) || l.flagDomainSeen(binary.Right, target, seen)
++			return l.flagDomainSeen(binary.Left, target, seen) && l.flagDomainSeen(binary.Right, target, seen)
+ 		case ast.KindBarToken:
+ 			return l.flagDomainSeen(binary.Left, target, seen) && l.flagDomainSeen(binary.Right, target, seen)
+ 		case ast.KindCaretToken:
