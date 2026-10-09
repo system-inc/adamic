@@ -1,0 +1,14 @@
+[
+  [
+    "boxed-check",
+    "ir.Unary{Operator: ir.Not, Operand: matches}",
+    "ir.BooleanConstant{}",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a"
+  ],
+  [
+    "boxed-observation",
+    "case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:",
+    "case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken:",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a"
+  ]
+]

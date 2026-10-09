@@ -1,0 +1,24 @@
+[compiler/scout-unions-main 832cbc4c] Rebuild required boolean-or-undefined class slots
+ Date: Fri Oct 9 15:49:52 2026 +0000
+ 28 files changed, 13496 insertions(+), 7 deletions(-)
+ create mode 100644 internal/lower/scout_class_boolean_test.go
+ create mode 100644 internal/oracle/scout_class_boolean_test.go
+ create mode 100644 internal/oracle/testdata/scout_class_boolean_fields.a
+ create mode 100644 internal/oracle/testdata/scout_selector_optional_boolean.a
+ create mode 100644 internal/oracle/testdata/scout_values_optional_boolean.a
+ create mode 100644 review/compiler/scout-unions-main/class-call-targets.log
+ create mode 100644 review/compiler/scout-unions-main/class-counts.log
+ create mode 100644 review/compiler/scout-unions-main/class-fields.md
+ create mode 100644 review/compiler/scout-unions-main/class-gaps.log
+ create mode 100644 review/compiler/scout-unions-main/class-lane-checks.log
+ create mode 100644 review/compiler/scout-unions-main/class-lower-retry.log
+ create mode 100644 review/compiler/scout-unions-main/class-lower.log
+ create mode 100644 review/compiler/scout-unions-main/class-optional.go.txt
+ create mode 100644 review/compiler/scout-unions-main/class-optional.log
+ create mode 100644 review/compiler/scout-unions-main/class-optional.overlay.json
+ create mode 100644 review/compiler/scout-unions-main/class-oracle.log
+ create mode 100644 review/compiler/scout-unions-main/class-refusals.log
+ create mode 100644 review/compiler/scout-unions-main/class-zero.go.txt
+ create mode 100644 review/compiler/scout-unions-main/class-zero.log
+ create mode 100644 review/compiler/scout-unions-main/class-zero.overlay.json
+ create mode 100644 review/compiler/scout-unions-main/nullable-string-lane-final.log
