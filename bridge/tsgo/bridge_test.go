@@ -13,6 +13,7 @@ import (
 	"unicode/utf16"
 
 	"context"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -43,8 +44,12 @@ func TestBridge(t *testing.T) {
 		}
 		return output
 	}
-	sanitized := filepath.Join(scratch, "tsgo-asan.a")
-	normal := filepath.Join(scratch, "tsgo.a")
+	// The checker archive, plain and sanitized, stage 0 and the oracle are build products (internal/buildcache): built
+	// once per hash of what they compile, or fetched from the store, so this test's time starts after them. The
+	// overlay mutants below build their own archives.
+	normal := buildcache.GoBuild(t, "tsgo.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
+	sanitized := buildcache.GoBuild(t, "tsgo-asan.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"},
+		"CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 	buildArchive := func(name, output, overlay string, sanitize bool) {
 		t.Helper()
 		arguments := []string{"build", "-buildmode=c-archive", "-o", output}
@@ -58,8 +63,6 @@ func TestBridge(t *testing.T) {
 		}
 		mustRun(name, command)
 	}
-	buildArchive("archive", normal, "", false)
-	buildArchive("archive-asan", sanitized, "", true)
 	driver := filepath.Join(scratch, "api")
 	linkDriver := func(name, archive, output string) {
 		t.Helper()
@@ -76,10 +79,8 @@ func TestBridge(t *testing.T) {
 	}
 	t.Log("input length off by one: ASan heap-buffer-overflow")
 
-	stage0 := filepath.Join(scratch, "adamic")
-	oracle := filepath.Join(scratch, "oracle")
-	mustRun("stage0-build", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	mustRun("oracle-build", exec.Command("go", "build", "-o", oracle, "./bridge/tsgo/oracle"))
+	stage0 := buildcache.GoBuild(t, "adamic", "./cmd/adamic", nil)
+	oracle := buildcache.GoBuild(t, "oracle", "./bridge/tsgo/oracle", nil)
 	fixture := filepath.Join(repository, "bridge/tsgo/testdata/queries.a")
 	for _, arguments := range [][]string{{"build", fixture, "-o", filepath.Join(scratch, "unlinked")}, {"c", fixture}, {"js", fixture}} {
 		output, err = run("refusal-"+arguments[0], exec.Command(stage0, arguments...))
