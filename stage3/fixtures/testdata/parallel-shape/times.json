@@ -1,0 +1,326 @@
+[
+  {
+    "name": "TestFixturesAssertions",
+    "wall_seconds": 17.359,
+    "test_seconds": 7.08,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesAssertions$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesCycles",
+    "wall_seconds": 3.286,
+    "test_seconds": 0.51,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesCycles$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesEnums",
+    "wall_seconds": 3.946,
+    "test_seconds": 0.47,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesEnums$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesHost",
+    "wall_seconds": 16.391,
+    "test_seconds": 0.58,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesHost$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesNamespaces",
+    "wall_seconds": 4.008,
+    "test_seconds": 0.51,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesNamespaces$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesNestedFunctions",
+    "wall_seconds": 11.369,
+    "test_seconds": 0.54,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesNestedFunctions$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesObjects",
+    "wall_seconds": 10.543,
+    "test_seconds": 0.53,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesObjects$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesPredicates",
+    "wall_seconds": 3.438,
+    "test_seconds": 0.53,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesPredicates$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesReal",
+    "wall_seconds": 3.636,
+    "test_seconds": 0.49,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesReal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesRecords",
+    "wall_seconds": 3.127,
+    "test_seconds": 0.51,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesRecords$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesRunner",
+    "wall_seconds": 2.93,
+    "test_seconds": 0.52,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesRunner$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesTaste",
+    "wall_seconds": 11.877,
+    "test_seconds": 0.57,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturesTaste$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestPrepareFixtureOracleHook",
+    "wall_seconds": 2.73,
+    "test_seconds": 0.55,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestPrepareFixtureOracleHook$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturePaths",
+    "wall_seconds": 2.122,
+    "test_seconds": 0.0,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturePaths$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixtureShardManifest",
+    "wall_seconds": 2.121,
+    "test_seconds": 0.0,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureShardManifest$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestTransformedNodeRunnerGuardHook",
+    "wall_seconds": 2.172,
+    "test_seconds": 0.0,
+    "result": "SKIP",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestTransformedNodeRunnerGuardHook$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestTransformedNodeRunnerGuard",
+    "wall_seconds": 2.271,
+    "test_seconds": 0.0,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestTransformedNodeRunnerGuard$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixtureDirectoriesHaveTopLevelTests",
+    "wall_seconds": 2.087,
+    "test_seconds": 0.01,
+    "result": "PASS",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]
