@@ -29,20 +29,22 @@ timeout 100 go test -json ./internal/lower \
 
 Replay command: `timeout 360 python3 review/compiler/statics-guards/replay.py`, after sourcing the toolchain. The runner bounds every go test with a 100-second subprocess timeout and `-timeout 90s`, and bounds patch application. Only targeted leaves run, never the whole lower package or repository gate. No oracle fixture or counts.md change was made. The new tests exercise Node, not native emission or sanitizers.
 
-Final top-level leaf timings, all below 60 seconds:
+Final top-level leaf timings after merging current main, all below 60 seconds:
 
 | Test | Seconds |
 | --- | ---: |
 | TestModuleNamespaceInitializedReadProof | 0.03 |
-| TestClassWrongOutputKeysRepair | 0.1 |
-| TestReadinessErrorIncludesReceiverExpression | 0.14 |
+| TestClassWrongOutputKeysRepair | 0.08 |
+| TestClockGenericReturnsT01RejectsIndexBeforeBody | 0.17 |
+| TestClockGenericReturnsT01RejectsNullBeforeBody | 0.17 |
+| TestClassWrongOutputPrivateRepair | 0.09 |
+| TestParserFactoryBindingHoisting | 0.04 |
+| TestDefiniteAssignmentSoundNeighbors | 0.31 |
+| TestReadinessErrorIncludesReceiverExpression | 0.15 |
 | TestNamespaceFactoryBindingsAgreeWithNode | 0.22 |
-| TestClockGenericReturnsT01RejectsIndexBeforeBody | 0.13 |
-| TestPrivateAndPublicStaticsAgreeWithNode | 0.28 |
-| TestParserFactoryBindingHoisting | 0.09 |
-| TestClockGenericReturnsT01RejectsNullBeforeBody | 0.12 |
-| TestClassWrongOutputPrivateRepair | 0.11 |
-| TestDefiniteAssignmentSoundNeighbors | 0.26 |
-| TestNamespaceAmbientHostInitialization | 1.18 |
+| TestPrivateAndPublicStaticsAgreeWithNode | 0.18 |
+| TestNamespaceAmbientHostInitialization | 1.15 |
 
 Landing merged current main 09769cb5ddc8067d2fa052a8c760d813894c8919. The focused leaves passed again on that merge (landed.jsonl). Lane checks on the implementation commit exited 0: `lane checks 5.4 s: gofmt and tools on 7 Go files, t.Parallel on 1 test packages; vet 1 packages`. The landing commit is checked again before push. The review logs were force-added because the repository ignores .log files. No non-test production file changed in any unit commit.
+
+Delivery commits before this report-only update: 153a5c2b (tests), eca1cf6f (main merge), ee2d8303 (review evidence). Final lane output: `lane checks 1.3 s: gofmt and tools on 7 Go files, t.Parallel on 1 test packages; vet 1 packages`, exit 0. All three mutant replays and seven empty probes exited 1 with the intended test failures; replay.py itself exited 0. Focused restored and landed commands exited 0.
