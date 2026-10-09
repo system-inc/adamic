@@ -1,0 +1,52 @@
+[
+  {
+    "test": "TestTSCCorpusUpstreamDifferences",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/upstream_protocol_test.go",
+    "seconds": 0.527,
+    "oracle": "Pinned tsc-upstream-differences.json Records checked byte-for-byte against npm Prettier 3.9.6 and the embedded Prettier fork running on Node. Includes exact parser error strings, not just exit codes. No Adamic port output is checked.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_TS_PRETTIER=/workspace/u097-prettier ADAMIC_TYPESCRIPT_SOURCE=/workspace/u111-typescript timeout 120 go test -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestTSCCorpusUpstreamDifferences$; ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.527s; no failing line: no permitted Adamic code under test is reached.",
+    "samples": [
+      0.507,
+      0.53,
+      0.527
+    ]
+  },
+  {
+    "test": "TestStatementUpstreamDifferences",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/upstream_test.go",
+    "seconds": 1.416,
+    "oracle": "Five pinned statement-upstream-differences.json records checked against external Go cohere Format and embedded/npm Prettier 3.9.6. The npm parent checks exit/stderr, but statementDifferences.mjs compares exact text and requires disagreement with Go. No Adamic port output is checked.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_TS_PRETTIER=/workspace/u097-prettier ADAMIC_TYPESCRIPT_SOURCE=/workspace/u111-typescript timeout 120 go test -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestStatementUpstreamDifferences$; ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t1.416s; no failing line: no permitted Adamic code under test is reached.",
+    "samples": [
+      1.445,
+      1.385,
+      1.416
+    ]
+  }
+]

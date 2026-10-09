@@ -1,0 +1,981 @@
+Base 60f24a6ef736a6016edeca63df075678186bba8d. Line numbers are at this origin/main commit.
+Reachable package helpers: upstreamOutcomes, comparePrinterLibrary, comparePrinterLibraryCases, bounded, combinedOutput, execute, executeShards (early return for JSON without adjacent text), executeOne, firstDifference (only on discrepancy). No lowerProgram, lowered, nativeBinary, natively, onJavaScriptBackend.
+External entry calls: prettier.format in expressions.mjs and embedded.mjs; Go cohere Format through TestAdamicStatementUpstreamDifferences; prettier.format in statementDifferences.mjs. These are oracle implementations under the brief, not permitted Adamic mutation targets.
+
+stage1/cohere/tsprinter/upstream_protocol_test.go
+1: package tsprinter
+2: 
+3: import (
+4: 	"encoding/json"
+5: 	"os"
+6: 	"path/filepath"
+7: 	"strings"
+8: 	"testing"
+9: )
+10: 
+11: type upstreamOutcome struct {
+12: 	Family, Label, Source, Go, Prettier, Embedded, PrettierError, EmbeddedError string
+13: }
+14: 
+15: func upstreamOutcomes(t *testing.T) []upstreamOutcome {
+16: 	t.Helper()
+17: 	data, err := os.ReadFile("testdata/tsc-upstream-differences.json")
+18: 	if err != nil {
+19: 		t.Fatal(err)
+20: 	}
+21: 	var pinned struct {
+22: 		Version string
+23: 		Records []upstreamOutcome
+24: 	}
+25: 	if err := json.Unmarshal(data, &pinned); err != nil {
+26: 		t.Fatal(err)
+27: 	}
+28: 	if pinned.Version != "3.9.6" {
+29: 		t.Fatalf("upstream outcome version: %s", pinned.Version)
+30: 	}
+31: 	return pinned.Records
+32: }
+33: 
+34: // The port always matches Go. External printers retain their own exact bytes or
+35: // parser errors; these outcomes are compared, never normalized into Go output.
+36: func comparePrinterLibrary(t *testing.T, name string, result run, specs, family string, embedded bool) {
+37: 	t.Helper()
+38: 	comparePrinterLibraryCases(t, name, result, specs, family, embedded, true)
+39: }
+40: 
+41: // A unit checks every applicable pinned outcome; the parent checks the full census.
+42: func comparePrinterLibraryCases(t *testing.T, name string, result run, specs, family string, embedded, census bool) {
+43: 	t.Helper()
+44: 	if result.exitCode != 0 || len(result.stderr) != 0 {
+45: 		t.Fatalf("%s: exit %d stderr %s", name, result.exitCode, result.stderr)
+46: 	}
+47: 	data, err := os.ReadFile(specs)
+48: 	if err != nil {
+49: 		t.Fatal(err)
+50: 	}
+51: 	var cases []printerCase
+52: 	if err := json.Unmarshal(data, &cases); err != nil {
+53: 		t.Fatal(err)
+54: 	}
+55: 	lines := strings.Split(strings.TrimSuffix(string(result.stdout), "\n"), "\n")
+56: 	if len(lines) != len(cases) {
+57: 		t.Fatalf("%s: %d answers, want %d", name, len(lines), len(cases))
+58: 	}
+59: 	records := upstreamOutcomes(t)
+60: 	seen := make(map[string]bool)
+61: 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
+62: 	differences, refusals := 0, 0
+63: 	for index, item := range cases {
+64: 		status, want := "ok", item.Want
+65: 		for _, record := range records {
+66: 			if record.Family != family || !strings.HasSuffix(item.Label, record.Label) || record.Source != item.Source {
+67: 				continue
+68: 			}
+69: 			if record.Go != item.Want {
+70: 				t.Fatalf("%s: recorded Go outcome changed", record.Label)
+71: 			}
+72: 			seen[record.Label] = true
+73: 			errText := record.PrettierError
+74: 			want = record.Prettier
+75: 			if embedded {
+76: 				want, errText = record.Embedded, record.EmbeddedError
+77: 			}
+78: 			if errText != "" {
+79: 				status, want = "error", errText
+80: 				refusals++
+81: 			} else {
+82: 				differences++
+83: 			}
+84: 			if want == "" {
+85: 				t.Fatalf("%s: missing %s outcome", record.Label, name)
+86: 			}
+87: 			break
+88: 		}
+89: 		expected := status + "\t" + escape.Replace(want)
+90: 		if lines[index] != expected {
+91: 			t.Errorf("%s %s: %s", name, item.Label, firstDifference(lines[index], expected))
+92: 		}
+93: 	}
+94: 	for _, record := range records {
+95: 		if census && record.Family == family && !seen[record.Label] {
+96: 			t.Errorf("%s: recorded upstream case absent: %s", name, record.Label)
+97: 		}
+98: 	}
+99: 	t.Logf("%s: %d cases; %d exact upstream text differences, %d exact parser refusals, all other bytes match Go", name, len(cases), differences, refusals)
+100: }
+101: 
+102: func TestTSCCorpusUpstreamDifferences(t *testing.T) {
+103: 	t.Parallel()
+104: 	library := os.Getenv("ADAMIC_TS_PRETTIER")
+105: 	if library == "" {
+106: 		t.Skip("set ADAMIC_TS_PRETTIER to prettier@3.9.6; #xq2ecw6 (setup --gate-inputs) installs it")
+107: 	}
+108: 	for _, family := range []string{"expressions", "statements"} {
+109: 		var cases []printerCase
+110: 		for _, record := range upstreamOutcomes(t) {
+111: 			if record.Family == family {
+112: 				cases = append(cases, printerCase{record.Label, record.Source, record.Go})
+113: 			}
+114: 		}
+115: 		data, _ := json.Marshal(cases)
+116: 		specs := filepath.Join(t.TempDir(), "cases.json")
+117: 		if err := os.WriteFile(specs, data, 0644); err != nil {
+118: 			t.Fatal(err)
+119: 		}
+120: 		npm, _ := filepath.Abs("testdata/expressions.mjs")
+121: 		comparePrinterLibrary(t, "npm Prettier", execute(t, nil, "node", npm, library, specs), specs, family, false)
+122: 		fork, _ := filepath.Abs("testdata/embedded.mjs")
+123: 		bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
+124: 		comparePrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", fork, bundles, specs), specs, family, true)
+125: 	}
+126: }
+
+stage1/cohere/tsprinter/upstream_test.go
+1: package tsprinter
+2: 
+3: import (
+4: 	"encoding/json"
+5: 	"os"
+6: 	"path/filepath"
+7: 	"strings"
+8: 	"testing"
+9: )
+10: 
+11: // Not parallel: this is a small pin check on the external formatters, not a port benchmark.
+12: func TestStatementUpstreamDifferences(t *testing.T) {
+13: 	directory := t.TempDir()
+14: 	root, _ := filepath.Abs(repository)
+15: 	side, _ := filepath.Abs("testdata/statements_side_test.go")
+16: 	expressions, _ := filepath.Abs("testdata/expressions_side_test.go")
+17: 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{root + "/cohere/internal/format/javascript/adamic_expressions_test.go": expressions, root + "/cohere/internal/format/javascript/adamic_statements_test.go": side}})
+18: 	path := filepath.Join(directory, "overlay.json")
+19: 	if err := os.WriteFile(path, overlay, 0644); err != nil {
+20: 		t.Fatal(err)
+21: 	}
+22: 	recordsPath, _ := filepath.Abs("testdata/statement-upstream-differences.json")
+23: 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicStatementUpstreamDifferences$", "./internal/format/javascript")
+24: 	command.Dir = root + "/cohere"
+25: 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_UPSTREAM="+recordsPath)
+26: 	if output, err := combinedOutput(command); err != nil {
+27: 		t.Fatalf("Go: %v %s", err, output)
+28: 	} else {
+29: 		t.Log(string(output))
+30: 	}
+31: 	data, err := os.ReadFile(recordsPath)
+32: 	if err != nil {
+33: 		t.Fatal(err)
+34: 	}
+35: 	var records []struct{ Source, Go, Prettier string }
+36: 	if err = json.Unmarshal(data, &records); err != nil {
+37: 		t.Fatal(err)
+38: 	}
+39: 	cases := []map[string]string{}
+40: 	var want strings.Builder
+41: 	for _, record := range records {
+42: 		cases = append(cases, map[string]string{"Source": record.Source, "Want": record.Go})
+43: 		want.WriteString("ok\t" + strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t").Replace(record.Go) + "\n")
+44: 	}
+45: 	specs, _ := json.Marshal(cases)
+46: 	specsPath := filepath.Join(directory, "cases.json")
+47: 	if err = os.WriteFile(specsPath, specs, 0644); err != nil {
+48: 		t.Fatal(err)
+49: 	}
+50: 	script, _ := filepath.Abs("testdata/embedded.mjs")
+51: 	bundles := root + "/cohere/internal/format/prettier/bundles"
+52: 	result := execute(t, nil, "node", script, bundles, specsPath)
+53: 	if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != want.String() {
+54: 		t.Fatalf("embedded: exit %d stderr %s diff %s", result.exitCode, result.stderr, firstDifference(string(result.stdout), want.String()))
+55: 	}
+56: 	library := os.Getenv("ADAMIC_TS_PRETTIER")
+57: 	if library == "" {
+58: 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+59: 	}
+60: 	script, _ = filepath.Abs("testdata/statementDifferences.mjs")
+61: 	result = execute(t, nil, "node", script, library, recordsPath)
+62: 	if result.exitCode != 0 || len(result.stderr) != 0 {
+63: 		t.Fatalf("npm: exit %d stderr %s", result.exitCode, result.stderr)
+64: 	}
+65: 	t.Log(string(result.stdout))
+66: }
+
+stage1/cohere/tsprinter/helpers_test.go
+1: package tsprinter
+2: 
+3: import (
+4: 	"bytes"
+5: 	"context"
+6: 	"errors"
+7: 	"fmt"
+8: 	"os"
+9: 	"os/exec"
+10: 	"path/filepath"
+11: 	"runtime"
+12: 	"strings"
+13: 	"testing"
+14: 
+15: 	"github.com/system-inc/adamic/internal/childguard"
+16: 	"github.com/system-inc/adamic/internal/ir"
+17: 	"github.com/system-inc/adamic/internal/javascript"
+18: 	"github.com/system-inc/adamic/internal/load"
+19: 	"github.com/system-inc/adamic/internal/lower"
+20: 	"github.com/system-inc/adamic/internal/native"
+21: )
+22: 
+23: const repository = "../../.."
+24: 
+25: // firstDifference says where two outputs first differ, line by line, or "" when they don't.
+26: func firstDifference(got string, want string) string {
+27: 	if got == want {
+28: 		return ""
+29: 	}
+30: 	gotLines, wantLines := strings.Split(got, "\n"), strings.Split(want, "\n")
+31: 	for index := 0; index < len(gotLines) || index < len(wantLines); index++ {
+32: 		var gotLine, wantLine string
+33: 		if index < len(gotLines) {
+34: 			gotLine = gotLines[index]
+35: 		}
+36: 		if index < len(wantLines) {
+37: 			wantLine = wantLines[index]
+38: 		}
+39: 		if gotLine != wantLine {
+40: 			return fmt.Sprintf("line %d: %q, Go cohere %q", index+1, gotLine, wantLine)
+41: 		}
+42: 	}
+43: 	return "the same lines, not the same bytes"
+44: }
+45: 
+46: // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
+47: func lowered(t *testing.T, path string) *ir.Program {
+48: 	t.Helper()
+49: 	program, err := lowerProgram(path)
+50: 	if err != nil {
+51: 		t.Fatal(err)
+52: 	}
+53: 	return program
+54: }
+55: 
+56: func lowerProgram(path string) (*ir.Program, error) {
+57: 	program, err := load.Load([]string{path})
+58: 	if err != nil {
+59: 		return nil, fmt.Errorf("Load: %w", err)
+60: 	}
+61: 	result, err := lower.Lower(context.Background(), program)
+62: 	if err != nil {
+63: 		return nil, fmt.Errorf("Lower: %w", err)
+64: 	}
+65: 	return result, nil
+66: }
+67: 
+68: // bounded prepares a child; execute and combinedOutput run it with progress-based guards.
+69: func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+70: 	t.Helper()
+71: 	// The child guard owns hang detection, including for Go test children.
+72: 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
+73: 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
+74: 	}
+75: 	return exec.Command(name, arguments...)
+76: }
+77: 
+78: func combinedOutput(command *exec.Cmd) ([]byte, error) {
+79: 	return childguard.CombinedOutput(command, childguard.Options{})
+80: }
+81: 
+82: func execute(t *testing.T, environment []string, name string, arguments ...string) run {
+83: 	t.Helper()
+84: 	if result, ok := executeShards(t, environment, name, arguments); ok {
+85: 		return result
+86: 	}
+87: 	return executeOne(t, environment, name, arguments...)
+88: }
+89: 
+90: func executeOne(t *testing.T, environment []string, name string, arguments ...string) run {
+91: 	t.Helper()
+92: 	command := bounded(t, name, arguments...)
+93: 	if environment != nil {
+94: 		command.Env = append(os.Environ(), environment...)
+95: 	}
+96: 	var stdout, stderr bytes.Buffer
+97: 	command.Stdout = &stdout
+98: 	command.Stderr = &stderr
+99: 	err := childguard.Run(command, childguard.Options{})
+100: 	var exitError *exec.ExitError
+101: 	if err != nil && !errors.As(err, &exitError) {
+102: 		t.Fatalf("running %s: %v", name, err)
+103: 	}
+104: 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+105: }
+106: 
+107: // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
+108: func onNode(t *testing.T, path string, arguments ...string) run {
+109: 	t.Helper()
+110: 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+111: 	if err != nil {
+112: 		t.Fatal(err)
+113: 	}
+114: 	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+115: }
+116: 
+117: // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
+118: func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
+119: 	t.Helper()
+120: 	path := filepath.Join(t.TempDir(), "program.mjs")
+121: 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+122: 		t.Fatal(err)
+123: 	}
+124: 	return onNode(t, path, arguments...)
+125: }
+126: 
+127: // nativelyRun is natively's run alone.
+128: func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
+129: 	t.Helper()
+130: 	result, _ := natively(t, program, arguments...)
+131: 	return result
+132: }
+133: 
+134: // natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
+135: // returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
+136: // its own run.
+137: func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
+138: 	t.Helper()
+139: 	binary := nativeBinary(t, program, t.TempDir())
+140: 	var environment []string
+141: 	if runtime.GOOS == "linux" {
+142: 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+143: 	}
+144: 	return execute(t, environment, binary, arguments...), binary
+145: }
+146: 
+147: // nativeBinary allows a corpus-owning test to build before starting its run units.
+148: // The owner supplies the directory so it outlives preparation.
+149: func nativeBinary(t *testing.T, program *ir.Program, directory string) string {
+150: 	t.Helper()
+151: 	binary, err := buildNative(program, directory)
+152: 	if err != nil {
+153: 		t.Fatal(err)
+154: 	}
+155: 	return binary
+156: }
+157: 
+158: func buildNative(program *ir.Program, directory string) (string, error) {
+159: 	binary := filepath.Join(directory, "port")
+160: 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+161: 		return "", err
+162: 	}
+163: 	return binary, nil
+164: }
+165: 
+166: // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
+167: // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
+168: // checks every fixture.
+169: func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+170: 	t.Helper()
+171: 	switch runtime.GOOS {
+172: 	case "darwin":
+173: 		binary := filepath.Join(t.TempDir(), "port")
+174: 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+175: 			t.Fatal(err)
+176: 		}
+177: 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+178: 		if report.exitCode == 0 {
+179: 			return ""
+180: 		}
+181: 		return string(report.stdout)
+182: 	case "linux":
+183: 		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+184: 		if report.exitCode == 0 {
+185: 			return ""
+186: 		}
+187: 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+188: 	}
+189: 	t.Fatalf("no leak check for %s", runtime.GOOS)
+190: 	return ""
+191: }
+192: 
+193: type run struct {
+194: 	stdout, stderr []byte
+195: 	exitCode       int
+196: }
+197: 
+198: // output keeps stdout and stderr separate for git corpus queries.
+199: func output(command *exec.Cmd) ([]byte, error) {
+200: 	var stdout, stderr bytes.Buffer
+201: 	command.Stdout = &stdout
+202: 	captureStderr := command.Stderr == nil
+203: 	if captureStderr {
+204: 		command.Stderr = &stderr
+205: 	}
+206: 	err := childguard.Run(command, childguard.Options{})
+207: 	if exitError, ok := err.(*exec.ExitError); ok && captureStderr {
+208: 		exitError.Stderr = stderr.Bytes()
+209: 	}
+210: 	return stdout.Bytes(), err
+211: }
+
+stage1/cohere/tsprinter/shards_test.go
+1: package tsprinter
+2: 
+3: import (
+4: 	"bytes"
+5: 	"encoding/json"
+6: 	"fmt"
+7: 	"os"
+8: 	"path/filepath"
+9: 	"runtime"
+10: 	"sort"
+11: 	"strings"
+12: 	"sync"
+13: 	"testing"
+14: )
+15: 
+16: type corpusShard struct {
+17: 	indices     []int
+18: 	text, specs string
+19: }
+20: type corpusPlan struct {
+21: 	labels []string
+22: 	shards []corpusShard
+23: }
+24: 
+25: var corpusPlans sync.Map
+26: 
+27: // Source bytes approximate parser and printer work. Ties use the original case
+28: // number and then the shard number, making the assignment reproducible.
+29: func assignCorpus(weights []int, count int) [][]int {
+30: 	count = min(count, len(weights))
+31: 	if count == 0 {
+32: 		return nil
+33: 	}
+34: 	order := make([]int, len(weights))
+35: 	for i := range order {
+36: 		order[i] = i
+37: 	}
+38: 	sort.Slice(order, func(i, j int) bool {
+39: 		if weights[order[i]] != weights[order[j]] {
+40: 			return weights[order[i]] > weights[order[j]]
+41: 		}
+42: 		return order[i] < order[j]
+43: 	})
+44: 	result, totals := make([][]int, count), make([]int, count)
+45: 	for _, index := range order {
+46: 		shard := 0
+47: 		for i := 1; i < count; i++ {
+48: 			if totals[i] < totals[shard] {
+49: 				shard = i
+50: 			}
+51: 		}
+52: 		result[shard] = append(result[shard], index)
+53: 		totals[shard] += max(weights[index], 1)
+54: 	}
+55: 	return result
+56: }
+57: 
+58: func planCorpus(t *testing.T, path string) *corpusPlan {
+59: 	t.Helper()
+60: 	if cached, ok := corpusPlans.Load(path); ok {
+61: 		return cached.(*corpusPlan)
+62: 	}
+63: 	base := strings.TrimSuffix(path, filepath.Ext(path))
+64: 	textPath, specsPath := base+".txt", base+".json"
+65: 	text, err := os.ReadFile(textPath)
+66: 	if err != nil {
+67: 		t.Fatal(err)
+68: 	}
+69: 	data, err := os.ReadFile(specsPath)
+70: 	if err != nil {
+71: 		t.Fatal(err)
+72: 	}
+73: 	var specs []json.RawMessage
+74: 	if err := json.Unmarshal(data, &specs); err != nil {
+75: 		t.Fatal(err)
+76: 	}
+77: 	var rows []string
+78: 	if filepath.Base(base) == "docs" {
+79: 		for _, part := range strings.Split(string(text), "reset\t")[1:] {
+80: 			rows = append(rows, "reset\t"+part)
+81: 		}
+82: 	} else {
+83: 		for _, row := range strings.Split(strings.TrimSuffix(string(text), "\n"), "\n") {
+84: 			rows = append(rows, row+"\n")
+85: 		}
+86: 	}
+87: 	if len(rows) != len(specs) || len(rows) == 0 {
+88: 		t.Fatalf("%s: %d protocol cases, %d specifications", path, len(rows), len(specs))
+89: 	}
+90: 	plan := &corpusPlan{labels: make([]string, len(rows))}
+91: 	weights := make([]int, len(rows))
+92: 	for i, raw := range specs {
+93: 		var item printerCase
+94: 		if err := json.Unmarshal(raw, &item); err != nil {
+95: 			t.Fatal(err)
+96: 		}
+97: 		plan.labels[i] = item.Label
+98: 		if item.Label == "" {
+99: 			plan.labels[i] = fmt.Sprintf("%s:case %d", specsPath, i)
+100: 		}
+101: 		weights[i] = len(rows[i])
+102: 	}
+103: 	directory := t.TempDir()
+104: 	for number, indices := range assignCorpus(weights, min(runtime.NumCPU(), 8)) {
+105: 		var batch strings.Builder
+106: 		subset := make([]json.RawMessage, 0, len(indices))
+107: 		for _, index := range indices {
+108: 			batch.WriteString(rows[index])
+109: 			subset = append(subset, specs[index])
+110: 		}
+111: 		shard := corpusShard{indices: indices, text: filepath.Join(directory, fmt.Sprintf("shard-%d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("shard-%d.json", number))}
+112: 		if err := os.WriteFile(shard.text, []byte(batch.String()), 0644); err != nil {
+113: 			t.Fatal(err)
+114: 		}
+115: 		encoded, err := json.Marshal(subset)
+116: 		if err != nil {
+117: 			t.Fatal(err)
+118: 		}
+119: 		if err := os.WriteFile(shard.specs, encoded, 0644); err != nil {
+120: 			t.Fatal(err)
+121: 		}
+122: 		plan.shards = append(plan.shards, shard)
+123: 	}
+124: 	corpusPlans.Store(path, plan)
+125: 	// Either extension resolves to the same immutable plan, retained by the
+126: 	// corpus-owning test until all its parallel mutant subtests finish.
+127: 	corpusPlans.Store(textPath, plan)
+128: 	corpusPlans.Store(specsPath, plan)
+129: 	t.Cleanup(func() { corpusPlans.Delete(textPath); corpusPlans.Delete(specsPath) })
+130: 	t.Logf("%s: %d cases in %d largest-first processes", filepath.Base(base), len(rows), len(plan.shards))
+131: 	return plan
+132: }
+133: 
+134: func mergeCorpus(plan *corpusPlan, outputs [][]byte) ([]byte, error) {
+135: 	if len(outputs) != len(plan.shards) {
+136: 		return nil, fmt.Errorf("corpus: %d shards, want %d", len(outputs), len(plan.shards))
+137: 	}
+138: 	merged := make([][]byte, len(plan.labels))
+139: 	for number, shard := range plan.shards {
+140: 		output := outputs[number]
+141: 		lines := bytes.Split(bytes.TrimSuffix(output, []byte("\n")), []byte("\n"))
+142: 		if len(output) == 0 {
+143: 			lines = nil
+144: 		}
+145: 		if len(lines) != len(shard.indices) {
+146: 			index := shard.indices[min(len(lines), len(shard.indices)-1)]
+147: 			return nil, fmt.Errorf("shard %d %s: missing or extra case: %d answers, want %d", number, plan.labels[index], len(lines), len(shard.indices))
+148: 		}
+149: 		if !bytes.HasSuffix(output, []byte("\n")) {
+150: 			return nil, fmt.Errorf("shard %d %s: unterminated answer", number, plan.labels[shard.indices[len(shard.indices)-1]])
+151: 		}
+152: 		for i, index := range shard.indices {
+153: 			if index < 0 || index >= len(merged) {
+154: 				return nil, fmt.Errorf("shard %d: extra case %d", number, index)
+155: 			}
+156: 			if merged[index] != nil {
+157: 				return nil, fmt.Errorf("shard %d %s: repeated case", number, plan.labels[index])
+158: 			}
+159: 			merged[index] = lines[i]
+160: 		}
+161: 	}
+162: 	var result bytes.Buffer
+163: 	for index, line := range merged {
+164: 		if line == nil {
+165: 			return nil, fmt.Errorf("%s: missing case", plan.labels[index])
+166: 		}
+167: 		result.Write(line)
+168: 		result.WriteByte('\n')
+169: 	}
+170: 	return result.Bytes(), nil
+171: }
+172: 
+173: func executeShards(t *testing.T, environment []string, name string, arguments []string) (run, bool) {
+174: 	t.Helper()
+175: 	position := -1
+176: 	for i, argument := range arguments {
+177: 		switch filepath.Base(argument) {
+178: 		case "cases.txt", "cases.json", "tsc-cases.txt", "docs.txt", "docs.json":
+179: 			position = i
+180: 		}
+181: 	}
+182: 	if position < 0 {
+183: 		return run{}, false
+184: 	}
+185: 	// Tiny pinned upstream probes have JSON only and stay a single process.
+186: 	path := arguments[position]
+187: 	if _, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".txt"); os.IsNotExist(err) {
+188: 		return run{}, false
+189: 	}
+190: 	plan := planCorpus(t, path)
+191: 	outputs := make([][]byte, len(plan.shards))
+192: 	results := make([]run, len(plan.shards))
+193: 	var group sync.WaitGroup
+194: 	for number, shard := range plan.shards {
+195: 		group.Add(1)
+196: 		go func(number int, shard corpusShard) {
+197: 			defer group.Done()
+198: 			args := append([]string(nil), arguments...)
+199: 			args[position] = shard.text
+200: 			if filepath.Ext(path) == ".json" {
+201: 				args[position] = shard.specs
+202: 			}
+203: 			results[number] = executeOne(t, environment, name, args...)
+204: 			outputs[number] = results[number].stdout
+205: 		}(number, shard)
+206: 	}
+207: 	group.Wait()
+208: 	// macOS leaks adds its own report to stdout. Each invocation must pass;
+209: 	// the ordinary native pass independently checks every printed answer.
+210: 	if name == "leaks" {
+211: 		for number, result := range results {
+212: 			if result.exitCode != 0 {
+213: 				t.Fatalf("leaks shard %d (%s): exit %d stdout %s stderr %s", number, plan.labels[plan.shards[number].indices[0]], result.exitCode, result.stdout, result.stderr)
+214: 			}
+215: 		}
+216: 		return run{}, true
+217: 	}
+218: 	for number, result := range results {
+219: 		if result.exitCode != 0 || len(result.stderr) != 0 {
+220: 			t.Fatalf("%s shard %d (%s): exit %d stderr %s", name, number, plan.labels[plan.shards[number].indices[0]], result.exitCode, result.stderr)
+221: 		}
+222: 	}
+223: 	stdout, err := mergeCorpus(plan, outputs)
+224: 	if err != nil {
+225: 		t.Fatalf("%s: %v", name, err)
+226: 	}
+227: 	return run{stdout: stdout}, true
+228: }
+229: 
+230: func corpusDifference(t *testing.T, cases, got, want string) string {
+231: 	t.Helper()
+232: 	if got == want {
+233: 		return ""
+234: 	}
+235: 	plan := planCorpus(t, cases)
+236: 	actual, expected := strings.Split(got, "\n"), strings.Split(want, "\n")
+237: 	for i := 0; i < max(len(actual), len(expected)); i++ {
+238: 		a, b := "", ""
+239: 		if i < len(actual) {
+240: 			a = actual[i]
+241: 		}
+242: 		if i < len(expected) {
+243: 			b = expected[i]
+244: 		}
+245: 		if a != b {
+246: 			label := cases
+247: 			if i < len(plan.labels) {
+248: 				label = plan.labels[i]
+249: 			}
+250: 			return fmt.Sprintf("%s: %s", label, firstDifference(a, b))
+251: 		}
+252: 	}
+253: 	return firstDifference(got, want)
+254: }
+255: 
+256: func TestCorpusShardAssignment(t *testing.T) {
+257: 	t.Parallel()
+258: 	got := assignCorpus([]int{1, 10, 2, 10, 3, 4}, 2)
+259: 	want := [][]int{{1, 5, 0}, {3, 4, 2}}
+260: 	if fmt.Sprint(got) != fmt.Sprint(want) {
+261: 		t.Fatalf("largest-first assignment %v, want %v", got, want)
+262: 	}
+263: }
+264: 
+265: func TestCorpusShardCoverage(t *testing.T) {
+266: 	t.Parallel()
+267: 	plan := &corpusPlan{labels: []string{"first.ts:0", "second.ts:4", "third.ts:8"}, shards: []corpusShard{{indices: []int{2, 0}}, {indices: []int{1}}}}
+268: 	for _, test := range []struct {
+269: 		name   string
+270: 		output [][]byte
+271: 		want   string
+272: 	}{
+273: 		{"missing", [][]byte{[]byte("ok\tthird\n"), []byte("ok\tsecond\n")}, "first.ts:0: missing or extra case"},
+274: 		{"extra", [][]byte{[]byte("ok\tthird\nok\tfirst\nok\textra\n"), []byte("ok\tsecond\n")}, "first.ts:0: missing or extra case"},
+275: 		{"unterminated", [][]byte{[]byte("ok\tthird\nok\tfirst"), []byte("ok\tsecond\n")}, "first.ts:0: unterminated answer"},
+276: 	} {
+277: 		t.Run(test.name, func(t *testing.T) {
+278: 			if _, err := mergeCorpus(plan, test.output); err == nil || !strings.Contains(err.Error(), test.want) {
+279: 				t.Fatalf("error %v, want %s", err, test.want)
+280: 			}
+281: 		})
+282: 	}
+283: }
+284: 
+285: // A real child reads the shard inputs; its independent expected bytes establish
+286: // both original-order reconstruction and named comparisons across shard boundaries.
+287: func TestCorpusShardTransport(t *testing.T) {
+288: 	t.Parallel()
+289: 	directory := t.TempDir()
+290: 	path := filepath.Join(directory, "cases.txt")
+291: 	var cases []printerCase
+292: 	var input, expected strings.Builder
+293: 	for i := 0; i < 23; i++ {
+294: 		source := strings.Repeat("x", 24-i)
+295: 		cases = append(cases, printerCase{fmt.Sprintf("fixture-%02d.ts:0", i), source, source})
+296: 		input.WriteString(">" + source + "\n")
+297: 		expected.WriteString("ok\t" + source + "\n")
+298: 	}
+299: 	data, err := json.Marshal(cases)
+300: 	if err != nil {
+301: 		t.Fatal(err)
+302: 	}
+303: 	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
+304: 		t.Fatal(err)
+305: 	}
+306: 	if err := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); err != nil {
+307: 		t.Fatal(err)
+308: 	}
+309: 	script := filepath.Join(directory, "driver.mjs")
+310: 	source := `import {readFileSync} from 'node:fs';
+311: for(const row of readFileSync(process.argv[2],'utf8').trimEnd().split('\n')) {
+312:  process.stdout.write('ok\t'+row.slice(1)+'\n');
+313: }
+314: `
+315: 	if err := os.WriteFile(script, []byte(source), 0644); err != nil {
+316: 		t.Fatal(err)
+317: 	}
+318: 	result := execute(t, nil, "node", script, path)
+319: 	if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != expected.String() {
+320: 		t.Fatalf("transport: exit %d stderr %s diff %s", result.exitCode, result.stderr, corpusDifference(t, path, string(result.stdout), expected.String()))
+321: 	}
+322: }
+
+stage1/cohere/tsprinter/testdata/statements_side_test.go
+1: // Overlay alongside the independent expression selector in cohere's Go printer.
+2: package javascript
+3: 
+4: import (
+5: 	"encoding/json"
+6: 	"fmt"
+7: 	"os"
+8: 	"strings"
+9: 	"testing"
+10: 
+11: 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+12: 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+13: 	"github.com/system-inc/cohere/internal/format/estree"
+14: 	"github.com/system-inc/cohere/internal/format/formatoptions"
+15: )
+16: 
+17: func statementSyntax(node *ast.Node) bool {
+18: 	if node == nil {
+19: 		return true
+20: 	}
+21: 	switch node.Kind {
+22: 	case ast.KindSourceFile:
+23: 		for _, item := range node.AsSourceFile().Statements.Nodes {
+24: 			if !statementSyntax(item) {
+25: 				return false
+26: 			}
+27: 		}
+28: 		return true
+29: 	case ast.KindBlock:
+30: 		valid := true
+31: 		node.ForEachChild(func(child *ast.Node) bool {
+32: 			if !statementSyntax(child) {
+33: 				valid = false
+34: 			}
+35: 			return false
+36: 		})
+37: 		return valid
+38: 	case ast.KindFunctionDeclaration:
+39: 		if node.Name() == nil || node.Type() != nil || node.TypeParameterList() != nil {
+40: 			return false
+41: 		}
+42: 		valid := true
+43: 		node.ForEachChild(func(child *ast.Node) bool {
+44: 			if child.Kind != ast.KindAsyncKeyword && child.Kind != ast.KindAsteriskToken && !statementSyntax(child) {
+45: 				valid = false
+46: 			}
+47: 			return false
+48: 		})
+49: 		return valid
+50: 	default:
+51: 		return supportedSyntax(node)
+52: 	}
+53: }
+54: 
+55: // Not parallel: writes the fixed output paths supplied by the environment request.
+56: func TestAdamicStatementCorpus(t *testing.T) {
+57: 	data, err := os.ReadFile(os.Getenv("ADAMIC_TS_STATEMENT_REQUEST"))
+58: 	if err != nil {
+59: 		t.Fatal(err)
+60: 	}
+61: 	var request struct {
+62: 		Files           []string
+63: 		Directory, Gaps string
+64: 	}
+65: 	if err = json.Unmarshal(data, &request); err != nil {
+66: 		t.Fatal(err)
+67: 	}
+68: 	cases := []portExpressionCase{}
+69: 	coverage := map[string]int{}
+70: 	rejected := map[string]int{}
+71: 	failed := map[string]string{}
+72: 	whole := 0
+73: 	add := func(label, source string) { cases = append(cases, portExpressionCase{Label: label, Source: source}) }
+74: 	for _, path := range request.Files {
+75: 		bytes, err := os.ReadFile(path)
+76: 		if err != nil {
+77: 			t.Fatal(err)
+78: 		}
+79: 		source := string(bytes)
+80: 		file := estree.ParseSourceFile(path, source)
+81: 		if diagnostics := file.Diagnostics(); len(diagnostics) > 0 {
+82: 			failed[path] = diagnostics[0].String()
+83: 			continue
+84: 		}
+85: 		var visit func(*ast.Node) bool
+86: 		visit = func(node *ast.Node) bool {
+87: 			if node.Kind == ast.KindSourceFile || ast.IsStatement(node) {
+88: 				start := scanner.GetTokenPosOfNode(node, file, false)
+89: 				fragment := source[start:node.End()]
+90: 				if node.Kind == ast.KindSourceFile {
+91: 					start = 0
+92: 					fragment = source
+93: 				}
+94: 				if statementSyntax(node) && coreBoundaries(node, source) && !strings.Contains(fragment, "/*") && !strings.Contains(fragment, "//") && !strings.HasPrefix(fragment, "#!") && !strings.HasPrefix(fragment, "\ufeff#!") && !hasBlankLine(fragment) && !strings.Contains(fragment, "\r") {
+95: 					if _, _, _, err := estree.ParseTypeScript("statement.ts", fragment, nil); err == nil {
+96: 						add(fmt.Sprintf("%s:%d:%s", path, start, node.Kind), fragment)
+97: 						coverage[node.Kind.String()]++
+98: 						if node.Kind == ast.KindSourceFile {
+99: 							whole++
+100: 						}
+101: 						return false
+102: 					}
+103: 					rejected["standalone-context"]++
+104: 				} else {
+105: 					rejected[node.Kind.String()]++
+106: 				}
+107: 			}
+108: 			node.ForEachChild(visit)
+109: 			return false
+110: 		}
+111: 		visit(file.AsNode())
+112: 	}
+113: 	for _, first := range []string{"const x=1;", "let x,y;", "var x=1,y=2;", "f(x);", "({x:1}).value;", "(a,b);", "'use strict';", "('use strict');", ";", "debugger;", "function named(x){const y=x+1;return y;}", "async function named(){return await foo;}", "function* named(){yield* foo;}"} {
+114: 		for _, second := range []string{"f(x);", "let y=x+1;", "const y={a:1,b:2};", "{let y=1;f(y);}", ";", "'later';", "(function named(){return x;})();"} {
+115: 			for _, third := range []string{"", "f(y);", "debugger;"} {
+116: 				add("program-sequence", first+second+third)
+117: 			}
+118: 		}
+119: 	}
+120: 	for _, source := range []string{"", ";", ";;", "function named(){}", "{;}", "const veryLongIdentifierAlpha=veryLongIdentifierBeta+veryLongIdentifierGamma+veryLongIdentifierDelta;f(veryLongIdentifierAlpha);"} {
+121: 		add("program-boundary", source)
+122: 	}
+123: 	for _, source := range []string{"function named();", "function named(x);", "function named(...items);", "function named(x=1);", "{function named();}", "yield\nvalue;", "yield\n0;", "yield 0;", "{}[0];", "p?x:y;", "{p?x:y;}"} {
+124: 		add("tsc-corpus-boundary", source)
+125: 	}
+126: 	options := formatoptions.Default()
+127: 	options.PrintWidth = 80
+128: 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
+129: 	var input, answers strings.Builder
+130: 	for index := range cases {
+131: 		item := &cases[index]
+132: 		item.Want, err = Format("statement.ts", item.Source, options, nil)
+133: 		if err != nil {
+134: 			t.Fatalf("case %d %s %q: %v", index, item.Label, item.Source, err)
+135: 		}
+136: 		fmt.Fprintln(&input, ">"+escape.Replace(item.Source))
+137: 		fmt.Fprintln(&answers, "ok\t"+escape.Replace(item.Want))
+138: 	}
+139: 	encoded, _ := json.Marshal(cases)
+140: 	report, _ := json.MarshalIndent(map[string]any{"files": len(request.Files), "cases": len(cases), "complete_files": whole, "coverage": coverage, "unsupported_candidates": rejected, "file_refusals": failed}, "", "  ")
+141: 	for name, data := range map[string][]byte{"cases.txt": []byte(input.String()), "answers.txt": []byte(answers.String()), "cases.json": encoded, "coverage.json": report} {
+142: 		if err = os.WriteFile(request.Directory+"/"+name, data, 0644); err != nil {
+143: 			t.Fatal(err)
+144: 		}
+145: 	}
+146: 	t.Logf("%d files, %d parse failures, %d supported statement/program fragments, %d complete files", len(request.Files), len(failed), len(cases), whole)
+147: }
+148: 
+149: // Pin the observed fork customizations independently of the Adamic printer.
+150: func TestAdamicStatementUpstreamDifferences(t *testing.T) {
+151: 	t.Parallel()
+152: 	data, err := os.ReadFile(os.Getenv("ADAMIC_TS_STATEMENT_UPSTREAM"))
+153: 	if err != nil {
+154: 		t.Fatal(err)
+155: 	}
+156: 	var records []struct{ Source, Go, Prettier string }
+157: 	if err = json.Unmarshal(data, &records); err != nil {
+158: 		t.Fatal(err)
+159: 	}
+160: 	options := formatoptions.Default()
+161: 	options.PrintWidth = 80
+162: 	for _, record := range records {
+163: 		got, err := Format("difference.ts", record.Source+";", options, nil)
+164: 		if err != nil || got != record.Go {
+165: 			t.Fatalf("source %q: Go %q, expected %q, error %v", record.Source, got, record.Go, err)
+166: 		}
+167: 		if record.Go == record.Prettier {
+168: 			t.Fatal("difference fixture must differ")
+169: 		}
+170: 	}
+171: 	t.Logf("%d exact Go fork differences pinned", len(records))
+172: }
+
+stage1/cohere/tsprinter/testdata/expressions.mjs
+1: import {createRequire} from 'node:module';
+2: import {readFileSync} from 'node:fs';
+3: const require=createRequire(process.argv[2]+'/package.json');
+4: const prettier=require('prettier');
+5: if(prettier.version!=='3.9.6') throw Error('wrong Prettier version');
+6: const escape=text=>text.replaceAll('\\','\\\\').replaceAll('\n','\\n').replaceAll('\r','\\r').replaceAll('\t','\\t');
+7: const cases=JSON.parse(readFileSync(process.argv[3],'utf8'));
+8: // Port results remain byte-identical to Go. External printer differences and
+9: // parser refusals must match the separately pinned exact upstream outcomes.
+10: const gapProof=process.argv[3].endsWith('/gaps.json');
+11: const known=gapProof ? JSON.parse(readFileSync(new URL('./prettier-differences.json',import.meta.url),'utf8')) : [];
+12: const upstream=gapProof ? [] : JSON.parse(readFileSync(new URL('./tsc-upstream-differences.json',import.meta.url),'utf8')).Records;
+13: const seen=new Set();
+14: for(const [index,item] of cases.entries()) {
+15:  const pinned=upstream.find(record=>(item.Label ?? '').endsWith(record.Label) && record.Source===item.Source && record.Go===item.Want);
+16:  let formatted;
+17:  try {
+18:   formatted=await prettier.format(item.Source+';',{parser:'typescript',printWidth:process.argv[4]===undefined ? 80 : Number.parseInt(process.argv[4],10),tabWidth:4,singleQuote:true,semi:true});
+19:  } catch(error) {
+20:   if(!pinned || pinned.PrettierError!==String(error)) throw Error(`case ${index} ${item.Label}: ${error}`);
+21:   process.stdout.write('error\t'+escape(String(error))+'\n');
+22:   continue;
+23:  }
+24:  if(formatted!==item.Want) {
+25:   const difference=known.find(record=>record.Label===item.Label && record.Source===item.Source && record.Go===item.Want && record.Prettier===formatted);
+26:   if(!difference && (!pinned || pinned.Prettier!==formatted)) throw Error(`case ${index} ${item.Label}: source ${JSON.stringify(item.Source)}, Go ${JSON.stringify(item.Want)}, Prettier ${JSON.stringify(formatted)}`);
+27:   if(difference) seen.add(difference.Source);
+28:  }
+29:  process.stdout.write('ok\t'+escape(formatted)+'\n');
+30: }
+31: 
+32: if(gapProof && seen.size!==known.length) throw Error('known upstream difference changed or disappeared');
+
+stage1/cohere/tsprinter/testdata/embedded.mjs
+1: // The actual Prettier fork cohere embeds, independently parsing the original source on V8.
+2: import {createRequire} from 'node:module';
+3: import {readFileSync} from 'node:fs';
+4: const require=createRequire(process.argv[2]+'/standalone.js');
+5: const prettier=require('./standalone.js');
+6: if(prettier.version!=='3.9.6') throw Error('wrong embedded Prettier version');
+7: const plugins=[require('./plugins/typescript.js'),require('./plugins/estree.js')];
+8: const escape=text=>text.replaceAll('\\','\\\\').replaceAll('\n','\\n').replaceAll('\r','\\r').replaceAll('\t','\\t');
+9: const cases=JSON.parse(readFileSync(process.argv[3],'utf8'));
+10: const upstream=JSON.parse(readFileSync(new URL('./tsc-upstream-differences.json',import.meta.url),'utf8')).Records;
+11: for(const [index,item] of cases.entries()) {
+12:  const pinned=upstream.find(record=>(item.Label ?? '').endsWith(record.Label) && record.Source===item.Source && record.Go===item.Want);
+13:  let formatted;
+14:  try {
+15:   formatted=await prettier.format(item.Source+';',{parser:'typescript',plugins,printWidth:process.argv[4]===undefined ? 80 : Number.parseInt(process.argv[4],10),tabWidth:4,singleQuote:true,semi:true});
+16:  } catch(error) {
+17:   if(!pinned || pinned.EmbeddedError!==String(error)) throw Error(`case ${index} ${item.Label}: ${error}`);
+18:   process.stdout.write('error\t'+escape(String(error))+'\n');
+19:   continue;
+20:  }
+21:  if(formatted!==item.Want && (!pinned || pinned.Embedded!==formatted)) throw Error(`case ${index} ${item.Label}: source ${JSON.stringify(item.Source)}, Go ${JSON.stringify(item.Want)}, embedded Prettier ${JSON.stringify(formatted)}`);
+22:  process.stdout.write('ok\t'+escape(formatted)+'\n');
+23: }
+
+stage1/cohere/tsprinter/testdata/statementDifferences.mjs
+1: import {createRequire} from 'node:module';
+2: import {readFileSync} from 'node:fs';
+3: const prettier=createRequire(process.argv[2]+'/package.json')('prettier');
+4: if(prettier.version!=='3.9.6') throw Error('wrong Prettier version');
+5: const records=JSON.parse(readFileSync(process.argv[3],'utf8'));
+6: for(const record of records) {
+7:  const text=await prettier.format(record.Source+';',{parser:'typescript',printWidth:80,tabWidth:4,singleQuote:true,semi:true});
+8:  if(text!==record.Prettier || text===record.Go) throw Error('upstream difference changed: '+JSON.stringify(record.Source));
+9: }
+10: console.log(records.length+' exact npm differences pinned');
