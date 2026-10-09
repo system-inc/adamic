@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/heap.c b/internal/native/runtime/heap.c
+index db97e947..89b40564 100644
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -105,7 +105,7 @@ static void unlist_chunk(chunk *each) {
+ 
+ // new_chunk gives a class a chunk: a spare one, whatever class it held, or a new one from malloc.
+ static chunk *new_chunk(size_t class) {
+-	chunk *each = spares;
++	chunk *each = NULL;
+ 	if (each != NULL) {
+ 		spares = each->next;
+ 	} else {

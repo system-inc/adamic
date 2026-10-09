@@ -1,0 +1,11 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -142,7 +142,7 @@
+ 	}
+ 	emitter.classDeclarations(&builder)
+ 	builder.WriteString(bodies.String())
+-	return builder.String()
++	return builder.String()[:builder.Len()-1]
+ }
+ 
+ // longestLiteral is the longest string literal C11 promises to compile (5.2.4.1: 4,095 characters),

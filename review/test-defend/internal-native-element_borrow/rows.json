@@ -1,0 +1,206 @@
+[
+  {
+    "test": "TestSizeClassesShareTheirChunks",
+    "package": "internal/native",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/runtime/heap.c:108",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/heap.c:108",
+        "change": "change constant: initialize chunk *each to NULL instead of spares; preserve contents, disable spare reuse",
+        "rows_failed": [
+          "TestSizeClassesShareTheirChunks"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-element/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run \"$(cat review/test-defend/internal-native-element_borrow/scope.regex)\" > review/test-defend/internal-native-element_borrow/D1.log 2>&1; heap_test.go:141: control: acquired 1171 chunks exceeds largest generation 79 + 16 retained class chunks (peak 75912 KiB): spare chunks were not reused",
+    "bounded": true,
+    "matrix_rows": [
+      "TestSizeClassesShareTheirChunks",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestResidentSetUnits",
+      "TestCEndsInNewline",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestLibraryMapSetIteratorResources",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringEquality",
+      "TestRuntimeStringViews",
+      "TestTypedArrayRuntime",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "rows_passed": [
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestResidentSetUnits",
+      "TestCEndsInNewline",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestLibraryMapSetIteratorResources",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringEquality",
+      "TestRuntimeStringViews",
+      "TestTypedArrayRuntime",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "limits": "Unique in the complete 30-row bounded matrix. Kills outside this set remain unknown."
+  },
+  {
+    "test": "TestCEndsInNewline",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegexProgramsKeepCheckedFieldReads"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D5 internal/native/emit_expressions.go:411",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/emit.go:111",
+        "change": "change constant: omit main closing newline",
+        "rows_failed": [
+          "TestCEndsInNewline",
+          "TestRegexProgramsKeepCheckedFieldReads",
+          "TestUniformFieldsMatchNode",
+          "TestNodeBufferRuntimeWithoutDeclarations"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/emit.go:144",
+        "change": "drop completed bodies write",
+        "rows_failed": [
+          "TestCEndsInNewline",
+          "TestRegexProgramsKeepCheckedFieldReads",
+          "TestUniformFieldsMatchNode",
+          "TestNbodyIndexedElementsBorrow",
+          "TestNodeBufferRuntimeWithoutDeclarations"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/emit.go:145",
+        "change": "off by one: return one fewer output byte",
+        "rows_failed": [
+          "TestCEndsInNewline",
+          "TestRegexProgramsKeepCheckedFieldReads",
+          "TestUniformFieldsMatchNode",
+          "TestNodeBufferRuntimeWithoutDeclarations"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/native/emit_expressions.go:411",
+        "change": "return early from ArrayReverse with NULL instead of emitting its operand and reversal",
+        "rows_failed": [
+          "TestCEndsInNewline"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-element/cache/D5 timeout 120 go test -overlay=/tmp/defend-element/D5.overlay.json -json -count=1 -timeout 90s ./internal/native/ -run \"$(cat review/test-defend/internal-native-element_borrow/scope.regex)\" > review/test-defend/internal-native-element_borrow/D5.log 2>&1; library_array_test.go:23: large fixture did not exceed runner's old cap",
+    "bounded": true,
+    "matrix_rows": [
+      "TestSizeClassesShareTheirChunks",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestResidentSetUnits",
+      "TestCEndsInNewline",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestLibraryMapSetIteratorResources",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringEquality",
+      "TestRuntimeStringViews",
+      "TestTypedArrayRuntime",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "rows_passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestResidentSetUnits",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestLibraryMapSetIteratorResources",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringEquality",
+      "TestRuntimeStringViews",
+      "TestTypedArrayRuntime",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "limits": "Unique in the complete 30-row bounded matrix. Kills outside this set remain unknown."
+  }
+]
