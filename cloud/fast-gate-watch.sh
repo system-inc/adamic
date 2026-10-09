@@ -251,6 +251,24 @@ stopSkipped() {
       echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: on the skip list"
   done
 }
+# Side work whose branch was pushed again stops: its verdict would only be superseded, and on Loom's pool it held one
+# of two server slots (Oct 9 04:08Z: gate-shards-json 6c0866e3 ran on after a7149770). Areas, landings and the star
+# keep running to a verdict; they have their own rules (stopStaleRed, the star's box).
+stopSuperseded() {
+  local file pid branch sha slot box rest tip
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r branch sha slot box rest < "${file}"
+    [[ ${branch} == codex/* || ${branch} == devtools/* ]] || continue
+    tip=$(awk -v b="${branch}" '$1 == b {print $2; exit}' "${state}/seen")
+    [ -n "${tip}" ] && [ "${tip}" != "${sha}" ] || continue
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "superseded by ${tip:0:12}" &&
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: superseded by ${tip:0:12}"
+  done
+}
 # A reserved run stops the moment a newer candidate of its family is queued, red or still clean: the newer
 # one carries the older's commits and the fix, and main's full gate must never see a candidate it would
 # fail (@system_adamic, Oct 8; it first stopped only runs already red). Its stop publishes what it had.
@@ -762,6 +780,7 @@ while true; do
   fi
   stopStaleRed
   stopSkipped
+  stopSuperseded
   publishEarlyRed
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
