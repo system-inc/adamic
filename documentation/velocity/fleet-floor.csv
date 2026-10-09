@@ -1726,3 +1726,9 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-09T15:31:31.183122Z,library,0,8,0,,,queue_empty
 2026-10-09T15:31:48.526756Z,developer_tools,0,4,1,010-grain-oracle-hook-7r4k16h.md,01a11436-8fb9-7512-a9cc-1c58aabf100e,sent
 2026-10-09T15:31:49.068161Z,developer_tools,1,4,0,,,queue_empty
+2026-10-09T15:35:46.487576Z,compiler,5,30,0,,,"gate_backpressure: 59 queued, 19 slots"
+2026-10-09T15:36:27.186101Z,cohere_adamic,0,30,0,,,"gate_backpressure: 59 queued, 19 slots"
+2026-10-09T15:36:31.580763Z,typescript,1,10,0,,,"gate_backpressure: 59 queued, 19 slots"
+2026-10-09T15:36:36.404455Z,runtime,1,8,0,,,"gate_backpressure: 59 queued, 19 slots"
+2026-10-09T15:36:39.106791Z,library,0,8,0,,,"gate_backpressure: 59 queued, 19 slots"
+2026-10-09T15:36:50.837911Z,developer_tools,1,4,0,,,"gate_backpressure: 59 queued, 19 slots"
