@@ -12,8 +12,8 @@ import (
 // after constructing and flattening the input, serially, best of five against Node. The Python
 // driver records wait4 peak RSS and load. Oversized K forms have a ten-second time limit, and
 // native processes a twelve-GiB address-space limit. The ordinary gate skips this heavy program.
+// Not parallel: timing and peak RSS need an otherwise idle worker.
 func TestNormalizeLongMeasurements(t *testing.T) {
-	// Not parallel: timing and peak RSS need an otherwise idle worker.
 	destination := os.Getenv("ADAMIC_NORMALIZE_BENCH_LOG")
 	if destination == "" {
 		t.Skip("set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements")

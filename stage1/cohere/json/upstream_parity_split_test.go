@@ -99,7 +99,7 @@ func upstreamParityUnion(cases []textCase, shards [][]textCase) error {
 func upstreamParityPrepare(t *testing.T) {
 	t.Helper()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
+		t.Skip("ADAMIC_JSON_PRETTIER unset: upstream report entry requires the independent oracle")
 	}
 	upstreamParitySetup.once.Do(func() { upstreamParityPrepareProducts(t) })
 	if !upstreamParitySetup.ready {
@@ -112,8 +112,8 @@ func upstreamParityPrepareProducts(t *testing.T) {
 	if err := gatesample.Validate(); err != nil {
 		t.Fatal(err)
 	}
-	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
+	if productOracle := os.Getenv("ADAMIC_JSON_PRETTIER"); productOracle == "" {
+		t.Skip("ADAMIC_JSON_PRETTIER unset: upstream report product setup requires the independent oracle")
 	}
 	started := time.Now()
 	defer func() { t.Logf("shared setup: %.3fs", time.Since(started).Seconds()) }()

@@ -12,6 +12,7 @@ import (
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestRepositoryAgreement(t *testing.T) {
+	t.Parallel()
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
 		t.Skip("set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory")
@@ -79,6 +80,7 @@ func TestRepositoryAgreement(t *testing.T) {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestCorpusNativeRefusals(t *testing.T) {
+	t.Parallel()
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
 		t.Skip("completed frozen corpus required")

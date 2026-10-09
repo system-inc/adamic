@@ -168,8 +168,8 @@ func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
 }
 
 type deepMutantsReady struct {
-	once           sync.Once
-	source, native string
+	once                   sync.Once
+	source, native, script string
 }
 
 var deepMutantsPrepared sync.Map
@@ -182,6 +182,7 @@ func deepMutantsPrepare(t *testing.T, mutation deepMutantsMutation) *deepMutants
 		lowered, _ := deepMutantsLowered(t, mutation)
 		ready.source = filepath.Join(lowered, "source/main.ts")
 		ready.native = deepMutantsNative(t, mutation)
+		ready.script = mutantEmittedProduct(t, ready.source)
 	})
 	if ready.native == "" {
 		t.Fatal("deep mutant preparation failed")
@@ -272,8 +273,9 @@ func deepMutantsShard(t *testing.T, shard int) {
 		}
 		ready := products[index]
 		for name, got := range map[string][]byte{
-			"Node":   threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), ready.source, "--manifest", list),
-			"native": threePortExecute(t, ctx, ready.native, "--manifest", list),
+			"Node":    threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), ready.source, "--manifest", list),
+			"native":  threePortExecute(t, ctx, ready.native, "--manifest", list),
+			"emitted": mutantEmittedOutput(t, ready.source, ready.script, "--manifest", list),
 		} {
 			if diff := firstDifference(want, got); diff == "" {
 				t.Fatal(name + " mutant survived")

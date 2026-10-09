@@ -95,7 +95,7 @@ func TestOct6ReleaseMutant(t *testing.T) {
 		t.Fatal("mutant changed no releases")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
+	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux", Malloc: runtime.GOOS == "darwin"}); err != nil {
 		t.Fatal(err)
 	}
 	want := onNode(t, path)
@@ -103,15 +103,7 @@ func TestOct6ReleaseMutant(t *testing.T) {
 	if difference := disagreement(want, got); difference != "" {
 		t.Fatalf("only the leak check should catch this: %s, stderr %q", difference, got.stderr)
 	}
-	var report string
-	switch runtime.GOOS {
-	case "linux":
-		report = leakSanitizer(t, binary)
-	case "darwin":
-		report = leaksCounted(t, mutated)
-	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
-	}
+	report := leakChecked(t, mutated, binary)
 	if !strings.Contains(report, "LeakSanitizer") && !strings.Contains(report, "leaked") {
 		t.Fatalf("leak mutant survived: %s", report)
 	}

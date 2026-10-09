@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -354,21 +355,34 @@ func stringsSanitizerEnvironment(leak bool) []string {
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
 
-func stringsLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
+func stringsCounted(t *testing.T, program stringsProgram) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "linux":
-		r := stringsExecute(t, stringsSanitizerEnvironment(true), sanitized, args...)
-		if r.exitCode != 0 {
-			t.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
+	options := native.Options{Count: true}
+	dir := stringsProduct(t, stringsInputs{Name: "counted", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: stringsClangToolchain(t)}, func(dir string) error {
+		source, err := os.ReadFile(program.c)
+		if err != nil {
+			return err
 		}
-	case "darwin":
-		r := stringsExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
-		if r.exitCode != 0 {
-			t.Fatalf("leaks: %s", r.stdout)
-		}
-	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		return native.Build(string(source), filepath.Join(dir, "port"), options)
+	})
+	return filepath.Join(dir, "port")
+}
+
+func stringsLeaks(t *testing.T, code, sanitized, counted string, args ...string) {
+	t.Helper()
+	report, err := leakcheck.Check(leakcheck.Program{
+		C: code, Sanitized: sanitized, Counted: counted,
+		Arguments: func() []string { return args },
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			result := stringsExecute(t, environment, name, arguments...)
+			return leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if report != "" {
+		t.Fatal(report)
 	}
 }
 

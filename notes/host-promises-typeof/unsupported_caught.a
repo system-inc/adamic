@@ -1,0 +1,2 @@
+async function f(): Promise<void> { throw new Error('caught'); }
+try { await f(); } catch { console.log('caught'); }

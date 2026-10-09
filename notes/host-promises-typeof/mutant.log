@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/async_coverage_typeof.a (0.61s)
+        oracle_test.go:678: stdout differs
+            node:   exit 0, stdout "true true true\nboolean boolean\ntrue function true\n", stderr ""
+            native: exit 0, stdout "false false false\nboolean boolean\nfalse object false\n", stderr ""
+        oracle_test.go:684: JavaScript backend: stdout differs
+            node:    exit 0, stdout "true true true\nboolean boolean\ntrue function true\n", stderr ""
+            backend: exit 0, stdout "false false false\nboolean boolean\nfalse object false\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.620s
+FAIL

@@ -1,0 +1,61 @@
+{
+  "full_gate": {
+    "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...",
+    "exit_code": 0,
+    "output": "?   \tgithub.com/system-inc/adamic/bench\t[no test files]\n?   \tgithub.com/system-inc/adamic/bench/regex\t[no test files]\n?   \tgithub.com/system-inc/adamic/cmd/adamic\t[no test files]\n?   \tgithub.com/system-inc/adamic/cmd/adamic-fuzz\t[no test files]\nok  \tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.709s\nok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t92.006s\nok  \tgithub.com/system-inc/adamic/internal/flow\t110.975s\nok  \tgithub.com/system-inc/adamic/internal/fresh\t44.063s\nok  \tgithub.com/system-inc/adamic/internal/fuzz\t10.925s\n?   \tgithub.com/system-inc/adamic/internal/ir\t[no test files]\n?   \tgithub.com/system-inc/adamic/internal/javascript\t[no test files]\nok  \tgithub.com/system-inc/adamic/internal/load\t1.836s\nok  \tgithub.com/system-inc/adamic/internal/lower\t29.765s\nok  \tgithub.com/system-inc/adamic/internal/native\t350.951s\nok  \tgithub.com/system-inc/adamic/internal/oracle\t453.199s\nok  \tgithub.com/system-inc/adamic/internal/regexp\t11.925s\nok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t1085.218s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/cssnumbers\t213.066s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/cssstrings\t37.711s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/formatfiles\t98.694s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/gitignore\t80.089s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql\t149.124s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t892.998s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t551.805s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/mediaquery\t29.615s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/selector\t72.491s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/suppression\t79.782s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/values\t101.629s\nok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t582.818s\nok  \tgithub.com/system-inc/adamic/stage1/typescript/scanner\t140.643s\n"
+  },
+  "final_a_oracle": {
+    "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -parallel 4 ./internal/oracle",
+    "exit_code": 0,
+    "output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t359.405s\n"
+  },
+  "runtime_controls_and_mutants": {
+    "command": "go test ./internal/native -run 'TestParallel|TestReleaseShared' -count=1 -v",
+    "exit_code": 0,
+    "findings": [
+      "    release_test.go:78: unsafe last-owner mutant compiles; ASan catches heap-use-after-free on dynamic shared text",
+      "    parallel_test.go:217: skip_items_share caught: SUMMARY: ThreadSanitizer: data race /tmp/adamic-gate/TestParallelChecksCatchMutantsskip_items_share482597363/001/adamic.h:70:24 in adamic_retain (exit status 66)",
+      "    parallel_test.go:217: plain_shared_count caught: SUMMARY: ThreadSanitizer: data race /home/agent/.cache/adamic/runtime/.build-2996557029/heap.c in adamic_retain_slow (exit status 66)",
+      "    parallel_test.go:217: field_cache caught: SUMMARY: ThreadSanitizer: data race /tmp/adamic-gate/TestParallelChecksCatchMutantsfield_cache3900242271/001/adamic.h:249:13 in adamic_object_field (exit status 66)",
+      "    parallel_test.go:217: remote_free caught: SUMMARY: ThreadSanitizer: data race /home/agent/.cache/adamic/runtime/.build-1092416150/heap.c:179:13 in give_local (exit status 66)",
+      "    parallel_test.go:217: result_order caught: harness failure (exit status 3)",
+      "    parallel_test.go:217: reused_graph caught: harness failure (signal: aborted)",
+      "    parallel_test.go:217: one_worker caught: harness failure (signal: aborted)"
+    ],
+    "package_output": [
+      "PASS",
+      "ok  \tgithub.com/system-inc/adamic/internal/native\t37.580s"
+    ]
+  },
+  "order_mutant": {
+    "exit_code": 0,
+    "findings": [
+      "    parallel_test.go:177: result-order mutant compiled, finished sanitizer and leak clean; Node caught stdout differs at one thread and default"
+    ]
+  },
+  "mutable_capture_mutant": {
+    "command": "go test ./internal/oracle -run '^TestConcurrencyRefusals/captured_let.a$' -count=1 -v",
+    "exit_code": 1,
+    "output": "=== RUN   TestConcurrencyRefusals\n=== PAUSE TestConcurrencyRefusals\n=== CONT  TestConcurrencyRefusals\n=== RUN   TestConcurrencyRefusals/captured_let.a\n=== PAUSE TestConcurrencyRefusals/captured_let.a\n=== CONT  TestConcurrencyRefusals/captured_let.a\n    concurrency_test.go:69: want Refused \"task capture 'options' is not shareable: options is not an immutable binding\", got <nil>\n--- FAIL: TestConcurrencyRefusals (0.00s)\n    --- FAIL: TestConcurrencyRefusals/captured_let.a (0.26s)\nFAIL\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.315s\nFAIL\n",
+    "control_exit_code": 0,
+    "control_output": "=== RUN   TestConcurrencyRefusals\n=== PAUSE TestConcurrencyRefusals\n=== CONT  TestConcurrencyRefusals\n=== RUN   TestConcurrencyRefusals/captured_let.a\n=== PAUSE TestConcurrencyRefusals/captured_let.a\n=== CONT  TestConcurrencyRefusals/captured_let.a\n--- PASS: TestConcurrencyRefusals (0.00s)\n    --- PASS: TestConcurrencyRefusals/captured_let.a (0.28s)\nPASS\nok  \tgithub.com/system-inc/adamic/internal/oracle\t0.324s\n"
+  },
+  "bun_direct_a": {
+    "exit_code": 0,
+    "output": "4096 files, 20282626 UTF-16 units, 2621440 tokens, 556992 distinct per file, ordered digest 823772603\n"
+  },
+  "unmeasured": [
+    "macOS compilation and leaks",
+    "macOS TSan capability",
+    "16-core Mac scaling",
+    "other five historical compiler mutants"
+  ],
+  "benchmark": {
+    "command": "go run ./bench -only parallel_files -threads 1,2,4 -rounds 5",
+    "exit_code": 0,
+    "raw_output": "date: 2026-10-06T21:28:42Z\nmachine: linux/amd64, 5 logical CPUs, AMD EPYC 9V74 80-Core Processor\nkernel: Linux 6.18.44 x86_64\nadamic: 039d402\nclang: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nnode: v24.19.0\nbun: 1.3.14\nruntimes: native/1, native/2, native/4, node, bun\nload before: 0.11 3.16 6.23 (1, 5, 15 minutes)\n\nround 1 parallel_files native/1: 0.752 s, 63.2 MB\nround 1 parallel_files native/2: 0.492 s, 63.4 MB\nround 1 parallel_files native/4: 0.316 s, 63.4 MB\nround 1 parallel_files node: 0.686 s, 223.6 MB\nround 1 parallel_files bun: 0.915 s, 217.6 MB\nround 2 parallel_files native/1: 0.745 s, 63.2 MB\nround 2 parallel_files native/2: 0.526 s, 63.3 MB\nround 2 parallel_files native/4: 0.356 s, 63.4 MB\nround 2 parallel_files node: 0.741 s, 162.1 MB\nround 2 parallel_files bun: 0.866 s, 217.7 MB\nround 3 parallel_files native/1: 0.869 s, 63.3 MB\nround 3 parallel_files native/2: 0.549 s, 63.4 MB\nround 3 parallel_files native/4: 0.334 s, 63.4 MB\nround 3 parallel_files node: 0.637 s, 162.6 MB\nround 3 parallel_files bun: 0.906 s, 217.0 MB\nround 4 parallel_files native/1: 0.800 s, 63.3 MB\nround 4 parallel_files native/2: 0.520 s, 63.4 MB\nround 4 parallel_files native/4: 0.312 s, 63.5 MB\nround 4 parallel_files node: 0.637 s, 223.6 MB\nround 4 parallel_files bun: 0.869 s, 217.3 MB\nround 5 parallel_files native/1: 0.744 s, 63.2 MB\nround 5 parallel_files native/2: 0.454 s, 63.4 MB\nround 5 parallel_files native/4: 0.354 s, 63.4 MB\nround 5 parallel_files node: 0.673 s, 222.5 MB\nround 5 parallel_files bun: 0.874 s, 216.4 MB\nbest of 5 interleaved rounds; time is wall clock, memory is peak resident\n\n| benchmark | native/1 time | native/1 memory | native/2 time | native/2 memory | native/4 time | native/4 memory | node time | node memory | bun time | bun memory | native/1 vs node | same answer |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|\n| parallel_files | 0.744 s | 63.2 MB | 0.454 s | 63.4 MB | 0.312 s | 63.5 MB | 0.637 s | 223.6 MB | 0.866 s | 217.7 MB | 1.17x | yes |\n\ncounted native build, run once (adamic build --count; parallel programs use ADAMIC_THREADS=1): heap values and reference-count calls\n\n| benchmark | allocations | frees | retains | releases | peak live | in regions |\n|---|---:|---:|---:|---:|---:|---:|\n| parallel_files | 3,952,651 | 3,952,651 | 8,151,046 | 8,654,931 | 8,839 | 0 |\n\nload after: 0.69 3.10 6.14 (1, 5, 15 minutes)\n",
+    "source": "bench/parallel_files.a",
+    "cpu_quota": "400000 100000",
+    "nproc": 5
+  }
+}

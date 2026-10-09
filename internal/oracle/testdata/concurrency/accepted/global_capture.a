@@ -1,0 +1,6 @@
+import { parallelMap } from 'adamic';
+const lookup: ReadonlyMap<string, number> = new Map([['a', 3], ['b', 8]]);
+const pick = (item: string): number => lookup.get(item) ?? 0;
+function summarize(item: string): number { return pick(item); }
+const items: readonly string[] = ['b', 'a'];
+console.log(parallelMap(items, summarize).join(','));

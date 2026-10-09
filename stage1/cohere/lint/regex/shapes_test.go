@@ -12,6 +12,7 @@ import (
 )
 
 func TestShapeFixtures(t *testing.T) {
+	t.Parallel()
 	// Not parallel: every fixture is compiled and compared, including the native transition control.
 	repository, err := filepath.Abs("../../../..")
 	if err != nil {
