@@ -5,8 +5,8 @@ Local stage-3 corpus, not registered in internal/oracle.
 | Family | Class-d sites | Node fixtures passing | Input mutants caught | .ts runtime contracts passing |
 |---|---:|---:|---:|---:|
 | DiagnosticWithLocation | 144 | 2 | 1 | 2 |
-| never[] | 82 | 2 | 1 | 1 |
-| FlowNode | 26 | 2 | 1 | 1 |
+| never[] | 82 | 2 | 1 | 2 |
+| FlowNode | 26 | 2 | 1 | 2 |
 | ResolvedType | 17 | 2 | 1 | 2 |
 | T | 17 | 2 | 1 | 2 |
 | NodeBuilderContext | 11 | 2 | 1 | 2 |
@@ -16,15 +16,15 @@ Local stage-3 corpus, not registered in internal/oracle.
 | Expression | 7 | 2 | 1 | 2 |
 | Node | 7 | 2 | 1 | 2 |
 | CapturedThis | 6 | 2 | 1 | 2 |
-| Declaration[] | 6 | 2 | 1 | 1 |
+| Declaration[] | 6 | 2 | 1 | 2 |
 | NodeArray<Statement> | 6 | 2 | 1 | 0 |
-| DiagnosticWithDetachedLocation | 5 | 2 | 1 | 1 |
-| FlowArrayMutation \| FlowAssignment | 5 | 2 | 1 | 1 |
+| DiagnosticWithDetachedLocation | 5 | 2 | 1 | 2 |
+| FlowArrayMutation \| FlowAssignment | 5 | 2 | 1 | 2 |
 | GeneratedIdentifier \| GeneratedPrivateIdentifier \| Node | 5 | 2 | 1 | 2 |
 | SyntheticSuper | 5 | 2 | 1 | 2 |
 | Mutable<GeneratedIdentifier> | 4 | 2 | 1 | 2 |
 | Diagnostic | 3 | 2 | 1 | 2 |
-| **Total** | **381 / 515** | **40** | **20** | **31 / 40** |
+| **Total** | **381 / 515** | **40** | **20** | **36 / 40** |
 
 Allocation rows below are release counted builds; panic rows stop at exit 70.
 Finished positives also pass ASan/UBSan and leak detection.
@@ -71,6 +71,4 @@ No internal/oracle registry or counts rows were added by this unit.
 
 Uncompiled compatibility inputs have no native allocation row.
 
-Current compiler head: `781766edccfd21ed4f2e9f9106dd488d28751e96`.
-
-36 inputs compile: 18 fitting native/JS runs match source Node, and 18 negatives stop at exit 70. All 36 native/JS results agree. Five diagnostic-content gaps account for the difference between 36 runtime stops/agreements and 31 full contracts. Four inputs are uncompiled. All 18 executable negative twins catch real IR check-removal mutants; two families are blocked. See REPORT.md for exact differences and reasons.
+Current compiler head: `29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d`. All 36 compiled inputs pass the strict contract in native sanitized, native counted and emitted JavaScript. Four inputs remain uncompiled (unshift and NodeArray intersection pairs).

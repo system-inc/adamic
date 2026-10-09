@@ -1,8 +1,47 @@
-fixtures: 18 of 40 native runs agree with source Node; 515 counts survey sites, not executable fixtures.
-sites: 98 of 98 receiver audits unchanged; individual original-site compiler proofs unmeasured.
-mutants: 18 real IR, 20 input, 80 header controls and 4 receiver/ledger mutants caught; 3 synthetic evidence controls rejected.
-branch: codex/step10-on-writes-next; report commit is the branch head.
-compiler head: 781766edccfd21ed4f2e9f9106dd488d28751e96.
+fixtures: 18 of 40 agree with source Node; 36 of 40 strict contracts pass.
+sites: the prior 98/98 receiver audit and 2/10 zero-check witnesses were not rerun in this follow-up.
+mutants: one emitted-JavaScript message-side-swap mutant caught; 20 input and 80 header controls rerun and caught.
+branch: codex/step10-on-writes-next; merged compiler head 29275d4e without rewriting d339be83.
+compiler head: 29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d.
+
+## Allocated-shape follow-up, Task #cf15j5c
+
+The five former diagnostic-gap claims were fixture expectation errors. Step 10 checks a write against the field type in the object's actual allocated shape. The widened receiving view does not replace that contract. The incoming type belongs after `got`. Copied the five exact stderr pins from internal/oracle/testdata/checked-write-messages at compiler head 29275d4e into manifest.json. Each corresponding README table row explains its allocated shape. No authored .a body or compiler implementation was edited by this follow-up; compiler changes arrived through the authorized merge.
+
+| Fixture | Pinned panic after `adamic: panic: write failed: ` | Allocated-shape reason |
+|---|---|---|
+| 02_shared-empty_out.a | `array[] expects never, got 1 (number)` | The allocated array is never[], not its number[] receiving view. |
+| 03_flow-node_out.a | `flow.node expects BinaryExpression, got BindingElement` | Actual FlowArrayMutation.node is BinaryExpression. |
+| 13_declaration-array_out.a | `array[] expects Declaration, got Node` | The allocated array is Declaration[], incoming expression is typed Node. |
+| 15_detached-diagnostic_out.a | `diagnostic.file expects undefined, got SourceFile` | The allocated detached diagnostic's file field is undefined. |
+| 16_flow-assignment-union_out.a | `flow.node expects BinaryExpression, got BindingElement` | The actual union member is FlowArrayMutation, whose node is BinaryExpression. |
+
+The first rerun passed 32/40: these five pins passed, but four older exact numeric pins (05_generic-range_out.a, 09_identifier-flags_out.a, 10_expression-range_out.a, 11_node-flags_out.a) lacked the new incoming `(number)` annotation. Both backends emitted that annotation. Chose to refresh those four stale pins too, without changing their rejection, allocated type, stdout or exit contracts. The final rerun passed 36/40. All 40 source Node outputs remain exact; native and emitted JavaScript agree on all 36 runnable inputs. Eighteen fitting runs agree with source Node; eighteen negatives intentionally stop before its silent store. No silent miscompile was observed.
+
+Only gap 2 (unshift) and gap 3 (NodeArray intersection) remain, each affecting both twins:
+
+| Smallest supplied fixture | First compiler diagnostic | Read |
+|---|---|---|
+| 07_diagnostic-array_in.a | `refuses inherited library member unshift read as an own field` | Compiler gap 2; no native run. |
+| 07_diagnostic-array_out.a | `refuses inherited library member unshift read as an own field` | Compiler gap 2; no native run. |
+| 14_statement-array-range_in.a | `can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet` | Compiler gap 3; no native run. |
+| 14_statement-array-range_out.a | Same NodeArray intersection NotYet | Compiler gap 3; no native run. |
+
+message-mutants.py changes only the emitted JavaScript write-panic formatter to swap its allocated-shape and incoming sides. It executes the original first, then the mutant for 03_flow-node_out.a. Original stderr is `adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement`; mutant stderr is `adamic: panic: write failed: flow.node expects BindingElement, got BinaryExpression`. Both exit 70 with stdout `before write\n`. verify.checked_write_accepts rejects the mutant solely through exact stderr, even though all expected type words remain present. message-mutants.json records the compiler hash and both results. This is a real emitted-runtime diagnostic mutant, not a compiler-source or native mutant.
+
+Every subprocess has verify.py's 30-second hard limit, and each whole command below has its own limit. Output was saved to logs; no full package or full gate was run:
+
+```text
+GOPROXY='https://proxy.golang.org|direct' timeout 540 bash cloud/setup.sh: exit 0
+source /workspace/adamic-tools/env.sh
+timeout 180 go build -o /tmp/cf15j5c-follow-adamic ./cmd/adamic: exit 0
+timeout 240 python3 stage3/fixtures/checked-writes/verify.py --compiler /tmp/cf15j5c-follow-adamic --compiler-revision 29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d --survey /tmp/cf15j5c-survey.json --observe --require-checked-writes: expected exit 1, 36 pass / four uncompiled; 40 Node, 20 input mutants, 80 header controls pass
+timeout 90 python3 stage3/fixtures/checked-writes/message-mutants.py --compiler /tmp/cf15j5c-follow-adamic --compiler-revision 29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d: exit 0, side swap caught by exact stderr
+timeout 90 python3 stage3/fixtures/checked-writes/headers.py --compiler /tmp/cf15j5c-follow-adamic: exit 0, all 50 headers match
+ADAMIC_GATE_UNCACHED=1 timeout 90 go test ./stage3/fixtures -run '^(TestFixturesCheckedWrites|TestFixtureDirectoriesHaveTopLevelTests)$' -count=1 -timeout 90s -v: exit 0, TestFixturesCheckedWrites 15.06s, package 17.043s
+```
+
+Setup: Node 0.026s; Go 0.027s; submodules 0.082s; markdown step 0.009s, ready 0.085s; clang 0.239s; shared cache 1.082s; build cache warm 40.986s; total 41.012s. nproc=5; cgroup quota=4 CPUs. The build uses the merged branch with fixture-only changes atop compiler 29275d4e. All source bodies and all 50 in-place headers remain unchanged. Counts and observations are refreshed. Prior proven-site and IR-mutant evidence below is historical, not a new observation on 29275d4e. Required lane checks run after this follow-up commit before the single push.
 
 # Checked writes on the rebuilt compiler
 
@@ -10,11 +49,11 @@ Task: #cf15j5c
 
 The two requested commits were cherry-picked as 1d63e09d (dc8d6447) and fa9ec7e4 (3af7a3f6). No compiler code changed. Their original commit messages are preserved; this report commit carries the task trailer.
 
-## Coverage and observations
+## Historical measurements on 781766ed (superseded diagnostic interpretation)
 
 The supplied corpus has 40 executable boundary fixtures, not 515. It selects 20 source families covering 381 of 515 unresolved census sites. There are no fixtures for the other 134 sites, and a family driver is not an individual-site execution. All 40 source Node records pass exactly. Native and emitted JavaScript compile for 36 inputs and agree with one another on every stdout, stderr and exit code. All 18 fitting inputs that compile agree with source Node; all 18 misfitting inputs stop before the write with exit 70. Those 18 source-Node disagreements are intentional checked-write behavior, recorded individually below. Four inputs do not compile. There are no observed silent miscompiles.
 
-The strict runtime contract passes 31/40 and fails nine inputs. Five failures concern required diagnostic content, not missing runtime checks. Two are unshift refusals and two are NodeArray representation NotYet stops. Expectations were not weakened.
+The strict runtime contract passes 31/40 and fails nine inputs. Five failures concerned fixture diagnostic expectations, not missing runtime checks. The allocated-shape interpretation below corrects the earlier report that called them compiler gaps. Two are unshift refusals and two are NodeArray representation NotYet stops. Expectations were not weakened.
 
 | Negative fixture | First differing stdout line (source Node / native and emitted JS) |
 |---|---|
@@ -41,15 +80,15 @@ Every negative above also differs in exit (source Node 0, native/JS 70) and stde
 
 | Smallest supplied failing fixture | Observation and classification |
 |---|---|
-| 02_shared-empty_out.a | Compiler diagnostic gap: adamic: panic: write failed: array[] expects never, got 1; required ['[]', 'never', 'number'] |
-| 03_flow-node_out.a | Compiler diagnostic gap: adamic: panic: write failed: flow.node expects BinaryExpression, got object; required ['node', 'BinaryExpression', 'BindingElement'] |
+| 02_shared-empty_out.a | Historical fixture diagnostic-content mismatch: adamic: panic: write failed: array[] expects never, got 1; required ['[]', 'never', 'number'] |
+| 03_flow-node_out.a | Historical fixture diagnostic-content mismatch: adamic: panic: write failed: flow.node expects BinaryExpression, got object; required ['node', 'BinaryExpression', 'BindingElement'] |
 | 07_diagnostic-array_in.a | Compiler gap: /tmp/adamic-gate/checked-writes-a_lvyzgv/07_diagnostic-array_in.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method) |
 | 07_diagnostic-array_out.a | Compiler gap: /tmp/adamic-gate/checked-writes-a_lvyzgv/07_diagnostic-array_out.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method) |
-| 13_declaration-array_out.a | Compiler diagnostic gap: adamic: panic: write failed: array[] expects Declaration, got object; required ['[]', 'Declaration', 'Node'] |
+| 13_declaration-array_out.a | Historical fixture diagnostic-content mismatch: adamic: panic: write failed: array[] expects Declaration, got object; required ['[]', 'Declaration', 'Node'] |
 | 14_statement-array-range_in.a | Compiler gap: /tmp/adamic-gate/checked-writes-a_lvyzgv/14_statement-array-range_in.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet |
 | 14_statement-array-range_out.a | Compiler gap: /tmp/adamic-gate/checked-writes-a_lvyzgv/14_statement-array-range_out.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet |
-| 15_detached-diagnostic_out.a | Compiler diagnostic gap: adamic: panic: write failed: diagnostic.file expects undefined, got object; required ['file', 'undefined', 'SourceFile'] |
-| 16_flow-assignment-union_out.a | Compiler diagnostic gap: adamic: panic: write failed: flow.node expects BinaryExpression, got object; required ['node', 'BinaryExpression', 'BindingElement'] |
+| 15_detached-diagnostic_out.a | Historical fixture diagnostic-content mismatch: adamic: panic: write failed: diagnostic.file expects undefined, got object; required ['file', 'undefined', 'SourceFile'] |
+| 16_flow-assignment-union_out.a | Historical fixture diagnostic-content mismatch: adamic: panic: write failed: flow.node expects BinaryExpression, got object; required ['node', 'BinaryExpression', 'BindingElement'] |
 
 The diagnostic-array driver calls unshift on its receiver directly. Node accepts it, so the inherited-library-member refusal looks like a compiler gap. The NodeArray intersection still lacks a representation. No changed upstream fact was observed: the source pin, hashes, full audit classifications and Node outputs remain unchanged. Historical refusal headers and tool assumptions were stale fixture infrastructure.
 

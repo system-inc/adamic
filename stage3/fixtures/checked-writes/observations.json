@@ -1,7 +1,7 @@
 {
   "fixture_base_commit": "45487a809f89885a3fc651cd590e7dabf31362dc",
-  "compiler_revision": "781766edccfd21ed4f2e9f9106dd488d28751e96",
-  "compiler_sha256": "dd595f5903da0c265f700dd41c3d449a6797761e14d94190596ca6f00fcf2f2f",
+  "compiler_revision": "29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d",
+  "compiler_sha256": "9cc13ef186926e47feb115348464f25323173838dd03c5c5b03664153bb5fd39",
   "node_version": "v24.19.0",
   "fixtures": [
     {
@@ -154,17 +154,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: array[] expects never, got 1\n"
+        "stderr": "adamic: panic: write failed: array[] expects never, got 1 (number)\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: array[] expects never, got 1\n"
+        "stderr": "adamic: panic: write failed: array[] expects never, got 1 (number)\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: array[] expects never, got 1\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
+        "stderr": "adamic: panic: write failed: array[] expects never, got 1 (number)\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
       },
       "native_counts": {
         "allocations": 2,
@@ -174,7 +174,7 @@
         "peak": 2,
         "regions": 0
       },
-      "checked_write_pass": false
+      "checked_write_pass": true
     },
     {
       "file": "03_flow-node_in.a",
@@ -240,17 +240,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\nadamic: counts: allocations 3 frees 0 retains 4 releases 3 peak 3 regions 0\n"
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\nadamic: counts: allocations 3 frees 0 retains 4 releases 3 peak 3 regions 0\n"
       },
       "native_counts": {
         "allocations": 3,
@@ -260,7 +260,7 @@
         "peak": 3,
         "regions": 0
       },
-      "checked_write_pass": false
+      "checked_write_pass": true
     },
     {
       "file": "04_resolved-members_in.a",
@@ -412,17 +412,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
+        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
       },
       "native_counts": {
         "allocations": 2,
@@ -498,17 +498,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got object\n"
+        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got SymbolTracker\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got object\n"
+        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got SymbolTracker\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got object\nadamic: counts: allocations 6 frees 0 retains 2 releases 3 peak 6 regions 0\n"
+        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got SymbolTracker\nadamic: counts: allocations 6 frees 0 retains 2 releases 3 peak 6 regions 0\n"
       },
       "native_counts": {
         "allocations": 6,
@@ -536,7 +536,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/07_diagnostic-array_in.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-mvant9hd/07_diagnostic-array_in.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -560,7 +560,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/07_diagnostic-array_out.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-mvant9hd/07_diagnostic-array_out.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -718,17 +718,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1\n"
+        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1 (number)\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1\n"
+        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1 (number)\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1\nadamic: counts: allocations 2 frees 0 retains 2 releases 1 peak 2 regions 0\n"
+        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1 (number)\nadamic: counts: allocations 2 frees 0 retains 2 releases 1 peak 2 regions 0\n"
       },
       "native_counts": {
         "allocations": 2,
@@ -804,17 +804,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\nadamic: counts: allocations 2 frees 0 retains 2 releases 1 peak 2 regions 0\n"
+        "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\nadamic: counts: allocations 2 frees 0 retains 2 releases 1 peak 2 regions 0\n"
       },
       "native_counts": {
         "allocations": 2,
@@ -890,17 +890,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0\n"
+        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0 (number)\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0\n"
+        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0 (number)\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
+        "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0 (number)\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
       },
       "native_counts": {
         "allocations": 2,
@@ -1062,17 +1062,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: array[] expects Declaration, got object\n"
+        "stderr": "adamic: panic: write failed: array[] expects Declaration, got Node\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: array[] expects Declaration, got object\n"
+        "stderr": "adamic: panic: write failed: array[] expects Declaration, got Node\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: array[] expects Declaration, got object\nadamic: counts: allocations 3 frees 0 retains 3 releases 3 peak 3 regions 0\n"
+        "stderr": "adamic: panic: write failed: array[] expects Declaration, got Node\nadamic: counts: allocations 3 frees 0 retains 3 releases 3 peak 3 regions 0\n"
       },
       "native_counts": {
         "allocations": 3,
@@ -1082,7 +1082,7 @@
         "peak": 3,
         "regions": 0
       },
-      "checked_write_pass": false
+      "checked_write_pass": true
     },
     {
       "file": "14_statement-array-range_in.a",
@@ -1100,7 +1100,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/14_statement-array-range_in.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-mvant9hd/14_statement-array-range_in.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -1124,7 +1124,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/14_statement-array-range_out.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-mvant9hd/14_statement-array-range_out.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -1196,17 +1196,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got object\n"
+        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got SourceFile\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got object\n"
+        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got SourceFile\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got object\nadamic: counts: allocations 2 frees 0 retains 2 releases 2 peak 2 regions 0\n"
+        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got SourceFile\nadamic: counts: allocations 2 frees 0 retains 2 releases 2 peak 2 regions 0\n"
       },
       "native_counts": {
         "allocations": 2,
@@ -1216,7 +1216,7 @@
         "peak": 2,
         "regions": 0
       },
-      "checked_write_pass": false
+      "checked_write_pass": true
     },
     {
       "file": "16_flow-assignment-union_in.a",
@@ -1282,17 +1282,17 @@
       "ts_runtime": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
       },
       "ts_javascript": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
       },
       "ts_counted": {
         "exit": 70,
         "stdout": "before write\n",
-        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\nadamic: counts: allocations 3 frees 0 retains 4 releases 3 peak 3 regions 0\n"
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\nadamic: counts: allocations 3 frees 0 retains 4 releases 3 peak 3 regions 0\n"
       },
       "native_counts": {
         "allocations": 3,
@@ -1302,7 +1302,7 @@
         "peak": 3,
         "regions": 0
       },
-      "checked_write_pass": false
+      "checked_write_pass": true
     },
     {
       "file": "17_generated-node-union_in.a",
@@ -2036,18 +2036,13 @@
     "a_headers_pass": 40,
     "header_predicate_mutants_caught": 80,
     "input_mutants_caught": 20,
-    "checked_write_pass": 31,
-    "checked_write_pending": 9
+    "checked_write_pass": 36,
+    "checked_write_pending": 4
   },
   "checked_write_pending": [
-    "02_shared-empty_out.a",
-    "03_flow-node_out.a",
     "07_diagnostic-array_in.a",
     "07_diagnostic-array_out.a",
-    "13_declaration-array_out.a",
     "14_statement-array-range_in.a",
-    "14_statement-array-range_out.a",
-    "15_detached-diagnostic_out.a",
-    "16_flow-assignment-union_out.a"
+    "14_statement-array-range_out.a"
   ]
 }

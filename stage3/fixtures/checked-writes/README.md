@@ -1,6 +1,6 @@
 # Checked writes through wider views
 
-Current rebuilt-compiler measurements for Task #cf15j5c are in [REPORT.md](REPORT.md). The material below preserves the original survey and dependency baseline. The current run passes 31 of 40 strict runtime contracts and catches 18 real IR mutants. The 515 figure counts survey sites, not executable fixtures.
+Current rebuilt-compiler measurements for Task #cf15j5c are in [REPORT.md](REPORT.md). The material below preserves the original survey and dependency baseline. The current run passes 36 of 40 strict runtime contracts and catches the message-side-swap mutant. The earlier run caught 18 real IR mutants. The 515 figure counts survey sites, not executable fixtures.
 
 Step 10 (#7hc82dv). Fixtures derived from TypeScript 6.0.3, original commit
 `050880ce59e30b356b686bd3144efe24f875ebc8`, Copyright Microsoft Corporation,
@@ -49,8 +49,8 @@ the task selected families by count, not by compiler support.
 | Rank | Source family | Class-d sites | Pair | Input mutant caught by exact Node stdout |
 |---:|---|---:|---|---|
 | 1 | DiagnosticWithLocation | 144 | [in](01_located-diagnostic_in.a), [out](01_located-diagnostic_out.a) | `file` to `undefined` |
-| 2 | never[] | 82 | [in](02_shared-empty_in.a), [out](02_shared-empty_out.a) | `false` to `true` |
-| 3 | FlowNode | 26 | [in](03_flow-node_in.a), [out](03_flow-node_out.a) | `binary` to `binding` |
+| 2 | never[] | 82 | [in](02_shared-empty_in.a), [out](02_shared-empty_out.a) | `false` to `true`; allocated-shape rule: the array is never[]; expects never, incoming 1 (number). |
+| 3 | FlowNode | 26 | [in](03_flow-node_in.a), [out](03_flow-node_out.a) | `binary` to `binding`; allocated-shape rule: FlowArrayMutation.node is BinaryExpression; incoming BindingElement. |
 | 4 | ResolvedType | 17 | [in](04_resolved-members_in.a), [out](04_resolved-members_out.a) | `members` to `undefined` |
 | 5 | T | 17 | [in](05_generic-range_in.a), [out](05_generic-range_out.a) | `0` to `1` |
 | 6 | NodeBuilderContext | 11 | [in](06_builder-tracker_in.a), [out](06_builder-tracker_out.a) | `tracker` to `fallback` |
@@ -60,10 +60,10 @@ the task selected families by count, not by compiler support.
 | 10 | Expression | 7 | [in](10_expression-range_in.a), [out](10_expression-range_out.a) | `0` to `1` |
 | 11 | Node | 7 | [in](11_node-flags_in.a), [out](11_node-flags_out.a) | `1` to `0` |
 | 12 | CapturedThis | 6 | [in](12_captured-this_in.a), [out](12_captured-this_out.a) | `emitNode` to `undefined` |
-| 13 | Declaration[] | 6 | [in](13_declaration-array_in.a), [out](13_declaration-array_out.a) | `declaration` to `expression` |
+| 13 | Declaration[] | 6 | [in](13_declaration-array_in.a), [out](13_declaration-array_out.a) | `declaration` to `expression`; allocated-shape rule: the array is Declaration[]; incoming Node. |
 | 14 | NodeArray<Statement> | 6 | [in](14_statement-array-range_in.a), [out](14_statement-array-range_out.a) | `0` to `1` |
-| 15 | DiagnosticWithDetachedLocation | 5 | [in](15_detached-diagnostic_in.a), [out](15_detached-diagnostic_out.a) | `undefined` to `file` |
-| 16 | FlowArrayMutation \| FlowAssignment | 5 | [in](16_flow-assignment-union_in.a), [out](16_flow-assignment-union_out.a) | `binary` to `binding` |
+| 15 | DiagnosticWithDetachedLocation | 5 | [in](15_detached-diagnostic_in.a), [out](15_detached-diagnostic_out.a) | `undefined` to `file`; allocated-shape rule: diagnostic.file is undefined; incoming SourceFile. |
+| 16 | FlowArrayMutation \| FlowAssignment | 5 | [in](16_flow-assignment-union_in.a), [out](16_flow-assignment-union_out.a) | `binary` to `binding`; allocated-shape rule: actual FlowArrayMutation.node is BinaryExpression; incoming BindingElement. |
 | 17 | GeneratedIdentifier \| GeneratedPrivateIdentifier \| Node | 5 | [in](17_generated-node-union_in.a), [out](17_generated-node-union_out.a) | `emitNode` to `undefined` |
 | 18 | SyntheticSuper | 5 | [in](18_synthetic-super_in.a), [out](18_synthetic-super_out.a) | `emitNode` to `undefined` |
 | 19 | Mutable<GeneratedIdentifier> | 4 | [in](19_mutable-generated_in.a), [out](19_mutable-generated_out.a) | `emitNode` to `undefined` |
@@ -76,9 +76,12 @@ Node expectations are exact stdout/stderr/exit triples. All negatives store the
 misfit silently and exit 0. Required Adamic negatives exit 70, preserve only
 `before write\n` on stdout, and have an `adamic: panic:` diagnostic naming the
 field and both types. Positive Adamic runs must match Node exactly. Diagnostic
-wording has not been invented: the six supported negative diagnostics are pinned
-byte-for-byte; unsupported cases specify required diagnostic content until they
-can run. observations.json records only what actually ran.
+wording has not been invented: the original six and the five allocated-shape
+messages from compiler head 29275d4e are pinned byte-for-byte; remaining cases
+retain their diagnostic-content contracts. Four older numeric-message pins
+(05, 09, 10, 11) now include the incoming `(number)` annotation emitted by
+29275d4e in both backends. Exact pins distinguish allocated
+shape and incoming value even when both names occur in a swapped message. observations.json records only what actually ran.
 
 Observed on main `45487a809f89885a3fc651cd590e7dabf31362dc`:
 

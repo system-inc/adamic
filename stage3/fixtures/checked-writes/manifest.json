@@ -390,11 +390,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "[]",
-              "never",
-              "number"
-            ]
+            "stderr": "adamic: panic: write failed: array[] expects never, got 1 (number)\n"
           }
         }
       },
@@ -503,11 +499,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "node",
-              "BinaryExpression",
-              "BindingElement"
-            ]
+            "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
           }
         }
       },
@@ -714,12 +706,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "pos",
-              "0",
-              "1"
-            ],
-            "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+            "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\n"
           }
         }
       },
@@ -1123,12 +1110,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "flags",
-              "0",
-              "1"
-            ],
-            "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1\n"
+            "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1 (number)\n"
           }
         }
       },
@@ -1233,12 +1215,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "pos",
-              "0",
-              "1"
-            ],
-            "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+            "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1 (number)\n"
           }
         }
       },
@@ -1349,12 +1326,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "flags",
-              "1",
-              "0"
-            ],
-            "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0\n"
+            "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0 (number)\n"
           }
         }
       },
@@ -1853,11 +1825,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "[]",
-              "Declaration",
-              "Node"
-            ]
+            "stderr": "adamic: panic: write failed: array[] expects Declaration, got Node\n"
           }
         }
       },
@@ -2125,11 +2093,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "file",
-              "undefined",
-              "SourceFile"
-            ]
+            "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got SourceFile\n"
           }
         }
       },
@@ -2223,11 +2187,7 @@
           "adamic_ts": {
             "exit": 70,
             "stdout": "before write\n",
-            "stderr_fields": [
-              "node",
-              "BinaryExpression",
-              "BindingElement"
-            ]
+            "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
           }
         }
       },
