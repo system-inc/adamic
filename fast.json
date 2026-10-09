@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T154953-b85cb9ef",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "4d81496dacace7d0959e12ec9cdd3dab1c8b04ee",
+  "branch": "area/stage3",
+  "base": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+  "unplanned_packages_not_run": 52,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}
