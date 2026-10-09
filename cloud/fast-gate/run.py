@@ -814,7 +814,10 @@ class Gate:
         refused outright, since no gate gives it its input."""
         deferred = self.deferredList()
         outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
-        results = {importPath + " " + name: outcomes.get(importPath + " " + name, "missing")
+        # A family split into shards is judged over its shards, as the fast gate judges a requested one (familyOutcome,
+        # 7adc5bf9): matched by exact name, five internal/native families read missing on main 20d538c0's whole log with
+        # every shard passing.
+        results = {importPath + " " + name: familyOutcome(outcomes, importPath, name)
                    for importPath, names in deferred.items() for name in sorted(names)}
         self.result["deferred_whole_results"] = results
         refused = deferredClassedOut(self.arguments.tools, deferred)
@@ -1319,7 +1322,9 @@ class Gate:
                         fields = line.split()
                         if fields and not fields[0].startswith("#"):
                             deferred.setdefault(module + "/" + fields[0], set()).add(fields[1])
-                self.result["deferred_list_blob"] = self.git(root, "hash-object", path)
+                # A plain read, not self.git: the whole gate checks its deferred list after the census, and a census red
+                # has cancelled the run by then, so spawning refuses (main 20d538c0's record had no deferred verdict).
+                self.result["deferred_list_blob"] = git(root, "hash-object", path)
                 return deferred
         return {}
 
