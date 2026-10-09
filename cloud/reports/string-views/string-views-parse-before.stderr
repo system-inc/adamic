@@ -1,0 +1,14 @@
+==4135== Callgrind, a call-graph generating cache profiler
+==4135== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==4135== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==4135== Command: /workspace/scratch/string-views/parse/native-before --manifest /workspace/scratch/string-views/parse/compiler.txt --count
+==4135== 
+==4135== For interactive control, run 'callgrind_control -h'.
+==4135== brk segment overflow in thread #1: can't grow to 0x4838000
+==4135== (see section Limitations in user manual)
+==4135== NOTE: further instances of this message will not be shown
+==4135== 
+==4135== Events    : Ir
+==4135== Collected : 6503630226
+==4135== 
+==4135== I   refs:      6,503,630,226

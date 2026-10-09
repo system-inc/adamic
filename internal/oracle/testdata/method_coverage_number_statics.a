@@ -1,0 +1,14 @@
+/* eslint-disable no-useless-call -- This program tests delayed call and literal apply adapters. */
+const nan = Number.isNaN;
+const integer = Number.isInteger;
+const safe = Number.isSafeInteger;
+const finite = Number.isFinite;
+const parse = Number.parseInt;
+const float = Number.parseFloat;
+for(const value of [NaN, Infinity, -0, 1.25, 9007199254740992]) {
+    console.log(`${nan(value)} ${integer.call(null, value)} ${safe.apply(undefined, [value])} ${finite(value)}`);
+}
+console.log(`${parse.apply(null, ['0x10'])} ${float.call({}, ' 1.5x')}`);
+const globalInt = parseInt;
+const globalFloat = parseFloat;
+console.log(`${globalInt.call(null, '101', 2)} ${globalFloat.apply(undefined, ['2.5x'])}`);

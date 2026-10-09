@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "300s",
+    "/tmp/performance-results/dependencies/node_modules/@typescript/native-preview-linux-x64/lib/tsgo",
+    "--singleThreaded",
+    "-p",
+    "performance.json",
+    "--noEmit",
+    "--pretty",
+    "false"
+  ],
+  "cwd": "/tmp/performance-results/inputs/mitt"
+}
