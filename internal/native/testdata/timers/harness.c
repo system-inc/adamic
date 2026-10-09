@@ -1,6 +1,9 @@
 #define _POSIX_C_SOURCE 200809L
 #include "timers.h"
+/* timers_test.go defines TIMERS_GRAPH first when the runtime has graph regions (slice 6). */
+#ifdef TIMERS_GRAPH
 #include "graph_regions.h"
+#endif
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,6 +62,10 @@ static void invoke(adamic_closure *closure, size_t argc, const adamic_value *arg
 static adamic_timer_handle start(double delay, bool repeat, double number, bool graph) {
     adamic_string *label = adamic_string_from_number(12345);
     void *capture = label;
+#ifndef TIMERS_GRAPH
+    /* Graph regions arrive with runtime's slice 6; the test skips this mode until then. */
+    assert(!graph);
+#else
     if (graph) {
         static const char *const names[] = {"next", "label"};
         static const bool references[] = {true, true};
@@ -69,15 +76,19 @@ static adamic_timer_handle start(double delay, bool repeat, double number, bool 
         node->slots[1].reference = label;
         capture = node;
     }
+#endif
     adamic_cell *cell = adamic_cell_new((adamic_value){.reference = capture}, true);
     adamic_closure *closure = adamic_closure_new(callback, 1);
+#ifdef TIMERS_GRAPH
     if (graph) {
         /* A graph closure/cell component; the registration is its last outside owner. */
         closure = adamic_graph_adopt(closure, sizeof *closure + sizeof closure->cells[0]);
         cell = adamic_graph_adopt_owned(cell, sizeof *cell);
         closure->cells[0] = adamic_graph_hold(closure, cell);
         adamic_release(cell);
-    } else closure->cells[0] = cell;
+    } else
+#endif
+    closure->cells[0] = cell;
     adamic_string *text = adamic_string_from_number(67890);
     adamic_value arguments[] = {{.reference = text}, {.number = number}};
     bool references[] = {true, false};

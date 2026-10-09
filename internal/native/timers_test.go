@@ -21,6 +21,10 @@ func timerHarness(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The graph mode needs graph regions, which arrive with runtime's slice 6.
+	if _, err := os.Stat("runtime/graph_regions.h"); err == nil {
+		return "#define TIMERS_GRAPH 1\n" + string(source)
+	}
 	return string(source)
 }
 func timerRun(environment []string, name string, args ...string) leakcheck.Run {
@@ -64,6 +68,9 @@ func TestTimersAgainstNode(t *testing.T) {
 	}
 	for _, mode := range []string{"order", "interval", "cancel", "cancel-self", "foreign", "unref", "unref-live", "deadlines", "graph", "arity", "host"} {
 		t.Run(mode, func(t *testing.T) {
+			if _, err := os.Stat("runtime/graph_regions.h"); mode == "graph" && err != nil {
+				t.Skip("awaits runtime's slice 6: graph regions")
+			}
 			run := timerRun([]string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, mode)
 			if run.ExitCode != 0 {
 				t.Fatalf("native: %+v", run)
@@ -97,7 +104,8 @@ func (runtime timerRuntime) build(code, output string, options native.Options) e
 	if err := os.WriteFile(source, []byte(code), 0600); err != nil {
 		return err
 	}
-	args := append(native.LinkFlags(options), "-I", filepath.Dir(library), "-o", output, source)
+	// The stack compiles and links with Flags; slice 4 adds LinkFlags (lld for a shipped release).
+	args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, source)
 	args = append(args, native.RuntimeLinkFlags(library)...)
 	args = append(args, "-lm")
 	result, err := exec.Command("clang", args...).CombinedOutput()
