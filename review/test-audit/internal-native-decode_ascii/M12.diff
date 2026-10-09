@@ -1,0 +1,11 @@
+--- a/internal/native/devirtualize.go
++++ b/internal/native/devirtualize.go
+@@ -65,7 +65,7 @@
+ 		if declare, ok := statement.(ir.Declare); ok {
+ 			if literal, ok := declare.Value.(ir.ObjectLiteral); ok && literal.Class == class {
+ 				for _, method := range literal.Methods {
+-					if method.Name == name && e.dispatchable(method.Function) {
++					if method.Name != name && e.dispatchable(method.Function) {
+ 						return method.Function, true
+ 					}
+ 				}

@@ -1,0 +1,37 @@
+{"Time":"2026-10-09T10:46:10.239138892Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:46:10.247469402Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:46:10.247579139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== RUN   TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247609424Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== PAUSE TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.24761266Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:46:10.247616745Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:46:10.247619498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== RUN   TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247623524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== PAUSE TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247625597Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:46:10.247629587Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode"}
+{"Time":"2026-10-09T10:46:10.247633161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"=== RUN   TestToExponentialAndToPrecisionMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247637097Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"=== PAUSE TestToExponentialAndToPrecisionMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247639588Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode"}
+{"Time":"2026-10-09T10:46:10.247642483Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:46:10.247644801Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== RUN   TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247649873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== PAUSE TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247652001Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:46:10.247654418Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:46:10.247656731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== CONT  TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247661732Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode"}
+{"Time":"2026-10-09T10:46:10.247664147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"=== CONT  TestToExponentialAndToPrecisionMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.247964587Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:46:10.247970534Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== CONT  TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.249430929Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:46:10.24944576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== CONT  TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.24950754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"--- PASS: TestExactReceiverRejectsAssignments (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:10.327544526Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Elapsed":0}
+{"Time":"2026-10-09T10:46:10.327593284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"--- PASS: TestDevirtualizedCalls (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:11.040680016Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Elapsed":0.08}
+{"Time":"2026-10-09T10:46:11.040729666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"--- PASS: TestToExponentialAndToPrecisionOutOfRangePanic (0.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:15.939391008Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Elapsed":0.79}
+{"Time":"2026-10-09T10:46:15.939606805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"    dtoa_test.go:156: 778686 answers (3690 values, every argument), 0 mismatches\n"}
+{"Time":"2026-10-09T10:46:15.93962677Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"--- PASS: TestToExponentialAndToPrecisionMatchNode (5.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:15.939638741Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Elapsed":5.69}
+{"Time":"2026-10-09T10:46:15.939642113Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:46:15.958297864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t5.718s\n"}
+{"Time":"2026-10-09T10:46:15.9583638Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.719}

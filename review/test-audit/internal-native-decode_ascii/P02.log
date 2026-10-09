@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T10:51:49.503736088Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:51:49.512281799Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:49.512377914Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== RUN   TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.512402591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== PAUSE TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.51240483Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:49.512407679Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:49.512409497Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== RUN   TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.512414073Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== PAUSE TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.512415848Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:49.512418247Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:49.512420113Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== CONT  TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.512422051Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:49.512423655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== CONT  TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.51243098Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"--- PASS: TestExactReceiverRejectsAssignments (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.549345144Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Elapsed":0}
+{"Time":"2026-10-09T10:51:49.549503644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:56: missing call cases: single=5 multiple=3 exact=0\n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:49.54952143Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"--- FAIL: TestDevirtualizedCalls (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.549525194Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Elapsed":0.04}
+{"Time":"2026-10-09T10:51:49.549532162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.550600738Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.047s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:49.550624714Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.047}

@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T10:51:51.140140021Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:51:51.148556653Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:51.148632611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== RUN   TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.148657922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== PAUSE TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.148660151Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:51.148663021Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:51.148664706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== RUN   TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.14866707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== PAUSE TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.148670261Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:51.148676777Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:51.148678406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== CONT  TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.149064434Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:51.149072166Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== CONT  TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.149513214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"--- PASS: TestExactReceiverRejectsAssignments (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.185578196Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Elapsed":0}
+{"Time":"2026-10-09T10:51:51.185623162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:41: single target is not direct: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.185629274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:51: unbounded receiver lost dispatch: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.185631726Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:41: single target is not direct: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.185634118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:41: single target is not direct: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.18563592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:41: single target is not direct: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.185640996Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:51: unbounded receiver lost dispatch: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.185650566Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:41: single target is not direct: \n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:51.187762575Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"--- FAIL: TestDevirtualizedCalls (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.187772617Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Elapsed":0.04}
+{"Time":"2026-10-09T10:51:51.187782965Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.188811713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.048s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:51.188839543Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.049}

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -1046,6 +1046,7 @@
+ 
+ // NumberPrototypeToExponential. Without an argument the digits are the shortest that read back.
+ adamic_string *adamic_number_to_exponential(double value, double fraction_digits, bool has_digits) {
++	return conversion_result("", 0);
+ 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
+ 	double digits = has_digits && !isnan(fraction_digits) ? trunc(fraction_digits) : 0;
+ 	if (isnan(value) || isinf(value)) {

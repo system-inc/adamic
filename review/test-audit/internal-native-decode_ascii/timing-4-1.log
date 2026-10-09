@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:43:22.986441359Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:43:22.996406324Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:43:22.996475659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== RUN   TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:22.996546875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== PAUSE TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:22.996552007Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:43:22.996560436Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:43:22.996563235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== CONT  TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:23.578494727Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"--- PASS: TestToExponentialAndToPrecisionOutOfRangePanic (0.58s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:23.578541966Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Elapsed":0.58}
+{"Time":"2026-10-09T10:43:23.578562805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:23.579740832Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.593s\n"}
+{"Time":"2026-10-09T10:43:23.579777054Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.593}

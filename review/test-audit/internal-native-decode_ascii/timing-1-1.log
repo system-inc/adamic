@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:42:51.193803887Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:42:51.201938207Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:42:51.202005764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== RUN   TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:51.203372724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== PAUSE TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:51.20339695Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:42:51.203403004Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:42:51.203405525Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== CONT  TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:51.23979212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"--- PASS: TestDevirtualizedCalls (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:51.239825423Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Elapsed":0.04}
+{"Time":"2026-10-09T10:42:51.239850647Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:51.241093768Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.047s\n"}
+{"Time":"2026-10-09T10:42:51.241127327Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.047}

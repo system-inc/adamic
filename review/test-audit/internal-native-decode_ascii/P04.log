@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T10:51:52.825853556Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:51:52.834990619Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:52.835062535Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== RUN   TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.835089974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== PAUSE TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.835093291Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:52.835098577Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:52.83510206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== RUN   TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.835222162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== PAUSE TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.835226841Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:52.835248391Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls"}
+{"Time":"2026-10-09T10:51:52.835251063Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"=== CONT  TestDevirtualizedCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.83525739Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments"}
+{"Time":"2026-10-09T10:51:52.835259777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"=== CONT  TestExactReceiverRejectsAssignments\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.835270857Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Output":"--- PASS: TestExactReceiverRejectsAssignments (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.873562618Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestExactReceiverRejectsAssignments","Elapsed":0}
+{"Time":"2026-10-09T10:51:52.873626651Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"    devirtualize_test.go:70: interface call still looks up its method\n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:52.873649855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Output":"--- FAIL: TestDevirtualizedCalls (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.873653655Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizedCalls","Elapsed":0.04}
+{"Time":"2026-10-09T10:51:52.873659302Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.87404242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.048s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:52.874073812Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.048}

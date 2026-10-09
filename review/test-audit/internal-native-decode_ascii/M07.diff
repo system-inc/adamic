@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -1051,7 +1051,7 @@
+ 	if (isnan(value) || isinf(value)) {
+ 		return conversion_special(value);
+ 	}
+-	if (digits < 0 || digits > max_fraction_digits) {
++	if (digits < -1 || digits > max_fraction_digits) {
+ 		static const char message[] = "RangeError: toExponential() argument must be between 0 and 100";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}

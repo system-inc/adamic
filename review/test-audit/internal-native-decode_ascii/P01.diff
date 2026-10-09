@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -160,6 +160,7 @@
+ }
+ 
+ adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length) {
++	return new_string(0);
+ 	return decode(bytes, length);
+ }
+ 

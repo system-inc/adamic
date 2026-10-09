@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -108,7 +108,7 @@
+ 		}
+ 		offset += sizeof word;
+ 	}
+-	while (offset < length && bytes[offset] < 0x80) {
++	while (offset < length && bytes[offset] <= 0x80) {
+ 		offset++;
+ 	}
+ 	return offset;

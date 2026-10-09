@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -126,7 +126,7 @@
+ 	}
+ 	adamic_string *string = new_string(size);
+ 	if (ascii == length) {
+-		string->units = length + 1;
++		string->units = length + 2;
+ 	}
+ 	unsigned char *cursor = (unsigned char *)string->bytes;
+ 	if (ascii != 0) {

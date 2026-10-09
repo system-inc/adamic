@@ -1,0 +1,11 @@
+--- a/internal/native/devirtualize.go
++++ b/internal/native/devirtualize.go
+@@ -46,7 +46,7 @@
+ 		for _, function := range e.program.Functions {
+ 			statements(function.Body)
+ 		}
+-		if declarations == 1 && !written {
++		if declarations == 1 && written {
+ 			return class
+ 		}
+ 	}

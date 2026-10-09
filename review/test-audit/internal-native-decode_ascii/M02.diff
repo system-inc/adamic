@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -53,7 +53,7 @@
+ 			lower = 0xa0;
+ 		}
+ 		if (lead == 0xed) {
+-			upper = 0x9f;
++			upper = 0xbf;
+ 		}
+ 		needed = 2;
+ 		value = lead & 0x0f;

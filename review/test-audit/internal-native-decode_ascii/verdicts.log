@@ -1,0 +1,75 @@
+[
+  {
+    "test": "TestDecodeASCII family",
+    "seconds": 71.027,
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "verdict": "slow-worthy",
+    "vacuous": false
+  },
+  {
+    "test": "TestDevirtualizedCalls",
+    "seconds": 0.049,
+    "kills": [
+      "M09",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [
+      "M09",
+      "M11",
+      "M12"
+    ],
+    "verdict": "sacred",
+    "vacuous": false
+  },
+  {
+    "test": "TestExactReceiverRejectsAssignments",
+    "seconds": 0.009,
+    "kills": [
+      "M10"
+    ],
+    "unique_kills": [],
+    "verdict": "subsumed",
+    "vacuous": true
+  },
+  {
+    "test": "TestToExponentialAndToPrecisionMatchNode",
+    "seconds": 5.57,
+    "kills": [
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [
+      "M06"
+    ],
+    "verdict": "sacred",
+    "vacuous": false
+  },
+  {
+    "test": "TestToExponentialAndToPrecisionOutOfRangePanic",
+    "seconds": 0.593,
+    "kills": [
+      "M05",
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [
+      "M07",
+      "M08"
+    ],
+    "verdict": "sacred",
+    "vacuous": false
+  }
+]

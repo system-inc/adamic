@@ -1,0 +1,215 @@
+diff --git a/internal/native/class_inheritance.go b/internal/native/class_inheritance.go
+index e6e4a982..3049d990 100644
+--- a/internal/native/class_inheritance.go
++++ b/internal/native/class_inheritance.go
+@@ -44,8 +44,12 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
+ }
+ 
+ func (e *emitter) callCode(call ir.Call, arguments []string) string {
++	if auditSelect() == 103 {
++		return ""
++	}
++
+ 	targets := e.program.CallTargets(call)
+-	if len(targets) == 1 {
++	if auditChoice(11, len(targets) == 1, len(targets) == 0) {
+ 		return fmt.Sprintf("%s(%s)", e.functionName(targets[0]), strings.Join(arguments, ", "))
+ 	}
+ 	if class := e.exactReceiverClass(call.Arguments[0]); class != 0 {
+diff --git a/internal/native/devirtualize.go b/internal/native/devirtualize.go
+index 3bbc036b..e6be463b 100644
+--- a/internal/native/devirtualize.go
++++ b/internal/native/devirtualize.go
+@@ -8,6 +8,10 @@ import "github.com/system-inc/adamic/internal/ir"
+ // captured bindings, assignments, joins and property reads remain unbounded.
+ // This emission proof does not narrow any ownership or exception summary.
+ func (e *emitter) exactReceiverClass(value ir.Expression) int {
++	if auditSelect() == 102 {
++		return 0
++	}
++
+ 	switch value := value.(type) {
+ 	case ir.Call:
+ 		if value.Virtual != 0 {
+@@ -15,7 +19,7 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
+ 		}
+ 		target := e.program.CallTargets(value)[0]
+ 		for index, class := range e.program.Classes {
+-			if !class.Static && class.Constructor == target {
++			if auditChoice(9, !class.Static, class.Static) && class.Constructor == target {
+ 				return index + 1
+ 			}
+ 		}
+@@ -46,7 +50,7 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
+ 		for _, function := range e.program.Functions {
+ 			statements(function.Body)
+ 		}
+-		if declarations == 1 && !written {
++		if auditChoice(10, declarations == 1 && !written, declarations == 1 && written) {
+ 			return class
+ 		}
+ 	}
+@@ -65,7 +69,7 @@ func (e *emitter) exactReceiverMethod(receiver ir.Expression, name string) (int,
+ 		if declare, ok := statement.(ir.Declare); ok {
+ 			if literal, ok := declare.Value.(ir.ObjectLiteral); ok && literal.Class == class {
+ 				for _, method := range literal.Methods {
+-					if method.Name == name && e.dispatchable(method.Function) {
++					if auditChoice(12, method.Name == name, method.Name != name) && e.dispatchable(method.Function) {
+ 						return method.Function, true
+ 					}
+ 				}
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..0c7bbc34 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,10 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditSelect() == 104 {
++		return ""
++	}
++
+ 	return cProgram(program, -1)
+ }
+ 
+diff --git a/internal/native/runtime/dtoa.c b/internal/native/runtime/dtoa.c
+index dbc57d3f..8894c28f 100644
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -22,6 +22,9 @@
+ // against its original; Bignum's methods take the bignum as their first argument.
+ 
+ #include "adamic.h"
++#include <stdlib.h>
++static int audit_select(void) { static int ready; static int selected; if (!ready) { const char *value = getenv("ADAMIC_MUTANT"); selected = value == NULL ? 0 : atoi(value); ready = 1; } return selected; }
++
+ 
+ #include <math.h>
+ #include <stdint.h>
+@@ -972,7 +975,7 @@ static int double_to_exponential(double value, int f, char *buffer) {
+ 	} else {
+ 		double_to_ascii(value, bignum_dtoa_precision, f + 1, decimal_rep, &decimal_rep_length, &decimal_point);
+ 	}
+-	int exponent = decimal_point - 1;
++	int exponent = decimal_point - (audit_select() == 5 ? 0 : 1);
+ 	return create_exponential_representation(decimal_rep, decimal_rep_length, exponent, negative, f + 1, buffer);
+ }
+ 
+@@ -989,7 +992,7 @@ static int double_to_precision(double value, int p, char *buffer) {
+ 	double_to_ascii(value, bignum_dtoa_precision, p, decimal_rep, &decimal_rep_length, &decimal_point);
+ 
+ 	int exponent = decimal_point - 1;
+-	if (exponent < -6 || exponent >= p) {
++	if (exponent < (audit_select() == 6 ? -5 : -6) || exponent >= p) {
+ 		return create_exponential_representation(decimal_rep, decimal_rep_length, exponent, negative, p, buffer);
+ 	}
+ 	// Use fixed notation.
+@@ -1046,12 +1049,14 @@ static adamic_string *conversion_special(double value) {
+ 
+ // NumberPrototypeToExponential. Without an argument the digits are the shortest that read back.
+ adamic_string *adamic_number_to_exponential(double value, double fraction_digits, bool has_digits) {
++	if (audit_select() == 105) { return conversion_result("", 0); }
++
+ 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
+ 	double digits = has_digits && !isnan(fraction_digits) ? trunc(fraction_digits) : 0;
+ 	if (isnan(value) || isinf(value)) {
+ 		return conversion_special(value);
+ 	}
+-	if (digits < 0 || digits > max_fraction_digits) {
++	if (digits < (audit_select() == 7 ? -1 : 0) || digits > max_fraction_digits) {
+ 		static const char message[] = "RangeError: toExponential() argument must be between 0 and 100";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+@@ -1062,6 +1067,8 @@ adamic_string *adamic_number_to_exponential(double value, double fraction_digits
+ 
+ // NumberPrototypeToPrecision. Without an argument it's ToString.
+ adamic_string *adamic_number_to_precision(double value, double precision, bool has_precision) {
++	if (audit_select() == 106) { return conversion_result("", 0); }
++
+ 	if (!has_precision) {
+ 		return adamic_string_from_number(value);
+ 	}
+@@ -1069,7 +1076,7 @@ adamic_string *adamic_number_to_precision(double value, double precision, bool h
+ 	if (isnan(value) || isinf(value)) {
+ 		return conversion_special(value);
+ 	}
+-	if (digits < 1 || digits > max_fraction_digits) {
++	if (digits < (audit_select() == 8 ? 0 : 1) || digits > max_fraction_digits) {
+ 		static const char message[] = "RangeError: toPrecision() argument must be between 1 and 100";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+diff --git a/internal/native/runtime/input.c b/internal/native/runtime/input.c
+index b673038f..666d71c8 100644
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -9,6 +9,9 @@
+ #define _POSIX_C_SOURCE 200809L
+ 
+ #include "adamic.h"
++#include <stdlib.h>
++static int audit_select(void) { static int ready; static int selected; if (!ready) { const char *value = getenv("ADAMIC_MUTANT"); selected = value == NULL ? 0 : atoi(value); ready = 1; } return selected; }
++
+ 
+ #include <errno.h>
+ #include <fcntl.h>
+@@ -44,7 +47,7 @@ static size_t decode_step(const unsigned char *bytes, size_t length, size_t offs
+ 	unsigned char lower = 0x80, upper = 0xbf;
+ 	size_t needed;
+ 	unsigned value;
+-	if (lead >= 0xc2 && lead <= 0xdf) {
++	if (lead >= (audit_select() == 1 ? 0xc3 : 0xc2) && lead <= 0xdf) {
+ 		needed = 1;
+ 		value = lead & 0x1f;
+ 	} else if (lead >= 0xe0 && lead <= 0xef) {
+@@ -53,7 +56,7 @@ static size_t decode_step(const unsigned char *bytes, size_t length, size_t offs
+ 			lower = 0xa0;
+ 		}
+ 		if (lead == 0xed) {
+-			upper = 0x9f;
++			upper = audit_select() == 2 ? 0xbf : 0x9f;
+ 		}
+ 		needed = 2;
+ 		value = lead & 0x0f;
+@@ -108,7 +111,7 @@ static size_t ascii_prefix(const unsigned char *bytes, size_t length) {
+ 		}
+ 		offset += sizeof word;
+ 	}
+-	while (offset < length && bytes[offset] < 0x80) {
++	while (offset < length && (audit_select() == 4 ? bytes[offset] <= 0x80 : bytes[offset] < 0x80)) {
+ 		offset++;
+ 	}
+ 	return offset;
+@@ -126,7 +129,7 @@ static adamic_string *decode(const unsigned char *bytes, size_t length) {
+ 	}
+ 	adamic_string *string = new_string(size);
+ 	if (ascii == length) {
+-		string->units = length + 1;
++		string->units = length + (audit_select() == 3 ? 2 : 1);
+ 	}
+ 	unsigned char *cursor = (unsigned char *)string->bytes;
+ 	if (ascii != 0) {
+@@ -160,6 +163,8 @@ static adamic_string *decode(const unsigned char *bytes, size_t length) {
+ }
+ 
+ adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length) {
++	if (audit_select() == 101) { return new_string(0); }
++
+ 	return decode(bytes, length);
+ }
+ 
+
+package native
+
+import (
+	"os"
+	"strconv"
+)
+
+func auditSelect() int { n, _ := strconv.Atoi(os.Getenv("ADAMIC_MUTANT")); return n }
+func auditChoice(id int, normal, changed bool) bool {
+	if auditSelect() == id {
+		return changed
+	}
+	return normal
+}

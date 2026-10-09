@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:43:06.511362003Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:43:06.520835986Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode"}
+{"Time":"2026-10-09T10:43:06.520898538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"=== RUN   TestToExponentialAndToPrecisionMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:06.520921104Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"=== PAUSE TestToExponentialAndToPrecisionMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:06.520923282Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode"}
+{"Time":"2026-10-09T10:43:06.52092672Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode"}
+{"Time":"2026-10-09T10:43:06.520928488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"=== CONT  TestToExponentialAndToPrecisionMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:12.066920717Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"    dtoa_test.go:156: 778686 answers (3690 values, every argument), 0 mismatches\n"}
+{"Time":"2026-10-09T10:43:12.067240344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Output":"--- PASS: TestToExponentialAndToPrecisionMatchNode (5.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:12.067245448Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionMatchNode","Elapsed":5.55}
+{"Time":"2026-10-09T10:43:12.067292507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:12.081084516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t5.569s\n"}
+{"Time":"2026-10-09T10:43:12.081149532Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.57}

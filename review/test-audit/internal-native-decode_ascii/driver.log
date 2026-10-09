@@ -1,0 +1,58 @@
+M01 compile 0 0.068
+M02 compile 0 0.072
+M03 compile 0 0.065
+M04 compile 0 0.07
+M05 compile 0 0.245
+M06 compile 0 0.259
+M07 compile 0 0.244
+M08 compile 0 0.243
+M09 compile 0 0.607
+M10 compile 0 0.305
+M11 compile 0 0.275
+M12 compile 0 0.306
+inactive 1 95.979 failed 0
+Traceback (most recent call last):
+  File "/workspace/adamic/review/test-audit/internal-native-decode_ascii/run-audit.py", line 65, in <module>
+    baseline=run('inactive',0,allpattern); assert baseline['exit']==0, 'inactive switch baseline failed'
+                                                  ^^^^^^^^^^^^^^^^^^^
+AssertionError: inactive switch baseline failed
+M01 compile 0 0.075
+M02 compile 0 0.066
+M03 compile 0 0.067
+M04 compile 0 0.068
+M05 compile 0 0.252
+M06 compile 0 0.266
+M07 compile 0 0.252
+M08 compile 0 0.261
+M09 compile 0 0.126
+M10 compile 0 0.128
+M11 compile 0 0.125
+M12 compile 0 0.123
+inactive 0 7.354 failed 0
+inactive-decode-native 0 58.791 failed 0
+inactive-decode-wasi 0 18.792 failed 0
+M01-native 1 48.944 failed 8
+M01-wasi 1 14.931 failed 8
+M02-native 1 48.431 failed 8
+M02-wasi 1 15.166 failed 8
+M03-native 1 32.863 failed 22
+M03-wasi 1 10.78 failed 22
+M04-native 1 27.153 failed 27
+M04-wasi 1 9.782 failed 27
+M05 1 7.208 failed 2
+M06 1 8.548 failed 1
+M07 1 8.418 failed 1
+M08 1 7.915 failed 1
+M09 1 1.786 failed 1
+M10 1 1.625 failed 2
+M11 1 1.671 failed 1
+M11-alone-TestDevirtualizedCalls 1 1.722 failed 1
+M11-alone-TestExactReceiverRejectsAssignments 0 1.641 failed 0
+M12 1 1.609 failed 1
+P01-native 1 1.813 failed 45
+P01-wasi 1 2.183 failed 45
+P02 1 1.685 failed 1
+P03 1 1.632 failed 1
+P04 1 1.679 failed 1
+P05 1 6.002 failed 2
+P06 1 6.594 failed 2

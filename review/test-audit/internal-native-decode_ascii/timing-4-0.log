@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:43:20.836690605Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:43:20.845693964Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:43:20.845764179Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== RUN   TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:20.845790761Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== PAUSE TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:20.845793006Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:43:20.845796187Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic"}
+{"Time":"2026-10-09T10:43:20.845798185Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"=== CONT  TestToExponentialAndToPrecisionOutOfRangePanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:21.441457426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Output":"--- PASS: TestToExponentialAndToPrecisionOutOfRangePanic (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:21.441506649Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToExponentialAndToPrecisionOutOfRangePanic","Elapsed":0.6}
+{"Time":"2026-10-09T10:43:21.441526759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:43:21.442260235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 2.3% of statements\n"}
+{"Time":"2026-10-09T10:43:21.44735677Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.610s\tcoverage: 2.3% of statements\n"}
+{"Time":"2026-10-09T10:43:21.447391062Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.611}

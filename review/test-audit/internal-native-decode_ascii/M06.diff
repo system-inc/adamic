@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -989,7 +989,7 @@
+ 	double_to_ascii(value, bignum_dtoa_precision, p, decimal_rep, &decimal_rep_length, &decimal_point);
+ 
+ 	int exponent = decimal_point - 1;
+-	if (exponent < -6 || exponent >= p) {
++	if (exponent < -5 || exponent >= p) {
+ 		return create_exponential_representation(decimal_rep, decimal_rep_length, exponent, negative, p, buffer);
+ 	}
+ 	// Use fixed notation.

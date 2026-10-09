@@ -1,0 +1,27 @@
+{
+  "TestDecodeASCII family": [
+    85.952,
+    71.027,
+    70.867
+  ],
+  "TestDevirtualizedCalls": [
+    0.054,
+    0.047,
+    0.049
+  ],
+  "TestExactReceiverRejectsAssignments": [
+    0.015,
+    0.009,
+    0.009
+  ],
+  "TestToExponentialAndToPrecisionMatchNode": [
+    5.569,
+    5.57,
+    5.603
+  ],
+  "TestToExponentialAndToPrecisionOutOfRangePanic": [
+    0.611,
+    0.593,
+    0.58
+  ]
+}

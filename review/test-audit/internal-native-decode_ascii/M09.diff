@@ -1,0 +1,11 @@
+--- a/internal/native/devirtualize.go
++++ b/internal/native/devirtualize.go
+@@ -15,7 +15,7 @@
+ 		}
+ 		target := e.program.CallTargets(value)[0]
+ 		for index, class := range e.program.Classes {
+-			if !class.Static && class.Constructor == target {
++			if class.Static && class.Constructor == target {
+ 				return index + 1
+ 			}
+ 		}

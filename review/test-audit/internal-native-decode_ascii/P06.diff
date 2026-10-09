@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -1062,6 +1062,7 @@
+ 
+ // NumberPrototypeToPrecision. Without an argument it's ToString.
+ adamic_string *adamic_number_to_precision(double value, double precision, bool has_precision) {
++	return conversion_result("", 0);
+ 	if (!has_precision) {
+ 		return adamic_string_from_number(value);
+ 	}

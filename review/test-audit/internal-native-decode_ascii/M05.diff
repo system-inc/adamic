@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -972,7 +972,7 @@
+ 	} else {
+ 		double_to_ascii(value, bignum_dtoa_precision, f + 1, decimal_rep, &decimal_rep_length, &decimal_point);
+ 	}
+-	int exponent = decimal_point - 1;
++	int exponent = decimal_point;
+ 	return create_exponential_representation(decimal_rep, decimal_rep_length, exponent, negative, f + 1, buffer);
+ }
+ 

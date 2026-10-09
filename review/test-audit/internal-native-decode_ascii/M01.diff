@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -44,7 +44,7 @@
+ 	unsigned char lower = 0x80, upper = 0xbf;
+ 	size_t needed;
+ 	unsigned value;
+-	if (lead >= 0xc2 && lead <= 0xdf) {
++	if (lead >= 0xc3 && lead <= 0xdf) {
+ 		needed = 1;
+ 		value = lead & 0x1f;
+ 	} else if (lead >= 0xe0 && lead <= 0xef) {

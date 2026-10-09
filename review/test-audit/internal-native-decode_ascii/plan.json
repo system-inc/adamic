@@ -1,0 +1,74 @@
+[
+  [
+    "M01",
+    "internal/native/runtime/input.c",
+    "lead >= 0xc2",
+    "lead >= 0xc3"
+  ],
+  [
+    "M02",
+    "internal/native/runtime/input.c",
+    "upper = 0x9f;",
+    "upper = 0xbf;"
+  ],
+  [
+    "M03",
+    "internal/native/runtime/input.c",
+    "string->units = length + 1;",
+    "string->units = length + 2;"
+  ],
+  [
+    "M04",
+    "internal/native/runtime/input.c",
+    "bytes[offset] < 0x80",
+    "bytes[offset] <= 0x80"
+  ],
+  [
+    "M05",
+    "internal/native/runtime/dtoa.c",
+    "int exponent = decimal_point - 1;",
+    "int exponent = decimal_point;"
+  ],
+  [
+    "M06",
+    "internal/native/runtime/dtoa.c",
+    "exponent < -6",
+    "exponent < -5"
+  ],
+  [
+    "M07",
+    "internal/native/runtime/dtoa.c",
+    "digits < 0 ||",
+    "digits < -1 ||"
+  ],
+  [
+    "M08",
+    "internal/native/runtime/dtoa.c",
+    "digits < 1 ||",
+    "digits < 0 ||"
+  ],
+  [
+    "M09",
+    "internal/native/devirtualize.go",
+    "!class.Static &&",
+    "class.Static &&"
+  ],
+  [
+    "M10",
+    "internal/native/devirtualize.go",
+    "declarations == 1 && !written",
+    "declarations == 1 && written"
+  ],
+  [
+    "M11",
+    "internal/native/class_inheritance.go",
+    "len(targets) == 1",
+    "len(targets) == 0"
+  ],
+  [
+    "M12",
+    "internal/native/devirtualize.go",
+    "method.Name == name",
+    "method.Name != name"
+  ]
+]
