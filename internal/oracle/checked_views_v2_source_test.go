@@ -81,6 +81,18 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 	for _, variant := range []string{"good-number", "good-string", "wrong", "nested"} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
+			if variant == "wrong" || variant == "nested" {
+				path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/callable-union-" + variant + ".a")
+				if err != nil {
+					t.Fatal(err)
+				}
+				field := "view.value"
+				if variant == "nested" {
+					field = "view.holder.value"
+				}
+				v4UnionReadRefusal(t, path, field)
+				return
+			}
 			program, path := interfaceFixture(t, "untagged/fixtures/callable-union-"+variant)
 			node := onNode(t, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {

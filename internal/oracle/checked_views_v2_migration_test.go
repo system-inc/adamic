@@ -218,7 +218,19 @@ func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
 
 func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 	t.Parallel()
-	program, path := interfaceFixture(t, "v2/callable-producer-wrong")
+	refused, err := filepath.Abs("../../stage3/interface-downcasts/v2/callable-producer-wrong.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	v4UnionReadRefusal(t, refused, "view.value")
+	// The .a misfit is refused before emission. Exercise the runtime certificate
+	// independently on an admitted producer, then remove its certified identities.
+	program, path := interfaceFixture(t, "untagged/fixtures/callable-union-good-number")
+	for i, contract := range program.ViewContracts {
+		if contract.Kind == ir.ViewCallable && contract.ProducerCertified {
+			program.ViewContracts[i].Functions = nil
+		}
+	}
 	node := onNode(t, path)
 	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
 		t.Fatal(difference)

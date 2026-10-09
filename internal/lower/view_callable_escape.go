@@ -49,12 +49,31 @@ func checkViewCallableEscape(graph *allocationFlowGraph, read ir.Property, reach
 // Unknown, missing fields and opaque callable sources are not empty proofs.
 // Every possible producer in the same may-flow graph must establish the relation.
 func (graph *allocationFlowGraph) viewCallableEscapeProven(read ir.Property, reaches ir.AllocationSet) bool {
-	if read.ViewEscapeContract == 0 || reaches.Unknown || len(reaches.Sites) == 0 {
+	if reaches.Unknown || len(reaches.Sites) == 0 {
 		return false
 	}
 	program := graph.program
-	target := program.ViewContracts[read.ViewEscapeContract-1]
+	union := read.ViewContract != 0 && program.ViewContracts[read.ViewContract-1].Kind == ir.ViewUnion && certifiedUntaggedCallableRead(program, read.ViewContract)
+	if read.ViewEscapeContract == 0 && !union {
+		return false
+	}
+	var target ir.ViewContract
+	if read.ViewEscapeContract != 0 {
+		target = program.ViewContracts[read.ViewEscapeContract-1]
+	}
 	compatible := func(function int) bool {
+		// V2 certifies logical member identity independently of V4's synthesized
+		// union call signature. Every reaching producer must have that witness.
+		if union {
+			for _, member := range program.ViewContracts[read.ViewContract-1].Members {
+				for _, certified := range program.ViewContracts[member-1].Functions {
+					if certified == function {
+						return true
+					}
+				}
+			}
+			return false
+		}
 		producer := program.Functions[function]
 		if producer.CallableReceiver != 0 && !viewCallableDomainSubset(program, target.Receiver, producer.CallableReceiver) {
 			return false
