@@ -46,3 +46,7 @@ git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
 ```
 
 This delivers the complete refusal census and scope evidence toward the acceptance-agreement roadmap work. The brief gives no numbered roadmap step for #41bkfdw, so no number is inferred. The acceptance conversion and M20 behavioral witness belong to a unit owning regex acceptance tests.
+
+Delivery verification: review commit e8165410 was merged with current main 60397548. The target prototype tests and production files did not change in that main update. The restored focused run passed in 3.796s, longest leaf 1.40s; M20's run passed in 10.377s, longest leaf 3.92s. The merged-main focused run is preserved in merged.jsonl.
+
+The first lane attempt printed `fatal: invalid object name 'origin/cloud/merge-tree'`; the requested fetch populated FETCH_HEAD but not that remote-tracking ref. The original pipeline's final Python process exited zero despite the missing script, so that attempt is not a successful check. Explicitly fetched `refs/heads/cloud/merge-tree:refs/remotes/origin/cloud/merge-tree` and the corresponding fast-gate ref, then reran with bash pipefail. Actual lane output: `lane checks 0.4 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages`, exit 0. This is a review-only diff, so there are no changed Go packages to vet.
