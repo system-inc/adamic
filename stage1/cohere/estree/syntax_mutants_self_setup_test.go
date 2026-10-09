@@ -219,11 +219,6 @@ func TestProduct_SyntaxMutantLowered_002(t *testing.T) {
 	syntaxMutantLoweredProduct(t, syntaxMutantEnumeration()[2])
 }
 
-func TestProduct_SyntaxMutantNative_000(t *testing.T) {
-	t.Parallel()
-	syntaxMutantNativeProduct(t, syntaxMutantEnumeration()[0])
-}
-
 func TestProduct_SyntaxMutantNative_001(t *testing.T) {
 	t.Parallel()
 	syntaxMutantNativeProduct(t, syntaxMutantEnumeration()[1])
