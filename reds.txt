@@ -1,0 +1,111 @@
+run adamic-verify-20261009T054209-2aeaf60c: void, 24358 tests in 12 units, 29 failed, 1 units broken, 0 killed over budget
+BROKEN tests-08: no results (exited true, last output "5.4G\t/tmp/loom-home")
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestWitnessScriptKind (tests-03)
+    harness_test.go:58: shared witness setup is not ready; select TestWitnessScriptKind_Setup together with the leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownLeafComposition (tests-03)
+    leaf_composition_shards_test.go:50: leaf composition setup is not ready: select TestMarkdownLeafComposition_Setup together with the shard
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-04)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.009s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	232.805s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	203.684s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestInspectRequestRefusals (tests-05)
+    shared_test.go:88: phase command stage0 2.408580s
+    typeaware_test.go:153: phase command checker 90.094091s
+    inspect_shards_test.go:36: checker: signal: killed
+    shared_test.go:170: phase group TestInspectRequestRefusals 95.223767s
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutantsUnion (tests-07)
+    acceptance_mutants_split_test.go:304: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_000 (tests-07)
+    acceptance_mutants_split_test.go:275: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_001 (tests-07)
+    acceptance_mutants_split_test.go:276: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_Setup (tests-07)
+    acceptance_mutants_split_test.go:182: shared setup exceeded 90s: context deadline exceeded
+    acceptance_mutants_split_test.go:120: build estree-acceptance-mutants-go-oracle c8100d8c6702 miss 4.13
+    acceptance_mutants_split_test.go:130: build estree-acceptance-mutant-lowered-catch-initializer 9001f4ad2166 miss 50.11
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestDeepMutants_000 (tests-07)
+    deep_mutants_split_test.go:278: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+    deep_mutants_split_test.go:278: TestDeepMutants_000 worker: signal: killed (deadline: context deadline exceeded)
+    deep_mutants_split_test.go:278: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestDeepMutants_001 (tests-07)
+    deep_mutants_split_test.go:279: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+    deep_mutants_split_test.go:279: TestDeepMutants_001 worker: signal: killed (deadline: context deadline exceeded)
+    deep_mutants_split_test.go:279: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestDeepMutants_002 (tests-07)
+    deep_mutants_split_test.go:280: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+    deep_mutants_split_test.go:280: TestDeepMutants_002 worker: signal: killed (deadline: context deadline exceeded)
+    deep_mutants_split_test.go:280: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_000 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:443: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_001 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:444: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_002 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:445: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_003 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:446: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_004 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:447: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_005 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:448: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_006 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:449: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_007 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:450: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_008 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:451: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_009 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:452: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_010 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:453: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_011 (tests-07)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:454: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_Setup (tests-07)
+    three_port_mutants_split_test.go:368: shared setup child:
+    three_port_mutants_split_test.go:330: build three-port-mutants-go-oracle-v1 e9f2646c98d6 miss 9.96
+    panic: test timed out after 1m30s
+    running tests:
+    TestThreePortMutants_Setup (1m30s)
+    goroutine 68 [running]:
+    testing.(*M).startAlarm.func1()
+    /home/agent/.adamic-tools/go/src/testing/testing.go:2961 +0x34a
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDotARename_Setup (tests-07)
+    dot_a_rename_split_test.go:270: P0: setup exceeded 90s: context deadline exceeded
+    dot_a_rename_split_test.go:244: union: 1/1 cases exactly once
+    dot_a_rename_split_test.go:246: build dot-a-rename-oracle d93acceb2603 miss 3.62
+    dot_a_rename_split_test.go:246: build dot-a-rename-renamed-source b7d8fe64ebc7 miss 1.19
+    dot_a_rename_split_test.go:246: build dot-a-rename-original-lowered 7b001e5b998d miss 69.13
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-07)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	2.845s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	364.399s
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml (package) (tests-07)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/yaml	2.086s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/yaml	90.100s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-10)
+    volume_test.go:105: phase command stage0 3.566543s
+    typeaware_test.go:153: phase command checker 9.572666s
+    typeaware_test.go:182: phase load volume 0.134927s
+    typeaware_test.go:189: phase lowering volume 2.740257s
+    typeaware_test.go:195: phase emission volume 57.749312s
+    typeaware_test.go:204: phase clang volume 28.351642s
+    volume_test.go:27: phase command volume-oracle-build 8.202594s
+    volume_test.go:118: phase command controls-go 0.104172s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-11)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.046s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	260.753s
