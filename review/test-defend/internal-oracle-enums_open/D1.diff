@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/input.c b/internal/native/runtime/input.c
+index b673038f..1513e67f 100644
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -392,7 +392,7 @@ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_st
+ #endif
+ 	if (!borrowed) {
+ 		do {
+-			descriptor = open(name, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, 0666);
++			descriptor = open(name, O_WRONLY | O_CREAT | O_CLOEXEC, 0666);
+ 		} while (descriptor < 0 && errno == EINTR);
+ 	}
+ 	free(name);

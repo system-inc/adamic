@@ -1,0 +1,20 @@
+[
+  {
+    "label": "cycle",
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestImportCycleLoadTimeReads$ -coverpkg github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript -coverprofile review/test-defend/internal-oracle-enums_open/cycle.cover ./internal/oracle/",
+    "exit": 0,
+    "wall": 8.004729666998173
+  },
+  {
+    "label": "input",
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestInputAgreesWithNode$ -coverpkg github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript -coverprofile review/test-defend/internal-oracle-enums_open/input.cover ./internal/oracle/",
+    "exit": 0,
+    "wall": 2.9799110060012026
+  },
+  {
+    "label": "subsumer",
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestNumericEnumNeverPinned$ -coverpkg github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript -coverprofile review/test-defend/internal-oracle-enums_open/subsumer.cover ./internal/oracle/",
+    "exit": 0,
+    "wall": 2.0752428400010103
+  }
+]
