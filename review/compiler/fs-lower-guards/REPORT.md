@@ -1,3 +1,5 @@
+The four fs guards are now behavioral Node comparisons. See [BEHAVIOR.md](BEHAVIOR.md) for the follow-up evidence; the original IR evidence below is superseded for those rows.
+
 Built five lowering guards and pinned method-value safety refusals for task #5x6wpqm.
 Branch compiler/fs-lower-guards starts from main 83f3940e and includes current main before delivery.
 Focused lowering tests and uncached Node comparisons in native split modes 0 and 1 passed.

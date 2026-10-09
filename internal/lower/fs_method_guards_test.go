@@ -1,10 +1,18 @@
 package lower
 
 import (
+	"bytes"
+	"context"
+	"errors"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
 )
 
 func TestParseIntMapUsesIndexRadix(t *testing.T) {
@@ -37,77 +45,84 @@ func TestParseIntMapUsesIndexRadix(t *testing.T) {
 	t.Fatal("missing parseInt map callback")
 }
 
-func guardedFSCall(t *testing.T, source string) ir.NodeFSFile {
+// Each execution owns its working directory so source and lowered JavaScript
+// see the same empty filesystem, without sharing state with parallel tests.
+func lowersAndAgreesWithNode(t *testing.T, source, wantStdout string, wantExit int) {
 	t.Helper()
+	runner, err := filepath.Abs("../../oracle/node.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	path := filepath.Join(directory, "main.a")
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	run := func(path string) (string, int) {
+		t.Helper()
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", runner, path)
+		command.Dir = t.TempDir()
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		stdout, err := command.Output()
+		exit := 0
+		if err != nil {
+			var failure *exec.ExitError
+			if !errors.As(err, &failure) || ctx.Err() != nil {
+				t.Fatalf("Node failed to run: %v; stderr %s", err, stderr.Bytes())
+			}
+			exit = failure.ExitCode()
+		}
+		t.Logf("Node %s: exit %d, stdout %q", filepath.Base(path), exit, stdout)
+		return string(stdout), exit
+	}
+	oracle, oracleExit := run(path)
+	if oracle != wantStdout || oracleExit != wantExit {
+		t.Fatalf("source Node: exit %d stdout %q, want exit %d stdout %q", oracleExit, oracle, wantExit, wantStdout)
+	}
 	program, err := lowerSource(t, source)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var calls []ir.NodeFSFile
-	var visit func(reflect.Value)
-	visit = func(value reflect.Value) {
-		if !value.IsValid() {
-			return
-		}
-		if value.CanInterface() {
-			if call, ok := value.Interface().(ir.NodeFSFile); ok {
-				calls = append(calls, call)
-				return
-			}
-		}
-		switch value.Kind() {
-		case reflect.Interface, reflect.Pointer:
-			if !value.IsNil() {
-				visit(value.Elem())
-			}
-		case reflect.Struct:
-			for i := 0; i < value.NumField(); i++ {
-				visit(value.Field(i))
-			}
-		case reflect.Slice:
-			for i := 0; i < value.Len(); i++ {
-				visit(value.Index(i))
-			}
-		}
+	generated := filepath.Join(directory, "generated.mjs")
+	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+		t.Fatal(err)
 	}
-	visit(reflect.ValueOf(program.Main))
-	if len(calls) != 1 {
-		t.Fatalf("want one fs call, got %d: %#v", len(calls), program.Main)
+	got, exit := run(generated)
+	if got != oracle || exit != oracleExit {
+		t.Fatalf("JavaScript backend: exit %d stdout %q; source Node: exit %d stdout %q", exit, got, oracleExit, oracle)
 	}
-	return calls[0]
 }
 
 func TestFSOpenStringFlagsLower(t *testing.T) {
 	t.Parallel()
-	call := guardedFSCall(t, "import {openSync} from 'node:fs'; openSync('x','r');")
-	if call.Operation != "open" || len(call.Arguments) != 3 {
-		t.Fatalf("want open with mode: %#v", call)
-	}
+	lowersAndAgreesWithNode(t, `import {writeFileSync,openSync,closeSync,readFileSync,unlinkSync} from 'node:fs';
+ writeFileSync('x','opened bytes'); const fd=openSync('x','r'); closeSync(fd);
+ console.log(readFileSync('x','utf8')); unlinkSync('x');`, "opened bytes\n", 0)
 }
 
 func TestFSRemoveDefaultRetryDelayLowers(t *testing.T) {
 	t.Parallel()
-	call := guardedFSCall(t, "import {rmSync} from 'node:fs'; rmSync('x',{retryDelay:100});")
-	if call.Operation != "rm" || len(call.Arguments) != 3 {
-		t.Fatalf("want rm with driver defaults: %#v", call)
-	}
+	lowersAndAgreesWithNode(t, `import {writeFileSync,existsSync,rmSync} from 'node:fs';
+ writeFileSync('x','remove me'); console.log(existsSync('x')?'present':'missing');
+ rmSync('x',{retryDelay:100}); console.log(existsSync('x')?'present':'missing');`, "present\nmissing\n", 0)
 }
 
 func TestFSExistsOperation(t *testing.T) {
 	t.Parallel()
-	call := guardedFSCall(t, "import {existsSync} from 'node:fs'; existsSync('x');")
-	if call.Operation != "exists" || call.Of != ir.Boolean {
-		t.Fatalf("want boolean exists operation: %#v", call)
-	}
+	lowersAndAgreesWithNode(t, `import {existsSync,writeFileSync,unlinkSync} from 'node:fs';
+ console.log(existsSync('x')?'present':'missing'); writeFileSync('x','exists');
+ console.log(existsSync('x')?'present':'missing'); unlinkSync('x');
+ console.log(existsSync('x')?'present':'missing');`, "missing\npresent\nmissing\n", 0)
 }
 
 func TestFSStatThrowsByDefault(t *testing.T) {
 	t.Parallel()
-	call := guardedFSCall(t, "import {statSync} from 'node:fs'; statSync('x');")
-	if call.Operation != "stat" || len(call.Arguments) != 2 {
-		t.Fatalf("want stat with throw argument: %#v", call)
-	}
-	if throws, ok := call.Arguments[1].(ir.BooleanConstant); !ok || !throws.Value {
-		t.Fatalf("stat must throw by default: %#v", call.Arguments[1])
-	}
+	// Missing-file behavior distinguishes throwIfNoEntry's default: Node exits
+	// before the final print; returning undefined instead continues and exits zero.
+	lowersAndAgreesWithNode(t, `import {existsSync,statSync} from 'node:fs';
+ console.log(existsSync('missing')?'present':'missing'); statSync('missing');
+ console.log('stat returned instead of throwing');`, "missing\n", 70)
 }
