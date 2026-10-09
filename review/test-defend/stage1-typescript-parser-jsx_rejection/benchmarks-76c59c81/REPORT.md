@@ -85,7 +85,7 @@ Origin/main 76c59c81e8617cea1892a01841494895927a712c; 100 current tests, no name
         ]
       }
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestCompilerExpressionsAgree_Setup|TestProduct_CompilerExpressionsNative|TestCompilerExpressionsAgree_000|TestCompilerExpressionsAgree_001|TestCompilerExpressionsAgree_002|TestCompilerExpressionsAgree_003|TestCompilerExpressionsAgree_004|TestCompilerExpressionsAgree_005|TestCompilerExpressionsAgree_006|TestCompilerExpressionsAgree_007|TestCompilerExpressionsAgree_008|TestCompilerExpressionsAgree_009|TestCompilerExpressionsAgree_010|TestCompilerExpressionsAgree_011|TestCompilerExpressionsAgree_012|TestCompilerExpressionsAgree_013|TestCompilerExpressionsAgree_014|TestCompilerExpressionsAgree_015)$ > D3.log 2>&1; compiler_expressions_shards_test.go:106: build compiler-expressions-native: native: sanitized build unavailable",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgree_Setup|TestProduct_CompilerExpressionsNative|TestCompilerExpressionsAgree_000|TestCompilerExpressionsAgree_001|TestCompilerExpressionsAgree_002|TestCompilerExpressionsAgree_003|TestCompilerExpressionsAgree_004|TestCompilerExpressionsAgree_005|TestCompilerExpressionsAgree_006|TestCompilerExpressionsAgree_007|TestCompilerExpressionsAgree_008|TestCompilerExpressionsAgree_009|TestCompilerExpressionsAgree_010|TestCompilerExpressionsAgree_011|TestCompilerExpressionsAgree_012|TestCompilerExpressionsAgree_013|TestCompilerExpressionsAgree_014|TestCompilerExpressionsAgree_015)$' > D3.log 2>&1; compiler_expressions_shards_test.go:106: build compiler-expressions-native: native: sanitized build unavailable",
     "bounded": true,
     "matrix_rows": [
       "TestCompilerExpressionsAgree_Setup",
@@ -132,7 +132,7 @@ Origin/main 76c59c81e8617cea1892a01841494895927a712c; 100 current tests, no name
         ]
       }
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestPerformance|TestWholePerformance|TestNodeCountCheckCatchesMutant|TestWholeCountCheckCatchesMutant)$ > D1.log 2>&1; performance_test.go:95: Node warm-up count \"17\\n\" differs from \"557010\\n\"",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestPerformance|TestWholePerformance|TestNodeCountCheckCatchesMutant|TestWholeCountCheckCatchesMutant)$' > D1.log 2>&1; performance_test.go:95: Node warm-up count \"17\\n\" differs from \"557010\\n\"",
     "bounded": true,
     "matrix_rows": [
       "TestPerformance",
@@ -165,7 +165,7 @@ Origin/main 76c59c81e8617cea1892a01841494895927a712c; 100 current tests, no name
         ]
       }
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestPerformance|TestWholePerformance|TestNodeCountCheckCatchesMutant|TestWholeCountCheckCatchesMutant)$ > D2.log 2>&1; performance_test.go:95: Node warm-up count \"847479\\n\" differs from \"887803\\n\"",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestPerformance|TestWholePerformance|TestNodeCountCheckCatchesMutant|TestWholeCountCheckCatchesMutant)$' > D2.log 2>&1; performance_test.go:95: Node warm-up count \"847479\\n\" differs from \"887803\\n\"",
     "bounded": true,
     "matrix_rows": [
       "TestPerformance",
@@ -212,3 +212,5 @@ Friction and unclear instructions:
 10. The repository ignores .log files, so evidence logs must be explicitly force-added. Source restoration was verified before packaging.
 
 Costs and limits: Warm setup skipped, npm ci reported 350 ms, nproc 5. Five mutations were run, below the seven-mutant ceiling; both count matrices took about 73 command-wall seconds and stayed below 90 binary seconds. Builder matrices took about 17 wall seconds each. Native rebuilds are included in real matrix runtime. Every Go builder diff passed go vet ./internal/native/. All standalone diffs apply independently to the starting origin/main commit. No other packages, broad builder consumers, exhaustive native coverage or repo-wide uniqueness were tested. Source edits are restored. Full report, profiles, coverage differences, caller searches, input-shape observation and raw JSON logs are retained.
+
+The requested defense branch already held another worker's JSX defense. The initial push was rejected. This session was moved into benchmarks-76c59c81 and the remote history merged, preserving both evidence sets without force-pushing.
