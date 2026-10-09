@@ -696,7 +696,7 @@ func TestThroughput(t *testing.T) {
 // attached to nothing. Stage 1 reads the table only by following links from the root, and the flat copy
 // of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
 // harness pass that walks the table by row reports on the copies and fails here.
-// Not parallel: uses the process-wide upstream capture and shared native products.
+// Not parallel: uses shared upstream capture, oracle, and native products.
 func TestNodeTableIsLinkOnly(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -724,7 +724,7 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 // mutated Node result, including JSX parsing, text spans and finding serialization.
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
 
-// Not parallel: prepares the shared registry and native canary before parallel mutant subtests.
+// Not parallel: prepares the shared live registry, oracle, and native canary before parallel mutant subtests.
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	descriptors := prepareRegistry(t, ".")

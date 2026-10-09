@@ -9,7 +9,7 @@ import (
 )
 
 // Prepare products once before the parallel comparison leaf.
-// Not parallel: prepares emittedMismatchSetup's shared comparison products.
+// Not parallel: prepares emittedMismatchSetup's shared products before the parallel comparison leaf.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
 	started := time.Now()
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
@@ -40,19 +40,19 @@ func serializationPort(t *testing.T) string {
 	return directory
 }
 
-// Not parallel: prepares completeSuggestionSetup's shared corpus and products.
+// Not parallel: initializes completeSuggestionSetup's shared fixtures, corpus, and products.
 func TestCompleteSuggestionSerialization(t *testing.T) {
 	completeSuggestionUnion(t)
 	completeSuggestionSetup(t)
 }
 
-// Not parallel: prepares suggestionAlongsideSetup's shared corpus and products.
+// Not parallel: initializes suggestionAlongsideSetup's shared suggestion and automatic-fix fixtures and products.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	suggestionAlongsideSetup(t)
 	suggestionAlongsideUnion(t)
 }
 
-// Not parallel: prepares the shared witnessScriptKindState and comparison products.
+// Not parallel: initializes shared witnessScriptKindState and products before its parallel shards.
 func TestWitnessScriptKind(t *testing.T) {
 	witnessScriptKindSetup(t)
 	witnessScriptKindUnion(t)

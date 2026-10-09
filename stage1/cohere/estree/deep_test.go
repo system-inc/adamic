@@ -27,6 +27,7 @@ func deepGrammar() []string {
 	return []string{numeric.String(), quoted.String(), logical.String()}
 }
 func TestDeepGrammar(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, deepGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
