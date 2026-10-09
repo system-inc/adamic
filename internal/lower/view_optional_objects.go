@@ -31,3 +31,57 @@ func (l *lowering) optionalObjectViewRead(node *ast.Node, field *ast.Symbol) boo
 	}
 	return undefined && objects == 1
 }
+
+// Lazy family failures can leave a placeholder without its field graph. Such a
+// placeholder cannot certify an optional object alias. Refuse its demanded read
+// rather than let the missing graph erase the child's checks.
+func (l *lowering) optionalObjectViewBoundary(node *ast.Node, target *checker.Type) error {
+	id := l.result.ViewContractTypes[int(target.Id())]
+	if id <= 0 {
+		return nil
+	}
+	root := l.result.ViewContracts[id-1]
+	if root.Kind != ir.ViewUnknown && root.Unsupported == "" {
+		return nil
+	}
+	family := root.Unsupported
+	if family == "" {
+		family = "object view"
+	}
+	names := map[string]bool{}
+	for _, field := range l.checker.GetPropertiesOfType(target) {
+		if field.Flags&ast.SymbolFlagsOptional != 0 {
+			names[field.Name] = true
+		}
+	}
+	if len(names) == 0 {
+		return nil
+	}
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return err
+	}
+	var refused error
+	var visit ast.Visitor
+	visit = func(part *ast.Node) bool {
+		if refused != nil {
+			return true
+		}
+		if part.Kind == ast.KindPropertyAccessExpression && names[part.Name().Text()] {
+			field := l.checker.GetSymbolAtLocation(part.Name())
+			if field != nil && l.optionalObjectViewRead(part, field) {
+				refused = &Refused{Where: l.program.Where(part), What: "an optional object field read " + sourceExpression(part) + " without a complete " + l.checker.TypeToString(target) + " view", Fix: "prove or implement the " + family + " contract before reading this field through its checked child view"}
+				return true
+			}
+		}
+		part.ForEachChild(visit)
+		return refused != nil
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+		if refused != nil {
+			return refused
+		}
+	}
+	return nil
+}

@@ -43,6 +43,9 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	if err != nil {
 		return nil, err
 	}
+	if err := l.optionalObjectViewBoundary(node, target); err != nil {
+		return nil, err
+	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
 	}

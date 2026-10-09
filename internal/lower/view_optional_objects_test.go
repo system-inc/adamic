@@ -53,3 +53,14 @@ func TestOptionalObjectGetterRemainsRefused(t *testing.T) {
 		t.Fatalf("getter must not use a data-slot certificate: %v", err)
 	}
 }
+
+func TestOptionalObjectIncompleteParentRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Base {readonly kind:number;readonly original?:Base|undefined}
+ interface Node extends Base {readonly text:string;readonly original?:Node|undefined;readonly deferred:((node:Node)=>string)|undefined}
+ function read(node:Base):string {const view=node as Node;const alias=view.original;return alias===undefined?"missing":alias.text}
+ console.log("unused");`)
+	if err == nil || !strings.Contains(err.Error(), "optional object field read view.original without a complete Node view") || !strings.Contains(err.Error(), "checked child view") {
+		t.Fatalf("placeholder must not erase a child check: %v", err)
+	}
+}
