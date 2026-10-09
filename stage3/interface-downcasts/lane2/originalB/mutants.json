@@ -1,0 +1,242 @@
+[
+  {
+    "fixture": "incrementalmultifileemitbuildinfo-fileidslist-bad.a",
+    "pair": "IncrementalMultiFileEmitBuildInfo.fileIdsList",
+    "mutation": "Return zero instead of the checked inner element",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "0\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "incrementalmultifileemitbuildinfo-fileidslist-absent.a",
+    "pair": "IncrementalMultiFileEmitBuildInfo.fileIdsList",
+    "mutation": "Admit an absent required field",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "absent\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "sortedandcanonicalizedmutablefilesystementries-directories-bad.a",
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.directories",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "objectliteralexpressionbase-objectliteralelement--properties-bad.a",
+    "pair": "ObjectLiteralExpressionBase<ObjectLiteralElement>.properties",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "heritageclause---undefined-types-bad.a",
+    "pair": "HeritageClause | undefined.types",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "objectliteralexpression---undefined-properties-bad.a",
+    "pair": "ObjectLiteralExpression | undefined.properties",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "jsdoc---undefined-tags-bad.a",
+    "pair": "JSDoc | undefined.tags",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "syntaxlist-_children-bad.a",
+    "pair": "SyntaxList._children",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "parsedcommandline---undefined-filenames-bad.a",
+    "pair": "ParsedCommandLine | undefined.fileNames",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "watchoptions-excludefiles-bad.a",
+    "pair": "WatchOptions.excludeFiles",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "watchoptions-excludedirectories-bad.a",
+    "pair": "WatchOptions.excludeDirectories",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "tsconfigsourcefile---undefined-extendedsourcefiles-bad.a",
+    "pair": "TsConfigSourceFile | undefined.extendedSourceFiles",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "signaturedeclaration---jsdocsignature---undefined-parameters-bad.a",
+    "pair": "SignatureDeclaration | JSDocSignature | undefined.parameters",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "conditionalroot-aliastypearguments-bad.a",
+    "pair": "ConditionalRoot.aliasTypeArguments",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "tupletype-typeparameters-bad.a",
+    "pair": "TupleType.typeParameters",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "tupletype-typeparameters-absent.a",
+    "pair": "TupleType.typeParameters",
+    "mutation": "Admit an absent required field",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "absent\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "interfacetypewithdeclaredmembers-typeparameters-bad.a",
+    "pair": "InterfaceTypeWithDeclaredMembers.typeParameters",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "interfacetypewithdeclaredmembers-typeparameters-absent.a",
+    "pair": "InterfaceTypeWithDeclaredMembers.typeParameters",
+    "mutation": "Admit an absent required field",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "absent\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "setaccessordeclaration---undefined-parameters-bad.a",
+    "pair": "SetAccessorDeclaration | undefined.parameters",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "signature---undefined-typeparameters-bad.a",
+    "pair": "Signature | undefined.typeParameters",
+    "mutation": "Replace the numeric descendant read contract and conversion with a string read",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "bad\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "configfilespecs---undefined-validatedfilesspec-bad.a",
+    "pair": "ConfigFileSpecs | undefined.validatedFilesSpec",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "configfilespecs---undefined-validatedfilesspec-absent.a",
+    "pair": "ConfigFileSpecs | undefined.validatedFilesSpec",
+    "mutation": "Admit an absent required field",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "absent\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "configfilespecs-validatedincludespecsbeforesubstitution-bad.a",
+    "pair": "ConfigFileSpecs.validatedIncludeSpecsBeforeSubstitution",
+    "mutation": "Admit a numeric element as part of the string consumer union",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "42\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  },
+  {
+    "fixture": "configfilespecs-validatedincludespecsbeforesubstitution-absent.a",
+    "pair": "ConfigFileSpecs.validatedIncludeSpecsBeforeSubstitution",
+    "mutation": "Admit an absent required field",
+    "catcher": "Exact stdout/stderr/exit-70 stopping oracle in sanitized native, release native and JavaScript.",
+    "mutant_stdout": "absent\n",
+    "mutant_exit": 0,
+    "mutant_stderr": "",
+    "native_leak_check": "clean"
+  }
+]
