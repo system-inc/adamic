@@ -1,0 +1,9 @@
+# Date UTC and ISO forms
+
+Roadmap step 29 (#96rpfw2), ruling 10: Date stores epoch milliseconds, with Node's TimeClip. Only UTC and ISO forms are admitted. Locale and local-time operations are refused at compile time, with a diagnostic naming ruling 10; pinning TZ does not make them admissible.
+
+The library implements numeric and ISO construction, copying a Date, Date.now (including a function value), getTime, valueOf, numeric Date comparisons, Number(date), Date.UTC, all eight UTC getters, toISOString, toUTCString and Date.parse of proven ISO strings. Date-only ISO forms are UTC. Date-time forms require Z or an explicit numeric offset. Literal types, finite literal unions, constant aliases and toISOString results establish the parse proof; arbitrary strings remain refused. Invalid ISO components return NaN as Node does.
+
+Date.now uses CLOCK_REALTIME on native and WASI and Node's Date.now on JavaScript. It returns whole epoch milliseconds. Clock values depend on the machine and may move backwards; no monotonicity is promised. Tests compare integer type and epoch range, rather than exact clock readings.
+
+Local getters and setters, getTimezoneOffset, toString, toDateString, toTimeString, toLocale*String, multi-argument local construction, Date() and non-ISO parsing are refused under ruling 10. UTC setters, setTime and toJSON are retained from the Date area implementation. Detached prototype methods, arbitrary receivers, intrinsic overrides and structural erasure of Date's internal slot remain NotYet. Catching toISOString's RangeError remains NotYet because catchable RangeError descriptors are not represented; uncaught invalid-time formatting agrees with the oracle's panic convention. Optional Date calls remain a compiler limitation: `function f(d: Date | undefined) { return d?.getTime(); }`.

@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"math"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -9,9 +10,11 @@ import (
 )
 
 var libraryArrayMethods = map[string]bool{
-	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"push": true, "join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"filter": true, "some": true, "every": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
+	"sort": true, "reduceRight": true,
 }
 
 // libraryArrayMethod keeps this slice's additions out of the shared method dispatch.
@@ -24,14 +27,26 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if err != nil {
 		return nil, true, err
 	}
+	if name == "push" && len(node.AsCallExpression().Arguments.Nodes) == 1 && node.AsCallExpression().Arguments.Nodes[0].Kind != ast.KindSpreadElement {
+		return l.arrayMethod(node, receiver, name)
+	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
+	}
+	if name == "indexOf" || name == "lastIndexOf" || name == "includes" {
+		if err := l.libraryArraySearchSlots(node, receiver, element); err != nil {
+			return nil, true, err
+		}
 	}
 	array, err := l.expression(receiver)
 	if err != nil {
 		return nil, true, err
 	}
 	switch name {
+	case "filter", "some", "every":
+		return l.libraryArrayPredicate(node, array, element, name)
+	case "push":
+		return l.libraryArrayPush(node, receiver, array, element)
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
 	case "with":
@@ -52,7 +67,7 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 		if len(signatures) == 1 && len(signatures[0].Parameters()) > 3 {
 			return nil, true, l.notYet(node, name+" with more than three callback parameters")
 		}
-		return l.arrayVisit(node, array, element, name)
+		return l.libraryArrayFindLast(node, array, element, name)
 	case "toReversed":
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, "toReversed with arguments")
@@ -80,6 +95,10 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 			return nil, true, l.notYet(node, "toSorted with an effectful comparator expression")
 		}
 		return l.arraySort(node, copy, element)
+	case "reduceRight":
+		return l.libraryArrayReduceRight(node, array, element)
+	case "sort":
+		return l.libraryArrayDefaultSort(node, receiver, array, element)
 	}
 	if len(written) < 1 || len(written) > 2 {
 		return nil, true, l.notYet(node, name+" with these arguments")
@@ -268,12 +287,16 @@ func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, e
 		return nil, true, l.notYet(node, "copyWithin with these arguments")
 	}
 	arguments := []ir.Expression{array}
-	for _, item := range written {
+	for position, item := range written {
 		value, err := l.expression(item)
 		if err != nil {
 			return nil, true, err
 		}
-		if value.Type() != ir.Number {
+		if _, missing := value.(ir.Undefined); missing && position == 2 {
+			// An explicitly undefined end uses the length, after all arguments run.
+			value = ir.NumberConstant{Value: math.Inf(1)}
+		}
+		if value.Type() != ir.Number && !(position == 2 && value.Type() == ir.MaybeNumber) {
 			return nil, true, l.notYet(node, "copyWithin with a nonnumeric bound")
 		}
 		arguments = append(arguments, value)
@@ -286,6 +309,9 @@ func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, e
 		return ir.Binary{Operator: ir.Add, Left: left, Right: right}
 	}
 	relative := func(value ir.Expression) ir.Expression {
+		if value.Type() == ir.MaybeNumber {
+			value = ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: ir.NumberConstant{Value: math.Inf(1)}, WhenNot: ir.Unwrap{Value: value}}
+		}
 		integer := ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{value}}, WhenTrue: zero, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}}}
 		local := b.declare("integer", integer)
 		read := b.read(local)
@@ -417,7 +443,7 @@ var libraryArrayLengths = map[string]float64{
 	"keys": 0, "lastIndexOf": 1, "map": 1, "pop": 0, "push": 1, "reduce": 1,
 	"reduceRight": 1, "reverse": 0, "shift": 0, "slice": 2, "some": 1, "sort": 1,
 	"splice": 2, "toLocaleString": 0, "toReversed": 0, "toSorted": 1, "toSpliced": 2,
-	"toString": 0, "unshift": 1, "values": 0, "with": 2,
+	"toString": 0, "unshift": 1, "values": 0, "with": 2, "isArray": 1,
 }
 
 // Observing the standard function's metadata never calls it with a lost receiver. Recognition
@@ -430,6 +456,9 @@ func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
 	access := node.AsPropertyAccessExpression()
 	if access.QuestionDotToken != nil {
 		return ""
+	}
+	if access.Name().Text() == "isArray" && l.isLibraryGlobal(access.Expression, "Array") {
+		return "isArray"
 	}
 	prototype := ast.SkipParentheses(access.Expression)
 	if prototype.Kind != ast.KindPropertyAccessExpression || prototype.Name().Text() != "prototype" || prototype.AsPropertyAccessExpression().QuestionDotToken != nil || !l.isLibraryGlobal(prototype.AsPropertyAccessExpression().Expression, "Array") {
@@ -463,6 +492,9 @@ func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool)
 }
 
 func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
+	if l.libraryArrayExplicitSearch(node) != "" {
+		return true
+	}
 	if l.libraryArrayMethodName(node) == "" {
 		return false
 	}

@@ -1,0 +1,19 @@
+function arrayKinds<T>(values: readonly T[]): string {
+ let result = '';
+ for (const value of values) { result = result + `${value === null} ${value === undefined} ${typeof value};`; }
+ return result;
+}
+function mapKinds<T>(values: ReadonlyMap<string, T>): string {
+ let result = '';
+ for (const value of values.values()) { result = result + `${value === null} ${value === undefined} ${typeof value};`; }
+ return result;
+}
+function fieldKind<T>(holder: {readonly value: T}): string { return `${holder.value === null} ${holder.value === undefined} ${typeof holder.value}`; }
+console.log(arrayKinds<string | null>([null, `owned${1}`]));
+console.log(arrayKinds<string | undefined>([undefined, `owned${2}`]));
+console.log(mapKinds<string | null>(new Map<string, string | null>([['empty', null], ['full', `owned${3}`]])));
+console.log(mapKinds<string | undefined>(new Map<string, string | undefined>([['empty', undefined], ['full', `owned${4}`]])));
+console.log(fieldKind<{readonly label: string} | null>({value: null}));
+console.log(fieldKind<{readonly label: string} | undefined>({value: undefined}));
+console.log(fieldKind<{readonly label: string} | null>({value: {label: `owned${5}`}}));
+console.log(fieldKind<{readonly label: string} | undefined>({value: {label: `owned${6}`}}));

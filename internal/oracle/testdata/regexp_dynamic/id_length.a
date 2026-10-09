@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? '^(?:i|j|_)$';
+const exception = new RegExp(pattern, 'u');
+console.log(`${exception.test('i')} ${exception.test('longName')}`);

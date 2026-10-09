@@ -44,14 +44,49 @@ func programs(t *testing.T) []string {
 	// every point its loops pass doesn't finish within the trace's five minutes even alone; its loops
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
-	// and operator shapes here, and the oracle still runs the full sweep. The large typed-array
-	// sieve prints a 100,001-element buffer at every traced point and exceeds that limit;
-	// typed_arrays_primes.a traces the same sieve through limit 100, and the oracle runs both.
-	// normalize_coverage_long.a observes every point of million-unit normalized strings.
-	// Its trace would record hundreds of millions of instructions; the smaller normalization
-	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
+	// and operator shapes here, and the oracle still runs the full sweep.
+	// These oracle fixtures are explicitly registered as expected NotYet or deliberately
+	// refused, so they have no accepted IR to trace. The oracle still verifies refusal.
+	// The process runtime-only probes are tested through explicit IR by their oracle
+	// tests; their source does not lower. Keep each exclusion explicit so other lowering
+	// failures still fail the flow gate. normalize_coverage_long.a observes every point of
+	// million-unit normalized strings; its trace would record hundreds of millions of
+	// instructions, the smaller normalization fixtures cover the same loop shapes here, and
+	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		switch filepath.Base(path) {
+		case "class_features_accessors.a":
+			// TestScout22AccessorSpreadRefusal pins the throwing accessor-spread gap.
+			return true
+		case "scout22_prototype_links.a", "scout22_prototype_lifetimes.a":
+			// Prototype mutation is refused in .a; their own tests compile .ts copies
+			// with proven heap lifetimes and compare them with Node.
+			return true
+		case "library_date_string.a", "library_date_string_utc.a", "library_date_string_refusal.a", "library_date_dynamic_parse.a":
+			// TestDateStringRuling10Refusals pins local-Date and unproven-parse refusals.
+			return true
+		case "scout19_slice2_create_set.a", "scout19_slice2_range.a":
+			// TestScout19Slice2ExpectedRefusals pins TS2345 (T | undefined into T);
+			// createSet also reports TS2322. Neither source has accepted IR.
+			return true
+		case "scout19_slice2_presence.a", "scout19_slice2_brands.a", "scout19_slice2_path.a", "scout19_slice2_generator.a":
+			// The same test pins non-null assertions, unchecked casts and generators
+			// as deliberate refusals; keep the passing MultiMap witnesses in flow.
+			return true
+		case "typed_arrays_primes_large.a":
+			// The full prime sweep is covered by its dedicated oracle, not the flow trace.
+			return true
+		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",
+			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
+			return true
+		// TestClassWrongOutput103/106/107/108 check these against Node and pin
+		// their deliberate refusals. They have no accepted IR for flow to trace.
+		case "classfeat_init_super.a", "classfeat_init_super_getter.a", "classfeat_init_super_number.a",
+			"classfeat_static_private_instance.a", "classfeat_static_private_method.a",
+			"iterators_hidden_return.a", "iterators_override_this.a", "iterators_sym_keys_view.a":
+			return true
+		}
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -112,6 +147,10 @@ func checkSingleAssignmentProgram(t *testing.T, path string) {
 	var totals SSAStats
 	var functions int
 	program := lowered(t, path)
+	if program.Async != nil {
+		t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+		return
+	}
 	for function := -1; function < len(program.Functions); function++ {
 		name := "main"
 		if function >= 0 {

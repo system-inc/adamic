@@ -10,6 +10,7 @@
 // 10), each held to Node by the oracle.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 

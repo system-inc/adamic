@@ -228,7 +228,7 @@ func TestOrderedProgress(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := " 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\n"
+	want := " 50/51 pass=0 fail=0 refused=0 not-typescript=0 crashed=0 skipped=50\n 51/51 pass=1 fail=0 refused=0 not-typescript=0 crashed=0 skipped=50\n"
 	if log.String() != want || report.Pass != 1 || report.Skipped != 50 {
 		t.Fatalf("ordered progress: %q, want %q", log.String(), want)
 	}
