@@ -31,7 +31,12 @@ ahra = Path(os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/Proje
 # What a red that may be load looks like, in its first failure's text.
 kinds = (
     ('timeout', re.compile(r'panic: test timed out after')),
-    ('stall', re.compile(r'stalled: no output for|stall guard')),
+    # internal/childguard's verdicts (#ah17waq): 'stalled: no output for' or 'stalled: no first output for' a window, and
+    # 'ceiling: <elapsed>', the guard's own end of a child that ran too long, never the child's nonzero exit.
+    ('stall', re.compile(r'stalled: no (?:first )?output for|stall guard')),
+    ('ceiling', re.compile(r'(?:^|\s|childguard: )ceiling: \d', re.M)),
+    # internal/testguard's CPU limit: RLIMIT_CPU ends the child with SIGXCPU.
+    ('cpu-limit', re.compile(r'signal: CPU time limit exceeded|SIGXCPU')),
     ('kill', re.compile(r'signal: killed|killed by (?:the )?(?:guard|watchdog)')),
     # A test's own budget kill (Oct 9: cohere's split units stop a step at 90 s and print this), which may be load.
     ('deadline', re.compile(r'unit deadline exceeded name=')),

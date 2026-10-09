@@ -72,6 +72,22 @@ class AbTriggerTests(unittest.TestCase):
         job = json.loads(self.write(deadline)[0].read_text())
         self.assertEqual((job['kind'], job['leaf']), ('deadline', 'TestSixRuleAgreementAndMutants_004'))
 
+    def test_each_guard_verdict_writes_a_job_of_its_kind(self):
+        # #ah17waq: stage 1's children die only through internal/childguard (stalled, or its ceiling) or internal/testguard
+        # (a CPU limit), never confused with an assertion diff.
+        head = 'github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_007\n=== RUN   TestShardsAgree_007\n'
+        for text, kind in (("    shards_test.go:88: stalled: no first output for 30s after 30.2s, load 61.4 (node lint.js)\n", 'stall'),
+                           ("    shards_test.go:88: stalled: no output for 1m0s after 4m2s, load 70.1 (node lint.js)\n", 'stall'),
+                           ("    shards_test.go:88: childguard: ceiling: 10m0.4s\n", 'ceiling'),
+                           ("    shards_test.go:91: lint child: signal: CPU time limit exceeded\n", 'cpu-limit')):
+            with self.subTest(kind=kind):
+                written = self.write(head + text)
+                self.assertEqual(json.loads(written[0].read_text())['kind'], kind)
+                for path in written:
+                    path.unlink()
+        # A diff that mentions a ceiling in its own words is still an assertion.
+        self.assertEqual(self.write(head + "    shards_test.go:40: got rule 'max-ceiling: 3', want 'max-ceiling: 4'\n"), [])
+
     def test_an_assertion_red_writes_no_job(self):
         self.assertEqual(self.write(assertion), [])
 
