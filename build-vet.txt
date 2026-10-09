@@ -1,0 +1,5 @@
+loom-pilot: trimmed the product cache's entries older than an hour: 3610 MB free, now 3610
+loom-pilot: dropped go's build cache: 3610 MB free, now 3612
+loom-build: tree 5643d94a3dea936849f34726706065cc67fa951e setup 1 s
+loom-build: go build ./... passed
+loom-build: go vet ./... passed

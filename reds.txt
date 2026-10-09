@@ -1,0 +1,219 @@
+run adamic-verify-20261009T204351-5faaece8: void, 1328 tests in 309 units, 0 failed, 84 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-01: exited 2, Loom's fault (last output "none            8.8G  5.2G  3.7G  59% /tmp")
+BROKEN tests-02: no results (exited false, last output "loom-runner: still running after 690 s")
+BROKEN tests-03: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-04: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-05: no results (exited false, last output "loom-runner: still running after 840 s")
+BROKEN tests-06: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-07: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-08: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-09: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-10: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-11: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-12: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-13: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-14: exited 2, Loom's fault (last output "none            8.8G  5.2G  3.7G  59% /tmp")
+BROKEN tests-15: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-16: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-17: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-18: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-19: exited 2, Loom's fault (last output "none            8.8G  6.0G  2.9G  68% /tmp")
+BROKEN tests-20: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-21: exited 2, Loom's fault (last output "none            8.8G  5.0G  3.9G  57% /tmp")
+BROKEN tests-22: exited 2, Loom's fault (last output "none            8.8G  6.4G  2.5G  72% /tmp")
+BROKEN tests-23: no results (exited false, last output "loom-runner: still running after 870 s")
+BROKEN tests-24: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-25: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-26: exited 2, Loom's fault (last output "none            8.8G  6.2G  2.7G  71% /tmp")
+BROKEN tests-27: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-28: no results (exited false, last output "loom-runner: still running after 600 s")
+BROKEN tests-30: no results (exited false, last output "loom-runner: still running after 870 s")
+BROKEN tests-31: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-33: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-34: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-35: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-01-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-01-r2: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-03-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-04-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-12-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-15-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-16-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-18-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-22-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-22-r2: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-24-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-24-r2: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-25-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-27-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-29-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-30-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-30-r2: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-30-r4: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-30-r5: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r2: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r3: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r4: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r5: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r6: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r7: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r8: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r9: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r10: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r11: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r12: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r13: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r14: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r15: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r16: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r17: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r18: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r19: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r20: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r21: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r22: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r23: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r24: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r25: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-32-r26: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-35-r1: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-35-r2: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-35-r3: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-35-r4: no results (exited true, last output "960M\t/tmp/adamic-tools")
+PRODUCT OVER 60 S product-11 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreePrepared: 78 s
+PRODUCT OVER 60 S product-13 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_WitnessScriptKindGoOracle: 80 s
+PRODUCT OVER 60 S product-13 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_jsx_tree_setup: 100 s
+PRODUCT OVER 60 S product-14 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementReleaseNative: 89 s
+PRODUCT OVER 60 S product-14 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationJavaScript: 76 s
+PRODUCT OVER 60 S product-14 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationOracleOutputs: 103 s
+PRODUCT OVER 60 S product-15 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementSanitizedNative: 120 s
+PRODUCT OVER 60 S product-15 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationScanner: 120 s
+PRODUCT OVER 60 S product-15 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_SuggestionAlongsideNative: 87 s
+PRODUCT OVER 60 S product-17 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_FactoryHooksMutantLowered: 79 s
+PRODUCT OVER 60 S product-17 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableEmitted: 79 s
+PRODUCT OVER 60 S product-27 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownLeafNativeSanitized: 66 s
+PRODUCT OVER 60 S product-27 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_manifest: 66 s
+PRODUCT OVER 60 S product-28 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownQuote_lists: 98 s
+PRODUCT OVER 60 S product-28 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTable_native_true: 98 s
+PRODUCT OVER 60 S product-31 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceClassNative: 62 s
+PRODUCT OVER 60 S product-31 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantsSetup_000: 61 s
+PRODUCT OVER 60 S product-31 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortNative2: 64 s
+PRODUCT OVER 60 S product-34 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_native_asan: 61 s
+PRODUCT OVER 60 S product-45 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownQuote_native_false: 61 s
+PRODUCT OVER 60 S product-45 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownQuote_native_true: 61 s
+PRODUCT OVER 60 S product-47 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_native_true: 62 s
+PRODUCT OVER 60 S product-50 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_LossyInputControlNative: 83 s
+PRODUCT OVER 60 S product-50 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantsSetup_001: 77 s
+PRODUCT OVER 60 S product-50 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortNative0: 83 s
+PRODUCT OVER 60 S product-51 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_RecoveryMutantsNative1: 68 s
+PRODUCT OVER 60 S product-51 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantsSetup_002: 73 s
+PRODUCT OVER 60 S product-53 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_first_binding: 79 s
+PRODUCT OVER 60 S product-55 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_info_native: 67 s
+PRODUCT OVER 60 S product-56 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompleteSuggestionLowered: 67 s
+PRODUCT OVER 60 S product-56 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationCounted: 80 s
+PRODUCT OVER 60 S product-56 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationProfiled: 84 s
+PRODUCT OVER 60 S product-56 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeNative: 84 s
+PRODUCT OVER 60 S product-60 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_004: 67 s
+PRODUCT OVER 60 S product-60 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_021: 68 s
+PRODUCT OVER 60 S product-60 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsSanitized: 68 s
+PRODUCT OVER 60 S product-78 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_native_asan: 72 s
+PRODUCT OVER 60 S product-82 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterGoOracle: 75 s
+PRODUCT OVER 60 S product-82 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterNarrow: 93 s
+PRODUCT OVER 60 S product-82 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterTabs: 118 s
+PRODUCT OVER 60 S product-82 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterTight: 118 s
+PRODUCT OVER 60 S product-106 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementLowered: 67 s
+PRODUCT OVER 60 S product-107 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_EmittedMismatchLowered: 66 s
+PRODUCT OVER 60 S product-108 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_EmittedMismatchNative: 78 s
+PRODUCT OVER 60 S product-109 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_LintGoOracle: 78 s
+PRODUCT OVER 60 S product-110 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_LintMutantNativeCanary: 123 s
+PRODUCT OVER 60 S product-185 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_LintOwnedWitnessesLowered: 71 s
+PRODUCT OVER 60 S product-186 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_LintOwnedWitnessesSanitized: 87 s
+PRODUCT OVER 60 S product-188 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_RulesAgreeNative: 83 s
+PRODUCT OVER 60 S product-195 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_GrainMarkdownFormatter: 79 s
+BROKEN tests-00 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-01 on 1 placements, workers: 87d7b65f9647
+BROKEN tests-02 on 1 placements, workers: d95b3b5a1a4a
+BROKEN tests-03 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-04 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-05 on 1 placements, workers: d9a51227ce19
+BROKEN tests-06 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-07 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-08 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-09 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-10 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-11 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-12 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-13 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-14 on 1 placements, workers: 79499c3bd220
+BROKEN tests-15 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-16 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-17 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-18 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-19 on 1 placements, workers: d24109916836
+BROKEN tests-20 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-21 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-22 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-23 on 1 placements, workers: a6b8d6ecbf4b
+BROKEN tests-24 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-25 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-26 on 1 placements, workers: ddf4d400950e
+BROKEN tests-27 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-28 on 1 placements, workers: 496bbfdff3cd
+BROKEN tests-30 on 1 placements, workers: 5116fd40e771
+BROKEN tests-31 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-33 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-34 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-35 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-01-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-01-r2 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-03-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-04-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-12-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-15-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-16-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-18-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-22-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-22-r2 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-24-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-24-r2 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-25-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-27-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-29-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-30-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-30-r2 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-30-r4 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-30-r5 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r2 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r3 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r4 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r5 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r6 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r7 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r8 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r9 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r10 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r11 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r12 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r13 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r14 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r15 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r16 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r17 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r18 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r19 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r20 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r21 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r22 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r23 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r24 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-32-r25 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-32-r26 on 1 placements, workers: 1b945d0fb2e7
+BROKEN tests-35-r1 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-35-r2 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-35-r3 on 1 placements, workers: 9b2db9d42042
+BROKEN tests-35-r4 on 1 placements, workers: 9b2db9d42042
