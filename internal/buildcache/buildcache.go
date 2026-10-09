@@ -233,12 +233,27 @@ func Tool(name string, arguments ...string) string {
 		return value.(string)
 	}
 	output, err := exec.Command(name, arguments...).CombinedOutput()
-	value := command + ": " + strings.TrimSpace(string(output))
+	value := command + ": " + toolReport(string(output))
 	if err != nil {
 		value += " (" + err.Error() + ")"
 	}
 	tools.Store(command, value)
 	return value
+}
+
+// toolReport is a tool's report without the lines that say only where it is installed: clang's --version ends
+// with InstalledDir, which differs by home (/home/ahra, /home/cloud, /root on a Codex instance) for the same clang,
+// and would key one product apart on every machine (Loom, Oct 9: a key that depends on the home directory is a
+// reproducibility bug). Everything that names what the tool is (its version, target and thread model) stays.
+func toolReport(output string) string {
+	lines := []string{}
+	for _, line := range strings.Split(strings.TrimSpace(output), "\n") {
+		if strings.HasPrefix(strings.TrimSpace(line), "InstalledDir:") {
+			continue
+		}
+		lines = append(lines, line)
+	}
+	return strings.TrimSpace(strings.Join(lines, "\n"))
 }
 
 func cacheDirectory() (string, error) {
