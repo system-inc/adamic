@@ -1,0 +1,27 @@
+Buildcache adoption blocked, 2026-10-09 UTC
+Branch: stage1-split/yaml
+Merged developer-tools buildcache-shared 2afbfa75221b7ad552ebd6ca40be91f838572154 without rebasing.
+Merge commit: 406277c678221b1a416f3cc37e7ab22c0e94d18d.
+The shared Product and GoBuild APIs are now on this branch. No YAML implementation changes or shared product publications were made.
+
+All YAML Go oracles use -overlay. GoBuild explicitly refuses -overlay; these remain caller-owned per the stated exception.
+
+Native-cache blocker verified:
+Two native.Build calls with source "int main(void) { return 0; }\n" and Options{Sanitize:true} in one test, with the same compiler and existing runtime archive, produced different bytes.
+cache_repro_probe_test.go:11: identical native.Build inputs: first=9585a0eeed0fc73581316bbe4a300b61030cbe17c8650712fb6717ae762559c4 second=e67ab5e250d1b684b2a0db56b4fad621b4bac449227e095ce5c3f6118d9a6b28 equal=false
+The temporary probe passed by asserting that these products differ. It was removed afterwards; the committed test code is unchanged.
+Probe metric: no subtests, whole wall from first run to last pass = 0.190208 s.
+Total run CPU (RUSAGE_CHILDREN user + system, including Go harness compilation and descendants) = 13.231072 CPU-seconds.
+nproc=5, cgroup quota=4 CPUs, GOMAXPROCS=4. No inputs were sampled or skipped.
+
+Why Product cannot safely wrap the current native builder:
+internal/native/native.go:119 creates a random temporary directory; line 128 writes main.c there. Sanitized Flags include -g, and the compiler receives that absolute source filename. Rebuilding identical declared inputs changes the binary.
+internal/native/library.go:187 similarly compiles runtime sources under a random staging directory with the sanitizer debug flags.
+internal/buildcache/store.go:291 audits a fetched product by rebuilding it and comparing every file's content hash. The verified native binary mismatch would fail that audit.
+
+Required external changes before adoption:
+Normalize program and runtime archive source/debug paths in internal/native/native.go and internal/native/library.go, retaining all existing sanitizer and leak checks. Invalidate the old runtime archive key when changing the archive build recipe, so an old archive cannot survive the normalization change.
+Both files are outside the YAML package. The user's rule requires stopping and naming the external change; no edits to those files were made.
+
+Cold/warm cached setup and cached-shard CPU: NOT MEASURED; integration is blocked, not completed. The paired uncached/fallback leaf, setup and total CPU measurements remain in LEAF_CPU_EVIDENCE.txt and LEAF_CPU_EVIDENCE.json; they are historical measurements, not cache adoption results.
+All existing shards, literal counts, selectors, union proofs, comparison sides and planted-failure checks remain unchanged.
