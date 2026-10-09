@@ -7,18 +7,18 @@
   "delegationsAfter": 0,
   "patch": {
     "files": 2,
-    "added": 420,
+    "added": 426,
     "removed": 78,
-    "changed": 498
+    "changed": 504
   },
   "native": {
     "0": {
       "exit": 1,
-      "output": "adamic: /tmp/adapt66-after/src/compiler/core.ts:335:41: Adamic 0.1 refuses a value of type () => { done: true; value: undefined; } | { done: false; value: U; } seen as (value: unknown) => IteratorResult<U, undefined>, which can write false | undefined where false is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+      "output": "adamic: /tmp/adapt66-typed/src/compiler/core.ts:368:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     },
     "1": {
       "exit": 1,
-      "output": "adamic: /tmp/adapt66-after/src/compiler/core.ts:335:41: Adamic 0.1 refuses a value of type () => { done: true; value: undefined; } | { done: false; value: U; } seen as (value: unknown) => IteratorResult<U, undefined>, which can write false | undefined where false is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+      "output": "adamic: /tmp/adapt66-typed/src/compiler/core.ts:368:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     }
   },
   "lane": {
@@ -48,7 +48,7 @@
       "node": "v24.19.0"
     },
     "execution": {
-      "commit": "fa5e90939a9e4c40aaf15cecd5d5b554c10dd2c9",
+      "commit": "11d37b01905d9efeee68b1cd3d99c9b31acbd2da",
       "apply_exit": 0,
       "oracle_exit": 1,
       "platform": {
@@ -56,9 +56,28 @@
         "arch": "x64",
         "node": "v24.19.0"
       },
-      "wall_seconds": 438.37
+      "wall_seconds": 492.522
     },
-    "results": "/tmp/adapt66-lane-validated",
+    "results": "/tmp/adapt66-typed-lane",
     "verdict": "PASS stage3 landing lane"
+  },
+  "nativeStop": {
+    "file": "src/compiler/core.ts",
+    "line": 368,
+    "column": 37,
+    "code": "adamic/no-unchecked-cast",
+    "function": "sameMap",
+    "outsideAdaptation66": true,
+    "sameMapUnchanged": true,
+    "originalLine": 356,
+    "likelyOwner": "stage3 truthful-cast / sameMap follow-up with compiler type-soundness review",
+    "ownerIsInference": true
+  },
+  "resultAnnotationsDeclared": true,
+  "followupMutant": {
+    "name": "remove-result-annotation",
+    "exit": 1,
+    "caught": true,
+    "catcher": "result callback must declare a type"
   }
 }

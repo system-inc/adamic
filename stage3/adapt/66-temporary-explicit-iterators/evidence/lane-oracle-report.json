@@ -1,5 +1,5 @@
 {
-  "tree": "/tmp/adapt66-lane-validated/adapted-tree",
+  "tree": "/tmp/adapt66-typed-lane/adapted-tree",
   "nproc": 5,
   "workers": 8,
   "runners": "all",
@@ -14,7 +14,7 @@
         "--no-fund"
       ],
       "exit": 0,
-      "seconds": 2.183
+      "seconds": 2.248
     },
     "build": {
       "command": [
@@ -23,7 +23,7 @@
         "build"
       ],
       "exit": 0,
-      "seconds": 21.916
+      "seconds": 23.705
     },
     "tests": {
       "command": [
@@ -35,7 +35,7 @@
         "--no-colors"
       ],
       "exit": 1,
-      "seconds": 307.973
+      "seconds": 348.885
     }
   },
   "status": "fail",
@@ -47,5 +47,5 @@
   "baseline_diffs": [
     "api/typescript.d.ts"
   ],
-  "wall_seconds": 332.139
+  "wall_seconds": 374.903
 }

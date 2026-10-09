@@ -44,10 +44,17 @@ throws during the input iterator step does not spuriously close the input.
 The checker retains live array-length checks for JSX children and the original
 first-pull length snapshot for tuple elaboration. Reverse iteration takes its
 initial array length only on first next. Set buckets remain live between pulls.
+Every result-producing pull and abrupt callback declares its exact
+`IteratorResult<Element, undefined>` return type, as do the shared next, return,
+and throw methods. Each mutable result literal is therefore created at its
+declared type instead of widened from an inferred union. Saved input next methods
+use a readonly function-property view; the original receiver and one-time getter
+capture are preserved without a cast.
+
 The helpers use undefined completion internally; existing void signatures stay
 unchanged, and SetIterator's actual undefined completion type is respected.
 
-**Scoreboard: 498 changed lines in tsc, 420 added and 78 removed, two files.**
+**Scoreboard: 504 changed lines in tsc, 426 added and 78 removed, two files.**
 This is the incremental row measured by the unmodified apply pipeline.
 `evidence/tsc.patch.gz` contains the external compiler source edits.
 
@@ -66,11 +73,13 @@ All three requested real-source mutants were run independently and failed:
 
 | Mutant | Catcher | Exit | Seconds |
 |---|---|---:|---:|
-| Restore singleIterator's original generator | AST census finds one remaining body | 1 | 1.670 |
-| Start singleIterator with its element already consumed | Exact Node element sequence comparison | 1 | 2.048 |
-| Read reverse iteration's array length at construction | Empty construction-trace laziness assertion | 1 | 2.124 |
+| Restore singleIterator's original generator | AST census finds one remaining body | 1 | 1.777 |
+| Start singleIterator with its element already consumed | Exact Node element sequence comparison | 1 | 2.007 |
+| Read reverse iteration's array length at construction | Empty construction-trace laziness assertion | 1 | 1.993 |
 
-Two additional mutants prove the guards: adding an unsanctioned public declaration
+A fourth follow-up mutant removes one result annotation; the AST source-shape
+guard fails with `result callback must declare a type`.
+Two existing additional mutants prove the guards: adding an unsanctioned public declaration
 fails the API byte comparison, and changing a reviewed generator body fails the
 adapter before writing source. The mutant compiler trees are isolated and removed
 after their observations; evidence contains their actual failure logs.
@@ -89,7 +98,7 @@ failure, zero pending**. Its sole failure is
 Its sole baseline difference is api/typescript.d.ts. The declaration guard
 matches all 222 existing sanctions and reports no new public declarations.
 Apply and upstream install/build exit 0; upstream tests/oracle exit 1 as required
-for that known failure. The final lane wall time is 438.370s; all eight workers
+for that known failure. The final lane wall time is 492.522s; all eight workers
 and all runners were used. The oracle phase timings are in
 `evidence/lane-oracle-report.json`.
 
@@ -105,17 +114,26 @@ rewritten to claim a later commit was tested.
 ## Native race measurement
 
 Adamic was built in an isolated worktree at compiler scratch commit
-`4cf6791a4a4ba515ebfa99fe3c12dd01a460948c`. Both native layouts, split 0 and 1,
-exit 1 at **src/compiler/core.ts:335:41**, past the original generator refusal
-at core.ts:332:1. The exact new refusal is:
+`4cf6791a4a4ba515ebfa99fe3c12dd01a460948c`. With this follow-up, the entry build
+passes the adaptation's mutable-result refusal at core.ts:335:41. Declared
+callback results exposed an adaptation-owned unbound-method refusal at
+core.ts:338:44; the readonly property views above clear that refusal too.
+The next stop outside adaptation 66 is **src/compiler/core.ts:368:37**:
 
 ```text
-Adamic 0.1 refuses a value of type () => { done: true; value: undefined; } | { done: false; value: U; } seen as (value: unknown) => IteratorResult<U, undefined>, which can write false | undefined where false is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
 ```
 
-This is an observed callback-result invariance refusal. No native tsc binary was
-produced or executed, and no compiler implementation was changed to bypass it.
-The full entry logs and the compiler build log are preserved in evidence.
+This is the original `sameMap` statement
+`const result: U[] = array.slice(0, i) as unknown[] as U[];`.
+AST comparison proves its complete function text is unchanged from the tree
+before 66 (the original statement is at core.ts:356:37). The likely owner is the
+stage3 truthful-cast / `sameMap` follow-up with compiler type-soundness review.
+The existing [front32 report](../../drivers/parser/evidence/front32/README.md)
+records the earlier truthful `T | U` proposal and its downstream checker errors.
+That attribution is an inference; the location and refusal are observed. Native
+execution beyond this stop is not covered, and no native tsc binary was produced. Both native
+layouts and the intermediate walk logs are preserved in evidence.
 
 ## Reproduction
 
@@ -128,20 +146,22 @@ export GOPROXY='https://proxy.golang.org|direct'
 bash cloud/setup.sh > /tmp/adapt66-setup.log 2>&1
 source /workspace/adamic-tools/env.sh
 export NODE_PATH=/tmp/adapt66-cache/api/node_modules
-node stage3/adapt/66-temporary-explicit-iterators/adapt.cjs /tmp/adapt66-after > /tmp/adapt66-adapt.log 2>&1
+node stage3/adapt/66-temporary-explicit-iterators/adapt.cjs /tmp/adapt66-typed > /tmp/adapt66-adapt.log 2>&1
 node stage3/adapt/66-temporary-explicit-iterators/census.cjs /tmp/adapt66-before /tmp/adapt66-census-before.json > /tmp/adapt66-census-before.log 2>&1
-node stage3/adapt/66-temporary-explicit-iterators/census.cjs /tmp/adapt66-after /tmp/adapt66-census-after.json --check > /tmp/adapt66-census-after.log 2>&1
-node stage3/adapt/66-temporary-explicit-iterators/verify.cjs /tmp/adapt66-before /tmp/adapt66-after /tmp/adapt66-proof.json > /tmp/adapt66-verify.log 2>&1
-node stage3/adapt/66-temporary-explicit-iterators/mutants.cjs /tmp/adapt66-before /tmp/adapt66-after /tmp/adapt66-mutants-final > /tmp/adapt66-mutants-final.log 2>&1
-node stage3/adapt/66-temporary-explicit-iterators/api.cjs /tmp/adapt66-before /tmp/adapt66-after /tmp/adapt66-api.json > /tmp/adapt66-api.log 2>&1
-STAGE3_CACHE=/tmp/adapt66-cache NODE_OPTIONS=--max-old-space-size=1536 stage3/lane/run.sh /tmp/adapt66-lane-validated > /tmp/adapt66-lane-validated.log 2>&1
-ADAMIC_NATIVE_SPLIT=0 /tmp/adapt66-native build /tmp/adapt66-after/src/tsc/tsc.ts -o /tmp/adapt66-tsc-native > /tmp/adapt66-native-entry.log 2>&1
-ADAMIC_NATIVE_SPLIT=1 /tmp/adapt66-native build /tmp/adapt66-after/src/tsc/tsc.ts -o /tmp/adapt66-tsc-native-split > /tmp/adapt66-native-entry-split.log 2>&1
+node stage3/adapt/66-temporary-explicit-iterators/census.cjs /tmp/adapt66-typed /tmp/adapt66-census-after.json --check > /tmp/adapt66-census-after.log 2>&1
+node stage3/adapt/66-temporary-explicit-iterators/verify.cjs /tmp/adapt66-before /tmp/adapt66-typed /tmp/adapt66-typed-proof.json > /tmp/adapt66-verify.log 2>&1
+node stage3/adapt/66-temporary-explicit-iterators/mutants.cjs /tmp/adapt66-before /tmp/adapt66-typed /tmp/adapt66-typed-mutants-final > /tmp/adapt66-typed-mutants-final.log 2>&1
+node stage3/adapt/66-temporary-explicit-iterators/evidence/source-shape.cjs /tmp/adapt66-before /tmp/adapt66-typed-lane/adapted-tree > /tmp/adapt66-final-shape.log 2>&1
+node stage3/adapt/66-temporary-explicit-iterators/api.cjs /tmp/adapt66-before /tmp/adapt66-typed-lane/adapted-tree /tmp/adapt66-typed-api.json > /tmp/adapt66-api.log 2>&1
+STAGE3_CACHE=/tmp/adapt66-cache NODE_OPTIONS=--max-old-space-size=1536 stage3/lane/run.sh /tmp/adapt66-typed-lane > /tmp/adapt66-typed-lane.log 2>&1
+ADAMIC_NATIVE_SPLIT=0 /tmp/adapt66-native build /tmp/adapt66-typed/src/tsc/tsc.ts -o /tmp/adapt66-tsc-native > /tmp/adapt66-native-entry.log 2>&1
+ADAMIC_NATIVE_SPLIT=1 /tmp/adapt66-native build /tmp/adapt66-typed/src/tsc/tsc.ts -o /tmp/adapt66-tsc-native-split > /tmp/adapt66-native-entry-split.log 2>&1
 ```
 
 `/tmp/adapt66-before` was produced by the full series before adding 66, and
-`/tmp/adapt66-after` was copied from it before applying 66. Both were independently
-installed with `npm ci --no-audit --no-fund` and built with `npm run build`, with
+`/tmp/adapt66-typed` contains its copied source with the revised 66 applied.
+The previous baseline and adapted trees were independently installed with
+`npm ci --no-audit --no-fund` and built with `npm run build`, with
 logs under /tmp/adapt66-{before-,}{install,build}.log. The final lane obtains a
 fresh tree by running the complete series itself, including 66 in its normal order.
 The compiler scratch CLI was built with
@@ -162,6 +182,6 @@ command:
 git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 - > /tmp/adapt66-integration-checks.log 2>&1
 ```
 
-It reported `lane checks 0.4 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages`.
+It reported `lane checks 0.3 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages`.
 There are no changed Go packages to vet. Git's staged whitespace check passes;
 raw CRLF diff evidence is compressed without modifying its source bytes.

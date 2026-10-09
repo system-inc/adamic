@@ -3,10 +3,11 @@ module.exports = {
 mapIterator: `
     let input: Iterator<T, unknown, unknown> | undefined;
     let advance: (() => IteratorResult<T, unknown>) | undefined;
-    return temporaryExplicitIterator<U>(() => {
+    return temporaryExplicitIterator<U>((): IteratorResult<U, undefined> => {
         if (!input) {
             input = iter[Symbol.iterator]();
-            const iterator = input, next = iterator.next;
+            const iterator: { readonly next: () => IteratorResult<T, unknown> } = input;
+            const next = iterator.next;
             advance = () => next.call(iterator);
         }
         const result = temporaryIteratorResult(advance!());
@@ -19,10 +20,11 @@ mapIterator: `
 mapDefinedIterator: `
     let input: Iterator<T, unknown, unknown> | undefined;
     let advance: (() => IteratorResult<T, unknown>) | undefined;
-    return temporaryExplicitIterator<U & ({} | null)>(() => {
+    return temporaryExplicitIterator<U & ({} | null)>((): IteratorResult<U & ({} | null), undefined> => {
         if (!input) {
             input = iter[Symbol.iterator]();
-            const iterator = input, next = iterator.next;
+            const iterator: { readonly next: () => IteratorResult<T, unknown> } = input;
+            const next = iterator.next;
             advance = () => next.call(iterator);
         }
         while (true) {
@@ -39,7 +41,7 @@ mapDefinedIterator: `
 `,
 singleIterator: `
     let pending = true;
-    return temporaryExplicitIterator<T>(() => {
+    return temporaryExplicitIterator<T>((): IteratorResult<T, undefined> => {
         if (!pending) return { done: true, value: undefined };
         pending = false;
         return { done: false, value };
@@ -47,7 +49,7 @@ singleIterator: `
 `,
 arrayReverseIterator: `
     let index: number | undefined;
-    return temporaryExplicitIterator<T>(() => {
+    return temporaryExplicitIterator<T>((): IteratorResult<T, undefined> => {
         if (index === undefined) index = array.length - 1;
         if (index < 0) return { done: true, value: undefined };
         const value = array[index]!;
@@ -64,7 +66,8 @@ flatMapIterator: `
     function pull(value: unknown): IteratorResult<U, undefined> {
         if (!input) {
             input = iter[Symbol.iterator]();
-            const iterator = input, next = iterator.next;
+            const iterator: { readonly next: () => IteratorResult<T, unknown> } = input;
+            const next = iterator.next;
             advance = () => next.call(iterator);
         }
         while (true) {
@@ -91,7 +94,7 @@ flatMapIterator: `
             catch (error) { try { temporaryIteratorClose(input); } catch {} throw error; }
         }
     }
-    return temporaryExplicitIterator<U>(pull, () => temporaryIteratorClose(input), ({ kind, value }) => {
+    return temporaryExplicitIterator<U>(pull, () => temporaryIteratorClose(input), ({ kind, value }): IteratorResult<U, undefined> => {
         let completion = kind === "return" ? value : undefined;
         try {
             if (delegated) {
@@ -126,15 +129,15 @@ flatMapIterator: `
 `,
 getElementIterator: `
         let input: Generator<TElement, undefined, unknown> | undefined;
-        return temporaryExplicitIterator<TElement>(value => {
+        return temporaryExplicitIterator<TElement>((value): IteratorResult<TElement, undefined> => {
             input ??= temporaryFlatMapIterator(multiMap.values(), value => isArray(value) ? value : singleIterator(value));
             const result = input.next(value);
             return result.done ? { done: true, value: undefined } : result;
-        }, () => { input?.return(undefined); }, ({ kind, value }) => kind === "throw" ? input!.throw(value) : input!.return(value));
+        }, () => { input?.return(undefined); }, ({ kind, value }): IteratorResult<TElement, undefined> => kind === "throw" ? input!.throw(value) : input!.return(value));
 `,
 entries: `
             let input: Iterator<TElement, unknown, unknown> | undefined;
-            return temporaryExplicitIterator<[TElement, TElement]>(() => {
+            return temporaryExplicitIterator<[TElement, TElement]>((): IteratorResult<[TElement, TElement], undefined> => {
                 input ??= getElementIterator();
                 const result = input.next();
                 return result.done ? { done: true, value: undefined } : { done: false, value: [result.value, result.value] };
@@ -170,7 +173,7 @@ for(const key of ['generateJsxAttributes','generateObjectLiteralElements','getUn
         let initialized = false;
         let input: Iterator<${item}, unknown, unknown> | undefined;
         let advance: (() => IteratorResult<${item}, unknown>) | undefined;
-        return temporaryExplicitIterator<${yielded}>(() => {
+        return temporaryExplicitIterator<${yielded}>((): IteratorResult<${yielded}, undefined> => {
             if (!initialized) {
                 initialized = true;
                 function initialize(): Iterator<${item}, unknown, unknown> | undefined {
@@ -179,7 +182,8 @@ for(const key of ['generateJsxAttributes','generateObjectLiteralElements','getUn
                 }
                 input = initialize();
                 if (input) {
-                    const iterator = input, next = iterator.next;
+                    const iterator: { readonly next: () => IteratorResult<${item}, unknown> } = input;
+                    const next = iterator.next;
                     advance = () => next.call(iterator);
                 }
             }
@@ -198,7 +202,7 @@ module.exports.generateJsxChildren = `
         let initialized = false;
         let index = 0;
         let memberOffset = 0;
-        return temporaryExplicitIterator<${elaboration}>(() => {
+        return temporaryExplicitIterator<${elaboration}>((): IteratorResult<${elaboration}, undefined> => {
             if (!initialized) {
                 initialized = true;
                 if (!length(node.children)) return { done: true, value: undefined };
@@ -217,7 +221,7 @@ module.exports.generateJsxChildren = `
 module.exports.generateLimitedTupleElements = `
         let len: number | undefined;
         let index = 0;
-        return temporaryExplicitIterator<${elaboration}>(() => {
+        return temporaryExplicitIterator<${elaboration}>((): IteratorResult<${elaboration}, undefined> => {
             if (len === undefined) len = length(node.elements);
             while (index < len) {
                 const i = index++;
@@ -233,7 +237,7 @@ module.exports.generateLimitedTupleElements = `
 `;
 module.exports['<anonymous>'] = `
                                 let pending = true;
-                                return temporaryExplicitIterator<typeof elem>(() => {
+                                return temporaryExplicitIterator<typeof elem>((): IteratorResult<typeof elem, undefined> => {
                                     if (!pending) return { done: true, value: undefined };
                                     pending = false;
                                     return { done: false, value: elem };
