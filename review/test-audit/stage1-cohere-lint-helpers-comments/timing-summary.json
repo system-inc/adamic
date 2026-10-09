@@ -1,0 +1,20 @@
+{
+  "nproc": 5,
+  "toolchain_setup_seconds": 0,
+  "npm_reported_seconds": 0.371,
+  "clean_whole_package_binary_seconds": 90.018,
+  "bounded_clean_binary_seconds": {
+    "TestJsxAdapterGuardMutant": 18.77,
+    "TestCommentMutants family": 28.699,
+    "TestCommentMutantsUnion": 0.007,
+    "TestCommentMutantsPlantedFailure": 0.042
+  },
+  "audit_command_wall_seconds": 718.8565792949903,
+  "standalone_validation_wall_seconds": 85.75047247800467,
+  "source_restored": true,
+  "phase_command_wall_seconds": {
+    "three-run timings": 414.1687080499905,
+    "production matrix": 219.09124631099985,
+    "probes and controlled checks": 85.59662493399992
+  }
+}

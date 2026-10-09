@@ -1,0 +1,62 @@
+[
+  {
+    "id": "M1",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/lint/helpers/comments/main.ts -o /tmp/u115/M1-native --sanitize",
+    "exit": 0,
+    "seconds": 18.11581685300007
+  },
+  {
+    "id": "M2",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/lint/helpers/comments/main.ts -o /tmp/u115/M2-native --sanitize",
+    "exit": 0,
+    "seconds": 17.859982383999522
+  },
+  {
+    "id": "M3",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/lint/helpers/comments/main.ts -o /tmp/u115/M3-native --sanitize",
+    "exit": 0,
+    "seconds": 17.847709299001508
+  },
+  {
+    "id": "M4",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/lint/helpers/comments/main.ts -o /tmp/u115/M4-native --sanitize",
+    "exit": 0,
+    "seconds": 18.474695449998762
+  },
+  {
+    "id": "P1",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/lint/helpers/comments/main.ts -o /tmp/u115/P1-native --sanitize",
+    "exit": 0,
+    "seconds": 7.255626337000649
+  },
+  {
+    "id": "W1",
+    "command": "go vet ./stage1/cohere/lint/helpers/comments/",
+    "exit": 0,
+    "seconds": 0.16669256600107474
+  },
+  {
+    "id": "W2",
+    "command": "go vet ./stage1/cohere/lint/helpers/comments/",
+    "exit": 0,
+    "seconds": 0.17158644500159426
+  },
+  {
+    "id": "W3",
+    "command": "go vet ./stage1/cohere/lint/helpers/comments/",
+    "exit": 0,
+    "seconds": 0.16260572799910733
+  },
+  {
+    "id": "S1",
+    "command": "go vet ./stage1/cohere/lint/helpers/comments/",
+    "exit": 0,
+    "seconds": 0.1512085370013665
+  },
+  {
+    "id": "P2",
+    "command": "go vet ./stage1/cohere/lint/helpers/comments/",
+    "exit": 0,
+    "seconds": 5.544548879001013
+  }
+]

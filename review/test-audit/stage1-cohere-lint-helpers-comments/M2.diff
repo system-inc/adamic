@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/helpers/comments/all.ts b/stage1/cohere/lint/helpers/comments/all.ts
+index 533efeb3..6a2e9fce 100644
+--- a/stage1/cohere/lint/helpers/comments/all.ts
++++ b/stage1/cohere/lint/helpers/comments/all.ts
+@@ -75,7 +75,7 @@ export function all(parser: Parser | undefined, root: number): Comment[] {
+         lines[index] = line;
+         columns[index] = column;
+         const point = parser.scanner.text.codePointAt(index) ?? 0;
+-        const width = point > 65535 ? 2 : 1;
++        const width = point > 65535 ? 1 : 1;
+         const size = utf8Length(parser.scanner.text.slice(index, index + width));
+         byte += size;
+         column += size;

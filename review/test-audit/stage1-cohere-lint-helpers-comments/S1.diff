@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/helpers/comments/comment_mutants_test.go b/stage1/cohere/lint/helpers/comments/comment_mutants_test.go
+index 4c2a7d58..f7972adf 100644
+--- a/stage1/cohere/lint/helpers/comments/comment_mutants_test.go
++++ b/stage1/cohere/lint/helpers/comments/comment_mutants_test.go
+@@ -166,7 +166,7 @@ func TestCommentMutantsUnion(t *testing.T) {
+ 	}
+ 	actual := map[string]bool{}
+ 	count := 0
+-	for shard := 0; shard < testCommentMutantsShards; shard++ {
++	for shard := 0; shard < testCommentMutantsShards-1; shard++ {
+ 		for row, witness := range rows {
+ 			key := fmt.Sprintf("%s/testdata/witnesses.json/%d/%s", mutants[shard].file, row, witness.Name)
+ 			if actual[key] || !expected[key] {

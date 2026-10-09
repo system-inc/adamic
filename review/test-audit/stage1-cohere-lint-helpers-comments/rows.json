@@ -1,0 +1,247 @@
+[
+  {
+    "test": "TestCommentMutants family",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comment_mutants_test.go:24",
+    "seconds": 27.289,
+    "timing_runs": [
+      27.716,
+      27.289,
+      27.001
+    ],
+    "oracle": "Live Go cohere complete byte output; forced-equality comparison rejects each compiled built-in mutant.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: comment_mutants_test.go:38: compiled semantic mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutants_[0-9]+$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W1.log 2>&1; comment_mutants_test.go:38: compiled semantic mutant survived",
+    "members": [
+      "TestCommentMutants_000",
+      "TestCommentMutants_001",
+      "TestCommentMutants_002",
+      "TestCommentMutants_003",
+      "TestCommentMutants_004"
+    ],
+    "verdict_basis": null
+  },
+  {
+    "test": "TestCommentMutantsUnion",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comment_mutants_test.go:140",
+    "seconds": 0.007,
+    "timing_runs": [
+      0.007,
+      0.008,
+      0.007
+    ],
+    "oracle": "Self-written independent expected and actual shard-ID sets; checks identities and count, not only count.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: comment_mutants_test.go:180: union count 188, unsplit 235",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/S1.log 2>&1; comment_mutants_test.go:180: union count 188, unsplit 235",
+    "members": [
+      "TestCommentMutantsUnion"
+    ],
+    "verdict_basis": null
+  },
+  {
+    "test": "TestCommentMutantsPlantedFailure",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comment_mutants_test.go:190",
+    "seconds": 0.041,
+    "timing_runs": [
+      0.041,
+      0.04,
+      0.042
+    ],
+    "oracle": "Self-written child failure protocol checks exit, named test failure and survived diagnostic, with a deliberately equal answer only in shard 002.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: comment_mutants_test.go:219: TestCommentMutants_002 did not catch planted survivor: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsPlantedFailure$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W2.log 2>&1; comment_mutants_test.go:219: TestCommentMutants_002 did not catch planted survivor: <nil>",
+    "members": [
+      "TestCommentMutantsPlantedFailure"
+    ],
+    "verdict_basis": null
+  },
+  {
+    "test": "TestCommentsMatchCohere",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comments_test.go:91",
+    "seconds": 19.098,
+    "timing_runs": [
+      19.098,
+      19.084,
+      19.305
+    ],
+    "oracle": "Live Go cohere full byte output compared with Node and sanitized native port on 47 boundary witnesses.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2"
+    ],
+    "last_proven_fail": "M3: comments_test.go:96: output line 67: got \"sorted 6,47,27\", Go \"sorted 6,27,47\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCommentsMatchCohere",
+      "TestConsumerCommentHelpers",
+      "TestJsxParserGapIsExplicit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1; comments_test.go:96: output line 67: got \"sorted 6,47,27\", Go \"sorted 6,27,47\"",
+    "members": [
+      "TestCommentsMatchCohere"
+    ],
+    "verdict_basis": null
+  },
+  {
+    "test": "TestConsumerCommentHelpers",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comments_test.go:104",
+    "seconds": 36.962,
+    "timing_runs": [
+      36.13,
+      36.962,
+      37.877
+    ],
+    "oracle": "Live Go cohere full byte output; Go parser provides AST spans, Node and native port compute comment answers for consumer corpus.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: comments_test.go:115: output line 123: got \"sorted 0,70,28\", Go \"sorted 0,28,70\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCommentsMatchCohere"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 19.098,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCommentsMatchCohere",
+      "TestConsumerCommentHelpers",
+      "TestJsxParserGapIsExplicit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1; comments_test.go:115: output line 123: got \"sorted 0,70,28\", Go \"sorted 0,28,70\"",
+    "members": [
+      "TestConsumerCommentHelpers"
+    ],
+    "verdict_basis": 1
+  },
+  {
+    "test": "TestJsxParserGapIsExplicit",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comments_test.go:121",
+    "seconds": 21.843,
+    "timing_runs": [
+      23.456,
+      20.901,
+      21.843
+    ],
+    "oracle": "Live Go parser validates zero JSX diagnostics; self-written refusal requires exit 70, NotYet label and identical Node/native stderr. Exit alone cannot pass.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: comments_test.go:152: gap silently accepted or failed differently: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCommentsMatchCohere",
+      "TestConsumerCommentHelpers",
+      "TestJsxParserGapIsExplicit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M4.log 2>&1; comments_test.go:152: gap silently accepted or failed differently: <nil>",
+    "members": [
+      "TestJsxParserGapIsExplicit"
+    ],
+    "verdict_basis": null
+  },
+  {
+    "test": "TestJsxAdapterGuardMutant",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "file": "stage1/cohere/lint/helpers/comments/comments_test.go:166",
+    "seconds": 19.111,
+    "timing_runs": [
+      18.935,
+      19.111,
+      19.359
+    ],
+    "oracle": "Self-written refusal predicate must reject a native guard-drop mutant that exits normally, emits comments, and has empty stderr.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3: comments_test.go:207: compiled adapter-guard mutant survived the actual refusal check",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxAdapterGuardMutant$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W3.log 2>&1; comments_test.go:207: compiled adapter-guard mutant survived the actual refusal check",
+    "members": [
+      "TestJsxAdapterGuardMutant"
+    ],
+    "verdict_basis": null
+  }
+]

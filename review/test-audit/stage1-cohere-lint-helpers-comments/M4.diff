@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/lint/helpers/comments/main.ts b/stage1/cohere/lint/helpers/comments/main.ts
+index da83b57b..08483396 100644
+--- a/stage1/cohere/lint/helpers/comments/main.ts
++++ b/stage1/cohere/lint/helpers/comments/main.ts
+@@ -25,7 +25,6 @@ for(const row of corpus.node(root).children) {
+     // The current parser has no JSX support and can reinterpret an element as
+     // another syntax shape. Do not treat that tree as a validated JSX adapter.
+     if(adapted < 0 && name.endsWith('.tsx')) {
+-        panic('NotYet: stage-1 JSX parser adapter');
+     }
+     let tree: number;
+     if(adapted < 0) {

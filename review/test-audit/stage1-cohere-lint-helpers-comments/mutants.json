@@ -1,0 +1,47 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/helpers/comments/can_begin_at.ts",
+    "line": 14,
+    "old": "code > 13",
+    "new": "code > 12",
+    "kind": "change constant",
+    "failed": [
+      "TestCommentsMatchCohere"
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/helpers/comments/all.ts",
+    "line": 78,
+    "old": "point > 65535 ? 2 : 1",
+    "new": "point > 65535 ? 1 : 1",
+    "kind": "change constant",
+    "failed": [
+      "TestCommentsMatchCohere"
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/helpers/comments/sort_by_position.ts",
+    "line": 3,
+    "old": "let outer = 1;",
+    "new": "let outer = 2;",
+    "kind": "off-by-one bound",
+    "failed": [
+      "TestCommentsMatchCohere",
+      "TestConsumerCommentHelpers"
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/lint/helpers/comments/main.ts",
+    "line": 28,
+    "old": "panic('NotYet: stage-1 JSX parser adapter');",
+    "new": "(drop statement)",
+    "kind": "drop statement",
+    "failed": [
+      "TestJsxParserGapIsExplicit"
+    ]
+  }
+]

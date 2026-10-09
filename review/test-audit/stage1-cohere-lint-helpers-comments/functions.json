@@ -1,0 +1,62 @@
+[
+  {
+    "file": "stage1/cohere/lint/helpers/comments/all.ts",
+    "line": 11,
+    "declaration": "export function all(parser: Parser | undefined, root: number): Comment[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/can_begin_at.ts",
+    "line": 2,
+    "declaration": "export function canBeginAt(text: string, position: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 6,
+    "declaration": "function tokenStart(parser: Parser, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 12,
+    "declaration": "function isParameterListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 32,
+    "declaration": "function isBracedListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 52,
+    "declaration": "export function collectListInteriors(parser: Parser, index: number): number[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/comment.ts",
+    "line": 10,
+    "declaration": "constructor("
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 11,
+    "declaration": "constructor(parser: Parser | undefined, root: number) {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 15,
+    "declaration": "get(): Comment[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 23,
+    "declaration": "export function forFile(parser: Parser | undefined, root: number, cache: FileCommentCache | undefined): Comment[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/main.ts",
+    "line": 9,
+    "declaration": "function read(path: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/sort_by_position.ts",
+    "line": 2,
+    "declaration": "export function sortByPosition(comments: Comment[]): void {"
+  }
+]

@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/lint/helpers/comments/sort_by_position.ts b/stage1/cohere/lint/helpers/comments/sort_by_position.ts
+index eb336724..6c984cc0 100644
+--- a/stage1/cohere/lint/helpers/comments/sort_by_position.ts
++++ b/stage1/cohere/lint/helpers/comments/sort_by_position.ts
+@@ -1,6 +1,6 @@
+ import type { Comment } from './comment.ts';
+ export function sortByPosition(comments: Comment[]): void {
+-    for(let outer = 1; outer < comments.length; outer++) {
++    for(let outer = 2; outer < comments.length; outer++) {
+         const current = comments[outer];
+         if(current === undefined) {
+             continue;

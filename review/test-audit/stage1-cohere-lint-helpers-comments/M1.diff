@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/helpers/comments/can_begin_at.ts b/stage1/cohere/lint/helpers/comments/can_begin_at.ts
+index b3f37841..da02762d 100644
+--- a/stage1/cohere/lint/helpers/comments/can_begin_at.ts
++++ b/stage1/cohere/lint/helpers/comments/can_begin_at.ts
+@@ -11,7 +11,7 @@ export function canBeginAt(text: string, position: number): boolean {
+         if(code === 47) {
+             return true;
+         }
+-        if(code !== 32 && (code < 9 || code > 13)) {
++        if(code !== 32 && (code < 9 || code > 12)) {
+             return false;
+         }
+     }
