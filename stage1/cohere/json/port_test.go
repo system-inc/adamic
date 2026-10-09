@@ -53,6 +53,19 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 }
 
 func executeResult(environment []string, name string, arguments ...string) (run, error) {
+	// All sanitized execution paths share admission, including parallel leaves,
+	// chunk workers, leak checks and optional calibration.
+	for _, setting := range environment {
+		if strings.HasPrefix(setting, "ASAN_OPTIONS=") {
+			budget, err := jsonSanitizedMemory()
+			if err != nil {
+				return run{}, err
+			}
+			budget.acquire(jsonMemorySanitizedWeight)
+			defer budget.release(jsonMemorySanitizedWeight)
+			break
+		}
+	}
 	command := exec.Command(name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
