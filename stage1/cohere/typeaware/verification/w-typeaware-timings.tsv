@@ -115,4 +115,4 @@ repeat-leaf	TestVolumeTypeSymbolPlantedSurvivor	-	0.00	-	-	pass; command_wall_s=
 repeat-leaf	TestVolumeTypeSymbol_000	178	3.15	-	-	pass; command_wall_s=5.237
 repeat-product	TestProduct_checker_asan	-	3.68	-	-	pass; command_wall_s=5.778
 repeat-product	TestProduct_typeaware_lowered	-	9.18	-	-	pass; command_wall_s=11.504
-# #f3942er stable prebuilt repeat: TestVolumeTypeSymbol_000 3.22s; own run 0.046s (see final report for exact phase).
+# #f3942er stable prebuilt repeat: TestVolumeTypeSymbol_000 3.15s; own run 0.037512s (see final report for exact phase).
