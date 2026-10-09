@@ -207,6 +207,9 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
 	if target.Kind == ast.KindElementAccessExpression {
 		receiver = target.AsElementAccessExpression().Expression
 	}
+	if receiver != nil && l.recordElement(l.checker.GetTypeAtLocation(receiver)) != nil {
+		return nil // Dictionary writes carry their own named-slot and cycle proofs.
+	}
 	if receiver == nil || !l.entriesStringIndexed(receiver) || l.entriesLiteralOrigin(receiver, 0) != nil {
 		return nil
 	}

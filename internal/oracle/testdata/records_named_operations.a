@@ -1,0 +1,22 @@
+interface Options {
+    target?: number;
+    required: number;
+    [option: string]: number | undefined;
+}
+const options: Options = { required: 4, zebra: 8, "10": 10, "2": 2 };
+console.log(`${options.required}:${options.target ?? 0}`);
+options.target = 7;
+options.required = 5;
+const key = "extra" + "Option";
+options[key] = 9;
+console.log(`${options.required}:${options.target}:${options[key]}:${options["missing"]}`);
+console.log(Object.keys(options).join(","));
+function dropRequired(options: Options, key: string): void { delete options[key]; }
+dropRequired(options, "required");
+console.log(`${typeof options.required}:${options.required === undefined}`);
+console.log(`${"target" in options}:${"missing" in options}`);
+delete options.target;
+console.log(`${"target" in options}:${options.target ?? 0}`);
+options["undefinedValue"] = undefined;
+console.log(`${"undefinedValue" in options}:${options["undefinedValue"]}`);
+console.log(Object.keys(options).join(","));

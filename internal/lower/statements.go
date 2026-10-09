@@ -121,6 +121,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return nil, err
 	}
 	expression = ast.SkipParentheses(expression)
+	if value, handled, err := l.recordExpression(expression); handled {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}

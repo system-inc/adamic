@@ -23,7 +23,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
@@ -144,7 +143,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && (l.enumerationIndexSignature(node) || l.checkedJSONIndexSignature(node))) && (node.Kind != ast.KindNonNullExpression || (!l.placeholderDeclaration(node) && !l.checkedAssertionSource(node))) {
+		if err := l.detachedOwnRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.recordLiteralRead(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) && !l.checkedJSONIndexSignature(node) {
+			if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
+				found = l.notYet(node, "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
+				return true
+			}
+		}
+		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || (!l.placeholderDeclaration(node) && !l.checkedAssertionSource(node))) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
@@ -170,6 +183,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
+		}
+		if err := l.recordStorageView(node); err != nil {
+			found = err
+			return true
 		}
 		if err := l.namespaceRefusal(node); err != nil {
 			found = err
@@ -223,7 +240,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				}
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

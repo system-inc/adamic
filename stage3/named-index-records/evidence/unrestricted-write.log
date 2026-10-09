@@ -1,0 +1,6 @@
+--- FAIL: TestNamedRecordRefusals (0.53s)
+    --- FAIL: TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_function_write(r:R,k:string):void_{r[k]="wrong";} (0.09s)
+        records_named_test.go:45: got <nil>, want NotYet named property named
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.561s
+FAIL

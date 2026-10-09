@@ -20,17 +20,24 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// Require a plain literal origin, including aliases. This deliberately refuses parameters and
 	// calls until their possible shapes and property presence can be proved.
 	_, construction := l.constructionJSON(ast.SkipParentheses(statement.Expression))
-	if !construction && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
+	isRecord := l.recordElement(proven) != nil
+	if !construction && !isRecord && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
 		return nil, l.notYet(statement.Expression, "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)")
 	}
 	object, err := l.expression(statement.Expression)
 	if err != nil {
 		return nil, err
 	}
-	if object.Type() != ir.Object {
+	if object.Type() != ir.Object && object.Type() != ir.Record {
 		return nil, l.notYet(statement.Expression, "for...in over a value that is not a plain object")
 	}
 	loop := ir.ForOf{Iterable: ir.ObjectKeys{Object: object}, Element: ir.String}
+	var recordLocal int
+	if isRecord {
+		recordLocal = len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "record", Type: ir.Record, Function: l.functionIndex})
+		loop.Iterable = ir.RecordCall{Method: "keys", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}}, Returns: ir.Array}
+	}
 	initializer := statement.Initializer
 	var assignment ir.Statement
 	if initializer.Kind == ast.KindVariableDeclarationList {
@@ -63,6 +70,10 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 		loop.Body = append(loop.Body, assignment)
 	}
 	loop.Body = append(loop.Body, body...)
+	if isRecord {
+		loop.Body = []ir.Statement{ir.If{Condition: ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}, ir.Read{Local: loop.Local, Of: ir.String}}, Returns: ir.Boolean}, Then: loop.Body}}
+		return []ir.Statement{ir.Declare{Local: recordLocal, Value: object}, loop}, nil
+	}
 	return []ir.Statement{loop}, nil
 }
 

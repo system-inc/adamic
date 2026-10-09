@@ -1,0 +1,12 @@
+interface Options { target?: number; [key: string]: number | undefined; }
+const options: Options = {};
+const own = Object.prototype.hasOwnProperty;
+const copied = own;
+console.log(`${copied.call(options, "target")}:${own.apply({ value: 1 }, ["value"])}:${own.call([1], "length")}`);
+const keys = Object.keys;
+console.log(keys.apply(null, [options]).join(","));
+options.target = 4;
+console.log(keys(options).join(","));
+const values = Object.values;
+const fixed = { value: 5 };
+console.log(values(fixed).join(","));

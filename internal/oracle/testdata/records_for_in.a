@@ -1,0 +1,9 @@
+const r: Record<string, number> = {a: 1, b: 2, c: 3};
+for(const key in r) {
+ console.log(key);
+ if(key === 'a') {delete r['b']; r['d']=4; r['c']=9;}
+}
+console.log(String(JSON.stringify(r)));
+let key='';
+for(key in r) {console.log(key); if(key === 'a') break;}
+console.log(key);
