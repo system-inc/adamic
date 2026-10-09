@@ -1,0 +1,58 @@
+# The fast gate's oracle smoke set: native (sanitized and release) against Node and the JavaScript
+# backend, one fixture per feature family, each the family's smallest (by source) that lowers and runs
+# unchecked. The fast gate runs TestNativeAgreesWithNode on exactly these. It changes only by a
+# reviewed commit, and the fast gate records this file's blob in fast.json. One exception to smallest:
+# normalize_form.a stands in for normalize_coverage_limit.a, which builds a 29.8-million-character
+# string and took 8.2 s alone on the Threadripper, more than every other fixture here.
+#
+# The set also grows from what actually broke (@system_adamic, Oct 7): an unchanged fixture that a
+# whole gate caught red joins in the lane that caught it, written "Lane fixture", while the set stays
+# under 30 s. A lane the gated tree doesn't have yet is listed in fast.json as absent, never run as
+# a silent pass.
+internal/oracle/testdata/array_from_length.a
+internal/oracle/testdata/bitwise.a
+internal/oracle/testdata/borrow_chain_reassigned.a
+internal/oracle/testdata/call_targets_sort.a
+internal/oracle/testdata/casts.a
+internal/oracle/testdata/class_oct6_parameters.a
+internal/oracle/testdata/classes.a
+internal/oracle/testdata/closures_throw_uncaught.a
+internal/oracle/testdata/devirtualize_abstract.a
+internal/oracle/testdata/enums_names.a
+internal/oracle/testdata/exceptions_empty.a
+internal/oracle/testdata/finally_leaves.a
+internal/oracle/testdata/fresh_calls.a
+internal/oracle/testdata/generic_method_return.a
+internal/oracle/testdata/inherited_static_field_read.a
+internal/oracle/testdata/json_stringify_numbers.a
+internal/oracle/testdata/library_object_freeze_write.a
+internal/oracle/testdata/lint_runtime_search_calls.a
+internal/oracle/testdata/map_zero_keys.a
+internal/oracle/testdata/maybe_boolean_panic.a
+internal/oracle/testdata/narrowed_writes.a
+internal/oracle/testdata/nbody_runtime_fields.a
+internal/oracle/testdata/normalize_form.a
+internal/oracle/testdata/number_parsing.a
+internal/oracle/testdata/optional_numbers.a
+internal/oracle/testdata/override_same_representation.a
+internal/oracle/testdata/panic.a
+internal/oracle/testdata/regexp_replaceall_nonglobal.a
+internal/oracle/testdata/regions_constructor_capture.a
+internal/oracle/testdata/reuse_global_sibling.a
+internal/oracle/testdata/route_targets_accessor.a
+internal/oracle/testdata/search_halves.a
+internal/oracle/testdata/set_foreach_fnexpr.a
+internal/oracle/testdata/spread_calls.a
+internal/oracle/testdata/stack_forever.a
+internal/oracle/testdata/string_too_long.a
+internal/oracle/testdata/throw_in_writes.a
+internal/oracle/testdata/timsort.a
+internal/oracle/testdata/typeof_string_literal.a
+internal/oracle/testdata/undefined_elements.a
+internal/oracle/testdata/utf8_view_fails.a
+internal/oracle/testdata/weak_narrowed.a
+internal/oracle/testdata/writes.a
+internal/oracle/testdata/devirtualize_modules/main.a
+internal/oracle/testdata/modules/main.a
+# Red in the whole gate of df2de6f1 (r3), Oct 7: an unchanged fixture broken by compiler changes.
+TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a

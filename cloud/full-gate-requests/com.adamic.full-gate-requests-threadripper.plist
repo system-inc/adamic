@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- A second whole-gate loop (@system_adamic, Oct 8 22:58Z): the Threadripper, all its CPUs, takes the star's requests
+     (~/.adamic-full-gate/requests) Home's loop hasn't claimed, so two slices run at once. It never gates mains; Home's
+     loop does. Install: cp to ~/Library/LaunchAgents, then launchctl bootstrap gui/501 <plist>. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.adamic.full-gate-requests-threadripper</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/kirkouimet/Projects/system/adamic-gate/cloud/full-gate-main.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/kirkouimet/Projects/ahra/node_modules/.bin:/Users/kirkouimet/.nvm/versions/node/v24.14.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>ADAMIC_FULL_GATE_BOX</key>
+    <string>threadripper</string>
+    <key>ADAMIC_FULL_GATE_SHARE</key>
+    <string>all</string>
+    <key>ADAMIC_FULL_GATE_ROLE</key>
+    <string>requests</string>
+    <key>ADAMIC_FULL_GATE_STATE</key>
+    <string>/Users/kirkouimet/.adamic-full-gate-threadripper</string>
+    <key>ADAMIC_FULL_GATE_REQUESTS</key>
+    <string>/Users/kirkouimet/.adamic-full-gate/requests</string>
+  </dict>
+  <key>KeepAlive</key>
+  <true/>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>60</integer>
+  <key>WorkingDirectory</key>
+  <string>/Users/kirkouimet/Projects/system/adamic-gate</string>
+  <key>StandardOutPath</key>
+  <string>/Users/kirkouimet/Projects/system/adamic-gate-logs/full-gate-requests-threadripper.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/kirkouimet/Projects/system/adamic-gate-logs/full-gate-requests-threadripper.log</string>
+</dict>
+</plist>
