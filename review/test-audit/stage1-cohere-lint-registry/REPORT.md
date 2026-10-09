@@ -204,7 +204,7 @@ Brief ambiguities and time costs:
 - One boolean vacuous field cannot describe two entries. All Generate probes fail, hence overall false; entry_probe_results records the direct Render pass for DeterministicRegeneration and failure for AdamicRuleModule. Negative descriptor rows do not directly call Render on successful inputs, so their passing P2 runs do not imply vacuity.
 - DeterministicRegeneration uses the implementation as its expected byte oracle. M8 and M9 survival and P2 passing are measured weaknesses; modification-time check still uniquely catches M11. Sacred here does not imply that every behavior is guarded.
 - Rejection diagnostics use substrings, not full text. This audit proves only the named rejection checks; a different error carrying the same substring could satisfy them.
-- A literal unconditional probe return leaves unreachable code flagged by go vet. Final switch-free P1/P2 diffs replace the whole body, retain their empty-entry behavior, and pass vet. Original failed probe-vet logs were replaced by the successful repeated validation; validation-output.log and validation.json are authoritative.
+- A literal unconditional probe return leaves unreachable code flagged by go vet. Final switch-free P1/P2 diffs replace the whole body, retain their empty-entry behavior, and remove Render-only go/format import when necessary, then pass vet. Original failed probe-vet logs were replaced by the successful repeated validation; validation.json and final_validate.py are authoritative.
 - Witness sorting removal is not labeled unguarded solely because tests pass: observed identical output and WalkDir lexical traversal support only an equivalent candidate.
 - Twelve mutations were selected before observing failures, spread across module selection, descriptor parsing/validation, ordering, rendering, witness enumeration and file writing. Other validation gates, filesystem-error paths, rendered runtime semantics and concurrent atomic-generation stress remain unsampled.
 - No external authority was claimed or checked: expectations are self-written. npm ci in stage3/api was required by the brief though this package does not load node_modules. No other Node dependency directory is reached.
@@ -212,5 +212,5 @@ Brief ambiguities and time costs:
 
 Timing:
 Setup 0s (warm env); npm installation was not timed separately. Baseline build/run shell 1.074s; binary 0.580s.
-Three isolated runs per row plus fourteen matrix/probe runs: 19.338s combined shell build/run wall, individual commands and walls in commands.json. Standalone go vet rebuild/check total 1.159s, each in validation.json. No native rebuilds.
+Three isolated runs per row plus fourteen matrix/probe runs: 19.338s combined shell build/run wall, individual commands and walls in commands.json. Standalone go vet rebuild/check total 1.120s, each in validation.json. No native rebuilds.
 Audit start was about 12:31 UTC; evidence prepared within the 20-minute budget. Four isolated medians and samples appear in rows.json. No other Adamic packages run. No PR or main push.

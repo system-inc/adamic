@@ -1,10 +1,43 @@
 --- a/stage1/cohere/lint/registry/registry.go
 +++ b/stage1/cohere/lint/registry/registry.go
-@@ -333,6 +333,7 @@
+@@ -333,38 +333,5 @@
  // Generate validates the entire registry even when a test selects only one rule.
  // Atomic replacement and unchanged-byte checks make concurrent test generation safe.
  func Generate(root string) ([]Descriptor, error) {
+-	descriptors, err := Discover(root)
+-	if err != nil {
+-		return nil, err
+-	}
+-	ts, goSource := Render(descriptors)
+-	directory := filepath.Join(root, ".generated")
+-	if err := os.MkdirAll(directory, 0755); err != nil {
+-		return nil, err
+-	}
+-	for _, file := range []struct {
+-		name string
+-		data []byte
+-	}{{"registry.ts", ts}, {"registry.go", goSource}} {
+-		path := filepath.Join(directory, file.name)
+-		if existing, err := os.ReadFile(path); err == nil && bytes.Equal(existing, file.data) {
+-			continue
+-		}
+-		temporary, err := os.CreateTemp(directory, "registry-")
+-		if err != nil {
+-			return nil, err
+-		}
+-		if _, err = temporary.Write(file.data); err != nil {
+-			temporary.Close()
+-			os.Remove(temporary.Name())
+-			return nil, err
+-		}
+-		if err = temporary.Close(); err != nil {
+-			return nil, err
+-		}
+-		if err = os.Rename(temporary.Name(), path); err != nil {
+-			return nil, err
+-		}
+-	}
+-	return descriptors, nil
+-}
 + return nil, nil
- 	descriptors, err := Discover(root)
- 	if err != nil {
- 		return nil, err
++}
