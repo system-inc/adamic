@@ -53,6 +53,14 @@ func programs(t *testing.T) []string {
 	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
+		case "scout19_slice2_create_set.a", "scout19_slice2_range.a":
+			// TestScout19Slice2ExpectedRefusals pins TS2345 (T | undefined into T);
+			// createSet also reports TS2322. Neither source has accepted IR.
+			return true
+		case "scout19_slice2_presence.a", "scout19_slice2_brands.a", "scout19_slice2_path.a", "scout19_slice2_generator.a":
+			// The same test pins non-null assertions, unchecked casts and generators
+			// as deliberate refusals; keep the passing MultiMap witnesses in flow.
+			return true
 		case "library_object_replaced.a":
 			// The Object branch's negative replaced-binding probe has no accepted IR.
 			// Lowering tests verify refusal, and its Node mutant proves the guard.
