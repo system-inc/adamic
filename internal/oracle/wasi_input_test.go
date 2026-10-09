@@ -30,54 +30,26 @@ process.exitCode = wasi.start(instance);`, binary, "root", filepath.Dir(binary)}
 	return executeInput(t, how, nil, "node", append(arguments, how.arguments...)...)
 }
 
-// Exact named observations, never a blanket permission to disagree.
-func expectedEngineBehavior(t *testing.T, path string, expected run, how inputRun, wasmtime bool) (run, bool) {
-	t.Helper()
-	// Limits are pinned for fixtures directly in testdata; a same-named file in a subdirectory, such as
-	// regexp_replace/arguments.a, is a different program and answers to Node unchanged.
-	name := filepath.Base(path)
-	if filepath.Base(filepath.Dir(path)) != "testdata" {
-		name = ""
-	}
-	limited := false
-	replace := func(old, changed string) {
-		t.Helper()
-		if strings.Count(string(expected.stdout), old) != 1 {
-			t.Fatalf("%s witness missing exact control %q", name, old)
-		}
-		expected.stdout = []byte(strings.Replace(string(expected.stdout), old, changed, 1))
-	}
-	if name == "walk.a" {
-		if wasmtime {
-			limited = true
-			replace("<dir>: 4 names, bad� name closed locked unlisted\n  bad� name: not looked up\n  closed: directory, true\n    cannot read directory <dir>/closed: permission denied\n  locked: directory, true\n    <dir>/locked: 0 names, \n  unlisted: directory, true\n    cannot read directory <dir>/unlisted: permission denied\n", "cannot read directory <dir>: failed\n")
-			t.Log("HOST LIMIT walk.a: wasmtime rejects directory entries with non-UTF-8 filenames")
-		}
-	}
-	if !wasmtime {
-		return expected, limited
-	}
-	switch name {
-	case "write_stdout_order.a":
-		expected = run{stdout: []byte("first\nthird, after cannot write /dev/stdout: permission denied\n")}
-		limited = true
-	case "write_stderr_order.a":
-		expected = run{stdout: []byte("first\nthird\n")}
-		limited = true
-	case "prompt_then_read.a":
-		expected = run{stdout: []byte("ready\ncannot read /dev/stdin: permission denied\n")}
-		limited = true
-	case "arguments.a":
-		expected = run{exitCode: 1, stderr: []byte("Error: failed to convert \"a\\xFFb\" to utf-8\n")}
-		limited = true
-	}
-	if limited && name != "walk.a" {
-		t.Log("HOST LIMIT", name, "exact pinned wasmtime stdout/stderr/exit asserted")
-	}
-	return expected, limited
+// An engine the input fixtures run on. V8 answers to Node unchanged; an engine with named host
+// limits rewrites Node's output into exactly what it must print instead.
+type wasmEngine struct {
+	run    func(t *testing.T, how inputRun, binary string) run
+	limits func(t *testing.T, path string, expected run) (run, bool)
 }
 
-func runWASIInputFixture(t *testing.T, compiler, fixture string, arguments []string, unreadable, writes, wasmtime bool) bool {
+var v8Engine = wasmEngine{run: onV8Input}
+
+func buildEngineFixture(t *testing.T, compiler, path, directory string) string {
+	t.Helper()
+	binary := filepath.Join(directory, "program.wasm")
+	command := bounded(t, compiler, "build", "--target", "wasm32-wasi", path, "-o", binary)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("adamic build: %v\n%s", err, output)
+	}
+	return binary
+}
+
+func runWASIInputFixture(t *testing.T, compiler, fixture string, arguments []string, unreadable, writes bool, engine wasmEngine) bool {
 	t.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
@@ -108,13 +80,11 @@ func runWASIInputFixture(t *testing.T, compiler, fixture string, arguments []str
 		}
 		writable(t, shared, "written")
 	}
-	expected, limited := expectedEngineBehavior(t, fixture, expected, how, wasmtime)
-	var actual run
-	if wasmtime {
-		actual = onWasmtime(t, how, binary)
-	} else {
-		actual = onV8Input(t, how, binary)
+	limited := false
+	if engine.limits != nil {
+		expected, limited = engine.limits(t, fixture, expected)
 	}
+	actual := engine.run(t, how, binary)
 	if writes {
 		if difference := filesDiffer(files, snapshot(t, how.arguments[0])); difference != "" {
 			t.Error(difference)
@@ -157,58 +127,7 @@ func TestWASIInputAgreesWithNode(t *testing.T) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, compiler, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, false)
-		})
-	}
-}
-
-func TestWasmtimeCheckedWitness(t *testing.T) {
-	t.Parallel()
-	requireWasmtime(t)
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/writes_past_end.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	raw := onNodeWith(t, inputRun{}, path)
-	checked := onJavaScriptBackend(t, program)
-	if disagreement(raw, checked) != "exit codes differ" {
-		t.Fatal("checked control must differ from raw source exit")
-	}
-	binary := filepath.Join(sharedDirectory(t), "checked.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
-	}
-	if difference := disagreement(checked, onWasmtime(t, inputRun{}, binary)); difference != "" {
-		t.Fatal(difference)
-	}
-	t.Logf("raw exit=%d checked exit=%d; wasmtime agrees with checked backend", raw.exitCode, checked.exitCode)
-}
-
-// The named exceptions still compare all three fields. Each independent mutant
-// must fail that exact comparison; changed host behavior cannot become a pass.
-func TestWASINamedBehaviorCatchesMutants(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"write_stdout_order.a", "write_stderr_order.a", "prompt_then_read.a", "arguments.a"} {
-		t.Run(name, func(t *testing.T) {
-			expected, limited := expectedEngineBehavior(t, filepath.Join("internal/oracle/testdata", name), run{}, inputRun{}, true)
-			if !limited {
-				t.Fatal("missing named assertion")
-			}
-			stdout := expected
-			stdout.stdout = append(append([]byte{}, expected.stdout...), '!')
-			stderr := expected
-			stderr.stderr = append(append([]byte{}, expected.stderr...), '!')
-			exit := expected
-			exit.exitCode++
-			for _, mutant := range []run{stdout, stderr, exit} {
-				if disagreement(expected, mutant) == "" {
-					t.Fatal("named behavior mutant escaped")
-				}
-			}
+			limited = runWASIInputFixture(t, compiler, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, v8Engine)
 		})
 	}
 }
@@ -270,30 +189,22 @@ func TestWASIWalkBehaviorCatchesMutants(t *testing.T) {
 	if os.Geteuid() == 0 {
 		how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
 	}
-	source := onNodeWith(t, how, path)
-	for _, engine := range []bool{false, true} {
-		expected, limited := expectedEngineBehavior(t, path, source, how, engine)
-		if limited != engine {
-			t.Fatal("walk: V8 compares to Node unchanged and wasmtime pins its host limit")
+	expected := onNodeWith(t, how, path)
+	holdsNodeEmptyPathLines(t, expected)
+	t.Log("walk empty-path mutants caught")
+}
+
+// Node's empty-path errors are held as Node prints them: losing either must be noticed.
+func holdsNodeEmptyPathLines(t *testing.T, expected run) {
+	t.Helper()
+	for _, line := range []string{"cannot read directory : no such directory\n", "cannot read status of : no such file\n"} {
+		if strings.Count(string(expected.stdout), line) != 1 {
+			t.Fatalf("walk witness lost Node's line %q", line)
 		}
-		// Node's empty-path errors are held as Node prints them: losing either must be noticed.
-		for _, line := range []string{"cannot read directory : no such directory\n", "cannot read status of : no such file\n"} {
-			if strings.Count(string(expected.stdout), line) != 1 {
-				t.Fatalf("walk witness lost Node's line %q", line)
-			}
-			changed := expected
-			changed.stdout = []byte(strings.Replace(string(expected.stdout), line, "", 1))
-			if disagreement(expected, changed) != "stdout differs" {
-				t.Fatal("walk empty-path mutant escaped")
-			}
-		}
-		if engine {
-			changed := expected
-			changed.stdout = []byte(strings.Replace(string(expected.stdout), "cannot read directory <dir>: failed\n", "host directory now works\n", 1))
-			if disagreement(expected, changed) != "stdout differs" {
-				t.Fatal("walk host mutant escaped")
-			}
+		changed := expected
+		changed.stdout = []byte(strings.Replace(string(expected.stdout), line, "", 1))
+		if disagreement(expected, changed) != "stdout differs" {
+			t.Fatal("walk empty-path mutant escaped")
 		}
 	}
-	t.Log("walk empty-path and invalid-UTF-8 host assertion mutants caught")
 }
