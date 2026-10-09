@@ -29,8 +29,10 @@ import (
 const compilerAgreementFileBuckets = 64
 const compilerAgreementRuleGroups = 16
 const compilerAgreementFixBuckets = 256
+const compilerAgreementCheckerGroups = 16
+const compilerAgreementCheckerKey = "compiler/src/compiler/checker.ts"
 const compilerAgreementSides = 5
-const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + 1) * compilerAgreementSides
+const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups) * compilerAgreementSides
 
 // Stable file and rule keys, rather than corpus ordinals, keep growing corpora covered.
 func compilerAgreementBucket(key string, count int) int {
@@ -88,22 +90,24 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 			seen[pair] = true
 			cases = append(cases, compilerAgreementCase{path, key, d.Name})
 		}
-		// A separate all-rule case retains interactions between fixes, rejected fixes,
-		// convergence, and the exact fixed bytes. It is not counted as another rule pair.
-		cases = append(cases, compilerAgreementCase{path, key, "all"})
+		// Other files retain their separate all-rule interaction checks. Checker
+		// uses the rule cases above, including each rule's complete fix output.
+		// A separate all-rule case is not counted as another rule pair.
+		if key != compilerAgreementCheckerKey {
+			cases = append(cases, compilerAgreementCase{path, key, "all"})
+		}
 	}
 	compilerAgreementCorpus = cases
 	return cases
 }
 
 func compilerAgreementOwner(c compilerAgreementCase) int {
+	if c.key == compilerAgreementCheckerKey {
+		// Checker fix output is compared per rule; every selected rule retains its
+		// complete diagnostic, proposal, rejection, convergence and fixed-byte checks.
+		return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementBucket(c.rule, compilerAgreementCheckerGroups)
+	}
 	if c.rule == "all" {
-		// The pinned compiler's largest file gets an indivisible fix unit.
-		// Growing repository files still use the static hash buckets below.
-		if c.key == "compiler/src/compiler/checker.ts" {
-			return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets
-		}
-		// Fix interactions remain indivisible; use smaller file buckets for them.
 		return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementBucket(c.key, compilerAgreementFixBuckets)
 	}
 	return compilerAgreementBucket(c.key, compilerAgreementFileBuckets)*compilerAgreementRuleGroups + compilerAgreementBucket(c.rule, compilerAgreementRuleGroups)
@@ -229,7 +233,7 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	cases := compilerAgreementCases(t)
-	pairs, fixes := 0, 0
+	pairs, fixes, checkerFixes := 0, 0, 0
 	counts := make([]int, testCompilerAndStage1AgreeShards/compilerAgreementSides)
 	for _, c := range cases {
 		owner := compilerAgreementOwner(c)
@@ -241,6 +245,9 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 			fixes++
 		} else {
 			pairs++
+			if c.key == compilerAgreementCheckerKey {
+				checkerFixes++
+			}
 		}
 	}
 	// Check the actual top-level function enumeration, including empty future buckets.
@@ -261,7 +268,7 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 		seen[index] = true
 	}
 
-	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix comparisons per side; %d shards", pairs, fixes, testCompilerAndStage1AgreeShards)
+	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix comparisons and %d checker per-rule fix comparisons per side; %d shards", pairs, fixes, checkerFixes, testCompilerAndStage1AgreeShards)
 	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
 }
 
@@ -13197,6 +13204,156 @@ func TestCompilerAndStage1Agree_6402(t *testing.T) { t.Parallel(); compilerAgree
 func TestCompilerAndStage1Agree_6403(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6403) }
 
 func TestCompilerAndStage1Agree_6404(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6404) }
+
+func TestCompilerAndStage1Agree_6405(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6405) }
+
+func TestCompilerAndStage1Agree_6406(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6406) }
+
+func TestCompilerAndStage1Agree_6407(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6407) }
+
+func TestCompilerAndStage1Agree_6408(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6408) }
+
+func TestCompilerAndStage1Agree_6409(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6409) }
+
+func TestCompilerAndStage1Agree_6410(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6410) }
+
+func TestCompilerAndStage1Agree_6411(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6411) }
+
+func TestCompilerAndStage1Agree_6412(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6412) }
+
+func TestCompilerAndStage1Agree_6413(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6413) }
+
+func TestCompilerAndStage1Agree_6414(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6414) }
+
+func TestCompilerAndStage1Agree_6415(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6415) }
+
+func TestCompilerAndStage1Agree_6416(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6416) }
+
+func TestCompilerAndStage1Agree_6417(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6417) }
+
+func TestCompilerAndStage1Agree_6418(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6418) }
+
+func TestCompilerAndStage1Agree_6419(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6419) }
+
+func TestCompilerAndStage1Agree_6420(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6420) }
+
+func TestCompilerAndStage1Agree_6421(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6421) }
+
+func TestCompilerAndStage1Agree_6422(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6422) }
+
+func TestCompilerAndStage1Agree_6423(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6423) }
+
+func TestCompilerAndStage1Agree_6424(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6424) }
+
+func TestCompilerAndStage1Agree_6425(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6425) }
+
+func TestCompilerAndStage1Agree_6426(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6426) }
+
+func TestCompilerAndStage1Agree_6427(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6427) }
+
+func TestCompilerAndStage1Agree_6428(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6428) }
+
+func TestCompilerAndStage1Agree_6429(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6429) }
+
+func TestCompilerAndStage1Agree_6430(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6430) }
+
+func TestCompilerAndStage1Agree_6431(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6431) }
+
+func TestCompilerAndStage1Agree_6432(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6432) }
+
+func TestCompilerAndStage1Agree_6433(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6433) }
+
+func TestCompilerAndStage1Agree_6434(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6434) }
+
+func TestCompilerAndStage1Agree_6435(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6435) }
+
+func TestCompilerAndStage1Agree_6436(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6436) }
+
+func TestCompilerAndStage1Agree_6437(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6437) }
+
+func TestCompilerAndStage1Agree_6438(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6438) }
+
+func TestCompilerAndStage1Agree_6439(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6439) }
+
+func TestCompilerAndStage1Agree_6440(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6440) }
+
+func TestCompilerAndStage1Agree_6441(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6441) }
+
+func TestCompilerAndStage1Agree_6442(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6442) }
+
+func TestCompilerAndStage1Agree_6443(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6443) }
+
+func TestCompilerAndStage1Agree_6444(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6444) }
+
+func TestCompilerAndStage1Agree_6445(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6445) }
+
+func TestCompilerAndStage1Agree_6446(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6446) }
+
+func TestCompilerAndStage1Agree_6447(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6447) }
+
+func TestCompilerAndStage1Agree_6448(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6448) }
+
+func TestCompilerAndStage1Agree_6449(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6449) }
+
+func TestCompilerAndStage1Agree_6450(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6450) }
+
+func TestCompilerAndStage1Agree_6451(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6451) }
+
+func TestCompilerAndStage1Agree_6452(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6452) }
+
+func TestCompilerAndStage1Agree_6453(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6453) }
+
+func TestCompilerAndStage1Agree_6454(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6454) }
+
+func TestCompilerAndStage1Agree_6455(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6455) }
+
+func TestCompilerAndStage1Agree_6456(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6456) }
+
+func TestCompilerAndStage1Agree_6457(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6457) }
+
+func TestCompilerAndStage1Agree_6458(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6458) }
+
+func TestCompilerAndStage1Agree_6459(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6459) }
+
+func TestCompilerAndStage1Agree_6460(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6460) }
+
+func TestCompilerAndStage1Agree_6461(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6461) }
+
+func TestCompilerAndStage1Agree_6462(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6462) }
+
+func TestCompilerAndStage1Agree_6463(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6463) }
+
+func TestCompilerAndStage1Agree_6464(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6464) }
+
+func TestCompilerAndStage1Agree_6465(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6465) }
+
+func TestCompilerAndStage1Agree_6466(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6466) }
+
+func TestCompilerAndStage1Agree_6467(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6467) }
+
+func TestCompilerAndStage1Agree_6468(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6468) }
+
+func TestCompilerAndStage1Agree_6469(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6469) }
+
+func TestCompilerAndStage1Agree_6470(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6470) }
+
+func TestCompilerAndStage1Agree_6471(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6471) }
+
+func TestCompilerAndStage1Agree_6472(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6472) }
+
+func TestCompilerAndStage1Agree_6473(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6473) }
+
+func TestCompilerAndStage1Agree_6474(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6474) }
+
+func TestCompilerAndStage1Agree_6475(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6475) }
+
+func TestCompilerAndStage1Agree_6476(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6476) }
+
+func TestCompilerAndStage1Agree_6477(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6477) }
+
+func TestCompilerAndStage1Agree_6478(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6478) }
+
+func TestCompilerAndStage1Agree_6479(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6479) }
 
 func compilerAgreementCompare(t *testing.T, got, want []byte) {
 	t.Helper()
