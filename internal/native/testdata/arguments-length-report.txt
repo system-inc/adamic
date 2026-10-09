@@ -1,0 +1,80 @@
+Built: read-only arguments.length with JavaScript's actual call count, in .a and .ts, through direct calls, function values, methods, callbacks, and constructor adapters, in both backends.
+Commits: implementation 7e635882dc5ef2339eefe61f1fa84b62946f2874; landing merge f46af40e64ada8554f3e01ddee9dded81e3b93cf, incorporating origin/main 71d7e491b3c9724f7a0e2ee754592149e7f9790b.
+Commands and outputs: post-merge lower/ir/fresh/JavaScript packages passed; filtered Node oracle plus all recorded counts passed in 69.051s; native call/borrow checks passed in 2.920s; full native package passed earlier in 483.418s; vet, gofmt, and diff checks passed.
+Mutants: declared count and omitted function-value count failed against Node in both backends; ignoring count-reader function types also failed against Node; arrow/write refusal mutations and unresolved-target mutation failed their pinned checks. Eight mutants killed, all sources restored.
+Not covered: no complete repository ./... gate; tuple-variable spreads, heterogeneous tuple spreads, constructor/super spreads, and slotless rest elements remain unsupported. The concrete reduceLeft fixture preserves core.ts's count decision, not a full tsc parser build.
+
+Base and assumptions
+
+The explicit unit branch instruction takes precedence over the generic start-from-main instruction: this branch began at origin/area/compiler, 5ecb2b680c2e9e43f6a76fdc14217afa8102e3b5. Current origin/main was subsequently merged into this branch without conflicts. The merge did not change compiler sources. Nothing was pushed to main or any area branch, and no pull request was opened.
+
+Function-type candidates use the same checker assignability relation and closure records as the cycle finder. All assignable declarations are conservative candidates, including named functions and methods. Missing type evidence means the entire program, never an empty target set. A reader receives a hidden numeric local. Virtual implementations share its signature. The packed closure/method ABI carries a size_t count; optional/rest slot binding also receives the actual count even when no target observes arguments.length. Compiler-generated adapters forward the original count rather than their padded or collected parameter count. Receiver arguments are excluded.
+
+Spreads expand once at their evaluation point. Native snapshots retain reference elements across subsequent argument mutations. Rest/spread calls bypass positional freshness, region, and move summaries where source positions no longer match parameters. New source fixtures are .a; temporary .ts copies test the other extension.
+
+Observed fixtures
+
+Ten fixtures compare stdout, stderr and exit status with Node v24.19.0. The ordinary .a oracle also checks sanitized/release native agreement, the JavaScript backend, and leaks. The temporary .ts oracle performs the same checks. Cases cover omitted arguments, explicit undefined, extra arguments, defaults, mutable/parameter/property/returned function values, a widened parameterless reader, spread snapshots, numeric and reference rest arrays, virtual/interface/static methods, library callbacks, inherited/static constructor adapters, getters/setters, and the reduceLeft initial-value distinction.
+
+reduceLeft uses concrete numeric types and splits items[index++] into an indexed read followed by index++, because postfix increment inside that expression is outside existing lowering. It retains the arguments.length <= 2 decision, optional initial/start/count parameters, callback, and reduction loop. Its Node result is the oracle. No cohere file was copied.
+
+Seven stored refusal fixtures cover indexing, aliasing, passing, returning, spreading, writing length, and arrows, with exact messages checked for both .a and .ts. Additional inline probes cover writing an indexed argument, increments, compound and parenthesized writes. Each diagnostic names an explicit parameter/rest parameter, a read-only local count, or capturing the enclosing count as the fix. A separate delete probe is rejected by the TypeScript checker with TS2790 before lowering; no unreachable lowering exception was added.
+
+Setup observations
+
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/arguments-length-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc: 5; cgroup cpu.max: 400000 100000.
+Go go1.27.1; clang 20.1.8; Node v24.19.0.
+setup: go ready (0.094s)
+setup: node ready (0.100s)
+setup: submodules ready (0.132s)
+setup: clang ready (0.458s)
+setup: markdown dependencies installed; step-duration=1.430s
+setup: markdown dependencies ready (1.628s)
+setup: go build ready (80.129s)
+setup: test binaries deferred (80.270s)
+setup: build cache warm (80.272s)
+setup: done (80.316s)
+Setup succeeded; no toolchain workaround beyond the requested GOPROXY setting was needed.
+
+Validation commands and logs
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/ir ./internal/fresh ./internal/native ./internal/javascript ./internal/oracle -count=1 -timeout 30m > /tmp/arguments-length-gate.log 2>&1
+Observed: lower 49.403s, ir 57.531s, fresh 95.697s, native 483.418s passed; JavaScript has no package tests. Oracle failed only the new default-initializer/function-value fixture: explicit undefined had been packed according to the checker's present number type. Corrected the incoming defaulted slot to preserve undefined. Subsequent focused oracle passed all nine then-existing fixtures in 18.090s. This failed run is not reported as a green gate.
+
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/arguments-length-counts-final.log 2>&1
+Observed: passed in 68.009s; ten new rows. Existing weak_parent retains/releases moved +2/+2 and typeof_dispatch +1/+1 after explicit call fitting; allocations/frees did not change.
+
+Post-merge checks:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/ir ./internal/fresh ./internal/javascript -count=1 -timeout 30m > /tmp/arguments-length-land-packages.log 2>&1
+Observed: lower 57.286s, ir 3.030s, fresh 77.270s passed; JavaScript has no package tests.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length|TestArgumentsLengthTypeScriptSource|TestCountsAreRecorded' -count=1 -timeout 30m > /tmp/arguments-length-land-oracle.log 2>&1
+Observed: passed in 69.051s, uncached; all ten unit fixtures, both extensions, all recorded counts.
+go test ./internal/native -run 'Test(DevirtualizedCalls|BorrowChain|Loop|Nbody.*Borrow|ThrowElementBorrow|CallTargetsElementBorrow)' -count=1 -timeout 30m > /tmp/arguments-length-land-native.log 2>&1
+Observed: passed in 2.920s.
+go vet ./... > /tmp/arguments-length-land-vet.log 2>&1
+Observed: exit 0, empty log.
+gofmt -l cmd internal > /tmp/arguments-length-land-gofmt.log
+Observed: empty log.
+git diff --check > /tmp/arguments-length-land-diffcheck.log
+Observed: exit 0, empty log.
+
+Mutant command and observations
+
+python3 internal/native/testdata/run-arguments-length-mutants.py > /tmp/arguments-length-mutants.log 2>&1
+The runner restores each file in finally and requires an observable failure, not merely a build failure.
+- native-declared-count: replaced the actual source argument count with parameter count; arguments_length.a failed with Node stdout disagreement.
+- native-function-value-count: passed zero on a function-value call; arguments_length_value_count.a failed with Node stdout disagreement.
+- javascript-declared-count: used fn.length instead of actual values.length; arguments_length.a failed with Node stdout disagreement.
+- native-ignore-count-reader-type: omitted the closed-world reader check while retaining parameter-slot counts; the parameterless widened reader failed with Node stdout disagreement.
+- javascript-function-value-count: passed zero to closure.code; arguments_length_value_count.a failed with Node stdout disagreement.
+- arrow-refusal: disabled the nearest-arrow guard; TestArgumentsLengthRefusals/arrow failed its pinned refusal assertion.
+- write-refusal: treated an assignment target as a read; TestArgumentsLengthRefusals/writing_length failed its pinned refusal assertion.
+- unknown-count-target: ignored readers when type evidence is absent; TestClosureArgumentsCountTargets failed with 'type 12: false, want true'.
+Individual logs are /tmp/arguments-length-<mutant-name>.log. All eight final mutants were killed. The initial missing-count probe on the broader value fixture instead triggered UBSan while binding a required reference parameter; the dedicated parameterless fixture was added so the final probe demonstrates the count result directly.
+
+Limits and inference
+
+The full native suite's exhaustive Unicode checks consumed approximately eight minutes. After fixing the lowering-only default-slot issue and merging main, the complete lower/IR/freshness packages, relevant native emission/ownership tests, and filtered external oracle were rerun; the entire repository gate and the exhaustive native Unicode suite were not repeated. No complete tsc core.ts/parser compile is claimed. The closed-world fallback is deliberately conservative; minimal count-parameter elimination is not a claim of this unit. Existing unsupported spreads refuse instead of being inferred from declared arity.

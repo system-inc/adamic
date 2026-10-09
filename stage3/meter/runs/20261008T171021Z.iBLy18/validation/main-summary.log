@@ -1,0 +1,24 @@
+{
+  "totals": {
+    "files": 82,
+    "source_files": 79,
+    "checker": 2,
+    "lowering": 0,
+    "checker_whole_program": 2,
+    "checker_own_file": 56
+  },
+  "roots": {
+    "target": 79,
+    "total": 79,
+    "tsc_original": 78,
+    "adaptation_created": [
+      {
+        "file": "src/compiler/hostErrors.ts",
+        "adaptation": "47-host-errors"
+      }
+    ],
+    "tsc_whole_program": 1,
+    "tsc_own_file": 55
+  }
+}
+All interrupted records reproduced exactly except timing: 30

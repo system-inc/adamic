@@ -378,7 +378,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	defer os.RemoveAll(directory)
 	if library == "" {
-		library, err = RuntimeLibrary("", options)
+		library, err = RuntimeLibraryForSource("", source, options)
 		if err != nil {
 			return err
 		}
@@ -424,6 +424,9 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if jobs > len(units) {
 		jobs = len(units)
 	}
+	// A unit includes units.h, and through it adamic.h, before any of the program's own #defines
+	// (the checker build puts tsgo_runtime.h first), so its features come as flags.
+	flags := sourceFlags(source, options)
 	objects := make([]string, len(units))
 	errors := make([]error, len(units))
 	work := make(chan int)
@@ -435,7 +438,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			for index := range work {
 				unit := units[index]
 				files := append([]runtimeFile{{unit.name, []byte(unit.source)}}, common...)
-				objects[index], errors[index] = compileUnit(unit, files, Flags(options), compiler, string(version), cache, directory, os.Getenv("ADAMIC_GATE_UNCACHED") == "1")
+				objects[index], errors[index] = compileUnit(unit, files, flags, compiler, string(version), cache, directory, os.Getenv("ADAMIC_GATE_UNCACHED") == "1")
 			}
 		}()
 	}

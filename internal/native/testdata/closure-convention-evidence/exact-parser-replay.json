@@ -1,0 +1,39 @@
+{
+  "published_branch": "origin/codex/stage3-parser-scratch-33bf53ac",
+  "publication_tip": "be7bdb8b86cffa409bec352d58cbdc291cfe608d",
+  "exact_compiler_base": "33bf53aca3ce199aa05fe7bd2e7898e7c5ef2d5b",
+  "cohere_pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "worktree": "/tmp/closure-exact-parser-scratch",
+  "worktree_pushed": false,
+  "source": "internal/oracle/testdata/native-arguments-length-value.a",
+  "original": {
+    "go_build_exit": 0,
+    "C_emit_exit": 0,
+    "native_build_exit": 0,
+    "native_exit": 0,
+    "native_stdout": "9\n",
+    "native_stderr": "",
+    "Node_stdout": "1\n"
+  },
+  "enforced": {
+    "go_build_exit": 0,
+    "C_emit_exit": 0,
+    "native_build_exit": 1,
+    "generated_C_compile_exit": 1,
+    "native_error": "array.c:202:72: too many arguments to function call, expected 2, have 3",
+    "generated_C_error": "controlling expression type adamic_counted_code_function * not compatible with any generic association type"
+  },
+  "hashes": {
+    "exact-parser-enforcement.patch": "0f96420200fee8a5df1c0f0756ed9e1335edf94297355befa7e223a0233e2a2d",
+    "exact-parser-original.c.txt": "48f492daa062f7d369a76791017470c9b00e602bb07f88d609f05b78ca5e4d81",
+    "exact-parser-enforced.c.txt": "b8c1d119892a1d8caf5533e83813646acfe2b97988202e51b89d77c5788bec28",
+    "exact-parser-original-go-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exact-parser-original-native-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exact-parser-original-stdout.log": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a",
+    "exact-parser-original-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exact-parser-enforced-go-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exact-parser-enforced-native-build.log": "51c97c711160c706bbb35fd83b1c944e6a072573ead215b34b59d3fe6e7bc245",
+    "exact-parser-enforced-generated-build.log": "f2b0bd5245c2772159c68337edfccfa29b03523b694bf130a702c7fc6d70e44c",
+    "parser-literal-cmp.log": "992c0d9e186ee0e55bf6dc57214876930428eed4202a1b7f1ddd8a0ecb5bfa63"
+  }
+}
