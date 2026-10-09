@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -81,6 +81,7 @@
+ }
+ 
+ adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {
++ return NULL;
+  uint64_t started = timing() ? now_ns() : 0;
+  uint64_t id = integer(handle), offset = integer(position);
+  tsgo_view path = path_view(file);

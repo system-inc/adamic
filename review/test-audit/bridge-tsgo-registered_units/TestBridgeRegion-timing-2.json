@@ -1,0 +1,118 @@
+{
+  "label": "TestBridgeRegion-timing-2",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeRegion$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 4.268553292000433,
+  "binary_seconds": 2.235,
+  "status": {
+    "TestBridgeRegion": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:14:54.518626239Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:14:54.526099745Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion"
+    },
+    {
+      "Time": "2026-10-09T09:14:54.526183539Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "=== RUN   TestBridgeRegion\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:54.955919548Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:71: build bridge-test-oracle 9d33a765116e hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:55.337301835Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:71: build bridge-test-healthy-region 970fe3e78e6e hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:55.756163052Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:278: build bridge-test-oracle 9d33a765116e hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.201903645Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:279: build bridge-test-oracle 9d33a765116e hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.276228905Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:279: region-frame: tsgo: load_ns=33347227 query_ns=12697772 queries=1\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.635554545Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:292: build bridge-test-healthy-region 970fe3e78e6e hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.742849721Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "    units_test.go:299: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 5 releases 13 peak 8 regions 1\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.743038539Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Output": "--- PASS: TestBridgeRegion (2.22s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.743065318Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Elapsed": 2.22
+    },
+    {
+      "Time": "2026-10-09T09:14:56.74311362Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.753057856Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t2.234s\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:56.753254956Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 2.235
+    }
+  ],
+  "cooked": false
+}

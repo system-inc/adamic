@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -72,6 +72,7 @@
+  return status;
+ }
+ int tsgo_release(tsgo_handle handle, tsgo_buffer *error) {
++ return TSGO_OK;
+  if (error == NULL) return TSGO_ARGUMENT;
+  return tsgo_go_release(handle, error);
+ }

@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -76,6 +76,7 @@
+  return tsgo_go_release(handle, error);
+ }
+ void tsgo_buffer_free(tsgo_buffer *buffer) {
++ return;
+  if (buffer == NULL) return;
+  free(buffer->data);
+  buffer->data = NULL;

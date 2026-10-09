@@ -1,0 +1,100 @@
+{
+  "label": "P_FREE-False-0",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI)$",
+  "corpus": false,
+  "selector": "P_FREE",
+  "cache": null,
+  "exit": 1,
+  "wall_seconds": 4.123445966000872,
+  "binary_seconds": 1.338,
+  "status": {
+    "TestBridgeABI": "fail"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:31:58.728912902Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:31:58.738130117Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI"
+    },
+    {
+      "Time": "2026-10-09T09:31:58.738200751Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "=== RUN   TestBridgeABI\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:31:59.357134619Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    units_test.go:71: build bridge-test-api 953142b05876 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:31:59.940604813Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    units_test.go:199: build bridge-test-api 953142b05876 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:32:00.057738028Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    units_test.go:199: api: signal: aborted\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:32:00.057765809Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "        api: /workspace/adamic/bridge/tsgo/testdata/api.c:26: int main(int, char **): Assertion `answer.type.data == NULL && answer.type.length == 0' failed.\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:32:00.057958212Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "--- FAIL: TestBridgeABI (1.32s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:32:00.05797071Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Elapsed": 1.32
+    },
+    {
+      "Time": "2026-10-09T09:32:00.05799099Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:32:00.066437798Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t1.337s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:32:00.06645978Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 1.338
+    }
+  ],
+  "cooked": false
+}

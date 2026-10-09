@@ -1,0 +1,90 @@
+{
+  "label": "TestBridgeOutputLength-timing-2",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeOutputLength$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 2.8736582180008554,
+  "binary_seconds": 0.932,
+  "status": {
+    "TestBridgeOutputLength": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:13:41.338563428Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:13:41.346376243Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength"
+    },
+    {
+      "Time": "2026-10-09T09:13:41.34645525Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Output": "=== RUN   TestBridgeOutputLength\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:41.777352642Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Output": "    units_test.go:71: build bridge-test-length-driver 2f7a7f7ec517 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:42.135177299Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Output": "    units_test.go:214: build bridge-test-length-driver 2f7a7f7ec517 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:42.263713438Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Output": "    units_test.go:214: output-length: AddressSanitizer: heap-buffer-overflow\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:42.263783871Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Output": "--- PASS: TestBridgeOutputLength (0.92s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:42.263790952Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Elapsed": 0.92
+    },
+    {
+      "Time": "2026-10-09T09:13:42.263813405Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:42.270942243Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.932s\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:42.270989943Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 0.932
+    }
+  ],
+  "cooked": false
+}

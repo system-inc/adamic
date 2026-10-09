@@ -1,0 +1,97 @@
+{
+  "label": "TestBridgeOutputFree-timing-1",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeOutputFree$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 9.625399155000196,
+  "binary_seconds": 7.649,
+  "status": {
+    "TestBridgeOutputFree": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:14:22.42164003Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:14:22.431147443Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree"
+    },
+    {
+      "Time": "2026-10-09T09:14:22.431224086Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Output": "=== RUN   TestBridgeOutputFree\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:29.205225255Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Output": "    products_test.go:243: build bridge-test-leak.a 51f2980bd96c miss 6.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:29.529014828Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Output": "    units_test.go:71: build bridge-test-leak-driver 06123317135d miss 6.72\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:29.923015885Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Output": "    units_test.go:220: build bridge-test-leak-driver 06123317135d hit 0.02\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:30.066259291Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Output": "    units_test.go:220: output-free: LeakSanitizer: detected memory leaks\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:30.066328342Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Output": "--- PASS: TestBridgeOutputFree (7.64s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:30.066336034Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Elapsed": 7.64
+    },
+    {
+      "Time": "2026-10-09T09:14:30.066358827Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:30.070410744Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t7.648s\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:30.070445205Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 7.649
+    }
+  ],
+  "cooked": false
+}

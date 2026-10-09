@@ -1,0 +1,65 @@
+[
+  {
+    "id": "W_EQUAL",
+    "file": "bridge/tsgo/units_test.go",
+    "line": 240,
+    "before": "bytes.Equal(truth, observed)",
+    "after": "(bytes.Equal(truth, truth) && bytes.Equal(observed, observed))",
+    "rows": [
+      "TestBridgeWrongPositionSample",
+      "TestBridgeWrongPositionChecker",
+      "TestBridgeWrongPositionParser",
+      "TestBridgeWrongPositionTypes",
+      "TestBridgeWrongPositionUtilities"
+    ],
+    "reason": "Treat every native answer as agreeing with Go, weakening the agreement comparison.",
+    "overlay": "/tmp/u004/witness/W_EQUAL/overlay.json"
+  },
+  {
+    "id": "W_STALE",
+    "file": "bridge/tsgo/testdata/api.c",
+    "line": 36,
+    "before": " assert(tsgo_query(handle, file, 14, &answer, &error) == TSGO_HANDLE);",
+    "after": " /* stale-query assertion disabled for witness audit */",
+    "rows": [
+      "TestBridgeStaleHandle"
+    ],
+    "reason": "Remove the stale-query assertion the planted failure witnesses.",
+    "overlay": "/tmp/u004/witness/W_STALE/overlay.json"
+  },
+  {
+    "id": "W_LINK",
+    "file": "bridge/tsgo/bridge_test.go",
+    "line": 29,
+    "before": "if _, err := lower.Lower(context.Background(), loaded); err == nil {\n\t\tt.Fatal(\"lowering accepted an unlinked checker call\")\n\t}",
+    "after": "if _, err := lower.Lower(context.Background(), loaded); false && err == nil {\n\t\tt.Fatal(\"lowering accepted an unlinked checker call\")\n\t}",
+    "rows": [
+      "TestBridgeLinkage"
+    ],
+    "reason": "Disable the link refusal comparison in the inner test.",
+    "overlay": "/tmp/u004/witness/W_LINK/overlay.json"
+  },
+  {
+    "id": "W_LSAN",
+    "file": "bridge/tsgo/units_test.go",
+    "line": 0,
+    "rows": [
+      "TestBridgeOutputFree",
+      "TestBridgeRegionOwnership"
+    ],
+    "reason": "Disable the witnessed LeakSanitizer check using ASAN_OPTIONS=detect_leaks=0 and LSAN_OPTIONS=detect_leaks=0. No source diff."
+  },
+  {
+    "id": "W_ASAN",
+    "file": "bridge/tsgo/products_test.go",
+    "line": 244,
+    "before": "\"-O1\", \"-g\", \"-fsanitize=address,undefined\", \"-I\",",
+    "after": "Remove C boundary and C driver sanitizer instrumentation",
+    "rows": [
+      "TestBridgeInputLength",
+      "TestBridgeOutputLength"
+    ],
+    "reason": "Disable AddressSanitizer in both the archive C boundary and C consumer recipe.",
+    "overlay": "/tmp/u004/witness/W_ASAN/overlay.json"
+  }
+]

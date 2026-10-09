@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -96,7 +96,7 @@
+  adamic_object *answer = adamic_object_new_in(region, &shape);
+  answer->slots[0].number = (double)result.kind;
+  answer->slots[1].reference = adamic_decode_utf8((const unsigned char *)result.symbol.data, result.symbol.length);
+- answer->slots[2].reference = adamic_decode_utf8((const unsigned char *)result.type.data, result.type.length);
++ answer->slots[2].reference = adamic_decode_utf8((const unsigned char *)result.type.data, result.type.length == 0 ? 0 : result.type.length - 1);
+  tsgo_result_free(&result);
+  if (timing()) { uint64_t elapsed = now_ns() - started;
+   if (query_count == 0) first_query_ns = elapsed;

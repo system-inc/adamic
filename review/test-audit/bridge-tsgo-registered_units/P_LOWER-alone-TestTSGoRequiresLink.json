@@ -1,0 +1,301 @@
+{
+  "label": "P_LOWER-alone-TestTSGoRequiresLink",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestTSGoRequiresLink$",
+  "corpus": false,
+  "selector": "P_LOWER",
+  "cache": "/tmp/u004/cache/P_LOWER",
+  "exit": 1,
+  "wall_seconds": 2.2774208930022724,
+  "binary_seconds": 0.058,
+  "status": {
+    "TestTSGoRequiresLink": "fail"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:35:43.244101948Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.251618372Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.25169859Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== RUN   TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.251721354Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== PAUSE TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.251724047Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.251729656Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.251731248Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== CONT  TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.297288205Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "--- FAIL: TestTSGoRequiresLink (0.05s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299732041Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299758029Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "[signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xaef9ef]\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299770768Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299773522Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "goroutine 8 [running]:\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.29977897Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "testing.tRunner.func1.2({0x1b3f488, 0x1c4a5c0})\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299783516Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.29978574Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "testing.tRunner.func1()\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299787382Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299789145Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "panic({0x1b3f488?, 0x1c4a5c0?})\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299790757Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.2997926Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x2aff32d1a200, 0x2aff32547620?)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299795915Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299798118Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).value(0x2aff32d1a200, 0x2aff321ed8c0)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299805769Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/expression.go:475 +0x127\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299811768Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x2aff32d1a200, 0x2aff321ed8c0)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299814953Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299818197Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x2aff32d1a200, 0x2aff32077700)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.29990844Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299911224Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2aff32d1a200, 0x2aff3232ebe0)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299913357Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/statements.go:76 +0x136\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.29991525Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x2aff32d1a200, {0x2aff32467640, 0x9, 0x2aff32367508?})\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299917213Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299918916Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.Lower({0x1bde080?, 0x1cc93a0?}, 0x2aff32533140)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299920518Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.29992215Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/bridge/tsgo_test.TestTSGoRequiresLink(0x2aff3232cd88)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299924003Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/bridge/tsgo/bridge_test.go:29 +0xd1\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299925605Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "testing.tRunner(0x2aff3232cd88, 0x1be8830)\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299927308Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.2999287Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "created by testing.(*T).Run in goroutine 1\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.299930102Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.301795096Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T09:35:43.30182559Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.057s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:35:43.301837979Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 0.058
+    }
+  ],
+  "cooked": false
+}

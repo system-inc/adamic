@@ -1,0 +1,1081 @@
+{
+  "label": "P_LOWER-False-0",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+  "corpus": false,
+  "selector": "P_LOWER",
+  "cache": "/tmp/u004/cache/P_LOWER",
+  "exit": 1,
+  "wall_seconds": 10.228406243997597,
+  "binary_seconds": 7.311,
+  "status": {
+    "TestBridgeUnlinkedBuild": "fail",
+    "TestBridgeUnlinkedC": "fail",
+    "TestBridgeUnlinkedJavaScript": "fail",
+    "TestTSGoRequiresLink": "fail"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:30:48.661003663Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:30:48.678012638Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:30:48.678114749Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== RUN   TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:48.678257268Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== PAUSE TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:48.678263598Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:30:48.678327422Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild"
+    },
+    {
+      "Time": "2026-10-09T09:30:48.678331367Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "=== RUN   TestBridgeUnlinkedBuild\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:52.645353017Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "    units_test.go:71: build bridge-test-stage0 13c6e7b1719c miss 3.41\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.195746284Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313921939Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "    units_test.go:229: unlinked build was not refused: exit status 2\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313963491Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        panic: runtime error: invalid memory address or nil pointer dereference\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313968959Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xb2f26f]\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313971953Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313981247Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        goroutine 1 [running]:\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313985132Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0xc0f3f099000, 0xc0f3eabb290?)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313994566Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.313998873Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).value(0xc0f3f099000, 0xc0f3e5cf8c0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314016609Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:475 +0x127\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314019723Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).expression(0xc0f3f099000, 0xc0f3e5cf8c0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314026443Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314031511Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).variables(0xc0f3f099000, 0xc0f3e773c00)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314034325Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314036979Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).statement(0xc0f3f099000, 0xc0f3e7894a0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314039593Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/statements.go:76 +0x136\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314042577Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).statements(0xc0f3f099000, {0xc0f3e99b540, 0x9, 0xc0f3e99b540?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314045221Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314047895Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        github.com/system-inc/adamic/internal/lower.Lower({0x1c6f760?, 0x1d57300?}, 0xc0f3e58f3b0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314073753Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314076327Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        main.compileLibrary({0x7ffcff01c1f1?, 0x0?}, 0x0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.3140788Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:133 +0x65\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314081224Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        main.build({0x7ffcff01c1f1, 0x30}, {0x7ffcff01c225, 0x3f}, {0xc0f3e78c640?, 0x1b5def8?, 0xc0f3e78be60?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314083748Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/cmd/adamic/tsgo.go:57 +0x505\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314086001Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        main.run({0xc0f3e454010?, 0x4?, 0xc0f3e3741e0?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314088855Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:97 +0x774\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314096416Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        main.main()\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314100592Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314134222Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "--- FAIL: TestBridgeUnlinkedBuild (4.64s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314138128Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Elapsed": 4.64
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314165027Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.314168532Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "=== RUN   TestBridgeUnlinkedC\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:53.853673343Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.425190252Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538773593Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:229: unlinked c was not refused: exit status 2\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538816215Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        panic: runtime error: invalid memory address or nil pointer dereference\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538821163Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xb2f26f]\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538824097Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538827312Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        goroutine 1 [running]:\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538830727Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x5f924cc2200, 0x5f924b77388?)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538834032Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538838098Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).value(0x5f924cc2200, 0x5f9242558c0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538840852Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:475 +0x127\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538843786Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x5f924cc2200, 0x5f9242558c0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538849484Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538854782Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x5f924cc2200, 0x5f9247e4780)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538859229Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538862594Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x5f924cc2200, 0x5f924404500)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538866309Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/statements.go:76 +0x136\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.53887383Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x5f924cc2200, {0x5f9247ab140, 0x9, 0x5f9240b3188?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538877365Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538880069Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        github.com/system-inc/adamic/internal/lower.Lower({0x1c6f760?, 0x1d57300?}, 0x5f9241d9bc0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538883184Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538886319Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        main.compileLibrary({0x7ffc10d5c234?, 0x0?}, 0x0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538889423Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:133 +0x65\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538892127Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        main.compile(...)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538894551Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:122\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538896834Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        main.run({0x5f92411e220?, 0x1c7fd28?, 0x5f92401c1e0?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538899228Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:73 +0x3a5\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538901681Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        main.main()\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538905617Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.53891409Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "--- FAIL: TestBridgeUnlinkedC (1.22s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538917334Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Elapsed": 1.22
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538924435Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript"
+    },
+    {
+      "Time": "2026-10-09T09:30:54.538927519Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "=== RUN   TestBridgeUnlinkedJavaScript\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.115667336Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.715706568Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.899809002Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "    units_test.go:229: unlinked js was not refused: exit status 2\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.899978472Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        panic: runtime error: invalid memory address or nil pointer dereference\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.899983499Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xb2f26f]\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.899986353Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.89999083Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        goroutine 1 [running]:\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.899994546Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x14c3bde8da00, 0x14c3bd243388?)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900112089Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900114943Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).value(0x14c3bde8da00, 0x14c3bd6b7bc0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900118027Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:475 +0x127\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900121813Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x14c3bde8da00, 0x14c3bd6b7bc0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900130025Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900135653Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x14c3bde8da00, 0x14c3bd56bc80)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900138798Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900142884Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x14c3bde8da00, 0x14c3bd69d400)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900146309Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/statements.go:76 +0x136\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900149674Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x14c3bde8da00, {0x14c3bd781540, 0x9, 0x14c3bd781540?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900156113Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900159659Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        github.com/system-inc/adamic/internal/lower.Lower({0x1c6f760?, 0x1d57300?}, 0x14c3bd2a9320)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900162693Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.90028941Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        main.compileLibrary({0x7ffde643c234?, 0x0?}, 0x0)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900294948Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:133 +0x65\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900297852Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        main.compile(...)\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900300656Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:122\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900303961Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        main.run({0x14c3bd2a8220?, 0x1c7fd28?, 0x14c3bd1a21e0?})\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900307406Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:84 +0x4b5\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.90030989Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        main.main()\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900315708Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        \t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900326414Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "--- FAIL: TestBridgeUnlinkedJavaScript (1.36s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.90033036Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Elapsed": 1.36
+    },
+    {
+      "Time": "2026-10-09T09:30:55.900339583Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.90034383Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== CONT  TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.954729932Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "--- FAIL: TestTSGoRequiresLink (0.06s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.958979237Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959003042Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "[signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xaef9ef]\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959006216Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.95900851Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "goroutine 23 [running]:\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959011835Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "testing.tRunner.func1.2({0x1b3f488, 0x1c4a5c0})\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959014458Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959016712Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "testing.tRunner.func1()\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959018264Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959019646Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "panic({0x1b3f488?, 0x1c4a5c0?})\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959021188Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959022901Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x3a960491f800, 0x3a9603f23620?)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959025565Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959027267Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).value(0x3a960491f800, 0x3a9603f6dc80)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959032695Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/expression.go:475 +0x127\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959036871Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x3a960491f800, 0x3a9603f6dc80)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959038704Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959040316Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x3a960491f800, 0x3a96041e2180)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959041849Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959043521Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x3a960491f800, 0x3a9603e96d20)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959045204Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/statements.go:76 +0x136\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959046926Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x3a960491f800, {0x3a96041f0340, 0x9, 0x3a96041e9508?})\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959048629Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959050491Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/internal/lower.Lower({0x1bde080?, 0x1cc93a0?}, 0x3a9603cce9f0)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959052074Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959053836Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "github.com/system-inc/adamic/bridge/tsgo_test.TestTSGoRequiresLink(0x3a9603e3cd88)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959055699Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic/bridge/tsgo/bridge_test.go:29 +0xd1\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959057271Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "testing.tRunner(0x3a9603e3cd88, 0x1be8830)\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959059004Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959060626Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "created by testing.(*T).Run in goroutine 1\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.959062329Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.971759468Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T09:30:55.971799607Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t7.309s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:55.971813908Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 7.311
+    }
+  ],
+  "cooked": false
+}

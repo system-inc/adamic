@@ -1,0 +1,9 @@
+Code-under-test entry map, established before mutation from complete registered_units_test.go and units_test.go plus production source:
+C ABI: copy_view; tsgo_create; tsgo_query; tsgo_release; tsgo_buffer_free; tsgo_result_free (bridge/tsgo/archive/boundary.c).
+Archive adapter: text; buffer; failed; recoverFailure; tsgo_go_create; tsgo_go_query; tsgo_go_release (archive/main.go), startProfile and stopProfile (archive/profile.go). The rows do not call type_parts or inspect entries.
+Native adapter: profiling; timing; now_ns; checked; integer; path_view; adamic_tsgo_program; adamic_tsgo_query; adamic_tsgo_query_in; adamic_tsgo_release (internal/native/runtime/tsgo.c). type_parts and inspect are linked but not reached by these fixtures.
+Bridge renderer/build: UsesTSGo; TSGoC; BuildTSGo; tsgoFlags (internal/native/tsgo.go), ordinary native emitter/build functions used by these entries.
+Lowering: Lower and lowering.tsgo, ordinary expression/module/function orchestration that delivers calls to lowering.tsgo.
+The shared direct Go checker and bridge checker package determine answers and are excluded from mutation. C api.c is assertion harness, never a production mutant target. queries.a and region.a are harness fixtures, never production mutant targets.
+Witnesses: InputLength, OutputLength, StaleHandle, Linkage, OutputFree, RegionOwnership, and all five WrongPosition rows. Their production failures will not determine verdicts.
+Static entry inventory is complete for dedicated bridge adapter sources. An exhaustive transitive compiler function reach set was not established; do not infer unlisted compiler coverage.

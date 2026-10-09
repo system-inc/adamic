@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -41,6 +41,7 @@
+ }
+ 
+ int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error) {
++ return TSGO_OK;
+  if (result == NULL || error == NULL) return TSGO_ARGUMENT;
+  tsgo_view copied = {0};
+  int status = copy_view(file, &copied);

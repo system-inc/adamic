@@ -1,0 +1,97 @@
+{
+  "label": "TestBridgeABI-timing-1",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeABI$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 12.819916574999297,
+  "binary_seconds": 10.641,
+  "status": {
+    "TestBridgeABI": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:12:32.623799631Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:12:32.631761144Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI"
+    },
+    {
+      "Time": "2026-10-09T09:12:32.631846931Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "=== RUN   TestBridgeABI\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:12:42.440713175Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    products_test.go:243: build bridge-test-tsgo-asan.a 61f675d4dc07 miss 9.08\n"
+    },
+    {
+      "Time": "2026-10-09T09:12:42.748863535Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    units_test.go:71: build bridge-test-api 9b16fa044cf2 miss 9.73\n"
+    },
+    {
+      "Time": "2026-10-09T09:12:43.125669385Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    units_test.go:199: build bridge-test-api 9b16fa044cf2 hit 0.02\n"
+    },
+    {
+      "Time": "2026-10-09T09:12:43.259820737Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "    units_test.go:200: C ABI: 100 queries, owned outputs, handles and argument checks; \"\u4e16\u754c\ud83c\udf0d\"\n"
+    },
+    {
+      "Time": "2026-10-09T09:12:43.259888907Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Output": "--- PASS: TestBridgeABI (10.63s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:12:43.259898822Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Elapsed": 10.63
+    },
+    {
+      "Time": "2026-10-09T09:12:43.259919202Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:12:43.264827409Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t10.641s\n"
+    },
+    {
+      "Time": "2026-10-09T09:12:43.264852556Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 10.641
+    }
+  ],
+  "cooked": false
+}

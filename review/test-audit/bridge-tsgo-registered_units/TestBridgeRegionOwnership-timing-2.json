@@ -1,0 +1,90 @@
+{
+  "label": "TestBridgeRegionOwnership-timing-2",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeRegionOwnership$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 3.032833881999977,
+  "binary_seconds": 0.969,
+  "status": {
+    "TestBridgeRegionOwnership": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:15:27.043554142Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:15:27.052929809Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership"
+    },
+    {
+      "Time": "2026-10-09T09:15:27.053031368Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Output": "=== RUN   TestBridgeRegionOwnership\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:15:27.448492548Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Output": "    units_test.go:71: build bridge-test-region-native 0a875d3bd411 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:15:27.868395076Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Output": "    units_test.go:302: build bridge-test-region-native 0a875d3bd411 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:15:28.007557325Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Output": "    units_test.go:306: region ownership: LeakSanitizer catches the unowned heap result\n"
+    },
+    {
+      "Time": "2026-10-09T09:15:28.007645384Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Output": "--- PASS: TestBridgeRegionOwnership (0.95s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:15:28.007651834Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Elapsed": 0.95
+    },
+    {
+      "Time": "2026-10-09T09:15:28.007687797Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:15:28.012426705Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.968s\n"
+    },
+    {
+      "Time": "2026-10-09T09:15:28.012458071Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 0.969
+    }
+  ],
+  "cooked": false
+}

@@ -1,0 +1,397 @@
+{
+  "label": "M06-True-12",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+  "corpus": true,
+  "selector": "M06",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 20.297653277997597,
+  "binary_seconds": 17.517,
+  "status": {
+    "TestBridgeOracleUtilities": "pass",
+    "TestBridgeTimingRound1Utilities": "pass",
+    "TestBridgeTimingRound2Utilities": "pass",
+    "TestBridgeTimingRound3Utilities": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:30:14.962536988Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:30:14.980785252Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities"
+    },
+    {
+      "Time": "2026-10-09T09:30:14.980891969Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "=== RUN   TestBridgeOracleUtilities\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:15.685054717Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:16.266106044Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:16.323080797Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:237: queries: utilities.ts, 400 positions, 4 unchanged program roots\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:16.842097086Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.05\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:17.304654155Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:238: go: tsgo: load_ns=251962598 query_ns=156660296 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:17.854737358Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:18.408436387Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "    units_test.go:243: oracle: utilities.ts, 14036 bytes identical under ASan/UBSan/LSan\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:18.408532989Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Output": "--- PASS: TestBridgeOracleUtilities (3.43s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:18.40854031Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Elapsed": 3.43
+    },
+    {
+      "Time": "2026-10-09T09:30:18.408611895Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities"
+    },
+    {
+      "Time": "2026-10-09T09:30:18.408614979Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "=== RUN   TestBridgeTimingRound1Utilities\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:18.993088523Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:19.607089928Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.09\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:19.669035677Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:20.187560848Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:20.749863853Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:247: go-baseline: tsgo: load_ns=296732410 query_ns=185812482 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:21.462055873Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:22.045176685Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:248: native-round-1: tsgo: load_ns=465704743 query_ns=63432801 queries=400 first_query_ns=75802 run_ns=64212901\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:22.567898891Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:23.162729261Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "    units_test.go:249: go-round-1: tsgo: load_ns=234442069 query_ns=313601310 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:23.16277649Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Output": "--- PASS: TestBridgeTimingRound1Utilities (4.75s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:23.162781608Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Elapsed": 4.75
+    },
+    {
+      "Time": "2026-10-09T09:30:23.16278942Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities"
+    },
+    {
+      "Time": "2026-10-09T09:30:23.162792674Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "=== RUN   TestBridgeTimingRound2Utilities\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:23.670798988Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:24.224933988Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:24.261480918Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:24.774238206Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:25.331677904Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:247: go-baseline: tsgo: load_ns=302360405 query_ns=183361578 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:25.910948364Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:26.535879951Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:248: native-round-2: tsgo: load_ns=511240317 query_ns=67790520 queries=400 first_query_ns=62522 run_ns=68675316\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:27.122834786Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:27.692392474Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "    units_test.go:249: go-round-2: tsgo: load_ns=314606900 query_ns=223085118 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:27.69252568Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Output": "--- PASS: TestBridgeTimingRound2Utilities (4.53s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:27.692556705Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Elapsed": 4.53
+    },
+    {
+      "Time": "2026-10-09T09:30:27.692591026Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities"
+    },
+    {
+      "Time": "2026-10-09T09:30:27.69259392Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "=== RUN   TestBridgeTimingRound3Utilities\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:28.239671525Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:28.91127085Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:28.946319177Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:29.560285822Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:30.28561942Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:247: go-baseline: tsgo: load_ns=488567003 query_ns=169243551 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:30.819727432Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:31.37811711Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:248: native-round-3: tsgo: load_ns=411109702 query_ns=75282194 queries=400 first_query_ns=88750 run_ns=76117580\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:31.949895911Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:32.473046633Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "    units_test.go:249: go-round-3: tsgo: load_ns=265862616 query_ns=210747154 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:32.473117397Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Output": "--- PASS: TestBridgeTimingRound3Utilities (4.78s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:32.473129075Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Elapsed": 4.78
+    },
+    {
+      "Time": "2026-10-09T09:30:32.473372873Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:32.479640701Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t17.513s\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:32.479703553Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 17.517
+    }
+  ],
+  "cooked": false
+}

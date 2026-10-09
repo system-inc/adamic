@@ -1,0 +1,118 @@
+{
+  "label": "TestBridgeWrongPositionTypes-timing-3",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeWrongPositionTypes$",
+  "corpus": true,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 4.437529503000405,
+  "binary_seconds": 2.37,
+  "status": {
+    "TestBridgeWrongPositionTypes": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:20:44.769937839Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:20:44.777290036Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes"
+    },
+    {
+      "Time": "2026-10-09T09:20:44.777366068Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "=== RUN   TestBridgeWrongPositionTypes\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:20:45.261038624Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:71: build bridge-test-oracle 9d33a765116e hit 0.04\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:45.655785275Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:71: build bridge-test-wrong-native 3407531d5b7e hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:45.698768563Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:255: queries: types.ts, 400 positions, 4 unchanged program roots\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:46.101608611Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:256: build bridge-test-oracle 9d33a765116e hit 0.05\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:46.437531041Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:256: go: tsgo: load_ns=193509966 query_ns=96807110 queries=400\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:46.75761516Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:257: build bridge-test-wrong-native 3407531d5b7e hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:47.134941344Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "    units_test.go:261: wrong-position: oracle mismatch at byte 6\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:47.135068341Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Output": "--- PASS: TestBridgeWrongPositionTypes (2.36s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:20:47.135073068Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Elapsed": 2.36
+    },
+    {
+      "Time": "2026-10-09T09:20:47.135097564Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:20:47.1396377Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t2.369s\n"
+    },
+    {
+      "Time": "2026-10-09T09:20:47.139667614Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 2.37
+    }
+  ],
+  "cooked": false
+}

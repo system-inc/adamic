@@ -1,0 +1,90 @@
+{
+  "label": "TestBridgeUnlinkedC-timing-3",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeUnlinkedC$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 2.8354435290002584,
+  "binary_seconds": 0.821,
+  "status": {
+    "TestBridgeUnlinkedC": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:13:20.014990929Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.022371679Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.022446318Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "=== RUN   TestBridgeUnlinkedC\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.398723313Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:71: build bridge-test-stage0 30780fb3202b hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.758593188Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:227: build bridge-test-stage0 30780fb3202b hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.831486826Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:231: c refuses unlinked checker calls\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.831580784Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "--- PASS: TestBridgeUnlinkedC (0.81s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.831587043Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Elapsed": 0.81
+    },
+    {
+      "Time": "2026-10-09T09:13:20.831617709Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.835776407Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.820s\n"
+    },
+    {
+      "Time": "2026-10-09T09:13:20.835804588Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 0.821
+    }
+  ],
+  "cooked": false
+}

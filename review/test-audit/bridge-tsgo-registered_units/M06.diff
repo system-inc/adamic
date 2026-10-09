@@ -1,0 +1,9 @@
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -85,5 +85,5 @@
+  if (result == NULL) return;
+  tsgo_buffer_free(&result->symbol);
+  tsgo_buffer_free(&result->type);
+- result->kind = 0;
++ result->kind = 1;
+ }

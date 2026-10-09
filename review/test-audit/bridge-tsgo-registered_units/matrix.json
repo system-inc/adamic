@@ -1,0 +1,2179 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "result.type.length);",
+    "after": "result.type.length == 0 ? 0 : result.type.length - 1);",
+    "menu": "off-by-one bound",
+    "line": 99,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeOracleUtilities": "fail",
+      "TestBridgeTimingRound1Utilities": "fail",
+      "TestBridgeTimingRound2Utilities": "fail",
+      "TestBridgeTimingRound3Utilities": "fail",
+      "TestBridgeTimingRound2Parser": "fail",
+      "TestBridgeTimingRound3Parser": "fail",
+      "TestBridgeOracleTypes": "fail",
+      "TestBridgeTimingRound1Types": "fail",
+      "TestBridgeTimingRound2Types": "fail",
+      "TestBridgeTimingRound3Types": "fail",
+      "TestBridgeOracleChecker": "fail",
+      "TestBridgeTimingRound1Checker": "fail",
+      "TestBridgeTimingRound2Checker": "fail",
+      "TestBridgeTimingRound3Checker": "fail",
+      "TestBridgeOracleParser": "fail",
+      "TestBridgeTimingRound1Parser": "fail",
+      "TestBridgeRegion": "fail",
+      "TestBridgeOracleSample": "fail",
+      "TestBridgeTimingRound1Sample": "fail",
+      "TestBridgeTimingRound2Sample": "fail",
+      "TestBridgeTimingRound3Sample": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeRegion",
+      "TestBridgeOracleSample",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeOracleChecker",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeOracleParser",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeOracleTypes",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeOracleUtilities",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeOracleUtilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 6",
+        "output": "=== RUN   TestBridgeOracleUtilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.07\n    units_test.go:237: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:238: go: tsgo: load_ns=343315895 query_ns=200440287 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 6\n--- FAIL: TestBridgeOracleUtilities (3.75s)\n",
+        "run": "M01-True-12"
+      },
+      "TestBridgeTimingRound1Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=254530406 query_ns=197772143 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=461531053 query_ns=37029026 queries=400 first_query_ns=48611 run_ns=37621602\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:249: go-round-1: tsgo: load_ns=305050310 query_ns=453948066 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Utilities (4.87s)\n",
+        "run": "M01-True-12"
+      },
+      "TestBridgeTimingRound2Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=266902824 query_ns=225802717 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=491494471 query_ns=60535846 queries=400 first_query_ns=45597 run_ns=61333379\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:249: go-round-2: tsgo: load_ns=317495015 query_ns=210990755 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Utilities (4.62s)\n",
+        "run": "M01-True-12"
+      },
+      "TestBridgeTimingRound3Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=311350624 query_ns=287338048 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=509537242 query_ns=69396382 queries=400 first_query_ns=58856 run_ns=70165543\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=251357858 query_ns=179773907 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Utilities (4.43s)\n",
+        "run": "M01-True-12"
+      },
+      "TestBridgeTimingRound2Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=175890560 query_ns=144324713 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=299458922 query_ns=33391168 queries=400 first_query_ns=49282 run_ns=33989468\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=170551719 query_ns=120430544 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Parser (2.93s)\n",
+        "run": "M01-True-6"
+      },
+      "TestBridgeTimingRound3Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:247: go-baseline: tsgo: load_ns=173983850 query_ns=131396499 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-3: tsgo: load_ns=290319291 query_ns=30367404 queries=400 first_query_ns=43935 run_ns=30971828\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=172792806 query_ns=129559645 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Parser (2.82s)\n",
+        "run": "M01-True-6"
+      },
+      "TestBridgeOracleTypes": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 6",
+        "output": "=== RUN   TestBridgeOracleTypes\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:237: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:238: go: tsgo: load_ns=169982882 query_ns=102688866 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 6\n--- FAIL: TestBridgeOracleTypes (2.02s)\n",
+        "run": "M01-True-6"
+      },
+      "TestBridgeTimingRound1Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=167839954 query_ns=99653726 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-1: tsgo: load_ns=266386434 query_ns=9682111 queries=400 first_query_ns=48592 run_ns=10168270\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=173755133 query_ns=99008221 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Types (2.61s)\n",
+        "run": "M01-True-6"
+      },
+      "TestBridgeTimingRound2Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:247: go-baseline: tsgo: load_ns=171281492 query_ns=111713612 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=296239280 query_ns=10754967 queries=400 first_query_ns=48050 run_ns=11259956\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:249: go-round-2: tsgo: load_ns=175074598 query_ns=102611627 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Types (2.75s)\n",
+        "run": "M01-True-6"
+      },
+      "TestBridgeTimingRound3Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=191496691 query_ns=89457150 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-3: tsgo: load_ns=274858289 query_ns=9278175 queries=400 first_query_ns=51335 run_ns=9750065\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:249: go-round-3: tsgo: load_ns=167369633 query_ns=102906642 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Types (2.65s)\n",
+        "run": "M01-True-6"
+      },
+      "TestBridgeOracleChecker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 6",
+        "output": "=== RUN   TestBridgeOracleChecker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=198997722 query_ns=161449415 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 6\n--- FAIL: TestBridgeOracleChecker (2.43s)\n",
+        "run": "M01-True-0"
+      },
+      "TestBridgeTimingRound1Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=193769875 query_ns=155418789 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=300317416 query_ns=50069843 queries=400 first_query_ns=50464 run_ns=50739051\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=198857366 query_ns=149543069 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Checker (3.05s)\n",
+        "run": "M01-True-0"
+      },
+      "TestBridgeTimingRound2Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=195287308 query_ns=208498248 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-2: tsgo: load_ns=287480575 query_ns=53259295 queries=400 first_query_ns=53779 run_ns=53943977\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=180709731 query_ns=158700001 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Checker (3.18s)\n",
+        "run": "M01-True-0"
+      },
+      "TestBridgeTimingRound3Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=187877581 query_ns=183508271 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=321823714 query_ns=54079498 queries=400 first_query_ns=54671 run_ns=54809841\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=277665650 query_ns=143347724 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Checker (3.30s)\n",
+        "run": "M01-True-0"
+      },
+      "TestBridgeOracleParser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 6",
+        "output": "=== RUN   TestBridgeOracleParser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:237: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:238: go: tsgo: load_ns=174682086 query_ns=113416359 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:241: native oracle mismatch at byte 6\n--- FAIL: TestBridgeOracleParser (2.22s)\n",
+        "run": "M01-True-0"
+      },
+      "TestBridgeTimingRound1Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=184558479 query_ns=140248656 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=303936517 query_ns=30200828 queries=400 first_query_ns=50855 run_ns=30779155\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=187810241 query_ns=114313751 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Parser (2.91s)\n",
+        "run": "M01-True-0"
+      },
+      "TestBridgeRegion": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:297: region probe did not use one region and agree with Go: <nil> stdout=\"5\\n\" stderr=adamic: counts: allocations 9 frees 8 retains 5 releases 13 peak 8 regions 1",
+        "output": "=== RUN   TestBridgeRegion\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 miss 2.28\n    products_test.go:260: build bridge-test-stage0 13c6e7b1719c miss 6.22\n    products_test.go:261: build bridge-test-tsgo-asan.a 502da4b1601b miss 2.18\n    units_test.go:71: build bridge-test-healthy-region 1c5a0d8b0d20 miss 15.76\n    units_test.go:278: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:279: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:279: region-frame: tsgo: load_ns=31931334 query_ns=15879783 queries=1\n    units_test.go:292: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.04\n    units_test.go:297: region probe did not use one region and agree with Go: <nil> stdout=\"5\\n\" stderr=adamic: counts: allocations 9 frees 8 retains 5 releases 13 peak 8 regions 1\n--- FAIL: TestBridgeRegion (20.30s)\n",
+        "run": "M01-False-0"
+      },
+      "TestBridgeOracleSample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 6",
+        "output": "=== RUN   TestBridgeOracleSample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    products_test.go:260: build bridge-test-stage0 13c6e7b1719c hit 0.05\n    products_test.go:261: build bridge-test-tsgo-asan.a 502da4b1601b hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 miss 7.01\n    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=32440119 query_ns=14948167 queries=162\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:241: native oracle mismatch at byte 6\n--- FAIL: TestBridgeOracleSample (8.68s)\n",
+        "run": "M01-False-0"
+      },
+      "TestBridgeTimingRound1Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    products_test.go:260: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    products_test.go:261: build bridge-test-tsgo.a 5c2ecec3483f miss 2.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 miss 6.46\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=27227510 query_ns=13742268 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=44235057 query_ns=636034 queries=162 first_query_ns=49092 run_ns=834888\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=33800334 query_ns=11842896 queries=162\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Sample (8.49s)\n",
+        "run": "M01-False-0"
+      },
+      "TestBridgeTimingRound2Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:247: go-baseline: tsgo: load_ns=27506794 query_ns=12329712 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=41735545 query_ns=682847 queries=162 first_query_ns=47830 run_ns=876750\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:249: go-round-2: tsgo: load_ns=33001690 query_ns=12387006 queries=162\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Sample (1.99s)\n",
+        "run": "M01-False-0"
+      },
+      "TestBridgeTimingRound3Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M01",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:247: go-baseline: tsgo: load_ns=27420087 query_ns=15996857 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=44221683 query_ns=680783 queries=162 first_query_ns=45847 run_ns=877251\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:249: go-round-3: tsgo: load_ns=29509122 query_ns=12411068 queries=162\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Sample (2.00s)\n",
+        "run": "M01-False-0"
+      }
+    }
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "answer->slots[0].number = (double)result.kind;",
+    "after": "answer->slots[0].number = (double)result.kind + 1;",
+    "menu": "change constant",
+    "line": 97,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeOracleUtilities": "fail",
+      "TestBridgeTimingRound1Utilities": "fail",
+      "TestBridgeTimingRound2Utilities": "fail",
+      "TestBridgeTimingRound3Utilities": "fail",
+      "TestBridgeRegion": "pass",
+      "TestBridgeOracleSample": "fail",
+      "TestBridgeTimingRound1Sample": "fail",
+      "TestBridgeTimingRound2Sample": "fail",
+      "TestBridgeTimingRound3Sample": "fail",
+      "TestBridgeOracleChecker": "fail",
+      "TestBridgeTimingRound1Checker": "fail",
+      "TestBridgeTimingRound2Checker": "fail",
+      "TestBridgeTimingRound3Checker": "fail",
+      "TestBridgeOracleParser": "fail",
+      "TestBridgeTimingRound1Parser": "fail",
+      "TestBridgeTimingRound2Parser": "fail",
+      "TestBridgeTimingRound3Parser": "fail",
+      "TestBridgeOracleTypes": "fail",
+      "TestBridgeTimingRound1Types": "fail",
+      "TestBridgeTimingRound2Types": "fail",
+      "TestBridgeTimingRound3Types": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeOracleSample",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeOracleChecker",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeOracleParser",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeOracleTypes",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeOracleUtilities",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeOracleUtilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 2",
+        "output": "=== RUN   TestBridgeOracleUtilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.05\n    units_test.go:237: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:238: go: tsgo: load_ns=276133483 query_ns=164352361 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 2\n--- FAIL: TestBridgeOracleUtilities (3.44s)\n",
+        "run": "M02-True-12"
+      },
+      "TestBridgeTimingRound1Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=270365720 query_ns=139584902 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=453008297 query_ns=49052302 queries=400 first_query_ns=46909 run_ns=49785134\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=242836948 query_ns=178047985 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Utilities (4.19s)\n",
+        "run": "M02-True-12"
+      },
+      "TestBridgeTimingRound2Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=303661204 query_ns=162691357 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-2: tsgo: load_ns=400460586 query_ns=72548351 queries=400 first_query_ns=54010 run_ns=73380794\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=279868869 query_ns=177213043 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Utilities (4.16s)\n",
+        "run": "M02-True-12"
+      },
+      "TestBridgeTimingRound3Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=283733011 query_ns=191431322 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=378272714 query_ns=39425979 queries=400 first_query_ns=52567 run_ns=40045243\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:249: go-round-3: tsgo: load_ns=248878223 query_ns=146012969 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Utilities (4.10s)\n",
+        "run": "M02-True-12"
+      },
+      "TestBridgeOracleSample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 2",
+        "output": "=== RUN   TestBridgeOracleSample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=74657623 query_ns=16497506 queries=162\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 2\n--- FAIL: TestBridgeOracleSample (2.71s)\n",
+        "run": "M02-False-0"
+      },
+      "TestBridgeTimingRound1Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=73032181 query_ns=28954918 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=99892971 query_ns=1134793 queries=162 first_query_ns=76162 run_ns=1417075\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=36526620 query_ns=15555582 queries=162\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Sample (3.01s)\n",
+        "run": "M02-False-0"
+      },
+      "TestBridgeTimingRound2Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=53619424 query_ns=22811737 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=57730028 query_ns=712940 queries=162 first_query_ns=55111 run_ns=895718\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=53403477 query_ns=30035273 queries=162\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Sample (3.10s)\n",
+        "run": "M02-False-0"
+      },
+      "TestBridgeTimingRound3Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.06\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=44668615 query_ns=14089118 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=53092189 query_ns=673130 queries=162 first_query_ns=50164 run_ns=864181\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=64176632 query_ns=14650406 queries=162\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Sample (3.31s)\n",
+        "run": "M02-False-0"
+      },
+      "TestBridgeOracleChecker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 2",
+        "output": "=== RUN   TestBridgeOracleChecker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:237: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=275738639 query_ns=235327314 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 2\n--- FAIL: TestBridgeOracleChecker (3.25s)\n",
+        "run": "M02-True-0"
+      },
+      "TestBridgeTimingRound1Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=262802667 query_ns=177138027 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=362284859 query_ns=106364111 queries=400 first_query_ns=127247 run_ns=107203627\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=240686242 query_ns=245605140 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Checker (4.02s)\n",
+        "run": "M02-True-0"
+      },
+      "TestBridgeTimingRound2Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=242770689 query_ns=173422377 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-2: tsgo: load_ns=322471907 query_ns=59660675 queries=400 first_query_ns=53459 run_ns=60331895\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=224803309 query_ns=151619468 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Checker (3.83s)\n",
+        "run": "M02-True-0"
+      },
+      "TestBridgeTimingRound3Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=259352697 query_ns=195604626 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=344878025 query_ns=81170854 queries=400 first_query_ns=47901 run_ns=81897465\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=270193327 query_ns=219987884 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Checker (4.11s)\n",
+        "run": "M02-True-0"
+      },
+      "TestBridgeOracleParser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 2",
+        "output": "=== RUN   TestBridgeOracleParser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:237: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=239370999 query_ns=158249674 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 2\n--- FAIL: TestBridgeOracleParser (2.92s)\n",
+        "run": "M02-True-0"
+      },
+      "TestBridgeTimingRound1Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=260442380 query_ns=156272490 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-1: tsgo: load_ns=326373560 query_ns=34792878 queries=400 first_query_ns=59428 run_ns=35364414\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:249: go-round-1: tsgo: load_ns=199938295 query_ns=153365585 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Parser (3.75s)\n",
+        "run": "M02-True-0"
+      },
+      "TestBridgeTimingRound2Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=250572402 query_ns=145047528 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=366527540 query_ns=30716758 queries=400 first_query_ns=48501 run_ns=31274754\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=209357227 query_ns=185903765 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Parser (4.00s)\n",
+        "run": "M02-True-6"
+      },
+      "TestBridgeTimingRound3Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=262519107 query_ns=115444123 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=353821122 query_ns=35263663 queries=400 first_query_ns=48421 run_ns=35866470\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=248782957 query_ns=187274046 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Parser (3.77s)\n",
+        "run": "M02-True-6"
+      },
+      "TestBridgeOracleTypes": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 2",
+        "output": "=== RUN   TestBridgeOracleTypes\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=341114107 query_ns=92860404 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 2\n--- FAIL: TestBridgeOracleTypes (2.94s)\n",
+        "run": "M02-True-6"
+      },
+      "TestBridgeTimingRound1Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=279203498 query_ns=175011556 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=387990006 query_ns=15662868 queries=400 first_query_ns=53529 run_ns=16297028\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:249: go-round-1: tsgo: load_ns=239983200 query_ns=91575852 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Types (3.79s)\n",
+        "run": "M02-True-6"
+      },
+      "TestBridgeTimingRound2Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=228032772 query_ns=164273150 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=401300460 query_ns=11156219 queries=400 first_query_ns=50935 run_ns=11739162\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=213534567 query_ns=178914718 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Types (3.73s)\n",
+        "run": "M02-True-6"
+      },
+      "TestBridgeTimingRound3Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M02",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:247: go-baseline: tsgo: load_ns=259964251 query_ns=128749007 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=324599383 query_ns=9652890 queries=400 first_query_ns=43614 run_ns=10131026\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=247639381 query_ns=106643974 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Types (3.74s)\n",
+        "run": "M02-True-6"
+      }
+    }
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "tsgo_query(id, path, offset, &result, &error)",
+    "after": "tsgo_query(id, path, offset + 1, &result, &error)",
+    "menu": "off-by-one bound",
+    "line": 89,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeTimingRound2Parser": "fail",
+      "TestBridgeTimingRound3Parser": "fail",
+      "TestBridgeOracleTypes": "fail",
+      "TestBridgeTimingRound1Types": "fail",
+      "TestBridgeTimingRound2Types": "fail",
+      "TestBridgeTimingRound3Types": "fail",
+      "TestBridgeRegion": "pass",
+      "TestBridgeOracleSample": "fail",
+      "TestBridgeTimingRound1Sample": "fail",
+      "TestBridgeTimingRound2Sample": "fail",
+      "TestBridgeTimingRound3Sample": "fail",
+      "TestBridgeOracleChecker": "fail",
+      "TestBridgeTimingRound1Checker": "fail",
+      "TestBridgeTimingRound2Checker": "fail",
+      "TestBridgeTimingRound3Checker": "fail",
+      "TestBridgeOracleParser": "fail",
+      "TestBridgeTimingRound1Parser": "fail",
+      "TestBridgeOracleUtilities": "fail",
+      "TestBridgeTimingRound1Utilities": "fail",
+      "TestBridgeTimingRound2Utilities": "fail",
+      "TestBridgeTimingRound3Utilities": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeOracleSample",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeOracleChecker",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeOracleParser",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeOracleTypes",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeOracleUtilities",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeTimingRound2Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.07\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=276738365 query_ns=160707022 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-2: tsgo: load_ns=356228703 query_ns=28766760 queries=400 first_query_ns=52467 run_ns=29347469\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.06\n    units_test.go:249: go-round-2: tsgo: load_ns=273187945 query_ns=147068939 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Parser (4.06s)\n",
+        "run": "M03-True-6"
+      },
+      "TestBridgeTimingRound3Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=215416658 query_ns=144806689 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=333591376 query_ns=50502235 queries=400 first_query_ns=47239 run_ns=51919068\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:249: go-round-3: tsgo: load_ns=252101990 query_ns=113156897 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Parser (3.75s)\n",
+        "run": "M03-True-6"
+      },
+      "TestBridgeOracleTypes": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 1033",
+        "output": "=== RUN   TestBridgeOracleTypes\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=243539712 query_ns=123941320 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 1033\n--- FAIL: TestBridgeOracleTypes (2.95s)\n",
+        "run": "M03-True-6"
+      },
+      "TestBridgeTimingRound1Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=267438835 query_ns=120616858 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=366917292 query_ns=16308379 queries=400 first_query_ns=72757 run_ns=16890481\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=299391846 query_ns=120084488 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Types (3.83s)\n",
+        "run": "M03-True-6"
+      },
+      "TestBridgeTimingRound2Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=250133500 query_ns=109162537 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=330178664 query_ns=12783100 queries=400 first_query_ns=57995 run_ns=13380197\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:249: go-round-2: tsgo: load_ns=241488656 query_ns=113362717 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Types (3.78s)\n",
+        "run": "M03-True-6"
+      },
+      "TestBridgeTimingRound3Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=222251386 query_ns=110892983 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: tsgo: load_ns=385287741 query_ns=20164529 queries=400 first_query_ns=74690 run_ns=20740506\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=289550404 query_ns=113377245 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Types (3.83s)\n",
+        "run": "M03-True-6"
+      },
+      "TestBridgeOracleSample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 70",
+        "output": "=== RUN   TestBridgeOracleSample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=44886721 query_ns=19706748 queries=162\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:239: native-asan: exit status 70\n        adamic: panic: position 162 is outside /workspace/adamic/bridge/tsgo/testdata/sample.ts\n--- FAIL: TestBridgeOracleSample (2.67s)\n",
+        "run": "M03-False-0"
+      },
+      "TestBridgeTimingRound1Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound1Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=34089861 query_ns=15775263 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-1: exit status 70\n        adamic: panic: position 162 is outside /workspace/adamic/bridge/tsgo/testdata/sample.ts\n--- FAIL: TestBridgeTimingRound1Sample (2.33s)\n",
+        "run": "M03-False-0"
+      },
+      "TestBridgeTimingRound2Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound2Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=55875078 query_ns=28374247 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: exit status 70\n        adamic: panic: position 162 is outside /workspace/adamic/bridge/tsgo/testdata/sample.ts\n--- FAIL: TestBridgeTimingRound2Sample (2.39s)\n",
+        "run": "M03-False-0"
+      },
+      "TestBridgeTimingRound3Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound3Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=52891603 query_ns=20187588 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: exit status 70\n        adamic: panic: position 162 is outside /workspace/adamic/bridge/tsgo/testdata/sample.ts\n--- FAIL: TestBridgeTimingRound3Sample (2.77s)\n",
+        "run": "M03-False-0"
+      },
+      "TestBridgeOracleChecker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 2131",
+        "output": "=== RUN   TestBridgeOracleChecker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:237: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=231681984 query_ns=198314723 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 2131\n--- FAIL: TestBridgeOracleChecker (3.16s)\n",
+        "run": "M03-True-0"
+      },
+      "TestBridgeTimingRound1Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=263741278 query_ns=187816680 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=360354703 query_ns=63307387 queries=400 first_query_ns=89121 run_ns=64093320\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=236598934 query_ns=222763510 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Checker (4.17s)\n",
+        "run": "M03-True-0"
+      },
+      "TestBridgeTimingRound2Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.06\n    units_test.go:247: go-baseline: tsgo: load_ns=244653569 query_ns=177254488 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: tsgo: load_ns=369200287 query_ns=55209729 queries=400 first_query_ns=41201 run_ns=55877100\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:249: go-round-2: tsgo: load_ns=228134029 query_ns=203358329 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Checker (4.03s)\n",
+        "run": "M03-True-0"
+      },
+      "TestBridgeTimingRound3Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=243228066 query_ns=180899157 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-3: tsgo: load_ns=401050594 query_ns=64427103 queries=400 first_query_ns=90443 run_ns=65295408\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:249: go-round-3: tsgo: load_ns=275008471 query_ns=140192840 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Checker (4.06s)\n",
+        "run": "M03-True-0"
+      },
+      "TestBridgeOracleParser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 14",
+        "output": "=== RUN   TestBridgeOracleParser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.06\n    units_test.go:237: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=305264947 query_ns=176468999 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:241: native oracle mismatch at byte 14\n--- FAIL: TestBridgeOracleParser (3.19s)\n",
+        "run": "M03-True-0"
+      },
+      "TestBridgeTimingRound1Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=230881522 query_ns=146282968 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=394113473 query_ns=44942228 queries=400 first_query_ns=48962 run_ns=45895265\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-1: tsgo: load_ns=224567633 query_ns=163807085 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Parser (3.72s)\n",
+        "run": "M03-True-0"
+      },
+      "TestBridgeOracleUtilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:241: native oracle mismatch at byte 492",
+        "output": "=== RUN   TestBridgeOracleUtilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=277946806 query_ns=178856378 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:241: native oracle mismatch at byte 492\n--- FAIL: TestBridgeOracleUtilities (3.24s)\n",
+        "run": "M03-True-12"
+      },
+      "TestBridgeTimingRound1Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound1Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:247: go-baseline: tsgo: load_ns=300008594 query_ns=242910071 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: tsgo: load_ns=351899717 query_ns=62034542 queries=400 first_query_ns=53639 run_ns=62835680\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:249: go-round-1: tsgo: load_ns=309947792 query_ns=137449395 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound1Utilities (4.57s)\n",
+        "run": "M03-True-12"
+      },
+      "TestBridgeTimingRound2Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound2Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=246896189 query_ns=208111544 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.06\n    units_test.go:248: native-round-2: tsgo: load_ns=392188244 query_ns=77320250 queries=400 first_query_ns=51315 run_ns=78125697\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-2: tsgo: load_ns=254578209 query_ns=186018183 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound2Utilities (4.23s)\n",
+        "run": "M03-True-12"
+      },
+      "TestBridgeTimingRound3Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M03",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:251: timed answers changed",
+        "output": "=== RUN   TestBridgeTimingRound3Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:247: go-baseline: tsgo: load_ns=267416418 query_ns=202439722 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-3: tsgo: load_ns=408120182 query_ns=40412190 queries=400 first_query_ns=57545 run_ns=41072856\n    units_test.go:249: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:249: go-round-3: tsgo: load_ns=282868238 query_ns=298755828 queries=400\n    units_test.go:251: timed answers changed\n--- FAIL: TestBridgeTimingRound3Utilities (4.33s)\n",
+        "run": "M03-True-12"
+      }
+    }
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "adamic_object_new_in(region, &shape)",
+    "after": "adamic_object_new_in(region ? NULL : region, &shape)",
+    "menu": "change option: omit region",
+    "line": 96,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeTimingRound2Parser": "pass",
+      "TestBridgeTimingRound3Parser": "pass",
+      "TestBridgeOracleTypes": "pass",
+      "TestBridgeTimingRound1Types": "pass",
+      "TestBridgeTimingRound2Types": "pass",
+      "TestBridgeTimingRound3Types": "pass",
+      "TestBridgeOracleUtilities": "pass",
+      "TestBridgeTimingRound1Utilities": "pass",
+      "TestBridgeTimingRound2Utilities": "pass",
+      "TestBridgeTimingRound3Utilities": "pass",
+      "TestBridgeRegion": "fail",
+      "TestBridgeOracleSample": "pass",
+      "TestBridgeTimingRound1Sample": "pass",
+      "TestBridgeTimingRound2Sample": "pass",
+      "TestBridgeTimingRound3Sample": "pass",
+      "TestBridgeOracleChecker": "pass",
+      "TestBridgeTimingRound1Checker": "pass",
+      "TestBridgeTimingRound2Checker": "pass",
+      "TestBridgeTimingRound3Checker": "pass",
+      "TestBridgeOracleParser": "pass",
+      "TestBridgeTimingRound1Parser": "pass"
+    },
+    "failed_rows": [
+      "TestBridgeRegion"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeRegion": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M04",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:297: region probe did not use one region and agree with Go: exit status 1 stdout=\"6\\n\" stderr=adamic: counts: allocations 9 frees 6 retains 5 releases 11 peak 8 regions 0",
+        "output": "=== RUN   TestBridgeRegion\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.04\n    units_test.go:278: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:279: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:279: region-frame: tsgo: load_ns=34937317 query_ns=12691236 queries=1\n    units_test.go:292: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.02\n    units_test.go:297: region probe did not use one region and agree with Go: exit status 1 stdout=\"6\\n\" stderr=adamic: counts: allocations 9 frees 6 retains 5 releases 11 peak 8 regions 0\n        \n        =================================================================\n        ==132511==ERROR: LeakSanitizer: detected memory leaks\n        \n        Direct leak of 94 byte(s) in 1 object(s) allocated from:\n            #0 0x55a0bcd08364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n            #1 0x55a0bcd5e8c1 in adamic_allocate /tmp/adamic-gate/adamic-tsgo-1592141599/heap.c:196:10\n        \n        Indirect leak of 140 byte(s) in 2 object(s) allocated from:\n            #0 0x55a0bcd08364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n            #1 0x55a0bcd5e8c1 in adamic_allocate /tmp/adamic-gate/adamic-tsgo-1592141599/heap.c:196:10\n        \n        SUMMARY: AddressSanitizer: 234 byte(s) leaked in 3 allocation(s).\n--- FAIL: TestBridgeRegion (3.06s)\n",
+        "run": "M04-False-0"
+      }
+    }
+  },
+  {
+    "id": "M05",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "buffer->length = 0;",
+    "after": "buffer->length = 1;",
+    "menu": "change constant",
+    "line": 82,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeOracleChecker": "pass",
+      "TestBridgeTimingRound1Checker": "pass",
+      "TestBridgeTimingRound2Checker": "pass",
+      "TestBridgeTimingRound3Checker": "pass",
+      "TestBridgeOracleParser": "pass",
+      "TestBridgeTimingRound1Parser": "pass",
+      "TestBridgeTimingRound2Parser": "pass",
+      "TestBridgeTimingRound3Parser": "pass",
+      "TestBridgeOracleTypes": "pass",
+      "TestBridgeTimingRound1Types": "pass",
+      "TestBridgeTimingRound2Types": "pass",
+      "TestBridgeTimingRound3Types": "pass",
+      "TestBridgeABI": "fail",
+      "TestBridgeRegion": "pass",
+      "TestBridgeOracleSample": "pass",
+      "TestBridgeTimingRound1Sample": "pass",
+      "TestBridgeTimingRound2Sample": "pass",
+      "TestBridgeTimingRound3Sample": "pass",
+      "TestBridgeOracleUtilities": "pass",
+      "TestBridgeTimingRound1Utilities": "pass",
+      "TestBridgeTimingRound2Utilities": "pass",
+      "TestBridgeTimingRound3Utilities": "pass"
+    },
+    "failed_rows": [
+      "TestBridgeABI"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI",
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeABI": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI|TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M05",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:199: api: signal: aborted",
+        "output": "=== RUN   TestBridgeABI\n    products_test.go:243: build bridge-test-tsgo-asan.a 502da4b1601b hit 0.05\n    units_test.go:71: build bridge-test-api 953142b05876 miss 0.91\n    units_test.go:199: build bridge-test-api 953142b05876 hit 0.03\n    units_test.go:199: api: signal: aborted\n        api: /workspace/adamic/bridge/tsgo/testdata/api.c:26: int main(int, char **): Assertion `answer.type.data == NULL && answer.type.length == 0' failed.\n--- FAIL: TestBridgeABI (2.11s)\n",
+        "run": "M05-False-0"
+      }
+    }
+  },
+  {
+    "id": "M06",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "result->kind = 0;",
+    "after": "result->kind = 1;",
+    "menu": "change constant",
+    "line": 88,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeABI": "pass",
+      "TestBridgeRegion": "pass",
+      "TestBridgeOracleSample": "pass",
+      "TestBridgeTimingRound1Sample": "pass",
+      "TestBridgeTimingRound2Sample": "pass",
+      "TestBridgeTimingRound3Sample": "pass",
+      "TestBridgeOracleChecker": "pass",
+      "TestBridgeTimingRound1Checker": "pass",
+      "TestBridgeTimingRound2Checker": "pass",
+      "TestBridgeTimingRound3Checker": "pass",
+      "TestBridgeOracleParser": "pass",
+      "TestBridgeTimingRound1Parser": "pass",
+      "TestBridgeOracleUtilities": "pass",
+      "TestBridgeTimingRound1Utilities": "pass",
+      "TestBridgeTimingRound2Utilities": "pass",
+      "TestBridgeTimingRound3Utilities": "pass",
+      "TestBridgeTimingRound2Parser": "pass",
+      "TestBridgeTimingRound3Parser": "pass",
+      "TestBridgeOracleTypes": "pass",
+      "TestBridgeTimingRound1Types": "pass",
+      "TestBridgeTimingRound2Types": "pass",
+      "TestBridgeTimingRound3Types": "pass"
+    },
+    "failed_rows": [],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI",
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {}
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "if (timing()) { uint64_t elapsed = now_ns() - started;",
+    "after": "if (0) { uint64_t elapsed = now_ns() - started;",
+    "menu": "flip condition",
+    "occurrence": 0,
+    "line": 101,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeRegion": "pass",
+      "TestBridgeOracleSample": "pass",
+      "TestBridgeTimingRound1Sample": "pass",
+      "TestBridgeTimingRound2Sample": "pass",
+      "TestBridgeTimingRound3Sample": "pass",
+      "TestBridgeOracleUtilities": "pass",
+      "TestBridgeTimingRound1Utilities": "pass",
+      "TestBridgeTimingRound2Utilities": "pass",
+      "TestBridgeTimingRound3Utilities": "pass",
+      "TestBridgeTimingRound2Parser": "pass",
+      "TestBridgeTimingRound3Parser": "pass",
+      "TestBridgeOracleTypes": "pass",
+      "TestBridgeTimingRound1Types": "pass",
+      "TestBridgeTimingRound2Types": "pass",
+      "TestBridgeTimingRound3Types": "pass",
+      "TestBridgeOracleChecker": "pass",
+      "TestBridgeTimingRound1Checker": "pass",
+      "TestBridgeTimingRound2Checker": "pass",
+      "TestBridgeTimingRound3Checker": "pass",
+      "TestBridgeOracleParser": "pass",
+      "TestBridgeTimingRound1Parser": "pass"
+    },
+    "failed_rows": [],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {}
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/tsgo.go",
+    "before": "if !l.program.TSGoEnabled() {",
+    "after": "if false {",
+    "menu": "flip condition",
+    "line": 27,
+    "supplemental": false,
+    "probe": false,
+    "status": {
+      "TestBridgeUnlinkedBuild": "fail",
+      "TestBridgeUnlinkedC": "fail",
+      "TestBridgeUnlinkedJavaScript": "fail",
+      "TestTSGoRequiresLink": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeUnlinkedBuild",
+      "TestBridgeUnlinkedC",
+      "TestBridgeUnlinkedJavaScript"
+    ],
+    "other_failures": [
+      "TestTSGoRequiresLink"
+    ],
+    "matrix_rows": [
+      "TestBridgeUnlinkedBuild",
+      "TestBridgeUnlinkedC",
+      "TestBridgeUnlinkedJavaScript",
+      "TestTSGoRequiresLink"
+    ],
+    "evidence": {
+      "TestBridgeUnlinkedBuild": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M08",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/M08"
+        },
+        "line": "units_test.go:229: unlinked build was not refused: exit status 1",
+        "output": "=== RUN   TestBridgeUnlinkedBuild\n    units_test.go:71: build bridge-test-stage0 13c6e7b1719c miss 3.91\n    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:229: unlinked build was not refused: exit status 1\n        adamic: tsgo requires a linked checker archive; build with --tsgo <archive>\n--- FAIL: TestBridgeUnlinkedBuild (5.08s)\n",
+        "run": "M08-False-0"
+      },
+      "TestBridgeUnlinkedC": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M08",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/M08"
+        },
+        "line": "units_test.go:229: unlinked c was not refused: exit status 1",
+        "output": "=== RUN   TestBridgeUnlinkedC\n    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:229: unlinked c was not refused: exit status 1\n        adamic: tsgo requires a native build with --tsgo <archive>\n--- FAIL: TestBridgeUnlinkedC (1.37s)\n",
+        "run": "M08-False-0"
+      },
+      "TestBridgeUnlinkedJavaScript": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M08",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/M08"
+        },
+        "line": "units_test.go:229: unlinked js was not refused: exit status 1",
+        "output": "=== RUN   TestBridgeUnlinkedJavaScript\n    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:229: unlinked js was not refused: exit status 1\n        adamic: tsgo is an external native checker library; JavaScript is not supported\n--- FAIL: TestBridgeUnlinkedJavaScript (1.26s)\n",
+        "run": "M08-False-0"
+      },
+      "TestTSGoRequiresLink": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+        "environment": {
+          "ADAMIC_MUTANT": "M08",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/M08"
+        },
+        "line": "bridge_test.go:30: lowering accepted an unlinked checker call",
+        "output": "=== RUN   TestTSGoRequiresLink\n=== PAUSE TestTSGoRequiresLink\n=== CONT  TestTSGoRequiresLink\n    bridge_test.go:30: lowering accepted an unlinked checker call\n--- FAIL: TestTSGoRequiresLink (0.04s)\n",
+        "run": "M08-False-0"
+      }
+    }
+  },
+  {
+    "id": "P_QUERY",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {",
+    "after": "adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {\n return NULL;",
+    "probe": true,
+    "line": 83,
+    "supplemental": false,
+    "status": {
+      "TestBridgeOracleChecker": "fail",
+      "TestBridgeTimingRound1Checker": "fail",
+      "TestBridgeTimingRound2Checker": "fail",
+      "TestBridgeTimingRound3Checker": "fail",
+      "TestBridgeOracleParser": "fail",
+      "TestBridgeTimingRound1Parser": "fail",
+      "TestBridgeOracleUtilities": "fail",
+      "TestBridgeTimingRound1Utilities": "fail",
+      "TestBridgeTimingRound2Utilities": "fail",
+      "TestBridgeTimingRound3Utilities": "fail",
+      "TestBridgeRegion": "fail",
+      "TestBridgeOracleSample": "fail",
+      "TestBridgeTimingRound1Sample": "fail",
+      "TestBridgeTimingRound2Sample": "fail",
+      "TestBridgeTimingRound3Sample": "fail",
+      "TestBridgeTimingRound2Parser": "fail",
+      "TestBridgeTimingRound3Parser": "fail",
+      "TestBridgeOracleTypes": "fail",
+      "TestBridgeTimingRound1Types": "fail",
+      "TestBridgeTimingRound2Types": "fail",
+      "TestBridgeTimingRound3Types": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeRegion",
+      "TestBridgeOracleSample",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeOracleChecker",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeOracleParser",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeOracleTypes",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeOracleUtilities",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeOracleChecker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 1",
+        "output": "=== RUN   TestBridgeOracleChecker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.05\n    units_test.go:237: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=271509516 query_ns=212813471 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:239: native-asan: exit status 1\n        /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\n        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61 \n--- FAIL: TestBridgeOracleChecker (3.41s)\n",
+        "run": "P_QUERY-True-0"
+      },
+      "TestBridgeTimingRound1Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound1Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=239428936 query_ns=180339733 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-1: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound1Checker (3.31s)\n",
+        "run": "P_QUERY-True-0"
+      },
+      "TestBridgeTimingRound2Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound2Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=291902727 query_ns=215097653 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound2Checker (3.45s)\n",
+        "run": "P_QUERY-True-0"
+      },
+      "TestBridgeTimingRound3Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound3Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.06\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=245016117 query_ns=246400884 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-3: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound3Checker (3.28s)\n",
+        "run": "P_QUERY-True-0"
+      },
+      "TestBridgeOracleParser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 1",
+        "output": "=== RUN   TestBridgeOracleParser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=255482186 query_ns=173167021 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:239: native-asan: exit status 1\n        /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\n        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61 \n--- FAIL: TestBridgeOracleParser (3.09s)\n",
+        "run": "P_QUERY-True-0"
+      },
+      "TestBridgeTimingRound1Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound1Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=269966706 query_ns=148951106 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound1Parser (2.91s)\n",
+        "run": "P_QUERY-True-0"
+      },
+      "TestBridgeOracleUtilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 1",
+        "output": "=== RUN   TestBridgeOracleUtilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.05\n    units_test.go:237: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:238: go: tsgo: load_ns=265155639 query_ns=175778946 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:239: native-asan: exit status 1\n        /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\n        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61 \n--- FAIL: TestBridgeOracleUtilities (3.18s)\n",
+        "run": "P_QUERY-True-12"
+      },
+      "TestBridgeTimingRound1Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound1Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=302574823 query_ns=151082605 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound1Utilities (2.98s)\n",
+        "run": "P_QUERY-True-12"
+      },
+      "TestBridgeTimingRound2Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound2Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=304226295 query_ns=160526983 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound2Utilities (2.99s)\n",
+        "run": "P_QUERY-True-12"
+      },
+      "TestBridgeTimingRound3Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound3Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=276884959 query_ns=268777444 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound3Utilities (3.39s)\n",
+        "run": "P_QUERY-True-12"
+      },
+      "TestBridgeRegion": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:297: region probe did not use one region and agree with Go: exit status 1 stdout=\"\" stderr=/tmp/adamic-gate/adamic-tsgo-1592141599/main.c:38:82: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')",
+        "output": "=== RUN   TestBridgeRegion\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.06\n    units_test.go:278: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:279: build bridge-test-oracle 18d35daf0574 hit 0.06\n    units_test.go:279: region-frame: tsgo: load_ns=33696171 query_ns=18539097 queries=1\n    units_test.go:292: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.03\n    units_test.go:297: region probe did not use one region and agree with Go: exit status 1 stdout=\"\" stderr=/tmp/adamic-gate/adamic-tsgo-1592141599/main.c:38:82: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\n        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-tsgo-1592141599/main.c:38:82 \n--- FAIL: TestBridgeRegion (3.36s)\n",
+        "run": "P_QUERY-False-0"
+      },
+      "TestBridgeOracleSample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 1",
+        "output": "=== RUN   TestBridgeOracleSample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=53980153 query_ns=26124330 queries=162\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:239: native-asan: exit status 1\n        /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\n        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61 \n--- FAIL: TestBridgeOracleSample (2.58s)\n",
+        "run": "P_QUERY-False-0"
+      },
+      "TestBridgeTimingRound1Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound1Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=33791998 query_ns=23887340 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound1Sample (2.36s)\n",
+        "run": "P_QUERY-False-0"
+      },
+      "TestBridgeTimingRound2Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound2Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=38041436 query_ns=23066289 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound2Sample (2.62s)\n",
+        "run": "P_QUERY-False-0"
+      },
+      "TestBridgeTimingRound3Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound3Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=34530474 query_ns=25451208 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound3Sample (2.22s)\n",
+        "run": "P_QUERY-False-0"
+      },
+      "TestBridgeTimingRound2Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound2Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.06\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:247: go-baseline: tsgo: load_ns=228466728 query_ns=141649457 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound2Parser (2.96s)\n",
+        "run": "P_QUERY-True-6"
+      },
+      "TestBridgeTimingRound3Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound3Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=256340657 query_ns=127043962 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound3Parser (2.82s)\n",
+        "run": "P_QUERY-True-6"
+      },
+      "TestBridgeOracleTypes": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 1",
+        "output": "=== RUN   TestBridgeOracleTypes\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=265589296 query_ns=133171433 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:239: native-asan: exit status 1\n        /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\n        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-tsgo-324028345/main.c:152:61 \n--- FAIL: TestBridgeOracleTypes (3.17s)\n",
+        "run": "P_QUERY-True-6"
+      },
+      "TestBridgeTimingRound1Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound1Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=282922742 query_ns=168523190 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound1Types (3.14s)\n",
+        "run": "P_QUERY-True-6"
+      },
+      "TestBridgeTimingRound2Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound2Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=246605164 query_ns=129635657 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound2Types (3.06s)\n",
+        "run": "P_QUERY-True-6"
+      },
+      "TestBridgeTimingRound3Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_QUERY",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: signal: segmentation fault",
+        "output": "=== RUN   TestBridgeTimingRound3Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=281776539 query_ns=122690049 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-3: signal: segmentation fault\n--- FAIL: TestBridgeTimingRound3Types (3.04s)\n",
+        "run": "P_QUERY-True-6"
+      }
+    }
+  },
+  {
+    "id": "P_ABI",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error) {",
+    "after": "int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error) {\n return TSGO_OK;",
+    "probe": true,
+    "line": 43,
+    "supplemental": false,
+    "status": {
+      "TestBridgeABI": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeABI"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI"
+    ],
+    "evidence": {
+      "TestBridgeABI": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_ABI",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:199: api: signal: aborted",
+        "output": "=== RUN   TestBridgeABI\n    units_test.go:71: build bridge-test-api 953142b05876 hit 0.07\n    units_test.go:199: build bridge-test-api 953142b05876 hit 0.03\n    units_test.go:199: api: signal: aborted\n        api: /workspace/adamic/bridge/tsgo/testdata/api.c:24: int main(int, char **): Assertion `answer.kind != 0 && answer.type.length != 0' failed.\n--- FAIL: TestBridgeABI (1.43s)\n",
+        "run": "P_ABI-False-0"
+      }
+    }
+  },
+  {
+    "id": "P_LOWER",
+    "file": "internal/lower/tsgo.go",
+    "before": "func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {",
+    "after": "func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {\n if true { return nil, true, nil }",
+    "probe": true,
+    "line": 15,
+    "supplemental": false,
+    "status": {
+      "TestBridgeUnlinkedC": "fail",
+      "TestBridgeUnlinkedJavaScript": "fail",
+      "TestBridgeUnlinkedBuild": "fail",
+      "TestTSGoRequiresLink": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeUnlinkedBuild",
+      "TestBridgeUnlinkedC",
+      "TestBridgeUnlinkedJavaScript"
+    ],
+    "other_failures": [
+      "TestTSGoRequiresLink"
+    ],
+    "matrix_rows": [
+      "TestBridgeUnlinkedBuild",
+      "TestBridgeUnlinkedC",
+      "TestBridgeUnlinkedJavaScript",
+      "TestTSGoRequiresLink"
+    ],
+    "evidence": {
+      "TestBridgeUnlinkedC": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_LOWER",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/P_LOWER"
+        },
+        "line": "units_test.go:229: unlinked c was not refused: exit status 2",
+        "output": "=== RUN   TestBridgeUnlinkedC\n    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:229: unlinked c was not refused: exit status 2\n        panic: runtime error: invalid memory address or nil pointer dereference\n        [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xb2f26f]\n        \n        goroutine 1 [running]:\n        github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x5f924cc2200, 0x5f924b77388?)\n        \t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n        github.com/system-inc/adamic/internal/lower.(*lowering).value(0x5f924cc2200, 0x5f9242558c0)\n        \t/workspace/adamic/internal/lower/expression.go:475 +0x127\n        github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x5f924cc2200, 0x5f9242558c0)\n        \t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n        github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x5f924cc2200, 0x5f9247e4780)\n        \t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n        github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x5f924cc2200, 0x5f924404500)\n        \t/workspace/adamic/internal/lower/statements.go:76 +0x136\n        github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x5f924cc2200, {0x5f9247ab140, 0x9, 0x5f9240b3188?})\n        \t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n        github.com/system-inc/adamic/internal/lower.Lower({0x1c6f760?, 0x1d57300?}, 0x5f9241d9bc0)\n        \t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n        main.compileLibrary({0x7ffc10d5c234?, 0x0?}, 0x0)\n        \t/workspace/adamic/cmd/adamic/main.go:133 +0x65\n        main.compile(...)\n        \t/workspace/adamic/cmd/adamic/main.go:122\n        main.run({0x5f92411e220?, 0x1c7fd28?, 0x5f92401c1e0?})\n        \t/workspace/adamic/cmd/adamic/main.go:73 +0x3a5\n        main.main()\n        \t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n--- FAIL: TestBridgeUnlinkedC (1.22s)\n",
+        "run": "P_LOWER-False-0"
+      },
+      "TestBridgeUnlinkedJavaScript": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_LOWER",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/P_LOWER"
+        },
+        "line": "units_test.go:229: unlinked js was not refused: exit status 2",
+        "output": "=== RUN   TestBridgeUnlinkedJavaScript\n    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:229: unlinked js was not refused: exit status 2\n        panic: runtime error: invalid memory address or nil pointer dereference\n        [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xb2f26f]\n        \n        goroutine 1 [running]:\n        github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x14c3bde8da00, 0x14c3bd243388?)\n        \t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n        github.com/system-inc/adamic/internal/lower.(*lowering).value(0x14c3bde8da00, 0x14c3bd6b7bc0)\n        \t/workspace/adamic/internal/lower/expression.go:475 +0x127\n        github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x14c3bde8da00, 0x14c3bd6b7bc0)\n        \t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n        github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x14c3bde8da00, 0x14c3bd56bc80)\n        \t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n        github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x14c3bde8da00, 0x14c3bd69d400)\n        \t/workspace/adamic/internal/lower/statements.go:76 +0x136\n        github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x14c3bde8da00, {0x14c3bd781540, 0x9, 0x14c3bd781540?})\n        \t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n        github.com/system-inc/adamic/internal/lower.Lower({0x1c6f760?, 0x1d57300?}, 0x14c3bd2a9320)\n        \t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n        main.compileLibrary({0x7ffde643c234?, 0x0?}, 0x0)\n        \t/workspace/adamic/cmd/adamic/main.go:133 +0x65\n        main.compile(...)\n        \t/workspace/adamic/cmd/adamic/main.go:122\n        main.run({0x14c3bd2a8220?, 0x1c7fd28?, 0x14c3bd1a21e0?})\n        \t/workspace/adamic/cmd/adamic/main.go:84 +0x4b5\n        main.main()\n        \t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n--- FAIL: TestBridgeUnlinkedJavaScript (1.36s)\n",
+        "run": "P_LOWER-False-0"
+      },
+      "TestBridgeUnlinkedBuild": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeUnlinkedBuild$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_LOWER",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/P_LOWER"
+        },
+        "line": "units_test.go:229: unlinked build was not refused: exit status 2",
+        "output": "=== RUN   TestBridgeUnlinkedBuild\n    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.04\n    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n    units_test.go:229: unlinked build was not refused: exit status 2\n        panic: runtime error: invalid memory address or nil pointer dereference\n        [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xb2f26f]\n        \n        goroutine 1 [running]:\n        github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11b544914a00, 0x11b5444f3290?)\n        \t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\n        github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11b544914a00, 0x11b543f97bc0)\n        \t/workspace/adamic/internal/lower/expression.go:475 +0x127\n        github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11b544914a00, 0x11b543f97bc0)\n        \t/workspace/adamic/internal/lower/expression.go:208 +0x8c\n        github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x11b544914a00, 0x11b543f6bd00)\n        \t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\n        github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x11b544914a00, 0x11b543fa45a0)\n        \t/workspace/adamic/internal/lower/statements.go:76 +0x136\n        github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x11b544914a00, {0x11b543d6d040, 0x9, 0x11b5442e7188?})\n        \t/workspace/adamic/internal/lower/statements.go:19 +0xd0\n        github.com/system-inc/adamic/internal/lower.Lower({0x1c6f760?, 0x1d57300?}, 0x11b543dd0f60)\n        \t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\n        main.compileLibrary({0x7ffcbe8dd1db?, 0x0?}, 0x0)\n        \t/workspace/adamic/cmd/adamic/main.go:133 +0x65\n        main.build({0x7ffcbe8dd1db, 0x30}, {0x7ffcbe8dd20f, 0x3f}, {0x11b543ffc640?, 0x1b5def8?, 0x11b543ffbe60?})\n        \t/workspace/adamic/cmd/adamic/tsgo.go:57 +0x505\n        main.run({0x11b543d44010?, 0x4?, 0x11b543bea1e0?})\n        \t/workspace/adamic/cmd/adamic/main.go:97 +0x774\n        main.main()\n        \t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n--- FAIL: TestBridgeUnlinkedBuild (0.96s)\n",
+        "run": "P_LOWER-alone-TestBridgeUnlinkedBuild"
+      },
+      "TestTSGoRequiresLink": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestTSGoRequiresLink$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_LOWER",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u004/cache/P_LOWER"
+        },
+        "line": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+        "output": "=== RUN   TestTSGoRequiresLink\n=== PAUSE TestTSGoRequiresLink\n=== CONT  TestTSGoRequiresLink\n--- FAIL: TestTSGoRequiresLink (0.05s)\npanic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xaef9ef]\n\ngoroutine 8 [running]:\ntesting.tRunner.func1.2({0x1b3f488, 0x1c4a5c0})\n\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\ntesting.tRunner.func1()\n\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\npanic({0x1b3f488?, 0x1c4a5c0?})\n\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\ngithub.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x2aff32d1a200, 0x2aff32547620?)\n\t/workspace/adamic/internal/lower/expression.go:656 +0xd4f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).value(0x2aff32d1a200, 0x2aff321ed8c0)\n\t/workspace/adamic/internal/lower/expression.go:475 +0x127\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expression(0x2aff32d1a200, 0x2aff321ed8c0)\n\t/workspace/adamic/internal/lower/expression.go:208 +0x8c\ngithub.com/system-inc/adamic/internal/lower.(*lowering).variables(0x2aff32d1a200, 0x2aff32077700)\n\t/workspace/adamic/internal/lower/locals.go:79 +0x6f3\ngithub.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2aff32d1a200, 0x2aff3232ebe0)\n\t/workspace/adamic/internal/lower/statements.go:76 +0x136\ngithub.com/system-inc/adamic/internal/lower.(*lowering).statements(0x2aff32d1a200, {0x2aff32467640, 0x9, 0x2aff32367508?})\n\t/workspace/adamic/internal/lower/statements.go:19 +0xd0\ngithub.com/system-inc/adamic/internal/lower.Lower({0x1bde080?, 0x1cc93a0?}, 0x2aff32533140)\n\t/workspace/adamic/internal/lower/lower.go:60 +0x5ee\ngithub.com/system-inc/adamic/bridge/tsgo_test.TestTSGoRequiresLink(0x2aff3232cd88)\n\t/workspace/adamic/bridge/tsgo/bridge_test.go:29 +0xd1\ntesting.tRunner(0x2aff3232cd88, 0x1be8830)\n\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\ncreated by testing.(*T).Run in goroutine 1\n\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n",
+        "run": "P_LOWER-alone-TestTSGoRequiresLink"
+      }
+    }
+  },
+  {
+    "id": "P_PROGRAM",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "double adamic_tsgo_program(const adamic_string *config, const adamic_array *files) {",
+    "after": "double adamic_tsgo_program(const adamic_string *config, const adamic_array *files) {\n return 0;",
+    "probe": true,
+    "line": 59,
+    "supplemental": false,
+    "status": {
+      "TestBridgeTimingRound2Parser": "fail",
+      "TestBridgeTimingRound3Parser": "fail",
+      "TestBridgeOracleTypes": "fail",
+      "TestBridgeTimingRound1Types": "fail",
+      "TestBridgeTimingRound2Types": "fail",
+      "TestBridgeTimingRound3Types": "fail",
+      "TestBridgeOracleUtilities": "fail",
+      "TestBridgeTimingRound1Utilities": "fail",
+      "TestBridgeTimingRound2Utilities": "fail",
+      "TestBridgeTimingRound3Utilities": "fail",
+      "TestBridgeOracleChecker": "fail",
+      "TestBridgeTimingRound1Checker": "fail",
+      "TestBridgeTimingRound2Checker": "fail",
+      "TestBridgeTimingRound3Checker": "fail",
+      "TestBridgeOracleParser": "fail",
+      "TestBridgeTimingRound1Parser": "fail",
+      "TestBridgeRegion": "fail",
+      "TestBridgeOracleSample": "fail",
+      "TestBridgeTimingRound1Sample": "fail",
+      "TestBridgeTimingRound2Sample": "fail",
+      "TestBridgeTimingRound3Sample": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeRegion",
+      "TestBridgeOracleSample",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeOracleChecker",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeOracleParser",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeOracleTypes",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeOracleUtilities",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {
+      "TestBridgeTimingRound2Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound2Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=272097994 query_ns=159739731 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound2Parser (2.77s)\n",
+        "run": "P_PROGRAM-True-6"
+      },
+      "TestBridgeTimingRound3Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound3Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=274993399 query_ns=167804609 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound3Parser (2.51s)\n",
+        "run": "P_PROGRAM-True-6"
+      },
+      "TestBridgeOracleTypes": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 70",
+        "output": "=== RUN   TestBridgeOracleTypes\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.02\n    units_test.go:237: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:238: go: tsgo: load_ns=261713834 query_ns=90627964 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:239: native-asan: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeOracleTypes (2.62s)\n",
+        "run": "P_PROGRAM-True-6"
+      },
+      "TestBridgeTimingRound1Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound1Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=261253762 query_ns=131444490 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.02\n    units_test.go:248: native-round-1: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound1Types (2.58s)\n",
+        "run": "P_PROGRAM-True-6"
+      },
+      "TestBridgeTimingRound2Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound2Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=237618524 query_ns=180066130 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound2Types (2.53s)\n",
+        "run": "P_PROGRAM-True-6"
+      },
+      "TestBridgeTimingRound3Types": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeTimingRound2Parser|TestBridgeTimingRound3Parser|TestBridgeOracleTypes|TestBridgeTimingRound1Types|TestBridgeTimingRound2Types|TestBridgeTimingRound3Types)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound3Types\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: types.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=326241710 query_ns=154558240 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound3Types (2.89s)\n",
+        "run": "P_PROGRAM-True-6"
+      },
+      "TestBridgeOracleUtilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 70",
+        "output": "=== RUN   TestBridgeOracleUtilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.05\n    units_test.go:237: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=291030566 query_ns=231379452 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.08\n    units_test.go:239: native-asan: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeOracleUtilities (3.02s)\n",
+        "run": "P_PROGRAM-True-12"
+      },
+      "TestBridgeTimingRound1Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound1Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.07\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=239882691 query_ns=194231823 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound1Utilities (2.88s)\n",
+        "run": "P_PROGRAM-True-12"
+      },
+      "TestBridgeTimingRound2Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound2Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=306814702 query_ns=209160775 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound2Utilities (2.82s)\n",
+        "run": "P_PROGRAM-True-12"
+      },
+      "TestBridgeTimingRound3Utilities": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleUtilities|TestBridgeTimingRound1Utilities|TestBridgeTimingRound2Utilities|TestBridgeTimingRound3Utilities)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound3Utilities\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: utilities.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:247: go-baseline: tsgo: load_ns=313900962 query_ns=162983236 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-3: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound3Utilities (2.75s)\n",
+        "run": "P_PROGRAM-True-12"
+      },
+      "TestBridgeOracleChecker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 70",
+        "output": "=== RUN   TestBridgeOracleChecker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:238: go: tsgo: load_ns=228851695 query_ns=212141612 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.05\n    units_test.go:239: native-asan: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeOracleChecker (2.93s)\n",
+        "run": "P_PROGRAM-True-0"
+      },
+      "TestBridgeTimingRound1Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound1Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=221864473 query_ns=181821558 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:248: native-round-1: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound1Checker (2.53s)\n",
+        "run": "P_PROGRAM-True-0"
+      },
+      "TestBridgeTimingRound2Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound2Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:247: go-baseline: tsgo: load_ns=222098322 query_ns=163214493 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound2Checker (2.44s)\n",
+        "run": "P_PROGRAM-True-0"
+      },
+      "TestBridgeTimingRound3Checker": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound3Checker\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: checker.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=322223710 query_ns=185076355 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-3: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound3Checker (2.77s)\n",
+        "run": "P_PROGRAM-True-0"
+      },
+      "TestBridgeOracleParser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 70",
+        "output": "=== RUN   TestBridgeOracleParser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:237: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:238: go: tsgo: load_ns=221267194 query_ns=188735466 queries=400\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:239: native-asan: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeOracleParser (2.77s)\n",
+        "run": "P_PROGRAM-True-0"
+      },
+      "TestBridgeTimingRound1Parser": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleChecker|TestBridgeTimingRound1Checker|TestBridgeTimingRound2Checker|TestBridgeTimingRound3Checker|TestBridgeOracleParser|TestBridgeTimingRound1Parser)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "/tmp/u004/typescript",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound1Parser\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.02\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: parser.ts, 400 positions, 4 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:247: go-baseline: tsgo: load_ns=296913072 query_ns=195792033 queries=400\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-1: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound1Parser (2.80s)\n",
+        "run": "P_PROGRAM-True-0"
+      },
+      "TestBridgeRegion": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:297: region probe did not use one region and agree with Go: exit status 70 stdout=\"\" stderr=adamic: panic: invalid or released checker handle",
+        "output": "=== RUN   TestBridgeRegion\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:71: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.04\n    units_test.go:278: build bridge-test-oracle 18d35daf0574 hit 0.06\n    units_test.go:279: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:279: region-frame: tsgo: load_ns=44910220 query_ns=16373871 queries=1\n    units_test.go:292: build bridge-test-healthy-region 1c5a0d8b0d20 hit 0.03\n    units_test.go:297: region probe did not use one region and agree with Go: exit status 70 stdout=\"\" stderr=adamic: panic: invalid or released checker handle\n        adamic: counts: allocations 5 frees 1 retains 5 releases 6 peak 4 regions 0\n--- FAIL: TestBridgeRegion (3.19s)\n",
+        "run": "P_PROGRAM-False-0"
+      },
+      "TestBridgeOracleSample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:239: native-asan: exit status 70",
+        "output": "=== RUN   TestBridgeOracleSample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native-asan 969bd23ca453 hit 0.03\n    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:238: build bridge-test-oracle 18d35daf0574 hit 0.05\n    units_test.go:238: go: tsgo: load_ns=42675987 query_ns=31841167 queries=162\n    units_test.go:239: build bridge-test-native-asan 969bd23ca453 hit 0.04\n    units_test.go:239: native-asan: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeOracleSample (2.51s)\n",
+        "run": "P_PROGRAM-False-0"
+      },
+      "TestBridgeTimingRound1Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-1: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound1Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.04\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=42827925 query_ns=15804500 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.04\n    units_test.go:248: native-round-1: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound1Sample (2.44s)\n",
+        "run": "P_PROGRAM-False-0"
+      },
+      "TestBridgeTimingRound2Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-2: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound2Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=44063764 query_ns=15909113 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:248: native-round-2: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound2Sample (2.32s)\n",
+        "run": "P_PROGRAM-False-0"
+      },
+      "TestBridgeTimingRound3Sample": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeOracleSample|TestBridgeTimingRound1Sample|TestBridgeTimingRound2Sample|TestBridgeTimingRound3Sample|TestBridgeRegion)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_PROGRAM",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:248: native-round-3: exit status 70",
+        "output": "=== RUN   TestBridgeTimingRound3Sample\n    units_test.go:71: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:71: build bridge-test-native 9ea6fc637447 hit 0.03\n    units_test.go:246: queries: sample.ts, 162 positions, 1 unchanged program roots\n    units_test.go:247: build bridge-test-oracle 18d35daf0574 hit 0.03\n    units_test.go:247: go-baseline: tsgo: load_ns=32177043 query_ns=15839947 queries=162\n    units_test.go:248: build bridge-test-native 9ea6fc637447 hit 0.05\n    units_test.go:248: native-round-3: exit status 70\n        adamic: panic: invalid or released checker handle\n--- FAIL: TestBridgeTimingRound3Sample (2.28s)\n",
+        "run": "P_PROGRAM-False-0"
+      }
+    }
+  },
+  {
+    "id": "P_RELEASE",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "void adamic_tsgo_release(double handle) {",
+    "after": "void adamic_tsgo_release(double handle) {\n return;",
+    "probe": true,
+    "line": 148,
+    "supplemental": false,
+    "status": {
+      "TestBridgeTimingRound2Parser": "pass",
+      "TestBridgeTimingRound3Parser": "pass",
+      "TestBridgeOracleTypes": "pass",
+      "TestBridgeTimingRound1Types": "pass",
+      "TestBridgeTimingRound2Types": "pass",
+      "TestBridgeTimingRound3Types": "pass",
+      "TestBridgeOracleUtilities": "pass",
+      "TestBridgeTimingRound1Utilities": "pass",
+      "TestBridgeTimingRound2Utilities": "pass",
+      "TestBridgeTimingRound3Utilities": "pass",
+      "TestBridgeOracleChecker": "pass",
+      "TestBridgeTimingRound1Checker": "pass",
+      "TestBridgeTimingRound2Checker": "pass",
+      "TestBridgeTimingRound3Checker": "pass",
+      "TestBridgeOracleParser": "pass",
+      "TestBridgeTimingRound1Parser": "pass",
+      "TestBridgeRegion": "pass",
+      "TestBridgeOracleSample": "pass",
+      "TestBridgeTimingRound1Sample": "pass",
+      "TestBridgeTimingRound2Sample": "pass",
+      "TestBridgeTimingRound3Sample": "pass"
+    },
+    "failed_rows": [],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeOracleChecker",
+      "TestBridgeOracleParser",
+      "TestBridgeOracleSample",
+      "TestBridgeOracleTypes",
+      "TestBridgeOracleUtilities",
+      "TestBridgeRegion",
+      "TestBridgeTimingRound1Checker",
+      "TestBridgeTimingRound1Parser",
+      "TestBridgeTimingRound1Sample",
+      "TestBridgeTimingRound1Types",
+      "TestBridgeTimingRound1Utilities",
+      "TestBridgeTimingRound2Checker",
+      "TestBridgeTimingRound2Parser",
+      "TestBridgeTimingRound2Sample",
+      "TestBridgeTimingRound2Types",
+      "TestBridgeTimingRound2Utilities",
+      "TestBridgeTimingRound3Checker",
+      "TestBridgeTimingRound3Parser",
+      "TestBridgeTimingRound3Sample",
+      "TestBridgeTimingRound3Types",
+      "TestBridgeTimingRound3Utilities"
+    ],
+    "evidence": {}
+  },
+  {
+    "id": "P_CREATE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error) {",
+    "after": "int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error) {\n return TSGO_OK;",
+    "probe": true,
+    "line": 23,
+    "supplemental": false,
+    "status": {
+      "TestBridgeABI": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeABI"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI"
+    ],
+    "evidence": {
+      "TestBridgeABI": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_CREATE",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:199: api: signal: aborted",
+        "output": "=== RUN   TestBridgeABI\n    units_test.go:71: build bridge-test-api 953142b05876 hit 0.07\n    units_test.go:199: build bridge-test-api 953142b05876 hit 0.03\n    units_test.go:199: api: signal: aborted\n        api: /workspace/adamic/bridge/tsgo/testdata/api.c:18: int main(int, char **): Assertion `handle != 0 && error.data == NULL' failed.\n--- FAIL: TestBridgeABI (1.36s)\n",
+        "run": "P_CREATE-False-0"
+      }
+    }
+  },
+  {
+    "id": "P_ABI_RELEASE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "int tsgo_release(tsgo_handle handle, tsgo_buffer *error) {",
+    "after": "int tsgo_release(tsgo_handle handle, tsgo_buffer *error) {\n return TSGO_OK;",
+    "probe": true,
+    "line": 74,
+    "supplemental": false,
+    "status": {
+      "TestBridgeABI": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeABI"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI"
+    ],
+    "evidence": {
+      "TestBridgeABI": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_ABI_RELEASE",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:199: api: signal: aborted",
+        "output": "=== RUN   TestBridgeABI\n    units_test.go:71: build bridge-test-api 953142b05876 hit 0.05\n    units_test.go:199: build bridge-test-api 953142b05876 hit 0.04\n    units_test.go:199: api: signal: aborted\n        api: /workspace/adamic/bridge/tsgo/testdata/api.c:36: int main(int, char **): Assertion `tsgo_query(handle, file, 14, &answer, &error) == TSGO_HANDLE' failed.\n--- FAIL: TestBridgeABI (1.54s)\n",
+        "run": "P_ABI_RELEASE-False-0"
+      }
+    }
+  },
+  {
+    "id": "P_FREE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "void tsgo_buffer_free(tsgo_buffer *buffer) {",
+    "after": "void tsgo_buffer_free(tsgo_buffer *buffer) {\n return;",
+    "probe": true,
+    "line": 78,
+    "supplemental": false,
+    "status": {
+      "TestBridgeABI": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeABI"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI"
+    ],
+    "evidence": {
+      "TestBridgeABI": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_FREE",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:199: api: signal: aborted",
+        "output": "=== RUN   TestBridgeABI\n    units_test.go:71: build bridge-test-api 953142b05876 hit 0.04\n    units_test.go:199: build bridge-test-api 953142b05876 hit 0.04\n    units_test.go:199: api: signal: aborted\n        api: /workspace/adamic/bridge/tsgo/testdata/api.c:26: int main(int, char **): Assertion `answer.type.data == NULL && answer.type.length == 0' failed.\n--- FAIL: TestBridgeABI (1.32s)\n",
+        "run": "P_FREE-False-0"
+      }
+    }
+  },
+  {
+    "id": "P_RESULT_FREE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "void tsgo_result_free(tsgo_result *result) {",
+    "after": "void tsgo_result_free(tsgo_result *result) {\n return;",
+    "probe": true,
+    "line": 84,
+    "supplemental": false,
+    "status": {
+      "TestBridgeABI": "fail"
+    },
+    "failed_rows": [
+      "TestBridgeABI"
+    ],
+    "other_failures": [],
+    "matrix_rows": [
+      "TestBridgeABI"
+    ],
+    "evidence": {
+      "TestBridgeABI": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeABI)$",
+        "environment": {
+          "ADAMIC_MUTANT": "P_RESULT_FREE",
+          "ADAMIC_TSGO_CORPUS": "",
+          "ADAMIC_BUILD_CACHE_DIR": null
+        },
+        "line": "units_test.go:199: api: signal: aborted",
+        "output": "=== RUN   TestBridgeABI\n    units_test.go:71: build bridge-test-api 953142b05876 hit 0.04\n    units_test.go:199: build bridge-test-api 953142b05876 hit 0.04\n    units_test.go:199: api: signal: aborted\n        api: /workspace/adamic/bridge/tsgo/testdata/api.c:26: int main(int, char **): Assertion `answer.type.data == NULL && answer.type.length == 0' failed.\n--- FAIL: TestBridgeABI (1.22s)\n",
+        "run": "P_RESULT_FREE-False-0"
+      }
+    }
+  }
+]

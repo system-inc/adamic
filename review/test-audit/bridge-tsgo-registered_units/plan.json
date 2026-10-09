@@ -1,0 +1,164 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "result.type.length);",
+    "after": "result.type.length == 0 ? 0 : result.type.length - 1);",
+    "menu": "off-by-one bound",
+    "line": 99,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "answer->slots[0].number = (double)result.kind;",
+    "after": "answer->slots[0].number = (double)result.kind + 1;",
+    "menu": "change constant",
+    "line": 97,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "tsgo_query(id, path, offset, &result, &error)",
+    "after": "tsgo_query(id, path, offset + 1, &result, &error)",
+    "menu": "off-by-one bound",
+    "line": 89,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "adamic_object_new_in(region, &shape)",
+    "after": "adamic_object_new_in(region ? NULL : region, &shape)",
+    "menu": "change option: omit region",
+    "line": 96,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M05",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "buffer->length = 0;",
+    "after": "buffer->length = 1;",
+    "menu": "change constant",
+    "line": 82,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M06",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "result->kind = 0;",
+    "after": "result->kind = 1;",
+    "menu": "change constant",
+    "line": 88,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "if (timing()) { uint64_t elapsed = now_ns() - started;",
+    "after": "if (0) { uint64_t elapsed = now_ns() - started;",
+    "menu": "flip condition",
+    "occurrence": 0,
+    "line": 101,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/tsgo.go",
+    "before": "if !l.program.TSGoEnabled() {",
+    "after": "if false {",
+    "menu": "flip condition",
+    "line": 27,
+    "supplemental": false,
+    "probe": false
+  },
+  {
+    "id": "P_QUERY",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {",
+    "after": "adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {\n return NULL;",
+    "probe": true,
+    "line": 83,
+    "supplemental": false
+  },
+  {
+    "id": "P_ABI",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error) {",
+    "after": "int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error) {\n return TSGO_OK;",
+    "probe": true,
+    "line": 43,
+    "supplemental": false
+  },
+  {
+    "id": "P_LOWER",
+    "file": "internal/lower/tsgo.go",
+    "before": "func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {",
+    "after": "func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {\n if true { return nil, true, nil }",
+    "probe": true,
+    "line": 15,
+    "supplemental": false
+  },
+  {
+    "id": "P_PROGRAM",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "double adamic_tsgo_program(const adamic_string *config, const adamic_array *files) {",
+    "after": "double adamic_tsgo_program(const adamic_string *config, const adamic_array *files) {\n return 0;",
+    "probe": true,
+    "line": 59,
+    "supplemental": false
+  },
+  {
+    "id": "P_RELEASE",
+    "file": "internal/native/runtime/tsgo.c",
+    "before": "void adamic_tsgo_release(double handle) {",
+    "after": "void adamic_tsgo_release(double handle) {\n return;",
+    "probe": true,
+    "line": 148,
+    "supplemental": false
+  },
+  {
+    "id": "P_CREATE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error) {",
+    "after": "int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error) {\n return TSGO_OK;",
+    "probe": true,
+    "line": 23,
+    "supplemental": false
+  },
+  {
+    "id": "P_ABI_RELEASE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "int tsgo_release(tsgo_handle handle, tsgo_buffer *error) {",
+    "after": "int tsgo_release(tsgo_handle handle, tsgo_buffer *error) {\n return TSGO_OK;",
+    "probe": true,
+    "line": 74,
+    "supplemental": false
+  },
+  {
+    "id": "P_FREE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "void tsgo_buffer_free(tsgo_buffer *buffer) {",
+    "after": "void tsgo_buffer_free(tsgo_buffer *buffer) {\n return;",
+    "probe": true,
+    "line": 78,
+    "supplemental": false
+  },
+  {
+    "id": "P_RESULT_FREE",
+    "file": "bridge/tsgo/archive/boundary.c",
+    "before": "void tsgo_result_free(tsgo_result *result) {",
+    "after": "void tsgo_result_free(tsgo_result *result) {\n return;",
+    "probe": true,
+    "line": 84,
+    "supplemental": false
+  }
+]

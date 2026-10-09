@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -21,6 +21,7 @@
+ }
+ 
+ int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error) {
++ return TSGO_OK;
+  if (handle == NULL || error == NULL || (count != 0 && files == NULL) || count > INT_MAX / sizeof(tsgo_view)) return TSGO_ARGUMENT;
+  *handle = 0;
+  tsgo_view copied = {0};

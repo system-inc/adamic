@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -94,7 +94,7 @@
+  static const bool references[] = {false, true, true};
+  static const adamic_shape shape = {3, names, references, NULL};
+  adamic_object *answer = adamic_object_new_in(region, &shape);
+- answer->slots[0].number = (double)result.kind;
++ answer->slots[0].number = (double)result.kind + 1;
+  answer->slots[1].reference = adamic_decode_utf8((const unsigned char *)result.symbol.data, result.symbol.length);
+  answer->slots[2].reference = adamic_decode_utf8((const unsigned char *)result.type.data, result.type.length);
+  tsgo_result_free(&result);

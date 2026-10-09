@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -146,6 +146,7 @@
+  return answer;
+ }
+ void adamic_tsgo_release(double handle) {
++ return;
+  uint64_t run_ns = timing() && run_started_ns != 0 ? now_ns() - run_started_ns : 0;
+  tsgo_buffer error = {0};
+  checked(tsgo_release(integer(handle), &error), &error);

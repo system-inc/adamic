@@ -1,0 +1,31 @@
+[
+  {
+    "id": "W_EQUAL",
+    "command": "timeout 90 go vet -overlay /tmp/u004/witness/W_EQUAL/overlay.json ./bridge/tsgo/",
+    "exit": 0,
+    "seconds": 0.9669020369983627,
+    "output": "",
+    "initial_error": "# github.com/system-inc/adamic/bridge/tsgo_test\n# [github.com/system-inc/adamic/bridge/tsgo_test]\nvet: /tmp/u004/witness/W_EQUAL/units_test.go:248:2: declared and not used: observed\n"
+  },
+  {
+    "id": "W_STALE",
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -Ibridge/tsgo -fsyntax-only /tmp/u004/witness/W_STALE/api.c",
+    "exit": 0,
+    "seconds": 0.018538701999204932,
+    "output": ""
+  },
+  {
+    "id": "W_LINK",
+    "command": "timeout 90 go vet -overlay /tmp/u004/witness/W_LINK/overlay.json ./bridge/tsgo/",
+    "exit": 0,
+    "seconds": 0.3434118120021594,
+    "output": ""
+  },
+  {
+    "id": "W_ASAN",
+    "command": "timeout 90 go vet -overlay /tmp/u004/witness/W_ASAN/overlay.json ./bridge/tsgo/",
+    "exit": 0,
+    "seconds": 0.40358319399820175,
+    "output": ""
+  }
+]

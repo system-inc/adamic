@@ -1,0 +1,90 @@
+{
+  "label": "TestBridgeStaleHandle-timing-3",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeStaleHandle$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 2.9375684169990564,
+  "binary_seconds": 0.941,
+  "status": {
+    "TestBridgeStaleHandle": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:13:59.227340256Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:13:59.235143192Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle"
+    },
+    {
+      "Time": "2026-10-09T09:13:59.23520972Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Output": "=== RUN   TestBridgeStaleHandle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:13:59.620678972Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Output": "    units_test.go:71: build bridge-test-stale-driver 172664cb8c08 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:00.065692918Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Output": "    units_test.go:217: build bridge-test-stale-driver 172664cb8c08 hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:00.163708582Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Output": "    units_test.go:217: stale-handle: tsgo_query(handle, file, 14, &answer, &error) == TSGO_HANDLE\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:00.16380221Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Output": "--- PASS: TestBridgeStaleHandle (0.93s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:00.163811884Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Elapsed": 0.93
+    },
+    {
+      "Time": "2026-10-09T09:14:00.163830762Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:00.168677823Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.941s\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:00.168715208Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 0.941
+    }
+  ],
+  "cooked": false
+}

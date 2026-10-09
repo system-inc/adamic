@@ -1,0 +1,286 @@
+{
+  "label": "M08-False-0",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestBridgeUnlinkedBuild|TestBridgeUnlinkedC|TestBridgeUnlinkedJavaScript|TestTSGoRequiresLink)$",
+  "corpus": false,
+  "selector": "M08",
+  "cache": "/tmp/u004/cache/M08",
+  "exit": 1,
+  "wall_seconds": 10.54841978100012,
+  "binary_seconds": 7.763,
+  "status": {
+    "TestBridgeUnlinkedBuild": "fail",
+    "TestBridgeUnlinkedC": "fail",
+    "TestBridgeUnlinkedJavaScript": "fail",
+    "TestTSGoRequiresLink": "fail"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:30:33.757087322Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:30:33.764765117Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:30:33.764850303Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== RUN   TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:33.764884253Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== PAUSE TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:33.764887087Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:30:33.764890231Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild"
+    },
+    {
+      "Time": "2026-10-09T09:30:33.764892615Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "=== RUN   TestBridgeUnlinkedBuild\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.149985828Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "    units_test.go:71: build bridge-test-stage0 13c6e7b1719c miss 3.91\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.736704426Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.847853675Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "    units_test.go:229: unlinked build was not refused: exit status 1\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.847887685Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "        adamic: tsgo requires a linked checker archive; build with --tsgo <archive>\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.847912011Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Output": "--- FAIL: TestBridgeUnlinkedBuild (5.08s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.847917098Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Elapsed": 5.08
+    },
+    {
+      "Time": "2026-10-09T09:30:38.847939972Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC"
+    },
+    {
+      "Time": "2026-10-09T09:30:38.847943537Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "=== RUN   TestBridgeUnlinkedC\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:39.45969315Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.1079111Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.218925481Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "    units_test.go:229: unlinked c was not refused: exit status 1\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.218982525Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "        adamic: tsgo requires a native build with --tsgo <archive>\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.218994022Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Output": "--- FAIL: TestBridgeUnlinkedC (1.37s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.218997597Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Elapsed": 1.37
+    },
+    {
+      "Time": "2026-10-09T09:30:40.219008613Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.219012219Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "=== RUN   TestBridgeUnlinkedJavaScript\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:40.760703009Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "    units_test.go:71: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.346555928Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "    units_test.go:227: build bridge-test-stage0 13c6e7b1719c hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.478689701Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "    units_test.go:229: unlinked js was not refused: exit status 1\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.478731252Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "        adamic: tsgo is an external native checker library; JavaScript is not supported\n",
+      "OutputType": "error-continue"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.478740265Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Output": "--- FAIL: TestBridgeUnlinkedJavaScript (1.26s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.47874357Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Elapsed": 1.26
+    },
+    {
+      "Time": "2026-10-09T09:30:41.478749929Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.478752433Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "=== CONT  TestTSGoRequiresLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.515455356Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "    bridge_test.go:30: lowering accepted an unlinked checker call\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.515494994Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Output": "--- FAIL: TestTSGoRequiresLink (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.515498289Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T09:30:41.515502966Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.519911074Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t7.762s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:30:41.519943432Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 7.763
+    }
+  ],
+  "cooked": false
+}

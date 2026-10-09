@@ -1,0 +1,42 @@
+[
+  {
+    "build_command": "clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -Ibridge/tsgo review/test-audit/bridge-tsgo-registered_units/reset-witness.c /home/agent/.cache/adamic-build/5c2ecec3483f29c60a6fd866366f32abe4d744f4101706ff7907e2724e10dd55/tsgo.a -lpthread -ldl -lm -o /tmp/u004/reset-witness",
+    "build_seconds": 0.12805337400277494
+  },
+  {
+    "mutant": "M06",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' ADAMIC_TSGO_TIMING=1 /tmp/u004/reset-witness",
+    "exit": 0,
+    "stdout": "0\n",
+    "stderr": "",
+    "seconds": 0.0026493479999771807
+  },
+  {
+    "mutant": "M06",
+    "selector": "M06",
+    "command": "ADAMIC_MUTANT='M06' ADAMIC_TSGO_TIMING=1 /tmp/u004/reset-witness",
+    "exit": 0,
+    "stdout": "1\n",
+    "stderr": "",
+    "seconds": 0.002488771999196615
+  },
+  {
+    "mutant": "M07",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' ADAMIC_TSGO_TIMING=1 /home/agent/.cache/adamic-build/9ea6fc637447783c648e4230dd5f52e500d52ffda63c201beaecebdd6f7e132e/native /workspace/adamic/bridge/tsgo/testdata/tsconfig.json /tmp/u004/survivor.tsv /workspace/adamic/bridge/tsgo/testdata/sample.ts",
+    "exit": 0,
+    "stdout": "262 0 12\n\"\u4e16\u754c\ud83c\udf0d\"\n",
+    "stderr": "tsgo: load_ns=49020310 query_ns=61941 queries=1 first_query_ns=61941 run_ns=110934\n",
+    "seconds": 0.05476196900053765
+  },
+  {
+    "mutant": "M07",
+    "selector": "M07",
+    "command": "ADAMIC_MUTANT='M07' ADAMIC_TSGO_TIMING=1 /home/agent/.cache/adamic-build/9ea6fc637447783c648e4230dd5f52e500d52ffda63c201beaecebdd6f7e132e/native /workspace/adamic/bridge/tsgo/testdata/tsconfig.json /tmp/u004/survivor.tsv /workspace/adamic/bridge/tsgo/testdata/sample.ts",
+    "exit": 0,
+    "stdout": "262 0 12\n\"\u4e16\u754c\ud83c\udf0d\"\n",
+    "stderr": "tsgo: load_ns=55895260 query_ns=0 queries=0 first_query_ns=0 run_ns=138303\n",
+    "seconds": 0.061618201001692796
+  }
+]

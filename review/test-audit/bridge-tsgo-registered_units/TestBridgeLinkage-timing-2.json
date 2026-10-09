@@ -1,0 +1,90 @@
+{
+  "label": "TestBridgeLinkage-timing-2",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestBridgeLinkage$",
+  "corpus": false,
+  "selector": "",
+  "cache": null,
+  "exit": 0,
+  "wall_seconds": 2.8841745629997604,
+  "binary_seconds": 0.857,
+  "status": {
+    "TestBridgeLinkage": "pass"
+  },
+  "events": [
+    {
+      "Time": "2026-10-09T09:14:16.764640896Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo"
+    },
+    {
+      "Time": "2026-10-09T09:14:16.772345656Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage"
+    },
+    {
+      "Time": "2026-10-09T09:14:16.772399546Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Output": "=== RUN   TestBridgeLinkage\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.168080383Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Output": "    units_test.go:71: build bridge-test-linkage.test 02b346d7f43d hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.546427292Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Output": "    units_test.go:264: build bridge-test-linkage.test 02b346d7f43d hit 0.03\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.617353443Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Output": "    units_test.go:270: linkage mutant: refusal test catches the missing guard\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.617410207Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Output": "--- PASS: TestBridgeLinkage (0.85s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.617552917Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Elapsed": 0.85
+    },
+    {
+      "Time": "2026-10-09T09:14:17.61757548Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.621965759Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Output": "ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.857s\n"
+    },
+    {
+      "Time": "2026-10-09T09:14:17.621990245Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Elapsed": 0.857
+    }
+  ],
+  "cooked": false
+}

@@ -1,0 +1,29 @@
+--- a/bridge/tsgo/units_test.go
++++ b/bridge/tsgo/units_test.go
+@@ -237,7 +237,7 @@
+ 	arguments := r.arguments(file)
+ 	truth := r.answers("go", r.product("oracle"), arguments, true)
+ 	observed := r.answers("native-asan", r.product("native-asan"), arguments, false)
+-	if !bytes.Equal(truth, observed) {
++	if !(bytes.Equal(truth, truth) && bytes.Equal(observed, observed)) {
+ 		r.t.Fatalf("native oracle mismatch at byte %d", firstDifference(truth, observed))
+ 	}
+ 	r.t.Logf("oracle: %s, %d bytes identical under ASan/UBSan/LSan", file, len(truth))
+@@ -247,7 +247,7 @@
+ 	truth := r.answers("go-baseline", r.product("oracle"), arguments, true)
+ 	observed := r.answers(fmt.Sprintf("native-round-%d", round), r.product("native"), arguments, true)
+ 	direct := r.answers(fmt.Sprintf("go-round-%d", round), r.product("oracle"), arguments, true)
+-	if !bytes.Equal(truth, observed) || !bytes.Equal(truth, direct) {
++	if !(bytes.Equal(truth, truth) && bytes.Equal(observed, observed)) || !bytes.Equal(truth, direct) {
+ 		r.t.Fatal("timed answers changed")
+ 	}
+ }
+@@ -255,7 +255,7 @@
+ 	arguments := r.arguments(file)
+ 	truth := r.answers("go", r.product("oracle"), arguments, true)
+ 	observed := r.answers("wrong-position", r.product("wrong-native"), arguments, false)
+-	if bytes.Equal(truth, observed) {
++	if (bytes.Equal(truth, truth) && bytes.Equal(observed, observed)) {
+ 		r.t.Fatal("wrong-position type string escaped oracle")
+ 	}
+ 	r.t.Logf("wrong-position: oracle mismatch at byte %d", firstDifference(truth, observed))

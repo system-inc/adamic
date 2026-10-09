@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -86,7 +86,7 @@
+  tsgo_view path = path_view(file);
+  tsgo_result result = {0};
+  tsgo_buffer error = {0};
+- int status = tsgo_query(id, path, offset, &result, &error);
++ int status = tsgo_query(id, path, offset + 1, &result, &error);
+  free((void *)path.data);
+  if (status != TSGO_OK) tsgo_result_free(&result);
+  checked(status, &error);

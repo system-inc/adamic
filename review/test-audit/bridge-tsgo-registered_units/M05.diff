@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -79,7 +79,7 @@
+  if (buffer == NULL) return;
+  free(buffer->data);
+  buffer->data = NULL;
+- buffer->length = 0;
++ buffer->length = 1;
+ }
+ void tsgo_result_free(tsgo_result *result) {
+  if (result == NULL) return;

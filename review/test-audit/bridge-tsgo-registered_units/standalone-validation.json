@@ -1,0 +1,140 @@
+[
+  {
+    "id": "M01",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M01/tsgo.c",
+    "compile": 0,
+    "seconds": 0.031774805998793454,
+    "output": ""
+  },
+  {
+    "id": "M02",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M02/tsgo.c",
+    "compile": 0,
+    "seconds": 0.034928346998640336,
+    "output": ""
+  },
+  {
+    "id": "M03",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M03/tsgo.c",
+    "compile": 0,
+    "seconds": 0.03196388499964087,
+    "output": ""
+  },
+  {
+    "id": "M04",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M04/tsgo.c",
+    "compile": 0,
+    "seconds": 0.037783732999741915,
+    "output": "",
+    "first_output": "/tmp/u004/standalone/M04/tsgo.c:83:52: error: unused parameter 'region' [-Werror,-Wunused-parameter]\n   83 | adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {\n      |                                                    ^\n1 error generated.\n",
+    "fix": "Reference region while mapping it to NULL to avoid unused parameter under -Werror"
+  },
+  {
+    "id": "M05",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M05/boundary.c",
+    "compile": 0,
+    "seconds": 0.022416797000914812,
+    "output": ""
+  },
+  {
+    "id": "M06",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M06/boundary.c",
+    "compile": 0,
+    "seconds": 0.021551552001255914,
+    "output": ""
+  },
+  {
+    "id": "M07",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/M07/tsgo.c",
+    "compile": 0,
+    "seconds": 0.03452289400047448,
+    "output": ""
+  },
+  {
+    "id": "M08",
+    "apply": 0,
+    "command": "timeout 90 go vet -overlay /tmp/u004/standalone/M08/overlay.json ./internal/lower/",
+    "compile": 0,
+    "seconds": 0.6832750399989891,
+    "output": ""
+  },
+  {
+    "id": "P_QUERY",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_QUERY/tsgo.c",
+    "compile": 0,
+    "seconds": 0.033759068999643205,
+    "output": ""
+  },
+  {
+    "id": "P_ABI",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_ABI/boundary.c",
+    "compile": 0,
+    "seconds": 0.019848858999466756,
+    "output": ""
+  },
+  {
+    "id": "P_LOWER",
+    "apply": 0,
+    "command": "timeout 90 go vet -overlay /tmp/u004/standalone/P_LOWER/overlay.json ./internal/lower/",
+    "compile": 0,
+    "seconds": 0.6127653290004673,
+    "output": ""
+  },
+  {
+    "id": "P_PROGRAM",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_PROGRAM/tsgo.c",
+    "compile": 0,
+    "seconds": 0.02689431799990416,
+    "output": ""
+  },
+  {
+    "id": "P_RELEASE",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_RELEASE/tsgo.c",
+    "compile": 0,
+    "seconds": 0.027333705000273767,
+    "output": ""
+  },
+  {
+    "id": "P_CREATE",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_CREATE/boundary.c",
+    "compile": 0,
+    "seconds": 0.01863489000061236,
+    "output": ""
+  },
+  {
+    "id": "P_ABI_RELEASE",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_ABI_RELEASE/boundary.c",
+    "compile": 0,
+    "seconds": 0.018725543999607908,
+    "output": ""
+  },
+  {
+    "id": "P_FREE",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_FREE/boundary.c",
+    "compile": 0,
+    "seconds": 0.018445952999172732,
+    "output": ""
+  },
+  {
+    "id": "P_RESULT_FREE",
+    "apply": 0,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only /tmp/u004/standalone/P_RESULT_FREE/boundary.c",
+    "compile": 0,
+    "seconds": 0.01857416100028786,
+    "output": ""
+  }
+]

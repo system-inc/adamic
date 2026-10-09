@@ -1,0 +1,10 @@
+--- a/internal/lower/tsgo.go
++++ b/internal/lower/tsgo.go
+@@ -13,6 +13,7 @@
+ // order and reference ownership. The bodies describe those effects for the
+ // analyses; the opt-in native library renderer supplies their implementation.
+ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
++ if true { return nil, true, nil }
+ 	callee := node.AsCallExpression().Expression
+ 	name := ""
+ 	for _, candidate := range []string{"tsgoProgram", "tsgoQuery", "tsgoRelease", "tsgoTypeParts", "tsgoInspect"} {

@@ -1,0 +1,11 @@
+--- a/internal/lower/tsgo.go
++++ b/internal/lower/tsgo.go
+@@ -24,7 +24,7 @@
+ 	if name == "" {
+ 		return nil, false, nil
+ 	}
+-	if !l.program.TSGoEnabled() {
++	if false {
+ 		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive>"}
+ 	}
+ 	arguments := []ir.Expression{}

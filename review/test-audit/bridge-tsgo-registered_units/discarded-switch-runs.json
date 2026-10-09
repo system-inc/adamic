@@ -1,0 +1,26 @@
+[
+  {
+    "label": "M01-True-12",
+    "seconds": 27.895567421001033,
+    "error": "Switch generation produced invalid C expression; all failures excluded from matrix.",
+    "output": "        /tmp/adamic-gate/adamic-tsgo-2449656922/tsgo.c:101:91: error: expected expression\n"
+  },
+  {
+    "label": "M01-True-6",
+    "seconds": 36.8988855940006,
+    "error": "Switch generation produced invalid C expression; all failures excluded from matrix.",
+    "output": "        /tmp/adamic-gate/adamic-tsgo-3683559391/tsgo.c:101:91: error: expected expression\n"
+  },
+  {
+    "label": "M01-True-0",
+    "seconds": 39.76754001399968,
+    "error": "Switch generation produced invalid C expression; all failures excluded from matrix.",
+    "output": "        /tmp/adamic-gate/adamic-tsgo-225770431/tsgo.c:101:91: error: expected expression\n"
+  },
+  {
+    "label": "M01-False-0",
+    "seconds": 54.273472412001865,
+    "error": "Switch generation produced invalid C expression; all failures excluded from matrix.",
+    "output": "        /tmp/adamic-gate/adamic-tsgo-316774360/tsgo.c:101:91: error: expected expression\n"
+  }
+]

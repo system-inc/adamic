@@ -1,0 +1,126 @@
+diff --git a/bridge/tsgo/archive/boundary.c b/bridge/tsgo/archive/boundary.c
+index 42683ee7..a52d00d3 100644
+--- a/bridge/tsgo/archive/boundary.c
++++ b/bridge/tsgo/archive/boundary.c
+@@ -21,6 +21,7 @@ static int copy_view(tsgo_view input, tsgo_view *output) {
+ }
+ 
+ int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_handle *handle, tsgo_buffer *error) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_CREATE") == 0) { return TSGO_OK; }
+  if (handle == NULL || error == NULL || (count != 0 && files == NULL) || count > INT_MAX / sizeof(tsgo_view)) return TSGO_ARGUMENT;
+  *handle = 0;
+  tsgo_view copied = {0};
+@@ -41,6 +42,7 @@ int tsgo_create(tsgo_view config, const tsgo_view *files, size_t count, tsgo_han
+ }
+ 
+ int tsgo_query(tsgo_handle handle, tsgo_view file, uint64_t position, tsgo_result *result, tsgo_buffer *error) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_ABI") == 0) { return TSGO_OK; }
+  if (result == NULL || error == NULL) return TSGO_ARGUMENT;
+  tsgo_view copied = {0};
+  int status = copy_view(file, &copied);
+@@ -72,18 +74,21 @@ int tsgo_inspect(tsgo_handle handle, tsgo_view file, uint64_t start, uint64_t en
+  return status;
+ }
+ int tsgo_release(tsgo_handle handle, tsgo_buffer *error) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_ABI_RELEASE") == 0) { return TSGO_OK; }
+  if (error == NULL) return TSGO_ARGUMENT;
+  return tsgo_go_release(handle, error);
+ }
+ void tsgo_buffer_free(tsgo_buffer *buffer) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_FREE") == 0) { return; }
+  if (buffer == NULL) return;
+  free(buffer->data);
+  buffer->data = NULL;
+- buffer->length = 0;
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M05") == 0) { buffer->length = 1; } else { buffer->length = 0; }
+ }
+ void tsgo_result_free(tsgo_result *result) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_RESULT_FREE") == 0) { return; }
+  if (result == NULL) return;
+  tsgo_buffer_free(&result->symbol);
+  tsgo_buffer_free(&result->type);
+- result->kind = 0;
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M06") == 0) { result->kind = 1; } else { result->kind = 0; }
+ }
+diff --git a/internal/lower/tsgo.go b/internal/lower/tsgo.go
+index 36de4505..23ee5752 100644
+--- a/internal/lower/tsgo.go
++++ b/internal/lower/tsgo.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"fmt"
++	"os"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/system-inc/adamic/bridge/tsgo/spec"
+@@ -13,6 +14,9 @@ import (
+ // order and reference ownership. The bodies describe those effects for the
+ // analyses; the opt-in native library renderer supplies their implementation.
+ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P_LOWER" {
++		return nil, true, nil
++	}
+ 	callee := node.AsCallExpression().Expression
+ 	name := ""
+ 	for _, candidate := range []string{"tsgoProgram", "tsgoQuery", "tsgoRelease", "tsgoTypeParts", "tsgoInspect"} {
+@@ -24,7 +28,7 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
+ 	if name == "" {
+ 		return nil, false, nil
+ 	}
+-	if !l.program.TSGoEnabled() {
++	if !l.program.TSGoEnabled() && !(os.Getenv("ADAMIC_MUTANT") == "M08") {
+ 		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive>"}
+ 	}
+ 	arguments := []ir.Expression{}
+diff --git a/internal/native/runtime/tsgo.c b/internal/native/runtime/tsgo.c
+index 1e7874de..cbe8777a 100644
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -57,6 +57,7 @@ static tsgo_view path_view(const adamic_string *path) {
+ }
+ 
+ double adamic_tsgo_program(const adamic_string *config, const adamic_array *files) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_PROGRAM") == 0) { return 0; }
+  uint64_t started = timing() ? now_ns() : 0;
+  tsgo_view config_view = path_view(config);
+  tsgo_view *roots = calloc(files->length == 0 ? 1 : files->length, sizeof *roots);
+@@ -81,24 +82,25 @@ adamic_object *adamic_tsgo_query(double handle, const adamic_string *file, doubl
+ }
+ 
+ adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const adamic_string *file, double position) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_QUERY") == 0) { return NULL; }
+  uint64_t started = timing() ? now_ns() : 0;
+  uint64_t id = integer(handle), offset = integer(position);
+  tsgo_view path = path_view(file);
+  tsgo_result result = {0};
+  tsgo_buffer error = {0};
+- int status = tsgo_query(id, path, offset, &result, &error);
++ int status = ((getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M03") == 0) ? tsgo_query(id, path, offset + 1, &result, &error) : tsgo_query(id, path, offset, &result, &error));
+  free((void *)path.data);
+  if (status != TSGO_OK) tsgo_result_free(&result);
+  checked(status, &error);
+  static const char *const names[] = {"nodeKind", "symbolName", "type"};
+  static const bool references[] = {false, true, true};
+  static const adamic_shape shape = {3, names, references, NULL};
+- adamic_object *answer = adamic_object_new_in(region, &shape);
+- answer->slots[0].number = (double)result.kind;
++ adamic_object *answer = ((getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M04") == 0) ? adamic_object_new_in(region ? NULL : region, &shape) : adamic_object_new_in(region, &shape));
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M02") == 0) { answer->slots[0].number = (double)result.kind + 1; } else { answer->slots[0].number = (double)result.kind; }
+  answer->slots[1].reference = adamic_decode_utf8((const unsigned char *)result.symbol.data, result.symbol.length);
+- answer->slots[2].reference = adamic_decode_utf8((const unsigned char *)result.type.data, result.type.length);
++ answer->slots[2].reference = adamic_decode_utf8((const unsigned char *)result.type.data, ((getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M01") == 0) ? (result.type.length == 0 ? 0 : result.type.length - 1) : result.type.length));
+  tsgo_result_free(&result);
+- if (timing()) { uint64_t elapsed = now_ns() - started;
++ if (!(getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M07") == 0) && timing()) { uint64_t elapsed = now_ns() - started;
+   if (query_count == 0) first_query_ns = elapsed;
+   queried_ns += elapsed; query_count++; }
+  return answer;
+@@ -146,6 +148,7 @@ adamic_string *adamic_tsgo_inspect(double handle, const adamic_string *file, dou
+  return answer;
+ }
+ void adamic_tsgo_release(double handle) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P_RELEASE") == 0) { return; }
+  uint64_t run_ns = timing() && run_started_ns != 0 ? now_ns() - run_started_ns : 0;
+  tsgo_buffer error = {0};
+  checked(tsgo_release(integer(handle), &error), &error);
