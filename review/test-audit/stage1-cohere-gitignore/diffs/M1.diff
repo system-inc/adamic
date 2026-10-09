@@ -1,0 +1,11 @@
+--- a/stage1/cohere/gitignore/path.ts
++++ b/stage1/cohere/gitignore/path.ts
+@@ -48,7 +48,7 @@
+ 	if (path === '') {
+ 		return '.';
+ 	}
+-	const rooted = path.startsWith('/');
++	const rooted = !path.startsWith('/');
+ 	const kept: string[] = [];
+ 	for (const element of path.split('/')) {
+ 		if (element === '' || element === '.') {

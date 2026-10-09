@@ -1,0 +1,47 @@
+{
+  "tools": {
+    "seconds": 0.07616508199862437,
+    "exit": 0,
+    "command": [
+      "bash",
+      "-c",
+      "go version; node --version; clang --version; nproc; git rev-parse HEAD"
+    ]
+  },
+  "npm": {
+    "seconds": 0.6376268339990929,
+    "exit": 0,
+    "command": [
+      "npm",
+      "ci"
+    ]
+  },
+  "list": {
+    "seconds": 9.808129294997343,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/gitignore/"
+    ]
+  },
+  "baseline": {
+    "seconds": 92.12148236199937,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "."
+    ]
+  }
+}

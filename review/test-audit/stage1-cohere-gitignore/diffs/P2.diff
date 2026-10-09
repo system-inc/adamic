@@ -1,0 +1,19 @@
+--- a/stage1/cohere/gitignore/pathsweep.ts
++++ b/stage1/cohere/gitignore/pathsweep.ts
+@@ -20,16 +20,3 @@
+ 	return text + line.slice(runStart);
+ }
+ 
+-const pathsFile = programArguments()[0] ?? panic('usage: pathsweep.ts <paths file>');
+-const read = readTextFile(pathsFile);
+-if (read.kind === 'Error') {
+-	panic(read.message);
+-}
+-const lines = read.text.split('\n');
+-lines.pop();
+-const output: string[] = [];
+-for (const line of lines) {
+-	const path = unescape(line);
+-	output.push(`${clean(path)}\t${base(path)}\t${dir(path)}`);
+-}
+-console.log(output.join('\n'));

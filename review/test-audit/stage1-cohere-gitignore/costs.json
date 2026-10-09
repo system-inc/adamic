@@ -1,0 +1,1588 @@
+{
+  "initial": {
+    "tools": {
+      "seconds": 0.07616508199862437,
+      "exit": 0,
+      "command": [
+        "bash",
+        "-c",
+        "go version; node --version; clang --version; nproc; git rev-parse HEAD"
+      ]
+    },
+    "npm": {
+      "seconds": 0.6376268339990929,
+      "exit": 0,
+      "command": [
+        "npm",
+        "ci"
+      ]
+    },
+    "list": {
+      "seconds": 9.808129294997343,
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "-list",
+        ".",
+        "./stage1/cohere/gitignore/"
+      ]
+    },
+    "baseline": {
+      "seconds": 92.12148236199937,
+      "exit": 1,
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/gitignore/",
+        "-run",
+        "."
+      ]
+    }
+  },
+  "timing_wall": 302.72683992999373,
+  "matrix_wall": 383.4166584119994,
+  "special_wall": 374.1707021930051,
+  "standalone_mutant_build_wall": 31.316655208000157,
+  "native_product_fetches": [
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "miss",
+      "seconds": 4.23
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 2.06
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.68
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.39
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 2.12
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.46
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.67
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.72
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 2.15
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.57
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.18
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.29
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.52
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.83
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 1.9
+    },
+    {
+      "log": "M3-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "2fe0e8846bd5",
+      "outcome": "hit",
+      "seconds": 2.0
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.21
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.13
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.13
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.13
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.21
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.2
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.21
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.22
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.42
+    },
+    {
+      "log": "extended-baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.22
+    },
+    {
+      "log": "M1-answers-narrow.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.26
+    },
+    {
+      "log": "M1-solo-TestThePortAnswersAsGoCohereAndGitDo_002.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "miss",
+      "seconds": 4.49
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "miss",
+      "seconds": 4.62
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.81
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 2.07
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.77
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.29
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 2.13
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.95
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.96
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.92
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.91
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.41
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.31
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.92
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 2.13
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 1.82
+    },
+    {
+      "log": "M2-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "5fb46fcd15b6",
+      "outcome": "hit",
+      "seconds": 2.21
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.16
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.56
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.63
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.48
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.52
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.52
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.64
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.18
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.42
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.61
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.6
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.56
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.57
+    },
+    {
+      "log": "timing-answers-3.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.44
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 2.23
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.29
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.24
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.72
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.59
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.79
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.65
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.73
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.63
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.26
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.19
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.74
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.58
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.6
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.94
+    },
+    {
+      "log": "timing-answers-1.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 2.14
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "miss",
+      "seconds": 3.08
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.36
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.29
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.43
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.67
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.37
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.56
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.52
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.37
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.38
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.62
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.47
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.35
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.42
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.42
+    },
+    {
+      "log": "M4-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "d94943593969",
+      "outcome": "hit",
+      "seconds": 1.4
+    },
+    {
+      "log": "M1-solo-TestThePortAnswersAsGoCohereAndGitDo_001.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 2.6
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.48
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.55
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.19
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.51
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.5
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.73
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.63
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.6
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.59
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.18
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.61
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.5
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.53
+    },
+    {
+      "log": "timing-answers-2.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.58
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-**_matching_one_segment_too_few",
+      "key": "9e827cec69a6",
+      "outcome": "hit",
+      "seconds": 1.45
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-entering_from_below_the_root_forgetting_the_files_above",
+      "key": "96f60aabb1fd",
+      "outcome": "hit",
+      "seconds": 1.51
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-precedence_read_from_the_root_down",
+      "key": "027a1b21c713",
+      "outcome": "hit",
+      "seconds": 1.64
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-a_linked_exclude_file_refused",
+      "key": "bc513ab2a2db",
+      "outcome": "hit",
+      "seconds": 1.55
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-%q_in_uppercase_hexadecimal",
+      "key": "6f009a9b2502",
+      "outcome": "hit",
+      "seconds": 1.72
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-R2_[[:upper:]]_one_letter_short",
+      "key": "048b76ed3a85",
+      "outcome": "hit",
+      "seconds": 1.8
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-R2_[[:xdigit:]]_taking_G",
+      "key": "5ce5ce9be265",
+      "outcome": "hit",
+      "seconds": 1.23
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-R2_an_escaped_range_end_read_as_the_backslash",
+      "key": "d2a537a95657",
+      "outcome": "hit",
+      "seconds": 1.19
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-R2_a_trailing_tab_trimmed_as_a_space",
+      "key": "5f34f7784976",
+      "outcome": "hit",
+      "seconds": 1.45
+    },
+    {
+      "log": "timing-witnesses-1.log",
+      "product": "gitignore-port-R2_a_path_never_cleaned",
+      "key": "fefa468e7e7c",
+      "outcome": "hit",
+      "seconds": 1.73
+    },
+    {
+      "log": "W1-largest.log",
+      "product": "gitignore-port-R2_the_size_limit_one_byte_lower",
+      "key": "bc7a6fd0d915",
+      "outcome": "miss",
+      "seconds": 8.52
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "miss",
+      "seconds": 3.9
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.21
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.16
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.11
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.13
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.09
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.21
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.32
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-correct",
+      "key": "45e2369e4a62",
+      "outcome": "hit",
+      "seconds": 1.4
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-**_matching_one_segment_too_few",
+      "key": "9e827cec69a6",
+      "outcome": "miss",
+      "seconds": 3.25
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-entering_from_below_the_root_forgetting_the_files_above",
+      "key": "96f60aabb1fd",
+      "outcome": "miss",
+      "seconds": 3.04
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-precedence_read_from_the_root_down",
+      "key": "027a1b21c713",
+      "outcome": "miss",
+      "seconds": 2.91
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-a_linked_exclude_file_refused",
+      "key": "bc513ab2a2db",
+      "outcome": "miss",
+      "seconds": 2.95
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-%q_in_uppercase_hexadecimal",
+      "key": "6f009a9b2502",
+      "outcome": "miss",
+      "seconds": 2.95
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-R2_[[:upper:]]_one_letter_short",
+      "key": "048b76ed3a85",
+      "outcome": "miss",
+      "seconds": 3.02
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-R2_[[:xdigit:]]_taking_G",
+      "key": "5ce5ce9be265",
+      "outcome": "miss",
+      "seconds": 2.85
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-R2_an_escaped_range_end_read_as_the_backslash",
+      "key": "d2a537a95657",
+      "outcome": "miss",
+      "seconds": 2.88
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-R2_a_trailing_tab_trimmed_as_a_space",
+      "key": "5f34f7784976",
+      "outcome": "miss",
+      "seconds": 2.83
+    },
+    {
+      "log": "baseline.log",
+      "product": "gitignore-port-R2_a_path_never_cleaned",
+      "key": "fefa468e7e7c",
+      "outcome": "miss",
+      "seconds": 2.87
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-**_matching_one_segment_too_few",
+      "key": "9e827cec69a6",
+      "outcome": "hit",
+      "seconds": 1.73
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-entering_from_below_the_root_forgetting_the_files_above",
+      "key": "96f60aabb1fd",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-precedence_read_from_the_root_down",
+      "key": "027a1b21c713",
+      "outcome": "hit",
+      "seconds": 1.22
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-a_linked_exclude_file_refused",
+      "key": "bc513ab2a2db",
+      "outcome": "hit",
+      "seconds": 1.86
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-%q_in_uppercase_hexadecimal",
+      "key": "6f009a9b2502",
+      "outcome": "hit",
+      "seconds": 1.76
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-R2_[[:upper:]]_one_letter_short",
+      "key": "048b76ed3a85",
+      "outcome": "hit",
+      "seconds": 1.37
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-R2_[[:xdigit:]]_taking_G",
+      "key": "5ce5ce9be265",
+      "outcome": "hit",
+      "seconds": 1.6
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-R2_an_escaped_range_end_read_as_the_backslash",
+      "key": "d2a537a95657",
+      "outcome": "hit",
+      "seconds": 1.76
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-R2_a_trailing_tab_trimmed_as_a_space",
+      "key": "5f34f7784976",
+      "outcome": "hit",
+      "seconds": 1.75
+    },
+    {
+      "log": "timing-witnesses-2.log",
+      "product": "gitignore-port-R2_a_path_never_cleaned",
+      "key": "fefa468e7e7c",
+      "outcome": "hit",
+      "seconds": 1.84
+    },
+    {
+      "log": "W1-narrow-017.log",
+      "product": "gitignore-port-entering_from_below_the_root_forgetting_the_files_above",
+      "key": "96f60aabb1fd",
+      "outcome": "hit",
+      "seconds": 1.22
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "miss",
+      "seconds": 2.81
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.34
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.16
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.16
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.15
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.13
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.14
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.13
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.39
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.54
+    },
+    {
+      "log": "M1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 1.91
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-**_matching_one_segment_too_few",
+      "key": "9e827cec69a6",
+      "outcome": "hit",
+      "seconds": 1.63
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-entering_from_below_the_root_forgetting_the_files_above",
+      "key": "96f60aabb1fd",
+      "outcome": "hit",
+      "seconds": 1.49
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-precedence_read_from_the_root_down",
+      "key": "027a1b21c713",
+      "outcome": "hit",
+      "seconds": 1.5
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-a_linked_exclude_file_refused",
+      "key": "bc513ab2a2db",
+      "outcome": "hit",
+      "seconds": 1.4
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-%q_in_uppercase_hexadecimal",
+      "key": "6f009a9b2502",
+      "outcome": "hit",
+      "seconds": 1.53
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-R2_[[:upper:]]_one_letter_short",
+      "key": "048b76ed3a85",
+      "outcome": "hit",
+      "seconds": 1.17
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-R2_[[:xdigit:]]_taking_G",
+      "key": "5ce5ce9be265",
+      "outcome": "hit",
+      "seconds": 1.16
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-R2_an_escaped_range_end_read_as_the_backslash",
+      "key": "d2a537a95657",
+      "outcome": "hit",
+      "seconds": 1.68
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-R2_a_trailing_tab_trimmed_as_a_space",
+      "key": "5f34f7784976",
+      "outcome": "hit",
+      "seconds": 1.46
+    },
+    {
+      "log": "timing-witnesses-3.log",
+      "product": "gitignore-port-R2_a_path_never_cleaned",
+      "key": "fefa468e7e7c",
+      "outcome": "hit",
+      "seconds": 1.77
+    },
+    {
+      "log": "largest-baseline.log",
+      "product": "gitignore-port-R2_the_size_limit_one_byte_lower",
+      "key": "bc7a6fd0d915",
+      "outcome": "miss",
+      "seconds": 3.1
+    },
+    {
+      "log": "largest-timing-2.log",
+      "product": "gitignore-port-R2_the_size_limit_one_byte_lower",
+      "key": "bc7a6fd0d915",
+      "outcome": "hit",
+      "seconds": 2.55
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-**_matching_one_segment_too_few",
+      "key": "9e827cec69a6",
+      "outcome": "miss",
+      "seconds": 4.02
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-entering_from_below_the_root_forgetting_the_files_above",
+      "key": "96f60aabb1fd",
+      "outcome": "miss",
+      "seconds": 5.09
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-precedence_read_from_the_root_down",
+      "key": "027a1b21c713",
+      "outcome": "miss",
+      "seconds": 4.62
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-a_linked_exclude_file_refused",
+      "key": "bc513ab2a2db",
+      "outcome": "miss",
+      "seconds": 3.57
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-%q_in_uppercase_hexadecimal",
+      "key": "6f009a9b2502",
+      "outcome": "miss",
+      "seconds": 3.71
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-R2_[[:upper:]]_one_letter_short",
+      "key": "048b76ed3a85",
+      "outcome": "miss",
+      "seconds": 4.39
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-R2_[[:xdigit:]]_taking_G",
+      "key": "5ce5ce9be265",
+      "outcome": "miss",
+      "seconds": 3.72
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-R2_an_escaped_range_end_read_as_the_backslash",
+      "key": "d2a537a95657",
+      "outcome": "miss",
+      "seconds": 4.29
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-R2_a_trailing_tab_trimmed_as_a_space",
+      "key": "5f34f7784976",
+      "outcome": "miss",
+      "seconds": 4.3
+    },
+    {
+      "log": "W1-witnesses.log",
+      "product": "gitignore-port-R2_a_path_never_cleaned",
+      "key": "fefa468e7e7c",
+      "outcome": "miss",
+      "seconds": 4.64
+    },
+    {
+      "log": "largest-timing-3.log",
+      "product": "gitignore-port-R2_the_size_limit_one_byte_lower",
+      "key": "bc7a6fd0d915",
+      "outcome": "hit",
+      "seconds": 2.09
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "miss",
+      "seconds": 2.96
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.73
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.77
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 1.7
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.16
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.27
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 1.78
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.58
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.02
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 1.75
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.21
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 1.75
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.38
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.41
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.01
+    },
+    {
+      "log": "P1-answers.log",
+      "product": "gitignore-port-correct",
+      "key": "62c928126c6e",
+      "outcome": "hit",
+      "seconds": 2.17
+    },
+    {
+      "log": "M1-solo-TestThePortAnswersAsGoCohereAndGitDo_000.log",
+      "product": "gitignore-port-correct",
+      "key": "0b03c4032ecb",
+      "outcome": "hit",
+      "seconds": 2.37
+    }
+  ]
+}

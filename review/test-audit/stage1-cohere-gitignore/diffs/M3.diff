@@ -1,0 +1,11 @@
+--- a/stage1/cohere/gitignore/gitignore.ts
++++ b/stage1/cohere/gitignore/gitignore.ts
+@@ -425,7 +425,7 @@
+ function lastMatching(rules: readonly Rule[], relativePath: string, baseName: string, isDirectory: boolean): Rule | undefined {
+ 	for (let index = rules.length - 1; index >= 0; index--) {
+ 		const candidate = rules[index] ?? panic('gitignore: a rule index past the rules');
+-		if (candidate.directoryOnly && !isDirectory) {
++		if (candidate.directoryOnly && isDirectory) {
+ 			continue;
+ 		}
+ 		if (candidate.matches(relativePath, baseName)) {

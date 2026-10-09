@@ -1,0 +1,11 @@
+--- a/stage1/cohere/gitignore/glob.ts
++++ b/stage1/cohere/gitignore/glob.ts
+@@ -82,7 +82,7 @@
+ 			const character = utf8At(text, textIndex);
+ 			clearPositions(nextPositions);
+ 			clearPositions(nextInside);
+-			const crossesNothing = path && character === 0x2f; // '/'
++			const crossesNothing = path && character !== 0x2f; // '/'
+ 			let advanced = false;
+ 			for (let position = 0; position < this.tokens.length; position++) {
+ 				const tokenEntry = this.tokens[position] ?? panic('glob: a position past the last token');

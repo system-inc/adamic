@@ -1,0 +1,11 @@
+--- a/stage1/cohere/gitignore/answers_shards_test.go
++++ b/stage1/cohere/gitignore/answers_shards_test.go
+@@ -77,7 +77,7 @@
+ 			}
+ 			for i, q := range tr.Queries {
+ 				key := fmt.Sprintf("tree/%s/%s/%t", tr.Name, q.Path, q.IsDirectory)
+-				b := portBucket(key)
++				b := i % portComparisonShards
+ 				add(key, b)
+ 				parts[b].Queries = append(parts[b].Queries, q)
+ 				if len(tr.Expected) > 0 {

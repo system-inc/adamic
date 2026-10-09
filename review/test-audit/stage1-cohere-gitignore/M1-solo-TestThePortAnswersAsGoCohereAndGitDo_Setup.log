@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T11:58:24.833399265Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore"}
+{"Time":"2026-10-09T11:58:24.845015987Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup"}
+{"Time":"2026-10-09T11:58:24.845294699Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup","Output":"=== RUN   TestThePortAnswersAsGoCohereAndGitDo_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:26.869349346Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup","Output":"    answers_shards_test.go:381: build gitignore-go-oracle 18f6963684b0 hit 1.98\n"}
+{"Time":"2026-10-09T11:58:27.742017135Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup","Output":"    answers_shards_test.go:381: union: 31949 live case ids, each exactly once (55 trees, 21 pattern lists, 1823 globs)\n"}
+{"Time":"2026-10-09T11:58:28.031716242Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup","Output":"    answers_shards_test.go:381: shared setup ready: 3.186s\n"}
+{"Time":"2026-10-09T11:58:28.032228369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup","Output":"--- PASS: TestThePortAnswersAsGoCohereAndGitDo_Setup (3.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:28.032239864Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_Setup","Elapsed":3.19}
+{"Time":"2026-10-09T11:58:28.032269697Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:28.152520042Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/gitignore\t3.318s\n"}
+{"Time":"2026-10-09T11:58:28.152627907Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Elapsed":3.319}

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/gitignore/path.ts",
+    "from": "const rooted = path.startsWith('/');",
+    "to": "const rooted = !path.startsWith('/');",
+    "menu": "flip condition",
+    "line": 51,
+    "failed_rows": [
+      "TestThePortAnswersAsGoCohereAndGitDo comparison family",
+      "TestPathAnswersAsGosPathPackage"
+    ],
+    "diff": "diffs/M1.diff",
+    "equivalent_candidate": false
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "from": "const crossesNothing = path && character === 0x2f;",
+    "to": "const crossesNothing = path && character !== 0x2f;",
+    "menu": "flip condition",
+    "line": 85,
+    "failed_rows": [
+      "TestThePortAnswersAsGoCohereAndGitDo comparison family"
+    ],
+    "diff": "diffs/M2.diff",
+    "equivalent_candidate": false
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "from": "if (candidate.directoryOnly && !isDirectory) {",
+    "to": "if (candidate.directoryOnly && isDirectory) {",
+    "menu": "flip condition",
+    "line": 428,
+    "failed_rows": [
+      "TestThePortAnswersAsGoCohereAndGitDo comparison family"
+    ],
+    "diff": "diffs/M3.diff",
+    "equivalent_candidate": false
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/expression.go",
+    "from": "return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil",
+    "to": "return ir.BooleanConstant{Value: node.Kind != ast.KindTrueKeyword}, nil",
+    "menu": "flip condition",
+    "line": 508,
+    "failed_rows": [
+      "TestThePortAnswersAsGoCohereAndGitDo comparison family",
+      "TestPathAnswersAsGosPathPackage"
+    ],
+    "diff": "diffs/M4.diff",
+    "equivalent_candidate": false
+  }
+]

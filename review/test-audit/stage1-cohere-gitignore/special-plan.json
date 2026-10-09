@@ -1,0 +1,37 @@
+[
+  {
+    "id": "W1",
+    "file": "stage1/cohere/gitignore/gitignore_test.go",
+    "line": 535,
+    "kind": "witness",
+    "change": "firstDifference always returns empty agreement"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/gitignore/answers_shards_test.go",
+    "line": 80,
+    "kind": "setup",
+    "change": "real-tree query owner uses query index instead of stable path hash"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/gitignore/main.ts",
+    "line": 41,
+    "kind": "empty-answer probe",
+    "change": "port entry produces no output: remove entry execution at module scope"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/gitignore/pathsweep.ts",
+    "line": 23,
+    "kind": "empty-answer probe",
+    "change": "port entry produces no output: remove entry execution at module scope"
+  },
+  {
+    "id": "P3",
+    "file": "internal/lower/lower.go",
+    "line": 12,
+    "kind": "empty-answer probe",
+    "change": "Lower returns an empty ir.Program at entry under ADAMIC_EMPTY_PROBE=P3"
+  }
+]

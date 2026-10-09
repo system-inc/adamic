@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/gitignore/",
+    "-run",
+    "^TestThePortAnswersAsGoCohereAndGitDo_017$"
+  ],
+  "wall": 9.888102888999128,
+  "exit": 1
+}

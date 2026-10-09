@@ -1,0 +1,488 @@
+[
+  {
+    "group": "answers",
+    "rep": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_Setup|Union|_00[0-9]|_01[0-5])$"
+    ],
+    "wall": 44.759343210000225,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:49:38.28036178Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 41.132
+      }
+    ]
+  },
+  {
+    "group": "answers",
+    "rep": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_Setup|Union|_00[0-9]|_01[0-5])$"
+    ],
+    "wall": 43.41446431100121,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:50:21.700254713Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 36.731
+      }
+    ]
+  },
+  {
+    "group": "answers",
+    "rep": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_Setup|Union|_00[0-9]|_01[0-5])$"
+    ],
+    "wall": 39.537345631997596,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:51:01.246297718Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 36.704
+      }
+    ]
+  },
+  {
+    "group": "witnesses",
+    "rep": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_01[6-9]|_02[0-6])$"
+    ],
+    "wall": 42.841316831996664,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:51:44.080329454Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 40.23
+      }
+    ]
+  },
+  {
+    "group": "witnesses",
+    "rep": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_01[6-9]|_02[0-6])$"
+    ],
+    "wall": 49.728993435997836,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:52:33.815642468Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 46.356
+      }
+    ]
+  },
+  {
+    "group": "witnesses",
+    "rep": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_01[6-9]|_02[0-6])$"
+    ],
+    "wall": 49.23656652899808,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:23.053815336Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 42.181
+      }
+    ]
+  },
+  {
+    "group": "path",
+    "rep": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPathAnswersAsGosPathPackage$"
+    ],
+    "wall": 4.765541100001428,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:27.827945855Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 2.461
+      }
+    ]
+  },
+  {
+    "group": "path",
+    "rep": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPathAnswersAsGosPathPackage$"
+    ],
+    "wall": 3.428867672002525,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:31.247288084Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 1.6139999999999999
+      }
+    ]
+  },
+  {
+    "group": "path",
+    "rep": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPathAnswersAsGosPathPackage$"
+    ],
+    "wall": 4.980167983001593,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:36.237566745Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 2.815
+      }
+    ]
+  },
+  {
+    "group": "gaps",
+    "rep": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ],
+    "wall": 3.348977678000665,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:39.58879577Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 1.349
+      }
+    ]
+  },
+  {
+    "group": "gaps",
+    "rep": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ],
+    "wall": 3.0072967449996213,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:42.595711246Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 1.199
+      }
+    ]
+  },
+  {
+    "group": "gaps",
+    "rep": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ],
+    "wall": 3.018132427998353,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:45.615885102Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 1.157
+      }
+    ]
+  },
+  {
+    "group": "planted",
+    "rep": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardPlantedDisagreement$"
+    ],
+    "wall": 1.8211855620029382,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:47.438828205Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "group": "planted",
+    "rep": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardPlantedDisagreement$"
+    ],
+    "wall": 1.7608644520005328,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:49.200202269Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.011
+      }
+    ]
+  },
+  {
+    "group": "planted",
+    "rep": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardPlantedDisagreement$"
+    ],
+    "wall": 1.755713154998375,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:50.956051196Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.011
+      }
+    ]
+  },
+  {
+    "group": "growth",
+    "rep": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardAssignmentSurvivesCorpusGrowth$"
+    ],
+    "wall": 1.7374769469970488,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:52.69357691Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "group": "growth",
+    "rep": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardAssignmentSurvivesCorpusGrowth$"
+    ],
+    "wall": 1.7361023880002904,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:54.431203161Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.013
+      }
+    ]
+  },
+  {
+    "group": "growth",
+    "rep": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardAssignmentSurvivesCorpusGrowth$"
+    ],
+    "wall": 1.848483869998745,
+    "exit": 0,
+    "terminal": [
+      {
+        "Time": "2026-10-09T11:53:56.280048699Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.009
+      }
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "answers": "^TestThePortAnswersAsGoCohereAndGitDo(_Setup|Union|_00[0-9]|_01[0-5])$",
+  "witnesses": "^TestThePortAnswersAsGoCohereAndGitDo(_01[6-9]|_02[0-6])$",
+  "path": "^TestPathAnswersAsGosPathPackage$",
+  "gaps": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+  "planted": "^TestPortAnswerShardPlantedDisagreement$",
+  "growth": "^TestPortAnswerShardAssignmentSurvivesCorpusGrowth$"
+}

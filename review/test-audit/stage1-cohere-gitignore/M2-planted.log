@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T12:01:20.810342839Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore"}
+{"Time":"2026-10-09T12:01:20.820029943Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement"}
+{"Time":"2026-10-09T12:01:20.82009609Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Output":"=== RUN   TestPortAnswerShardPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:20.820118245Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Output":"=== PAUSE TestPortAnswerShardPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:20.820120772Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement"}
+{"Time":"2026-10-09T12:01:20.820123174Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement"}
+{"Time":"2026-10-09T12:01:20.820125375Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Output":"=== CONT  TestPortAnswerShardPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:20.820127783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Output":"    answers_shards_test.go:549: union: 2 live case ids, each exactly once (0 trees, 1 pattern lists, 0 globs)\n"}
+{"Time":"2026-10-09T12:01:20.820136838Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Output":"    answers_shards_test.go:570: planted disagreement caught only by shard-009\n"}
+{"Time":"2026-10-09T12:01:20.820145713Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Output":"--- PASS: TestPortAnswerShardPlantedDisagreement (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:20.820150046Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestPortAnswerShardPlantedDisagreement","Elapsed":0}
+{"Time":"2026-10-09T12:01:20.820175996Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:20.820474077Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/gitignore\t0.010s\n"}
+{"Time":"2026-10-09T12:01:20.820523705Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Elapsed":0.01}

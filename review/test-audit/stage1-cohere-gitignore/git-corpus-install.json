@@ -1,0 +1,34 @@
+[
+  {
+    "file": "t0008-ignores.sh",
+    "command": [
+      "timeout",
+      "90",
+      "curl",
+      "-fL",
+      "--retry",
+      "1",
+      "https://raw.githubusercontent.com/git/git/v2.51.0/t/t0008-ignores.sh",
+      "-o",
+      "/tmp/u094/git-source/t/t0008-ignores.sh"
+    ],
+    "seconds": 0.41849072900004103,
+    "exit": 0
+  },
+  {
+    "file": "t3070-wildmatch.sh",
+    "command": [
+      "timeout",
+      "90",
+      "curl",
+      "-fL",
+      "--retry",
+      "1",
+      "https://raw.githubusercontent.com/git/git/v2.51.0/t/t3070-wildmatch.sh",
+      "-o",
+      "/tmp/u094/git-source/t/t3070-wildmatch.sh"
+    ],
+    "seconds": 0.29928982199999155,
+    "exit": 0
+  }
+]

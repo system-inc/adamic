@@ -1,0 +1,486 @@
+[
+  {
+    "name": "W1-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/gitignore/"
+    ],
+    "env": {},
+    "wall": 0.4616102789987053,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": []
+  },
+  {
+    "name": "W1-witnesses",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_01[6-9]|_02[0-6])$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/W1"
+    },
+    "wall": 105.03105438000057,
+    "exit": 1,
+    "failures": [
+      "TestThePortAnswersAsGoCohereAndGitDo_020",
+      "TestThePortAnswersAsGoCohereAndGitDo_023",
+      "TestThePortAnswersAsGoCohereAndGitDo_016",
+      "TestThePortAnswersAsGoCohereAndGitDo_024",
+      "TestThePortAnswersAsGoCohereAndGitDo_021",
+      "TestThePortAnswersAsGoCohereAndGitDo_022",
+      "TestThePortAnswersAsGoCohereAndGitDo_018",
+      "TestThePortAnswersAsGoCohereAndGitDo_019",
+      "TestThePortAnswersAsGoCohereAndGitDo_025"
+    ],
+    "skips": [
+      "TestThePortAnswersAsGoCohereAndGitDo_026"
+    ],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:07:58.678073658Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 90.096
+      }
+    ]
+  },
+  {
+    "name": "W1-path",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPathAnswersAsGosPathPackage$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/W1"
+    },
+    "wall": 14.985129696000513,
+    "exit": 1,
+    "failures": [
+      "TestPathAnswersAsGosPathPackage"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:08:13.665976365Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 7.505
+      }
+    ]
+  },
+  {
+    "name": "W1-planted",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardPlantedDisagreement$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/W1"
+    },
+    "wall": 6.713462234001781,
+    "exit": 1,
+    "failures": [
+      "TestPortAnswerShardPlantedDisagreement"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:08:20.391899173Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.099
+      }
+    ]
+  },
+  {
+    "name": "W1-largest",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo_026$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/W1",
+      "ADAMIC_GITIGNORE_LARGEST": "1"
+    },
+    "wall": 63.883664592998684,
+    "exit": 1,
+    "failures": [
+      "TestThePortAnswersAsGoCohereAndGitDo_026"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:09:24.292708107Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 57.897
+      }
+    ]
+  },
+  {
+    "name": "S1-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/gitignore/"
+    ],
+    "env": {},
+    "wall": 0.723956999998336,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": []
+  },
+  {
+    "name": "S1-growth",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPortAnswerShardAssignmentSurvivesCorpusGrowth$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/S1"
+    },
+    "wall": 16.479108630002884,
+    "exit": 1,
+    "failures": [
+      "TestPortAnswerShardAssignmentSurvivesCorpusGrowth"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:09:41.382738204Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 0.045
+      }
+    ]
+  },
+  {
+    "name": "P1-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/gitignore/main.ts",
+      "-o",
+      "/tmp/u094/P1-port",
+      "--sanitize"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/P1"
+    },
+    "wall": 1.8765440239985764,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": []
+  },
+  {
+    "name": "P1-answers",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_Setup|Union|_00[0-9]|_01[0-5])$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/P1"
+    },
+    "wall": 52.47358534600062,
+    "exit": 1,
+    "failures": [
+      "TestThePortAnswersAsGoCohereAndGitDo_015",
+      "TestThePortAnswersAsGoCohereAndGitDo_003",
+      "TestThePortAnswersAsGoCohereAndGitDo_000",
+      "TestThePortAnswersAsGoCohereAndGitDo_013",
+      "TestThePortAnswersAsGoCohereAndGitDo_009",
+      "TestThePortAnswersAsGoCohereAndGitDo_002",
+      "TestThePortAnswersAsGoCohereAndGitDo_001",
+      "TestThePortAnswersAsGoCohereAndGitDo_007",
+      "TestThePortAnswersAsGoCohereAndGitDo_006",
+      "TestThePortAnswersAsGoCohereAndGitDo_008",
+      "TestThePortAnswersAsGoCohereAndGitDo_005",
+      "TestThePortAnswersAsGoCohereAndGitDo_014",
+      "TestThePortAnswersAsGoCohereAndGitDo_011",
+      "TestThePortAnswersAsGoCohereAndGitDo_012",
+      "TestThePortAnswersAsGoCohereAndGitDo_010",
+      "TestThePortAnswersAsGoCohereAndGitDo_004"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:10:35.890675404Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 49.338
+      }
+    ]
+  },
+  {
+    "name": "P2-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/gitignore/pathsweep.ts",
+      "-o",
+      "/tmp/u094/P2-port",
+      "--sanitize"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/P2"
+    },
+    "wall": 0.9845359040009498,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": []
+  },
+  {
+    "name": "P2-path",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestPathAnswersAsGosPathPackage$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/P2"
+    },
+    "wall": 5.013281876999827,
+    "exit": 1,
+    "failures": [
+      "TestPathAnswersAsGosPathPackage"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:10:41.934037431Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 2.146
+      }
+    ]
+  },
+  {
+    "name": "P3-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "env": {},
+    "wall": 1.6541815339987807,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": []
+  },
+  {
+    "name": "P3-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/gitignore/gaps/6_boolean_element.ts",
+      "-o",
+      "/tmp/u094/P3-port",
+      "--sanitize"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/P3",
+      "ADAMIC_EMPTY_PROBE": "P3"
+    },
+    "wall": 21.23958815900187,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": []
+  },
+  {
+    "name": "P3-gaps",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u094/cache/P3",
+      "ADAMIC_EMPTY_PROBE": "P3"
+    },
+    "wall": 14.43740175700077,
+    "exit": 1,
+    "failures": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:11:19.244463941Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 2.247
+      }
+    ]
+  },
+  {
+    "name": "largest-timing-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo_026$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": "1"
+    },
+    "wall": 33.049394018002204,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:11:52.327541312Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 27.699
+      }
+    ]
+  },
+  {
+    "name": "largest-timing-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo_026$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": "1"
+    },
+    "wall": 35.16420276200006,
+    "exit": 0,
+    "failures": [],
+    "skips": [],
+    "terminal": [
+      {
+        "Time": "2026-10-09T12:12:27.48749609Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Elapsed": 28.642
+      }
+    ]
+  }
+]

@@ -1,0 +1,68 @@
+Static port call inventory. Matcher.root and Matcher.directory are declared but not called by these drivers. Drivers and case parser prepare/format data; they are not production mutation targets.
+stage1/cohere/gitignore/path.ts:10: function isClean(path: string): boolean {
+stage1/cohere/gitignore/path.ts:44: export function clean(path: string): string {
+stage1/cohere/gitignore/path.ts:78: export function base(path: string): string {
+stage1/cohere/gitignore/path.ts:96: export function dir(path: string): string {
+stage1/cohere/gitignore/glob.ts:48: constructor(tokens: readonly Token[], never: boolean, isLiteral: boolean, literal: readonly number[], isSuffix: boolean) {
+stage1/cohere/gitignore/glob.ts:59: matches(text: string, path: boolean): boolean {
+stage1/cohere/gitignore/glob.ts:148: reach(positions: boolean[], start: number): void {
+stage1/cohere/gitignore/glob.ts:172: function endsWith(text: string, length: number, bytes: readonly number[]): boolean {
+stage1/cohere/gitignore/glob.ts:183: function neverGlob(): Glob {
+stage1/cohere/gitignore/glob.ts:189: export function compileGlob(pattern: string, path: boolean): Glob {
+stage1/cohere/gitignore/glob.ts:283: function compileSet(pattern: string, length: number, start: number): CompiledSet | undefined {
+stage1/cohere/gitignore/glob.ts:367: function className(pattern: string, start: number, end: number): string {
+stage1/cohere/gitignore/glob.ts:377: function addClass(members: boolean[], name: string): boolean {
+stage1/cohere/gitignore/glob.ts:428: function isLetter(character: number): boolean {
+stage1/cohere/gitignore/glob.ts:432: function isDigit(character: number): boolean {
+stage1/cohere/gitignore/glob.ts:438: function newPositionSet(size: number): boolean[] {
+stage1/cohere/gitignore/glob.ts:442: function addPosition(positions: boolean[], position: number): void {
+stage1/cohere/gitignore/glob.ts:446: function hasPosition(positions: readonly boolean[], position: number): boolean {
+stage1/cohere/gitignore/glob.ts:450: function clearPositions(positions: boolean[]): void {
+stage1/cohere/gitignore/gitignore.ts:73: function failure<Value>(message: string): Result<Value> {
+stage1/cohere/gitignore/gitignore.ts:93: function lstat(tree: WorkingTree, relative: string): Entry | undefined {
+stage1/cohere/gitignore/gitignore.ts:100: function stat(tree: WorkingTree, relative: string): Entry | undefined {
+stage1/cohere/gitignore/gitignore.ts:121: function absolute(tree: WorkingTree, relative: string): string {
+stage1/cohere/gitignore/gitignore.ts:133: constructor(file: string, line: number, pattern: string) {
+stage1/cohere/gitignore/gitignore.ts:140: isZero(): boolean {
+stage1/cohere/gitignore/gitignore.ts:145: toString(): string {
+stage1/cohere/gitignore/gitignore.ts:155: function zeroSource(): Source {
+stage1/cohere/gitignore/gitignore.ts:171: constructor(source: Source, negated: boolean, directoryOnly: boolean, anchored: boolean, base: string, glob: Glob) {
+stage1/cohere/gitignore/gitignore.ts:181: matches(relativePath: string, baseName: string): boolean {
+stage1/cohere/gitignore/gitignore.ts:211: constructor(tree: WorkingTree, directory: string, files: (readonly Rule[])[], exclude: readonly Rule[], excludedBy: Rule | undefined) {
+stage1/cohere/gitignore/gitignore.ts:220: root(): string {
+stage1/cohere/gitignore/gitignore.ts:226: directory(): string {
+stage1/cohere/gitignore/gitignore.ts:232: excluded(): Verdict {
+stage1/cohere/gitignore/gitignore.ts:247: enter(relativeDirectoryAsGiven: string): Result<Matcher> {
+stage1/cohere/gitignore/gitignore.ts:297: ignored(relativePathAsGiven: string, isDirectory: boolean): Verdict {
+stage1/cohere/gitignore/gitignore.ts:323: ignoredPath(relativePathAsGiven: string, isDirectory: boolean): Result<Verdict> {
+stage1/cohere/gitignore/gitignore.ts:339: decide(relativePath: string, baseName: string, isDirectory: boolean, fileCount: number): Rule | undefined {
+stage1/cohere/gitignore/gitignore.ts:354: export function newMatcher(tree: WorkingTree): Result<Matcher> {
+stage1/cohere/gitignore/gitignore.ts:385: constructor(rules: readonly Rule[]) {
+stage1/cohere/gitignore/gitignore.ts:393: ignored(relativePathAsGiven: string, isDirectory: boolean): Verdict {
+stage1/cohere/gitignore/gitignore.ts:406: export function compilePatterns(lines: readonly string[], name: string): Result<Patterns> {
+stage1/cohere/gitignore/gitignore.ts:425: function lastMatching(rules: readonly Rule[], relativePath: string, baseName: string, isDirectory: boolean): Rule | undefined {
+stage1/cohere/gitignore/gitignore.ts:440: function readTreeFile(tree: WorkingTree, directory: string): Result<readonly Rule[]> {
+stage1/cohere/gitignore/gitignore.ts:455: function readIgnoreFile(tree: WorkingTree, relativeFile: string, follow: boolean): Result<string | undefined> {
+stage1/cohere/gitignore/gitignore.ts:489: function parseRules(contentsAsRead: string, file: string, base: string): Result<readonly Rule[]> {
+stage1/cohere/gitignore/gitignore.ts:509: function trimTrailingSpaces(line: string): string {
+stage1/cohere/gitignore/gitignore.ts:537: function compileRule(line: string, file: string, lineNumber: number, base: string): Rule {
+stage1/cohere/gitignore/gitignore.ts:565: function cleanRelative(relative: string): string {
+stage1/cohere/gitignore/gitignore.ts:579: function isCleanRelative(relative: string): boolean {
+stage1/cohere/gitignore/gitignore.ts:598: export function joinRelative(directory: string, name: string): string {
+stage1/cohere/gitignore/gitignore.ts:606: function displayDirectory(directory: string): string {
+stage1/cohere/gitignore/gitignore.ts:614: function cutPrefix(text: string, prefix: string): readonly [string, boolean] {
+stage1/cohere/gitignore/gitignore.ts:622: function trimPrefix(text: string, prefix: string): string {
+stage1/cohere/gitignore/gitignore.ts:627: function trimSuffix(text: string, suffix: string): string {
+stage1/cohere/gitignore/gitignore.ts:632: function hexDigit(value: number): string {
+stage1/cohere/gitignore/gitignore.ts:640: function quote(text: string): string {
+stage1/cohere/gitignore/main.ts:16: function verdictLine(verdict: Verdict): string {
+stage1/cohere/gitignore/main.ts:23: function scopeFor(scopes: Map<string, Matcher>, directory: string): Result<Matcher> {
+stage1/cohere/gitignore/pathsweep.ts:9: function unescape(line: string): string {
+Gap row code under test: internal/lower.Lower and its lowering.expression dispatch, including BooleanConstant creation at expression.go:509. Full reached Go functions will be captured with a coverage profile before planting.
+
+Input-parser functions also reached by the port entry, outside the production mutation targets:
+stage1/cohere/gitignore/case.ts:58: function unescape(field: string): string {
+stage1/cohere/gitignore/case.ts:94: function field(fields: readonly string[], index: number, lineNumber: number): string {
+stage1/cohere/gitignore/case.ts:99: function flag(fields: readonly string[], index: number, lineNumber: number): boolean {
+stage1/cohere/gitignore/case.ts:108: function entryOf(fields: readonly string[], lineNumber: number): Entry {
+stage1/cohere/gitignore/case.ts:125: export function parseCases(text: string): Cases {

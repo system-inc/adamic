@@ -1,0 +1,66 @@
+[
+  {
+    "name": "extended-baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo(_Setup|Union|_00[0-9]|_01[0-5])$"
+    ],
+    "env": {
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source"
+    },
+    "wall": 30.182031111999095,
+    "exit": 0
+  },
+  {
+    "name": "coverage",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-audit/stage1-cohere-gitignore/lower.cover"
+    ],
+    "env": {},
+    "wall": 8.563570244001312,
+    "exit": 0
+  },
+  {
+    "name": "largest-baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo_026$"
+    ],
+    "env": {
+      "ADAMIC_GITIGNORE_LARGEST": "1",
+      "COHERE_GIT_SOURCE": "/tmp/u094/git-source"
+    },
+    "wall": 23.848732282000128,
+    "exit": 0
+  }
+]
