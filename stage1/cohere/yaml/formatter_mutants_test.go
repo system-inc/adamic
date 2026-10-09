@@ -58,6 +58,7 @@ func yamlFormatterMutantPlan(t *testing.T, count int) [][]string {
 }
 
 func TestFormatterMutantsUnion(t *testing.T) {
+	t.Parallel()
 	_, _, count := formatCases(t)
 	if count == 0 {
 		t.Fatal("empty corpus")
@@ -106,6 +107,7 @@ func yamlFormatterMutantSurvivor(unit, side string, actual, expected []byte) err
 }
 
 func TestFormatterMutantsPlantedSurvivor(t *testing.T) {
+	t.Parallel()
 	for _, side := range []string{"native", "Node"} {
 		caught := 0
 		for index := range yamlFormatterMutants {
