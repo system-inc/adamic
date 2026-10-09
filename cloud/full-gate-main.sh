@@ -71,7 +71,10 @@ publish() {
   local sha=$1 stamp=$2 out=$3 parent=$4
   local copy index gitDirectory tree commit branch=gate-logs/${sha:0:12}/${stamp}/full-main
   copy=$(mktemp -d)
-  scp -q -r "${box}:${out}" "${copy}/full-main"
+  # The record, not the run's scratch: the catalog's units hold whole repository worktrees and the wasi units
+  # their go-build trees. Copying those with scp -r took over ten minutes a publish (and stalled on their dangling
+  # symlinks), so Home's loop hung two hours inside one run's publishes (Oct 9 06:4xZ).
+  rsync -a --exclude 'adamic-catalog-worktree-*' --exclude 'go-build*' --exclude '*.test' "${box}:${out}/" "${copy}/full-main/"
   # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
   # that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
   find "${copy}/full-main" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
