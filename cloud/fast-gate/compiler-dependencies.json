@@ -1,6 +1,33 @@
 {
   "version": 1,
   "packages": {
+    "": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/arena": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/control_flow_graph": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
     "stage1/cohere/lint/helpers/core": [
       "internal/load",
       "internal/lower",
@@ -83,6 +110,33 @@
       "cmd/adamic"
     ],
     "stage1/cohere/lint/helpers/slot05/batch33": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/array-callback-return": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/consistent-return": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/no-unreachable-loop": [
       "internal/load",
       "internal/lower",
       "internal/native",
