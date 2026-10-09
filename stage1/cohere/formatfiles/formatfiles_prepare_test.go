@@ -28,7 +28,6 @@ type formatfilesShared struct {
 	casesPath, answers string
 	parts              []formatfilesPart
 	port               formatfilesPrepared
-	mutated            map[string]formatfilesPrepared
 }
 
 var formatfilesCorpusOnce sync.Once
@@ -71,19 +70,12 @@ func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
 	return prepared
 }
 
-func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {
+func formatfilesPrepareShard(t *testing.T) *formatfilesShared {
 	t.Helper()
 	state := *formatfilesReady(t)
 	state.port = formatfilesPreparedPort(t)
 	if runtime.GOOS == "darwin" {
 		state.port.unsanitized = formatfilesUnsanitized(t)
-	}
-	state.mutated = make(map[string]formatfilesPrepared)
-	for index, mutant := range mutants {
-		if formatfilesShard("mutant/"+mutant.name) != selected {
-			continue
-		}
-		state.mutated[mutant.name] = formatfilesPreparedMutant(t, index)
 	}
 	return &state
 }
@@ -254,10 +246,19 @@ func formatfilesSetupPort(t *testing.T, applied *mutant) string {
 	directory := formatfilesSetupDirectory(t)
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
-	for _, made := range []string{port, gitignore} {
+	config := filepath.Join(directory, "config")
+	for _, made := range []string{port, gitignore, config} {
 		if err := os.Mkdir(made, 0o755); err != nil {
 			t.Fatal(err)
 		}
+	}
+	// enumerate imports the shared config glob implementation.
+	contents, err := os.ReadFile("../config/glob.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(config, "glob.ts"), contents, 0o644); err != nil {
+		t.Fatal(err)
 	}
 	for _, name := range gitignoreFiles {
 		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))
