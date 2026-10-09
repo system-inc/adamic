@@ -1,4 +1,5 @@
 function isNumber(value: string | number): value is number { return typeof value === 'number'; }
-const items: (string | number)[] = [1, 2];
+const items: (string | number)[] = [1, 2, 'discard'];
+items.pop();
 function sum(values: number[]): number { return values.reduce((a, b) => a + b, 0); }
 if (items.every(isNumber)) console.log('total ' + sum(items));

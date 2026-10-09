@@ -1,0 +1,15 @@
+--- FAIL: TestArrayNarrowingSomeNegatedAgrees (0.23s)
+    array_narrowing_test.go:137: Lower refused acceptance row: /tmp/adamic-gate/TestArrayNarrowingSomeNegatedAgrees2997840640/001/main.a:2:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal
+--- FAIL: TestArrayNarrowingCatRefused (0.15s)
+    array_narrowing_test.go:105: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/cat.a:4:5, got /workspace/adamic/internal/lower/testdata/array_narrowing/cat.a:3:33: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal
+--- FAIL: TestArrayNarrowingForwardRefused (0.13s)
+    array_narrowing_test.go:100: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/forward.a:4:5, got /workspace/adamic/internal/lower/testdata/array_narrowing/forward.a:2:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal
+--- FAIL: TestArrayNarrowingPropertyRefused (0.16s)
+    array_narrowing_test.go:95: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/property.a:3:5, got /workspace/adamic/internal/lower/testdata/array_narrowing/property.a:2:54: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal
+--- FAIL: TestArrayNarrowingReadonlyRefused (0.11s)
+    array_narrowing_test.go:85: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/readonly.a:3:5, got /workspace/adamic/internal/lower/testdata/array_narrowing/readonly.a:2:45: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal
+--- FAIL: TestArrayNarrowingInferredRefused (0.22s)
+    array_narrowing_test.go:80: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/inferred.a:2:5, got /workspace/adamic/internal/lower/testdata/array_narrowing/inferred.a:1:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	87.507s
+FAIL
