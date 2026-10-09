@@ -48,6 +48,7 @@ func factoryHooksMatches(output []byte, mutated bool) bool {
 }
 
 func TestFactoryHooksUnion(t *testing.T) {
+	t.Parallel()
 	registered := []func(*testing.T){TestFactoryHooks_000, TestFactoryHooks_001, TestFactoryHooks_002, TestFactoryHooks_003, TestFactoryHooks_004}
 	if len(registered) != testFactoryHooksShards {
 		t.Fatalf("registered %d shards, want %d", len(registered), testFactoryHooksShards)
@@ -70,6 +71,7 @@ func TestFactoryHooksUnion(t *testing.T) {
 }
 
 func TestFactoryHooksPlantedFailure(t *testing.T) {
+	t.Parallel()
 	caught := []int{}
 	for i := 0; i < testFactoryHooksShards; i++ {
 		for _, c := range factoryHooksSlice(i) {
@@ -261,8 +263,13 @@ func factoryHooksNative(t *testing.T) string {
 }
 
 // Each build product is a separately timed setup unit, built once across the family.
+// Not parallel: fixture registries and cached build products are prepared before the parallel shards.
 func TestFactoryHooksLowered_000(t *testing.T) { factoryHooksLowered(t, 0) }
+
+// Not parallel: fixture registries and cached build products are prepared before the parallel shards.
 func TestFactoryHooksLowered_001(t *testing.T) { factoryHooksLowered(t, 1) }
+
+// Not parallel: fixture registries and cached build products are prepared before the parallel shards.
 func TestFactoryHooksNativeSetup(t *testing.T) { factoryHooksNative(t) }
 
 func factoryHooksVariant(mutated bool) int {
@@ -274,7 +281,6 @@ func factoryHooksVariant(mutated bool) int {
 
 func factoryHooksShard(t *testing.T, index int) {
 	t.Helper()
-	t.Parallel()
 	products := factoryHooksProducts(t)
 	for _, c := range factoryHooksSlice(index) {
 		p := products[0]
@@ -302,8 +308,23 @@ func factoryHooksShard(t *testing.T, index int) {
 		t.Logf("%s: %.3fs", c.name, result.duration.Seconds())
 	}
 }
-func TestFactoryHooks_000(t *testing.T) { factoryHooksShard(t, 0) }
-func TestFactoryHooks_001(t *testing.T) { factoryHooksShard(t, 1) }
-func TestFactoryHooks_002(t *testing.T) { factoryHooksShard(t, 2) }
-func TestFactoryHooks_003(t *testing.T) { factoryHooksShard(t, 3) }
-func TestFactoryHooks_004(t *testing.T) { factoryHooksShard(t, 4) }
+func TestFactoryHooks_000(t *testing.T) {
+	t.Parallel()
+	factoryHooksShard(t, 0)
+}
+func TestFactoryHooks_001(t *testing.T) {
+	t.Parallel()
+	factoryHooksShard(t, 1)
+}
+func TestFactoryHooks_002(t *testing.T) {
+	t.Parallel()
+	factoryHooksShard(t, 2)
+}
+func TestFactoryHooks_003(t *testing.T) {
+	t.Parallel()
+	factoryHooksShard(t, 3)
+}
+func TestFactoryHooks_004(t *testing.T) {
+	t.Parallel()
+	factoryHooksShard(t, 4)
+}
