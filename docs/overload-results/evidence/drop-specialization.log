@@ -4,20 +4,20 @@
 === RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
 === PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
 === CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
-    oracle_test.go:770: exit codes differ
+    oracle_test.go:774: exit codes differ
         node:   exit 0, stdout "name:visited\ntrue\n", stderr ""
         native: exit 70, stdout "name:visited\n", stderr "adamic: panic: overload 1 of visitBindingElement result BindingElement cannot be served by implementation result ArrayBindingElement\n"
-    oracle_test.go:776: JavaScript backend: exit codes differ
+    oracle_test.go:780: JavaScript backend: exit codes differ
         node:    exit 0, stdout "name:visited\ntrue\n", stderr ""
         backend: exit 70, stdout "name:visited\n", stderr "adamic: panic: overload 1 of visitBindingElement result BindingElement cannot be served by implementation result ArrayBindingElement\n"
-    oracle_test.go:783: leaks:
+    oracle_test.go:787: leaks:
         exit 70
         adamic: panic: overload 1 of visitBindingElement result BindingElement cannot be served by implementation result ArrayBindingElement
---- FAIL: TestNativeAgreesWithNode (0.02s)
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a (0.46s)
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a (0.66s)
 FAIL
 gate cache: native hits=0 misses=3
 gate cache: node hits=0 misses=2
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.490s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.703s
 FAIL

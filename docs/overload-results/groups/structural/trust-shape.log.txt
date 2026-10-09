@@ -1,8 +1,8 @@
 === RUN   TestOverloadStructuralRefuses
 === RUN   TestOverloadStructuralRefuses/missing_Block_field
-    overload_structural_test.go:45: wanted refusal naming result.statements, got <nil>
---- FAIL: TestOverloadStructuralRefuses (0.10s)
-    --- FAIL: TestOverloadStructuralRefuses/missing_Block_field (0.10s)
+    overload_structural_test.go:53: wanted refusal naming result.statements, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.13s)
+    --- FAIL: TestOverloadStructuralRefuses/missing_Block_field (0.13s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.108s
+FAIL	github.com/system-inc/adamic/internal/lower	0.142s
 FAIL

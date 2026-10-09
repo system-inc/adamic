@@ -14,17 +14,17 @@
 === RUN   TestHiddenTNodeConstraintRepresentation/unknown
 === RUN   TestHiddenTNodeConstraintRepresentation/any
 === RUN   TestHiddenTNodeConstraintRepresentation/array_layout
---- FAIL: TestHiddenTNodeConstraintRepresentation (0.28s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/number (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.03s)
-    --- PASS: TestHiddenTNodeConstraintRepresentation/structural_length (0.03s)
-    --- PASS: TestHiddenTNodeConstraintRepresentation/unconstrained (0.03s)
-    --- PASS: TestHiddenTNodeConstraintRepresentation/unknown (0.03s)
-    --- PASS: TestHiddenTNodeConstraintRepresentation/any (0.03s)
-    --- PASS: TestHiddenTNodeConstraintRepresentation/array_layout (0.03s)
+--- FAIL: TestHiddenTNodeConstraintRepresentation (0.59s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/number (0.07s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.09s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.07s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.04s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.05s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/structural_length (0.05s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/unconstrained (0.04s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/unknown (0.07s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/any (0.04s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/array_layout (0.07s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.294s
+FAIL	github.com/system-inc/adamic/internal/lower	0.606s
 FAIL

@@ -1,0 +1,58 @@
+[
+  {
+    "check": "ir-final",
+    "exit": 0
+  },
+  {
+    "check": "lower-final",
+    "exit": 0
+  },
+  {
+    "check": "build-final",
+    "exit": 0
+  },
+  {
+    "check": "vet",
+    "exit": 0
+  },
+  {
+    "check": "oracle",
+    "exit": 0
+  },
+  {
+    "check": "values-uncached",
+    "exit": 0
+  },
+  {
+    "check": "mutants-base-final",
+    "exit": 0
+  },
+  {
+    "check": "mutants-fields-final",
+    "exit": 0
+  },
+  {
+    "check": "mutants-admission-final",
+    "exit": 0
+  },
+  {
+    "check": "mutants-callback",
+    "exit": 0
+  },
+  {
+    "check": "mutants-structural",
+    "exit": 0
+  },
+  {
+    "check": "mutants-field-hatch",
+    "exit": 0
+  },
+  {
+    "check": "mutants-values",
+    "exit": 0
+  },
+  {
+    "check": "mutants-visitors",
+    "exit": 0
+  }
+]

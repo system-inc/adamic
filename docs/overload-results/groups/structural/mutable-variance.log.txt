@@ -1,8 +1,8 @@
 === RUN   TestOverloadStructuralRefuses
 === RUN   TestOverloadStructuralRefuses/writable_variance
-    overload_structural_test.go:45: wanted refusal naming parameter input, got <nil>
---- FAIL: TestOverloadStructuralRefuses (0.12s)
-    --- FAIL: TestOverloadStructuralRefuses/writable_variance (0.12s)
+    overload_structural_test.go:53: wanted refusal naming parameter input, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.28s)
+    --- FAIL: TestOverloadStructuralRefuses/writable_variance (0.28s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.133s
+FAIL	github.com/system-inc/adamic/internal/lower	0.294s
 FAIL

@@ -8,12 +8,12 @@
 === RUN   TestOverloadResultsRefuses/unserved_generic_domain
 === RUN   TestOverloadResultsRefuses/shared_readonly_result
     overload_results_test.go:107: wanted cannot be served, got <nil>
---- FAIL: TestOverloadResultsRefuses (0.21s)
-    --- PASS: TestOverloadResultsRefuses/optional_result_property (0.04s)
-    --- FAIL: TestOverloadResultsRefuses/shared_writable_result (0.04s)
-    --- PASS: TestOverloadResultsRefuses/escaping_checked_overload (0.03s)
-    --- PASS: TestOverloadResultsRefuses/unserved_generic_domain (0.05s)
-    --- FAIL: TestOverloadResultsRefuses/shared_readonly_result (0.05s)
+--- FAIL: TestOverloadResultsRefuses (0.57s)
+    --- PASS: TestOverloadResultsRefuses/optional_result_property (0.14s)
+    --- FAIL: TestOverloadResultsRefuses/shared_writable_result (0.11s)
+    --- PASS: TestOverloadResultsRefuses/escaping_checked_overload (0.11s)
+    --- PASS: TestOverloadResultsRefuses/unserved_generic_domain (0.10s)
+    --- FAIL: TestOverloadResultsRefuses/shared_readonly_result (0.12s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.223s
+FAIL	github.com/system-inc/adamic/internal/lower	0.599s
 FAIL

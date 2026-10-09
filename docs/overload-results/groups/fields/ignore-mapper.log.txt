@@ -18,17 +18,17 @@
     hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
 === RUN   TestHiddenTNodeConstraintRepresentation/array_layout
     hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
---- FAIL: TestHiddenTNodeConstraintRepresentation (0.29s)
-    --- PASS: TestHiddenTNodeConstraintRepresentation/number (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.03s)
+--- FAIL: TestHiddenTNodeConstraintRepresentation (0.42s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/number (0.09s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.07s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.04s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/structural_length (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.04s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/structural_length (0.04s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/unconstrained (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/unknown (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/any (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/array_layout (0.03s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.299s
+FAIL	github.com/system-inc/adamic/internal/lower	0.428s
 FAIL

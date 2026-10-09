@@ -1,8 +1,8 @@
 === RUN   TestOverloadStructuralRefuses
 === RUN   TestOverloadStructuralRefuses/factory_result_covariance
-    overload_structural_test.go:53: wanted refusal naming readonly covariance requires string | number | undefined to fit string | undefined, got /tmp/adamic-gate/TestOverloadStructuralRefusesfactory_result_covariance2231433927/001/main.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for this overload's admitted arguments, preserving result variance
---- FAIL: TestOverloadStructuralRefuses (0.20s)
-    --- FAIL: TestOverloadStructuralRefuses/factory_result_covariance (0.20s)
+    overload_structural_test.go:53: wanted refusal naming readonly covariance requires string | number | undefined to fit string | undefined, got /workspace/scratch/hidden-go-build/TestOverloadStructuralRefusesfactory_result_covariance1036634932/001/main.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for this overload's admitted arguments, preserving result variance
+--- FAIL: TestOverloadStructuralRefuses (0.10s)
+    --- FAIL: TestOverloadStructuralRefuses/factory_result_covariance (0.10s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.228s
+FAIL	github.com/system-inc/adamic/internal/lower	0.111s
 FAIL

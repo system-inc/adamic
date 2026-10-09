@@ -1,6 +1,6 @@
 === RUN   TestOverloadStructuralResults
-    overload_structural_test.go:18: /tmp/adamic-gate/TestOverloadStructuralResults1348871575/001/main.a:4:1: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody at result.kind; prove every return for this overload's admitted arguments, preserving result variance
---- FAIL: TestOverloadStructuralResults (0.04s)
+    overload_structural_test.go:18: /tmp/adamic-gate/TestOverloadStructuralResults716663846/001/main.a:4:1: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires string to fit "Block"; prove every return for this overload's admitted arguments, preserving result variance
+--- FAIL: TestOverloadStructuralResults (0.09s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL	github.com/system-inc/adamic/internal/lower	0.118s
 FAIL

@@ -6,10 +6,10 @@
 === RUN   TestOverloadResultsLiarStops/evaluate-liar
     overload_results_test.go:88: /workspace/adamic-tools/bin/node: <nil>, stdout "template\n42\n" stderr ""
 === RUN   TestOverloadResultsLiarStops/parameter-liar
---- FAIL: TestOverloadResultsLiarStops (1.19s)
-    --- FAIL: TestOverloadResultsLiarStops/liar (0.39s)
-    --- FAIL: TestOverloadResultsLiarStops/evaluate-liar (0.40s)
-    --- PASS: TestOverloadResultsLiarStops/parameter-liar (0.40s)
+--- FAIL: TestOverloadResultsLiarStops (1.24s)
+    --- FAIL: TestOverloadResultsLiarStops/liar (0.41s)
+    --- FAIL: TestOverloadResultsLiarStops/evaluate-liar (0.44s)
+    --- PASS: TestOverloadResultsLiarStops/parameter-liar (0.39s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	1.202s
+FAIL	github.com/system-inc/adamic/internal/lower	1.259s
 FAIL

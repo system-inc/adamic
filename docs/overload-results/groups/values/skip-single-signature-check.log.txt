@@ -4,7 +4,7 @@
     oracle_test.go:596: gate cache native hit
     overload_values_test.go:46: gate cache node hit
     oracle_test.go:589: gate cache native hit
-    overload_values_test.go:53: javascript unchecked wrong result: {stdout:[116 114 117 101 10 49 10 49 10] stderr:[] exitCode:0}
+    overload_values_test.go:53: release unchecked wrong result: {stdout:[] stderr:[] exitCode:-1}
 --- FAIL: TestOverloadValues (0.10s)
     --- FAIL: TestOverloadValues/narrow/liar (0.10s)
 FAIL

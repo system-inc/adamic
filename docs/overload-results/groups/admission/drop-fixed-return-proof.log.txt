@@ -1,6 +1,6 @@
 === RUN   TestOverloadStructuralResults
-    overload_structural_test.go:18: /tmp/adamic-gate/TestOverloadStructuralResults630409396/004/main.a:7:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result Body at result.kind; readonly covariance requires string to fit "Block"; prove every return for this overload's admitted arguments, preserving result variance
---- FAIL: TestOverloadStructuralResults (0.40s)
+    overload_structural_test.go:18: /workspace/scratch/hidden-go-build/TestOverloadStructuralResults548546756/004/main.a:7:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result Body at result.kind; readonly covariance requires string to fit "Block"; prove every return for this overload's admitted arguments, preserving result variance
+--- FAIL: TestOverloadStructuralResults (0.12s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.441s
+FAIL	github.com/system-inc/adamic/internal/lower	0.126s
 FAIL

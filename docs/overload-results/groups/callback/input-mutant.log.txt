@@ -1,8 +1,8 @@
 === RUN   TestOverloadCallbackUnserved
 === RUN   TestOverloadCallbackUnserved/input
     overload_callback_test.go:38: expected an unserved callback refusal, got <nil>
---- FAIL: TestOverloadCallbackUnserved (0.04s)
-    --- FAIL: TestOverloadCallbackUnserved/input (0.04s)
+--- FAIL: TestOverloadCallbackUnserved (0.17s)
+    --- FAIL: TestOverloadCallbackUnserved/input (0.17s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.054s
+FAIL	github.com/system-inc/adamic/internal/lower	0.186s
 FAIL

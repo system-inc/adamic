@@ -1,8 +1,8 @@
 === RUN   TestOverloadStructuralRefuses
 === RUN   TestOverloadStructuralRefuses/visitor_domain_liar
-    overload_structural_test.go:53: wanted refusal naming callback contravariance at callback.parameter1 requires Node to fit TIn, got <nil>
---- FAIL: TestOverloadStructuralRefuses (0.20s)
-    --- FAIL: TestOverloadStructuralRefuses/visitor_domain_liar (0.20s)
+    overload_structural_test.go:53: wanted refusal naming callback contravariance at callback.parameter1 requires Node to fit TIn, got /workspace/scratch/hidden-go-build/TestOverloadStructuralRefusesvisitor_domain_liar1268993456/001/main.a:6:2: Adamic 0.1 refuses visitor argument path is unproven: Node cannot be trusted as Modifier; prove a present original-array element at this invocation
+--- FAIL: TestOverloadStructuralRefuses (0.14s)
+    --- FAIL: TestOverloadStructuralRefuses/visitor_domain_liar (0.14s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.205s
+FAIL	github.com/system-inc/adamic/internal/lower	0.149s
 FAIL

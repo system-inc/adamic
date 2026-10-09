@@ -1,0 +1,82 @@
+[
+  {
+    "group": "docs/overload-results/evidence/mutants.json",
+    "mutants": [
+      "trust-optional-property",
+      "trust-result",
+      "drop-specialization",
+      "drop-parameter-check",
+      "trust-shared-result"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/callback/mutants.json",
+    "mutants": [
+      "input",
+      "result",
+      "representation",
+      "field-storage"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/structural/mutants.json",
+    "mutants": [
+      "drop-proof",
+      "trust-shape",
+      "reverse-covariance",
+      "mutable-variance"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/fields/mutants.json",
+    "mutants": [
+      "drop-field-storage",
+      "drop-constraint-storage",
+      "object-layout",
+      "array-layout",
+      "unconstrained-layout",
+      "ignore-substitution",
+      "ignore-mapper"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/admission/mutants.json",
+    "mutants": [
+      "drop-fixed-return-proof",
+      "reverse-result-covariance",
+      "trust-visitor-input",
+      "trust-writable-result",
+      "drop-return-storage",
+      "drop-relation-diagnostic"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/field-hatch/mutants.json",
+    "mutants": [
+      "drop-kind-check",
+      "drop-value-check"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/values/mutants.json",
+    "mutants": [
+      "drop-indirect-check",
+      "skip-single-signature-check"
+    ],
+    "all_caught": true
+  },
+  {
+    "group": "docs/overload-results/groups/visitors/mutants.json",
+    "mutants": [
+      "erase-TIn-to-Node",
+      "admit-unproven-invocation"
+    ],
+    "all_caught": true
+  }
+]

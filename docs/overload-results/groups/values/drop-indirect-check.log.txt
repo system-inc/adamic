@@ -4,12 +4,12 @@
     oracle_test.go:596: gate cache native hit
     overload_values_test.go:46: gate cache node hit
     oracle_test.go:589: gate cache native hit
-    overload_values_test.go:53: javascript unchecked wrong result: {stdout:[116 114 117 101 10 49 10 49 10 102 97 108 115 101 10 111 116 104 101 114 10] stderr:[] exitCode:0}
---- FAIL: TestOverloadValues (0.10s)
-    --- FAIL: TestOverloadValues/returned/liar (0.10s)
+    overload_values_test.go:53: release unchecked wrong result: {stdout:[] stderr:[] exitCode:-1}
+--- FAIL: TestOverloadValues (0.11s)
+    --- FAIL: TestOverloadValues/returned/liar (0.11s)
 FAIL
 gate cache: native hits=2 misses=0
 gate cache: node hits=2 misses=0
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.113s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.120s
 FAIL

@@ -19,17 +19,17 @@
     hidden_boundary_generic_tnode_test.go:62: lost concrete substitution: 0, false
 === RUN   TestHiddenTNodeConstraintRepresentation/array_layout
     hidden_boundary_generic_tnode_test.go:62: lost concrete substitution: 0, false
---- FAIL: TestHiddenTNodeConstraintRepresentation (0.30s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/number (0.03s)
+--- FAIL: TestHiddenTNodeConstraintRepresentation (0.35s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/number (0.04s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.04s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/structural_length (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/unconstrained (0.03s)
     --- FAIL: TestHiddenTNodeConstraintRepresentation/unknown (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/any (0.03s)
-    --- FAIL: TestHiddenTNodeConstraintRepresentation/array_layout (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/any (0.04s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/array_layout (0.05s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.318s
+FAIL	github.com/system-inc/adamic/internal/lower	0.365s
 FAIL
