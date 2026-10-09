@@ -1,0 +1,38 @@
+// Concrete witnesses for the 20 direct toString sites in the pinned tsc census.
+// sys.ts's four any receivers still require compiler provenance in the source.
+import { Buffer } from 'node:buffer';
+const type = {id: 27};
+console.log(type.id.toString()); // checker.ts:18478
+console.log(type.id.toString()); // checker.ts:18491
+console.log(type.id.toString()); // checker.ts:18497
+const value = 1.25;
+console.log(value.toString()); // debug.ts:417
+const sourceMapGenerator = {toString: (): string => 'map'.repeat(2)};
+console.log(sourceMapGenerator.toString()); // emitter.ts:1042
+console.log(sourceMapGenerator.toString()); // emitter.ts:1102
+function statisticValue(): string {return 'stat'.repeat(2);}
+console.log(statisticValue().toString()); // executeCommandLine.ts:1272
+const tokenValue = '63';
+console.log((+tokenValue).toString(8)); // scanner.ts:1261
+const code = 0x10ffff;
+console.log(code.toString(16)); // scanner.ts:1583
+console.log(code.toString(16)); // scanner.ts:1586
+const acc = 31;
+console.log(acc.toString()); // sys.ts:64
+const input = 'hé'.repeat(2);
+console.log(Buffer.from(Buffer.from(input).toString('base64'), 'base64').toString('utf8')); // sys.ts:1614
+console.log(Buffer.from(input).toString('base64')); // sys.ts:1615
+const buffer = Buffer.from('fffe6800e900', 'hex');
+console.log(buffer.toString('utf16le', 2)); // sys.ts:1805, concrete Buffer provenance
+console.log(buffer.toString('utf16le', 2)); // sys.ts:1809, concrete Buffer provenance
+const utf8 = Buffer.from('efbbbf68c3a9', 'hex');
+console.log(utf8.toString('utf8', 3)); // sys.ts:1813, concrete Buffer provenance
+console.log(utf8.toString('utf8')); // sys.ts:1816, concrete Buffer provenance
+const charCode = 0xd800;
+console.log(charCode.toString(16)); // utilities.ts:6182
+console.log(charCode.toString(16)); // utilities.ts:6237
+const name = '42';
+console.log((+name).toString()); // utilities.ts:10942
+// The two source-map generators also exercise template and + object conversion.
+console.log(`${sourceMapGenerator}`);
+console.log('source ' + sourceMapGenerator);

@@ -1,0 +1,7 @@
+function fail(message?: string, stackCrawlMark?: () => unknown): never {
+ const e = new Error(message ? `Debug Failure. ${message}` : 'Debug Failure.');
+ if (Error.captureStackTrace) {
+  Error.captureStackTrace(e, stackCrawlMark || fail);
+ }
+ throw e;
+}

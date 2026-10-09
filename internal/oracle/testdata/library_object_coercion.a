@@ -1,0 +1,27 @@
+let order = '';
+const primitive = {
+ valueOf: (): number => { order += 'valueOf '; return 42; },
+ toString: (): string => { order += 'toString '; return '7'; },
+};
+console.log(`${Number(primitive)} ${order}`);
+order = '';
+console.log(`${String(primitive)} ${order}`);
+const fallback = {
+ valueOf: (): { value: number } => { order += 'valueOf '; return { value: 1 }; },
+ toString: (): string => { order += 'toString '; return '19'; },
+};
+order = '';
+console.log(`${Number(fallback)} ${order}`);
+const reverse = {
+ toString: (): { value: number } => { order += 'toString '; return { value: 1 }; },
+ valueOf: (): boolean => { order += 'valueOf '; return true; },
+};
+order = '';
+console.log(`${String(reverse)} ${order}`);
+console.log(`${Number({ valueOf: 0, toString: (): string => '23' })}`);
+console.log(String({ toString: false, valueOf: (): number => 27 }));
+console.log(`${Number({ plain: 1 })}`);
+console.log(String({ plain: 1 }));
+try {
+ Number({ valueOf: (): number => { order += 'throw '; throw new Error('stop'); }, toString: (): string => { order += 'wrong '; return '1'; } });
+} catch { console.log(order); }

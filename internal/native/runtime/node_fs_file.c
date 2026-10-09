@@ -1,6 +1,9 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
+#define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
+// macOS hides st_atimespec, st_mtimespec and mkdtemp once _POSIX_C_SOURCE is set, unless Darwin's
+// own extensions are asked for too. glibc ignores this macro.
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>
@@ -13,6 +16,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include "node_fs_wasi.h"
 
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
@@ -27,6 +31,7 @@ static void raise_error(const char *name, const char *code, const char *message)
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
     error->slots[2].reference = text(code);
+    adamic_error_tag(error);
     adamic_thrown = error;
 }
 
@@ -83,27 +88,60 @@ static char *bytes(const adamic_string *value) {
     return result;
 }
 
-// Node's ERR_INVALID_ARG_VALUE uses inspect followed by a 128-unit preview.
+// Node 24.19.0 lib/internal/util/inspect.js strEscape/meta and
+// lib/internal/errors.js ERR_INVALID_ARG_VALUE. Work in UTF-16 units so a lone
+// surrogate is escaped, while a real pair remains literal. Node inspects at most
+// 10000 source units, then previews the first 128 inspected units.
+static size_t inspect_string_part(const adamic_string *value, size_t start, size_t end, double *shown, size_t at) {
+    bool single = false, double_quote = false, backtick = false, interpolation = false;
+    for (size_t i = start; i < end; i++) {
+        double c = adamic_string_char_code_at(value, (double)i);
+        single |= c == '\''; double_quote |= c == '"'; backtick |= c == '`';
+        if (c == '$' && i + 1 < end && adamic_string_char_code_at(value, (double)i + 1) == '{') { interpolation = true; }
+    }
+    int quote = !single ? '\'' : !double_quote ? '"' : !backtick && !interpolation ? '`' : '\'';
+    shown[at++] = quote;
+    for (size_t i = start; i < end; i++) {
+        unsigned c = (unsigned)adamic_string_char_code_at(value, (double)i);
+        if (c == '\\' || c == (unsigned)quote) { shown[at++] = '\\'; shown[at++] = c; }
+        else if (c == '\n' || c == '\r' || c == '\t' || c == '\b' || c == '\f') {
+            shown[at++] = '\\'; shown[at++] = c == '\n' ? 'n' : c == '\r' ? 'r' : c == '\t' ? 't' : c == '\b' ? 'b' : 'f';
+        } else if (c < 32 || (c >= 127 && c < 160)) {
+            char escape[5]; snprintf(escape, sizeof escape, "\\x%02X", c);
+            for (size_t j = 0; j < 4; j++) { shown[at++] = (unsigned char)escape[j]; }
+        } else if (c >= 0xd800 && c <= 0xdfff) {
+            if (c <= 0xdbff && i + 1 < end) {
+                unsigned low = (unsigned)adamic_string_char_code_at(value, (double)i + 1);
+                if (low >= 0xdc00 && low <= 0xdfff) { shown[at++] = c; shown[at++] = low; i++; continue; }
+            }
+            char escape[7]; snprintf(escape, sizeof escape, "\\u%04x", c);
+            for (size_t j = 0; j < 6; j++) { shown[at++] = (unsigned char)escape[j]; }
+        } else { shown[at++] = c; }
+    }
+    shown[at++] = quote;
+    return at;
+}
+
 static void invalid_value(const char *prefix, const adamic_string *value) {
-    size_t capacity = value->length * 4 + 8;
-    char *shown = malloc(capacity);
+    size_t units = (size_t)adamic_string_length(value);
+    if (units > 10000) { units = 10000; }
+    double *shown = malloc((units * 10 + 2) * sizeof *shown);
     if (shown == NULL) { adamic_panic("out of memory", 13); }
-    char quote = '\'';
-    if (memchr(value->bytes, '\'', value->length) != NULL) {
-        quote = memchr(value->bytes, '"', value->length) == NULL ? '"' :
-            memchr(value->bytes, '`', value->length) == NULL && memchr(value->bytes, '$', value->length) == NULL ? '`' : '\'';
+    size_t at = 0, start = 0;
+    // formatPrimitive's default compact=3, breakLength=80, indentation=0:
+    // long strings split after each newline, quoting each part separately.
+    for (size_t i = 0; i < units; i++) {
+        if (units > 76 && adamic_string_char_code_at(value, (double)i) == '\n' && i + 1 < units) {
+            at = inspect_string_part(value, start, i + 1, shown, at);
+            const char separator[] = " +\n  ";
+            for (size_t j = 0; j < sizeof separator - 1; j++) { shown[at++] = separator[j]; }
+            start = i + 1;
+        }
     }
-    size_t at = 0; shown[at++] = quote;
-    for (size_t i = 0; i < value->length; i++) {
-        unsigned char c = (unsigned char)value->bytes[i];
-        if (c == '\\' || c == (unsigned char)quote) { shown[at++] = '\\'; shown[at++] = (char)c; }
-        else if (c == '\n' || c == '\r' || c == '\t' || c == '\b' || c == '\f' || c == '\v') {
-            shown[at++] = '\\'; shown[at++] = c == '\n' ? 'n' : c == '\r' ? 'r' : c == '\t' ? 't' : c == '\b' ? 'b' : c == '\f' ? 'f' : 'v';
-        } else if (c < 32 || c == 127) { snprintf(shown + at, 5, "\\x%02x", c); at += 4; }
-        else { shown[at++] = (char)c; }
-    }
-    shown[at++] = quote; shown[at] = 0;
-    adamic_string *inspection = adamic_decode_utf8((const unsigned char *)shown, at);
+    at = inspect_string_part(value, start, units, shown, at);
+    // Every source beyond inspect's limit already gives an inspection longer
+    // than the preview. Its trailing 'more characters' cannot enter the preview.
+    adamic_string *inspection = adamic_string_from_char_codes(at, shown);
     free(shown);
     adamic_string *preview = inspection;
     if (adamic_string_length(inspection) > 128) {
@@ -112,14 +150,36 @@ static void invalid_value(const char *prefix, const adamic_string *value) {
         preview = adamic_string_concat(2, (adamic_string *const[]){slice, &dots});
         adamic_release(slice); adamic_release(inspection);
     }
-    size_t length = strlen(prefix) + preview->length + 1;
-    char *message = malloc(length);
-    if (message == NULL) { adamic_panic("out of memory", 13); }
-    memcpy(message, prefix, strlen(prefix));
-    memcpy(message + strlen(prefix), preview->bytes, preview->length);
-    message[length - 1] = 0;
-    raise_error("TypeError", "ERR_INVALID_ARG_VALUE", message);
-    free(message); adamic_release(preview);
+    adamic_string *lead = text(prefix);
+    adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){lead, preview});
+    adamic_release(lead); adamic_release(preview);
+    // Preserve a surrogate at the preview cut, rather than decoding WTF-8 as
+    // filesystem UTF-8. It is part of the Error's JavaScript string.
+    adamic_object *error = adamic_object_new(&error_shape);
+    error->slots[0].reference = text("TypeError");
+    error->slots[1].reference = message;
+    error->slots[2].reference = text("ERR_INVALID_ARG_VALUE");
+    adamic_error_tag(error);
+    adamic_thrown = error;
+}
+
+// Node ERR_OUT_OF_RANGE uses addNumericalSeparator above 2**32, and otherwise
+// util.inspect's formatNumber (including negative zero). Port the error helper
+// verbatim, including its grouping of a String(number) in exponent notation.
+static adamic_string *range_number(double value) {
+    if (value == 0 && signbit(value)) { return text("-0"); }
+    adamic_string *plain = adamic_string_from_number(value);
+    if (!isfinite(value) || value != trunc(value) || fabs(value) <= 4294967296.0) { return plain; }
+    size_t start = plain->bytes[0] == '-' ? 1 : 0;
+    size_t length = plain->length;
+    char shown[128]; size_t at = 0;
+    for (size_t i = 0; i < length; i++) {
+        if (i > start && (length - i) % 3 == 0) { shown[at++] = '_'; }
+        shown[at++] = plain->bytes[i];
+    }
+    adamic_string *result = adamic_decode_utf8((const unsigned char *)shown, at);
+    adamic_release(plain);
+    return result;
 }
 
 static char *path_bytes(const adamic_string *path, bool throwing) {
@@ -130,7 +190,7 @@ static char *path_bytes(const adamic_string *path, bool throwing) {
 
 static bool integer(double value, double maximum, const char *argument) {
     if (isfinite(value) && value == trunc(value) && value >= 0 && value <= maximum) { return true; }
-    adamic_string *shown = adamic_string_from_number(value);
+    adamic_string *shown = range_number(value);
     char message[300];
     if (!isfinite(value) || value != trunc(value)) {
         snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be an integer. Received %.*s", argument, (int)shown->length, shown->bytes);
@@ -143,7 +203,7 @@ static bool integer(double value, double maximum, const char *argument) {
 }
 
 static void read_range(const char *argument, const char *range, double value) {
-    adamic_string *shown = adamic_string_from_number(value);
+    adamic_string *shown = range_number(value);
     char message[300];
     snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be %s. Received %.*s", argument, range, (int)shown->length, shown->bytes);
     adamic_release(shown);
@@ -185,6 +245,13 @@ static int open_file(const adamic_string *path, const adamic_string *flag, doubl
     int of = flags(flag);
     if (of < 0) { free(name); return -1; }
     if (!integer(mode, 4294967295., "mode")) { free(name); return -1; }
+#ifdef ADAMIC_TARGET_WASI
+    if (mode != 0666) {
+        free(name);
+        adamic_panic("wasm32-wasi: file creation permission bits are not supported", sizeof "wasm32-wasi: file creation permission bits are not supported" - 1);
+    }
+    if (path->length == 0) { system_error(ENOENT, "open", name); free(name); return -1; }
+#endif
     int descriptor;
     do { descriptor = open(name, of | O_CLOEXEC, (mode_t)(uint32_t)mode); } while (descriptor < 0 && errno == EINTR);
     if (descriptor < 0) { system_error(errno, "open", name); }
@@ -198,6 +265,10 @@ double adamic_fs_file_open(const adamic_string *path, const adamic_string *flag,
 }
 
 int adamic_fs_file_read_bytes(int descriptor, unsigned char **out, size_t *length) {
+#ifdef ADAMIC_TARGET_WASI
+    struct stat information;
+    if (fstat(descriptor, &information) == 0 && S_ISDIR(information.st_mode)) { return EISDIR; }
+#endif
     size_t used = 0, capacity = 4096;
     unsigned char *buffer = malloc(capacity);
     if (buffer == NULL) { return ENOMEM; }
@@ -388,26 +459,22 @@ bool adamic_fs_file_exists(const adamic_string *path) {
     adamic_output_flush();
     char *name = path_bytes(path, false);
     if (name == NULL) { return false; }
+#ifdef ADAMIC_TARGET_WASI
+    if (path->length == 0) { free(name); return false; }
+#endif
     struct stat information;
     bool exists = stat(name, &information) == 0;
     free(name);
     return exists;
 }
 
-static const char *const date_fields[] = {"_fsFileTime"};
-static const bool date_refs[] = {false};
-static const adamic_shape date_shape = {1, date_fields, date_refs, NULL};
-
+// Both explicit Dates and filesystem timestamps use the Date internal slot.
 adamic_object *adamic_fs_file_date_new(double milliseconds) {
-    adamic_object *date = adamic_object_new(&date_shape);
-    double clipped = isfinite(milliseconds) && fabs(milliseconds) <= 8640000000000000. ? trunc(milliseconds) : NAN;
-    date->slots[0].number = clipped == 0 ? 0. : clipped;
-    return date;
+    return adamic_date_new(milliseconds);
 }
 
 double adamic_fs_file_date_time(const adamic_object *date) {
-    static adamic_slot_cache cache;
-    return adamic_object_field(date, "_fsFileTime", &cache)->number;
+    return adamic_date_value(date);
 }
 
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
@@ -418,6 +485,12 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     adamic_output_flush();
     char *name = path_bytes(path, true);
     if (name == NULL) { return NULL; }
+#ifdef ADAMIC_TARGET_WASI
+    if (path->length == 0) {
+        if (throw_if_missing) { system_error(ENOENT, "stat", name); }
+        free(name); return NULL;
+    }
+#endif
     struct stat information;
     if (stat(name, &information) != 0) {
         int error = errno;
@@ -442,9 +515,28 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     return result;
 }
 
+bool adamic_fs_file_is_stats(const adamic_object *information) { return information->shape == &stat_shape; }
+
 static mode_t stat_mode(const adamic_object *information) {
     static adamic_slot_cache cache;
     return (mode_t)adamic_object_field(information, "_fsFileMode", &cache)->number;
+}
+bool adamic_fs_file_stat_is(const adamic_object *information, const char *method) {
+    mode_t mode = stat_mode(information);
+#ifdef ADAMIC_TARGET_WASI
+    // Preview 1, including Node's uvwasi host, represents FIFOs as sockets.
+    // The two predicates cannot distinguish them from this runtime mode.
+    if (S_ISSOCK(mode) && (strcmp(method, "isFIFO") == 0 || strcmp(method, "isSocket") == 0)) {
+        adamic_panic("wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets", sizeof "wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets" - 1);
+    }
+#endif
+    if (strcmp(method, "isFile") == 0) { return S_ISREG(mode); }
+    if (strcmp(method, "isDirectory") == 0) { return S_ISDIR(mode); }
+    if (strcmp(method, "isSymbolicLink") == 0) { return S_ISLNK(mode); }
+    if (strcmp(method, "isBlockDevice") == 0) { return S_ISBLK(mode); }
+    if (strcmp(method, "isCharacterDevice") == 0) { return S_ISCHR(mode); }
+    if (strcmp(method, "isFIFO") == 0) { return S_ISFIFO(mode); }
+    return S_ISSOCK(mode);
 }
 bool adamic_fs_file_is_file(const adamic_object *information) { return S_ISREG(stat_mode(information)); }
 bool adamic_fs_file_is_directory(const adamic_object *information) { return S_ISDIR(stat_mode(information)); }
@@ -489,6 +581,13 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
     char *name = path_bytes(path, true);
     if (name == NULL) { return NULL; }
     if (!integer(mode, 4294967295., "options.mode")) { free(name); return NULL; }
+#ifdef ADAMIC_TARGET_WASI
+    if (mode != 0777) {
+        free(name);
+        adamic_panic("wasm32-wasi: directory creation permission bits are not supported", sizeof "wasm32-wasi: directory creation permission bits are not supported" - 1);
+    }
+    if (path->length == 0) { system_error(ENOENT, "mkdir", name); free(name); return NULL; }
+#endif
     adamic_string *first = NULL;
     int error = make_directory(name, (mode_t)(uint32_t)mode, recursive, &first);
     if (error != 0) { adamic_release(first); first = NULL; system_error(error, "mkdir", name); }
@@ -517,6 +616,10 @@ static char *mkdtemp(char *name) {
 
 // libc mkdtemp atomically creates a private directory with a six-byte suffix.
 adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
+#ifdef ADAMIC_TARGET_WASI
+    (void)prefix;
+    adamic_panic("wasm32-wasi: fs.mkdtempSync requires temporary directory creation", sizeof "wasm32-wasi: fs.mkdtempSync requires temporary directory creation" - 1);
+#else
     adamic_output_flush();
     if (memchr(prefix->bytes, 0, prefix->length) != NULL) {
         invalid_value("The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received ", prefix);
@@ -532,6 +635,7 @@ adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
     else { int error = errno; memcpy(name + length, "XXXXXX", 7); system_error(error, "mkdtemp", name); }
     free(name);
     return result;
+#endif
 }
 
 // Node's native rmSync uses filesystem removal errors after its lstat check.
@@ -617,13 +721,21 @@ static double fs_utimes(const adamic_string *path, double atime, double mtime, b
         double value = seconds[i];
         if (dates[i] && isnan(value)) { times[i].tv_sec=0; times[i].tv_nsec=UTIME_OMIT; continue; }
         if (!isfinite(value)) {
-            adamic_string *shown = adamic_string_from_number(value);
+            adamic_string *shown = range_number(value);
             char message[250];
             snprintf(message, sizeof message, "The \"time\" argument must be an instance of Date or an Time in seconds. Received type number (%.*s)", (int)shown->length, shown->bytes);
             adamic_release(shown); free(name);
             raise_error("TypeError", "ERR_INVALID_ARG_TYPE", message);
             return 0;
         }
+#ifdef ADAMIC_TARGET_WASI
+        // Preview 1 timestamps are unsigned. Node 24's WASI command host
+        // also drops subsecond precision in path_filestat_set_times.
+        if (value < 0 || value != floor(value) || value > 18446744073.) {
+            free(name);
+            adamic_panic("wasm32-wasi: fs.utimesSync timestamp precision or range is unavailable", sizeof "wasm32-wasi: fs.utimesSync timestamp precision or range is unavailable" - 1);
+        }
+#endif
         if (value < 0 && !dates[i]) { clock_gettime(CLOCK_REALTIME, &times[i]); continue; }
         // libuv converts double seconds to timespec nanoseconds on Linux.
         if (value >= 9223372036854774784.) { times[i].tv_sec = (time_t)INT64_MAX; times[i].tv_nsec = 0; }
