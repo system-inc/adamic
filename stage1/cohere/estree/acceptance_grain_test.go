@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -40,7 +41,7 @@ func acceptanceMutantCheck(want, got []byte) error {
 	return nil
 }
 
-func acceptanceMutantProducts(t *testing.T, item acceptanceMutant) (string, string) {
+func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool) (string, string) {
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:  "estree-acceptance-mutant-lowered-" + item.name,
@@ -76,77 +77,77 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant) (string, stri
 		}
 		return nil
 	})
+	if !compile {
+		return filepath.Join(lowered, "main.ts"), ""
+	}
 	inputs.Name = "estree-acceptance-mutant-native-" + item.name
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true})...)
+	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
 	return filepath.Join(lowered, "main.ts"), filepath.Join(product, "port")
 }
 
-// Only the non-parallel setup test writes this, before parallel tests resume.
-var acceptanceMutantsReady string
-
-func acceptanceMutantsSetupInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	flags := []string{"repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}
-	for _, item := range acceptanceMutantEnumeration() {
-		flags = append(flags, item.name, item.file, item.from, item.to)
-	}
-	flags = append(flags, acceptanceGrammar()...)
-	flags = append(flags, native.Flags(native.Options{Sanitize: true})...)
-	return buildcache.Inputs{Name: "estree-acceptance-mutants-ready", Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod", "go.work"}, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+// Each independently selected shard builds or fetches only its own mutant.
+var acceptancePrepared [testAcceptanceMutantsShards]struct {
+	once                 sync.Once
+	main, binary, oracle string
 }
+var acceptanceOracleOnce sync.Once
+var acceptanceOraclePath string
 
-func acceptanceMutantsCopy(from, to string, mode os.FileMode) error {
-	data, err := os.ReadFile(from)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(to, data, mode)
-}
-
-func acceptanceMutantsPrepare(t *testing.T) string {
+func acceptanceMutantsOracle(t *testing.T) string {
 	t.Helper()
-	inputs := acceptanceMutantsSetupInputs(t)
-	return buildcache.Product(t, inputs, func(dir string) error {
-		oracleInputs := inputs
-		oracleInputs.Name = "estree-acceptance-mutants-go-oracle"
-		oracle := buildcache.Product(t, oracleInputs, func(output string) error {
-			// GoBuild is not on main yet; retain the original Go overlay build recipe.
-			return acceptanceMutantsCopy(goOracle(t), filepath.Join(output, "oracle"), 0755)
-		})
-		list := manifest(t, acceptanceGrammar())
-		want := execute(t, "", filepath.Join(oracle, "oracle"), "--manifest", list)
-		if err := os.WriteFile(filepath.Join(dir, "want"), want, 0644); err != nil {
-			return err
-		}
-		for index, item := range acceptanceMutantEnumeration() {
-			main, binary := acceptanceMutantProducts(t, item)
-			sourceDir := filepath.Join(dir, fmt.Sprintf("%03d", index))
-			if err := os.Mkdir(sourceDir, 0755); err != nil {
-				return err
-			}
-			files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+	acceptanceOracleOnce.Do(func() {
+		inputs := buildcache.Inputs{Name: "estree-acceptance-mutants-go-oracle",
+			Files:     []string{"stage1/cohere/estree", "cohere", "go.mod", "go.work"},
+			Flags:     []string{"repository=" + root(t), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}
+		directory := buildcache.Product(t, inputs, func(directory string) error {
+			// GoBuild is absent on this base; preserve the existing overlay recipe.
+			binary := goOracle(t)
+			data, err := os.ReadFile(binary)
 			if err != nil {
 				return err
 			}
-			for _, file := range files {
-				if err := acceptanceMutantsCopy(file, filepath.Join(sourceDir, filepath.Base(file)), 0644); err != nil {
-					return err
-				}
-			}
-			if err := acceptanceMutantsCopy(binary, filepath.Join(sourceDir, "port"), 0755); err != nil {
-				return err
-			}
-		}
-		return nil
+			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0755)
+		})
+		acceptanceOraclePath = filepath.Join(directory, "oracle")
 	})
+	return acceptanceOraclePath
+}
+
+func acceptanceMutantsPrepareShard(t *testing.T, shard int) (string, string, string) {
+	t.Helper()
+	prepared := &acceptancePrepared[shard]
+	prepared.once.Do(func() {
+		prepared.oracle = acceptanceMutantsOracle(t)
+		prepared.main, prepared.binary = acceptanceMutantProducts(t, acceptanceMutantEnumeration()[shard], true)
+	})
+	return prepared.main, prepared.binary, prepared.oracle
+}
+
+func TestProduct_AcceptanceOracle(t *testing.T) { t.Parallel(); acceptanceMutantsOracle(t) }
+func TestProduct_AcceptanceCatchLowered(t *testing.T) {
+	t.Parallel()
+	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[0], false)
+}
+func TestProduct_AcceptanceCatchNative(t *testing.T) {
+	t.Parallel()
+	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[0], true)
+}
+func TestProduct_AcceptanceClassLowered(t *testing.T) {
+	t.Parallel()
+	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[1], false)
+}
+func TestProduct_AcceptanceClassNative(t *testing.T) {
+	t.Parallel()
+	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[1], true)
 }
 
 func acceptanceMutantsCommand(ctx context.Context, executable string, args ...string) *exec.Cmd {
@@ -163,58 +164,6 @@ func acceptanceMutantsCommand(ctx context.Context, executable string, args ...st
 	return command
 }
 
-// Not parallel: prepares immutable products before parallel acceptance-mutant leaves resume.
-func TestAcceptanceMutants_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_SETUP_CHILD") == "1" {
-		t.Log("ACCEPTANCE_MUTANTS_READY=" + acceptanceMutantsPrepare(t))
-		return
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^TestAcceptanceMutants_Setup$", "-test.timeout=90s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_SETUP_CHILD=1")
-	output, err := command.CombinedOutput()
-	if ctx.Err() != nil {
-		t.Fatalf("shared setup exceeded 90s: %v\n%s", ctx.Err(), output)
-	}
-	if err != nil {
-		t.Fatalf("shared setup: %v\n%s", err, output)
-	}
-	for _, line := range strings.Split(string(output), "\n") {
-		if _, value, ok := strings.Cut(line, "ACCEPTANCE_MUTANTS_READY="); ok {
-			acceptanceMutantsReady = strings.TrimSpace(value)
-		}
-	}
-	if acceptanceMutantsReady == "" {
-		t.Fatalf("shared setup did not publish products:\n%s", output)
-	}
-	t.Logf("%s", output)
-}
-
-func acceptanceMutantsReadyProduct(t *testing.T) string {
-	t.Helper()
-	if acceptanceMutantsReady != "" {
-		return acceptanceMutantsReady
-	}
-	// A proof child may inherit an uncached product prepared by its parent.
-	if ready := os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_READY"); ready != "" {
-		return ready
-	}
-	// Standalone leaf runs require a preceding setup run. This callback never
-	// builds: a missing product is an explicit error rather than lazy setup.
-	ready, err := buildcache.Get(acceptanceMutantsSetupInputs(t), func(string) error {
-		return fmt.Errorf("shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf")
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	return ready
-}
-
 func acceptanceMutantsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
 	command := acceptanceMutantsCommand(ctx, name, args...)
@@ -228,7 +177,11 @@ func acceptanceMutantsExecute(t *testing.T, ctx context.Context, name string, ar
 
 func runAcceptanceMutantShard(t *testing.T, shard int) {
 	t.Helper()
-	ready := acceptanceMutantsReadyProduct(t)
+	setup := time.Now()
+	main, binary, oracle := acceptanceMutantsPrepareShard(t, shard)
+	t.Logf("setup wall=%.3fs", time.Since(setup).Seconds())
+	started := time.Now()
+	defer func() { t.Logf("own work wall=%.3fs", time.Since(started).Seconds()) }()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	items := acceptanceMutantEnumeration()
@@ -236,12 +189,7 @@ func runAcceptanceMutantShard(t *testing.T, shard int) {
 		t.Fatalf("enumerated %d mutations, declared %d shards", len(items), testAcceptanceMutantsShards)
 	}
 	list := manifest(t, acceptanceGrammar())
-	want, err := os.ReadFile(filepath.Join(ready, "want"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	product := filepath.Join(ready, fmt.Sprintf("%03d", shard))
-	main, binary := filepath.Join(product, "main.ts"), filepath.Join(product, "port")
+	want := acceptanceMutantsExecute(t, ctx, oracle, "--manifest", list)
 	for name, got := range map[string][]byte{
 		"Node":   acceptanceMutantsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
 		"native": acceptanceMutantsExecute(t, ctx, binary, "--manifest", list),
@@ -291,36 +239,44 @@ func TestAcceptanceMutantsUnion(t *testing.T) {
 			t.Fatalf("mutation %d covered %d times", index, seen[index])
 		}
 	}
-	// Plant one surviving mutant and exercise each real top-level shard separately.
+	t.Logf("union: %d mutations x %d corpus cases = %d pairs, each exactly once", len(items), len(acceptanceGrammar()), len(items)*len(acceptanceGrammar()))
+}
+
+// Each proof runs one real shard in its own process, retaining all corpus bytes.
+// Separate proof units avoid aggregating two cold mutant builds into one grain.
+// The two assertions together require exactly shard 000 to catch the planted
+// surviving native witness, and shard 001 to retain its original passing verdict.
+func proveAcceptanceMutantShard(t *testing.T, index int) {
+	t.Helper()
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	caught := []int{}
-	for _, index := range runners {
-		name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
-		command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1", "ADAMIC_ACCEPTANCE_MUTANTS_READY="+acceptanceMutantsReadyProduct(t))
-		output, err := command.CombinedOutput()
-		contextErr := ctx.Err()
-		cancel()
-		if contextErr != nil {
-			t.Fatalf("%s exceeded child deadline: %v\n%s", name, contextErr, output)
-		}
-		if err != nil {
-			exit, ok := err.(*exec.ExitError)
-			if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
-				t.Fatalf("unexpected planted failure: %v\n%s", err, output)
-			}
-			caught = append(caught, index)
-		}
+	name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
+	output, err := command.CombinedOutput()
+	t.Logf("isolated planted proof:\n%s", output)
+	if ctx.Err() != nil {
+		t.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())
 	}
-	if len(caught) != 1 || caught[0] != 0 {
-		t.Fatalf("planted failure caught by %v", caught)
+	if index == 0 {
+		exit, ok := err.(*exec.ExitError)
+		if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "native mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
+			t.Fatalf("planted surviving mutant must fail only %s: %v\n%s", name, err, output)
+		}
+		t.Log("planted native witness caught by " + name)
+	} else if err != nil {
+		t.Fatalf("unplanted shard %s must pass: %v\n%s", name, err, output)
+	} else {
+		t.Log("planted witness has no ownership in " + name)
 	}
-	t.Logf("union: %d mutations x %d corpus cases = %d pairs, each exactly once; planted surviving mutant caught only by TestAcceptanceMutants_000", len(items), len(acceptanceGrammar()), len(items)*len(acceptanceGrammar()))
 }
+
+func TestAcceptanceMutantsPlanted_000(t *testing.T) { t.Parallel(); proveAcceptanceMutantShard(t, 0) }
+func TestAcceptanceMutantsPlanted_001(t *testing.T) { t.Parallel(); proveAcceptanceMutantShard(t, 1) }
 
 // Each canonical dump terminates with a stripped-source line, whose source
 // newlines are escaped. Preserve every byte while identifying corpus cases.
