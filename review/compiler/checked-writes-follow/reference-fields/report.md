@@ -88,6 +88,13 @@ Every original mutant (PASS means caught):
 - TestCheckedWiderWriteMutants/drop_literal_set: caught (0.62s).
 - TestCheckedWiderWriteMutants/drop_check: caught (0.70s).
 
+- TestCheckedEmitContractsMutants/emit-drop-check: caught (1.03s).
+- TestCheckedEmitContractsMutants/emit-callback-misfit: caught (0.99s).
+- TestCheckedEmitContractsMutants/emit-resolution-misfit: caught (0.87s).
+- TestCheckedEmitContractsMutants/emit-comment-misfit: caught (1.16s).
+- TestCheckedEmitContractsMutants/emit-node-misfit: caught (1.00s).
+- TestCheckedEmitContractsMutants/emit-auto-misfit: caught (1.05s).
+
 Prior literal mutant: TestRuntimeCheckedLibraryPushRejectsLiteral caught the exit-0 regression (original-literal-mutant.log).
 
 New overlay mutants:
@@ -106,4 +113,4 @@ New overlay mutants:
 
 Four additional message-only mutants: TestCheckedWriteMessageMutant03, 13, 15 and 16; each exact stderr comparison caught the wider-view declaration in JavaScript, native release and sanitized native (oracle-final.log).
 
-Lane checks run after commit; output is lane-checks.log. Push and delivery SHA are recorded in the final response.
+Lane checks after implementation commit 06953dec: PASS in 9.0s; gofmt and tools on 45 Go files, t.Parallel on five test packages, a-check on 16 .a files, vet on five packages. Output is lane-checks.log. Push and delivery SHA are recorded in the final response.
