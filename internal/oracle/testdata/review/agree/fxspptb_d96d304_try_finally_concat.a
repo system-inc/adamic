@@ -1,0 +1,12 @@
+// A concatenation past V8's longest string inside a try with only a finally: Node runs the finally,
+// then the RangeError ends the program.
+const half = 'ab'.repeat(2 ** 27);
+function join(): number {
+	try {
+		const whole = half + half;
+		return whole.length;
+	} finally {
+		console.log('finally ran');
+	}
+}
+console.log(`${join()}`);

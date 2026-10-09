@@ -1,0 +1,7 @@
+// exec in a loop over one long string: each call decodes the whole input again.
+let text = '';
+for (let i = 0; i < 100000; i++) text += 'a ';
+const word = /a/g;
+let count = 0;
+while (word.exec(text) !== null) count++;
+console.log(`${count}`);

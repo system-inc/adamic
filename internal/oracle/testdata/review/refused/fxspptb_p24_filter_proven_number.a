@@ -1,0 +1,8 @@
+function isNumber(x: string | number): x is number {
+  return typeof x === "number";
+}
+const items: (string | number)[] = ["a", 2, "bc", 4];
+const numbers = items.filter(isNumber);
+console.log(String(numbers.length));
+console.log(String(numbers[0]));
+console.log(numbers.join(","));

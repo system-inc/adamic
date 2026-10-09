@@ -1,0 +1,17 @@
+interface Link {
+	value: number;
+	label: string;
+}
+let chain: Link | undefined = { value: 1, label: `built ${1}` };
+function drop(): void {
+	chain = undefined;
+}
+if (chain !== undefined) {
+	drop();
+	try {
+		console.log(`${chain.value}`);
+	} catch (error) {
+		console.log('caught');
+	}
+	console.log('after');
+}
