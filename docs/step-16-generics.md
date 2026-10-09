@@ -589,3 +589,38 @@ already admits every supported scout shape, including fixture 14. The redundant
 resolved-mapper addition is omitted. No compiler or runtime implementation changes
 are included in this rebuild. The historical retirement totals are not remeasured
 credits on main. Generic body relations remain compiler/generic-body-relations.
+
+## Generic function values after the ruled implementation
+
+Compared dependency `50654a40` with compiler `62ede3ef` on the same 26 surveyed
+roots. All 79 source hashes, 324 checker diagnostics, root identities, eligibility
+statuses and available body spans match the pinned baseline. The original table
+above remains historical; its 4,031 attributed bytes are not measured retirement.
+
+| Observed generic-value blockers | Dependency roots | Dependency sites | After roots | After sites |
+| --- | ---: | ---: | ---: | ---: |
+| Generic declaration values, higher-rank slots and slot-scan limits | 26 | 14 | 11 | 8 |
+
+Seven original diagnostic positions no longer have an observed generic-value
+blocker. Advancing through the parenthesizer root exposes one later value site,
+`factory/parenthesizerRules.ts:691:45`, whose contextual callable has no single
+concrete signature. The original site at line 676 is passed. All eleven
+core.ts:220 comparer roots pass that value site. The three standalone generic
+default roots remain refused without a concrete outer caller; their instantiated
+reductions agree with Node in both backends. The state-machine slot now explicitly
+names TOuterState, TState and TResult in its higher-rank refusal. Paths without
+context and Debug's generic stack marker remain refused with fixes.
+
+Seven roots have no observed isolated-lowering blocker. This does not certify
+accepted whole programs: the corpus is checker-rejected, module scanning retains
+ten computed-property panics, and isolated lowering retains 29 statement panics,
+all unchanged from the dependency run. Other boundaries still hide children.
+No backend or usable IR is produced by this census. See the
+[26-root comparison](../review/compiler/generic-values/census-comparison.md) and
+[full findings](../review/compiler/generic-values/census-comparison.json).
+
+The complete admission-delta gate separately classifies 1,103 pinned programs:
+five newly accepted programs agree with source Node, JavaScript and native,
+with no omitted programs. A planted emitted comparer returning false makes that
+gate fail on stdout while all backends exit successfully. Provenance, commands,
+mutants and limits are in [the delivery report](../review/compiler/generic-values/FOURTH.md).

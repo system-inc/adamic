@@ -155,3 +155,20 @@ negative mutants. Keep each new test leaf below 60 seconds. Remeasure exact
 root/site rows on the dependency source snapshot; historical hidden bytes stay
 historical. General polymorphic storage, identity-only markers, backward flow
 inference and the binary state machine are outside that first implementation.
+
+## Implemented and measured
+
+The comparer/default reductions and immutable declaration aliases are implemented,
+including alias readiness and concrete escapes. Higher-rank slots are refused in
+both extensions with binder names and fixes; a monomorphic callable's argument
+and result contracts are checked at their own annotations and escape sites,
+without treating their recursive object graphs as that callable's own binders.
+Source identity is preserved across represented specializations and callable views.
+
+The [same-input census](../review/compiler/generic-values/census-comparison.md)
+now observes this family at 11 roots and eight sites, from 26 roots and 14 sites.
+The [complete admission proof](../review/compiler/generic-values/FOURTH.md)
+checks all five newly accepted corpus programs against Node in both backends.
+Explicit instantiation expressions, nested generic callable escapes and unknown
+callable descriptors remain NotYet. Contexts without a single concrete signature
+remain refused; the later parenthesizer overload site is recorded in the census.

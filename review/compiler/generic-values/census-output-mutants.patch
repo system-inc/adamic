@@ -1,0 +1,20 @@
+--- guard/internal_lower_lower.go
++++ mutant-IR/internal_lower_lower.go
+@@ -17,7 +17,7 @@
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+-	return nil, fmt.Errorf("latent census: measurement only; no IR output")
++	return &ir.Program{}, fmt.Errorf("latent census: measurement only; no IR output")
+ }
+ 
+ type lowering struct {
+--- guard/internal_load_load.go
++++ mutant-loader/internal_load_load.go
+@@ -388,5 +388,5 @@
+ // CompilerProgram exposes the checked program to public checker and lint adapters.
+ func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
+ 
+-func Load(paths []string) (*Program, error) { return nil, fmt.Errorf("latent census: measurement loader only; no output path") }
++func Load(paths []string) (*Program, error) { return LatentLoad(paths) }
+ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) { return Load(paths) }
