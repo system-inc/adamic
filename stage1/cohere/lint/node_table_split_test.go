@@ -74,7 +74,7 @@ func nodeTableSourceInputsAt(t *testing.T, root string) []string {
 // TestNodeTableIsLinkOnly requires identical output with every node-table row
 // copied and attached to nothing. The live corpus and all original options and
 // recovery classifications are retained; only manifest batching changes.
-// Setup is serial and process-lived, including for a filtered single shard.
+// Not parallel: prepares process-lived corpus and build products before parallel shards.
 func TestNodeTableIsLinkOnly(t *testing.T) { nodeTableSetup(t) }
 
 func nodeTableSetup(t *testing.T) {
