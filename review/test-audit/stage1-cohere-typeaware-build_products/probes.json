@@ -1,0 +1,163 @@
+[
+  {
+    "id": "P01",
+    "file": "shared_test.go",
+    "anchor": "func (h *harness) stage0() string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_stage0"
+    ],
+    "line": 82
+  },
+  {
+    "id": "P02",
+    "file": "typeaware_test.go",
+    "anchor": "func (h *harness) archive(name, overlay string, sanitize bool) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_checker",
+      "TestProduct_checker_asan"
+    ],
+    "line": 149
+  },
+  {
+    "id": "P03",
+    "file": "typeaware_test.go",
+    "anchor": "func (h *harness) lowered(entry, name string) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_six_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_volume_lowered"
+    ],
+    "line": 180
+  },
+  {
+    "id": "P04",
+    "file": "typeaware_test.go",
+    "anchor": "func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_suite",
+      "TestProduct_suite_asan",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_facts_cost_native",
+      "TestProduct_query_cost_native",
+      "TestProduct_volume_native"
+    ],
+    "line": 217
+  },
+  {
+    "id": "P05",
+    "file": "six_builds_test.go",
+    "anchor": "func (h *harness) sixBuildProduct(name string, command *exec.Cmd) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_six_oracle",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_facts_cost_go",
+      "TestProduct_volume_oracle",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_type_symbol_oracle"
+    ],
+    "line": 319
+  },
+  {
+    "id": "P06",
+    "file": "volume_profile_Controls_test.go",
+    "anchor": "func volumeProfileControlsLowered(h *harness, stage0 string) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_profile_controls_lowered"
+    ],
+    "line": 183
+  },
+  {
+    "id": "P07",
+    "file": "build_products_test.go",
+    "anchor": "func volumeProfileControlProduct(t *testing.T, sanitize bool) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_profile_controls_native"
+    ],
+    "line": 58
+  },
+  {
+    "id": "P08",
+    "file": "profile_test.go",
+    "anchor": "func volumeProfileMissingBinding(h *harness, stage0, archive string) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_profile_missing_binding"
+    ],
+    "line": 45
+  },
+  {
+    "id": "P09",
+    "file": "volume_profile_Mutants_test.go",
+    "anchor": "func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_profile_mutant_binding_slot",
+      "TestProduct_profile_mutant_scope_containment",
+      "TestProduct_profile_mutant_first_binding"
+    ],
+    "line": 116
+  },
+  {
+    "id": "P10",
+    "file": "build_products_test.go",
+    "anchor": "func volumeProfileCorpusGoProduct(t *testing.T, output string) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_corpus_stage0",
+      "TestProduct_corpus_checker",
+      "TestProduct_corpus_checker_asan",
+      "TestProduct_corpus_oracle"
+    ],
+    "line": 76
+  },
+  {
+    "id": "P11",
+    "file": "build_products_test.go",
+    "anchor": "func volumeProfileCorpusNativeProduct(t *testing.T, sanitize bool) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_corpus_native"
+    ],
+    "line": 63
+  },
+  {
+    "id": "P12",
+    "file": "volume_type_symbol_test.go",
+    "anchor": "func typeSymbolNativeProduct(h *harness) string {",
+    "answer": "return \"\"",
+    "members": [
+      "TestProduct_type_symbol_native"
+    ],
+    "line": 195
+  },
+  {
+    "id": "P13",
+    "file": "volume_type_symbol_test.go",
+    "anchor": "func typeSymbolFixtures(h *harness) ([]string, string) {",
+    "answer": "return nil, \"\"",
+    "members": [
+      "TestProduct_type_symbol_fixtures"
+    ],
+    "line": 205
+  },
+  {
+    "id": "P14",
+    "file": "volume_type_symbol_test.go",
+    "anchor": "func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string) result {",
+    "answer": "return result{}",
+    "members": [
+      "TestProduct_type_symbol_truth"
+    ],
+    "line": 245
+  }
+]

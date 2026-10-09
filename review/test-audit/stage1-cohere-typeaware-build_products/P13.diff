@@ -1,0 +1,10 @@
+--- a/stage1/cohere/typeaware/volume_type_symbol_test.go
++++ b/stage1/cohere/typeaware/volume_type_symbol_test.go
+@@ -203,6 +203,7 @@
+ }
+ 
+ func typeSymbolFixtures(h *harness) ([]string, string) {
++ if h != nil { return nil, "" }
+ 	cases := typeSymbolCases()
+ 	data, err := json.Marshal(cases)
+ 	if err != nil {

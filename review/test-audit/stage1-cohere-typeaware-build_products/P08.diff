@@ -1,0 +1,10 @@
+--- a/stage1/cohere/typeaware/profile_test.go
++++ b/stage1/cohere/typeaware/profile_test.go
+@@ -43,6 +43,7 @@
+ }
+ 
+ func volumeProfileMissingBinding(h *harness, stage0, archive string) string {
++ if h != nil { return "" }
+ 	return volumeProfileNative(h, stage0, archive, false, "typeaware volume missing-binding namedScopes wrong", func(local *harness) string {
+ 		return profileSourceMutant(local, stage0, archive, "missing-binding", "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+ 	}, "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")

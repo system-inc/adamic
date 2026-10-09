@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/six_builds_test.go
++++ b/stage1/cohere/typeaware/six_builds_test.go
+@@ -320,7 +320,7 @@
+ 	h.t.Helper()
+ 	product := h.sixBuildRecipe(name, command)
+ 	dir := h.sixBuildOnce(product)
+-	path := filepath.Join(dir, product.File)
++	path := filepath.Join(dir, product.File + ".missing")
+ 	if info, err := os.Stat(path); err != nil || !info.Mode().IsRegular() {
+ 		h.t.Fatalf("missing product %s: %v", path, err)
+ 	}

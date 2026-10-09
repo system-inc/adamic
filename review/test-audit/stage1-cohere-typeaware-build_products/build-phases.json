@@ -1,0 +1,392 @@
+[
+  {
+    "log": "baseline-group-01.log",
+    "test": "TestProduct_checker",
+    "phase": "typeaware_test.go:159: phase command checker 3.884834s"
+  },
+  {
+    "log": "baseline-group-01.log",
+    "test": "TestProduct_checker_asan",
+    "phase": "typeaware_test.go:159: phase command checker-asan 4.252375s"
+  },
+  {
+    "log": "baseline-group-06.log",
+    "test": "TestProduct_profile_missing_binding",
+    "phase": "typeaware_test.go:185: phase load missing-binding 0.232723s"
+  },
+  {
+    "log": "baseline-group-06.log",
+    "test": "TestProduct_profile_missing_binding",
+    "phase": "typeaware_test.go:192: phase lowering missing-binding 6.106320s"
+  },
+  {
+    "log": "baseline-group-06.log",
+    "test": "TestProduct_profile_missing_binding",
+    "phase": "typeaware_test.go:198: phase emission missing-binding 37.378015s"
+  },
+  {
+    "log": "baseline-group-06.log",
+    "test": "TestProduct_profile_missing_binding",
+    "phase": "typeaware_test.go:225: phase clang missing-binding 15.738033s"
+  },
+  {
+    "log": "timing-07-3.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.015625s"
+  },
+  {
+    "log": "timing-07-3.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.006293s"
+  },
+  {
+    "log": "timing-07-3.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.023868s"
+  },
+  {
+    "log": "timing-07-3.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.019855s"
+  },
+  {
+    "log": "timing-07-3.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.006838s"
+  },
+  {
+    "log": "timing-07-3.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.005519s"
+  },
+  {
+    "log": "M1.log",
+    "test": "TestProduct_type_symbol_native",
+    "phase": "shared_test.go:88: phase command stage0 5.729029s"
+  },
+  {
+    "log": "timing-07-2.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.017600s"
+  },
+  {
+    "log": "timing-07-2.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.019533s"
+  },
+  {
+    "log": "timing-07-2.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.020726s"
+  },
+  {
+    "log": "timing-07-2.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.005543s"
+  },
+  {
+    "log": "timing-07-2.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.006602s"
+  },
+  {
+    "log": "timing-07-2.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.005321s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.022300s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.007141s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.015863s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:141: phase command clang-version 0.021666s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.008199s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:142: phase command go-version 0.005127s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_first_binding",
+    "phase": "volume_profile_Mutants_test.go:166: phase command first-binding 59.844258s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_binding_slot",
+    "phase": "volume_profile_Mutants_test.go:166: phase command binding-slot 59.844189s"
+  },
+  {
+    "log": "baseline-group-07.log",
+    "test": "TestProduct_profile_mutant_scope_containment",
+    "phase": "volume_profile_Mutants_test.go:166: phase command scope-containment 61.125244s"
+  },
+  {
+    "log": "M3-cold.log",
+    "test": "TestProduct_profile_controls_native",
+    "phase": "typeaware_test.go:162: phase command checker 3.992438s"
+  },
+  {
+    "log": "baseline.log",
+    "test": "TestInspectRequestRefusals",
+    "phase": "shared_test.go:88: phase command stage0 9.054831s"
+  },
+  {
+    "log": "superseded-M1-validator.log",
+    "test": "TestProduct_type_symbol_native",
+    "phase": "shared_test.go:91: phase command stage0 9.469849s"
+  },
+  {
+    "log": "bounded-baseline.log",
+    "test": "TestProduct_query_cost_lowered",
+    "phase": "typeaware_test.go:185: phase load query-cost 0.125227s"
+  },
+  {
+    "log": "bounded-baseline.log",
+    "test": "TestProduct_query_cost_lowered",
+    "phase": "typeaware_test.go:192: phase lowering query-cost 0.001199s"
+  },
+  {
+    "log": "bounded-baseline.log",
+    "test": "TestProduct_query_cost_lowered",
+    "phase": "typeaware_test.go:198: phase emission query-cost 0.000539s"
+  },
+  {
+    "log": "bounded-baseline.log",
+    "test": "TestProduct_typeaware_lowered",
+    "phase": "typeaware_test.go:185: phase load native 0.953792s"
+  },
+  {
+    "log": "bounded-baseline.log",
+    "test": "TestProduct_typeaware_lowered",
+    "phase": "typeaware_test.go:192: phase lowering native 5.147498s"
+  },
+  {
+    "log": "bounded-baseline.log",
+    "test": "TestProduct_typeaware_lowered",
+    "phase": "typeaware_test.go:198: phase emission native 43.629207s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_six_lowered",
+    "phase": "typeaware_test.go:185: phase load suite 0.179963s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_facts_cost_lowered",
+    "phase": "typeaware_test.go:185: phase load facts-cost 0.058571s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_facts_cost_lowered",
+    "phase": "typeaware_test.go:192: phase lowering facts-cost 0.002415s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_facts_cost_lowered",
+    "phase": "typeaware_test.go:198: phase emission facts-cost 0.000797s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_volume_lowered",
+    "phase": "typeaware_test.go:185: phase load volume 0.097679s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_six_lowered",
+    "phase": "typeaware_test.go:192: phase lowering suite 1.308926s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_volume_lowered",
+    "phase": "typeaware_test.go:192: phase lowering volume 3.776411s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_six_lowered",
+    "phase": "typeaware_test.go:198: phase emission suite 15.128963s"
+  },
+  {
+    "log": "baseline-group-02.log",
+    "test": "TestProduct_volume_lowered",
+    "phase": "typeaware_test.go:198: phase emission volume 29.882101s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_query_cost_native",
+    "phase": "typeaware_test.go:225: phase clang query-cost 9.087091s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_facts_cost_native",
+    "phase": "typeaware_test.go:225: phase clang facts-cost 9.188199s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_suite",
+    "phase": "typeaware_test.go:225: phase clang suite 13.985544s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_typeaware_native",
+    "phase": "typeaware_test.go:225: phase clang native 16.933346s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_volume_native",
+    "phase": "typeaware_test.go:225: phase clang volume 18.316119s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_suite_asan",
+    "phase": "typeaware_test.go:225: phase clang suite-asan 40.647281s"
+  },
+  {
+    "log": "baseline-group-03.log",
+    "test": "TestProduct_typeaware_native_asan",
+    "phase": "typeaware_test.go:225: phase clang native-asan 34.221371s"
+  },
+  {
+    "log": "baseline-group-10.log",
+    "test": "TestProduct_type_symbol_native",
+    "phase": "typeSymbol-build volume-type-symbol-native cold=56.823332s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_facts_cost_native",
+    "phase": "typeaware_test.go:162: phase command checker 5.255670s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_suite_asan",
+    "phase": "typeaware_test.go:162: phase command checker-asan 5.294736s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_facts_cost_native",
+    "phase": "typeaware_test.go:191: phase load facts-cost 0.068685s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_facts_cost_native",
+    "phase": "typeaware_test.go:198: phase lowering facts-cost 0.003845s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_facts_cost_native",
+    "phase": "typeaware_test.go:204: phase emission facts-cost 0.003285s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_volume_native",
+    "phase": "typeaware_test.go:191: phase load volume 0.275789s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_suite",
+    "phase": "typeaware_test.go:191: phase load suite 0.172734s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_typeaware_native",
+    "phase": "typeaware_test.go:191: phase load native 0.182246s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_typeaware_native",
+    "phase": "typeaware_test.go:198: phase lowering native 1.170956s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_suite",
+    "phase": "typeaware_test.go:198: phase lowering suite 1.882526s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_volume_native",
+    "phase": "typeaware_test.go:198: phase lowering volume 4.823743s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_facts_cost_native",
+    "phase": "typeaware_test.go:234: phase clang facts-cost 7.596903s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_typeaware_native",
+    "phase": "typeaware_test.go:204: phase emission native 12.654777s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_suite",
+    "phase": "typeaware_test.go:204: phase emission suite 18.840590s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_typeaware_native",
+    "phase": "typeaware_test.go:234: phase clang native 15.819617s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_query_cost_native",
+    "phase": "typeaware_test.go:191: phase load query-cost 0.040765s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_query_cost_native",
+    "phase": "typeaware_test.go:198: phase lowering query-cost 0.001215s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_query_cost_native",
+    "phase": "typeaware_test.go:204: phase emission query-cost 0.000466s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_suite",
+    "phase": "typeaware_test.go:234: phase clang suite 13.827137s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_query_cost_native",
+    "phase": "typeaware_test.go:234: phase clang query-cost 7.821865s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_volume_native",
+    "phase": "typeaware_test.go:204: phase emission volume 40.991337s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_typeaware_native_asan",
+    "phase": "typeaware_test.go:234: phase clang native-asan 37.694639s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_suite_asan",
+    "phase": "typeaware_test.go:234: phase clang suite-asan 38.819903s"
+  },
+  {
+    "log": "M2.log",
+    "test": "TestProduct_volume_native",
+    "phase": "typeaware_test.go:234: phase clang volume 15.547857s"
+  }
+]

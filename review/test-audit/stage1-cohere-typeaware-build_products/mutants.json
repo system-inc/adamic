@@ -1,0 +1,75 @@
+[
+  {
+    "id": "M1",
+    "file": "six_builds_test.go",
+    "from": "path := filepath.Join(dir, product.File)",
+    "to": "path := filepath.Join(dir, product.File + \".missing\")",
+    "menu": "change constant",
+    "line": 323,
+    "supplemental": true,
+    "reason": "Replacement chosen after review of the superseded validator run; excluded from verdict and uniqueness evidence.",
+    "failed_tests": [
+      "TestProduct_facts_cost_go",
+      "TestProduct_six_oracle",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_type_symbol_native",
+      "TestProduct_type_symbol_oracle",
+      "TestProduct_type_symbol_truth",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_volume_oracle"
+    ],
+    "failed_rows": []
+  },
+  {
+    "id": "M2",
+    "file": "typeaware_test.go",
+    "from": "data, err := os.ReadFile(binary)",
+    "to": "data, err := os.ReadFile(binary + \".missing\")",
+    "menu": "change constant",
+    "line": 245,
+    "failed_tests": [
+      "TestProduct_facts_cost_native",
+      "TestProduct_query_cost_native",
+      "TestProduct_suite",
+      "TestProduct_suite_asan",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_volume_native"
+    ],
+    "failed_rows": [
+      "TestProduct native family"
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "volume_profile_Controls_test.go",
+    "from": "return filepath.Join(directory, \"volume.c\")",
+    "to": "return filepath.Join(directory, \"missing.c\")",
+    "menu": "change constant",
+    "line": 201,
+    "failed_tests": [
+      "TestProduct_corpus_native",
+      "TestProduct_profile_controls_native"
+    ],
+    "failed_rows": [
+      "TestProduct_profile_controls_native",
+      "TestProduct_corpus_native"
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "volume_type_symbol_test.go",
+    "from": "manifest := filepath.Join(directory, \"controls.manifest\")",
+    "to": "manifest := filepath.Join(directory, \"missing.manifest\")",
+    "menu": "change constant",
+    "line": 233,
+    "failed_tests": [
+      "TestProduct_type_symbol_fixtures",
+      "TestProduct_type_symbol_truth"
+    ],
+    "failed_rows": [
+      "TestProduct_type_symbol_fixtures",
+      "TestProduct_type_symbol_truth"
+    ]
+  }
+]

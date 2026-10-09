@@ -1,0 +1,10 @@
+--- a/stage1/cohere/typeaware/volume_profile_Controls_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Controls_test.go
+@@ -181,6 +181,7 @@
+ // cold build unit can finish under the deadline. Both sanitizer modes use the
+ // exact same lowered C and the original BuildTSGo flags and runtime.
+ func volumeProfileControlsLowered(h *harness, stage0 string) string {
++ if h != nil { return "" }
+ 	inputs := volumeProfileNativeInputs(h, stage0, "", false, "typeaware volume lowered")
+ 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+ 		program, err := load.Load([]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")})

@@ -1,0 +1,221 @@
+diff --git a/stage1/cohere/typeaware/build_products_test.go b/stage1/cohere/typeaware/build_products_test.go
+index e578b40d..c7ce22b1 100644
+--- a/stage1/cohere/typeaware/build_products_test.go
++++ b/stage1/cohere/typeaware/build_products_test.go
+@@ -3,6 +3,7 @@ package typeaware
+ import (
+ 	"context"
+ 	"encoding/json"
++	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ 	"testing"
+@@ -56,11 +57,17 @@ func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) strin
+ }
+ 
+ func volumeProfileControlProduct(t *testing.T, sanitize bool) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P07" {
++		return ""
++	}
+ 	h := typeAwareProductHarness(t)
+ 	return volumeProfileControlsBinary(h, "", h.archive("checker", "", sanitize), sanitize)
+ }
+ 
+ func volumeProfileCorpusNativeProduct(t *testing.T, sanitize bool) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P11" {
++		return ""
++	}
+ 	h := typeAwareProductHarness(t)
+ 	ctx := context.Background()
+ 	stage0 := volumeProfileCorporaGoProduct(t, ctx, h.repository, "adamic")
+@@ -74,6 +81,9 @@ func volumeProfileCorpusNativeProduct(t *testing.T, sanitize bool) string {
+ }
+ 
+ func volumeProfileCorpusGoProduct(t *testing.T, output string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P10" {
++		return ""
++	}
+ 	h := typeAwareProductHarness(t)
+ 	return volumeProfileCorporaGoProduct(t, context.Background(), h.repository, output)
+ }
+diff --git a/stage1/cohere/typeaware/profile_test.go b/stage1/cohere/typeaware/profile_test.go
+index d80f6704..667a4139 100644
+--- a/stage1/cohere/typeaware/profile_test.go
++++ b/stage1/cohere/typeaware/profile_test.go
+@@ -43,6 +43,9 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
+ }
+ 
+ func volumeProfileMissingBinding(h *harness, stage0, archive string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P08" {
++		return ""
++	}
+ 	return volumeProfileNative(h, stage0, archive, false, "typeaware volume missing-binding namedScopes wrong", func(local *harness) string {
+ 		return profileSourceMutant(local, stage0, archive, "missing-binding", "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+ 	}, "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+diff --git a/stage1/cohere/typeaware/shared_test.go b/stage1/cohere/typeaware/shared_test.go
+index 2fd6dcdf..8eff4960 100644
+--- a/stage1/cohere/typeaware/shared_test.go
++++ b/stage1/cohere/typeaware/shared_test.go
+@@ -80,6 +80,9 @@ func buildProduct(t *testing.T, name string, command *exec.Cmd, directory string
+ }
+ 
+ func (h *harness) stage0() string {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return ""
++	}
+ 	h.t.Helper()
+ 	path, err := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
+ 		binary := filepath.Join(directory, "adamic")
+diff --git a/stage1/cohere/typeaware/six_builds_test.go b/stage1/cohere/typeaware/six_builds_test.go
+index b5d6051c..1eb8a4fc 100644
+--- a/stage1/cohere/typeaware/six_builds_test.go
++++ b/stage1/cohere/typeaware/six_builds_test.go
+@@ -317,11 +317,14 @@ func compactSixFiles(files []string) []string {
+ }
+ 
+ func (h *harness) sixBuildProduct(name string, command *exec.Cmd) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P05" {
++		return ""
++	}
+ 	h.t.Helper()
+ 	product := h.sixBuildRecipe(name, command)
+ 	dir := h.sixBuildOnce(product)
+ 	path := filepath.Join(dir, product.File)
+-	if info, err := os.Stat(path); err != nil || !info.Mode().IsRegular() {
++	if info, err := os.Stat(path); err != nil || (!info.Mode().IsRegular() != (os.Getenv("ADAMIC_MUTANT") == "M1")) {
+ 		h.t.Fatalf("missing product %s: %v", path, err)
+ 	}
+ 	if h.sixProducts == nil {
+diff --git a/stage1/cohere/typeaware/typeaware_test.go b/stage1/cohere/typeaware/typeaware_test.go
+index 7a7887fd..9390ad59 100644
+--- a/stage1/cohere/typeaware/typeaware_test.go
++++ b/stage1/cohere/typeaware/typeaware_test.go
+@@ -147,6 +147,9 @@ func (h *harness) overlay(name, path, from, to string) string {
+ 	return h.write(name+".json", string(data))
+ }
+ func (h *harness) archive(name, overlay string, sanitize bool) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return ""
++	}
+ 	h.t.Helper()
+ 	if overlay == "" {
+ 		path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
+@@ -178,6 +181,9 @@ func (h *harness) archive(name, overlay string, sanitize bool) string {
+ }
+ 
+ func (h *harness) lowered(entry, name string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P03" {
++		return ""
++	}
+ 	h.t.Helper()
+ 	build := func(_ string) (string, error) {
+ 		started := time.Now()
+@@ -215,6 +221,9 @@ func (h *harness) lowered(entry, name string) string {
+ // build uses the same load, lowering and TSGo emission pipeline as stage zero.
+ // Only the completed C string is shared, because emission mutates its IR.
+ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P04" {
++		return ""
++	}
+ 	h.t.Helper()
+ 	path := filepath.Join(h.directory, name)
+ 	source := h.lowered(entry, name)
+@@ -242,7 +251,7 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
+ 		h.t.Fatal(err)
+ 	}
+ 	// Callers may remove their binaries. Give them copies, preserving the product.
+-	data, err := os.ReadFile(binary)
++	data, err := os.ReadFile(binary + map[string]string{"M2": ".missing"}[os.Getenv("ADAMIC_MUTANT")])
+ 	if err != nil {
+ 		h.t.Fatal(err)
+ 	}
+diff --git a/stage1/cohere/typeaware/volume_profile_Controls_test.go b/stage1/cohere/typeaware/volume_profile_Controls_test.go
+index e11d4e0b..add1e26c 100644
+--- a/stage1/cohere/typeaware/volume_profile_Controls_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Controls_test.go
+@@ -181,6 +181,9 @@ func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name
+ // cold build unit can finish under the deadline. Both sanitizer modes use the
+ // exact same lowered C and the original BuildTSGo flags and runtime.
+ func volumeProfileControlsLowered(h *harness, stage0 string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P06" {
++		return ""
++	}
+ 	inputs := volumeProfileNativeInputs(h, stage0, "", false, "typeaware volume lowered")
+ 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+ 		program, err := load.Load([]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")})
+@@ -198,7 +201,12 @@ func volumeProfileControlsLowered(h *harness, stage0 string) string {
+ 		}
+ 		return os.WriteFile(filepath.Join(directory, "volume.c"), []byte(source), 0600)
+ 	})
+-	return filepath.Join(directory, "volume.c")
++	return filepath.Join(directory, func() string {
++		if os.Getenv("ADAMIC_MUTANT") == "M3" {
++			return "missing.c"
++		}
++		return "volume.c"
++	}())
+ }
+ 
+ func TestVolumeProfileControlsLower(t *testing.T) {
+diff --git a/stage1/cohere/typeaware/volume_profile_Mutants_test.go b/stage1/cohere/typeaware/volume_profile_Mutants_test.go
+index dabae3de..99e1c195 100644
+--- a/stage1/cohere/typeaware/volume_profile_Mutants_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Mutants_test.go
+@@ -114,6 +114,9 @@ func runVolumeProfileMutantShard(t *testing.T, shardIndex int) {
+ }
+ 
+ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P09" {
++		return ""
++	}
+ 	t, repository := h.t, h.repository
+ 	stage0, archive := h.stage0(), h.archive("checker", "", false)
+ 	// Hash the actual build executables as well as the imported source tree.
+diff --git a/stage1/cohere/typeaware/volume_type_symbol_test.go b/stage1/cohere/typeaware/volume_type_symbol_test.go
+index 4dc0a1ef..68dcc5a9 100644
+--- a/stage1/cohere/typeaware/volume_type_symbol_test.go
++++ b/stage1/cohere/typeaware/volume_type_symbol_test.go
+@@ -193,6 +193,9 @@ func typeSymbolArchive(h *harness) string {
+ }
+ 
+ func typeSymbolNativeProduct(h *harness) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P12" {
++		return ""
++	}
+ 	stage0 := h.stage0()
+ 	archive := typeSymbolArchive(h)
+ 	inputs, build, err := typeSymbolNativeSpec(h.repository, stage0, "volume-type-symbol-native", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, false)
+@@ -203,6 +206,9 @@ func typeSymbolNativeProduct(h *harness) string {
+ }
+ 
+ func typeSymbolFixtures(h *harness) ([]string, string) {
++	if os.Getenv("ADAMIC_MUTANT") == "P13" {
++		return nil, ""
++	}
+ 	cases := typeSymbolCases()
+ 	data, err := json.Marshal(cases)
+ 	if err != nil {
+@@ -230,7 +236,12 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
+ 		_ = manifest
+ 		return nil
+ 	})
+-	manifest := filepath.Join(directory, "controls.manifest")
++	manifest := filepath.Join(directory, func() string {
++		if os.Getenv("ADAMIC_MUTANT") == "M4" {
++			return "missing.manifest"
++		}
++		return "controls.manifest"
++	}())
+ 	data, err = os.ReadFile(manifest)
+ 	if err != nil {
+ 		h.t.Fatal(err)
+@@ -243,6 +254,9 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
+ }
+ 
+ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string) result {
++	if os.Getenv("ADAMIC_MUTANT") == "P14" {
++		return result{}
++	}
+ 	t, repository := h.t, h.repository
+ 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+ 	// Every root and the config are product inputs; Go-oracle bytes cover its

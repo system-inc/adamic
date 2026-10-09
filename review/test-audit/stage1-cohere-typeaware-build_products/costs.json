@@ -1,0 +1,14 @@
+{
+  "setup": "warm env validated; bootstrap skipped",
+  "npm_ci_seconds": 0.796,
+  "nproc": 5,
+  "whole_baseline_test_seconds": 90.497,
+  "product_slice_baseline_test_seconds": 90.054,
+  "group_baseline_command_wall_seconds": 464.5758482420042,
+  "timing_repeat_command_wall_seconds": 163.74228767400018,
+  "mutation_and_probe_command_wall_seconds": 171.2692765479951,
+  "isolated_M3_test_seconds": 44.621,
+  "standalone_mutant_vet_seconds": 1.673296057002517,
+  "standalone_probe_vet_seconds": 5.058816742995987,
+  "builds": "Per-phase build timings are in build-phases.json. Command wall includes Go test compilation; row medians use the test binary package Elapsed line. Costs overlap parallel child phases and are not additive."
+}

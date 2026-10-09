@@ -1,0 +1,10 @@
+--- a/stage1/cohere/typeaware/typeaware_test.go
++++ b/stage1/cohere/typeaware/typeaware_test.go
+@@ -178,6 +178,7 @@
+ }
+ 
+ func (h *harness) lowered(entry, name string) string {
++ if h != nil { return "" }
+ 	h.t.Helper()
+ 	build := func(_ string) (string, error) {
+ 		started := time.Now()

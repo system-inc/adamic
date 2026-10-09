@@ -1,0 +1,36 @@
+[
+  {
+    "id": "M1",
+    "file": "six_builds_test.go",
+    "from": "path := filepath.Join(dir, product.File)",
+    "to": "path := filepath.Join(dir, product.File + \".missing\")",
+    "menu": "change constant",
+    "line": 323,
+    "supplemental": true,
+    "reason": "Replacement chosen after review of the superseded validator run; excluded from verdict and uniqueness evidence."
+  },
+  {
+    "id": "M2",
+    "file": "typeaware_test.go",
+    "from": "data, err := os.ReadFile(binary)",
+    "to": "data, err := os.ReadFile(binary + \".missing\")",
+    "menu": "change constant",
+    "line": 245
+  },
+  {
+    "id": "M3",
+    "file": "volume_profile_Controls_test.go",
+    "from": "return filepath.Join(directory, \"volume.c\")",
+    "to": "return filepath.Join(directory, \"missing.c\")",
+    "menu": "change constant",
+    "line": 201
+  },
+  {
+    "id": "M4",
+    "file": "volume_type_symbol_test.go",
+    "from": "manifest := filepath.Join(directory, \"controls.manifest\")",
+    "to": "manifest := filepath.Join(directory, \"missing.manifest\")",
+    "menu": "change constant",
+    "line": 233
+  }
+]

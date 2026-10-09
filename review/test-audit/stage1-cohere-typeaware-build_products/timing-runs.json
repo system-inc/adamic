@@ -1,0 +1,458 @@
+[
+  {
+    "group": "TestProduct buildProduct family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 9.578090504999636,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_stage0|TestProduct_checker|TestProduct_checker_asan)$"
+    ]
+  },
+  {
+    "group": "TestProduct lowered family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 10.113728148999144,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_lowered|TestProduct_typeaware_lowered|TestProduct_facts_cost_lowered|TestProduct_query_cost_lowered|TestProduct_volume_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct native family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 16.629688470000474,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_suite|TestProduct_suite_asan|TestProduct_typeaware_native|TestProduct_typeaware_native_asan|TestProduct_facts_cost_native|TestProduct_query_cost_native|TestProduct_volume_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct sixBuildProduct family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 7.325729129001047,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_archive|TestProduct_type_symbol_oracle)$"
+    ]
+  },
+  {
+    "group": "TestProduct_profile_controls_lowered",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 3.3867381759991986,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct volumeProfileNative family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 5.560251028999119,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_native|TestProduct_profile_missing_binding)$"
+    ]
+  },
+  {
+    "group": "TestProduct profile_mutant family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 6.884024988999954,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_mutant_binding_slot|TestProduct_profile_mutant_scope_containment|TestProduct_profile_mutant_first_binding)$"
+    ]
+  },
+  {
+    "group": "TestProduct corpusGo family",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 5.589653120001458,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_corpus_stage0|TestProduct_corpus_checker|TestProduct_corpus_checker_asan|TestProduct_corpus_oracle)$"
+    ]
+  },
+  {
+    "group": "TestProduct_corpus_native",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 6.666948389998652,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_corpus_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_type_symbol_native",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 5.393955182000354,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_type_symbol_fixtures",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 2.4959591000006185,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_fixtures)$"
+    ]
+  },
+  {
+    "group": "TestProduct_type_symbol_truth",
+    "repeat": 2,
+    "exit": 0,
+    "wall": 3.710197901000356,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_truth)$"
+    ]
+  },
+  {
+    "group": "TestProduct buildProduct family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 5.041899338000803,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_stage0|TestProduct_checker|TestProduct_checker_asan)$"
+    ]
+  },
+  {
+    "group": "TestProduct lowered family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 5.821217811999304,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_lowered|TestProduct_typeaware_lowered|TestProduct_facts_cost_lowered|TestProduct_query_cost_lowered|TestProduct_volume_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct native family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 14.831949417000942,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_suite|TestProduct_suite_asan|TestProduct_typeaware_native|TestProduct_typeaware_native_asan|TestProduct_facts_cost_native|TestProduct_query_cost_native|TestProduct_volume_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct sixBuildProduct family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 7.2045655909987545,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_archive|TestProduct_type_symbol_oracle)$"
+    ]
+  },
+  {
+    "group": "TestProduct_profile_controls_lowered",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 3.160724346000279,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct volumeProfileNative family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 5.824247859000025,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_native|TestProduct_profile_missing_binding)$"
+    ]
+  },
+  {
+    "group": "TestProduct profile_mutant family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 7.55550468599904,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_mutant_binding_slot|TestProduct_profile_mutant_scope_containment|TestProduct_profile_mutant_first_binding)$"
+    ]
+  },
+  {
+    "group": "TestProduct corpusGo family",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 6.955214954001349,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_corpus_stage0|TestProduct_corpus_checker|TestProduct_corpus_checker_asan|TestProduct_corpus_oracle)$"
+    ]
+  },
+  {
+    "group": "TestProduct_corpus_native",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 8.24239018499975,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_corpus_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_type_symbol_native",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 7.231733798000278,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_type_symbol_fixtures",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 4.019236935000663,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_fixtures)$"
+    ]
+  },
+  {
+    "group": "TestProduct_type_symbol_truth",
+    "repeat": 3,
+    "exit": 0,
+    "wall": 4.518638612998984,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_truth)$"
+    ]
+  }
+]

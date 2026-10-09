@@ -1,0 +1,145 @@
+[
+  {
+    "group": "TestProduct buildProduct family",
+    "members": [
+      "TestProduct_stage0",
+      "TestProduct_checker",
+      "TestProduct_checker_asan"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 11.060449325999798,
+    "fails": []
+  },
+  {
+    "group": "TestProduct lowered family",
+    "members": [
+      "TestProduct_six_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_volume_lowered"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 39.91615540100065,
+    "fails": []
+  },
+  {
+    "group": "TestProduct native family",
+    "members": [
+      "TestProduct_suite",
+      "TestProduct_suite_asan",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_facts_cost_native",
+      "TestProduct_query_cost_native",
+      "TestProduct_volume_native"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 57.49380608300089,
+    "fails": []
+  },
+  {
+    "group": "TestProduct sixBuildProduct family",
+    "members": [
+      "TestProduct_six_oracle",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_facts_cost_go",
+      "TestProduct_volume_oracle",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_type_symbol_oracle"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 39.29566495200015,
+    "fails": []
+  },
+  {
+    "group": "TestProduct_profile_controls_lowered",
+    "members": [
+      "TestProduct_profile_controls_lowered"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 36.34893334300068,
+    "fails": []
+  },
+  {
+    "group": "TestProduct volumeProfileNative family",
+    "members": [
+      "TestProduct_profile_controls_native",
+      "TestProduct_profile_missing_binding"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 69.33695234400147,
+    "fails": []
+  },
+  {
+    "group": "TestProduct profile_mutant family",
+    "members": [
+      "TestProduct_profile_mutant_binding_slot",
+      "TestProduct_profile_mutant_scope_containment",
+      "TestProduct_profile_mutant_first_binding"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 70.27447966600084,
+    "fails": []
+  },
+  {
+    "group": "TestProduct corpusGo family",
+    "members": [
+      "TestProduct_corpus_stage0",
+      "TestProduct_corpus_checker",
+      "TestProduct_corpus_checker_asan",
+      "TestProduct_corpus_oracle"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 36.952601212000445,
+    "fails": []
+  },
+  {
+    "group": "TestProduct_corpus_native",
+    "members": [
+      "TestProduct_corpus_native"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 24.136990926999715,
+    "fails": []
+  },
+  {
+    "group": "TestProduct_type_symbol_native",
+    "members": [
+      "TestProduct_type_symbol_native"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 63.36809974300013,
+    "fails": []
+  },
+  {
+    "group": "TestProduct_type_symbol_fixtures",
+    "members": [
+      "TestProduct_type_symbol_fixtures"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 11.014679838999655,
+    "fails": []
+  },
+  {
+    "group": "TestProduct_type_symbol_truth",
+    "members": [
+      "TestProduct_type_symbol_truth"
+    ],
+    "exit": 0,
+    "cooked": false,
+    "wall_seconds": 5.377035405999777,
+    "fails": []
+  }
+]

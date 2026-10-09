@@ -1,0 +1,10 @@
+--- a/stage1/cohere/typeaware/volume_profile_Mutants_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Mutants_test.go
+@@ -114,6 +114,7 @@
+ }
+ 
+ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) string {
++ if h != nil { return "" }
+ 	t, repository := h.t, h.repository
+ 	stage0, archive := h.stage0(), h.archive("checker", "", false)
+ 	// Hash the actual build executables as well as the imported source tree.

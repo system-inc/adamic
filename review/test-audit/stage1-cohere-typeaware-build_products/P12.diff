@@ -1,0 +1,10 @@
+--- a/stage1/cohere/typeaware/volume_type_symbol_test.go
++++ b/stage1/cohere/typeaware/volume_type_symbol_test.go
+@@ -193,6 +193,7 @@
+ }
+ 
+ func typeSymbolNativeProduct(h *harness) string {
++ if h != nil { return "" }
+ 	stage0 := h.stage0()
+ 	archive := typeSymbolArchive(h)
+ 	inputs, build, err := typeSymbolNativeSpec(h.repository, stage0, "volume-type-symbol-native", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, false)

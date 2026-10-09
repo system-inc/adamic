@@ -1,0 +1,230 @@
+[
+  {
+    "group": "TestProduct sixBuildProduct family",
+    "repeat": 1,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_oracle)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-01-1.log"
+  },
+  {
+    "group": "TestProduct sixBuildProduct family",
+    "repeat": 2,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_oracle)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-01-2.log"
+  },
+  {
+    "group": "TestProduct sixBuildProduct family",
+    "repeat": 3,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_oracle)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-01-3.log"
+  },
+  {
+    "group": "TestProduct_type_symbol_archive",
+    "repeat": 1,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_archive)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-02-1.log"
+  },
+  {
+    "group": "TestProduct_type_symbol_archive",
+    "repeat": 2,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_archive)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-02-2.log"
+  },
+  {
+    "group": "TestProduct_type_symbol_archive",
+    "repeat": 3,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_archive)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-02-3.log"
+  },
+  {
+    "group": "TestProduct_profile_controls_native",
+    "repeat": 1,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_native)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-03-1.log"
+  },
+  {
+    "group": "TestProduct_profile_controls_native",
+    "repeat": 2,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_native)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-03-2.log"
+  },
+  {
+    "group": "TestProduct_profile_controls_native",
+    "repeat": 3,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_native)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-03-3.log"
+  },
+  {
+    "group": "TestProduct_profile_missing_binding",
+    "repeat": 1,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_missing_binding)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-04-1.log"
+  },
+  {
+    "group": "TestProduct_profile_missing_binding",
+    "repeat": 2,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_missing_binding)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-04-2.log"
+  },
+  {
+    "group": "TestProduct_profile_missing_binding",
+    "repeat": 3,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_missing_binding)$"
+    ],
+    "log": "review/test-audit/stage1-cohere-typeaware-build_products/final-timing-04-3.log"
+  }
+]
