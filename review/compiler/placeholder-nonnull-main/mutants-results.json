@@ -1,0 +1,104 @@
+[
+  {
+    "name": "drop-flow-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/drop-flow-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseChecks$/saved_leak$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.441992810003285
+  },
+  {
+    "name": "retain-alias-proof",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/retain-alias-proof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseChecks$/alias_reset$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.423513591005758
+  },
+  {
+    "name": "nullish-receiver-twice",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/nullish-receiver-twice.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/placeholder_nonnull_null_loose[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 29.674413626002206
+  },
+  {
+    "name": "json-ordinary-assertion",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/json-ordinary-assertion.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/placeholder_nonnull_null_json[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 23.57667078099621
+  },
+  {
+    "name": "admit-weak-slot",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/admit-weak-slot.json",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderWeakSlotStaysNotYet$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 14.711857667003642
+  },
+  {
+    "name": "omit-refusal-state",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/omit-refusal-state.json",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningSpreadOverwrite$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 10.298541247000685
+  }
+]

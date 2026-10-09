@@ -31,7 +31,7 @@ func (e *emitter) placeholderViewField(property ir.Property) string {
 	e.line("const adamic_object *%s = (const adamic_object *)((const unsigned char *)(%s - %s.index) - offsetof(adamic_object, slots));", owner, slot, cache)
 	e.line("unsigned char %s = adamic_object_field_types(%s)[%s.index];", kind, owner, cache)
 	// Copy a tagged nullish payload even when its readiness bit is unset.
-	e.line("if (%s == %d && (%s->reference == NULL || %s->reference == &adamic_null)) {", kind, ir.Union, slot, slot)
+	e.line("if (%s == %d || %s == %d || (%s == %d && (%s->reference == NULL || %s->reference == &adamic_null))) {", kind, ir.UndefinedRepresentation, kind, ir.NullRepresentation, kind, ir.Union, slot, slot)
 	e.line("%s = adamic_retain(%s->reference);", result, slot)
 	unset := fmt.Sprintf("!adamic_object_initialized(%s)[%s.index]", owner, cache)
 	unset += fmt.Sprintf(" || (%s == %d && !adamic_maybe_number_unpack(%s->number).present)", kind, ir.MaybeNumber, slot)

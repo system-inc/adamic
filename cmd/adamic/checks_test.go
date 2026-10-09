@@ -69,12 +69,14 @@ func TestExplainChecksDriver(t *testing.T) {
 
 // Placeholder checks share the public report in every compiler entry point.
 func TestPlaceholderExplainChecksOutput(t *testing.T) {
+	t.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
 	}
 	for _, backend := range []string{"c", "js", "build"} {
 		t.Run(backend, func(t *testing.T) {
+			t.Parallel()
 			arguments := []string{backend, "internal/oracle/testdata/placeholder_nonnull_saved_leak.a", "--explain-checks"}
 			if backend == "build" {
 				arguments = append(arguments, "-o", filepath.Join(t.TempDir(), "program"), "--sanitize")

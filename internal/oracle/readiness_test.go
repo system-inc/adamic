@@ -284,6 +284,7 @@ func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 
 // Non-literal assertions are checked at initialization, even if a later write would replace them.
 func TestNonliteralInitializerCannotSkipCheck(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
