@@ -11,6 +11,12 @@ for (const stream of [process.stdout, process.stderr]) {
 	stream.on('error', () => process.exit(70));
 }
 
+// Opt-in comparison for the hash-pinned terminal fixtures in node.mjs. This
+// observes Node's own engine failure; it does not classify arbitrary payloads.
+export function terminalCheckOracle() {
+	process.on('uncaughtExceptionMonitor', (error) => panic(String(error)));
+}
+
 export function panic(message) {
 	process.stderr.write(`adamic: panic: ${message}\n`);
 	process.exit(70);

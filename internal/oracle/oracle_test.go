@@ -548,13 +548,25 @@ func onNode(t *testing.T, path string) run {
 }
 
 // onJavaScriptBackend runs a lowered program through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program) run {
+// An explicit source path carries a pinned terminal-check convention; Program.Source is only a display name.
+func onJavaScriptBackend(t *testing.T, program *ir.Program, source ...string) run {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+	code := javascript.JavaScript(program)
+	if len(source) != 0 {
+		// The convention depends on the original entry and its import graph, so both
+		// participate in the JavaScript observation's cache key through this comment.
+		code = "// Source oracle: " + strconv.Quote(source[0]) + " " + sourceIdentity(t, source[0]) + "\n" + code
+	}
+	if err := os.WriteFile(path, []byte(code), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return onNode(t, path)
+	if len(source) == 0 {
+		return onNode(t, path)
+	}
+	return cachedNode(t, path, func() run {
+		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), "--terminal-source", source[0], path)
+	})
 }
 
 // lowered checks and lowers a program, or returns stage 0's refusal.
@@ -752,7 +764,7 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Lower: %v", err)
 			}
-			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program, path)
 			native, sanitized := natively(t, program)
 			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
 			// allocator rather than malloc) must say exactly what the sanitized one did.
