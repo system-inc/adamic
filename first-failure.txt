@@ -1,0 +1,8 @@
+FIRST FAILURE (tests, at 126.1 s):
+github.com/system-inc/adamic/stage1/cohere/lint TestOwnedWitnesses_000
+=== RUN   TestOwnedWitnesses_000
+=== PAUSE TestOwnedWitnesses_000
+=== CONT  TestOwnedWitnesses_000
+cooked: TestOwnedWitnesses_Setup exceeded 90s
+
+(box load 30.8 on 64 cores at first failure)
