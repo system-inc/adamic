@@ -1,0 +1,111 @@
+[
+  {
+    "test": "TestMergePutsCasesBackInOrder",
+    "package": "stage1/cohere/lint/shards",
+    "file": "stage1/cohere/lint/shards/shards_test.go:8",
+    "seconds": 0.002,
+    "oracle": "Handwritten complete expected byte string for interleaved case blocks in ascending order.",
+    "oracle_kind": "self",
+    "kills": [
+      "C1",
+      "C2",
+      "C7",
+      "C9"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "C9 shards_test.go:15: case 2 missing from every shard",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C9.log 2>&1; shards_test.go:15: case 2 missing from every shard",
+    "timing_samples": [
+      0.003,
+      0.002,
+      0.002
+    ],
+    "mutation_kind": "construction",
+    "construction_unique_kills": []
+  },
+  {
+    "test": "TestMergeKeepsLinesThatOnlyLookLikeCases",
+    "package": "stage1/cohere/lint/shards",
+    "file": "stage1/cohere/lint/shards/shards_test.go:23",
+    "seconds": 0.002,
+    "oracle": "Handwritten complete expected byte string retaining indented case-like text and case 1x.",
+    "oracle_kind": "self",
+    "kills": [
+      "C1",
+      "C2",
+      "C4",
+      "C7",
+      "C9"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "C9 shards_test.go:27: shard 0: malformed case line \"case 1x\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C9.log 2>&1; shards_test.go:27: shard 0: malformed case line \"case 1x\"",
+    "timing_samples": [
+      0.002,
+      0.002,
+      0.001
+    ],
+    "mutation_kind": "construction",
+    "construction_unique_kills": [
+      "C4"
+    ]
+  },
+  {
+    "test": "TestMergeRefusesAMissingOrRepeatedCase",
+    "package": "stage1/cohere/lint/shards",
+    "file": "stage1/cohere/lint/shards/shards_test.go:34",
+    "seconds": 0.002,
+    "oracle": "Handwritten diagnostic substrings for missing, repeated, non-case-start, empty-shard and extra-case inputs. Error required; complete diagnostic not compared.",
+    "oracle_kind": "self",
+    "kills": [
+      "C1",
+      "C2",
+      "C3",
+      "C8",
+      "C9"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "C9 shards_test.go:54: extra case: error <nil>, want \"2 cases printed, want the manifest's 1\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C9.log 2>&1; shards_test.go:54: extra case: error <nil>, want \"2 cases printed, want the manifest's 1\"",
+    "timing_samples": [
+      0.002,
+      0.003,
+      0.002
+    ],
+    "mutation_kind": "construction",
+    "construction_unique_kills": [
+      "C3",
+      "C8"
+    ]
+  }
+]

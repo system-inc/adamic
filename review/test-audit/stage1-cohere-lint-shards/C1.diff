@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/shards/shards.go
++++ b/stage1/cohere/lint/shards/shards.go
+@@ -75,7 +75,7 @@
+ 	return Merge(outputs, rows)
+ }
+ 
+-var casePrefix = []byte("case ")
++var casePrefix = []byte("CASE ")
+ 
+ // Merge puts the shards' case blocks back in case order. A block starts at a line `case <n>` and runs to
+ // the next one; nothing a case prints starts a line that way, since findings, ranges, edits and the fixed

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:40:20.094904669Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards"}
+{"Time":"2026-10-09T12:40:20.096619055Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase"}
+{"Time":"2026-10-09T12:40:20.096697851Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase","Output":"=== RUN   TestMergeRefusesAMissingOrRepeatedCase\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:20.096726844Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase","Output":"=== PAUSE TestMergeRefusesAMissingOrRepeatedCase\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:20.096729097Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase"}
+{"Time":"2026-10-09T12:40:20.096731391Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase"}
+{"Time":"2026-10-09T12:40:20.096733163Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase","Output":"=== CONT  TestMergeRefusesAMissingOrRepeatedCase\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:20.096739132Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase","Output":"--- PASS: TestMergeRefusesAMissingOrRepeatedCase (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:20.096741015Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Test":"TestMergeRefusesAMissingOrRepeatedCase","Elapsed":0}
+{"Time":"2026-10-09T12:40:20.0967514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:20.097051849Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/shards\t0.002s\n"}
+{"Time":"2026-10-09T12:40:20.097087701Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/shards","Elapsed":0.002}

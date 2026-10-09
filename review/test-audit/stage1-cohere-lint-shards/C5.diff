@@ -1,0 +1,9 @@
+--- a/stage1/cohere/lint/shards/shards.go
++++ b/stage1/cohere/lint/shards/shards.go
+@@ -146,5 +146,5 @@
+ 	for digits < len(rest) && rest[digits] >= '0' && rest[digits] <= '9' {
+ 		digits++
+ 	}
+-	return digits > 0 && digits < len(rest) && rest[digits] == '\n'
++	return digits >= 0 && digits < len(rest) && rest[digits] == '\n'
+ }

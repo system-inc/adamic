@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/shards/shards.go
++++ b/stage1/cohere/lint/shards/shards.go
+@@ -104,7 +104,7 @@
+ 			end := len(output)
+ 			for search := start + lineEnd + 1; search < len(output); {
+ 				next := bytes.IndexByte(output[search:], '\n')
+-				if bytes.HasPrefix(output[search:], casePrefix) && isCaseLine(output[search:]) {
++				if bytes.HasPrefix(output[search:], casePrefix)  {
+ 					end = search
+ 					break
+ 				}

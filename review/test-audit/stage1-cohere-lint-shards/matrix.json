@@ -1,0 +1,37 @@
+{
+  "C1": [
+    "TestMergePutsCasesBackInOrder",
+    "TestMergeRefusesAMissingOrRepeatedCase",
+    "TestMergeKeepsLinesThatOnlyLookLikeCases"
+  ],
+  "C2": [
+    "TestMergeRefusesAMissingOrRepeatedCase",
+    "TestMergePutsCasesBackInOrder",
+    "TestMergeKeepsLinesThatOnlyLookLikeCases"
+  ],
+  "C3": [
+    "TestMergeRefusesAMissingOrRepeatedCase"
+  ],
+  "C4": [
+    "TestMergeKeepsLinesThatOnlyLookLikeCases"
+  ],
+  "C5": [],
+  "C6": [],
+  "C7": [
+    "TestMergePutsCasesBackInOrder",
+    "TestMergeKeepsLinesThatOnlyLookLikeCases"
+  ],
+  "C8": [
+    "TestMergeRefusesAMissingOrRepeatedCase"
+  ],
+  "C9": [
+    "TestMergePutsCasesBackInOrder",
+    "TestMergeKeepsLinesThatOnlyLookLikeCases",
+    "TestMergeRefusesAMissingOrRepeatedCase"
+  ],
+  "P1": [
+    "TestMergeRefusesAMissingOrRepeatedCase",
+    "TestMergePutsCasesBackInOrder",
+    "TestMergeKeepsLinesThatOnlyLookLikeCases"
+  ]
+}

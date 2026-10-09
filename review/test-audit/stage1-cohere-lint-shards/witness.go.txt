@@ -1,0 +1,3 @@
+package main
+import("fmt"; "strings"; s "github.com/system-inc/adamic/stage1/cohere/lint/shards")
+func main(){b,e:=s.Merge([][]byte{[]byte("case 0\ncase \nfixed\ta\n")},1);fmt.Printf("blank-number: output=%q error=%v\n",b,e);var text strings.Builder;for n:=0;n<10;n++{fmt.Fprintf(&text,"case %d\nfixed\t%d\n",n,n)};b,e=s.Merge([][]byte{[]byte(text.String())},10);fmt.Printf("digit-nine: output=%q error=%v\n",b,e)}

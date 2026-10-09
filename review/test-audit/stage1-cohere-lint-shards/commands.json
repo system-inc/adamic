@@ -1,0 +1,122 @@
+[
+  {
+    "id": "TestMergePutsCasesBackInOrder-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergePutsCasesBackInOrder$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergePutsCasesBackInOrder-1.log 2>&1",
+    "exit": 0,
+    "wall": 0.17016149700066308
+  },
+  {
+    "id": "TestMergePutsCasesBackInOrder-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergePutsCasesBackInOrder$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergePutsCasesBackInOrder-2.log 2>&1",
+    "exit": 0,
+    "wall": 0.17619823700078996
+  },
+  {
+    "id": "TestMergePutsCasesBackInOrder-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergePutsCasesBackInOrder$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergePutsCasesBackInOrder-3.log 2>&1",
+    "exit": 0,
+    "wall": 0.19224595299965586
+  },
+  {
+    "id": "TestMergeKeepsLinesThatOnlyLookLikeCases-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergeKeepsLinesThatOnlyLookLikeCases$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergeKeepsLinesThatOnlyLookLikeCases-1.log 2>&1",
+    "exit": 0,
+    "wall": 0.17337457399844425
+  },
+  {
+    "id": "TestMergeKeepsLinesThatOnlyLookLikeCases-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergeKeepsLinesThatOnlyLookLikeCases$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergeKeepsLinesThatOnlyLookLikeCases-2.log 2>&1",
+    "exit": 0,
+    "wall": 0.20917958999962138
+  },
+  {
+    "id": "TestMergeKeepsLinesThatOnlyLookLikeCases-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergeKeepsLinesThatOnlyLookLikeCases$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergeKeepsLinesThatOnlyLookLikeCases-3.log 2>&1",
+    "exit": 0,
+    "wall": 0.16353974500088952
+  },
+  {
+    "id": "TestMergeRefusesAMissingOrRepeatedCase-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergeRefusesAMissingOrRepeatedCase$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergeRefusesAMissingOrRepeatedCase-1.log 2>&1",
+    "exit": 0,
+    "wall": 0.17033225299928745
+  },
+  {
+    "id": "TestMergeRefusesAMissingOrRepeatedCase-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergeRefusesAMissingOrRepeatedCase$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergeRefusesAMissingOrRepeatedCase-2.log 2>&1",
+    "exit": 0,
+    "wall": 0.1728431499996077
+  },
+  {
+    "id": "TestMergeRefusesAMissingOrRepeatedCase-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run ^TestMergeRefusesAMissingOrRepeatedCase$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/TestMergeRefusesAMissingOrRepeatedCase-3.log 2>&1",
+    "exit": 0,
+    "wall": 0.1777156919997651
+  },
+  {
+    "id": "C1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C1.log 2>&1",
+    "exit": 1,
+    "wall": 0.22091936899960274
+  },
+  {
+    "id": "C2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C2.log 2>&1",
+    "exit": 1,
+    "wall": 0.2348361730000761
+  },
+  {
+    "id": "C3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C3.log 2>&1",
+    "exit": 1,
+    "wall": 0.22448014600013266
+  },
+  {
+    "id": "C4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C4.log 2>&1",
+    "exit": 1,
+    "wall": 0.21312674599903403
+  },
+  {
+    "id": "C5",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C5.log 2>&1",
+    "exit": 0,
+    "wall": 0.22051099600139423
+  },
+  {
+    "id": "C6",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C6.log 2>&1",
+    "exit": 0,
+    "wall": 0.23644274400066934
+  },
+  {
+    "id": "C7",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C7.log 2>&1",
+    "exit": 1,
+    "wall": 0.2113898869993136
+  },
+  {
+    "id": "C8",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C8.log 2>&1",
+    "exit": 1,
+    "wall": 0.21407033800096542
+  },
+  {
+    "id": "C9",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/C9.log 2>&1",
+    "exit": 1,
+    "wall": 0.20606188099918654
+  },
+  {
+    "id": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/P1.log 2>&1",
+    "exit": 1,
+    "wall": 0.21835832500073593
+  },
+  {
+    "id": "restored",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/shards/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-lint-shards/restored.log 2>&1",
+    "exit": 0,
+    "wall": 0.16985029699935694
+  }
+]

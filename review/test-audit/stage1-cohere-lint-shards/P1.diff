@@ -1,0 +1,64 @@
+--- a/stage1/cohere/lint/shards/shards.go
++++ b/stage1/cohere/lint/shards/shards.go
+@@ -83,60 +83,7 @@
+ // exactly once, and exactly rows of them, the manifest's non-empty rows: a shard that lost or repeated a
+ // row fails here instead of shifting the output, including one that lost the last rows, which leaves no gap.
+ func Merge(outputs [][]byte, rows int) ([]byte, error) {
+-	blocks := map[int][]byte{}
+-	for shard, output := range outputs {
+-		if len(output) == 0 {
+-			continue
+-		}
+-		if !bytes.HasPrefix(output, casePrefix) {
+-			return nil, fmt.Errorf("shard %d output does not start with a case line", shard)
+-		}
+-		start := 0
+-		for start < len(output) {
+-			lineEnd := bytes.IndexByte(output[start:], '\n')
+-			if lineEnd < 0 {
+-				return nil, fmt.Errorf("shard %d: unterminated case line", shard)
+-			}
+-			number, err := strconv.Atoi(string(output[start+len(casePrefix) : start+lineEnd]))
+-			if err != nil {
+-				return nil, fmt.Errorf("shard %d: malformed case line %q", shard, output[start:start+lineEnd])
+-			}
+-			end := len(output)
+-			for search := start + lineEnd + 1; search < len(output); {
+-				next := bytes.IndexByte(output[search:], '\n')
+-				if bytes.HasPrefix(output[search:], casePrefix) && isCaseLine(output[search:]) {
+-					end = search
+-					break
+-				}
+-				if next < 0 {
+-					break
+-				}
+-				search += next + 1
+-			}
+-			if _, seen := blocks[number]; seen {
+-				return nil, fmt.Errorf("case %d printed twice", number)
+-			}
+-			blocks[number] = output[start:end]
+-			start = end
+-		}
+-	}
+-	if len(blocks) != rows {
+-		for number := 0; number < rows; number++ {
+-			if _, ok := blocks[number]; !ok {
+-				return nil, fmt.Errorf("case %d missing from every shard", number)
+-			}
+-		}
+-		return nil, fmt.Errorf("%d cases printed, want the manifest's %d", len(blocks), rows)
+-	}
+-	var merged bytes.Buffer
+-	for number := 0; number < rows; number++ {
+-		block, ok := blocks[number]
+-		if !ok {
+-			return nil, fmt.Errorf("case %d missing from every shard", number)
+-		}
+-		merged.Write(block)
+-	}
+-	return merged.Bytes(), nil
++ return nil, nil
+ }
+ 
+ // isCaseLine is whether text starts with a whole `case <digits>` line.

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "C1",
+    "line": 78,
+    "old": "var casePrefix = []byte(\"case \")",
+    "new": "var casePrefix = []byte(\"CASE \")",
+    "menu": "change prefix constant"
+  },
+  {
+    "id": "C2",
+    "line": 119,
+    "old": "blocks[number] = output[start:end]",
+    "new": "blocks[number+1] = output[start:end]",
+    "menu": "off-by-one block key"
+  },
+  {
+    "id": "C3",
+    "line": 116,
+    "old": "if _, seen := blocks[number]; seen {",
+    "new": "if _, seen := blocks[number]; seen && false {",
+    "menu": "flip duplicate condition"
+  },
+  {
+    "id": "C4",
+    "line": 107,
+    "old": "&& isCaseLine(output[search:])",
+    "new": "",
+    "menu": "drop whole-line condition"
+  },
+  {
+    "id": "C5",
+    "line": 149,
+    "old": "return digits > 0 &&",
+    "new": "return digits >= 0 &&",
+    "menu": "off-by-one digit bound"
+  },
+  {
+    "id": "C6",
+    "line": 146,
+    "old": "rest[digits] <= '9'",
+    "new": "rest[digits] <= '8'",
+    "menu": "change digit upper bound"
+  },
+  {
+    "id": "C7",
+    "line": 119,
+    "old": "blocks[number] = output[start:end]",
+    "new": "blocks[number] = output[start:end-1]",
+    "menu": "off-by-one block slice"
+  },
+  {
+    "id": "C8",
+    "line": 123,
+    "old": "if len(blocks) != rows {",
+    "new": "if false {",
+    "menu": "flip case-count condition"
+  },
+  {
+    "id": "C9",
+    "line": 149,
+    "old": "rest[digits] == '\\n'",
+    "new": "rest[digits] != '\\n'",
+    "menu": "flip line terminator condition"
+  },
+  {
+    "id": "P1",
+    "line": 85,
+    "old": "func Merge(outputs [][]byte, rows int) ([]byte, error) {\n\tblocks := map[int][]byte{}\n\tfor shard, output := range outputs {\n\t\tif len(output) == 0 {\n\t\t\tcontinue\n\t\t}\n\t\tif !bytes.HasPrefix(output, casePrefix) {\n\t\t\treturn nil, fmt.Errorf(\"shard %d output does not start with a case line\", shard)\n\t\t}\n\t\tstart := 0\n\t\tfor start < len(output) {\n\t\t\tlineEnd := bytes.IndexByte(output[start:], '\\n')\n\t\t\tif lineEnd < 0 {\n\t\t\t\treturn nil, fmt.Errorf(\"shard %d: unterminated case line\", shard)\n\t\t\t}\n\t\t\tnumber, err := strconv.Atoi(string(output[start+len(casePrefix) : start+lineEnd]))\n\t\t\tif err != nil {\n\t\t\t\treturn nil, fmt.Errorf(\"shard %d: malformed case line %q\", shard, output[start:start+lineEnd])\n\t\t\t}\n\t\t\tend := len(output)\n\t\t\tfor search := start + lineEnd + 1; search < len(output); {\n\t\t\t\tnext := bytes.IndexByte(output[search:], '\\n')\n\t\t\t\tif bytes.HasPrefix(output[search:], casePrefix) && isCaseLine(output[search:]) {\n\t\t\t\t\tend = search\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t\tif next < 0 {\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t\tsearch += next + 1\n\t\t\t}\n\t\t\tif _, seen := blocks[number]; seen {\n\t\t\t\treturn nil, fmt.Errorf(\"case %d printed twice\", number)\n\t\t\t}\n\t\t\tblocks[number] = output[start:end]\n\t\t\tstart = end\n\t\t}\n\t}\n\tif len(blocks) != rows {\n\t\tfor number := 0; number < rows; number++ {\n\t\t\tif _, ok := blocks[number]; !ok {\n\t\t\t\treturn nil, fmt.Errorf(\"case %d missing from every shard\", number)\n\t\t\t}\n\t\t}\n\t\treturn nil, fmt.Errorf(\"%d cases printed, want the manifest's %d\", len(blocks), rows)\n\t}\n\tvar merged bytes.Buffer\n\tfor number := 0; number < rows; number++ {\n\t\tblock, ok := blocks[number]\n\t\tif !ok {\n\t\t\treturn nil, fmt.Errorf(\"case %d missing from every shard\", number)\n\t\t}\n\t\tmerged.Write(block)\n\t}\n\treturn merged.Bytes(), nil\n}\n",
+    "new": "func Merge(outputs [][]byte, rows int) ([]byte, error) {\n return nil, nil\n}\n",
+    "menu": "empty Merge body"
+  }
+]
