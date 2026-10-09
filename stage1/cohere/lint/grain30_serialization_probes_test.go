@@ -36,7 +36,8 @@ func grain30Probe(t *testing.T, name string, cold, plant bool) ([]byte, error) {
 		command.Env = append(command.Env, "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
 	}
 	if cold {
-		command.Env = append(command.Env, "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on")
+		// Cold means built here: the shared store is off for the child, or a product another machine built is fetched instead.
+		command.Env = append(command.Env, "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_BUILD_STORE=off")
 	}
 	output, err := command.CombinedOutput()
 	if command.Process != nil {

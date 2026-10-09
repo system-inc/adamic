@@ -38,7 +38,8 @@ func TestJsxLintTreesSetupIsolation(t *testing.T) {
 		}
 	}
 	command := exec.CommandContext(context.Background(), executable, "-test.run=^TestJsxLintTrees_001$", "-test.v", "-test.skip=^TestProduct_")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=on", "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=")
+	// The preparation must happen here: the shared store is off for the child, or it fetches what another machine built.
+	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=on", "ADAMIC_BUILD_STORE=off", "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=")
 	output, err := command.CombinedOutput()
 	if err != nil {
 		t.Fatalf("standalone cold shard failed: %v\n%s", err, output)

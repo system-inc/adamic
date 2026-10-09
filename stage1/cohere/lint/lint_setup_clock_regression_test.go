@@ -54,7 +54,8 @@ func TestShardsAgree_SetupRequired(t *testing.T) {
 		}
 	}
 	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=on", "ADAMIC_SHARDS_AGREE_LEAF=0")
+	// Cold preparation means built here: the shared store is off for the child.
+	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=on", "ADAMIC_BUILD_STORE=off", "ADAMIC_SHARDS_AGREE_LEAF=0")
 	output, err := command.CombinedOutput()
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) || !bytes.Contains(output, []byte("build shards-agree-prepared-v1 ")) || !bytes.Contains(output, []byte(" miss ")) {
 		t.Fatalf("standalone shard must prepare its corpus: %v\n%s", err, output)
