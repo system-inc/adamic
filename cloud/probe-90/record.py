@@ -5,14 +5,21 @@ calls this; cloud/probe-90-test.py tests it offline.
 
     record.py branch <UTC stamp> <leaf|all>
     record.py skipped <branch> <skip-globs file>          prints the glob that skips it, exit 1 when none does
-    record.py line <record dir> --mode M --sha S --ref R --stamp-epoch N --commit-epoch N --pushed-epoch N --tools T
+    record.py line <record dir> --mode M --sha S --ref R --tools T --jobs J --pushed-epoch N --commit-epoch N
+                   --stamp-epoch N [--enqueue-epoch N] [--running-epoch N]
+    record.py pending --mode M --sha S --jobs J --pushed-epoch N --now-epoch N [--enqueue-epoch N] [--running-epoch N]
+                      [--note TEXT]                       the line for a probe that got no green or red record
 
-The phases, from whichever route answered:
+The line's wall is the push to the record commit: what a change sees. Its phases, from whichever route answered:
 
-  Loom's pool (fast.json runner "pool"; the normal route): no steps_seconds, so they come from record.jsonl, the run's
-  unit events, and the record's two clocks: the ref's stamp (fast.sh's serve start) and the record commit's time.
-    select   serve start to the first unit started: the gate's selection run, the job's planning, Loom placing units
-             (unknown, with publish, when the record carries an earlier attempt's run, its units started before the stamp)
+  queue    A+B (system_adamic's ruling, Oct 9: the queue is its own phase): A is Loom's job file written (enqueue,
+           cloud/pool-job.sh) to its .running (fast.sh serves it); B is .running to the job's first unit placed (the
+           selection unit's "started" in <sha>.work/select-record.jsonl). ">N" when it never placed.
+  Loom's pool (fast.json runner "pool"; the normal route): no steps_seconds, so the rest come from record.jsonl, the
+  run's unit events, and the record commit's time:
+    select   the selection unit started to the first test or build unit started: the selection run and Loom placing
+             the job's units (from the record's stamp, fast.sh's serve start, when the selection's start is unknown;
+             unknown, with publish, when the record carries an earlier attempt's run, its units started before it)
     fetch    the longest unit setup, "setup N s" (the tree and its build cache onto an instance)
     build    the build-vet unit's exit wallSeconds less its setup (go build ./... and go vet ./...)
     test     the longest test unit, "tests took N s" (else its exit wallSeconds less its setup)
@@ -24,8 +31,8 @@ The phases, from whichever route answered:
     build    steps_seconds.build
     test     steps_seconds.tests
     publish  not separable on a box (inside fetch), shown as "-"
-  wall is the stamp to the record commit on both; queue is the push to the stamp (the watcher noticing, the pool job
-  waiting for a slot). Phases overlap (tests run beside the build), so they don't sum to the wall.
+  Phases overlap (tests run beside the build), so they don't sum to the wall. The line ends with the pool's depth when
+  it was read: jobs running by tier, then queued by tier ("pool 40:8 30:4 queued 30:10 10:31").
 """
 import argparse
 import fnmatch
@@ -79,7 +86,7 @@ def readEvents(directory):
     return []
 
 
-def poolPhases(events, stampEpoch, commitEpoch):
+def poolPhases(events, stampEpoch, commitEpoch, placeEpoch=None):
     units = {}
     for event in events:
         unit = event.get('unit')
@@ -116,8 +123,9 @@ def poolPhases(events, stampEpoch, commitEpoch):
     # A retried job can publish an earlier attempt's run (its units started before this record's stamp: 1e8eff51's
     # 14:37Z record carried its 13:04Z run, Oct 9). Its unit seconds stand, but nothing measured against this stamp does.
     earlier = bool(started) and min(started) < stampEpoch
+    origin = placeEpoch if placeEpoch is not None and placeEpoch >= stampEpoch else stampEpoch
     return {
-        'select': min(started) - stampEpoch if started and not earlier else None,
+        'select': min(started) - origin if started and not earlier else None,
         'fetch': max(setups) if setups else None,
         'build': build['wall'] - build.get('setup', 0.0) if 'wall' in build else None,
         'test': max(tests) if tests else None,
@@ -137,8 +145,9 @@ def boxPhases(fast, stampEpoch, commitEpoch):
     }
 
 
-def phases(directory, stampEpoch, commitEpoch):
-    """The record's route and its five phases, with its wall (stamp to record commit)."""
+def phases(directory, stampEpoch, commitEpoch, placeEpoch=None, pushedEpoch=None):
+    """The record's route and its five phases, with its wall (the push to the record commit, or the stamp to it when
+    the push time is unknown)."""
     # A box run cut short can publish a red with no fast.json (seven such records on Oct 9): its phases read unknown.
     try:
         with open(os.path.join(directory, 'fast.json')) as handle:
@@ -146,10 +155,10 @@ def phases(directory, stampEpoch, commitEpoch):
     except (OSError, ValueError):
         fast = {}
     if fast.get('runner') == 'pool':
-        route, mapped = 'pool', poolPhases(readEvents(directory), stampEpoch, commitEpoch)
+        route, mapped = 'pool', poolPhases(readEvents(directory), stampEpoch, commitEpoch, placeEpoch)
     else:
         route, mapped = 'box', boxPhases(fast, stampEpoch, commitEpoch)
-    mapped['wall'] = commitEpoch - stampEpoch
+    mapped['wall'] = commitEpoch - (pushedEpoch if pushedEpoch is not None else stampEpoch)
     return route, fast, mapped
 
 
@@ -157,18 +166,86 @@ def seconds(value):
     return '-' if value is None else '%d' % round(value)
 
 
-def statusLine(mode, verdict, route, mapped, queue, tools, runId):
-    """One line of at most 160 characters with no all-caps word: the wall, its phases, the tools and the run."""
-    head = 'probe-90 %s %s: wall %ss = select %s fetch %s build %s test %s publish %s' % (
-        mode, verdict, seconds(mapped['wall']), seconds(mapped['select']), seconds(mapped['fetch']),
+def placedEpoch(jobs, sha, runningEpoch=None):
+    """When the job's selection unit started on the pool (its first unit placed), from <sha>.work/select-record.jsonl,
+    or None. Only a start at or after this attempt's .running counts: the work directory outlives a void."""
+    path = os.path.join(jobs, sha + '.work', 'select-record.jsonl')
+    try:
+        with open(path) as handle:
+            times = [epoch(event['time']) for event in (json.loads(line) for line in handle if line.strip())
+                     if event.get('type') == 'started' and event.get('unit') == 'select']
+    except (OSError, ValueError, KeyError):
+        return None
+    if runningEpoch is not None:
+        times = [moment for moment in times if moment >= runningEpoch - 5]
+    return min(times) if times else None
+
+
+def poolDepth(jobs):
+    """Loom's fast jobs right now: running by tier, then queued (written, not decided, running or cancelled) by tier."""
+    running, queued = {}, {}
+    try:
+        names = os.listdir(jobs)
+    except OSError:
+        return 'pool depth unknown'
+    present = set(names)
+    for name in names:
+        sha = name[:-5] if name.endswith('.json') else ''
+        if not re.fullmatch(r'[0-9a-f]{40}', sha) or sha + '.verdict' in present or sha + '.cancelled' in present:
+            continue
+        try:
+            with open(os.path.join(jobs, name)) as handle:
+                tier = int(json.load(handle).get('priority', 0))
+        except (OSError, ValueError, TypeError, AttributeError):
+            tier = 0
+        side = running if sha + '.running' in present else queued
+        side[tier] = side.get(tier, 0) + 1
+
+    def tiers(counts):
+        return ' '.join('%d:%d' % (tier, counts[tier]) for tier in sorted(counts, reverse=True)) or '0'
+    return 'pool %s queued %s' % (tiers(running), tiers(queued))
+
+
+def queueText(enqueueEpoch, runningEpoch, placeEpoch, nowEpoch=None):
+    """A+B: enqueue to .running, .running to the first unit placed (">N" while it hasn't placed)."""
+    first = seconds(runningEpoch - enqueueEpoch) if enqueueEpoch is not None and runningEpoch is not None else '-'
+    if runningEpoch is None:
+        second = '-'
+    elif placeEpoch is not None:
+        second = seconds(placeEpoch - runningEpoch)
+    elif nowEpoch is not None:
+        second = '>' + seconds(nowEpoch - runningEpoch)
+    else:
+        second = '-'
+    return '%s+%s' % (first, second)
+
+
+def fit(candidates):
+    """The first candidate within 160 characters, else the last one cut to 160."""
+    for line in candidates:
+        if len(line) <= MaximumLine:
+            return line
+    return candidates[-1][:MaximumLine]
+
+
+def statusLine(mode, verdict, route, mapped, queue, depth, tools, runId):
+    """One line of at most 160 characters with no all-caps word: the wall, the queue and the gate's phases, the pool's
+    depth, the tools and the run."""
+    head = 'probe-90 %s %s %ss: queue %s select %s fetch %s build %s test %s publish %s' % (
+        mode, verdict, seconds(mapped['wall']), queue, seconds(mapped['select']), seconds(mapped['fetch']),
         seconds(mapped['build']), seconds(mapped['test']), seconds(mapped['publish']))
-    tail = '; %s, tools %s, run %s' % (route, (tools or 'unknown')[:9], runId)
-    line = head + ('; queue %ss' % seconds(queue) if queue is not None else '') + tail
-    if len(line) > MaximumLine:
-        line = head + tail
-    if len(line) > MaximumLine:
-        line = line[:MaximumLine]
-    return line
+    tools = (tools or 'unknown')[:9]
+    short = runId.rsplit('-', 1)[-1] if runId.startswith('adamic-') else runId.replace('record ', '')
+    return fit(['%s; %s; %s, tools %s, run %s' % (head, depth, route, tools, runId),
+                '%s; %s; %s, tools %s, run %s' % (head, depth, route, tools, short),
+                '%s; %s, tools %s, run %s; %s' % (head, route, tools, short, depth)])
+
+
+def pendingLine(mode, sha, wall, queue, depth, note):
+    """The line for a probe that got no green or red record: how long it waited, its queue, why, and the depth."""
+    head = 'probe-90 %s no verdict in %ss: queue %s' % (mode, seconds(wall), queue)
+    return fit(['%s%s; %s; sha %s' % (head, (', ' + note) if note else '', depth, sha[:9]),
+                '%s; %s; sha %s' % (head, depth, sha[:9])])
 
 
 def runIdentifier(fast, reference):
@@ -190,19 +267,40 @@ def main(argv):
             print(glob)
             return 0
         return 1
-    if argv[:1] == ['line']:
-        parser = argparse.ArgumentParser(prog='record.py line')
-        parser.add_argument('directory')
-        for name in ('--mode', '--sha', '--ref', '--tools'):
+    if argv[:1] in (['line'], ['pending']):
+        parser = argparse.ArgumentParser(prog='record.py ' + argv[0])
+        if argv[0] == 'line':
+            parser.add_argument('directory')
+            for name in ('--ref', '--tools'):
+                parser.add_argument(name, required=True)
+            for name in ('--stamp-epoch', '--commit-epoch'):
+                parser.add_argument(name, type=float, required=True)
+        else:
+            parser.add_argument('--now-epoch', type=float, required=True)
+            parser.add_argument('--note', default='')
+        for name in ('--mode', '--sha', '--jobs'):
             parser.add_argument(name, required=True)
-        for name in ('--stamp-epoch', '--commit-epoch', '--pushed-epoch'):
-            parser.add_argument(name, type=float, required=True)
+        parser.add_argument('--pushed-epoch', type=float, required=True)
+        for name in ('--enqueue-epoch', '--running-epoch'):
+            parser.add_argument(name, type=float)
         arguments = parser.parse_args(argv[1:])
-        route, fast, mapped = phases(arguments.directory, arguments.stamp_epoch, arguments.commit_epoch)
+        depth = poolDepth(arguments.jobs)
+        place = placedEpoch(arguments.jobs, arguments.sha, arguments.running_epoch)
+        if argv[0] == 'pending':
+            queue = queueText(arguments.enqueue_epoch, arguments.running_epoch, place, arguments.now_epoch)
+            print(pendingLine(arguments.mode, arguments.sha, arguments.now_epoch - arguments.pushed_epoch, queue, depth,
+                              arguments.note))
+            return 0
+        # Never seen running: the record's stamp is fast.sh's serve start.
+        running = arguments.running_epoch if arguments.running_epoch is not None else arguments.stamp_epoch
+        place = place if place is not None else placedEpoch(arguments.jobs, arguments.sha, running)
+        route, fast, mapped = phases(arguments.directory, arguments.stamp_epoch, arguments.commit_epoch, place,
+                                     arguments.pushed_epoch)
+        queue = queueText(arguments.enqueue_epoch, running, place) if route == 'pool' else '-'
         with open(os.path.join(arguments.directory, 'status.txt')) as handle:
             verdict = handle.readline().split(':', 1)[0].strip()
-        print(statusLine(arguments.mode, verdict, route, mapped, arguments.stamp_epoch - arguments.pushed_epoch,
-                         arguments.tools, runIdentifier(fast, arguments.ref)))
+        print(statusLine(arguments.mode, verdict, route, mapped, queue, depth, arguments.tools,
+                         runIdentifier(fast, arguments.ref)))
         return 0
     print(__doc__.split('\n\n')[1], file=sys.stderr)
     return 2

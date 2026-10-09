@@ -10,8 +10,9 @@
 # One throwaway commit on main's tip appends one comment line (gofmt-clean) to one fixed file and is pushed as
 # devtools/probe-90-<UTC stamp>, a devtools/* tip the watcher (cloud/fast-gate-watch.sh) gates against main like any
 # candidate: Loom's pool first, a box racing it when the pool is slow. The probe waits for the first green or red
-# record under gate-logs/<sha12>/, reads it as five phases (cloud/probe-90/record.py says how each is mapped), posts
-# ONE machine status line on the outcome with `ahra tasks status <task> "<line>" --auto`, and deletes its branch.
+# record under gate-logs/<sha12>/, reads it as its queue and five gate phases (cloud/probe-90/record.py says how each is
+# mapped) with Loom's depth, posts ONE machine status line on the outcome with `ahra tasks status <task> "<line>" --auto`
+# (a no-verdict line, with the queue so far, when none comes in time), and deletes its branch.
 #
 # The leaf: cmd/adamic-stage1-progress/main_test.go. Nothing in the module imports cmd/adamic-stage1-progress (go list:
 # no Imports, TestImports or XTestImports name it), a _test.go edit selects its own package alone (run.py touched()),
@@ -114,11 +115,19 @@ pushed=$(date -u +%s)
 deadline=$((pushed + limit))
 
 # The first green or red record of the sha. A void (the watcher queues it again) or a lost race's stopped record is no
-# verdict, so it is passed over.
-record="" checked=" "
+# verdict, so it is passed over. Loom's job file and its .running are stamped when first seen: fast.sh removes .running
+# when the job ends, so the queue's clocks are read while it waits.
+record="" checked=" " enqueued="" running="" note=""
+clocks() {
+  [ -n "${enqueued}" ] || enqueued=$(stat -f %m "${jobs}/${sha}.json" 2> /dev/null)
+  [ -n "${running}" ] || running=$(stat -f %m "${jobs}/${sha}.running" 2> /dev/null)
+}
 while [ -z "${record}" ]; do
+  clocks
   if [ "$(date -u +%s)" -ge "${deadline}" ]; then
-    post "probe-90 ${mode}: no green or red record for ${sha:0:9} within ${limit}s of its push (branch ${branch}); see the watcher log"
+    line=$(python3 "${helper}" pending --mode "${mode}" --sha "${sha}" --jobs "${jobs}" --pushed-epoch "${pushed}" \
+      --now-epoch "$(date -u +%s)" ${enqueued:+--enqueue-epoch "${enqueued}"} ${running:+--running-epoch "${running}"} --note "${note}")
+    post "${line:-probe-90 ${mode}: no green or red record for ${sha:0:9} within ${limit}s of its push}"
     exit 1
   fi
   # The watcher said it won't gate it: no record is coming.
@@ -135,10 +144,13 @@ while [ -z "${record}" ]; do
     status=$(git -C "${here}" show "${commit}:status.txt" 2> /dev/null | head -1)
     case ${status} in
       green:* | red:*) record=${reference#refs/heads/} recordCommit=${commit}; break ;;
-      *) say "passed over ${reference#refs/heads/}: ${status:0:100}" ;;
+      *)
+        say "passed over ${reference#refs/heads/}: ${status:0:100}"
+        note="pool void"
+        [[ ${status} == *ceiling* ]] && note="pool void at its ceiling" ;;
     esac
   done < <(git -C "${here}" ls-remote origin "refs/heads/gate-logs/${sha:0:12}/*" 2> /dev/null | sort -k2)
-  [ -n "${record}" ] || { sleep 20 & wait $!; }
+  [ -n "${record}" ] || { sleep 10 & wait $!; }
 done
 
 for name in fast.json status.txt record.jsonl record.jsonl.gz; do
@@ -151,7 +163,9 @@ commitEpoch=$(git -C "${here}" show -s --format=%ct "${recordCommit}")
 tools=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1])).get("tools", ""))' "${jobs}/${sha}.json" 2> /dev/null)
 [ -n "${tools}" ] || tools=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1])).get("tools_sha", ""))' "${scratch}/fast.json" 2> /dev/null)
 [ -n "${tools}" ] || tools=$(cat "${state}/tools-good" 2> /dev/null)
-line=$(python3 "${helper}" line "${scratch}" --mode "${mode}" --sha "${sha}" --ref "${record}" --tools "${tools}" \
-  --stamp-epoch "${stampEpoch}" --commit-epoch "${commitEpoch}" --pushed-epoch "${pushed}") || { say "could not read ${record}"; exit 1; }
+clocks
+line=$(python3 "${helper}" line "${scratch}" --mode "${mode}" --sha "${sha}" --ref "${record}" --tools "${tools}" --jobs "${jobs}" \
+  --stamp-epoch "${stampEpoch}" --commit-epoch "${commitEpoch}" --pushed-epoch "${pushed}" \
+  ${enqueued:+--enqueue-epoch "${enqueued}"} ${running:+--running-epoch "${running}"}) || { say "could not read ${record}"; exit 1; }
 say "record ${record} for ${branch} ${sha}"
 post "${line}" || exit 1

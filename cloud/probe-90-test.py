@@ -123,54 +123,118 @@ class MappingTests(unittest.TestCase):
         self.assertEqual((route, fast, mapped['wall'], mapped['test']), ('box', {}, 60.0, None))
 
 
+def writeJobs(jobs, entries):
+    """A Loom jobs directory: (sha char, tier, state) with state running, queued, decided or cancelled."""
+    for char, tier, state in entries:
+        sha = char * 40
+        (Path(jobs) / (sha + '.json')).write_text(json.dumps({'sha': sha, 'priority': tier}))
+        if state != 'queued':
+            (Path(jobs) / (sha + {'running': '.running', 'decided': '.verdict', 'cancelled': '.cancelled'}[state])).write_text('')
+
+
+class QueueTests(unittest.TestCase):
+    def test_pool_depth_counts_running_then_queued_by_tier(self):
+        with tempfile.TemporaryDirectory() as jobs:
+            writeJobs(jobs, [('a', 40, 'running'), ('b', 40, 'running'), ('c', 30, 'running'), ('d', 30, 'queued'),
+                             ('e', 10, 'queued'), ('f', 10, 'queued'), ('9', 10, 'decided'), ('8', 30, 'cancelled')])
+            (Path(jobs) / 'notes.txt').write_text('')
+            self.assertEqual(probe.poolDepth(jobs), 'pool 40:2 30:1 queued 30:1 10:2')
+        with tempfile.TemporaryDirectory() as jobs:
+            self.assertEqual(probe.poolDepth(jobs), 'pool 0 queued 0')
+
+    def test_placed_reads_this_attempts_selection_start(self):
+        with tempfile.TemporaryDirectory() as jobs:
+            work = Path(jobs) / (poolFast['sha'] + '.work')
+            work.mkdir()
+            (work / 'select-record.jsonl').write_text(''.join(json.dumps(event) + '\n' for event in [
+                {'run': 'adamic-select-a', 'verdict': {'status': 'green'}},
+                {'unit': 'select', 'time': '2026-10-09T15:00:00.000Z', 'type': 'started'},
+                {'unit': 'select', 'time': '2026-10-09T15:48:12.248Z', 'type': 'started'},
+                {'unit': 'select', 'time': '2026-10-09T15:49:40.000Z', 'type': 'finished'}]))
+            self.assertAlmostEqual(probe.placedEpoch(jobs, poolFast['sha'], poolStamp), poolStamp + 1.248, places=3)
+            self.assertIsNone(probe.placedEpoch(jobs, 'f' * 40, poolStamp))
+
+    def test_queue_text(self):
+        self.assertEqual(probe.queueText(100, 108, 120), '8+12')
+        self.assertEqual(probe.queueText(100, 108, None, 1918), '8+>1810')
+        self.assertEqual(probe.queueText(None, None, None, 500), '-+-')
+
+    def test_select_starts_at_the_selection_units_start_when_known(self):
+        mapped = probe.poolPhases(poolEvents, poolStamp, poolCommit, poolStamp + 1.248)
+        self.assertAlmostEqual(mapped['select'], 92.663, places=3)
+
+
 class LineTests(unittest.TestCase):
-    pattern = re.compile(r'^probe-90 (leaf|all) (green|red): wall \d+s = select (\d+|-) fetch (\d+|-) build (\d+|-) '
-                         r'test (\d+|-) publish (\d+|-)(; queue \d+s)?; (pool|box), tools [0-9a-f]{9}, run \S.*$')
+    pattern = re.compile(r'^probe-90 (leaf|all) (green|red) \d+s: queue (\d+|-)\+(>?\d+|-) select (\d+|-) fetch (\d+|-) '
+                         r'build (\d+|-) test (\d+|-) publish (\d+|-); .*\b(pool|box), tools [0-9a-f]{9}, run \S')
+    depth = 'pool 40:8 30:5 queued 40:2 30:10 10:31'
 
     def assertGoodLine(self, line):
         self.assertLessEqual(len(line), 160, line)
         self.assertNotIn('\n', line)
-        self.assertRegex(line, self.pattern)
         # ahra refuses all-caps words of three letters or more.
         self.assertIsNone(re.search(r'\b[A-Z]{3,}\b', line), line)
 
     def test_pool_line(self):
         with tempfile.TemporaryDirectory() as directory:
             writeRecord(directory, poolFast, poolEvents)
-            route, fast, mapped = probe.phases(directory, poolStamp, poolCommit)
-        line = probe.statusLine('leaf', 'green', route, mapped, 41, '95eb1c8fd6a310758b9de0620e54c05389048fc1',
+            route, fast, mapped = probe.phases(directory, poolStamp, poolCommit, poolStamp + 1.248, poolStamp - 50)
+        self.assertEqual(mapped['wall'], 226.0)  # the push to the record commit
+        line = probe.statusLine('leaf', 'green', route, mapped, probe.queueText(poolStamp - 8, poolStamp, poolStamp + 1.248),
+                                self.depth, '95eb1c8fd6a310758b9de0620e54c05389048fc1',
                                 probe.runIdentifier(fast, 'gate-logs/318eef6a4ccc/20261009T154811Z/fast'))
-        self.assertEqual(line, 'probe-90 leaf green: wall 176s = select 94 fetch 2 build 53 test 10 publish 26; queue 41s; '
-                               'pool, tools 95eb1c8fd, run adamic-verify-20261009T154944-cb9f12bd')
+        self.assertEqual(line, 'probe-90 leaf green 226s: queue 8+1 select 93 fetch 2 build 53 test 10 publish 26; '
+                               'pool 40:8 30:5 queued 40:2 30:10 10:31; pool, tools 95eb1c8fd, run cb9f12bd')
+        self.assertRegex(line, self.pattern)
         self.assertGoodLine(line)
 
     def test_box_line_names_its_record(self):
         with tempfile.TemporaryDirectory() as directory:
             writeRecord(directory, boxFast)
             route, fast, mapped = probe.phases(directory, boxStamp, boxCommit)
-        line = probe.statusLine('all', 'red', route, mapped, 1234, boxFast['tools_sha'],
+        line = probe.statusLine('all', 'red', route, mapped, '-+-', self.depth, boxFast['tools_sha'],
                                 probe.runIdentifier(fast, 'gate-logs/e77a4ae41f47/20261009T162356Z/fast'))
         self.assertIn('publish -;', line)
-        self.assertTrue(line.endswith('run record 20261009T162356Z'), line)
+        self.assertTrue(line.endswith('run 20261009T162356Z'), line)
+        self.assertRegex(line, self.pattern)
         self.assertGoodLine(line)
 
-    def test_a_long_line_drops_the_queue_then_stays_within_160(self):
+    def test_a_long_line_keeps_within_160(self):
         mapped = {'wall': 99999, 'select': 99999, 'fetch': 99999, 'build': 99999, 'test': 99999, 'publish': 99999}
-        line = probe.statusLine('all', 'green', 'pool', mapped, 99999, 'a' * 40, 'adamic-verify-20261009T154944-cb9f12bd')
-        self.assertNotIn('queue', line)
+        line = probe.statusLine('all', 'green', 'pool', mapped, '99999+>99999', self.depth, 'a' * 40,
+                                'adamic-verify-20261009T154944-cb9f12bd')
         self.assertGoodLine(line)
-        line = probe.statusLine('all', 'green', 'pool', mapped, 9, 'a' * 40, 'x' * 200)
+        self.assertIn('tools aaaaaaaaa', line)
+        line = probe.statusLine('all', 'green', 'pool', mapped, '1+1', 'pool ' + '40:8 ' * 40, 'a' * 40, 'x' * 200)
         self.assertEqual(len(line), 160)
 
-    def test_cli_line_reads_a_record_directory(self):
-        with tempfile.TemporaryDirectory() as directory:
+    def test_pending_line(self):
+        line = probe.pendingLine('leaf', '9f92330854f84c4befa839e8a3f4be2f1a40897f', 1858, '8+>1810',
+                                 self.depth, 'pool void at its ceiling')
+        self.assertEqual(line, 'probe-90 leaf no verdict in 1858s: queue 8+>1810, pool void at its ceiling; '
+                               'pool 40:8 30:5 queued 40:2 30:10 10:31; sha 9f9233085')
+        self.assertGoodLine(line)
+        self.assertGoodLine(probe.pendingLine('all', 'a' * 40, 5, '-+-', 'pool ' + '40:8 ' * 40, 'x' * 100))
+
+    def test_cli_line_reads_a_record_directory_and_the_jobs(self):
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as jobs:
             writeRecord(directory, poolFast, poolEvents, status='green: 318eef6a fast gate on Loom\'s side pool')
+            writeJobs(jobs, [('a', 40, 'running'), ('b', 10, 'queued')])
             out = subprocess.run(['python3', str(here / 'probe-90' / 'record.py'), 'line', directory, '--mode', 'leaf',
                                   '--sha', poolFast['sha'], '--ref', 'gate-logs/318eef6a4ccc/20261009T154811Z/fast',
-                                  '--tools', 'b' * 40, '--stamp-epoch', str(poolStamp), '--commit-epoch', str(poolCommit),
-                                  '--pushed-epoch', str(poolStamp - 41)], capture_output=True, text=True, check=True).stdout
+                                  '--tools', 'b' * 40, '--jobs', jobs, '--stamp-epoch', str(poolStamp),
+                                  '--commit-epoch', str(poolCommit), '--pushed-epoch', str(poolStamp - 41),
+                                  '--enqueue-epoch', str(poolStamp - 3)], capture_output=True, text=True, check=True).stdout
         self.assertGoodLine(out.strip())
-        self.assertTrue(out.startswith('probe-90 leaf green: wall 176s'))
+        self.assertTrue(out.startswith('probe-90 leaf green 217s: queue 3+- select 94 '), out)
+        self.assertIn('pool 40:1 queued 10:1', out)
+
+    def test_cli_pending(self):
+        with tempfile.TemporaryDirectory() as jobs:
+            out = subprocess.run(['python3', str(here / 'probe-90' / 'record.py'), 'pending', '--mode', 'leaf', '--sha', 'c' * 40,
+                                  '--jobs', jobs, '--pushed-epoch', '1000', '--now-epoch', '3100', '--enqueue-epoch', '1040',
+                                  '--running-epoch', '1048'], capture_output=True, text=True, check=True).stdout.strip()
+        self.assertEqual(out, 'probe-90 leaf no verdict in 2100s: queue 8+>2052; pool 0 queued 0; sha ccccccccc')
 
 
 class BranchTests(unittest.TestCase):
