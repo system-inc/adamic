@@ -1,0 +1,4 @@
+M01: Node source count for !key in object changed 1 -> 0. See witness-before-count.log and M01-witness.log.
+M02: Unicode U+0080 prefix changed finding 6 10 unexpected -> finding 5 9 unexpected. See witness-before-unicode.log and M02-witness.log.
+M03: Node source count for !key in object changed 1 -> 0. See witness-before-count.log and M03-witness.log.
+P01 is a probe, not a survivor mutant: empty profile emits zero stdout bytes and TestCompileProfiles still passes.

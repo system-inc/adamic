@@ -1,0 +1,28 @@
+{
+  "D1": {
+    "rows_ran": [
+      "TestCompileProfiles"
+    ],
+    "rows_failed": [
+      "TestCompileProfiles"
+    ],
+    "rows_passed": [],
+    "rows_skipped": [],
+    "failing_line": "build_test.go:28: /workspace/adamic/stage1/typescript/scanner/scanner.ts:69:20: Adamic 0.1 refuses inherited library member codePointAt read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "bounded": false,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "ADAMIC_BUILD_CACHE_DIR": "/tmp/no-unsafe-negation-defense/cache/D1"
+  }
+}

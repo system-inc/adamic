@@ -1,0 +1,24 @@
+[
+  {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/object.go:1690",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/object.go:1690",
+        "change": "Change supported string-method table key codePointAt to codePointAtDisabled.",
+        "rows_failed": [
+          "TestCompileProfiles"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/no-unsafe-negation-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/no-unsafe-negation/ -run . > D1.log 2>&1; build_test.go:28: /workspace/adamic/stage1/typescript/scanner/scanner.ts:69:20: Adamic 0.1 refuses inherited library member codePointAt read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "bounded": false,
+    "rows_passed": [],
+    "defense_scope": "Compilation acceptance, not lint-result correctness. No other top-level test exists in the current package."
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/lint/rules/no-unsafe-negation/",
+    "-run",
+    "."
+  ],
+  "ADAMIC_BUILD_CACHE_DIR": "/tmp/no-unsafe-negation-defense/cache/D1",
+  "status": 1,
+  "wall_seconds": 13.81121039390564,
+  "go_vet_seconds": 0.7889442443847656
+}

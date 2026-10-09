@@ -1,0 +1,270 @@
+[
+  {
+    "label": "timing-0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 36.27948825599742,
+    "log": "timing-0.log"
+  },
+  {
+    "label": "timing-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 36.8836478589983,
+    "log": "timing-1.log"
+  },
+  {
+    "label": "timing-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 35.41700731200035,
+    "log": "timing-2.log"
+  },
+  {
+    "label": "witness-before-count",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+      "/tmp/u122/count.manifest",
+      "--count"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 0.13620009499936714,
+    "log": "witness-before-count.log"
+  },
+  {
+    "label": "witness-before-unicode",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+      "/tmp/u122/unicode.manifest"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 0.1335060879973753,
+    "log": "witness-before-unicode.log"
+  },
+  {
+    "label": "M01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/M01"
+    },
+    "exit": 0,
+    "wall_seconds": 34.34494564599663,
+    "log": "M01.log"
+  },
+  {
+    "label": "M01-witness",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+      "/tmp/u122/count.manifest",
+      "--count"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 0.1287285369980964,
+    "log": "M01-witness.log"
+  },
+  {
+    "label": "M02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/M02"
+    },
+    "exit": 0,
+    "wall_seconds": 34.81443982500059,
+    "log": "M02.log"
+  },
+  {
+    "label": "M02-witness",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+      "/tmp/u122/unicode.manifest"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 0.1278298889992584,
+    "log": "M02-witness.log"
+  },
+  {
+    "label": "M03",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/M03"
+    },
+    "exit": 0,
+    "wall_seconds": 38.535848717998306,
+    "log": "M03.log"
+  },
+  {
+    "label": "M03-witness",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+      "/tmp/u122/count.manifest",
+      "--count"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 0.14580064300025697,
+    "log": "M03-witness.log"
+  },
+  {
+    "label": "P01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/P01"
+    },
+    "exit": 0,
+    "wall_seconds": 2.528996772998653,
+    "log": "P01.log"
+  },
+  {
+    "label": "P01-witness",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+      "/tmp/u122/count.manifest",
+      "--count"
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 0.08269843599919113,
+    "log": "P01-witness.log"
+  },
+  {
+    "label": "restored-control",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 38.518294238001545,
+    "log": "restored-control.log"
+  }
+]

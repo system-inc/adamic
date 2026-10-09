@@ -1,0 +1,46 @@
+[
+  {
+    "id": "M01",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-audit/stage1-cohere-lint-rules-no-unsafe-negation/M01.diff"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "id": "M02",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-audit/stage1-cohere-lint-rules-no-unsafe-negation/M02.diff"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "id": "M03",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-audit/stage1-cohere-lint-rules-no-unsafe-negation/M03.diff"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "id": "P01",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-audit/stage1-cohere-lint-rules-no-unsafe-negation/P01.diff"
+    ],
+    "exit": 0,
+    "output": ""
+  }
+]

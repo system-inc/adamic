@@ -1,0 +1,13 @@
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..fd3988ba 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1687,7 +1687,7 @@ var stringMethods = map[string]struct {
+ 	optional  int
+ }{
+ 	"slice":       {[]ir.Type{ir.Number, ir.Number}, 2},
+-	"codePointAt": {[]ir.Type{ir.Number}, 1},
++	"codePointAtDisabled": {[]ir.Type{ir.Number}, 1},
+ 	"padStart":    {[]ir.Type{ir.Number, ir.String}, 1},
+ 	"padEnd":      {[]ir.Type{ir.Number, ir.String}, 1},
+ 	"repeat":      {[]ir.Type{ir.Number}, 0},

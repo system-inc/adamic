@@ -1,0 +1,11 @@
+{
+  "id": "D1",
+  "code_under_test": "Compile support for the owned standalone profile through internal/load, internal/lower, internal/native and internal/javascript; unchanged rule.a/profile.a are the input program",
+  "oracle": "Self-written success checks for Load/Lower, sanitized/release native.Build and JavaScript file write; clang is the native build acceptance checker; no lint-result oracle runs",
+  "difference": "Only row in package; asserts compilation availability, which audit behavioral port mutants preserved",
+  "file": "internal/lower/object.go",
+  "line": 1690,
+  "menu": "change constant",
+  "old": "\"codePointAt\": {[]ir.Type{ir.Number}, 1},",
+  "new": "\"codePointAtDisabled\": {[]ir.Type{ir.Number}, 1},"
+}
