@@ -47,7 +47,7 @@ class LandingTests(unittest.TestCase):
         # The scripts under test, beside a merge-back that does nothing.
         self.scripts = root / 'scripts'
         self.scripts.mkdir()
-        for name in ('push-main.sh', 'landings.py', 'lane-checks.py'):
+        for name in ('push-main.sh', 'landings.py', 'lane-checks.py', 'rerun_merge.py'):
             shutil.copy(directory / name, self.scripts / name)
         (self.scripts / 'merge-back.sh').write_text('#!/usr/bin/env bash\n')
         (self.scripts / 'merge-back.sh').chmod(0o755)
@@ -178,6 +178,30 @@ class LandingTests(unittest.TestCase):
         self.assertEqual(git(self.repository, 'rev-parse', moved + '^{tree}'),
                          git(self.repository, 'merge-tree', '--write-tree', self.main_now(), second).splitlines()[0])
 
+
+    def test_a_moved_main_lands_on_a_rerun_of_the_units_it_changed(self):
+        # #mbexftz: main moves by a test in the candidate's package, push-main names B (main merged with the gated
+        # sha), and a rerun of only the moved unit at B lands B on the gate's kept verdicts, saying so in trailers.
+        candidate = self.change(self.main, 'code/a.go', 'package code\n\n// candidate\n', 'candidate')
+        units = lambda **verdicts: [{'id': name, 'input_sha256': digest, 'verdict': verdict} for name, (digest, verdict) in verdicts.items()]
+        base = self.publish(candidate, 'base', {'sha': candidate, 'base': self.main, 'finished': True,
+                                                'units': units(code=('c1', 'passed'), other=('o1', 'passed'))}, kind='full')
+        beside = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test beside it')
+        moved = self.assertLanded(self.push('--test-only', beside, 'beside'), self.main, beside)
+        refused = self.push(candidate, '1', '1', '0', '0', 'candidate')
+        b = refused.stderr.split('on B ')[1].split()[0]
+        git(self.repository, 'push', '-q', 'origin', b + ':refs/heads/moved-b')
+        record = {'sha': b, 'base': moved, 'finished': True, 'skip': 0, 'packages': ['code'], 'fail': 0, 'pass': 3,
+                  'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                  'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                  'stages_exit': {stage: 0 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                  'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census'],
+                  'rerun_of': base, 'units': units(code=('c2', 'passed'), other=('o1', 'kept'))}
+        rerun = self.publish(b, 'rerun', record)
+        landed = self.assertLanded(self.push('--fast-gate', rerun, b, 'moved'), moved, b)
+        trailers = git(self.repository, 'log', '-1', '--format=%(trailers:only,unfold)', landed)
+        self.assertIn('Rerun-units: code', trailers)
+        self.assertIn('Moved-main: %s..%s' % (self.main, moved), trailers)
 
     def test_a_test_beside_the_stars_code_waits_while_its_gate_runs(self):
         root = Path(self.tmp.name)

@@ -41,6 +41,7 @@ smokeReviewed=no
 pauseException=""
 testOnly=no
 deletion=no
+extraTrailers=""
 notReaders=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
@@ -424,6 +425,17 @@ VERDICT
 	gateMinutes=$(printf '%s\n' "$verdict" | sed -n 2p)
 	read -r pass fail skip <<<"$(printf '%s\n' "$verdict" | sed -n 3p)"
 	fastNote=$(printf '%s\n' "$verdict" | sed -n 4p)
+	# A rerun on kept verdicts names the units it ran, and a B (#mbexftz: the moved main merged with the gated sha,
+	# its subject "Moved main: ...") names the main the gate saw and the one it lands over.
+	rerunUnits=$(python3 -c 'import json, sys
+record = json.load(open(sys.argv[1]))
+if record.get("rerun_of"):
+    print(" ".join(sorted(unit["id"] for unit in record.get("units") or [] if unit.get("verdict") != "kept")) or "none")' "$fastJSON")
+	[ -z "$rerunUnits" ] || extraTrailers="Rerun-units: ${rerunUnits}"
+	if [ "$(git log -1 --format=%s "$sha" | cut -c1-11)" = "Moved main:" ]; then
+		extraTrailers="${extraTrailers:+${extraTrailers}
+}Moved-main: $(git merge-base "${sha}^2" "${sha}^1")..$(git rev-parse "${sha}^1")"
+	fi
 	# The fast gate chose its packages by the gated tree's difference from its base, a main. That
 	# choice is this landing's only if every path main has changed since, beyond record commits, is in
 	# that difference too: main moved by records only, or by commits this landing already holds (a
@@ -680,7 +692,8 @@ Gate-minutes: ${gateMinutes}
 Pass: ${pass}
 Fail: ${fail}
 Skip: ${skip}
-Backlog: ${backlog}
+Backlog: ${backlog}${extraTrailers:+
+${extraTrailers}}
 MESSAGE
 )
 if [ "$(git rev-parse "${landing}^{tree}")" != "$tree" ]; then
