@@ -187,6 +187,12 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			if field.Name == name {
 				value := literalValue(field.Value)
 				if _, absent := value.(ir.Undefined); absent {
+					// rmSync merges own properties over its defaults, then validates
+					// them. A present undefined is an invalid value, not an absent key.
+					// The scalar fs host cannot carry this TypeError and its code.
+					if operation == "rm" {
+						return nil, l.notYet(node, "node:fs.rmSync options."+name+" present as undefined (Node throws TypeError ERR_INVALID_ARG_TYPE; option validation is not represented by the scalar fs host)")
+					}
 					return fallback, nil
 				}
 				return value, nil

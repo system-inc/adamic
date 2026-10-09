@@ -1,0 +1,31 @@
+import { mkdtempSync, rmSync, writeFileSync, existsSync } from 'node:fs';
+// Each omission must keep Node's default; force omission uses an existing tree.
+const root = mkdtempSync('rm-options-');
+writeFileSync(root + '/no-recursive', 'x');
+rmSync(root + '/no-recursive', { force: true, maxRetries: 0, retryDelay: 100 });
+console.log(`no-recursive=${existsSync(root + '/no-recursive')}`);
+writeFileSync(root + '/no-force', 'x');
+rmSync(root + '/no-force', { recursive: true, maxRetries: 0, retryDelay: 100 });
+console.log(`no-force=${existsSync(root + '/no-force')}`);
+writeFileSync(root + '/no-retries', 'x');
+rmSync(root + '/no-retries', { recursive: true, force: true, retryDelay: 100 });
+console.log(`no-retries=${existsSync(root + '/no-retries')}`);
+writeFileSync(root + '/no-delay', 'x');
+rmSync(root + '/no-delay', { recursive: true, force: true, maxRetries: 0 });
+console.log(`no-delay=${existsSync(root + '/no-delay')}`);
+writeFileSync(root + '/empty-options', 'x');
+rmSync(root + '/empty-options', {});
+console.log(`empty-options=${existsSync(root + '/empty-options')}`);
+writeFileSync(root + '/no-options', 'x');
+rmSync(root + '/no-options');
+console.log(`no-options=${existsSync(root + '/no-options')}`);
+// Defaults must still reject a missing path without force, and a directory
+// without recursive. Observe the errors without an unproven errno view.
+try { rmSync(root + '/missing', { recursive: true }); }
+catch (error) { if (error instanceof Error) { console.log(error.name); } }
+try { rmSync(root); }
+catch (error) { if (error instanceof Error) { console.log(error.name); } }
+const options = { recursive: true, force: true };
+rmSync(root + '/missing', options);
+rmSync(root, { recursive: true, force: true, maxRetries: 0, retryDelay: 100 });
+console.log(existsSync(root) ? 'present' : 'removed');
