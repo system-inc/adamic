@@ -194,11 +194,9 @@ func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 			return nil, err
 		}
 		fs.nodeTypes = true
-		roots = append(roots, currentDirectory.ResolveFile(index))
-		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
-		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
-		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		checkRoots = append(checkRoots, currentDirectory.ResolveFile(index))
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
+		program = buildProgram()
 		if program == nil {
 			return nil, errors.New("load: the compiler built no Node program")
 		}

@@ -65,6 +65,7 @@ func TestProjectLoaderReferenceSources(t *testing.T) {
 }
 
 func TestProjectLoaderOptionAuditFailsClosed(t *testing.T) {
+	t.Parallel()
 	dir := projectFixture(t, map[string]string{
 		"main.ts":       "const values: number[] = [];\nexport const value: number = values[0];\n",
 		"tsconfig.json": `{"compilerOptions":{` + fixtureOptions + `},"files":["main.ts"]}`,
@@ -82,6 +83,7 @@ func TestProjectLoaderOptionAuditFailsClosed(t *testing.T) {
 }
 
 func TestProjectLoaderOwnershipAndNoCheck(t *testing.T) {
+	t.Parallel()
 	for _, tc := range []struct{ name, config, source, other, want string }{
 		{"noCheck", `{"compilerOptions":{"noCheck":true},"files":["main.ts"]}`, "export const value: number = 1;", "", "noCheck"},
 		{"mixed", `{"compilerOptions":{` + fixtureOptions + `},"files":["main.ts"]}`, "export const value: number = 1;", "export const proof: number = 1;", "mixed project"},
@@ -104,6 +106,7 @@ func TestProjectLoaderOwnershipAndNoCheck(t *testing.T) {
 }
 
 func TestProjectLoaderHostConsoleAndCompositeEntries(t *testing.T) {
+	t.Parallel()
 	dir := projectFixture(t, map[string]string{
 		"main.ts":       "console.log(7);\nexport const value: number = 1;\n",
 		"other.ts":      "export const other: number = 2;\n",
@@ -121,5 +124,37 @@ func TestProjectLoaderHostConsoleAndCompositeEntries(t *testing.T) {
 	}
 	if _, err := Load([]string{filepath.Join(dir, "main.ts")}); err == nil || !strings.Contains(err.Error(), "other.ts:1:14: error TS2322") {
 		t.Fatalf("configured composite source silently dropped: %v", err)
+	}
+}
+
+func TestProjectLoaderNodeImportsKeepReferenceRoots(t *testing.T) {
+	t.Parallel()
+	dir := projectFixture(t, map[string]string{
+		"app/main.ts":              `import { existsSync } from 'node:fs'; export const value: boolean = existsSync('x');`,
+		"app/host.d.ts":            `declare module 'node:fs' { export function existsSync(path: string): boolean; }`,
+		"dependency/unused.ts":     `export const unused: number = 1;`,
+		"app/tsconfig.json":        referenceConfig(`["main.ts","host.d.ts"]`, `[{"path":"../dependency"}]`, ""),
+		"dependency/tsconfig.json": referenceConfig(`["unused.ts"]`, `[]`, ""),
+	})
+	program, err := Load([]string{filepath.Join(dir, "app/main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range program.CompilerProgram().GetSourceFiles() {
+		if program.FileName(file) == filepath.Join(dir, "dependency/unused.ts") {
+			return
+		}
+	}
+	t.Fatal("node import discarded referenced source roots")
+}
+
+func TestProjectLoaderStandaloneNodeKeepsPrelude(t *testing.T) {
+	t.Parallel()
+	file := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(file, []byte(`import { existsSync } from 'node:fs'; import { readTextFile } from 'adamic'; const present: boolean = existsSync('x'); const text = readTextFile('x'); console.log('checked');`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Load([]string{file}); err != nil {
+		t.Fatalf("standalone Node rebuild lost prelude: %v", err)
 	}
 }

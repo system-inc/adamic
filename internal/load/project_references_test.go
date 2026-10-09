@@ -185,57 +185,59 @@ func TestProjectReferencesSharedPrelude(t *testing.T) {
 
 func TestProjectReferencesTypesUnion(t *testing.T) {
 	t.Parallel()
-	for _, fixture := range []struct {
-		name         string
-		duplicate    bool
-		skipLibCheck bool
-	}{
-		{"clean", false, false},
-		{"duplicate", true, false},
-		{"duplicate-skipped", true, true},
-	} {
-		t.Run(fixture.name, func(t *testing.T) {
-			duplicate := fixture.duplicate
-			entryDeclaration := "type EntryNumber = number;\n"
-			dependencyDeclaration := "type DependencyNumber = number;\n"
-			if duplicate {
-				entryDeclaration += "declare const sharedAmbient: number;\n"
-				dependencyDeclaration += "declare const sharedAmbient: number;\n"
-			}
-			dir := projectFixture(t, map[string]string{
-				"app/main.ts":                               `export const result: EntryNumber = 7;`,
-				"dependency/value.ts":                       `export const value: DependencyNumber = 7;`,
-				"app/tsconfig.json":                         referenceConfig(`["main.ts"]`, `[{"path":"../dependency"}]`, fmt.Sprintf(`,"types":["entry","entry"],"skipLibCheck":%t`, fixture.skipLibCheck)),
-				"dependency/tsconfig.json":                  referenceConfig(`["value.ts"]`, `[]`, fmt.Sprintf(`,"types":["dependency"],"skipLibCheck":%t`, fixture.skipLibCheck)),
-				"node_modules/@types/entry/index.d.ts":      entryDeclaration,
-				"node_modules/@types/dependency/index.d.ts": dependencyDeclaration,
-			})
-			program, err := Load([]string{filepath.Join(dir, "app/main.ts")})
-			if duplicate {
-				if err == nil || !strings.Contains(err.Error(), "error TS2451: Cannot redeclare block-scoped variable 'sharedAmbient'.") || !strings.Contains(err.Error(), "@types/entry/index.d.ts:2:15") || !strings.Contains(err.Error(), "@types/dependency/index.d.ts:2:15") {
-					t.Fatalf("want both checker duplicate declarations, got %v", err)
-				}
-			} else {
-				if err != nil {
-					t.Fatalf("ambient types union lost a project: %v", err)
-				}
-				types := program.CompilerProgram().Options().Types
-				if len(types) != 2 || types[0] != "entry" || types[1] != "dependency" {
-					t.Fatalf("want distinct ambient types union, got %v", types)
-				}
-			}
-			report, err := AuditProjectOptions(context.Background(), filepath.Join(dir, "app/tsconfig.json"))
-			if err != nil {
-				t.Fatal(err)
-			}
-			if duplicate {
-				if len(report.ProjectErrors) != 2 || len(report.Sites) != 0 {
-					t.Fatalf("want ordinary duplicate declarations, got %+v", report)
-				}
-			} else if len(report.ProjectErrors) != 0 || len(report.Sites) != 0 {
-				t.Fatalf("audit lost ambient types union: %+v", report)
-			}
-		})
+	checkProjectTypesUnion(t, false, false)
+}
+
+func TestProjectReferencesTypesUnionDuplicate(t *testing.T) {
+	t.Parallel()
+	checkProjectTypesUnion(t, true, false)
+}
+
+func TestProjectReferencesTypesUnionDuplicateSkipped(t *testing.T) {
+	t.Parallel()
+	checkProjectTypesUnion(t, true, true)
+}
+
+func checkProjectTypesUnion(t *testing.T, duplicate, skipLibCheck bool) {
+	t.Helper()
+	entryDeclaration := "type EntryNumber = number;\n"
+	dependencyDeclaration := "type DependencyNumber = number;\n"
+	if duplicate {
+		entryDeclaration += "declare const sharedAmbient: number;\n"
+		dependencyDeclaration += "declare const sharedAmbient: number;\n"
+	}
+	dir := projectFixture(t, map[string]string{
+		"app/main.ts":                               `export const result: EntryNumber = 7;`,
+		"dependency/value.ts":                       `export const value: DependencyNumber = 7;`,
+		"app/tsconfig.json":                         referenceConfig(`["main.ts"]`, `[{"path":"../dependency"}]`, fmt.Sprintf(`,"types":["entry","entry"],"skipLibCheck":%t`, skipLibCheck)),
+		"dependency/tsconfig.json":                  referenceConfig(`["value.ts"]`, `[]`, fmt.Sprintf(`,"types":["dependency"],"skipLibCheck":%t`, skipLibCheck)),
+		"node_modules/@types/entry/index.d.ts":      entryDeclaration,
+		"node_modules/@types/dependency/index.d.ts": dependencyDeclaration,
+	})
+	program, err := Load([]string{filepath.Join(dir, "app/main.ts")})
+	if duplicate {
+		if err == nil || !strings.Contains(err.Error(), "error TS2451: Cannot redeclare block-scoped variable 'sharedAmbient'.") || !strings.Contains(err.Error(), "@types/entry/index.d.ts:2:15") || !strings.Contains(err.Error(), "@types/dependency/index.d.ts:2:15") {
+			t.Fatalf("want both checker duplicate declarations, got %v", err)
+		}
+	} else {
+		if err != nil {
+			t.Fatalf("ambient types union lost a project: %v", err)
+		}
+		types := program.CompilerProgram().Options().Types
+		if len(types) != 2 || types[0] != "entry" || types[1] != "dependency" {
+			t.Fatalf("want distinct ambient types union, got %v", types)
+		}
+	}
+	report, err := AuditProjectOptions(context.Background(), filepath.Join(dir, "app/tsconfig.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if duplicate {
+		if len(report.ProjectErrors) != 2 || len(report.Sites) != 0 {
+			t.Fatalf("want ordinary duplicate declarations, got %+v", report)
+		}
+	} else if len(report.ProjectErrors) != 0 || len(report.Sites) != 0 {
+		t.Fatalf("audit lost ambient types union: %+v", report)
 	}
 }
 

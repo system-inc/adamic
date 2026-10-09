@@ -119,7 +119,7 @@ def main():
         overlay = scratch / (name + '.json')
         overlay.write_text(json.dumps(dict(Replace={str(original): str(changed)})))
         log = run(name, ['go', 'test', '-overlay', str(overlay), './internal/load', '-count=1',
-                         '-run', '^TestProjectReferencesTypesUnion/' + test + '$'], 1)
+                         '-run', '^' + ('TestProjectReferencesTypesUnion' if test == 'clean' else 'TestProjectReferencesTypesUnionDuplicateSkipped') + '$'], 1)
         assert '--- FAIL:' in log and witness in log and '[build failed]' not in log, log
         killed.append(name)
     summary = dict(authored_checked=[str(path.relative_to(ROOT)) for path in authored_files], clean_output='7\n', duplicate_diagnostics=loader_diagnostics, mutants_caught=killed, logs=str(scratch))
