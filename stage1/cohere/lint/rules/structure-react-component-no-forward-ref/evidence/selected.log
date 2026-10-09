@@ -1,0 +1,136 @@
+=== RUN   TestForwardRefAbsentNodesAndCount
+=== PAUSE TestForwardRefAbsentNodesAndCount
+=== RUN   TestForwardRefNativeMutant
+=== PAUSE TestForwardRefNativeMutant
+=== RUN   TestRulesAgree
+=== PAUSE TestRulesAgree
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== CONT  TestForwardRefAbsentNodesAndCount
+=== CONT  TestMutants
+=== CONT  TestOwnedWitnesses
+=== CONT  TestRulesAgree
+=== RUN   TestMutants/structure-forward-ref-import-module
+=== PAUSE TestMutants/structure-forward-ref-import-module
+=== CONT  TestForwardRefNativeMutant
+=== NAME  TestRulesAgree
+    lint_test.go:420: checker compilation phases: load=390.424521ms lower=9.795760116s C=797.578487ms JavaScript=40.774758ms
+=== NAME  TestForwardRefNativeMutant
+    lint_test.go:148: checker compilation phases: load=320.838953ms lower=10.161124472s C=898.047975ms JavaScript=53.48441ms
+=== NAME  TestForwardRefAbsentNodesAndCount
+    lint_test.go:296: cohere cases: 5747 unique source/rule/options combinations
+=== NAME  TestRulesAgree
+    lint_test.go:420: checker native build: 1m4.052673871s
+=== NAME  TestForwardRefAbsentNodesAndCount
+    forward_ref_validation_test.go:92: checker native build: 55.953198071s
+=== NAME  TestOwnedWitnesses
+    registration_test.go:60: checker native build: 1m4.052690896s
+=== NAME  TestForwardRefNativeMutant
+    lint_test.go:156: checker native mutant build: 1m4.060268074s
+=== NAME  TestRulesAgree
+    lint_test.go:296: cohere cases: 5747 unique source/rule/options combinations
+    lint_test.go:491: typed upstream cases: 0 under their captured compiler options, 0 under strict alone; 0 held to upstream's count, 0 not, their programs holding other fixture files
+=== NAME  TestOwnedWitnesses
+    registration_test.go:60: typed runtime time: Go program and lint=84.420037ms native program, lint and recording=140.849981ms
+=== NAME  TestForwardRefNativeMutant
+    forward_ref_validation_test.go:114: structure-forward-ref-import-module caught on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestForwardRefNativeMutant1598383403/002/structure-react-component-no-forward-ref-0.tsx:2:22", Go "/tmp/adamic-gate/TestForwardRefNativeMutant1598383403/002/structure-react-component-no-forward-ref-0.tsx:1:17"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestForwardRefNativeMutant1598383403/002/structure-react-component-no-forward-ref-0.tsx:1:17
+          structure/react-component-no-forward-ref  This imports forwardRef from react. React 19 passes ref as an ordinary property to a function component, so forwardRef wraps a component in a layer that no longer does anything. The cost is not the wrapper itself: a wrapped component's properties type is written against the wrapper rather than the component, so the shape a reader sees at the call site is one indirection away from the shape the component actually declares. Accept ref as a regular property instead. The import is reported separately from a call because a leftover import outlives the last call site and is what makes the next one easy to write.
+        
+        range 16 34 noForwardRefImport 			16 34
+        /tmp/adamic-gate/TestForwardRefNativeMutant1598383403/002/structure-react-component-no-forward-ref-0.tsx:2:22
+--- PASS: TestForwardRefNativeMutant (78.16s)
+=== CONT  TestMutants/structure-forward-ref-import-module
+=== NAME  TestForwardRefAbsentNodesAndCount
+    forward_ref_validation_test.go:92: Go, Node, emitted JavaScript, native identical: 4682 bytes
+    forward_ref_validation_test.go:93: own captured upstream cases=17; absent-node cases=33
+--- PASS: TestForwardRefAbsentNodesAndCount (81.24s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:60: typed runtime time: native=140.849981ms
+    registration_test.go:60: typed runtime time: Node=672.88546ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=93.38793ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 740 bytes
+    registration_test.go:60: checker native build: 15.606913ms
+    registration_test.go:60: typed runtime time: Go program and lint=79.21693ms native program, lint and recording=102.947038ms
+=== NAME  TestRulesAgree
+    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 505841 bytes
+--- PASS: TestRulesAgree (82.33s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:60: typed runtime time: native=102.947038ms
+    registration_test.go:60: typed runtime time: Node=355.230952ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=81.198814ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1887 bytes
+    registration_test.go:60: checker native build: 8.127382ms
+    registration_test.go:60: typed runtime time: Go program and lint=57.573111ms native program, lint and recording=82.881807ms
+    registration_test.go:60: typed runtime time: native=82.881807ms
+    registration_test.go:60: typed runtime time: Node=306.170826ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=80.545129ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:60: checker native build: 13.255489ms
+    registration_test.go:60: typed runtime time: Go program and lint=71.918003ms native program, lint and recording=101.013535ms
+    registration_test.go:60: typed runtime time: native=101.013535ms
+    registration_test.go:60: typed runtime time: Node=353.595601ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=103.077122ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 5286 bytes
+    registration_test.go:60: checker native build: 8.808372ms
+    registration_test.go:60: typed runtime time: Go program and lint=70.506253ms native program, lint and recording=76.05217ms
+    registration_test.go:60: typed runtime time: native=76.05217ms
+    registration_test.go:60: typed runtime time: Node=333.377681ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=82.348582ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1066 bytes
+    registration_test.go:60: checker native build: 10.028151ms
+    registration_test.go:60: typed runtime time: Go program and lint=73.074793ms native program, lint and recording=81.172571ms
+    registration_test.go:60: typed runtime time: native=81.172571ms
+    registration_test.go:60: typed runtime time: Node=330.49049ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=90.464268ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1060 bytes
+    registration_test.go:60: checker native build: 12.630883ms
+    registration_test.go:60: typed runtime time: Go program and lint=76.70868ms native program, lint and recording=68.901518ms
+    registration_test.go:60: typed runtime time: native=68.901518ms
+    registration_test.go:60: typed runtime time: Node=335.137114ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=90.130263ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 968 bytes
+    registration_test.go:60: checker native build: 9.699169ms
+    registration_test.go:60: typed runtime time: Go program and lint=66.631941ms native program, lint and recording=96.421068ms
+    registration_test.go:60: typed runtime time: native=96.421068ms
+    registration_test.go:60: typed runtime time: Node=369.209586ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=78.517132ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1060 bytes
+    registration_test.go:76: checker native build: 10.301707ms
+=== NAME  TestMutants/structure-forward-ref-import-module
+    lint_test.go:1127: checker compilation phases: load=259.67632ms lower=7.731301431s C=691.270026ms JavaScript=47.036884ms
+    lint_test.go:1133: structure-forward-ref-import-module caught on Node: case 88 line 4888: port "/tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:2:22", Go "/tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:1:17"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:1:17
+          structure/react-component-no-forward-ref  This imports forwardRef from react. React 19 passes ref as an ordinary property to a function component, so forwardRef wraps a component in a layer that no longer does anything. The cost is not the wrapper itself: a wrapped component's properties type is written against the wrapper rather than the component, so the shape a reader sees at the call site is one indirection away from the shape the component actually declares. Accept ref as a regular property instead. The import is reported separately from a call because a leftover import outlives the last call site and is what makes the next one easy to write.
+        
+        range 16 34 noForwardRefImport 			16 34
+        /tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:2:22
+    lint_test.go:1133: structure-forward-ref-import-module caught on emitted JavaScript: case 88 line 4888: port "/tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:2:22", Go "/tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:1:17"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:1:17
+          structure/react-component-no-forward-ref  This imports forwardRef from react. React 19 passes ref as an ordinary property to a function component, so forwardRef wraps a component in a layer that no longer does anything. The cost is not the wrapper itself: a wrapped component's properties type is written against the wrapper rather than the component, so the shape a reader sees at the call site is one indirection away from the shape the component actually declares. Accept ref as a regular property instead. The import is reported separately from a call because a leftover import outlives the last call site and is what makes the next one easy to write.
+        
+        range 16 34 noForwardRefImport 			16 34
+        /tmp/adamic-gate/TestMutantsstructure-forward-ref-import-module70735442/019/structure-react-component-no-forward-ref-0.tsx:2:22
+--- PASS: TestMutants (2.73s)
+    --- PASS: TestMutants/structure-forward-ref-import-module (9.99s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:76: Go, Node, emitted JavaScript, native identical: 488905 bytes
+--- PASS: TestOwnedWitnesses (91.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	91.413s

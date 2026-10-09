@@ -1,0 +1,16 @@
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: node ready (0.019s)
+setup: go ready (0.019s)
+setup: submodules ready (0.049s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s
+setup: markdown dependencies ready (0.059s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.147s)
+setup: go build skipped (validated warming stamp) (0.914s)
+setup: test binaries deferred (use --warm-tests) (0.915s)
+setup: build cache warm (0.916s)
+setup: build-flags commit=bd5490b6ff36cfc6013d549f78ffa4f9f9a6e075 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.00 0.40 0.32 1/133 1921 load-after=0.00 0.40 0.32 1/133 2139
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (0.943s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.BmTAho

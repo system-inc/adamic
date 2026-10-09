@@ -1,0 +1,115 @@
+package lint
+
+import (
+	"bytes"
+	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"testing"
+)
+
+func forwardRefFixtureText(t *testing.T, expression ast.Expr) string {
+	t.Helper()
+	switch value := expression.(type) {
+	case *ast.BasicLit:
+		text, err := strconv.Unquote(value.Value)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return text
+	case *ast.BinaryExpr:
+		if value.Op != token.ADD {
+			t.Fatal("unexpected fixture expression")
+		}
+		return forwardRefFixtureText(t, value.X) + forwardRefFixtureText(t, value.Y)
+	default:
+		t.Fatalf("unexpected fixture expression %T", expression)
+		return ""
+	}
+}
+
+func TestForwardRefAbsentNodesAndCount(t *testing.T) {
+	t.Parallel()
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const name = "structure/react-component-no-forward-ref"
+	count := 0
+	for _, row := range upstream(t) {
+		if strings.Split(row, "\t")[1] == name {
+			count++
+		}
+	}
+	if count != 17 {
+		t.Fatalf("captured %d own upstream cases, want 17", count)
+	}
+	file, err := parser.ParseFile(token.NewFileSet(), filepath.Join(repository, "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go"), nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var sources []string
+	ast.Inspect(file, func(node ast.Node) bool {
+		assignment, ok := node.(*ast.AssignStmt)
+		if !ok || len(assignment.Lhs) != 1 {
+			return true
+		}
+		identifier, ok := assignment.Lhs[0].(*ast.Ident)
+		if !ok || identifier.Name != "sources" {
+			return true
+		}
+		literal, ok := assignment.Rhs[0].(*ast.CompositeLit)
+		if !ok {
+			t.Fatal("fixture sources changed")
+		}
+		for _, expression := range literal.Elts {
+			sources = append(sources, forwardRefFixtureText(t, expression))
+		}
+		return false
+	})
+	if len(sources) != 11 {
+		t.Fatalf("absent-node shapes=%d, want 11", len(sources))
+	}
+	var rows []string
+	for index, source := range sources {
+		for variant, filename := range []string{"source/api/ThingRequest.ts", "source/components/ThingRequest.tsx", "app/thing/page.tsx"} {
+			path := filepath.Join(t.TempDir(), fmt.Sprint(index, "-", variant), filename)
+			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+				t.Fatal(err)
+			}
+			rows = append(rows, path+"\t"+name)
+		}
+	}
+	oracle := goOracle(t)
+	compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, recoveryRows(t, oracle, rows)))
+	t.Logf("own captured upstream cases=%d; absent-node cases=%d", count, len(rows))
+}
+
+func TestForwardRefNativeMutant(t *testing.T) {
+	t.Parallel()
+	directory := mutant(t, "context.node(module).text !== 'react'", "context.node(module).text !== 'other'", "rules/structure-react-component-no-forward-ref/rule.a")
+	var rows []string
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name == "structure/react-component-no-forward-ref" {
+			rows = ownedWitnessRows(t, ".", descriptor)
+		}
+	}
+	path := manifest(t, rows)
+	want := execute(t, "", goOracle(t), "--manifest", path).output
+	got := execute(t, "", buildMutantPort(t, directory), "--manifest", path).output
+	if bytes.Equal(got, want) {
+		t.Fatal("native mutant survived")
+	}
+	if diff := difference(got, node(t, directory, path, false).output); diff != "" {
+		t.Fatal(diff)
+	}
+	t.Logf("structure-forward-ref-import-module caught on sanitized native: %s", difference(got, want))
+}

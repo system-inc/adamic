@@ -1,0 +1,5 @@
+{
+  "name": "structure-forward-ref-import-module",
+  "from": "context.node(module).text !== 'react'",
+  "to": "context.node(module).text !== 'other'"
+}

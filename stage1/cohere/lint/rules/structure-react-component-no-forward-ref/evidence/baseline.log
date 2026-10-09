@@ -1,0 +1,57 @@
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== CONT  TestOwnedWitnesses
+    registration_test.go:60: checker compilation phases: load=246.088162ms lower=6.404769251s C=701.605927ms JavaScript=35.042627ms
+    registration_test.go:60: checker native build: 1m3.558267658s
+    registration_test.go:60: typed runtime time: Go program and lint=54.29942ms native program, lint and recording=83.141534ms
+    registration_test.go:60: typed runtime time: native=83.141534ms
+    registration_test.go:60: typed runtime time: Node=329.288668ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=80.02407ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 740 bytes
+    registration_test.go:60: checker native build: 39.009983ms
+    registration_test.go:60: typed runtime time: Go program and lint=53.759391ms native program, lint and recording=74.920649ms
+    registration_test.go:60: typed runtime time: native=74.920649ms
+    registration_test.go:60: typed runtime time: Node=345.812631ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=78.668754ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1887 bytes
+    registration_test.go:60: checker native build: 10.082117ms
+    registration_test.go:60: typed runtime time: Go program and lint=55.575484ms native program, lint and recording=77.874998ms
+    registration_test.go:60: typed runtime time: native=77.874998ms
+    registration_test.go:60: typed runtime time: Node=322.146838ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=74.578012ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:60: checker native build: 18.749945ms
+    registration_test.go:60: typed runtime time: Go program and lint=59.541939ms native program, lint and recording=75.035206ms
+    registration_test.go:60: typed runtime time: native=75.035206ms
+    registration_test.go:60: typed runtime time: Node=324.699054ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=92.935834ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 5286 bytes
+    registration_test.go:60: checker native build: 22.071043ms
+    registration_test.go:60: typed runtime time: Go program and lint=54.646758ms native program, lint and recording=67.180631ms
+    registration_test.go:60: typed runtime time: native=67.180631ms
+    registration_test.go:60: typed runtime time: Node=345.38799ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=75.675454ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1066 bytes
+    registration_test.go:60: checker native build: 9.899203ms
+    registration_test.go:60: typed runtime time: Go program and lint=61.933456ms native program, lint and recording=68.670094ms
+    registration_test.go:60: typed runtime time: native=68.670094ms
+    registration_test.go:60: typed runtime time: Node=333.061662ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=80.948729ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1060 bytes
+    registration_test.go:60: checker native build: 10.349438ms
+    registration_test.go:60: typed runtime time: Go program and lint=53.407126ms native program, lint and recording=98.924354ms
+    registration_test.go:60: typed runtime time: native=98.924354ms
+    registration_test.go:60: typed runtime time: Node=317.300457ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=68.423915ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 968 bytes
+    registration_test.go:60: checker native build: 16.211255ms
+    registration_test.go:60: typed runtime time: Go program and lint=51.713977ms native program, lint and recording=68.703018ms
+    registration_test.go:60: typed runtime time: native=68.703018ms
+    registration_test.go:60: typed runtime time: Node=283.754397ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=74.781354ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1060 bytes
+    registration_test.go:76: checker native build: 9.86705ms
+    registration_test.go:76: Go, Node, emitted JavaScript, native identical: 475043 bytes
+--- PASS: TestOwnedWitnesses (93.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	93.514s

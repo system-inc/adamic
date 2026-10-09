@@ -1,0 +1,3 @@
+declare function forwardRef(value: unknown): unknown;
+export const bare = ((forwardRef))(null);
+export const member = ((React).forwardRef)(null);
