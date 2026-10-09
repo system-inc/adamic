@@ -180,9 +180,25 @@ func bridgeProduct(t testing.TB, repository, name string) string {
 	return filepath.Join(directory, name)
 }
 
+// productDeadline bounds one product's own build commands. ADAMIC_BRIDGE_PRODUCT_DEADLINE shortens it, so a cold run
+// can prove upstream builds stay outside it.
+var productDeadline = func() time.Duration {
+	if value, err := time.ParseDuration(os.Getenv("ADAMIC_BRIDGE_PRODUCT_DEADLINE")); err == nil && value > 0 {
+		return value
+	}
+	return 5 * time.Minute
+}()
+
 func buildBridgeProduct(t testing.TB, repository, directory, name string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-	defer cancel()
+	// A product's five minutes are its own build's. Its upstream products (stage0, an archive) are built or fetched
+	// under their own deadline, and this one starts again once they're in hand (Oct 9: healthy-region was killed at
+	// 5 minutes after waiting 227 s for a cold stage0 and 67 s for an archive).
+	ctx, cancel := context.WithTimeout(context.Background(), productDeadline)
+	defer func() { cancel() }()
+	upstreamsInHand := func() {
+		cancel()
+		ctx, cancel = context.WithTimeout(context.Background(), productDeadline)
+	}
 	run := func(command *exec.Cmd) error {
 		command.Dir = repository
 		output, err := command.CombinedOutput()
@@ -263,6 +279,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 	drivers := map[string]string{"api": "tsgo-asan.a", "length-driver": "length.a", "stale-driver": "stale.a", "leak-driver": "leak.a"}
 	if archiveName, ok := drivers[name]; ok {
 		archive := bridgeProduct(t, repository, archiveName)
+		upstreamsInHand()
 		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-I", filepath.Join(repository, "bridge/tsgo"), filepath.Join(repository, "bridge/tsgo/testdata/api.c"), archive, "-lpthread", "-ldl", "-lm", "-o", destination))
 	}
 	binaries := map[string]struct {
@@ -281,6 +298,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 	}
 	compiler := bridgeProduct(t, repository, binary.compiler)
 	archive := bridgeProduct(t, repository, binary.archive)
+	upstreamsInHand()
 	arguments := []string{"build", filepath.Join(repository, "bridge/tsgo/testdata", binary.fixture), "-o", destination, "--tsgo", archive}
 	if binary.sanitized {
 		arguments = append(arguments, "--sanitize")
