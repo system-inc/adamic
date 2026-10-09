@@ -1,0 +1,5 @@
+=== RUN   TestU043RefusalObservation
+    u043_observation_test.go:11: refusal=/tmp/adamic-gate/TestU043RefusalObservation85757629/001/main.a:1:60: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestU043RefusalObservation (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.040s

@@ -1,0 +1,11 @@
+--- a/internal/lower/prototype.go
++++ b/internal/lower/prototype.go
+@@ -261,7 +261,7 @@
+ 	for _, module := range modules {
+ 		module.AsNode().ForEachChild(visit)
+ 	}
+-	return reason
++	return ""
+ }
+ 
+ // An unannotated const made directly from a plain literal has no boxed primitive hidden by a

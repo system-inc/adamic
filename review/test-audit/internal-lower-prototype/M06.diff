@@ -1,0 +1,11 @@
+--- a/internal/lower/prototype.go
++++ b/internal/lower/prototype.go
+@@ -107,7 +107,7 @@
+ 		return nil, false, nil
+ 	} // Number's radix overload.
+ 	if name == "toLocaleString" && of == ir.Number {
+-		return nil, true, &Refused{Where: l.program.Where(node), What: name + " on a number", Fix: "JavaScript uses locale-sensitive number formatting; use toString for deterministic formatting"}
++		return nil, true, &Refused{Where: l.program.Where(node), What: name + " on a number", Fix: ""}
+ 	}
+ 	if name == "toLocaleString" && of == ir.Array {
+ 		element, err := l.elementType(receiver)

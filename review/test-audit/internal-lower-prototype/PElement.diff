@@ -1,0 +1,12 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1783,6 +1783,9 @@
+ // elementAccess lowers array[index], string[index], and tuple[index] with a constant index: the
+ // tuple's field of that name.
+ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
++	emptyAnswer := true
++	if emptyAnswer { return nil, nil }
++
+ 	access := node.AsElementAccessExpression()
+ 	index := ast.SkipParentheses(access.ArgumentExpression)
+ 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {

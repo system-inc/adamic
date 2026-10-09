@@ -1,0 +1,22 @@
+{
+  "TestInheritedLibraryReadsNeverLoadOwnFields": 3.226,
+  "TestPrototypeMethodsAreRefusedWithReasons": 0.322,
+  "TestNullishPrototypeReadsAreRejectedByChecker": 0.738,
+  "TestPrototypeHazardsBehindObjectViewsAreNotYet": 0.311,
+  "TestUnrepresentedPrototypeCallsAreNotYet": 0.232,
+  "TestIsPrototypeOfReadsExplainThePrototypeRefusal": 0.068,
+  "TestProvenRelationsRefuse": 0.307,
+  "TestProvenRelationsErase": 0.103,
+  "TestReadinessElisionRequiresDominatingAssignment": 0.354,
+  "TestRegExpNativeRefusals": 0.148,
+  "TestRegExpSourceNode": 0.035,
+  "TestRepresentationClockSourceCheckedTypes": 0.038,
+  "TestSuppressionDirectivesAreRefused": 0.394,
+  "TestSuppressionDirectiveSoundNeighbors": 0.168,
+  "TestCheckedCastProofAndElision": 0.149,
+  "TestDefaultTaggedInterfaceAdmission": 0.286,
+  "TestDefaultTaggedInterfaceNeedsNoFlag": 0.04,
+  "TestNumericEnumsAreOpen": 0.248,
+  "TestPredicateOverloadRuntime": 5.094,
+  "TestUncheckableCastsStayRefused": 0.317
+}

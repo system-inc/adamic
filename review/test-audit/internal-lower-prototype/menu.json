@@ -1,0 +1,182 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/prototype.go",
+    "line": 41,
+    "old": "if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {",
+    "new": "if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {",
+    "kind": "flip condition",
+    "change": "invert inherited-library declaration recognition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/prototype.go",
+    "line": 71,
+    "old": "if name == \"isPrototypeOf\" {\n\t\treturn &Refused",
+    "new": "if name == \"constructor\" {\n\t\treturn &Refused",
+    "kind": "change constant",
+    "change": "select constructor instead of isPrototypeOf diagnostic"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/prototype.go",
+    "line": 91,
+    "old": "if name == \"isPrototypeOf\" {\n\t\treturn nil, true, &Refused",
+    "new": "if name != \"isPrototypeOf\" {\n\t\treturn nil, true, &Refused",
+    "kind": "flip condition",
+    "change": "invert prototype-chain call refusal"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/prototype.go",
+    "line": 264,
+    "old": "return reason\n}",
+    "new": "return \"\"\n}",
+    "kind": "change constant",
+    "change": "discard whole-program hazard result"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/prototype.go",
+    "line": 151,
+    "old": "} else if result != of {",
+    "new": "} else if result == of {",
+    "kind": "flip condition",
+    "change": "invert valueOf representation compatibility"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/prototype.go",
+    "line": 110,
+    "old": "JavaScript uses locale-sensitive number formatting; use toString for deterministic formatting",
+    "new": "",
+    "kind": "change constant",
+    "change": "clear locale-sensitive number repair"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/object.go",
+    "line": 382,
+    "old": "if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name)",
+    "new": "if !l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name)",
+    "kind": "flip condition",
+    "change": "invert property inherited guard"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/object.go",
+    "line": 1788,
+    "old": "if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text())",
+    "new": "if !l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text())",
+    "kind": "flip condition",
+    "change": "invert element inherited guard"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/expression.go",
+    "line": 83,
+    "old": "\"RegExpIndicesArray\")):\n\t\treturn ir.Array, true",
+    "new": "\"RegExpIndicesArray\")):\n\t\treturn ir.Array, false",
+    "kind": "change constant",
+    "change": "mark array representation unknown"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/expression.go",
+    "line": 95,
+    "old": "// An object with call signatures is a function, held as a closure.\n\t\treturn ir.Closure, true",
+    "new": "// An object with call signatures is a function, held as a closure.\n\t\treturn ir.Closure, false",
+    "kind": "change constant",
+    "change": "mark callable representation unknown"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/proven_relations.go",
+    "line": 22,
+    "old": "field != \"\" {\n\t\treturn refuse(\"optional field \"+field",
+    "new": "field == \"\" {\n\t\treturn refuse(\"optional field \"+field",
+    "kind": "flip condition",
+    "change": "invert optional relation failure"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/proven_relations.go",
+    "line": 25,
+    "old": "\tif mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {\n\t\treturn refuse(\"nominal ancestry for \"+l.checker.TypeToString(mismatch), \"construct that class or a subclass; use an interface for structural values (adamic/nominal-class)\")\n\t}\n",
+    "new": "",
+    "kind": "drop statement",
+    "change": "drop nominal relation refusal block"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/non_null.go",
+    "line": 114,
+    "old": "counts.Checked++",
+    "new": "counts.Checked += 2",
+    "kind": "change constant",
+    "change": "double eager assertion count"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/refusals.go",
+    "line": 22,
+    "old": "write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "new": "",
+    "kind": "change constant",
+    "change": "clear non-null repair"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/refusals.go",
+    "line": 42,
+    "old": "if len(module.CommentDirectives) > 0 {",
+    "new": "if len(module.CommentDirectives) > 1 {",
+    "kind": "off-by-one bound",
+    "change": "require two suppression directives"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/refusals.go",
+    "line": 49,
+    "old": "What: name + \" suppression directive\", Fix: \"remove it and fix the type error\"",
+    "new": "What: name + \" suppression directive\", Fix: \"\"",
+    "kind": "change constant",
+    "change": "clear suppression repair"
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/regexp.go",
+    "line": 32,
+    "old": "if len(args) > 2 {",
+    "new": "if len(args) > 0 {",
+    "kind": "change constant",
+    "change": "reject any RegExp constructor argument"
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/regexp.go",
+    "line": 222,
+    "old": "return \"(?:)\"",
+    "new": "return \"()\"",
+    "kind": "change constant",
+    "change": "change empty RegExp source"
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/regexp.go",
+    "line": 264,
+    "old": "if c == '/' && !escaped && depth == 0 {",
+    "new": "if c == '/' && !escaped && depth > 0 {",
+    "kind": "flip condition",
+    "change": "invert slash character-class condition"
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/regexp.go",
+    "line": 225,
+    "old": "escaped, sets := false, strings.Contains(flags, \"v\")",
+    "new": "escaped, sets := false, strings.Contains(flags, \"u\")",
+    "kind": "change constant",
+    "change": "use u for nested character sets"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -81,7 +81,7 @@
+ 	case flags&checker.TypeFlagsBooleanLike != 0:
+ 		return ir.Boolean, true
+ 	case flags&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
+-		return ir.Array, true
++		return ir.Array, false
+ 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+ 		// A Set is held as a Map whose values aren't used (set.go).
+ 		return ir.Map, true

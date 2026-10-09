@@ -1,0 +1,745 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverprofile=/workspace/adamic/review/test-audit/internal-lower-prototype/slice.cover",
+      "./internal/lower/",
+      "-run",
+      "^(TestInheritedLibraryReadsNeverLoadOwnFields|TestPrototypeMethodsAreRefusedWithReasons|TestNullishPrototypeReadsAreRejectedByChecker|TestPrototypeHazardsBehindObjectViewsAreNotYet|TestUnrepresentedPrototypeCallsAreNotYet|TestIsPrototypeOfReadsExplainThePrototypeRefusal|TestProvenRelationsRefuse|TestProvenRelationsErase|TestReadinessElisionRequiresDominatingAssignment|TestRegExpNativeRefusals|TestRegExpSourceNode|TestRepresentationClockSourceCheckedTypes|TestSuppressionDirectivesAreRefused|TestSuppressionDirectiveSoundNeighbors)$"
+    ],
+    "log": "slice-coverage.log",
+    "exit": 0,
+    "wall": 13.504227972999615
+  },
+  {
+    "command": [
+      "go",
+      "tool",
+      "cover",
+      "-func=/workspace/adamic/review/test-audit/internal-lower-prototype/slice.cover"
+    ],
+    "log": "functions-coverage.txt",
+    "exit": 0,
+    "wall": 0.11131155400016723
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritedLibraryReadsNeverLoadOwnFields$"
+    ],
+    "log": "timing-TestInheritedLibraryReadsNeverLoadOwnFields-1.log",
+    "exit": 0,
+    "wall": 5.021107512000071
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritedLibraryReadsNeverLoadOwnFields$"
+    ],
+    "log": "timing-TestInheritedLibraryReadsNeverLoadOwnFields-2.log",
+    "exit": 0,
+    "wall": 5.325637217999883
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritedLibraryReadsNeverLoadOwnFields$"
+    ],
+    "log": "timing-TestInheritedLibraryReadsNeverLoadOwnFields-3.log",
+    "exit": 0,
+    "wall": 5.129298269999708
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeMethodsAreRefusedWithReasons$"
+    ],
+    "log": "timing-TestPrototypeMethodsAreRefusedWithReasons-1.log",
+    "exit": 0,
+    "wall": 2.1272019610000825
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeMethodsAreRefusedWithReasons$"
+    ],
+    "log": "timing-TestPrototypeMethodsAreRefusedWithReasons-2.log",
+    "exit": 0,
+    "wall": 2.2347389880001174
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeMethodsAreRefusedWithReasons$"
+    ],
+    "log": "timing-TestPrototypeMethodsAreRefusedWithReasons-3.log",
+    "exit": 0,
+    "wall": 2.2198011899999983
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNullishPrototypeReadsAreRejectedByChecker$"
+    ],
+    "log": "timing-TestNullishPrototypeReadsAreRejectedByChecker-1.log",
+    "exit": 0,
+    "wall": 2.534512526999606
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNullishPrototypeReadsAreRejectedByChecker$"
+    ],
+    "log": "timing-TestNullishPrototypeReadsAreRejectedByChecker-2.log",
+    "exit": 0,
+    "wall": 2.617141389999688
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNullishPrototypeReadsAreRejectedByChecker$"
+    ],
+    "log": "timing-TestNullishPrototypeReadsAreRejectedByChecker-3.log",
+    "exit": 0,
+    "wall": 2.5598335489999045
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeHazardsBehindObjectViewsAreNotYet$"
+    ],
+    "log": "timing-TestPrototypeHazardsBehindObjectViewsAreNotYet-1.log",
+    "exit": 0,
+    "wall": 2.0809770460000436
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeHazardsBehindObjectViewsAreNotYet$"
+    ],
+    "log": "timing-TestPrototypeHazardsBehindObjectViewsAreNotYet-2.log",
+    "exit": 0,
+    "wall": 1.9595117049998407
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeHazardsBehindObjectViewsAreNotYet$"
+    ],
+    "log": "timing-TestPrototypeHazardsBehindObjectViewsAreNotYet-3.log",
+    "exit": 0,
+    "wall": 2.0266334739999365
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUnrepresentedPrototypeCallsAreNotYet$"
+    ],
+    "log": "timing-TestUnrepresentedPrototypeCallsAreNotYet-1.log",
+    "exit": 0,
+    "wall": 2.0782728170001974
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUnrepresentedPrototypeCallsAreNotYet$"
+    ],
+    "log": "timing-TestUnrepresentedPrototypeCallsAreNotYet-2.log",
+    "exit": 0,
+    "wall": 2.0441027159999976
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUnrepresentedPrototypeCallsAreNotYet$"
+    ],
+    "log": "timing-TestUnrepresentedPrototypeCallsAreNotYet-3.log",
+    "exit": 0,
+    "wall": 2.1207046639997316
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestIsPrototypeOfReadsExplainThePrototypeRefusal$"
+    ],
+    "log": "timing-TestIsPrototypeOfReadsExplainThePrototypeRefusal-1.log",
+    "exit": 0,
+    "wall": 1.892052369999874
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestIsPrototypeOfReadsExplainThePrototypeRefusal$"
+    ],
+    "log": "timing-TestIsPrototypeOfReadsExplainThePrototypeRefusal-2.log",
+    "exit": 0,
+    "wall": 1.8473423229997934
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestIsPrototypeOfReadsExplainThePrototypeRefusal$"
+    ],
+    "log": "timing-TestIsPrototypeOfReadsExplainThePrototypeRefusal-3.log",
+    "exit": 0,
+    "wall": 1.8071523839998918
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsRefuse$"
+    ],
+    "log": "timing-TestProvenRelationsRefuse-1.log",
+    "exit": 0,
+    "wall": 2.1591962630000126
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsRefuse$"
+    ],
+    "log": "timing-TestProvenRelationsRefuse-2.log",
+    "exit": 0,
+    "wall": 2.284462543000245
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsRefuse$"
+    ],
+    "log": "timing-TestProvenRelationsRefuse-3.log",
+    "exit": 0,
+    "wall": 2.218934890000128
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsErase$"
+    ],
+    "log": "timing-TestProvenRelationsErase-1.log",
+    "exit": 0,
+    "wall": 1.963060024999777
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsErase$"
+    ],
+    "log": "timing-TestProvenRelationsErase-2.log",
+    "exit": 0,
+    "wall": 1.9353430720002507
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsErase$"
+    ],
+    "log": "timing-TestProvenRelationsErase-3.log",
+    "exit": 0,
+    "wall": 1.9487179340003422
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestReadinessElisionRequiresDominatingAssignment$"
+    ],
+    "log": "timing-TestReadinessElisionRequiresDominatingAssignment-1.log",
+    "exit": 0,
+    "wall": 2.1680882119999296
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestReadinessElisionRequiresDominatingAssignment$"
+    ],
+    "log": "timing-TestReadinessElisionRequiresDominatingAssignment-2.log",
+    "exit": 0,
+    "wall": 2.2177777560000322
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestReadinessElisionRequiresDominatingAssignment$"
+    ],
+    "log": "timing-TestReadinessElisionRequiresDominatingAssignment-3.log",
+    "exit": 0,
+    "wall": 2.147183710000263
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpNativeRefusals$"
+    ],
+    "log": "timing-TestRegExpNativeRefusals-1.log",
+    "exit": 0,
+    "wall": 2.1303035089999867
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpNativeRefusals$"
+    ],
+    "log": "timing-TestRegExpNativeRefusals-2.log",
+    "exit": 0,
+    "wall": 1.9307516419999047
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpNativeRefusals$"
+    ],
+    "log": "timing-TestRegExpNativeRefusals-3.log",
+    "exit": 0,
+    "wall": 2.033814588000041
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpSourceNode$"
+    ],
+    "log": "timing-TestRegExpSourceNode-1.log",
+    "exit": 0,
+    "wall": 1.8295369739998932
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpSourceNode$"
+    ],
+    "log": "timing-TestRegExpSourceNode-2.log",
+    "exit": 0,
+    "wall": 1.9784000270001343
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpSourceNode$"
+    ],
+    "log": "timing-TestRegExpSourceNode-3.log",
+    "exit": 0,
+    "wall": 1.8512850420001996
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$"
+    ],
+    "log": "timing-TestRepresentationClockSourceCheckedTypes-1.log",
+    "exit": 0,
+    "wall": 2.0199414740000066
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$"
+    ],
+    "log": "timing-TestRepresentationClockSourceCheckedTypes-2.log",
+    "exit": 0,
+    "wall": 1.8211652869999853
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$"
+    ],
+    "log": "timing-TestRepresentationClockSourceCheckedTypes-3.log",
+    "exit": 0,
+    "wall": 1.9158204659997864
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectivesAreRefused$"
+    ],
+    "log": "timing-TestSuppressionDirectivesAreRefused-1.log",
+    "exit": 0,
+    "wall": 2.1450279939999746
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectivesAreRefused$"
+    ],
+    "log": "timing-TestSuppressionDirectivesAreRefused-2.log",
+    "exit": 0,
+    "wall": 2.396603786999549
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectivesAreRefused$"
+    ],
+    "log": "timing-TestSuppressionDirectivesAreRefused-3.log",
+    "exit": 0,
+    "wall": 2.455462690999866
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectiveSoundNeighbors$"
+    ],
+    "log": "timing-TestSuppressionDirectiveSoundNeighbors-1.log",
+    "exit": 0,
+    "wall": 1.8918437809998068
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectiveSoundNeighbors$"
+    ],
+    "log": "timing-TestSuppressionDirectiveSoundNeighbors-2.log",
+    "exit": 0,
+    "wall": 1.9497869760002686
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectiveSoundNeighbors$"
+    ],
+    "log": "timing-TestSuppressionDirectiveSoundNeighbors-3.log",
+    "exit": 0,
+    "wall": 1.9143871679998483
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -93,7 +93,7 @@
+ 		return ir.Object, true
+ 	case flags&checker.TypeFlagsObject != 0:
+ 		// An object with call signatures is a function, held as a closure.
+-		return ir.Closure, true
++		return ir.Closure, false
+ 	case flags&checker.TypeFlagsUnion != 0:
+ 		if l.includesNull(proven) && !dynamicObjectType(proven) {
+ 			// Preserve the area's nullable reference and RegExp protocols. Only

@@ -1,0 +1,12 @@
+--- a/internal/lower/proven_relations.go
++++ b/internal/lower/proven_relations.go
+@@ -21,9 +21,6 @@
+ 	}
+ 	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
+ 		return refuse("optional field "+field+" has no proven compatible presence/type", "keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)")
+-	}
+-	if mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {
+-		return refuse("nominal ancestry for "+l.checker.TypeToString(mismatch), "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)")
+ 	}
+ 	return nil
+ }

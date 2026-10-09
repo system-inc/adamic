@@ -1,0 +1,42 @@
+{
+  "PLower": {
+    "TestPrototypeMethodsAreRefusedWithReasons": true,
+    "TestPrototypeHazardsBehindObjectViewsAreNotYet": true,
+    "TestUnrepresentedPrototypeCallsAreNotYet": true,
+    "TestIsPrototypeOfReadsExplainThePrototypeRefusal": true,
+    "TestProvenRelationsRefuse": true,
+    "TestProvenRelationsErase": true,
+    "TestReadinessElisionRequiresDominatingAssignment": true,
+    "TestRegExpNativeRefusals": true,
+    "TestSuppressionDirectivesAreRefused": true,
+    "TestSuppressionDirectiveSoundNeighbors": false
+  },
+  "PProperty": {
+    "TestInheritedLibraryReadsNeverLoadOwnFields": true
+  },
+  "PElement": {
+    "TestInheritedLibraryReadsNeverLoadOwnFields": true
+  },
+  "PRepresentation": {
+    "TestRepresentationClockSourceCheckedTypes": true
+  },
+  "PRegexSource": {
+    "TestRegExpSourceNode": true
+  },
+  "M04": {
+    "TestInheritedLibraryReadsNeverLoadOwnFields": false,
+    "TestPrototypeMethodsAreRefusedWithReasons": false,
+    "TestNullishPrototypeReadsAreRejectedByChecker": false,
+    "TestPrototypeHazardsBehindObjectViewsAreNotYet": true,
+    "TestUnrepresentedPrototypeCallsAreNotYet": false,
+    "TestIsPrototypeOfReadsExplainThePrototypeRefusal": false,
+    "TestProvenRelationsRefuse": false,
+    "TestProvenRelationsErase": false,
+    "TestReadinessElisionRequiresDominatingAssignment": false,
+    "TestRegExpNativeRefusals": false,
+    "TestRegExpSourceNode": false,
+    "TestRepresentationClockSourceCheckedTypes": false,
+    "TestSuppressionDirectivesAreRefused": false,
+    "TestSuppressionDirectiveSoundNeighbors": false
+  }
+}

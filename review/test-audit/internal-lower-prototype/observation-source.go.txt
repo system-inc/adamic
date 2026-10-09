@@ -1,0 +1,12 @@
+package lower
+import("testing";"os/exec")
+func TestU043SourceObservation(t *testing.T) {
+ got:=escapeRegexSource("[[/]/", "u")
+ node,err:=exec.Command("node","-e","console.log(new RegExp('[[/]/','u').source)").CombinedOutput()
+ if err!=nil {t.Fatalf("Node: %v %s",err,node)}
+ t.Logf("input=%q flags=u lowering=%q Node=%q", "[[/]/", got, string(node))
+}
+func TestU043RefusalObservation(t *testing.T) {
+ _,err:=lowerSource(t,"function made(pattern: string): RegExp { return new RegExp(pattern); }")
+ t.Logf("refusal=%v",err)
+}

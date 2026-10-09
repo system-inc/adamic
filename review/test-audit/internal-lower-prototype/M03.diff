@@ -1,0 +1,11 @@
+--- a/internal/lower/prototype.go
++++ b/internal/lower/prototype.go
+@@ -88,7 +88,7 @@
+ 	default:
+ 		return nil, false, nil
+ 	}
+-	if name == "isPrototypeOf" {
++	if name != "isPrototypeOf" {
+ 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
+ 	}
+ 	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Error") {

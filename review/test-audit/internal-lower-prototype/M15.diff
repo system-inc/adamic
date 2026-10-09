@@ -1,0 +1,11 @@
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -39,7 +39,7 @@
+ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 	// Use the parser's directives, which also recognize the block forms honored by the checker.
+ 	// Text in a string or a prose comment never enters this list.
+-	if len(module.CommentDirectives) > 0 {
++	if len(module.CommentDirectives) > 1 {
+ 		directive := module.CommentDirectives[0]
+ 		name := "@ts-ignore"
+ 		if directive.Kind == ast.CommentDirectiveKindExpectError {

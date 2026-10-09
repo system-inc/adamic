@@ -1,0 +1,11 @@
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -19,7 +19,7 @@
+ // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
+ // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
+ var refusals = map[ast.Kind]refusal{
+-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
++	ast.KindNonNullExpression: {"the non-null assertion !", ""},
+ 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
+ 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
+ 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},

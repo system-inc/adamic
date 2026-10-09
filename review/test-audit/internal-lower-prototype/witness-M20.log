@@ -1,0 +1,5 @@
+=== RUN   TestU043SourceObservation
+    u043_observation_test.go:7: input="[[/]/" flags=u lowering="[[/]/" Node="[[/]\\/\n"
+--- PASS: TestU043SourceObservation (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.034s

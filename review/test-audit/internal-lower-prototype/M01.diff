@@ -1,0 +1,11 @@
+--- a/internal/lower/prototype.go
++++ b/internal/lower/prototype.go
+@@ -38,7 +38,7 @@
+ 	}
+ 	for _, root := range l.checker.GetRootSymbols(symbol) {
+ 		for _, declaration := range root.Declarations {
+-			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
++			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+ 				return true
+ 			}
+ 		}

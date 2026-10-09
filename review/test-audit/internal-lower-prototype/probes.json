@@ -1,0 +1,61 @@
+[
+  {
+    "id": "PLower",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "signature": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "answer": "return nil, nil",
+    "rows": [
+      "TestPrototypeMethodsAreRefusedWithReasons",
+      "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+      "TestUnrepresentedPrototypeCallsAreNotYet",
+      "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+      "TestProvenRelationsRefuse",
+      "TestProvenRelationsErase",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestRegExpNativeRefusals",
+      "TestSuppressionDirectivesAreRefused",
+      "TestSuppressionDirectiveSoundNeighbors"
+    ]
+  },
+  {
+    "id": "PProperty",
+    "file": "internal/lower/object.go",
+    "line": 341,
+    "signature": "func (l *lowering) property(node *ast.Node) (ir.Expression, error) {",
+    "answer": "return nil, nil",
+    "rows": [
+      "TestInheritedLibraryReadsNeverLoadOwnFields"
+    ]
+  },
+  {
+    "id": "PElement",
+    "file": "internal/lower/object.go",
+    "line": 1785,
+    "signature": "func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {",
+    "answer": "return nil, nil",
+    "rows": [
+      "TestInheritedLibraryReadsNeverLoadOwnFields"
+    ]
+  },
+  {
+    "id": "PRepresentation",
+    "file": "internal/lower/expression.go",
+    "line": 43,
+    "signature": "func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {",
+    "answer": "return 0, false",
+    "rows": [
+      "TestRepresentationClockSourceCheckedTypes"
+    ]
+  },
+  {
+    "id": "PRegexSource",
+    "file": "internal/lower/regexp.go",
+    "line": 220,
+    "signature": "func escapeRegexSource(pattern, flags string) string {",
+    "answer": "return \"\"",
+    "rows": [
+      "TestRegExpSourceNode"
+    ]
+  }
+]

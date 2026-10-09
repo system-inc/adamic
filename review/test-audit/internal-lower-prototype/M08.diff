@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1785,7 +1785,7 @@
+ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
+ 	access := node.AsElementAccessExpression()
+ 	index := ast.SkipParentheses(access.ArgumentExpression)
+-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
++	if !l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
+ 		return nil, l.prototypeRead(node, index.Text())
+ 	}
+ 	optional := access.QuestionDotToken != nil

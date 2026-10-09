@@ -1,0 +1,11 @@
+--- a/internal/lower/proven_relations.go
++++ b/internal/lower/proven_relations.go
+@@ -19,7 +19,7 @@
+ 	if found := l.freshOrWidened(expression, source, target); found != nil {
+ 		return l.wideningRefusal(where, source, target, found)
+ 	}
+-	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
++	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field == "" {
+ 		return refuse("optional field "+field+" has no proven compatible presence/type", "keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)")
+ 	}
+ 	if mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {

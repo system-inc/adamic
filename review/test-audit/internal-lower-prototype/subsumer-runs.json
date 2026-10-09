@@ -1,0 +1,308 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCheckedCastProofAndElision$"
+    ],
+    "log": "timing-TestCheckedCastProofAndElision-1.log",
+    "exit": 0,
+    "wall": 2.127443115999995
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCheckedCastProofAndElision$"
+    ],
+    "log": "timing-TestCheckedCastProofAndElision-2.log",
+    "exit": 0,
+    "wall": 2.084165576000032
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCheckedCastProofAndElision$"
+    ],
+    "log": "timing-TestCheckedCastProofAndElision-3.log",
+    "exit": 0,
+    "wall": 1.9995622619999267
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceAdmission$"
+    ],
+    "log": "timing-TestDefaultTaggedInterfaceAdmission-1.log",
+    "exit": 0,
+    "wall": 2.2166483839996545
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceAdmission$"
+    ],
+    "log": "timing-TestDefaultTaggedInterfaceAdmission-2.log",
+    "exit": 0,
+    "wall": 2.2432601010000326
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceAdmission$"
+    ],
+    "log": "timing-TestDefaultTaggedInterfaceAdmission-3.log",
+    "exit": 0,
+    "wall": 2.3561283030003324
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceNeedsNoFlag$"
+    ],
+    "log": "timing-TestDefaultTaggedInterfaceNeedsNoFlag-1.log",
+    "exit": 0,
+    "wall": 2.2514642359997197
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceNeedsNoFlag$"
+    ],
+    "log": "timing-TestDefaultTaggedInterfaceNeedsNoFlag-2.log",
+    "exit": 0,
+    "wall": 2.017484114999661
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceNeedsNoFlag$"
+    ],
+    "log": "timing-TestDefaultTaggedInterfaceNeedsNoFlag-3.log",
+    "exit": 0,
+    "wall": 1.9841069779999998
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNumericEnumsAreOpen$"
+    ],
+    "log": "timing-TestNumericEnumsAreOpen-1.log",
+    "exit": 0,
+    "wall": 2.195530897000026
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNumericEnumsAreOpen$"
+    ],
+    "log": "timing-TestNumericEnumsAreOpen-2.log",
+    "exit": 0,
+    "wall": 2.1103629720000754
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNumericEnumsAreOpen$"
+    ],
+    "log": "timing-TestNumericEnumsAreOpen-3.log",
+    "exit": 0,
+    "wall": 2.1366378789998635
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPredicateOverloadRuntime$"
+    ],
+    "log": "timing-TestPredicateOverloadRuntime-1.log",
+    "exit": 0,
+    "wall": 6.884554679999837
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPredicateOverloadRuntime$"
+    ],
+    "log": "timing-TestPredicateOverloadRuntime-2.log",
+    "exit": 0,
+    "wall": 7.216543667999758
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPredicateOverloadRuntime$"
+    ],
+    "log": "timing-TestPredicateOverloadRuntime-3.log",
+    "exit": 0,
+    "wall": 6.922660705999988
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUncheckableCastsStayRefused$"
+    ],
+    "log": "timing-TestUncheckableCastsStayRefused-1.log",
+    "exit": 0,
+    "wall": 2.248407430000043
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUncheckableCastsStayRefused$"
+    ],
+    "log": "timing-TestUncheckableCastsStayRefused-2.log",
+    "exit": 0,
+    "wall": 2.2236898679998376
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUncheckableCastsStayRefused$"
+    ],
+    "log": "timing-TestUncheckableCastsStayRefused-3.log",
+    "exit": 0,
+    "wall": 2.180637570000272
+  }
+]

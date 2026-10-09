@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:40:59.824677427Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:40:59.831870818Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T10:40:59.831943859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== RUN   TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:59.833505946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== PAUSE TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:59.833520268Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T10:40:59.833523613Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T10:40:59.833525606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== CONT  TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:59.861437529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"    regexp_test.go:24: expected loud NotYet for function made(pattern: string): RegExp { return new RegExp(pattern); }: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:40:59.861516929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"--- FAIL: TestRegExpNativeRefusals (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:59.861526493Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Elapsed":0.03}
+{"Time":"2026-10-09T10:40:59.861554706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:59.86293217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.038s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:59.863054715Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.038}

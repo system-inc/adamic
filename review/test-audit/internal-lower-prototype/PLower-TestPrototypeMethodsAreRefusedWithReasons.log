@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:40:45.40307998Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:40:45.410346866Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T10:40:45.41041581Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== RUN   TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:45.410439095Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== PAUSE TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:45.410441449Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T10:40:45.410443933Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T10:40:45.410445805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== CONT  TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:45.442826393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"    prototype_test.go:97: got \u003cnil\u003e, want a reasoned refusal\n","OutputType":"error"}
+{"Time":"2026-10-09T10:40:45.44295017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"--- FAIL: TestPrototypeMethodsAreRefusedWithReasons (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:45.442958242Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Elapsed":0.03}
+{"Time":"2026-10-09T10:40:45.442988257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:45.444276422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:45.444308921Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.041}

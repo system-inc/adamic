@@ -1,0 +1,11 @@
+--- a/internal/lower/prototype.go
++++ b/internal/lower/prototype.go
+@@ -148,7 +148,7 @@
+ 	if name == "valueOf" {
+ 		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result == ir.Union && of == ir.Object {
+ 			return fit(value, result), true, nil
+-		} else if result != of {
++		} else if result == of {
+ 			return nil, true, l.notYet(node, "valueOf whose library result type erases the "+typeName(of)+" representation to Object (keeping or returning that result needs a tagged object view)")
+ 		}
+ 		switch of {

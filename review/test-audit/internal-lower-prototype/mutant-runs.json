@@ -1,0 +1,1045 @@
+[
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M01-vet.log",
+    "exit": 0,
+    "wall": 0.12611202099969887,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M02-vet.log",
+    "exit": 0,
+    "wall": 0.12831691300016246,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M03-vet.log",
+    "exit": 0,
+    "wall": 0.1331710210001802,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M04-vet.log",
+    "exit": 0,
+    "wall": 0.14505247399984,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M05-vet.log",
+    "exit": 0,
+    "wall": 0.15883098299991616,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M06-vet.log",
+    "exit": 0,
+    "wall": 0.11830487999986872,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M07-vet.log",
+    "exit": 0,
+    "wall": 0.13878808499976003,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M08-vet.log",
+    "exit": 0,
+    "wall": 0.12401518699971348,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M09-vet.log",
+    "exit": 0,
+    "wall": 0.12265665599989006,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M10-vet.log",
+    "exit": 0,
+    "wall": 0.11536053400004675,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M11-vet.log",
+    "exit": 0,
+    "wall": 0.11672721800005093,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M12-vet.log",
+    "exit": 0,
+    "wall": 0.11641011900019294,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M13-vet.log",
+    "exit": 0,
+    "wall": 0.11585293799998908,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M14-vet.log",
+    "exit": 0,
+    "wall": 0.11696584799983611,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M15-vet.log",
+    "exit": 0,
+    "wall": 0.1101860610001495,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M16-vet.log",
+    "exit": 0,
+    "wall": 0.12389041300002646,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M17-vet.log",
+    "exit": 0,
+    "wall": 0.1172125309999501,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M18-vet.log",
+    "exit": 0,
+    "wall": 0.1414620030000151,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M19-vet.log",
+    "exit": 0,
+    "wall": 0.11858488200005013,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M20-vet.log",
+    "exit": 0,
+    "wall": 0.12913695499992173,
+    "environment": {}
+  },
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "internal/lower/prototype.go",
+      "internal/lower/object.go",
+      "internal/lower/expression.go",
+      "internal/lower/proven_relations.go",
+      "internal/lower/non_null.go",
+      "internal/lower/refusals.go",
+      "internal/lower/regexp.go",
+      "internal/lower/lower.go",
+      "internal/lower/u043_mutant.go"
+    ],
+    "log": "switch-gofmt.log",
+    "exit": 0,
+    "wall": 0.015289550000034069,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u043-test",
+      "./internal/lower/"
+    ],
+    "log": "switch-build.log",
+    "exit": 0,
+    "wall": 8.250688137999987,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M01.log",
+    "exit": 1,
+    "wall": 29.092237869999735,
+    "environment": {
+      "ADAMIC_MUTANT": "M01",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M01"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M02.log",
+    "exit": 1,
+    "wall": 28.23072930699982,
+    "environment": {
+      "ADAMIC_MUTANT": "M02",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M02"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M03.log",
+    "exit": 1,
+    "wall": 25.365556118999848,
+    "environment": {
+      "ADAMIC_MUTANT": "M03",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M03"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M04.log",
+    "exit": 1,
+    "wall": 27.563134677000107,
+    "environment": {
+      "ADAMIC_MUTANT": "M04",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M04"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M05.log",
+    "exit": 1,
+    "wall": 25.90598606499998,
+    "environment": {
+      "ADAMIC_MUTANT": "M05",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M05"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M06.log",
+    "exit": 1,
+    "wall": 26.40653817800012,
+    "environment": {
+      "ADAMIC_MUTANT": "M06",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M06"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M07.log",
+    "exit": 1,
+    "wall": 24.75435391899964,
+    "environment": {
+      "ADAMIC_MUTANT": "M07",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M07"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M08.log",
+    "exit": 1,
+    "wall": 27.33212932499964,
+    "environment": {
+      "ADAMIC_MUTANT": "M08",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M08"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M09.log",
+    "exit": 1,
+    "wall": 29.38328706700031,
+    "environment": {
+      "ADAMIC_MUTANT": "M09",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M09"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M10.log",
+    "exit": 1,
+    "wall": 29.064772898999763,
+    "environment": {
+      "ADAMIC_MUTANT": "M10",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M10"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M11.log",
+    "exit": 1,
+    "wall": 29.6714268249998,
+    "environment": {
+      "ADAMIC_MUTANT": "M11",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M11"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M12.log",
+    "exit": 1,
+    "wall": 27.264918049000244,
+    "environment": {
+      "ADAMIC_MUTANT": "M12",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M12"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M13.log",
+    "exit": 1,
+    "wall": 28.620412848999877,
+    "environment": {
+      "ADAMIC_MUTANT": "M13",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M13"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M14.log",
+    "exit": 1,
+    "wall": 28.60007495200034,
+    "environment": {
+      "ADAMIC_MUTANT": "M14",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M14"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M15.log",
+    "exit": 1,
+    "wall": 29.354927274000147,
+    "environment": {
+      "ADAMIC_MUTANT": "M15",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M15"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M16.log",
+    "exit": 1,
+    "wall": 27.939902235999853,
+    "environment": {
+      "ADAMIC_MUTANT": "M16",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M16"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M17.log",
+    "exit": 1,
+    "wall": 26.855626855000082,
+    "environment": {
+      "ADAMIC_MUTANT": "M17",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M17"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M18.log",
+    "exit": 1,
+    "wall": 27.648537008999938,
+    "environment": {
+      "ADAMIC_MUTANT": "M18",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M18"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M19.log",
+    "exit": 1,
+    "wall": 28.023606055000073,
+    "environment": {
+      "ADAMIC_MUTANT": "M19",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M19"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "log": "M20.log",
+    "exit": 0,
+    "wall": 27.95155203000013,
+    "environment": {
+      "ADAMIC_MUTANT": "M20",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/M20"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeMethodsAreRefusedWithReasons$"
+    ],
+    "log": "PLower-TestPrototypeMethodsAreRefusedWithReasons.log",
+    "exit": 1,
+    "wall": 1.930007668000144,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestPrototypeHazardsBehindObjectViewsAreNotYet$"
+    ],
+    "log": "PLower-TestPrototypeHazardsBehindObjectViewsAreNotYet.log",
+    "exit": 1,
+    "wall": 2.22324715700006,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUnrepresentedPrototypeCallsAreNotYet$"
+    ],
+    "log": "PLower-TestUnrepresentedPrototypeCallsAreNotYet.log",
+    "exit": 1,
+    "wall": 2.0718057560002308,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestIsPrototypeOfReadsExplainThePrototypeRefusal$"
+    ],
+    "log": "PLower-TestIsPrototypeOfReadsExplainThePrototypeRefusal.log",
+    "exit": 1,
+    "wall": 1.9358265900000333,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsRefuse$"
+    ],
+    "log": "PLower-TestProvenRelationsRefuse.log",
+    "exit": 1,
+    "wall": 2.122940101999575,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestProvenRelationsErase$"
+    ],
+    "log": "PLower-TestProvenRelationsErase.log",
+    "exit": 1,
+    "wall": 1.9669640560000516,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestReadinessElisionRequiresDominatingAssignment$"
+    ],
+    "log": "PLower-TestReadinessElisionRequiresDominatingAssignment.log",
+    "exit": 1,
+    "wall": 2.253943448999962,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpNativeRefusals$"
+    ],
+    "log": "PLower-TestRegExpNativeRefusals.log",
+    "exit": 1,
+    "wall": 1.8398161580003034,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectivesAreRefused$"
+    ],
+    "log": "PLower-TestSuppressionDirectivesAreRefused.log",
+    "exit": 1,
+    "wall": 2.310634114000095,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestSuppressionDirectiveSoundNeighbors$"
+    ],
+    "log": "PLower-TestSuppressionDirectiveSoundNeighbors.log",
+    "exit": 0,
+    "wall": 2.1133898260000024,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritedLibraryReadsNeverLoadOwnFields$"
+    ],
+    "log": "PProperty-TestInheritedLibraryReadsNeverLoadOwnFields.log",
+    "exit": 1,
+    "wall": 5.503719033999914,
+    "environment": {
+      "ADAMIC_MUTANT": "PProperty",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PProperty"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritedLibraryReadsNeverLoadOwnFields$"
+    ],
+    "log": "PElement-TestInheritedLibraryReadsNeverLoadOwnFields.log",
+    "exit": 1,
+    "wall": 4.970085035000011,
+    "environment": {
+      "ADAMIC_MUTANT": "PElement",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PElement"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$"
+    ],
+    "log": "PRepresentation-TestRepresentationClockSourceCheckedTypes.log",
+    "exit": 1,
+    "wall": 2.2354401249999682,
+    "environment": {
+      "ADAMIC_MUTANT": "PRepresentation",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PRepresentation"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestRegExpSourceNode$"
+    ],
+    "log": "PRegexSource-TestRegExpSourceNode.log",
+    "exit": 1,
+    "wall": 2.800165148999895,
+    "environment": {
+      "ADAMIC_MUTANT": "PRegexSource",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u043/cache/PRegexSource"
+    }
+  }
+]

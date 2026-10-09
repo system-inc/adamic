@@ -1,0 +1,16 @@
+[
+  "TestInheritedLibraryReadsNeverLoadOwnFields",
+  "TestPrototypeMethodsAreRefusedWithReasons",
+  "TestNullishPrototypeReadsAreRejectedByChecker",
+  "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+  "TestUnrepresentedPrototypeCallsAreNotYet",
+  "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+  "TestProvenRelationsRefuse",
+  "TestProvenRelationsErase",
+  "TestReadinessElisionRequiresDominatingAssignment",
+  "TestRegExpNativeRefusals",
+  "TestRegExpSourceNode",
+  "TestRepresentationClockSourceCheckedTypes",
+  "TestSuppressionDirectivesAreRefused",
+  "TestSuppressionDirectiveSoundNeighbors"
+]

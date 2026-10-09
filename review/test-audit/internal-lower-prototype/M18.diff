@@ -1,0 +1,11 @@
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@ -219,7 +219,7 @@
+ // EscapeRegExpPattern preserves escapes already present in the pattern.
+ func escapeRegexSource(pattern, flags string) string {
+ 	if pattern == "" {
+-		return "(?:)"
++		return "()"
+ 	}
+ 	var result strings.Builder
+ 	escaped, sets := false, strings.Contains(flags, "v")

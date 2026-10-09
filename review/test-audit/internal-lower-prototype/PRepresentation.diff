@@ -1,0 +1,12 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -41,6 +41,9 @@
+ }
+ 
+ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
++	emptyAnswer := true
++	if emptyAnswer { return 0, false }
++
+ 	proven = l.concrete(proven)
+ 	if kind := l.typedArrayKind(proven); kind != 0 {
+ 		return kind, true

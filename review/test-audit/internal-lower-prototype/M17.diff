@@ -1,0 +1,11 @@
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@ -29,7 +29,7 @@
+ 		} else {
+ 			args = node.AsCallExpression().Arguments.Nodes
+ 		}
+-		if len(args) > 2 {
++		if len(args) > 0 {
+ 			return nil, l.notYet(node, "RegExp with more than two arguments")
+ 		}
+ 		if len(args) > 0 {

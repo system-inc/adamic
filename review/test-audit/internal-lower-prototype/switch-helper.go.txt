@@ -1,0 +1,6 @@
+package lower
+import "os"
+func auditMutant() string{return os.Getenv("ADAMIC_MUTANT")}
+func auditBool(id string,b bool)bool{if auditMutant()==id{return !b};return b}
+func auditChoice(id,a,b string)string{if auditMutant()==id{return a};return b}
+func auditInt(id string,a,b int)int{if auditMutant()==id{return a};return b}
