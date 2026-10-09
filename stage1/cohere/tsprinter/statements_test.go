@@ -2,11 +2,15 @@ package tsprinter
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -25,7 +29,19 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	if err := os.WriteFile(directory+"/overlay.json", overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+directory+"/overlay.json", "-run=^TestAdamicStatementCorpus$", "./internal/format/javascript")
+	oracleDir := statementProduct(t, statementInputs{
+		Name: "Go statement oracle", Files: []string{expressionSide, statementSide, root + "/cohere"},
+		Flags: []string{"test", "-c", "-overlay"}, Toolchain: "go",
+	}, func(dir string) error {
+		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+directory+"/overlay.json", "./internal/format/javascript")
+		command.Dir = root + "/cohere"
+		output, err := combinedOutput(command)
+		if err != nil {
+			return fmt.Errorf("%w: %s", err, output)
+		}
+		return nil
+	})
+	command := bounded(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=3h")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
 	if output, err := combinedOutput(command); err != nil {
@@ -55,65 +71,110 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
-// Not parallel: corpus and executable artifacts have caller-selected fixed directories.
+const testStatementsAgainstGoAndPrettierShards = 16
+
+// ADAMIC_TEST_SHARD=i/n runs the shards whose number modulo n is i;
+// unset runs all shards. Build products are prepared once and shared by leaves.
 func TestStatementsAgainstGoAndPrettier(t *testing.T) {
+	setup := time.Now()
+	cpu := statementCPU()
+	t.Cleanup(func() { t.Logf("CPU including builds: %.3fs", statementCPU()-cpu) })
 	cases, want, specs := statementCorpus(t)
+	shards := statementShards(t, cases, want, specs)
+	library := os.Getenv("ADAMIC_TS_PRETTIER")
+	if library == "" {
+		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+	}
 	port, _ := filepath.Abs("statementsMain.ts")
-	compare := func(name string, result run) {
-		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
+	files, err := filepath.Glob("*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	parserFiles, err := filepath.Glob("../../typescript/parser/*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files = append(files, parserFiles...)
+	var program *ir.Program
+	var code string
+	loweredDir := statementProduct(t, statementInputs{Name: "lowered program", Files: files, Toolchain: "Adamic Go checker/lowerer"}, func(dir string) error {
+		program = lowered(t, port)
+		code = native.C(program)
+		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(code), 0644); err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+	})
+	nativeDir := statementProduct(t, statementInputs{Name: "sanitized native", Files: []string{filepath.Join(loweredDir, "port.c")}, Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: "clang"}, func(dir string) error {
+		return native.Build(code, filepath.Join(dir, "port"), native.Options{Sanitize: true})
+	})
+	releaseDir := statementProduct(t, statementInputs{Name: "release native", Files: []string{filepath.Join(loweredDir, "port.c")}, Flags: native.Flags(native.Options{}), Toolchain: "clang"}, func(dir string) error {
+		return native.Build(code, filepath.Join(dir, "port"), native.Options{})
+	})
+	binary, release := filepath.Join(nativeDir, "port"), filepath.Join(releaseDir, "port")
+	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
+		if err := os.MkdirAll(keep, 0755); err != nil {
+			t.Fatal(err)
+		}
+		for name, source := range map[string]string{"port.c": filepath.Join(loweredDir, "port.c"), "port": release} {
+			data, err := os.ReadFile(source)
+			if err != nil {
+				t.Fatal(err)
+			}
+			mode := os.FileMode(0644)
+			if name == "port" {
+				mode = 0755
+			}
+			if err := os.WriteFile(filepath.Join(keep, name), data, mode); err != nil {
+				t.Fatal(err)
+			}
 		}
 	}
-	compare("Node", onNode(t, port, "--cases", cases, "80"))
-	program := lowered(t, port)
-	result, binary := natively(t, program, "--cases", cases, "80")
-	compare("native", result)
-	compare("backend", onJavaScriptBackend(t, program, "--cases", cases, "80"))
-	// These exact refusals are part of the file driver's contract.
 	gapInput := ">const x:number=1;\n>const {x}=value;\n>export const x=1;\n>if(x)f();\n>#!/usr/bin/env node\\nf();\n"
 	gapWant := "notyet\tvariable-types\nnotyet\tvariable-pattern\nnotyet\tvariable-modifiers\nnotyet\tIfStatement\nnotyet\tcomment-attachment\n"
 	gapPath := filepath.Join(t.TempDir(), "statement-gaps.txt")
 	if err := os.WriteFile(gapPath, []byte(gapInput), 0644); err != nil {
 		t.Fatal(err)
 	}
-	for _, side := range []struct {
-		name   string
-		result run
-	}{
-		{"Node gaps", onNode(t, port, "--cases", gapPath, "80")},
-		{"native gaps", execute(t, nil, binary, "--cases", gapPath, "80")},
-		{"backend gaps", onJavaScriptBackend(t, program, "--cases", gapPath, "80")},
-	} {
-		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != gapWant {
-			t.Fatalf("%s: %s stderr %s", side.name, side.result.stdout, side.result.stderr)
-		}
-	}
-
-	if report := leaks(t, program, binary, "--cases", cases, "80"); report != "" {
-		t.Fatal(report)
-	}
-	library := os.Getenv("ADAMIC_TS_PRETTIER")
-	if library == "" {
-		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
 	script, _ := filepath.Abs("testdata/expressions.mjs")
-	comparePrinterLibrary(t, "npm Prettier", execute(t, nil, "node", script, library, specs), specs, "statements", false)
 	embedded, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-	comparePrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", embedded, bundles, specs), specs, "statements", true)
-	release := filepath.Join(t.TempDir(), "release")
-	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+	backend := filepath.Join(loweredDir, "program.mjs")
+	selected := statementShardSelection(t)
+	t.Logf("setup including builds: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(want, "\n"), len(shards))
+	for number, shard := range shards {
+		if !selected(number) {
+			continue
 		}
-		release = filepath.Join(keep, "port")
-		if err := os.WriteFile(filepath.Join(keep, "port.c"), []byte(native.C(program)), 0644); err != nil {
-			t.Fatal(err)
-		}
+		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
+			t.Parallel()
+			compare := func(name string, result run) {
+				if err := statementDisagreement(name, result, shard.want, shard.labels); err != nil {
+					t.Fatal(err)
+				}
+			}
+			compare("Node", onNode(t, port, "--cases", shard.text, "80"))
+			compare("native", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.text, "80"))
+			compare("backend", onNode(t, backend, "--cases", shard.text, "80"))
+			for _, side := range []struct {
+				name   string
+				result run
+			}{
+				{"Node gaps", onNode(t, port, "--cases", gapPath, "80")},
+				{"native gaps", execute(t, nil, binary, "--cases", gapPath, "80")},
+				{"backend gaps", onNode(t, backend, "--cases", gapPath, "80")},
+			} {
+				if err := statementDisagreement(side.name, side.result, gapWant, nil); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if report := leaks(t, program, binary, "--cases", shard.text, "80"); report != "" {
+				t.Fatal(report)
+			}
+			statementPrinterLibrary(t, "npm Prettier", execute(t, nil, "node", script, library, shard.specs), shard.specs, false)
+			statementPrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", embedded, bundles, shard.specs), shard.specs, true)
+			compare("release", execute(t, nil, release, "--cases", shard.text, "80"))
+			t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
+		})
 	}
-	if err := native.Build(native.C(program), release, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	compare("release", execute(t, nil, release, "--cases", cases, "80"))
-	t.Logf("%d statement/program fragments byte-identical", strings.Count(want, "\n"))
 }
