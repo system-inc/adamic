@@ -1,5 +1,5 @@
 """Run each guard separately, then the audit overlays, and restored guards."""
-import difflib, json, os, subprocess, time
+import difflib, gzip, json, os, subprocess, time
 from pathlib import Path
 root=Path(__file__).resolve().parents[3]
 out=Path(__file__).resolve().parent
@@ -31,6 +31,6 @@ for label,old,new,(pkg,test),reason in mutations:
  assert text.count(old)==1
  replacement=scratch/(label+'.go'); replacement.write_text(text.replace(old,new))
  overlay=scratch/(label+'.json'); overlay.write_text(json.dumps({'Replace':{str(source):str(replacement)}}))
- (out/(label+'.diff')).write_text(''.join(difflib.unified_diff(text.splitlines(True),replacement.read_text().splitlines(True),fromfile='internal/ir/call_targets.go',tofile=label+'/call_targets.go')))
+ (out/(label+'.diff.gz')).write_bytes(gzip.compress(''.join(difflib.unified_diff(text.splitlines(True),replacement.read_text().splitlines(True),fromfile='internal/ir/call_targets.go',tofile=label+'/call_targets.go')).encode(),mtime=0))
  run(label,pkg,test,overlay,'fail',reason)
 for pkg,test in units: run('restored-'+test,pkg,test)
