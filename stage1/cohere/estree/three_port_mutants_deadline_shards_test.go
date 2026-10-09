@@ -47,7 +47,7 @@ type threePortShard struct {
 }
 
 func threePortShards(t *testing.T) []threePortShard {
-	file, err := parser.ParseFile(token.NewFileSet(), "three_port_mutants_split_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "three_port_mutants_deadline_shards_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -166,7 +166,7 @@ func checkThreePortCase(pair threePortCase, want, source, native []byte) error {
 }
 
 // Products are addressed by live source content and built once across shard processes.
-func threePortProduct(t *testing.T, mutation threePortMutation) (string, string) {
+func threePortLoweredProduct(t *testing.T, mutation threePortMutation) string {
 	t.Helper()
 	inputs := buildcache.Inputs{Name: "three-port-mutant-lowered-" + mutation.name,
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
@@ -208,7 +208,16 @@ func threePortProduct(t *testing.T, mutation threePortMutation) (string, string)
 		}
 		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644)
 	})
-	inputs.Name = "three-port-mutant-native-" + mutation.name
+	return lowered
+}
+
+func threePortNativeProduct(t *testing.T, mutation threePortMutation) string {
+	t.Helper()
+	lowered := threePortLoweredProduct(t, mutation)
+	inputs := buildcache.Inputs{Name: "three-port-mutant-native-" + mutation.name,
+		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
+		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	inputs.Flags = append(inputs.Flags, "split=true")
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
@@ -220,7 +229,7 @@ func threePortProduct(t *testing.T, mutation threePortMutation) (string, string)
 		}
 		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
-	return filepath.Join(lowered, "source", "main.ts"), filepath.Join(binary, "port")
+	return filepath.Join(binary, "port")
 }
 
 type threePortPreparedPort struct{ Source, Native string }
@@ -229,52 +238,69 @@ type threePortPrepared struct {
 	Ports  []threePortPreparedPort
 }
 
-// Assigned by the serial setup test before parallel leaves are released. A
-// separately selected leaf reads the published setup product without building.
-var threePortPreparedForRun *threePortPrepared
+// Shared preparation has no deadline. Every selected shard prepares once per
+// process before its own clock starts; Loom still bounds the whole unit.
+var threePortShared struct {
+	once     sync.Once
+	prepared *threePortPrepared
+}
 
-func threePortSetupInputs(t *testing.T) buildcache.Inputs {
+func threePortOracleInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
-	return buildcache.Inputs{Name: "three-port-mutants-setup-v1",
+	return buildcache.Inputs{Name: "three-port-mutants-go-oracle-v1",
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"},
-		Flags:     []string{"repository=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+		Flags:     []string{"repository=" + root(t), "go build", "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
-func threePortReadPrepared(t *testing.T, path string) *threePortPrepared {
+func threePortSetupContext() (context.Context, context.CancelFunc) {
+	return context.WithCancel(context.Background())
+}
+
+func threePortOracleProduct(t *testing.T) string {
 	t.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var prepared threePortPrepared
-	if err := json.Unmarshal(data, &prepared); err != nil {
-		t.Fatal(err)
-	}
-	if len(prepared.Ports) != len(threePortMutations()) {
-		t.Fatal("incomplete shared setup")
-	}
-	paths := []string{prepared.Oracle}
-	for _, port := range prepared.Ports {
-		paths = append(paths, port.Source, port.Native)
-	}
-	for _, path := range paths {
-		if _, err := os.Stat(path); err != nil {
-			t.Fatalf("shared setup product missing: %v", err)
+	inputs := threePortOracleInputs(t)
+	directory := buildcache.Product(t, inputs, func(dir string) error {
+		repo := root(t)
+		source := filepath.Join(repo, "stage1/cohere/estree/testdata/oracle.go")
+		virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+		if err != nil {
+			return err
 		}
-	}
-	return &prepared
+		path := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		ctx, cancel := threePortSetupContext()
+		defer cancel()
+		command := threePortCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command.Dir = filepath.Join(repo, "cohere")
+		output, err := command.CombinedOutput()
+		if err != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(directory, "oracle")
 }
 
 func threePortReady(t *testing.T) *threePortPrepared {
 	t.Helper()
-	if threePortPreparedForRun != nil {
-		return threePortPreparedForRun
-	}
-	directory := buildcache.Product(t, threePortSetupInputs(t), func(string) error {
-		return fmt.Errorf("run TestThreePortMutants_Setup before shards; a leaf never prepares shared state")
+	threePortShared.once.Do(func() {
+		prepared := &threePortPrepared{Oracle: threePortOracleProduct(t)}
+		for _, mutation := range threePortMutations() {
+			lowered := threePortLoweredProduct(t, mutation)
+			prepared.Ports = append(prepared.Ports, threePortPreparedPort{
+				filepath.Join(lowered, "source", "main.ts"), threePortNativeProduct(t, mutation),
+			})
+		}
+		threePortShared.prepared = prepared
 	})
-	return threePortReadPrepared(t, filepath.Join(directory, "ready.json"))
+	if threePortShared.prepared == nil {
+		t.Fatal("shared product build failed")
+	}
+	return threePortShared.prepared
 }
 
 func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
@@ -309,88 +335,60 @@ func threePortExecute(t *testing.T, ctx context.Context, name string, args ...st
 	return output
 }
 
-// Not parallel: publishes immutable shared products before parallel shard tests run
 func TestThreePortMutants_Setup(t *testing.T) {
-	if report := os.Getenv("ADAMIC_THREE_PORT_SETUP_CHILD"); report != "" {
-		directory := buildcache.Product(t, threePortSetupInputs(t), func(directory string) error {
-			prepared := threePortPrepared{Ports: make([]threePortPreparedPort, len(threePortMutations()))}
-			var workers sync.WaitGroup
-			for m, mutation := range threePortMutations() {
-				workers.Add(1)
-				go func(m int, mutation threePortMutation) {
-					defer workers.Done()
-					source, binary := threePortProduct(t, mutation)
-					prepared.Ports[m] = threePortPreparedPort{source, binary}
-				}(m, mutation)
-			}
-			// GoBuild is not on this base. Preserve the overlay build but publish its
-			// binary through buildcache, within the setup child's process-group deadline.
-			oracleInputs := threePortSetupInputs(t)
-			oracleInputs.Name = "three-port-mutants-go-oracle-v1"
-			oracleDirectory := buildcache.Product(t, oracleInputs, func(dir string) error {
-				binary := goOracle(t)
-				data, err := os.ReadFile(binary)
-				if err != nil {
-					return err
-				}
-				return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
-			})
-			prepared.Oracle = filepath.Join(oracleDirectory, "oracle")
-			workers.Wait()
-			if t.Failed() {
-				return fmt.Errorf("shared product build failed")
-			}
-			data, err := json.Marshal(prepared)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(directory, "ready.json"), data, 0644)
-		})
-		data, err := os.ReadFile(filepath.Join(directory, "ready.json"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(report, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		return
-	}
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	report := filepath.Join(t.TempDir(), "ready.json")
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	command := threePortCommand(ctx, executable, "-test.run=^TestThreePortMutants_Setup$", "-test.timeout=90s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_THREE_PORT_SETUP_CHILD="+report)
-	output, err := command.CombinedOutput()
-	t.Logf("shared setup child:\n%s", output)
-	if ctx.Err() != nil {
-		t.Fatal("cooked: TestThreePortMutants_Setup exceeded 90s deadline")
-	}
-	if err != nil {
-		t.Fatalf("shared setup: %v", err)
-	}
-	threePortPreparedForRun = threePortReadPrepared(t, report)
+	t.Parallel()
+	threePortReady(t)
 }
 
-func TestThreePortMutants_SetupRequired(t *testing.T) {
+func TestThreePortMutants_SetupDeadlineProof(t *testing.T) {
 	t.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := threePortSetupContext()
 	defer cancel()
-	command := threePortCommand(ctx, executable, "-test.run=^TestThreePortMutants_000$", "-test.timeout=90s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE=", "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_THREE_PORT_PROOF=", "ADAMIC_THREE_PORT_SETUP_CHILD=")
-	output, err := command.CombinedOutput()
-	exit, ok := err.(*exec.ExitError)
-	if ctx.Err() != nil || !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "a leaf never prepares shared state") {
-		t.Fatalf("cold leaf must refuse setup instead of building: %v\n%s", err, output)
+	if _, ok := ctx.Deadline(); ok {
+		t.Fatal("shared setup has a deadline")
 	}
-	t.Log("cold standalone shard refused unprepared shared state without building")
+	own, stop := threePortOwnWorkContext(100 * time.Millisecond)
+	defer stop()
+	command := threePortCommand(own, "node", "-e", "setInterval(() => {}, 1000)")
+	if err := command.Run(); err == nil {
+		t.Fatal("own-work deadline did not kill its child")
+	}
+	if own.Err() != context.DeadlineExceeded {
+		t.Fatalf("own work deadline did not fire: %v", own.Err())
+	}
+	if ctx.Err() != nil {
+		t.Fatalf("own work deadline cancelled setup: %v", ctx.Err())
+	}
+}
+
+func threePortOwnWorkContext(budget time.Duration) (context.Context, context.CancelFunc) {
+	return context.WithTimeout(context.Background(), budget)
+}
+
+func TestProduct_ThreePortOracle(t *testing.T) { t.Parallel(); threePortOracleProduct(t) }
+func TestProduct_ThreePortLowered0(t *testing.T) {
+	t.Parallel()
+	threePortLoweredProduct(t, threePortMutations()[0])
+}
+func TestProduct_ThreePortNative0(t *testing.T) {
+	t.Parallel()
+	threePortNativeProduct(t, threePortMutations()[0])
+}
+func TestProduct_ThreePortLowered1(t *testing.T) {
+	t.Parallel()
+	threePortLoweredProduct(t, threePortMutations()[1])
+}
+func TestProduct_ThreePortNative1(t *testing.T) {
+	t.Parallel()
+	threePortNativeProduct(t, threePortMutations()[1])
+}
+func TestProduct_ThreePortLowered2(t *testing.T) {
+	t.Parallel()
+	threePortLoweredProduct(t, threePortMutations()[2])
+}
+func TestProduct_ThreePortNative2(t *testing.T) {
+	t.Parallel()
+	threePortNativeProduct(t, threePortMutations()[2])
 }
 
 func runThreePortShard(t *testing.T, index int) {
@@ -416,9 +414,9 @@ func runThreePortShard(t *testing.T, index int) {
 		}
 		return
 	}
-	// Readiness is resolved before the leaf deadline. This path cannot build.
+	// Prepare shared products before starting this shard's own-work deadline.
 	prepared := threePortReady(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := threePortOwnWorkContext(90 * time.Second)
 	defer cancel()
 	m := shard.cases[0].mutant
 	mutation := threePortMutations()[m]
