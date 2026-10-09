@@ -21,33 +21,26 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		{"optional_object", "enum E { A, B } function flags(box: { flags: E; other?: { flags: E } }): E { return box.other ? box.flags | box.other.flags : box.flags; }"},
 	} {
 		t.Log(probe.name)
-		program, err := lowerSource(t, probe.source)
-		if err != nil {
-			t.Fatal(err)
-		}
-		name := "E"
-		fields := []enumGuardField{{"A", float64(0)}, {"0", "A"}, {"B", float64(1)}, {"1", "B"}}
+		observation := "console.log(`${E.A}/${E[0]}`);"
 		switch probe.name {
-		case "singleton":
-			fields = fields[:2]
 		case "member_tags":
-			name = "Kind"
+			observation = "console.log(`${a.kind}/${a.value}/${Kind[0]}`);"
 		case "coalesce":
-			name = "Flags"
-			fields = []enumGuardField{{"None", float64(0)}, {"0", "None"}, {"A", float64(1)}, {"1", "A"}, {"B", float64(2)}, {"2", "B"}, {"Pair", float64(3)}, {"3", "Pair"}}
+			observation = "console.log(`${Flags.None}/${Flags.Pair}/${Flags[3]}`);"
+		case "arithmetic":
+			observation += "console.log(`${e}`);"
 		case "signed_flags":
-			name = "Flags"
-			fields = []enumGuardField{{"A", float64(-2147483648)}, {"-2147483648", "A"}, {"B", float64(1)}, {"1", "B"}}
+			observation = "console.log(`${Flags.A}/${flags}/${Flags[1]}`);"
 		case "cast":
-			name = "SyntaxKind"
-			fields = []enumGuardField{{"First", float64(0)}, {"0", "First"}, {"Last", float64(1)}, {"1", "Last"}}
+			observation = "console.log(`${kind(77)}/${SyntaxKind.First}/${SyntaxKind[0]}`);"
+		case "containers":
+			observation += "console.log(`${values.join(',')}/${map.get('x')}`);"
+		case "optional_object":
+			observation += "console.log(`${flags({flags:E.A})}/${flags({flags:E.A,other:{flags:E.B}})}`);"
 		}
-		assertEnumGuardFields(t, program, name, fields)
-		l, statements := enumGuardProof(t, probe.source)
-		if !l.openNumericEnumType(l.checker.GetTypeAtLocation(statements[0].Name())) {
-			t.Fatal("whole numeric enum must remain open")
-		}
+		lowersAndAgreesWithNode(t, probe.source+observation)
 	}
+
 }
 
 func TestStringEnumsStayClosed(t *testing.T) {

@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"reflect"
 	"testing"
 	"time"
 
@@ -16,57 +15,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
-
-type enumGuardField struct {
-	name  string
-	value any
-}
-
-var flagGuardFields = []enumGuardField{
-	{"None", float64(0)}, {"0", "None"},
-	{"A", float64(1)}, {"1", "A"},
-	{"B", float64(2)}, {"2", "B"},
-	{"High", float64(1073741824)}, {"1073741824", "High"},
-	{"Both", float64(3)}, {"3", "Both"},
-}
-
-func assertEnumGuardFields(t *testing.T, program *ir.Program, name string, want []enumGuardField) {
-	t.Helper()
-	if program == nil || len(program.Main) == 0 {
-		t.Fatal("lowering returned empty IR")
-	}
-	for _, statement := range program.Main {
-		declaration, ok := statement.(ir.Declare)
-		if !ok || program.Locals[declaration.Local].Name != name {
-			continue
-		}
-		object, ok := declaration.Value.(ir.ObjectLiteral)
-		if !ok {
-			t.Fatalf("enum %s declaration is %T, want object literal", name, declaration.Value)
-		}
-		got := make([]enumGuardField, 0, len(object.Fields))
-		for _, field := range object.Fields {
-			var value any
-			switch constant := field.Value.(type) {
-			case ir.NumberConstant:
-				value = constant.Value
-			case ir.StringConstant:
-				if constant.Index < 0 || constant.Index >= len(program.Strings) {
-					t.Fatalf("enum %s field %s has invalid string index %d", name, field.Name, constant.Index)
-				}
-				value = program.Strings[constant.Index]
-			default:
-				t.Fatalf("enum %s field %s is %T, want a constant", name, field.Name, field.Value)
-			}
-			got = append(got, enumGuardField{field.Name, value})
-		}
-		if !reflect.DeepEqual(got, want) {
-			t.Fatalf("enum %s fields = %#v, want %#v", name, got, want)
-		}
-		return
-	}
-	t.Fatalf("enum %s object is missing from IR", name)
-}
 
 // The numeric IR has no flag-domain annotation. Query the actual checker-backed
 // proof separately so an open numeric enum cannot hide a broken flag proof.
@@ -116,17 +64,6 @@ function xorFlags(a: Flags, b: Flags): Flags { return a ^ b; }
 			t.Errorf("%s flag domain = %v, want %v", statement.Name().Text(), got, wants[index])
 		}
 	}
-}
-
-func enumGuardLoop(t *testing.T, program *ir.Program) ir.ForOf {
-	t.Helper()
-	for _, statement := range program.Main {
-		if loop, ok := statement.(ir.ForOf); ok {
-			return loop
-		}
-	}
-	t.Fatal("enum iteration is missing from IR")
-	return ir.ForOf{}
 }
 
 func enumGuardNodeOutput(t *testing.T, source string, program *ir.Program, want string, buildNative bool) {
@@ -186,4 +123,48 @@ func TestEnumMemberValuesAndReverseNameMatchNode(t *testing.T) {
 		t.Fatal("lowering returned empty IR")
 	}
 	enumGuardNodeOutput(t, source, program, "1 2 1 Alias\n", true)
+}
+
+// Open numeric enum lowering bypasses these classification proofs, so changing
+// them does not change emitted JavaScript. Direct proof checks are necessary to
+// guard M14, M15 and M16; output comparisons alone cannot observe them.
+func TestEnumFlagProofsWithoutObservableLoweringEffect(t *testing.T) {
+	t.Parallel()
+	assertEnumGuardFlag(t, "enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e }")
+	assertEnumGuardDomains(t)
+}
+
+// JavaScript object literals overwrite duplicate keys, hiding M04 in output.
+// Native objects need a unique field slot, so guard that invariant directly.
+func TestEnumReverseMappingUsesSingleSlot(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "enum E { A = 1, B = 2, Alias = A } console.log(E[1] ?? 'missing');")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if program == nil {
+		t.Fatal("lowering returned empty IR")
+	}
+	found := false
+	for _, statement := range program.Main {
+		declaration, ok := statement.(ir.Declare)
+		if !ok || program.Locals[declaration.Local].Name != "E" {
+			continue
+		}
+		object, ok := declaration.Value.(ir.ObjectLiteral)
+		if !ok {
+			t.Fatal("enum object allocation is missing")
+		}
+		found = true
+		seen := map[string]bool{}
+		for _, field := range object.Fields {
+			if seen[field.Name] {
+				t.Fatalf("duplicate enum field slot %q", field.Name)
+			}
+			seen[field.Name] = true
+		}
+	}
+	if !found {
+		t.Fatal("enum declaration is missing")
+	}
 }
