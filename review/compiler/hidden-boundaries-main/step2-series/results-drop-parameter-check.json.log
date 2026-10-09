@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:22:39.426304028Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:22:39.437602317Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar"}
+{"Time":"2026-10-09T10:22:39.437873457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar","Output":"=== RUN   TestOverloadResultsLiarStopsParameterLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:22:39.437906155Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar","Output":"=== PAUSE TestOverloadResultsLiarStopsParameterLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:22:39.437908859Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar"}
+{"Time":"2026-10-09T10:22:39.437914488Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar"}
+{"Time":"2026-10-09T10:22:39.43791629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar","Output":"=== CONT  TestOverloadResultsLiarStopsParameterLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:22:39.969190821Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar","Output":"    overload_results_test.go:119: /workspace/adamic-tools/bin/node: \u003cnil\u003e, stdout \"before\\nimplementation\\nundefined\\n\" stderr \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:22:39.969509591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar","Output":"--- FAIL: TestOverloadResultsLiarStopsParameterLiar (0.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:22:39.969524704Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadResultsLiarStopsParameterLiar","Elapsed":0.53}
+{"Time":"2026-10-09T10:22:39.969550552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:22:39.993831456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.567s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:22:39.993879828Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.568}

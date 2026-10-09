@@ -1,0 +1,231 @@
+{"Time":"2026-10-09T10:20:48.953267494Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T10:20:48.961522646Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet"}
+{"Time":"2026-10-09T10:20:48.961599129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet","Output":"=== RUN   TestHiddenTNodeValueExactNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961647451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet","Output":"=== PAUSE TestHiddenTNodeValueExactNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961650095Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet"}
+{"Time":"2026-10-09T10:20:48.961656564Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings"}
+{"Time":"2026-10-09T10:20:48.961658457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"=== RUN   TestOverloadContractRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961661982Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"=== PAUSE TestOverloadContractRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961663625Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings"}
+{"Time":"2026-10-09T10:20:48.961665688Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid"}
+{"Time":"2026-10-09T10:20:48.96166733Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid","Output":"=== RUN   TestOverloadFieldHatchKindValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961669764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid","Output":"=== PAUSE TestOverloadFieldHatchKindValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961671306Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid"}
+{"Time":"2026-10-09T10:20:48.961673179Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar"}
+{"Time":"2026-10-09T10:20:48.961674921Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"=== RUN   TestOverloadFieldHatchKindLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961677054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"=== PAUSE TestOverloadFieldHatchKindLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961678557Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar"}
+{"Time":"2026-10-09T10:20:48.961680449Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid"}
+{"Time":"2026-10-09T10:20:48.961681922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid","Output":"=== RUN   TestOverloadFieldHatchValueValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961684005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid","Output":"=== PAUSE TestOverloadFieldHatchValueValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961685507Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid"}
+{"Time":"2026-10-09T10:20:48.96168734Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar"}
+{"Time":"2026-10-09T10:20:48.96169471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"=== RUN   TestOverloadFieldHatchValueLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961696954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"=== PAUSE TestOverloadFieldHatchValueLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961698466Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar"}
+{"Time":"2026-10-09T10:20:48.961700369Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined"}
+{"Time":"2026-10-09T10:20:48.961703193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined","Output":"=== RUN   TestOverloadFieldHatchValueUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961706778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined","Output":"=== PAUSE TestOverloadFieldHatchValueUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961708461Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined"}
+{"Time":"2026-10-09T10:20:48.961712877Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal"}
+{"Time":"2026-10-09T10:20:48.96171444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal","Output":"=== RUN   TestOverloadStructuralFieldRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961718756Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal","Output":"=== PAUSE TestOverloadStructuralFieldRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961720318Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal"}
+{"Time":"2026-10-09T10:20:48.961722331Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid"}
+{"Time":"2026-10-09T10:20:48.961723984Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid","Output":"=== RUN   TestOverloadValuesReturnedValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961726287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid","Output":"=== PAUSE TestOverloadValuesReturnedValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.96172805Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid"}
+{"Time":"2026-10-09T10:20:48.961730323Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar"}
+{"Time":"2026-10-09T10:20:48.961731765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar","Output":"=== RUN   TestOverloadValuesReturnedLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961734019Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar","Output":"=== PAUSE TestOverloadValuesReturnedLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961735841Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar"}
+{"Time":"2026-10-09T10:20:48.961749571Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid"}
+{"Time":"2026-10-09T10:20:48.961751274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid","Output":"=== RUN   TestOverloadValuesNarrowValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.96175552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid","Output":"=== PAUSE TestOverloadValuesNarrowValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961757393Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid"}
+{"Time":"2026-10-09T10:20:48.961759596Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar"}
+{"Time":"2026-10-09T10:20:48.961761008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar","Output":"=== RUN   TestOverloadValuesNarrowLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961762971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar","Output":"=== PAUSE TestOverloadValuesNarrowLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961764453Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar"}
+{"Time":"2026-10-09T10:20:48.961766977Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid"}
+{"Time":"2026-10-09T10:20:48.961768329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid","Output":"=== RUN   TestOverloadValuesOrderValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961770292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid","Output":"=== PAUSE TestOverloadValuesOrderValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961771784Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid"}
+{"Time":"2026-10-09T10:20:48.961773647Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar"}
+{"Time":"2026-10-09T10:20:48.961775129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar","Output":"=== RUN   TestOverloadValuesOrderLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961778955Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar","Output":"=== PAUSE TestOverloadValuesOrderLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961780758Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar"}
+{"Time":"2026-10-09T10:20:48.96178274Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid"}
+{"Time":"2026-10-09T10:20:48.961784463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid","Output":"=== RUN   TestOverloadValuesModuleValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961786466Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid","Output":"=== PAUSE TestOverloadValuesModuleValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961788038Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid"}
+{"Time":"2026-10-09T10:20:48.961789841Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar"}
+{"Time":"2026-10-09T10:20:48.961803461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar","Output":"=== RUN   TestOverloadValuesModuleLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961806546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar","Output":"=== PAUSE TestOverloadValuesModuleLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.96180963Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar"}
+{"Time":"2026-10-09T10:20:48.961813095Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof"}
+{"Time":"2026-10-09T10:20:48.961814588Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof","Output":"=== RUN   TestOverloadValueProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961819425Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof","Output":"=== PAUSE TestOverloadValueProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961820947Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof"}
+{"Time":"2026-10-09T10:20:48.96182284Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid"}
+{"Time":"2026-10-09T10:20:48.961825434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid","Output":"=== RUN   TestOverloadVisitorsOriginalValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961827917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid","Output":"=== PAUSE TestOverloadVisitorsOriginalValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.96182954Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid"}
+{"Time":"2026-10-09T10:20:48.961832664Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar"}
+{"Time":"2026-10-09T10:20:48.961834116Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar","Output":"=== RUN   TestOverloadVisitorsOriginalLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961837161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar","Output":"=== PAUSE TestOverloadVisitorsOriginalLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961839935Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar"}
+{"Time":"2026-10-09T10:20:48.961842999Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid"}
+{"Time":"2026-10-09T10:20:48.961845423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid","Output":"=== RUN   TestOverloadVisitorsHelperValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961847807Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid","Output":"=== PAUSE TestOverloadVisitorsHelperValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961849449Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid"}
+{"Time":"2026-10-09T10:20:48.961851352Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar"}
+{"Time":"2026-10-09T10:20:48.961853044Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar","Output":"=== RUN   TestOverloadVisitorsHelperLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961856029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar","Output":"=== PAUSE TestOverloadVisitorsHelperLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961857531Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar"}
+{"Time":"2026-10-09T10:20:48.961859354Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid"}
+{"Time":"2026-10-09T10:20:48.961862889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid","Output":"=== RUN   TestOverloadVisitorsOverloadedHelperValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961968355Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid","Output":"=== PAUSE TestOverloadVisitorsOverloadedHelperValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961971219Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid"}
+{"Time":"2026-10-09T10:20:48.961974283Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar"}
+{"Time":"2026-10-09T10:20:48.961976767Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar","Output":"=== RUN   TestOverloadVisitorsOverloadedHelperLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961989115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar","Output":"=== PAUSE TestOverloadVisitorsOverloadedHelperLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961991028Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar"}
+{"Time":"2026-10-09T10:20:48.961993812Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar"}
+{"Time":"2026-10-09T10:20:48.961996316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar","Output":"=== RUN   TestOverloadVisitorsDefaultLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.961999481Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar","Output":"=== PAUSE TestOverloadVisitorsDefaultLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.962001023Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar"}
+{"Time":"2026-10-09T10:20:48.962004027Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations"}
+{"Time":"2026-10-09T10:20:48.9620056Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations","Output":"=== RUN   TestOverloadVisitorInstantiations\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.962007883Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations","Output":"=== PAUSE TestOverloadVisitorInstantiations\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.962009525Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations"}
+{"Time":"2026-10-09T10:20:48.962190312Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet"}
+{"Time":"2026-10-09T10:20:48.962197393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet","Output":"=== CONT  TestHiddenTNodeValueExactNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.962201839Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar"}
+{"Time":"2026-10-09T10:20:48.962203572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar","Output":"=== CONT  TestOverloadValuesOrderLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.962515833Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid"}
+{"Time":"2026-10-09T10:20:48.962526549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid","Output":"=== CONT  TestOverloadValuesOrderValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:48.962699394Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal"}
+{"Time":"2026-10-09T10:20:48.962704842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal","Output":"=== CONT  TestOverloadStructuralFieldRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.103389433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet","Output":"--- PASS: TestHiddenTNodeValueExactNotYet (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.103437104Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestHiddenTNodeValueExactNotYet","Elapsed":0.14}
+{"Time":"2026-10-09T10:20:49.103456382Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar"}
+{"Time":"2026-10-09T10:20:49.103462732Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar","Output":"=== CONT  TestOverloadValuesNarrowLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.22579505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal","Output":"--- PASS: TestOverloadStructuralFieldRefusal (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.225918332Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadStructuralFieldRefusal","Elapsed":0.26}
+{"Time":"2026-10-09T10:20:49.225927035Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid"}
+{"Time":"2026-10-09T10:20:49.225932293Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid","Output":"=== CONT  TestOverloadValuesNarrowValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.630179325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar","Output":"--- PASS: TestOverloadValuesOrderLiar (0.67s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.63025053Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderLiar","Elapsed":0.67}
+{"Time":"2026-10-09T10:20:49.63025737Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar"}
+{"Time":"2026-10-09T10:20:49.630260144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar","Output":"=== CONT  TestOverloadValuesReturnedLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.640764979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid","Output":"--- PASS: TestOverloadValuesOrderValid (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.640815244Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesOrderValid","Elapsed":0.68}
+{"Time":"2026-10-09T10:20:49.640821343Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid"}
+{"Time":"2026-10-09T10:20:49.640823746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid","Output":"=== CONT  TestOverloadValuesReturnedValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.696555784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar","Output":"--- PASS: TestOverloadValuesNarrowLiar (0.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.6966003Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowLiar","Elapsed":0.59}
+{"Time":"2026-10-09T10:20:49.696612658Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid"}
+{"Time":"2026-10-09T10:20:49.696615392Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid","Output":"=== CONT  TestOverloadVisitorsHelperValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.823756713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid","Output":"--- PASS: TestOverloadValuesNarrowValid (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.823838493Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesNarrowValid","Elapsed":0.6}
+{"Time":"2026-10-09T10:20:49.823846836Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations"}
+{"Time":"2026-10-09T10:20:49.823850691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations","Output":"=== CONT  TestOverloadVisitorInstantiations\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.200569043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar","Output":"--- PASS: TestOverloadValuesReturnedLiar (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.200614711Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedLiar","Elapsed":0.57}
+{"Time":"2026-10-09T10:20:50.20062135Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar"}
+{"Time":"2026-10-09T10:20:50.200623864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar","Output":"=== CONT  TestOverloadVisitorsDefaultLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.205812388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid","Output":"--- PASS: TestOverloadValuesReturnedValid (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.205835321Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesReturnedValid","Elapsed":0.57}
+{"Time":"2026-10-09T10:20:50.205838927Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar"}
+{"Time":"2026-10-09T10:20:50.20584098Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar","Output":"=== CONT  TestOverloadVisitorsOverloadedHelperLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.398520592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations","Output":"--- PASS: TestOverloadVisitorInstantiations (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.398597476Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorInstantiations","Elapsed":0.57}
+{"Time":"2026-10-09T10:20:50.398603715Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid"}
+{"Time":"2026-10-09T10:20:50.398605517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid","Output":"=== CONT  TestOverloadVisitorsOverloadedHelperValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.57087575Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid","Output":"--- PASS: TestOverloadVisitorsHelperValid (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.570931382Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperValid","Elapsed":0.87}
+{"Time":"2026-10-09T10:20:50.570946334Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar"}
+{"Time":"2026-10-09T10:20:50.570949849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar","Output":"=== CONT  TestOverloadVisitorsHelperLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.802621764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar","Output":"--- PASS: TestOverloadVisitorsOverloadedHelperLiar (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.80268008Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperLiar","Elapsed":0.6}
+{"Time":"2026-10-09T10:20:50.802687801Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid"}
+{"Time":"2026-10-09T10:20:50.802691467Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid","Output":"=== CONT  TestOverloadFieldHatchValueValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.844000021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar","Output":"--- PASS: TestOverloadVisitorsDefaultLiar (0.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:50.844091526Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsDefaultLiar","Elapsed":0.64}
+{"Time":"2026-10-09T10:20:50.844097525Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined"}
+{"Time":"2026-10-09T10:20:50.844110834Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined","Output":"=== CONT  TestOverloadFieldHatchValueUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.156836808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar","Output":"--- PASS: TestOverloadVisitorsHelperLiar (0.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.156883577Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsHelperLiar","Elapsed":0.59}
+{"Time":"2026-10-09T10:20:51.156889636Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar"}
+{"Time":"2026-10-09T10:20:51.15689251Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"=== CONT  TestOverloadFieldHatchValueLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.305696893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid","Output":"--- PASS: TestOverloadVisitorsOverloadedHelperValid (0.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.305743181Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOverloadedHelperValid","Elapsed":0.9}
+{"Time":"2026-10-09T10:20:51.30574897Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof"}
+{"Time":"2026-10-09T10:20:51.305751474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof","Output":"=== CONT  TestOverloadValueProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.412804278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid","Output":"--- PASS: TestOverloadFieldHatchValueValid (0.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.412854502Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueValid","Elapsed":0.61}
+{"Time":"2026-10-09T10:20:51.412869995Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar"}
+{"Time":"2026-10-09T10:20:51.412874882Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar","Output":"=== CONT  TestOverloadVisitorsOriginalLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.468638666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined","Output":"--- PASS: TestOverloadFieldHatchValueUndefined (0.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.468688179Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueUndefined","Elapsed":0.62}
+{"Time":"2026-10-09T10:20:51.468695089Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid"}
+{"Time":"2026-10-09T10:20:51.468707678Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid","Output":"=== CONT  TestOverloadVisitorsOriginalValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.853974111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof","Output":"--- PASS: TestOverloadValueProof (0.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.854151042Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValueProof","Elapsed":0.55}
+{"Time":"2026-10-09T10:20:51.854158023Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid"}
+{"Time":"2026-10-09T10:20:51.854160827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid","Output":"=== CONT  TestOverloadValuesModuleValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.874234386Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"--- PASS: TestOverloadFieldHatchValueLiar (0.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:51.874304289Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Elapsed":0.72}
+{"Time":"2026-10-09T10:20:51.874310999Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar"}
+{"Time":"2026-10-09T10:20:51.874313723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar","Output":"=== CONT  TestOverloadValuesModuleLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.015323633Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar","Output":"--- PASS: TestOverloadVisitorsOriginalLiar (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.017075531Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalLiar","Elapsed":0.6}
+{"Time":"2026-10-09T10:20:52.017092205Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid"}
+{"Time":"2026-10-09T10:20:52.01709548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid","Output":"=== CONT  TestOverloadFieldHatchKindValid\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.326754503Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid","Output":"--- PASS: TestOverloadVisitorsOriginalValid (0.86s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.326818608Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadVisitorsOriginalValid","Elapsed":0.86}
+{"Time":"2026-10-09T10:20:52.326827811Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar"}
+{"Time":"2026-10-09T10:20:52.32684048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"=== CONT  TestOverloadFieldHatchKindLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.476237919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid","Output":"--- PASS: TestOverloadValuesModuleValid (0.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.476386749Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleValid","Elapsed":0.62}
+{"Time":"2026-10-09T10:20:52.476395241Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings"}
+{"Time":"2026-10-09T10:20:52.476397875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"=== CONT  TestOverloadContractRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.47640137Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token"}
+{"Time":"2026-10-09T10:20:52.476403113Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"=== RUN   TestOverloadContractRulings/token\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.476405456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"=== PAUSE TestOverloadContractRulings/token\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.476407139Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token"}
+{"Time":"2026-10-09T10:20:52.476409823Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline"}
+{"Time":"2026-10-09T10:20:52.476411565Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"=== RUN   TestOverloadContractRulings/trampoline\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.47641439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"=== PAUSE TestOverloadContractRulings/trampoline\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.476416032Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline"}
+{"Time":"2026-10-09T10:20:52.476417875Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer"}
+{"Time":"2026-10-09T10:20:52.476419317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"=== RUN   TestOverloadContractRulings/serializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.47642131Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"=== PAUSE TestOverloadContractRulings/serializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.476422932Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer"}
+{"Time":"2026-10-09T10:20:52.476425196Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token"}
+{"Time":"2026-10-09T10:20:52.476426788Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"=== CONT  TestOverloadContractRulings/token\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.536575318Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar","Output":"--- PASS: TestOverloadValuesModuleLiar (0.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.536682286Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadValuesModuleLiar","Elapsed":0.66}
+{"Time":"2026-10-09T10:20:52.536688555Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer"}
+{"Time":"2026-10-09T10:20:52.536690538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"=== CONT  TestOverloadContractRulings/serializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.623874797Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid","Output":"--- PASS: TestOverloadFieldHatchKindValid (0.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.623923268Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindValid","Elapsed":0.61}
+{"Time":"2026-10-09T10:20:52.623929207Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline"}
+{"Time":"2026-10-09T10:20:52.62393128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"=== CONT  TestOverloadContractRulings/trampoline\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.670770322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"--- PASS: TestOverloadContractRulings/token (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.708794565Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Elapsed":0.19}
+{"Time":"2026-10-09T10:20:52.708847283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"--- PASS: TestOverloadContractRulings/serializer (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.802319433Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Elapsed":0.17}
+{"Time":"2026-10-09T10:20:52.802363458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"--- PASS: TestOverloadContractRulings/trampoline (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.802374595Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Elapsed":0.18}
+{"Time":"2026-10-09T10:20:52.802376918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"--- PASS: TestOverloadContractRulings (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.924730322Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Elapsed":0}
+{"Time":"2026-10-09T10:20:52.924780456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"--- PASS: TestOverloadFieldHatchKindLiar (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.924788829Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Elapsed":0.6}
+{"Time":"2026-10-09T10:20:52.924792274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:52.924795519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=62\n"}
+{"Time":"2026-10-09T10:20:52.924797441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=52\n"}
+{"Time":"2026-10-09T10:20:52.924808187Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T10:20:52.928321667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t3.975s\n"}
+{"Time":"2026-10-09T10:20:52.928390058Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":3.975}

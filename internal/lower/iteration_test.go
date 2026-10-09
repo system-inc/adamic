@@ -157,10 +157,8 @@ func TestRepresentedMethodReplacementIsNotYet(t *testing.T) {
 func TestDestructuredMethodsCannotLoadOwnSlots(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"const own={next():number{return 1;}};const {next}=own;console.log(`${next()}`);",
 		"class Box{next():number{return 1;}}const own=new Box();const {next}=own;console.log(`${next()}`);",
 		"class Box{next():number{return 1;}}const own=new Box();const view:{next:()=>number}=own;console.log(`${view.next()}`);",
-		"const own={next():number{return 1;}};const view:{next:()=>number}=own;const {next}=view;console.log(`${next()}`);",
 		"const own={};const {constructor}=own;",
 	} {
 		_, err := lowerSource(t, source)

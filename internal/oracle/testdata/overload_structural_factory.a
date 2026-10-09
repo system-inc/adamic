@@ -1,0 +1,21 @@
+interface Block { readonly kind: 'Block'; readonly statements: readonly number[]; }
+interface Expression { readonly kind: string; readonly text: string; }
+type Body = Block | Expression;
+const block: Block = { kind: 'Block', statements: [7] };
+let blockCalls = 0;
+function makeBlock(): Block { blockCalls++; return block; }
+function transform(): Block;
+function transform(): Body { return makeBlock(); }
+const body = transform();
+console.log(`${body.kind}:${body.statements.length}:${body === block}:${blockCalls}`);
+
+interface Result<T> { readonly value: T; flag: boolean; }
+const shared: Result<string> = { value: 'word', flag: true };
+let resultCalls = 0;
+function narrowResult(): Result<string> { resultCalls++; return shared; }
+function evaluate(): Result<string | undefined>;
+function evaluate(): Result<string | number | undefined> { return narrowResult(); }
+const result = evaluate();
+console.log(`${result.value ?? 'missing'}:${result === shared}:${resultCalls}`);
+result.flag = false;
+console.log(`${shared.flag}`);

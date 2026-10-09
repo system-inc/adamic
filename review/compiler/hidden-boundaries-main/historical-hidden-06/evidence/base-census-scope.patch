@@ -1,0 +1,27 @@
+--- internal_lower_latent_units.go
++++ internal_lower_latent_units_head.go
+@@ -113,6 +113,7 @@
+ 
+ func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
+ 	for _, file := range program.Files() {
++		if program.FileName(file) != "/tmp/hidden-adapted/src/compiler/transformers/esDecorators.ts" { continue }
+ 		if selection != nil && file != selection.file {
+ 			continue
+ 		}
+@@ -123,7 +124,7 @@
+ 		fresh := func() *lowering {
+ 			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+ 		}
+-		if selection == nil {
++		if false && selection == nil {
+ 			func() {
+ 				defer func() {
+ 					if failure := recover(); failure != nil {
+@@ -141,6 +142,7 @@
+ 		base.latentRegisterNested(program.Files())
+ 		for _, candidate := range latentCandidates(program, file) {
+ 			node := candidate.node
++			if node.End() <= 61324 || node.Pos() >= 72741 { continue }
+ 			if selection != nil && node != selection.node {
+ 				continue
+ 			}

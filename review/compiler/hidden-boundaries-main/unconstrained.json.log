@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:55:05.116537221Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:55:05.126013075Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained"}
+{"Time":"2026-10-09T09:55:05.126101416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained","Output":"=== RUN   TestHiddenTNodeConstraintUnconstrained\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:05.126128285Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained","Output":"=== PAUSE TestHiddenTNodeConstraintUnconstrained\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:05.126130929Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained"}
+{"Time":"2026-10-09T09:55:05.126137359Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained"}
+{"Time":"2026-10-09T09:55:05.126139282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained","Output":"=== CONT  TestHiddenTNodeConstraintUnconstrained\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:05.168565899Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained","Output":"    hidden_boundary_generic_tnode_test.go:30: constraint representation = (1, true), want (0, false)\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:05.168632016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained","Output":"--- FAIL: TestHiddenTNodeConstraintUnconstrained (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:05.168635481Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintUnconstrained","Elapsed":0.04}
+{"Time":"2026-10-09T09:55:05.168655471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:05.172833136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.056s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:05.172880325Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.056}
