@@ -1,0 +1,113 @@
+[
+  {
+    "test": "TestStringBuildingMatchesNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringViewAfterAppendMatchesNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/native/runtime/string_repeat_impl.h:27",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/string_repeat_impl.h:27",
+        "change": "return repeat_unchecked(string, count); -> return repeat_unchecked(string, count - 1);",
+        "rows_failed": [
+          "TestStringBuildingMatchesNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-followup/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode|TestRuntimeStringViews)$' > D2.log 2>&1; string_build_test.go:116: operation 99: native  edbc8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8df09f8c8d; Node  edbc8df09f8c8df09f8c8df09f8c8d",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "rows_passed": [
+      "TestRuntimeStringViews",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ]
+  },
+  {
+    "test": "TestStringIndexMatchesNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringIndexCacheStatesMatchNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D4 internal/native/runtime/string_index.c:95",
+    "attempts": [
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/runtime/string_index.c:95",
+        "change": "bytes[0] & 0x07 -> bytes[0] & 0x03",
+        "rows_failed": [
+          "TestStringIndexMatchesNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-followup/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode|TestRuntimeStringViews)$' > D4.log 2>&1; string_index_test.go:278: line 1:",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "rows_passed": [
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ]
+  },
+  {
+    "test": "TestStringViewAfterAppendMatchesNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringBuildingMatchesNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/native/runtime/string_append.c:64",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/string_append.c:64",
+        "change": "if (string->heap.references == 1 && !itself -> if (string->heap.references == 2 && !itself",
+        "rows_failed": [
+          "TestStringViewAfterAppendMatchesNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-followup/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode|TestRuntimeStringViews)$' > D3.log 2>&1; string_index_test.go:404: UTF-16 view after append differs from Node",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "rows_passed": [
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringIndexMatchesNode",
+      "TestStringsMatchJavaScript"
+    ]
+  }
+]

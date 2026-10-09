@@ -1,0 +1,15 @@
+{
+  "pass": [
+    "TestStringBuildingMatchesNode",
+    "TestStringIndexMatchesNode",
+    "TestStringViewAfterAppendMatchesNode",
+    "TestStringsMatchJavaScript"
+  ],
+  "fail": [
+    "TestStringIndexCacheStatesMatchNode"
+  ],
+  "skip": [],
+  "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode)$' > D1.log 2>&1",
+  "wall_seconds": 22.502317198999663,
+  "exit": 1
+}

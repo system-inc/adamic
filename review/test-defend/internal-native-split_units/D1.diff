@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/string_index.c b/internal/native/runtime/string_index.c
+index 4fd948fd..311b2e16 100644
+--- a/internal/native/runtime/string_index.c
++++ b/internal/native/runtime/string_index.c
+@@ -130,7 +130,7 @@ size_t adamic_string_units_before(const adamic_string *string, size_t offset) {
+ 	}
+ 	// Keep the established-index path local; usable also handles building and unindexed strings.
+ 	struct adamic_string_index *index = string->index;
+-	if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
++	if (index == NULL) {
+ 		index = usable(string, units);
+ 	}
+ 	size_t start = 0, at = 0;

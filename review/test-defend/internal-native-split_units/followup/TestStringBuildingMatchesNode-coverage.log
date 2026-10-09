@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T17:18:30.006044877Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T17:18:30.064494911Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode"}
+{"Time":"2026-10-09T17:18:30.06466765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode","Output":"=== RUN   TestStringBuildingMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:18:30.064714005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode","Output":"=== PAUSE TestStringBuildingMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:18:30.064717091Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode"}
+{"Time":"2026-10-09T17:18:30.064720246Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode"}
+{"Time":"2026-10-09T17:18:30.064722523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode","Output":"=== CONT  TestStringBuildingMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:18:31.224087269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode","Output":"    string_build_test.go:119: 2000 stateful operations match Node\n"}
+{"Time":"2026-10-09T17:18:31.224455028Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode","Output":"--- PASS: TestStringBuildingMatchesNode (1.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:18:31.224469267Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringBuildingMatchesNode","Elapsed":1.16}
+{"Time":"2026-10-09T17:18:31.224556168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:18:31.247944813Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 2.3% of statements in ./internal/native\n"}
+{"Time":"2026-10-09T17:18:31.478365117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t1.470s\tcoverage: 2.3% of statements in ./internal/native\n"}
+{"Time":"2026-10-09T17:18:31.478406271Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":1.472}

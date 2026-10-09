@@ -1,0 +1,19 @@
+{
+  "pass": [
+    "TestRuntimeStringViews",
+    "TestStringBuildingMatchesNode",
+    "TestStringIndexCacheStatesMatchNode",
+    "TestStringIndexMatchesNode",
+    "TestStringsMatchJavaScript"
+  ],
+  "fail": [
+    "TestStringViewAfterAppendMatchesNode"
+  ],
+  "skip": [],
+  "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-followup/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode|TestRuntimeStringViews)$' > D3.log 2>&1",
+  "wall_seconds": 21.308756197999173,
+  "exit": 1,
+  "file": "internal/native/runtime/string_append.c",
+  "line": 64,
+  "change": "if (string->heap.references == 1 && !itself -> if (string->heap.references == 2 && !itself"
+}

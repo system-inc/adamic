@@ -1,0 +1,19 @@
+{
+  "pass": [
+    "TestRuntimeStringViews",
+    "TestStringIndexCacheStatesMatchNode",
+    "TestStringIndexMatchesNode",
+    "TestStringViewAfterAppendMatchesNode",
+    "TestStringsMatchJavaScript"
+  ],
+  "fail": [
+    "TestStringBuildingMatchesNode"
+  ],
+  "skip": [],
+  "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-followup/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode|TestRuntimeStringViews)$' > D2.log 2>&1",
+  "wall_seconds": 20.388019221998547,
+  "exit": 1,
+  "file": "internal/native/runtime/string_repeat_impl.h",
+  "line": 27,
+  "change": "return repeat_unchecked(string, count); -> return repeat_unchecked(string, count - 1);"
+}

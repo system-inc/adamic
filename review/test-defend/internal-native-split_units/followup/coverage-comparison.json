@@ -1,0 +1,17 @@
+[
+  {
+    "test": "TestStringBuildingMatchesNode",
+    "subsumer": "TestStringViewAfterAppendMatchesNode",
+    "exclusive_go_blocks": []
+  },
+  {
+    "test": "TestStringViewAfterAppendMatchesNode",
+    "subsumer": "TestStringBuildingMatchesNode",
+    "exclusive_go_blocks": []
+  },
+  {
+    "test": "TestStringIndexMatchesNode",
+    "subsumer": "TestStringIndexCacheStatesMatchNode",
+    "exclusive_go_blocks": []
+  }
+]

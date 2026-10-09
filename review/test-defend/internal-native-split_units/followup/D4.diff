@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/string_index.c b/internal/native/runtime/string_index.c
+index 4fd948fd..de66c647 100644
+--- a/internal/native/runtime/string_index.c
++++ b/internal/native/runtime/string_index.c
+@@ -92,7 +92,7 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
+ 		unsigned point = size == 1 ? bytes[0] : size == 2 ?
+ 			((unsigned)(bytes[0] & 0x1f) << 6) | (bytes[1] & 0x3f) : size == 3 ?
+ 			((unsigned)(bytes[0] & 0x0f) << 12) | ((unsigned)(bytes[1] & 0x3f) << 6) | (bytes[2] & 0x3f) :
+-			((unsigned)(bytes[0] & 0x07) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
++			((unsigned)(bytes[0] & 0x03) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
+ 		if (size == 4) {
+ 			index->view[at++] = (uint16_t)(0xd800 + ((point - 0x10000) >> 10));
+ 			index->view[at++] = (uint16_t)(0xdc00 + ((point - 0x10000) & 0x3ff));

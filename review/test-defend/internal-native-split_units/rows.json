@@ -1,0 +1,39 @@
+[
+  {
+    "test": "TestStringIndexCacheStatesMatchNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringIndexMatchesNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/runtime/string_index.c:133",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/string_index.c:133",
+        "change": "if (index == NULL || index == ADAMIC_LITERAL_INDEX) becomes if (index == NULL) in adamic_string_units_before",
+        "rows_failed": [
+          "TestStringIndexCacheStatesMatchNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode)$' > D1.log 2>&1; string_index_test.go:451: cache-states: exit status 1; AddressSanitizer: global-buffer-overflow in adamic_string_units_before at string_index.c:140",
+    "bounded": true,
+    "matrix_rows": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "rows_passed": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "code_under_test": "C runtime string search and UTF-16 index cache",
+    "oracle": "Node indexOf and charCodeAt, complete stdout equality; ASan also checks native memory access"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "pass": [
+    "TestRuntimeStringViews",
+    "TestStringBuildingMatchesNode",
+    "TestStringIndexCacheStatesMatchNode",
+    "TestStringViewAfterAppendMatchesNode",
+    "TestStringsMatchJavaScript"
+  ],
+  "fail": [
+    "TestStringIndexMatchesNode"
+  ],
+  "skip": [],
+  "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/native-followup/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestStringBuildingMatchesNode|TestRuntimeStringViews)$' > D4.log 2>&1",
+  "wall_seconds": 22.61823810900023,
+  "exit": 1,
+  "file": "internal/native/runtime/string_index.c",
+  "line": 95,
+  "change": "bytes[0] & 0x07 -> bytes[0] & 0x03"
+}

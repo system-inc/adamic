@@ -1,0 +1,23 @@
+[
+  [
+    "D2",
+    "internal/native/runtime/string_repeat_impl.h",
+    "return repeat_unchecked(string, count);",
+    "return repeat_unchecked(string, count - 1);",
+    "internal/native/runtime/string.c"
+  ],
+  [
+    "D3",
+    "internal/native/runtime/string_append.c",
+    "if (string->heap.references == 1 && !itself",
+    "if (string->heap.references == 2 && !itself",
+    "internal/native/runtime/string_append.c"
+  ],
+  [
+    "D4",
+    "internal/native/runtime/string_index.c",
+    "bytes[0] & 0x07",
+    "bytes[0] & 0x03",
+    "internal/native/runtime/string_index.c"
+  ]
+]

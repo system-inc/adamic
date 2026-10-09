@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/string_repeat_impl.h b/internal/native/runtime/string_repeat_impl.h
+index 79142500..1d8e3e0f 100644
+--- a/internal/native/runtime/string_repeat_impl.h
++++ b/internal/native/runtime/string_repeat_impl.h
+@@ -24,7 +24,7 @@ adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
+ 		return adamic_retain((adamic_string *)&adamic_string_empty);
+ 	}
+ 	adamic_string_check_length(adamic_string_length(string) * count);
+-	return repeat_unchecked(string, count);
++	return repeat_unchecked(string, count - 1);
+ }
+ 
+ adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start) {
