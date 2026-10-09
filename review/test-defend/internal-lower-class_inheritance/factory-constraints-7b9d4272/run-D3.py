@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,os,json,time
-p=Path('review/test-defend/internal-lower-class_inheritance');f=Path('internal/lower/class_generic_calls.go')
+p=Path('review/test-defend/internal-lower-class_inheritance/factory-constraints-7b9d4272');f=Path('internal/lower/class_generic_calls.go')
 menu=[('D3','\tmapper := newTypeMapper(sources, targets)\n')]
 
 for mid,old in menu:

@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,os,json,time
-p=Path('review/test-defend/internal-lower-class_inheritance');f=Path('internal/lower/class_generic_calls.go')
+p=Path('review/test-defend/internal-lower-class_inheritance/factory-constraints-7b9d4272');f=Path('internal/lower/class_generic_calls.go')
 menu=[('D1','\tif err := l.nominalTypeArguments(declaration, targets, mapper, node); err != nil {\n\t\treturn nil, true, err\n\t}\n'),('D2','\tl.typeMapper, l.genericInstances = mapper, bucket\n')]
 for mid,old in menu:
  original=f.read_text();assert original.count(old)==1

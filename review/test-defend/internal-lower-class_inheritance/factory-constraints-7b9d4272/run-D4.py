@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,os,json,time
-p=Path('review/test-defend/internal-lower-class_inheritance');f=Path('internal/lower/class_inheritance.go')
+p=Path('review/test-defend/internal-lower-class_inheritance/factory-constraints-7b9d4272');f=Path('internal/lower/class_inheritance.go')
 menu=[('D4','\t\tconcrete[index] = instantiateType(l.checker, base, mapper)\n')]
 
 for mid,old in menu:
