@@ -1,0 +1,16 @@
+run adamic-verify-20261009T210921-62a4da13: void, 0 tests in 5 units, 0 failed, 5 units broken, 0 killed over budget
+AGAIN tests-00: from run adamic-verify-again-20261009T211428-ed38045c
+AGAIN tests-01: from run adamic-verify-again-20261009T211428-ed38045c
+AGAIN tests-02: from run adamic-verify-again-20261009T211428-ed38045c
+AGAIN tests-03: from run adamic-verify-again-20261009T211428-ed38045c
+AGAIN tests-04: from run adamic-verify-again-20261009T211428-ed38045c
+BROKEN tests-00: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-01: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-02: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-03: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-04: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN tests-00 on 3 placements, workers: 9b2db9d42042, 48ab18cc216d, d24109916836
+BROKEN tests-01 on 3 placements, workers: 1b945d0fb2e7, 79499c3bd220, 1b945d0fb2e7
+BROKEN tests-02 on 3 placements, workers: ddf4d400950e, 87d7b65f9647, 48ab18cc216d
+BROKEN tests-03 on 3 placements, workers: 79499c3bd220, 1b945d0fb2e7, 87d7b65f9647
+BROKEN tests-04 on 3 placements, workers: 48ab18cc216d, 9b2db9d42042, 79499c3bd220
