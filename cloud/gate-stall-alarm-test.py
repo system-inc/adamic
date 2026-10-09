@@ -105,6 +105,24 @@ class StallAlarmTests(unittest.TestCase):
             handle.write('B %d cloud/land-runtime-slice3 %s\n' % (self.now - 400, 'f' * 40))
         self.assertEqual(len(self.check()), 2)
 
+    def test_the_star_s_boxes_and_a_pool_with_no_side_tip_are_not_free(self):
+        # Oct 9 00:30Z: the star held Workshop and Server, whose six small slots sat idle by rule, and the alarm paged.
+        (self.root / 'slots').write_text('workshop B\nworkshop S\nworkshop S\npool P\npool P\n')
+        (self.root / 'star-boxes').write_text('workshop\n')
+        (self.root / 'pool-side').write_text('')
+        self.state(queuedAgo=400, startedAgo=360)
+        (self.root / 'queue').write_text('B %d cloud/land-x %s\n' % (self.now - 400, 'a' * 40))
+        self.assertEqual(self.check(), [], 'the star\'s box and a pool no queued tip can use are not free')
+        # A side tip waiting with the pool idle is a stall.
+        with open(self.root / 'queue', 'a') as handle:
+            handle.write('S %d codex/side %s\n' % (self.now - 400, 'b' * 40))
+        self.assertEqual(len(self.check()), 2)
+        # The pool switched off holds nothing.
+        (self.root / 'pool-side').unlink()
+        (self.root / 'sends').unlink()
+        (self.root / 'stall-alarmed').unlink(missing_ok=True)
+        self.assertEqual(self.check(), [])
+
 
 if __name__ == '__main__':
     unittest.main()

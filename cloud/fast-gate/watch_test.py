@@ -73,6 +73,15 @@ printf '%s %s\\n' "$box" "$*" >> "$TEST_ROOT/stops"
 touch "$TEST_ROOT/stopped-$sha"
 ''')
         self.script(self.bin / 'sleep', '/bin/sleep 0.03\n')
+        # Loom's side pool (#xt96xyp): a local waiter, here answering from pool-mode (green, red or void).
+        self.script(cloud / 'pool-job.sh', '''sha=$1; branch=$3
+printf '%s %s\\n' "$branch" "$sha" >> "$TEST_ROOT/pool-starts"
+while [ "$(cat "$TEST_ROOT/pool-mode" 2>/dev/null || echo hold)" = hold ]; do /bin/sleep 0.01; done
+case "$(cat "$TEST_ROOT/pool-mode")" in
+  green) echo "green: $sha fast gate on Loom's side pool, go tests only" ;;
+  void) echo "void: $sha the pool gave no verdict in 5400 s" ;;
+esac
+''')
         self.script(cloud / 'auto-area-merge.sh', '''printf '%s\\n' "$*" >> "$TEST_ROOT/merges"
 ''')
         (self.state / 'auto-area-merge').touch()
@@ -640,6 +649,41 @@ class WatchTests(unittest.TestCase):
         self.assertNotIn('codex/side', w.read('starts'))
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side' in w.read('starts'))
+
+    def test_side_tips_go_to_the_pool_and_a_pool_void_goes_to_the_boxes(self):
+        # @system_adamic, Oct 8 23:53Z: side work's fast gates go to Loom's pool, the boxes keep the star and landings.
+        w = self.reservation('box0 B\nbox1 S\npool P\n', [('cloud/land-x', 'B'), ('codex/side', 'S'), ('area/compiler', 'B')], release=False)
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: 'cloud/land-x ' in w.read('starts'))
+        # The pool before a free small slot: the boxes are kept for the star and landings.
+        w.wait(lambda: 'codex/side ' in w.read('pool-starts'))
+        self.assertNotIn('codex/side', w.read('starts'))
+        time.sleep(.3)
+        # An area runs complete, with stage 3: never on the pool.
+        self.assertNotIn('area/compiler', w.read('pool-starts'))
+        self.assertEqual(len(w.read('pool-starts').splitlines()), 1, 'one pool line, one job at once')
+        # A pool void sends the tip to the boxes, never counting toward a void storm.
+        w.put('pool-mode', 'void')
+        w.wait(lambda: 'pool void codex/side' in w.read('output'))
+        self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
+        w.put('mode', 'pass')
+        w.wait(lambda: 'codex/side 0' in w.read('starts'))
+        self.assertTrue([x for x in w.read('starts').splitlines() if x.startswith('codex/side ')][0].endswith(' box1'))
+        self.assertEqual(len(w.read('pool-starts').splitlines()), 1)
+
+    def test_a_pool_green_reaches_its_owner_and_promotes_no_tools(self):
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
+        self.addCleanup(w.close)
+        time.sleep(.4)
+        self.assertEqual(w.read('pool-starts'), '', 'the pool is off until pool-side exists')
+        (w.state / 'pool-side').touch()
+        w.wait(lambda: 'codex/test0 ' in w.read('pool-starts'))
+        w.put('pool-mode', 'green')
+        w.wait(lambda: 'done codex/test0: green:' in w.read('output'))
+        time.sleep(.2)
+        self.assertNotIn('promoted tools', w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
 
     def test_stop_gate_refuses_anything_but_a_whole_sha(self):
         w = self.start(0)

@@ -120,7 +120,14 @@ dispatch() {
   if staging && [ "${box}" != "$(cat "${state}/canary-box")" ]; then
     script=${goodTree}/cloud/fast-gate.sh token="$(cat "${state}/tools-good"):good"
   fi
-  ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
+  if [ "${box}" = pool ]; then
+    # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
+    # token names the good tools and a pool green promotes nothing.
+    token="$(cat "${state}/tools-good"):pool"
+    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" > "${log}" 2>&1 &
+  else
+    ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
+  fi
   local pid=$!
   echo "${started}" > "${state}/running-started/${pid}"
   echo "${branch} ${sha} ${slot} ${box} ${class} ${token} ${log}" > "${state}/running/${pid}"
@@ -212,6 +219,11 @@ sameReservedFamily() {
 # the reason from beside its out directory on SIGTERM, publishes what it had and exits.
 stopGate() {
   local pid=$1 branch=$2 sha=$3 box=$4 reason=$5
+  # A pool job is a local waiter: stopping it stops the wait (Loom's run finishes on its own and is never read).
+  if [ "${box}" = pool ]; then
+    kill -TERM "${pid}" 2> /dev/null && touch "${state}/stopped-running/${pid}"
+    return 0
+  fi
   if bash "${here}/cloud/stop-gate.sh" "${box}" "${sha}" "${reason}"; then
     touch "${state}/stopped-running/${pid}"
     return 0
@@ -524,6 +536,18 @@ borrowableBox() {
     [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
   done | head -1
 }
+# Side work's fast gates go to Loom's pool (#xt96xyp; @system_adamic, Oct 8 23:53Z): codex/* and devtools/* tips, never
+# the star, an ahead tip, a reservation, a landing or an area (areas run complete, with stage 3, which the pool can't).
+# "pool P" lines in the slot table are its capacity, one per job at once, and ${state}/pool-side switches it on. A tip
+# the pool once voided goes to the boxes.
+poolTip() {
+  local branch=$1 sha=$2 glob
+  [[ ${branch} == codex/* || ${branch} == devtools/* ]] || return 1
+  isFront "${branch}" && return 1
+  for glob in ${aheadList[@]+"${aheadList[@]}"}; do [[ ${branch} == ${glob} ]] && return 1; done
+  matchesReservation "${branch}" && return 1
+  ! grep -qx "${sha}" "${state}/pool-void" 2> /dev/null
+}
 # One pick from the ranked list: the tip with the lowest position * 100 + rank + extra that a free slot can
 # take now, as "score queued branch sha class slot box". Extra (a borrowed slot, 10) never crosses a
 # position (100 apart), so the walk stops at the first position past the best found.
@@ -535,9 +559,16 @@ pickNext() {
     generalClasses=" $(echo "${generalEligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')"
     generalBorrowable=$(borrowableBox "${generalEligible}")
   fi
+  local poolFree=no
+  [ -f "${state}/pool-side" ] && echo "${free}" | grep -qx "pool P" && poolFree=yes
   while read -r key queued class branch sha reserved; do
     position=$(( key / 100 ))
     [ -n "${best}" ] && [ "${position}" -gt "${bestPosition}" ] && break
+    if [ "${poolFree}" = yes ] && [ "${reserved}" = no ] && poolTip "${branch}" "${sha}"; then
+      [ -n "${best}" ] && [ "${key}" -ge "${bestScore}" ] && continue
+      best="${key} ${queued} ${branch} ${sha} ${class} P pool" bestScore=${key} bestPosition=${position}
+      break
+    fi
     if [ "${reserved}" = no ] && [ -n "${unreservedProbe}" ]; then
       eligible=${generalEligible} classes=${generalClasses} borrowable=${generalBorrowable}
     else
@@ -581,6 +612,8 @@ usableSlots() {
     isFront "${runningBranch}" && held="${held}${runningBox:-threadripper} "
   done < "${state}/running.tmp"
   while read -r box slot; do
+    # The pool is offered to side tips by pickNext alone.
+    [ "${box}" = pool ] && continue
     blocked=no
     [[ ${held} == *" ${box} "* ]] && blocked=yes
     # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there. The
@@ -749,6 +782,13 @@ while true; do
       continue
     fi
     cause=$(voidCause "${gateLog}")
+    if [ "${box}" = pool ] && [ -n "${cause}" ] && [ "${stoppedOnPurpose}" = no ]; then
+      echo "${sha}" >> "${state}/pool-void"
+      grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
+      echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+      echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; queued again for the boxes"
+      continue
+    fi
     if [ "${branch}" = canary/main ]; then
       if [ -n "${cause}" ]; then
         countVoid "${gateLog}"

@@ -50,6 +50,9 @@ drained = set()
 for pid in os.listdir(os.path.join(state, 'reserved-running')) if os.path.isdir(os.path.join(state, 'reserved-running')) else []:
     if alive(pid):
         drained.update(word for line in read(os.path.join('reserved-running', pid)) for word in line)
+# A box the star runs on or waits for takes no other gate (the star owns its box, Oct 8 21:47Z): its idle slots aren't
+# free. At 00:30Z on Oct 9 the alarm paged a stall on the star boxes' six idle small slots.
+drained.update(fields[0] for fields in read('star-boxes') if fields)
 running = []
 for pid in os.listdir(os.path.join(state, 'running')) if os.path.isdir(os.path.join(state, 'running')) else []:
     fields = (read(os.path.join('running', pid)) or [[]])[0]
@@ -62,6 +65,10 @@ for fields in read('slots'):
     if len(fields) < 2 or fields[0] in drained:
         continue
     box, slot = fields[0], fields[1]
+    # Loom's pool takes side tips only, while it is switched on (#xt96xyp).
+    if box == 'pool' and not (os.path.exists(os.path.join(state, 'pool-side')) and
+                              any(branch.startswith(('codex/', 'devtools/')) for branch in queued)):
+        continue
     globs = fields[2:3] or (firstStep if (box, slot) == ('server', 'B') else [])
     globs = [glob.rstrip(',') for glob in globs if glob.rstrip(',')]
     if globs:

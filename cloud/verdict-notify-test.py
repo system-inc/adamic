@@ -113,6 +113,14 @@ class VerdictTests(unittest.TestCase):
         self.send('codex/compiler-loops', self.red)
         self.assertEqual(list(self.jobs.glob('*.json')), [])
 
+    def test_a_pool_verdict_says_it_covered_the_go_tests_only(self):
+        log = ("fast gate: %s against main %s, tools x, on pool, class P\n"
+               "green: %s fast gate on Loom's side pool, go tests only, 12 units in 300 s (branch codex/compiler-x, run r)\n"
+               "published gate-logs/ababababab/20261009T010000Z/fast\n") % (SHA, 'c' * 40, SHA)
+        text = self.send('codex/compiler-x', log)[0][1]
+        self.assertIn("on Loom's side pool, Go tests only.", text)
+        self.assertNotIn('side pool', self.send('codex/compiler-x', self.red)[0][1])
+
     def test_no_all_caps_word_survives(self):
         log = self.red.replace('TestOwnershipShapes', 'TestJSONShapes')
         self.assertIn('Testjsonshapes', self.send('codex/compiler-x', log)[0][1])

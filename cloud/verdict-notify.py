@@ -187,6 +187,9 @@ def message(branch, sha, log, early=None):
         took = re.search(r'fast gate in ([\d.]+ s)', rest)
         if took:
             parts.append(' in %s' % took.group(1))
+    if "Loom's side pool" in rest:
+        # The pool runs the Go tests only (#xt96xyp): the page says what the verdict covers.
+        parts.append(" on Loom's side pool, Go tests only")
     parts.append('.')
     if early is not None:
         parts.append(' Log: %s.' % early)
