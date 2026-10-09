@@ -114,7 +114,7 @@ else
   done
   mode=$(cat "$TEST_ROOT/mode")
 fi
-if [ "$mode" = pass ]; then echo "green: $sha passed"
+if [ "$mode" = pass ]; then echo "green: $sha passed, 3 packages, $(cat "$TEST_ROOT/passes" 2>/dev/null || echo 900) pass, 0 skip, smoke 1 fixtures"
 elif [ "$mode" = red ]; then echo "red: $sha failed"
 else
   echo 'VOID FAILURE'; echo 'void: no result'
@@ -960,6 +960,21 @@ class WatchTests(unittest.TestCase):
         w.put('canary', 'pass')
         w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
 
+    def test_a_stage_canary_that_ran_too_few_tests_is_void_and_promotes_nothing(self):
+        # Oct 9 10:42Z: main gated against itself passed 0 tests, and its green promoted 0a1ccadc.
+        w = self.staged(1)
+        w.put('passes', '0')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'stage canary void with tools tools-one: ran 0 tests, under the canary' in w.read('output'))
+        time.sleep(.2)
+        self.assertNotIn('promoted tools', w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
+        self.assertFalse((w.state / 'storm').exists())
+        w.put('passes', '500')
+        w.put('canary', 'pass')
+        w.put('clock', '1600')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+
     def test_a_stage_canary_takes_another_box_when_the_canary_box_has_no_slot(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='box0 S\nbox0 S\nbox1 S\n')
         self.addCleanup(w.close)
@@ -1011,14 +1026,21 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: w.read('output').count('main canary not green') == 2)
         time.sleep(.3)
         self.assertEqual(w.read('messages').count('canary is not green'), 2)
+        # A green that ran too few tests is a void, and pages as one.
+        w.put('passes', '12')
         w.put('canary', 'pass')
         w.put('clock', '6400')
+        w.wait(lambda: 'void (ran 12 tests, under the canary' in w.read('output'))
+        w.wait(lambda: w.read('messages').count('canary is not green') == 4)
+        self.assertFalse((w.state / 'storm').exists())
+        w.put('passes', '900')
+        w.put('clock', '8200')
         w.wait(lambda: 'main canary green' in w.read('output'))
         w.put('canary', 'red')
-        w.put('clock', '8200')
-        w.wait(lambda: w.read('output').count('main canary not green') == 3)
+        w.put('clock', '10000')
+        w.wait(lambda: w.read('output').count('main canary not green') == 4)
         time.sleep(.3)
-        self.assertEqual(w.read('messages').count('canary is not green'), 4)
+        self.assertEqual(w.read('messages').count('canary is not green'), 6)
         self.assertFalse((w.state / 'storm').exists())
 
     def test_main_s_canary_runs_the_good_tools_while_new_ones_are_staged(self):

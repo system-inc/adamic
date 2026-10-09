@@ -72,6 +72,16 @@ voidCause() {
   grep -oE 'creating work dir|Connection reset by|kex_exchange_identification|ssh: connect to host|Connection refused|index\.lock.: File exists|No space left on device' "${log}" | head -1
 }
 
+# A canary green that passed fewer than ${canaryMinPass} tests proved nothing about the tests: it reads as void, never
+# green (@system_adamic, Oct 9 10:50Z, after main gated against itself passed 0 tests and promoted 0a1ccadc at 10:42Z).
+# Prints why, or nothing for a canary that ran enough. The stage and the half-hourly canaries read it; the deploy and
+# storm probe doesn't, since there a void starts a storm.
+thinCanary() {
+  local passed
+  passed=$(grep -E '^green:' "$1" | tail -1 | grep -oE ', [0-9]+ pass,' | grep -oE '[0-9]+')
+  [ "${passed:-0}" -ge "${canaryMinPass}" ] || echo "ran ${passed:-0} tests, under the canary's ${canaryMinPass}"
+}
+
 # Notifications are best effort, once per transition; uppercase runs are normalized because
 # ahra refuses all-caps words. Preserve mixed-case paths such as /Users.
 notifyStorm() {
@@ -848,6 +858,7 @@ toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
 canaryRequired=1
 mainCanarySeconds=${ADAMIC_FAST_GATE_MAIN_CANARY_SECONDS:-1800}
+canaryMinPass=${ADAMIC_FAST_GATE_CANARY_MIN_PASS:-500}
 [ -s "${state}/main-canary-started" ] || date -u +%s > "${state}/main-canary-started"
 [ -s "${state}/tools-good" ] || echo "${toolsHead}" > "${state}/tools-good"
 [ -s "${state}/canary-box" ] && placeGoodTree
@@ -967,14 +978,16 @@ while true; do
       # Main's half-hourly canary (#aptcka1): main's tip is the one sha whose answer we already know, so a red or a
       # void here is the gate's own fault until shown otherwise. It pages developer tools and integration once per
       # first failure; a green clears it. A void counts toward a storm like any box void.
-      verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1)
-      if [ -z "${cause}" ] && [[ ${verdict} == "green: ${sha} "* ]]; then
+      verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1) thin=""
+      [ -z "${cause}" ] && [[ ${verdict} == "green: ${sha} "* ]] && thin=$(thinCanary "${gateLog}")
+      if [ -z "${cause}" ] && [ -z "${thin}" ] && [[ ${verdict} == "green: ${sha} "* ]]; then
         echo "$(date -u +%H:%M:%S) main canary green: ${sha} on ${box} with tools ${testedHead%%:*}"
         rm -f "${state}/main-canary-paged"
         continue
       fi
       [ -n "${cause}" ] && countVoid "${gateLog}"
       said=${cause:+void (${cause})}
+      said=${said:-${thin:+void (${thin})}}
       said=${said:-${verdict}}
       echo "$(date -u +%H:%M:%S) main canary not green: ${sha} on ${box} with tools ${testedHead%%:*}: ${said}"
       # One page per failure, whatever main's sha or the seconds it took.
@@ -991,6 +1004,7 @@ while true; do
       # meant every box-side push restarted promotion and nothing promoted). A red holds them until the next box-side
       # push; a void says the tools, not the boxes, so it counts toward no storm and tries again in ten minutes.
       tested=${testedHead%%:*} verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1)
+      [ -z "${cause}" ] && [[ ${verdict} == "green: ${sha} "* ]] && cause=$(thinCanary "${gateLog}")
       if [ -n "${cause}" ]; then
         echo "$(date -u +%H:%M:%S) stage canary void with tools ${tested:0:9}: ${cause}; another in ten minutes"
         if [ "$(cat "${state}/stage-void" 2>/dev/null)" != "${testedHead}" ]; then
