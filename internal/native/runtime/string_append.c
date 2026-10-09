@@ -61,7 +61,7 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 	// of memory and write into bytes that are its owner's. length + added can't overflow, as the loop
 	// above held it under SIZE_MAX / 2.
 	adamic_string *result = string;
-	if (string->heap.references == 1 && !itself && length + added <= string->capacity) {
+	if (adamic_reference_count(&string->heap) == 1 && !itself && length + added <= string->capacity) {
 		// The bytes are about to change, so what was cached about the old ones goes: the length in
 		// units, and the position index (string_index.c).
 		adamic_string_free_index(string);

@@ -16,6 +16,7 @@ import (
 // TestWASIAgreesWithNode runs every ordinary fixture as a WASI command.
 // Opt in with ADAMIC_ORACLE_WASI=1; these observations always run uncached.
 func TestWASIAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
 	}
@@ -88,6 +89,7 @@ func onWASI(t *testing.T, source string) run {
 }
 
 func TestWASIOracleCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -111,6 +113,7 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -142,6 +145,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 
 // Compile every emitted translation unit for the 32-bit ABI independently of runtime linking.
 func TestWASIEmission(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -170,7 +174,7 @@ func TestWASIEmission(t *testing.T) {
 				t.Fatal(err)
 			}
 			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
-			if output, err := bounded(t, compiler, flags...).CombinedOutput(); err != nil {
+			if output, err := boundedCompile(t, compiler, flags...).CombinedOutput(); err != nil {
 				t.Fatalf("emitted C: %v\n%s", err, output)
 			}
 		})

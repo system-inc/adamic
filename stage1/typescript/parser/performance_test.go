@@ -14,7 +14,9 @@ import (
 
 // Not parallel: timing the three implementations together would measure their
 // contention. The opt-in benchmark runs after correctness and sanitizers.
-func TestPerformance(t *testing.T)      { performance(t, false) }
+func TestPerformance(t *testing.T) { performance(t, false) }
+
+// Not parallel: timings require an idle worker, as for TestPerformance.
 func TestWholePerformance(t *testing.T) { performance(t, true) }
 func performance(t *testing.T, whole bool) {
 	if os.Getenv("ADAMIC_PARSER_BENCH") != "1" {

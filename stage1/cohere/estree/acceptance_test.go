@@ -18,12 +18,7 @@ func TestAcceptanceGrammar(t *testing.T) {
 	list := manifest(t, acceptanceGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
-		}
-	}
+	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("%d acceptance grammar cases, %d identical canonical bytes", len(acceptanceGrammar()), len(want))
 }
 
@@ -42,9 +37,10 @@ func TestAcceptanceDiagnostics(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, path := range strings.Fields(string(paths)) {
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser")
-		}
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			checkRefusalModes(t, main, binary, script, path, "ESTree parser")
+		})
 	}
 	t.Logf("%d Go refusals explicitly refused before deadline on all builds", len(sources))
 }
@@ -57,11 +53,12 @@ func TestAcceptanceDiagnosticControl(t *testing.T) {
 		t.Fatal(statuses)
 	}
 	main := mutantPort(t, "pipeline.ts", "if(syntax !== '')", "if(false)")
-	binary, _ := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if !strings.Contains(string(got), "0 Program ") {
-			t.Fatal(name + " control did not accept")
-		}
-		t.Log(name + ": disabled syntax validation accepts Go-refused update operand; acceptance check catches it")
+	checkAcceptanceControl(t, main, list, 1)
+}
+
+// Not parallel: acceptance mutant products compile native runtime cache entries.
+func TestAcceptanceMutants(t *testing.T) {
+	for shard := 0; shard < testAcceptanceMutantsShards; shard++ {
+		runAcceptanceMutantShard(t, shard)
 	}
 }

@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -639,29 +640,9 @@ func natively(t *testing.T, program *ir.Program, arguments ...string) (run, stri
 	return execute(t, environment, binary, arguments...), binary
 }
 
-// leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
-// an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
-// checks every fixture.
+// leaks returns a report of everything the finished port never let go of, or "": the leak check the
+// oracle runs on every fixture (internal/leakcheck), on the sanitized binary and the port's C.
 func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return string(report.stdout)
-	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
-	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
+	return leakcheck.Report(t, native.C(program), sanitized, arguments...)
 }

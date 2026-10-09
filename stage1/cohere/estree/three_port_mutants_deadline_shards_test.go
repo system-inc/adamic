@@ -416,6 +416,7 @@ func runThreePortShard(t *testing.T, index int) {
 	}
 	// Prepare shared products before starting this shard's own-work deadline.
 	prepared := threePortReady(t)
+	script := mutantEmittedProduct(t, prepared.Ports[shard.cases[0].mutant].Source)
 	ctx, cancel := threePortOwnWorkContext(90 * time.Second)
 	defer cancel()
 	m := shard.cases[0].mutant
@@ -430,6 +431,7 @@ func runThreePortShard(t *testing.T, index int) {
 	want := threePortCanonicalRecords(t, threePortExecute(t, ctx, oracle, "--manifest", list), len(texts))
 	source := threePortCanonicalRecords(t, threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), sourcePath, "--manifest", list), len(texts))
 	native := threePortCanonicalRecords(t, threePortExecute(t, ctx, binary, "--manifest", list), len(texts))
+	mutantEmittedOutput(t, sourcePath, script, "--manifest", list)
 	for i, pair := range shard.cases {
 		if err := checkThreePortCase(pair, want[i], source[i], native[i]); err != nil {
 			t.Fatal(err)

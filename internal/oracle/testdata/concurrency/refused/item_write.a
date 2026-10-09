@@ -1,0 +1,5 @@
+import { parallelMap } from 'adamic';
+interface Item { readonly value: number; }
+const items: readonly Item[] = [{ value: 1 }];
+function write(item: { value: number }): number { item.value = 3; return item.value; }
+parallelMap(items, (item) => write(item));

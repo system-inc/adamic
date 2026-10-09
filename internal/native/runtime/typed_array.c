@@ -10,6 +10,7 @@ _Static_assert(sizeof(double) == 8, "Float64Array requires 8-byte doubles");
 static size_t width(enum adamic_typed_array_kind kind) {
 	switch (kind) {
 	case adamic_typed_array_uint8: return 1;
+	case adamic_typed_array_uint16: return 2;
 	case adamic_typed_array_int32: return 4;
 	case adamic_typed_array_float64: return 8;
 	}
@@ -53,6 +54,7 @@ adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, do
 static double read_element(const adamic_typed_array *array, size_t index) {
 	switch (array->kind) {
 	case adamic_typed_array_uint8: return ((const uint8_t *)array->data)[index];
+	case adamic_typed_array_uint16: return ((const uint16_t *)array->data)[index];
 	case adamic_typed_array_int32: return ((const int32_t *)array->data)[index];
 	case adamic_typed_array_float64: return ((const double *)array->data)[index];
 	}
@@ -65,11 +67,14 @@ static void write_element(adamic_typed_array *array, size_t index, double value)
 		return;
 	}
 	// Avoid undefined float-to-integer casts and implementation-defined signed wrap.
-	double modulus = array->kind == adamic_typed_array_uint8 ? 256.0 : 4294967296.0;
+	double modulus = array->kind == adamic_typed_array_uint8 ? 256.0 :
+		array->kind == adamic_typed_array_uint16 ? 65536.0 : 4294967296.0;
 	double modulo = isfinite(value) ? fmod(trunc(value), modulus) : 0;
 	if (modulo < 0) { modulo += modulus; }
 	if (array->kind == adamic_typed_array_uint8) {
 		((uint8_t *)array->data)[index] = (uint8_t)modulo;
+	} else if (array->kind == adamic_typed_array_uint16) {
+		((uint16_t *)array->data)[index] = (uint16_t)modulo;
 	} else {
 		double signed_value = modulo >= 2147483648.0 ? modulo - 4294967296.0 : modulo;
 		((int32_t *)array->data)[index] = (int32_t)signed_value;
