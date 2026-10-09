@@ -72,6 +72,18 @@ class AbTriggerTests(unittest.TestCase):
         job = json.loads(self.write(deadline)[0].read_text())
         self.assertEqual((job['kind'], job['leaf']), ('deadline', 'TestSixRuleAgreementAndMutants_004'))
 
+    def test_a_hand_rolled_own_work_watchdog_writes_a_deadline_job(self):
+        # Oct 9 13:31Z: gocacheprog 77dcb095's box run on Server went red at load 39 on css's own 60 s watchdog, and no A/B
+        # started because the panic matched no kind.
+        for text in ('github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_003\n'
+                     'panic: TestCSSPrinterAgreesWithGo_003: own work exceeded 60s\n',
+                     'github.com/system-inc/adamic/stage1/cohere/lint TestMutantsJsx_002\n'
+                     'panic: JSX mutant own work exceeded 60 seconds\n'):
+            for path in (self.root / 'jobs').glob('*.json') if (self.root / 'jobs').exists() else ():
+                path.unlink()
+            job = json.loads(self.write(text)[0].read_text())
+            self.assertEqual(job['kind'], 'deadline')
+
     def test_each_guard_verdict_writes_a_job_of_its_kind(self):
         # #ah17waq: stage 1's children die only through internal/childguard (stalled, or its ceiling) or internal/testguard
         # (a CPU limit), never confused with an assertion diff.

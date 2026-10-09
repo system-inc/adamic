@@ -40,6 +40,9 @@ kinds = (
     ('kill', re.compile(r'signal: killed|killed by (?:the )?(?:guard|watchdog)')),
     # A test's own budget kill (Oct 9: cohere's split units stop a step at 90 s and print this), which may be load.
     ('deadline', re.compile(r'unit deadline exceeded name=')),
+    # A test's hand-rolled own-work watchdog (Oct 9: css, json and lint shards panic 'own work exceeded 60s' or '60 seconds'),
+    # the same kind of kill until #xv6h7ty moves them onto internal/testgrain.
+    ('deadline', re.compile(r'own work exceeded \d+ ?s')),
 )
 testLine = re.compile(r'^(\S+/\S+) (Test[^\s]*)$')
 # A go test timeout panics naming the package alone; the test is the first one it lists as running.
