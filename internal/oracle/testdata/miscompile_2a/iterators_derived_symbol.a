@@ -1,0 +1,9 @@
+class Base { readonly limit = 2; }
+class Counted extends Base {
+ [Symbol.iterator]() {
+  let index = 0;
+  const limit = this.limit;
+  return { next() { index++; return { value: index, done: index > limit }; } };
+ }
+}
+console.log([...new Counted()].join(','));
