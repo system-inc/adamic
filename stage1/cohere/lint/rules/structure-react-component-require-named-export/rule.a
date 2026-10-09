@@ -1,0 +1,119 @@
+import type { RuleContext } from '../../context.ts';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { reactLikelyComponentName } from '../../helpers/react/react_likely_component_name.a';
+import { IsExportedByName } from '../../helpers/module/is_exported_by_name.a';
+import { exportNodeView } from '../../helpers/module/node_view.a';
+import type { AnalysisNode } from '../../helpers/slot05/batch33/model.a';
+import type { JsxNode } from '../../helpers/slot05/batch32/model.a';
+import { isLikelyReactComponent } from '../../helpers/slot05/batch33/is_likely_react_component.a';
+import { returnArgumentLooksLikeJsx } from '../../helpers/slot05/batch32/return_argument_looks_like_jsx.a';
+import { message } from './messages.a';
+interface Component { name: string; node: number; exported: boolean; }
+export class Rule {
+ readonly context: RuleContext;
+ readonly analysis: AnalysisNode[] = [];
+ readonly jsx: JsxNode[] = [];
+ readonly components: Component[] = [];
+ constructor(context: RuleContext) { this.context = context; }
+ // These tables only project parser facts into the shared helper contracts.
+ project(): void {
+  const c = this.context;
+  for(const n of c.parser.nodes) {
+   const k = n.kind;
+   const functionLike = ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration'].includes(k);
+   let body = -1;
+   if(functionLike) {
+    const last = n.children[n.children.length - 1] ?? -1;
+    if(c.kind(last) === 'Block' || (k === 'ArrowFunction' && c.kind(last) !== 'SemicolonToken')) { body = last; }
+   }
+   const parameters: number[] = [];
+   for(const child of n.children) { if(c.kind(child) === 'Parameter') { parameters.push(child); } }
+   let nodeName = -1;
+   if(k === 'Parameter') {
+    for(const child of n.children) {
+     if(!c.kind(child).endsWith('Keyword') && c.kind(child) !== 'DotDotDotToken' && c.kind(child) !== 'Decorator') { nodeName = child; break; }
+    }
+   }
+   this.analysis.push({functionLike, identifier:k === 'Identifier', typeReference:false,
+    call:k === 'CallExpression', property:k === 'PropertyAccessExpression', parenthesized:k === 'ParenthesizedExpression',
+    block:k === 'Block', returnStatement:k === 'ReturnStatement', text:n.text,
+    expression:n.children[0] ?? -1, name:nodeName, typeName:-1, body, parameters, statements:n.children});
+   this.jsx.push({element:k === 'JsxElement', fragment:k === 'JsxFragment', selfClosing:k === 'JsxSelfClosingElement',
+    parenthesized:k === 'ParenthesizedExpression', conditional:k === 'ConditionalExpression',
+    expression:n.children[0] ?? -1, whenTrue:n.children[2] ?? -1, whenFalse:n.children[4] ?? -1});
+  }
+ }
+ likely(index: number): boolean {
+  return isLikelyReactComponent(this.analysis, index, (expression: number): boolean => returnArgumentLooksLikeJsx(this.jsx, expression));
+ }
+ record(index: number, exported: boolean): void {
+  const c = this.context;
+  if(c.kind(index) !== 'Identifier') { return; }
+  const name = c.node(index).text;
+  for(const component of this.components) {
+   if(component.name === name) { if(exported) { component.exported = true; } return; }
+  }
+  this.components.push({name,node:index,exported});
+ }
+ forwardRef(index: number): boolean {
+  const c = this.context;
+  if(c.kind(index) !== 'CallExpression') { return false; }
+  const callee = c.node(index).children[0] ?? -1;
+  if(c.kind(callee) === 'Identifier') { return c.node(callee).text === 'forwardRef'; }
+  if(c.kind(callee) === 'PropertyAccessExpression') {
+   const name = c.property(callee);
+   return c.kind(name) === 'Identifier' && c.node(name).text === 'forwardRef';
+  }
+  return false;
+ }
+ visit(root: number): void {
+  const c = this.context;
+  const file = structureFileContext(c.parser.path);
+  if(!file.isReactFile || file.isSpecialNextJsFile) { return; }
+  this.project();
+  for(const statement of c.node(root).children) {
+   const kind = c.kind(statement);
+   if(kind === 'FunctionDeclaration') {
+    const name = c.name(statement);
+    if(name >= 0 && reactLikelyComponentName(c.node(name).text) && this.likely(statement)) {
+     this.record(name, IsExportedByName(exportNodeView(c.parser,statement).modifiers));
+    }
+   }
+   else if(kind === 'VariableStatement') {
+    const exported = IsExportedByName(exportNodeView(c.parser,statement).modifiers);
+    for(const list of c.node(statement).children) {
+     if(c.kind(list) !== 'VariableDeclarationList') { continue; }
+     for(const declaration of c.node(list).children) {
+      const name = c.node(declaration).children[0] ?? -1;
+      if(c.kind(name) !== 'Identifier' || !reactLikelyComponentName(c.node(name).text)) { continue; }
+      const children = c.node(declaration).children;
+      const last = children[children.length - 1] ?? -1;
+      const previous = children[children.length - 2] ?? -1;
+      const initializer = previous >= 0 && c.scanAt(c.node(previous).end) === 'EqualsToken' ? last : -1;
+      if(this.forwardRef(initializer) || this.likely(initializer)) { this.record(name,exported); }
+     }
+    }
+   }
+   else if(kind === 'ExportDeclaration') {
+    // A module specifier makes this a re-export of another file.
+    if(c.has(statement,'StringLiteral')) { continue; }
+    for(const clause of c.node(statement).children) {
+     if(c.kind(clause) !== 'NamedExports') { continue; }
+     for(const specifier of c.node(clause).children) {
+      const names = c.node(specifier).children;
+      const exported = names[names.length - 1] ?? -1;
+      let local = exported;
+      for(const child of names) { if(c.kind(child) === 'Identifier') { local = child; break; } }
+      if(c.kind(exported) !== 'Identifier' || c.node(exported).text === 'default') { continue; }
+      if(c.kind(local) !== 'Identifier') { continue; }
+      for(const component of this.components) { if(component.name === c.node(local).text) { component.exported = true; } }
+     }
+    }
+   }
+  }
+  for(const component of this.components) { if(component.exported) { return; } }
+  const first = this.components[0];
+  if(first !== undefined) { c.report(first.node,'structure/react-component-require-named-export','componentRequiresNamedExport',message(),'','',''); }
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

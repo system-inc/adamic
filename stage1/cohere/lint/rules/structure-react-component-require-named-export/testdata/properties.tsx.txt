@@ -1,0 +1,2 @@
+function Panel(properties: { title: string }) { return properties.title; }
+export default Panel;

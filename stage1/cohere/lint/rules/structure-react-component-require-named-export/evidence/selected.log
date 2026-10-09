@@ -1,0 +1,45 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestRequireNamedExportSelected
+=== PAUSE TestRequireNamedExportSelected
+=== CONT  TestMutants
+=== CONT  TestRequireNamedExportSelected
+=== RUN   TestMutants/default-specifier-counts-as-named
+=== PAUSE TestMutants/default-specifier-counts-as-named
+=== CONT  TestMutants/default-specifier-counts-as-named
+    lint_test.go:1127: checker compilation phases: load=241.764323ms lower=8.605688305s C=970.785109ms JavaScript=38.421471ms
+    lint_test.go:1133: default-specifier-counts-as-named caught on Node: case 88 line 4888: port "fixed\tfunction Button() { return <div />; }\\u000aexport { Button as default };\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-specifier-counts-as-named1607188406/019/structure-react-component-require-named-export-0.tsx:1:10"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsdefault-specifier-counts-as-named1607188406/019/structure-react-component-require-named-export-0.tsx:1:10
+          structure/react-component-require-named-export  This file declares a component and exports nothing by name, so a consumer can only reach it through a default import, which lets every importer choose its own name for the same component. That makes the codebase impossible to grep: the thing is called one name where it is written and another wherever it is used, and a rename never propagates. Put `export` on the declaration.
+
+        range 9 15 componentRequiresNamedExport 			9 15
+        fixed	function Button() { return <div />; }\u000aexport { Button as default };\u000a
+    lint_test.go:1133: default-specifier-counts-as-named caught on emitted JavaScript: case 88 line 4888: port "fixed\tfunction Button() { return <div />; }\\u000aexport { Button as default };\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-specifier-counts-as-named1607188406/019/structure-react-component-require-named-export-0.tsx:1:10"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsdefault-specifier-counts-as-named1607188406/019/structure-react-component-require-named-export-0.tsx:1:10
+          structure/react-component-require-named-export  This file declares a component and exports nothing by name, so a consumer can only reach it through a default import, which lets every importer choose its own name for the same component. That makes the codebase impossible to grep: the thing is called one name where it is written and another wherever it is used, and a rename never propagates. Put `export` on the declaration.
+
+        range 9 15 componentRequiresNamedExport 			9 15
+        fixed	function Button() { return <div />; }\u000aexport { Button as default };\u000a
+--- PASS: TestMutants (2.75s)
+    --- PASS: TestMutants/default-specifier-counts-as-named (10.90s)
+=== NAME  TestRequireNamedExportSelected
+    lint_test.go:296: cohere cases: 5762 unique source/rule/options combinations
+    require_named_export_selected_test.go:16: captured upstream cases: 32
+    require_named_export_selected_test.go:23: checker compilation phases: load=219.454197ms lower=7.667095631s C=748.573121ms JavaScript=38.903642ms
+    require_named_export_selected_test.go:23: checker native build: 1m7.942532477s
+    require_named_export_selected_test.go:23: Go, Node, emitted JavaScript, native identical: 533987 bytes
+--- PASS: TestRequireNamedExportSelected (105.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	106.068s

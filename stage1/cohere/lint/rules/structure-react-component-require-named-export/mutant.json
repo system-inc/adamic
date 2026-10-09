@@ -1,0 +1,5 @@
+{
+  "name": "default-specifier-counts-as-named",
+  "from": "c.kind(exported) !== 'Identifier' || c.node(exported).text === 'default'",
+  "to": "c.kind(exported) !== 'Identifier'"
+}

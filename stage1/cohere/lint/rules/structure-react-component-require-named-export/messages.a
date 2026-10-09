@@ -1,0 +1,3 @@
+import { PolicyMessage } from '../../helpers/policy_message.ts';
+const catalog = new PolicyMessage("{\"structure/react-component-require-named-export\":{\"componentRequiresNamedExport\":{\"Text\":\"This file declares a component and exports nothing by name, so a consumer can only reach it through a default import, which lets every importer choose its own name for the same component. That makes the codebase impossible to grep: the thing is called one name where it is written and another wherever it is used, and a rename never propagates. Put `export` on the declaration.\",\"Options\":null}}}");
+export function message(): string { return catalog.render('structure/react-component-require-named-export', 'componentRequiresNamedExport', new Map<string, string>(), []); }
