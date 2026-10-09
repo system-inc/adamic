@@ -1,0 +1,10 @@
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -19,7 +19,6 @@
+ 	}
+ 	if field != nil {
+ 		declared := l.checker.GetTypeOfSymbol(field)
+-		property.ViewTypeID = int(declared.Id())
+ 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+ 		property.ViewType = l.checker.TypeToString(declared)
+ 		property.ViewAllowed = l.viewLiterals(declared)

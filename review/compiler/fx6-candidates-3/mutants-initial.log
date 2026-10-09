@@ -1,0 +1,54 @@
+nullable-receiver: caught by optional checked read escaped
+generic-receiver: caught by exit codes differ
+union-receiver: caught by gap changed
+receiver: runner passed
+revert-receiver exit 1
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== CONT  TestFX6P37
+    fx6_valid_test.go:29: JavaScript backend stdout = "3\n", source Node = "3\nnumber 5\n"
+--- FAIL: TestFX6P37 (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.303s
+FAIL
+
+revert-destructure-type-id exit 1
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== CONT  TestFX6P53
+    fx6_valid_test.go:44: JavaScript backend stdout = "", source Node = "n5\n"
+--- FAIL: TestFX6P53 (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.205s
+FAIL
+
+revert-p70 exit 1
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== CONT  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:33: want located tuple object refusal, got <nil>
+--- FAIL: TestTupleObjectViewRefused (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.185s
+FAIL
+
+valid: runner passed
+element-bypass exit 1
+destructure-bypass exit 1
+routing: runner passed
+skip-conversion-check: caught by native and sanitized misfit fixture runtime comparisons; exit 1
+scalar: runner passed
+unfiltered-native caught; test exit 1
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/fx6-candidates-3/run-mutants.py", line 14, in <module>
+    exec(compile(s,str(p),'exec'),{'__file__':str(p),'__name__':'__main__'})
+  File "/workspace/adamic/review/compiler/fx7-callable-producers/run-mutants.py", line 25, in <module>
+    print(name,'caught; test exit',result.returncode,flush=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: === RUN   TestCallableProducerCertificatesUseClosureThunks
+=== PAUSE TestCallableProducerCertificatesUseClosureThunks
+=== CONT  TestCallableProducerCertificatesUseClosureThunks
+--- PASS: TestCallableProducerCertificatesUseClosureThunks (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.234s
+

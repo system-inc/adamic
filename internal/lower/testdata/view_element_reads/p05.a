@@ -1,0 +1,8 @@
+// A wrong view's number field, read by a string-literal key, holds a string.
+interface Holder { readonly kind: 'Holder'; readonly count: number; }
+const raw = { kind: 'Holder' as const, count: 'seven' };
+const base: { readonly kind: 'Holder' } = raw;
+const view = base as Holder;
+const doubled = view['count'] * 2;
+console.log(`${doubled}`);
+console.log(`${view['count'] > 0}`);

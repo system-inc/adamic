@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewIn
+=== PAUSE TestCheckedViewIn
+=== CONT  TestCheckedViewIn
+    view_element_reads_test.go:64: gate cache node hit
+    view_element_reads_test.go:64: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    view_element_reads_test.go:64: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: 'count' in view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "true\n" stderr ""
+        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: 'count' in view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "true\n" stderr ""
+        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: 'count' in view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "true\n" stderr ""
+--- FAIL: TestCheckedViewIn (0.35s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.355s
+FAIL

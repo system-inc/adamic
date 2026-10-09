@@ -1,0 +1,48 @@
+=== RUN   TestStringViewAfterAppendMatchesNode
+=== PAUSE TestStringViewAfterAppendMatchesNode
+=== RUN   TestRuntimeStringViews
+=== PAUSE TestRuntimeStringViews
+=== RUN   TestViewSnapshotPayloadOwnership
+=== PAUSE TestViewSnapshotPayloadOwnership
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestStringViewAfterAppendMatchesNode
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false
+=== CONT  TestViewSnapshotPayloadOwnership
+=== CONT  TestRuntimeStringViews
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/0
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/1
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/2
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/4
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/5
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true
+--- PASS: TestViewSnapshotPayloadOwnership (0.24s)
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/0
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/1
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/2
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/4
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/5
+=== NAME  TestStringViewAfterAppendMatchesNode
+    string_index_test.go:406: 43 lines match Node, including literal, stack and in-place append views
+--- PASS: TestStringViewAfterAppendMatchesNode (0.33s)
+--- PASS: TestViewMixedUnionUnknownAndUnavailable (0.33s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/false (0.10s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/0 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/1 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/2 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/3 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/4 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/5 (0.00s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/true (0.23s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/0 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/1 (0.01s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/2 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/3 (0.01s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/4 (0.01s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/5 (0.00s)
+--- PASS: TestRuntimeStringViews (0.39s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.406s
