@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-underscore-dangle/profile.a
++++ b/stage1/cohere/lint/rules/no-underscore-dangle/profile.a
+@@ -22,7 +22,7 @@
+     const read = readTextFile(path);
+     if(read.kind === 'Error') { panic(read.message); }
+     const source = read.text;
+-    const parser = new Parser(source, path);
++    const parser = new Parser(path, source);
+     const root = parser.file();
+     const parents: number[] = [];
+     for(const node of parser.nodes) { parents.push(-1); }

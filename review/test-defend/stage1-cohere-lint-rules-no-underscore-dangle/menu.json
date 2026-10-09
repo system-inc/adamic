@@ -1,0 +1,23 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:25",
+    "change": "swap arguments: parser input and filename",
+    "from": "new Parser(source, path)",
+    "to": "new Parser(path, source)"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:42",
+    "change": "swap callback arguments: reverse finding ordering",
+    "from": "(left, right) => left.start - right.start",
+    "to": "(right, left) => left.start - right.start"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:10",
+    "change": "swap recursive arguments: revisit parent instead of descending",
+    "from": "ancestry(context, parents, child, index)",
+    "to": "ancestry(context, parents, index, child)"
+  }
+]

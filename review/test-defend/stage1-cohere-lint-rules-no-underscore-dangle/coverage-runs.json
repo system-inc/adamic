@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/load,github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/target.cover",
+      "./stage1/cohere/lint/rules/no-underscore-dangle/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "exit": 0,
+    "wall": 52.950951077000354
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/load,github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/rest.cover",
+      "./stage1/cohere/lint/rules/no-underscore-dangle/",
+      "-run",
+      "^$"
+    ],
+    "exit": 0,
+    "wall": 2.095756769995205
+  }
+]

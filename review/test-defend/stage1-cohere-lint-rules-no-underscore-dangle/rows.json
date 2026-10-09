@@ -1,0 +1,31 @@
+[
+  {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:25",
+        "change": "swap arguments: parser input and filename",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:42",
+        "change": "swap callback arguments: reverse finding ordering",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:10",
+        "change": "swap recursive arguments: revisit parent instead of descending",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/underscore-defend/cache/D{1,2,3} timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/no-underscore-dangle/ -run .; D1: --- PASS: TestCompileProfiles (39.16s); D2: --- PASS: TestCompileProfiles (38.04s); D3: --- PASS: TestCompileProfiles (37.77s). No production-mutant failing line exists in this session."
+  }
+]
