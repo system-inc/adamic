@@ -66,6 +66,15 @@ if gated:
     job["gate"] = gated
 if priority:
     job["priority"] = int(priority)
+# A higher tier already in the file stays: Loom or integration may have raised it by hand (a P0 at 40 outside the
+# waterfall, Oct 9 13:23Z), and a requeue writing its own 10 over it sent fx5 refusals 7f746e5a to the side slots.
+try:
+    with open(path) as handle:
+        earlier = json.load(handle).get("priority")
+    if isinstance(earlier, int) and earlier > job.get("priority", 0):
+        job["priority"] = earlier
+except (OSError, ValueError, AttributeError):
+    pass
 with open(path + ".partial", "w") as handle:
     json.dump(job, handle)
 os.replace(path + ".partial", path)

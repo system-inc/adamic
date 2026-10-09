@@ -177,6 +177,12 @@ fi
         (self.root / 'jobs' / (sha + '.cancel')).write_text('left by an earlier job\n')
         self.pool(sha, 'codex/feature')
         self.assertFalse((self.root / 'jobs' / (sha + '.cancel')).exists())
+        # A requeue keeps a higher tier already in the job file (a P0 raised by hand), and never lowers it.
+        job_path = self.root / 'jobs' / (sha + '.json')
+        raised = json.loads(job_path.read_text())
+        raised['priority'] = 40
+        job_path.write_text(json.dumps(raised))
+        self.assertEqual(self.pool(sha, 'codex/feature')[1]['priority'], 40)
         # Every unit placed by the deadline: no race.
         placed = self.candidate('codex/placed', {'feature.go': 'package feature // placed\n'})
         (self.root / 'jobs').mkdir(exist_ok=True)

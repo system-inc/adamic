@@ -291,6 +291,18 @@ class DispatchTests(unittest.TestCase):
             self.step()
         self.assertEqual(len(self.calls(['ai', 'start'])), 1)
 
+    def test_backpressure_starts_a_brief_that_adds_no_gate_load(self):
+        # Kirk, Oct 9 16:22Z: developer tools' tools briefs (cloud/ on devtools/fast-gate, never gated as candidates) sat
+        # behind 63 queued candidates.
+        (self.queue / '01.md').write_text('Label: side\nPolish a side tool for #zzzzzz1.\n')
+        (self.queue / '02.md').write_text('Label: tools\nTask: qse4xnb\nGate-load: none (devtools/guard-kill-rerun is skipped)\n')
+        (self.watch / 'slots').write_text('box B\nbox S\n')
+        (self.watch / 'queue').write_text('S 1 codex/a x\n' * 7)
+        with patch.dict(os.environ, {'ADAMIC_FLEET_FLOOR_CRITICAL': '8p84qna'}):
+            self.step()
+        self.assertEqual([c[6] for c in self.calls(['ai', 'start'])], ['tools'])
+        self.assertTrue((self.queue / '01.md').exists(), 'side work stays queued')
+
     def test_the_path_s_work_is_the_path_and_everything_upstream_of_it(self):
         waterfall = {'criticalPath': ['v1', 'v2'],
                      'edges': [{'from': 'core', 'to': 'step24'}, {'from': 'step24', 'to': 'v2'}, {'from': 'v1', 'to': 'v2'},

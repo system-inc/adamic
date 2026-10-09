@@ -1,0 +1,2 @@
+# Review programs out of the review lane by ruling, one "<task>/<file>.a <why>" per line (cloud/review-census.py).
+fxspptb/d96d304_normalize_edge.a builds strings at V8's maximum length, 39.2 s on the box, over the lane's 30 s unit; integration moved it out at f71bbe97 and it lives as evidence in review/fxspptb/ (Oct 9 15:15Z)

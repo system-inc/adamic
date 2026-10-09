@@ -1,12 +1,21 @@
 # The gate-mutant suite (#fyvmsy8, @system_adamic's ruling Oct 9 06:21Z, built by @system_adamic_tests on #f3p1c0z): planted
 # candidates whose verdict a correct gate already knows. Every stage canary and every half-hourly main canary gates each one
 # with the canary's own tools (cloud/fast-gate-watch.sh), and staged box tools promote only when every mutant reads as
-# declared here. Each is a single commit on main ce1c5a2f, pinned by sha so a moved branch never changes the suite; never
+# declared here. Each is a single commit on main, pinned by sha so a moved branch never changes the suite; never
 # merge one. A mutant that stops merging cleanly onto main reads red at merge, which is no expected verdict: rebase it.
 #
 # name<TAB>sha<TAB>step<TAB>pattern: the red must be at that step, and the pattern (an extended regex, may be empty) must
 # match the first failure's block of the gate's log. An empty file is no suite; a missing one holds every promotion.
-plain-wrong-answer	58c3960d5f90899a24e55ab840076b29bc1ca320	tests	internal/buildcache TestEveryInputChangesTheKey
+# The control, a plain wrong answer in a package nothing imports, so the fast gate selects it alone and names it (@system_adamic_tests,
+# Oct 9 14:16Z; it replaces plain-wrong-answer, whose buildcache change selected 96 units and stopped first on another package).
+# Any statecopy test is a correct first failure: the flipped argument check breaks every test that runs the tool, and
+# main added TestPublishedCopyModeIsPrivate (publication_unix_test.go), which now fails first (Oct 9 16:29Z misread).
+plain-wrong-answer-leaf	2df63b7390d02b3b70b9751369aa17069a30b640	tests	stage3/census/latent/statecopy Test[A-Za-z]+
 binary-dies-partway	a840ec0723dee3a596055f76146a36a44cc60b10	tests	internal/corpusfiles
 deferred-red-reaches-census	0096078f544f90bb5d48febbc5099a906699e734	census
 wasi-family-must-run	15e7f9faa8733da808570aa6b63777161d1402c0	tests	internal/native TestWASIUnit[0-9]+
+# Hole 5, a canary that runs nothing: ten empty commits on main ce1c5a2f, gated against its tip~10 as a canary is; it
+# must read as thin (under the canary's 500 passed tests), which a canary reads void and never promotes on. Empty, not
+# docs-only: gitignore's tests read every path and markdowninline's every .md, so the docs-only cut (8820bb5c) selected
+# both, passed 2170 tests and read as a wrong green (Oct 9 15:43Z).
+canary-empty-landings	fae5b2c14f1f05b31e1dc9bda30f4d32f58222ca	thin	

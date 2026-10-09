@@ -52,7 +52,19 @@ import traceback
 
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
-gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
+gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1",
+                   "GOFLAGS": "-buildvcs=false -trimpath"}
+# Every go command the gate runs builds without the commit stamp or the checkout path (@system_adamic, Oct 9 16:33Z): a
+# product's bytes must be a function of its build cache key, and neither is in a key, so main's product fetched at a
+# candidate's commit or another machine's path differed from the candidate's own fresh build in 12 ranges (stage 0,
+# floor1's identity check) and the rebuild audit would call it poisoning. A phase that sets its own go flags keeps them.
+gateGoFlags = gateEnvironment["GOFLAGS"].split()
+
+
+def withGateGoFlags(variables):
+    flags = variables.get("GOFLAGS", "").split()
+    variables["GOFLAGS"] = " ".join(flags + [flag for flag in gateGoFlags if flag not in flags])
+    return variables
 fullPackageTimeout = "3h"
 slowPackageSeconds = 3600
 # Kirk's hard constraint (Oct 8): no test unit runs longer than this, so every unit can go to any of a hundred
@@ -382,6 +394,12 @@ def main():
     sys.exit(0 if gate.failure is None and not gate.stopped else 1)
 
 
+class CensusRefusal(ValueError):
+    """The compiler dependency census refused a change: a red the change can fix itself, never a gate-tool crash. A
+    plain ValueError reached the runner as 'the gate tool crashed', so main fc7252a6's whole gate recorded cd01cd09's
+    undeclared consumer as infra (#3rq7vga, Oct 9), and red-sort would have counted it as nobody's."""
+
+
 class Gate:
     def __init__(self, arguments):
         self.arguments = arguments
@@ -491,12 +509,8 @@ class Gate:
         changed = [path for path in changed if path]
         try:
             packages, unowned = self.touched(changed)
-        except ValueError as error:
-            if not str(error).startswith("compiler dependency census"):
-                raise
-            # A red the change can fix itself, never a gate-tool crash (developer tools, Oct 9).
-            self.fail("census", "%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, "
-                      "then the compiler packages it exercises (entries there add to the gate tools' map)." % error)
+        except CensusRefusal as error:
+            self.censusRed(error)
             return
         # Stage 1's corpus tests sample in the landing gate (@system_adamic's ruling; the interface agreed
         # with @system_cohere_adamic): the main sha the gate diffs against sets the stride's offset, and the
@@ -658,10 +672,18 @@ class Gate:
             if self.arguments.full:
                 parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
                 changed = [path for path in (self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []) if path]
-                _, unowned = self.touched(changed)
+                try:
+                    _, unowned = self.touched(changed)
+                except CensusRefusal as error:
+                    self.censusRed(error)
+                    return
                 self.cover(unowned, changed)
             else:
-                self.fastPhaseInputs(recordCoverage=True)
+                try:
+                    self.fastPhaseInputs(recordCoverage=True)
+                except CensusRefusal as error:
+                    self.censusRed(error)
+                    return
         elif phase == "tools":
             self.toolsDeclared()
         elif phase == "build":
@@ -707,7 +729,11 @@ class Gate:
                 self.checkCensus()
                 self.requestedRan()
         elif phase in ("workers", "a-check", "catalog-apply"):
-            changed, executors = self.fastPhaseInputs()
+            try:
+                changed, executors = self.fastPhaseInputs()
+            except CensusRefusal as error:
+                self.censusRed(error)
+                return
             if phase == "workers":
                 if not executors & {"workers", "bench-workers"}:
                     raise ValueError("workers has no work for this change")
@@ -768,7 +794,11 @@ class Gate:
         # The no-executor check holds on main too: what this main changed against its first parent.
         parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
         changed = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
-        _, unowned = self.touched([path for path in changed if path])
+        try:
+            _, unowned = self.touched([path for path in changed if path])
+        except CensusRefusal as error:
+            self.censusRed(error)
+            return
         self.cover(unowned, [path for path in changed if path])
         try:
             self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
@@ -823,7 +853,10 @@ class Gate:
         refused outright, since no gate gives it its input."""
         deferred = self.deferredList()
         outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
-        results = {importPath + " " + name: outcomes.get(importPath + " " + name, "missing")
+        # A family split into shards is judged over its shards, as the fast gate judges a requested one (familyOutcome,
+        # 7adc5bf9): matched by exact name, five internal/native families read missing on main 20d538c0's whole log with
+        # every shard passing.
+        results = {importPath + " " + name: familyOutcome(outcomes, importPath, name)
                    for importPath, names in deferred.items() for name in sorted(names)}
         self.result["deferred_whole_results"] = results
         refused = deferredClassedOut(self.arguments.tools, deferred)
@@ -1328,7 +1361,9 @@ class Gate:
                         fields = line.split()
                         if fields and not fields[0].startswith("#"):
                             deferred.setdefault(module + "/" + fields[0], set()).add(fields[1])
-                self.result["deferred_list_blob"] = self.git(root, "hash-object", path)
+                # A plain read, not self.git: the whole gate checks its deferred list after the census, and a census red
+                # has cancelled the run by then, so spawning refuses (main 20d538c0's record had no deferred verdict).
+                self.result["deferred_list_blob"] = git(root, "hash-object", path)
                 return deferred
         return {}
 
@@ -1566,7 +1601,7 @@ class Gate:
             self.result["compiler_consumers_undeclared_on_base"] = onBase
         missing = [path for path in missing if path in touchedFiles]
         if missing:
-            raise ValueError("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
+            raise CensusRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
         self.result["compiler_dependency_map"] = {"root": root, "path": name}
         return packages
 
@@ -2217,17 +2252,31 @@ class Gate:
     def checkCensus(self):
         started = time.monotonic()
         tools = self.arguments.tools
+        logPath = os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")
+        censusPath = os.path.join(os.path.abspath(self.arguments.out), "census-tests.jsonl")
+        try:
+            heavy, unknown = heavyCensus(logPath, censusPath, heavyUnits(tools), self.arguments.full)
+        except (OSError, ValueError) as error:
+            self.exits["census"] = 1
+            self.fail("census", "heavy census: %s" % error)
+            return
+        self.census["heavy"] = heavy
+        self.census["unclassified"] += unknown
+        self.result["heavy_skips"] = heavy
         # census-extra.json: skips in main the tools tree doesn't have yet, classified, checked against the log only.
         # -git: a pending skip passes only while the branch it awaits is off main (asked of the candidate's origin).
         process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, "-extra", os.path.join(tools, "cloud/fast-gate/census-extra.json"),
                               "-git", os.path.abspath(self.arguments.tree),
-                              os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
+                              censusPath],
                              subprocess.PIPE, subprocess.PIPE, tools, {"GOWORK": "off"})
         stdout, stderr = process.communicate()
+        heavyReport = "".join("heavy\t%s\t%s\t%s\t%.1f s\t%s\n" %
+                              (row["package"], row["test"], row["owner"], row["budget_seconds"], row["why"]) for row in heavy)
+        heavyReport += "".join("unknown\t%s\t%s\n" % tuple(key.split(" ", 1)) for key in unknown)
         with open(os.path.join(self.arguments.out, "census.log"), "w") as handle:
-            handle.write(stdout + stderr)
+            handle.write(heavyReport + stdout + stderr)
         self.steps["census"] = round(time.monotonic() - started, 1)
-        self.exits["census"] = process.returncode
+        self.exits["census"] = process.returncode or (1 if unknown else 0)
         for line in stdout.splitlines():
             fields = line.split("\t")
             if len(fields) == 3 and fields[0] == "required-input":
@@ -2236,8 +2285,8 @@ class Gate:
                 self.census["unclassified"].append(fields[1] + " " + fields[2])
             if len(fields) == 5 and fields[0] in ("pending", "pending-landed", "pending-unknown"):
                 self.census.setdefault("pending", []).append("%s %s (%s)" % (fields[1].rsplit("/", 1)[-1], fields[2], fields[4]))
-        if process.returncode != 0:
-            self.fail("census", (stdout + stderr)[-4000:])
+        if self.exits["census"] != 0:
+            self.fail("census", (heavyReport + stdout + stderr)[-4000:])
 
     def git(self, directory, *arguments):
         return self.command(["git", "-C", directory] + list(arguments),
@@ -2264,6 +2313,7 @@ class Gate:
             variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
             variables.update(environment or {})
             variables.update(self.buildStoreEnvironment)
+            withGateGoFlags(variables)
             process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
             self.processes.append(process)
             self.recordTestStart(command)
@@ -2278,6 +2328,10 @@ class Gate:
                 after_seconds=round(time.monotonic() - self.testsStarted, 3)))
             details["launched"].set()
             self.testLaunchLock.release()
+
+    def censusRed(self, error):
+        self.fail("census", "%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, "
+                  "then the compiler packages it exercises (entries there add to the gate tools' map)." % error)
 
     def fail(self, step, detail):
         with self.lock:
@@ -2367,6 +2421,25 @@ class Gate:
                             burndown.add((fields[0], fields[1]))
         except OSError:
             pass
+        try:
+            declarations = heavyUnits(self.arguments.tools)
+            heavy = []
+            for (package, name), (seconds, action) in sorted(units.items()):
+                declared = heavyUnit(declarations, package, name)
+                if declared is not None:
+                    heavy.append(dict(declared, test=name, seconds=seconds, action=action,
+                                      **{"class": "heavy", "over_budget": seconds > declared["budget_seconds"]}))
+        except (OSError, ValueError) as error:
+            self.fail("budget", "heavy declarations: %s" % error)
+            return
+        self.result["heavy_units"] = heavy
+        heavyKeys = {(row["package"], row["test"]) for row in heavy}
+        ledger = [row for row in ledger if (row[0], row[1]) not in heavyKeys]
+        heavyOver = [row for row in heavy if row["over_budget"]]
+        if heavyOver and self.failure is None and not getattr(self, "stopped", None):
+            self.fail("budget", "heavy units over their own budget:\n" + "\n".join(
+                "heavy %s %s %.1f s > %.1f s; owner %s" %
+                (row["package"], row["test"], row["seconds"], row["budget_seconds"], row["owner"]) for row in heavyOver))
         over = {(package, name) for package, name, _, _ in ledger}
         listed = sorted("%s %s" % key for key in over & burndown)
         offBurndown = [row for row in ledger if (row[0], row[1]) not in burndown]
@@ -2427,8 +2500,12 @@ class Gate:
         self.budget(longTests(units), units)
         for row in self.result.get("cache_drain_units", []):
             units[row["package"], row["test"]] = (row["seconds"], "pass" if row["exit"] == 0 else "fail")
+        heavyRows = {(row["package"], row["test"]): row for row in self.result.get("heavy_units", [])}
         self.result["units"] = [{"package": package, "test": name, "seconds": seconds, "action": action,
-                                 "product": name.startswith("TestProduct_")}
+                                 "product": name.startswith("TestProduct_"),
+                                 **({"class": "heavy", "owner": heavyRows[package, name]["owner"],
+                                     "budget_seconds": heavyRows[package, name]["budget_seconds"]}
+                                    if (package, name) in heavyRows else {})}
                                 for (package, name), (seconds, action) in sorted(units.items())]
         ledger = longTests(units)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
@@ -2472,6 +2549,10 @@ class Gate:
         steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
         if self.result.get("products_over_budget"):
             steps += "; products over %d s, listed not red: %s" % (longTestSeconds, "; ".join(self.result["products_over_budget"]))
+        if self.result.get("heavy_units"):
+            steps += "; heavy: " + "; ".join("%s %s %.1fs/%.1fs owner %s" %
+                (row["package"], row["test"], row["seconds"], row["budget_seconds"], row["owner"])
+                for row in self.result["heavy_units"])
         if self.census.get("pending"):
             steps += "; pending skips: %s" % "; ".join(self.census["pending"])
         steps += "; box " + ", ".join("%s at %s" % (loadWords(self.result["box_load"][moment]), moment.replace("_", " "))
@@ -2643,6 +2724,74 @@ def testInBase(tree, base, package, unit):
     found = subprocess.run(["git", "-C", tree, "grep", "-q", "-E", r"^func %s\(" % re.escape(test), base, "--", ":(glob)" + directory + "/*_test.go"],
                            capture_output=True)
     return found.returncode == 0
+
+
+def heavyUnits(tools):
+    """Explicit exemptions only. Missing inventory means none; malformed rows fail closed.
+
+    Names select an exact test/subtest and its descendants, or the generated shards
+    recognized by familyMember. No regex, glob or bare-prefix exemptions.
+    """
+    path = os.path.join(tools, "cloud/fast-gate/heavy-units.tsv")
+    try:
+        with open(path) as handle:
+            lines = handle.readlines()
+    except FileNotFoundError:
+        return []
+    rows, seen = [], set()
+    for number, line in enumerate(lines, 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        fields = line.rstrip("\n").split("\t")
+        if len(fields) != 5 or any(not field.strip() for field in fields):
+            raise ValueError("%s:%d: heavy unit needs package, test/family, owner, seconds, why" % (path, number))
+        package, name, owner, budget, why = fields
+        seconds = float(budget)
+        if not math.isfinite(seconds) or seconds <= 0 or not name.startswith("Test") or any(c in name for c in "*?[]"):
+            raise ValueError("%s:%d: invalid heavy unit name or budget" % (path, number))
+        key = package, name
+        if key in seen:
+            raise ValueError("%s:%d: duplicate heavy unit %s %s" % (path, number, package, name))
+        seen.add(key)
+        rows.append({"package": package, "test": name, "owner": owner, "budget_seconds": seconds, "why": why})
+    return rows
+
+
+def heavyUnit(rows, package, name):
+    name = name.removesuffix(" (setup)")
+    matches = [row for row in rows if row["package"] == package and
+               (name == row["test"] or name.startswith(row["test"] + "/") or
+                familyMember(name.split("/", 1)[0], row["test"]))]
+    if len(matches) > 1:
+        raise ValueError("ambiguous heavy declarations for %s %s" % (package, name))
+    return matches[0] if matches else None
+
+
+def heavyCensus(path, destination, declarations, full):
+    """Class explicit 'heavy: deferred ...' skips at the gate boundary.
+
+    Preserve the original log and every non-deferral skip for the existing AST and
+    input census. Whole gates may not defer heavy coverage. A declaration never
+    excuses a required-input skip just because it belongs to the same test.
+    """
+    messages, classed, unknown = {}, [], []
+    with open(path) as source, open(destination, "w") as output:
+        for line in source:
+            event = json.loads(line)
+            key = event.get("Package", ""), event.get("Test", "")
+            if event.get("Action") == "run":
+                messages[key] = ""
+            if event.get("Action") == "output":
+                messages[key] = messages.get(key, "") + event.get("Output", "")
+            if event.get("Action") == "skip" and key[1] and re.search(r"heavy: deferred\b", messages.get(key, "")):
+                declared = heavyUnit(declarations, *key)
+                if declared is not None and not full:
+                    classed.append(dict(declared, test=key[1], **{"class": "heavy"}))
+                else:
+                    unknown.append("%s %s" % key)
+                continue
+            output.write(line)
+    return classed, unknown
 
 
 def longTests(units):

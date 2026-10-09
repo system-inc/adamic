@@ -20,6 +20,9 @@ tasks = Path(os.environ.get('ADAMIC_REVIEW_TASKS', str(repository / 'cloud' / 'r
 state = Path(os.environ.get('ADAMIC_REVIEW_STATE', os.path.expanduser('~/.adamic-review-census')))
 ahraDirectory = os.environ.get('ADAMIC_REVIEW_AHRA_DIR', '/Users/kirkouimet/Projects/ahra')
 lane = 'internal/oracle/testdata/review/'
+# Programs out of the lane by ruling, one "<task>/<file>.a <why>" per line: a program that can't be a lane fixture (one over
+# the lane's 30 s unit) lives as evidence elsewhere and is named here, never matched by a pattern.
+exemptions = Path(os.environ.get('ADAMIC_REVIEW_EXEMPT', str(repository / 'cloud' / 'review-census-exempt.txt')))
 
 
 def blob(content):
@@ -39,11 +42,20 @@ def laneBlobs():
     return {line.split()[2] for line in listing.splitlines() if line.split()[3].startswith((lane + 'agree/', lane + 'refused/'))}
 
 
+def exempt():
+    if not exemptions.exists():
+        return set()
+    return {line.split()[0] for line in exemptions.read_text().splitlines() if line.strip() and not line.startswith('#')}
+
+
 def missing():
     inLane = laneBlobs()
+    excused = exempt()
     outside = []
     for task in reviewTasks():
         for path in sorted((attachments / task).glob('*.a')):
+            if '%s/%s' % (task, path.name) in excused:
+                continue
             if blob(path.read_bytes()) not in inLane:
                 outside.append('%s/%s' % (task, path.name))
     return outside

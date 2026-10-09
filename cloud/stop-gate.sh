@@ -25,5 +25,7 @@ for out in ~/fast-gate/out/"${sha:0:12}"-*; do
   [ -d "${out}" ] || continue
   printf '%s\n' "${reason}" > "${out}.stop-reason"
 done
-pkill -TERM -f "run.py .*--sha ${sha}"
+# A gate merged onto main's tip runs with the merge's sha (541c8446), so match its out directory, which carries the tip's:
+# from then until Oct 9 17:20Z every stop of a merged candidate matched nothing and the run held its slot to the end.
+pkill -TERM -f "run.py .*--out [^ ]*/fast-gate/out/${sha:0:12}-" || pkill -TERM -f "run.py .*--sha ${sha}"
 STOP
