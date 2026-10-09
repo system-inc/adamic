@@ -3,6 +3,7 @@ package printer
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"os"
@@ -12,6 +13,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -101,10 +103,13 @@ func onNode(t *testing.T, path string, arguments ...string) run {
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
 func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
-	}
+	source := javascript.JavaScript(program)
+	product := printerBuild(t, printerBuildInputs{
+		Name:  "GraphQL JavaScript backend",
+		Files: printerInputFiles(t, filepath.Join(repository, "internal/javascript")),
+		Flags: []string{fmt.Sprintf("source:%x", sha256.Sum256([]byte(source)))}, Toolchain: runtime.Version(),
+	}, func(directory string) error { return os.WriteFile(directory+"/program.mjs", []byte(source), 0644) })
+	path := product + "/program.mjs"
 	return onNode(t, path, arguments...)
 }
 
@@ -120,10 +125,7 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // its own run.
 func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := printerNativeProduct(t, native.C(program), native.Options{Sanitize: true})
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
@@ -138,10 +140,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
+		binary := printerNativeProduct(t, native.C(program), native.Options{})
 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
@@ -161,4 +160,13 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 type run struct {
 	stdout, stderr []byte
 	exitCode       int
+}
+
+func printerNativeProduct(t *testing.T, source string, options native.Options) string {
+	t.Helper()
+	flags := append(native.Flags(options), fmt.Sprintf("source:%x", sha256.Sum256([]byte(source))))
+	return printerBuild(t, printerBuildInputs{
+		Name: "GraphQL native input program", Files: printerInputFiles(t, filepath.Join(repository, "internal/native")),
+		Flags: flags, Toolchain: buildcache.Tool("clang", "--version"),
+	}, func(directory string) error { return native.Build(source, directory+"/port", options) }) + "/port"
 }
