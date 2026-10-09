@@ -1,0 +1,94 @@
+{
+  "builder.ts": {
+    "baseline": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c",
+    "current": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+  },
+  "checker.ts": {
+    "baseline": "4ee47eff7ce7e9b806c1576b62e48a584cc408cbbdd5c96c31f6f385b873078c",
+    "current": "4ee47eff7ce7e9b806c1576b62e48a584cc408cbbdd5c96c31f6f385b873078c"
+  },
+  "commandLineParser.ts": {
+    "baseline": "d5022a3b3cf374123277fb3087fd0db28cd9d2d311bb6705fcec6ecf28e39acd",
+    "current": "d5022a3b3cf374123277fb3087fd0db28cd9d2d311bb6705fcec6ecf28e39acd"
+  },
+  "core.ts": {
+    "baseline": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+    "current": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+  },
+  "debug.ts": {
+    "baseline": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810",
+    "current": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+  },
+  "moduleNameResolver.ts": {
+    "baseline": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+    "current": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128"
+  },
+  "program.ts": {
+    "baseline": "f34112c624147a4adaf9f580d59acbb592687641194eb092f89a41724d10b13b",
+    "current": "f34112c624147a4adaf9f580d59acbb592687641194eb092f89a41724d10b13b"
+  },
+  "resolutionCache.ts": {
+    "baseline": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673",
+    "current": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673"
+  },
+  "sourcemap.ts": {
+    "baseline": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513",
+    "current": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513"
+  },
+  "sys.ts": {
+    "baseline": "66325f9ce19fb0bb5072818a920d796f52bd985098d8e490de2879b24ceee9f4",
+    "current": "66325f9ce19fb0bb5072818a920d796f52bd985098d8e490de2879b24ceee9f4"
+  },
+  "transformer.ts": {
+    "baseline": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+    "current": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c"
+  },
+  "transformers/classFields.ts": {
+    "baseline": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c",
+    "current": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c"
+  },
+  "transformers/declarations.ts": {
+    "baseline": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+    "current": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed"
+  },
+  "transformers/es2015.ts": {
+    "baseline": "9248c4bfea979035d36ae363c7012532820f215060d54bc9d3c86654953193b8",
+    "current": "9248c4bfea979035d36ae363c7012532820f215060d54bc9d3c86654953193b8"
+  },
+  "transformers/es2017.ts": {
+    "baseline": "18dc472c3bda1fd9deb5a7d051e7a3bb36576c5408fbdf4caca7323299cd1eb5",
+    "current": "18dc472c3bda1fd9deb5a7d051e7a3bb36576c5408fbdf4caca7323299cd1eb5"
+  },
+  "transformers/esDecorators.ts": {
+    "baseline": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+    "current": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633"
+  },
+  "transformers/esnext.ts": {
+    "baseline": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119",
+    "current": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119"
+  },
+  "transformers/generators.ts": {
+    "baseline": "29257fe9ab78230205b3190da0e7d9340cc1694078a001cefa5812e228083bf9",
+    "current": "29257fe9ab78230205b3190da0e7d9340cc1694078a001cefa5812e228083bf9"
+  },
+  "transformers/jsx.ts": {
+    "baseline": "d7dbbe912e7d4224bc436c52585e1568bc5c948a3b5089a9c08fd86577373539",
+    "current": "d7dbbe912e7d4224bc436c52585e1568bc5c948a3b5089a9c08fd86577373539"
+  },
+  "transformers/module/esnextAnd2015.ts": {
+    "baseline": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71",
+    "current": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71"
+  },
+  "tsbuildPublic.ts": {
+    "baseline": "76c3d00b159cd163d0ef437cf65afdf482a9e99a7e2b408c5ea7c4599891efbb",
+    "current": "76c3d00b159cd163d0ef437cf65afdf482a9e99a7e2b408c5ea7c4599891efbb"
+  },
+  "watch.ts": {
+    "baseline": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e",
+    "current": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e"
+  },
+  "watchPublic.ts": {
+    "baseline": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874",
+    "current": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874"
+  }
+}

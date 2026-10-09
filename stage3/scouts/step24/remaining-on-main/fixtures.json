@@ -1,0 +1,65 @@
+[
+  {
+    "group": "optional-field-presence",
+    "oracle": {
+      "exit": 0,
+      "stdout": "present\n",
+      "stderr": "",
+      "seconds": 0.068
+    },
+    "mutant": {
+      "exit": 0,
+      "stdout": "absent\n",
+      "stderr": "",
+      "seconds": 0.068
+    },
+    "in_place_compiler": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "stage3/scouts/step24/remaining-on-main/optional-field-presence.a:4:7: error TS2375: Type '{ read: undefined; }' is not assignable to type 'Host' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'read' are incompatible.\n    Type 'undefined' is not assignable to type '() => string'.\n",
+      "seconds": 0.038
+    }
+  },
+  {
+    "group": "nullable-result-relation",
+    "oracle": {
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": "",
+      "seconds": 0.063
+    },
+    "mutant": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.061
+    },
+    "in_place_compiler": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "stage3/scouts/step24/remaining-on-main/nullable-result-relation.a:3:7: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n",
+      "seconds": 0.035
+    }
+  },
+  {
+    "group": "nullable-argument",
+    "oracle": {
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": "",
+      "seconds": 0.068
+    },
+    "mutant": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.065
+    },
+    "in_place_compiler": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "stage3/scouts/step24/remaining-on-main/nullable-argument.a:4:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n",
+      "seconds": 0.039
+    }
+  }
+]
