@@ -262,3 +262,27 @@ its prior 8,048-byte reveal remains. 14 retains its new 1,195-byte reveal and
 [comparison](../../docs/overload-results/groups/visitors/regions.json),
 [exact stops](../../docs/overload-results/groups/visitors/next-stops.json), and
 [raw census](../../docs/overload-results/groups/visitors/after.jsonl.gz).
+
+
+## Merged hidden-boundary landing candidate
+
+Compared with current main 031a1259, on production code ad2e8902. The ordered merges are
+702c3ecb, b3b32769, e9fd9bbb. These eight intervals include hidden-08; they supersede
+isolated branch numbers for this landing comparison. All 82 adapted hashes are verified.
+
+| Region | Main hidden | Candidate hidden | Revealed bytes | Next stop |
+|---|---:|---:|---:|---|
+| hidden-01-large | 13,625 | 13,625 | 0 | declarations.ts:1678:110 TS2345; checker #k881crd |
+| hidden-01-small | 6,899 | 6,899 | 0 | declarations.ts:1678:110 TS2345; checker #k881crd |
+| hidden-05-large | 5,583 | 5,583 | 0 | visitorPublic.ts:123:5 visitNode parameter, from es2018.ts:828:9; checked views |
+| hidden-05-small | 5,420 | 5,420 | 0 | visitorPublic.ts:123:5 visitNode parameter, from es2015.ts:3193:9; checked views |
+| hidden-06 | 11,417 | 1,020 | 10,397 | visitorPublic.ts:194:1 visitNodes result covariance, from esDecorators.ts:1250:13; checked views |
+| hidden-13 | 7,289 | 6,965 | 324 | es2017.ts:764:38 TS18048; checker #k881crd |
+| hidden-14 | 7,102 | 5,983 | 1,119 | utilities.ts:5041:1 result._expressionBrand, from utilities.ts:11338:9; brands |
+| hidden-08 | 9,790 | 2,360 | 7,430 | utilities.ts:9045:23 union or optional field read; record storage |
+| Total assigned intervals | 67,125 | 47,855 | 19,270 | |
+
+[Landing report](../../docs/hidden-boundaries/landing/REPORT.md),
+[exact stops and raising functions](../../docs/hidden-boundaries/landing/next-stops.json),
+[byte intersections](../../docs/hidden-boundaries/landing/regions.json), and
+[verification commands and logs](../../docs/hidden-boundaries/landing/checks.json).
