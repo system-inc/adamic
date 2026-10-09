@@ -1,0 +1,2 @@
+// The dictionary is present, but its nonparticipating capture is undefined.
+console.log('b'.replace(/(?<first>a)?b/, (match: string, capture: string | undefined, offset: number, input: string, groups: { readonly first: string }) => groups.first ?? 'absent'));

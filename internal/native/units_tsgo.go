@@ -19,16 +19,17 @@ func BuildSplitTSGo(source, output, archive string, options Options) error {
 	if _, err := os.Stat(archive); err != nil {
 		return fmt.Errorf("native: checker archive: %w", err)
 	}
-	library, err := splitTSGoRuntime(options)
+	library, err := splitTSGoRuntime(source, options)
 	if err != nil {
 		return err
 	}
 	return buildUnitsWithLibrary(source, output, options, library, []string{archive, "-lpthread", "-ldl"})
 }
 
-// Reuse the existing runtime cache with the checker ABI header in its snapshot and ADAMIC_TSGO
-// in its flags. The ordinary runtime's empty tsgo.c object cannot satisfy these calls.
-func splitTSGoRuntime(options Options) (string, error) {
+// Reuse the existing runtime cache with the checker ABI header in its snapshot, and ADAMIC_TSGO
+// plus the program's features in its flags. The ordinary runtime's empty tsgo.c object cannot
+// satisfy these calls, and a runtime built without the features has other layouts than the units.
+func splitTSGoRuntime(source string, options Options) (string, error) {
 	files, err := readRuntime(runtime, "runtime")
 	if err != nil {
 		return "", err
@@ -46,6 +47,6 @@ func splitTSGoRuntime(options Options) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	flags := append(Flags(options), "-DADAMIC_TSGO")
+	flags := append(sourceFlags(source, options), "-DADAMIC_TSGO")
 	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }

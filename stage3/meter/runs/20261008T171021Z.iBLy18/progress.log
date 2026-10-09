@@ -1,0 +1,14 @@
+{
+  "milestones": {
+    "scanner_native": false,
+    "parser_native": false,
+    "no_emit_match": false,
+    "real_programs_match": false
+  },
+  "reasons": {
+    "scanner_native": "native build stops before emitting: debug.ts:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports (run stage3/drivers/scanner/evidence/combined-records-library/split)",
+    "parser_native": "no complete native-output comparison and mutant evidence in this run",
+    "no_emit_match": "no complete native-output comparison and mutant evidence in this run",
+    "real_programs_match": "no complete native-output comparison and mutant evidence in this run"
+  }
+}

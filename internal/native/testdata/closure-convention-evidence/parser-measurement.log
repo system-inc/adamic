@@ -1,0 +1,22 @@
+1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9 /tmp/arguments-length-current-main-parser-correct.c
+e5115e8d8daacce460238b6266e9ef3dbe2ecd05aff2fe1c3f47aeb300a95951 /tmp/closure-convention-landing-parser.c
+db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e /tmp/arguments-length-current-main-parser-correct
+a0d99447bda0c8d31fb2579d2d7d108221ee11bdf93eed119d13967ededb2c48 /tmp/closure-convention-landing-parser
+C identical: False
+binary identical: False
+main 1 20.184 ms 0 b'10523'
+merged 1 18.937 ms 0 b'10523'
+main 2 9.658 ms 0 b'10523'
+merged 2 10.354 ms 0 b'10523'
+main 3 9.699 ms 0 b'10523'
+merged 3 19.608 ms 0 b'10523'
+main 4 9.347 ms 0 b'10523'
+merged 4 12.058 ms 0 b'10523'
+main 5 9.957 ms 0 b'10523'
+merged 5 10.137 ms 0 b'10523'
+main best of five 9.347 ms
+merged best of five 10.137 ms
+instructions:u: perf_event_open errno=2 No such file or directory
+cycles:u: perf_event_open errno=2 No such file or directory
+counted macro present: False
+argument_count present: False

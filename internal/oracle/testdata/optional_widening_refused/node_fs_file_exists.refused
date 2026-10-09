@@ -1,0 +1,1 @@
+internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)

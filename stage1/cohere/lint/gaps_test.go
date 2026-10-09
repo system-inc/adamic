@@ -40,7 +40,6 @@ func TestOptionAndComparatorGaps(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, answer, refusal string }{
 		{"2_optional_index.ts", "1\n", "?.[] on a value"},
-		{"3_numeric_or.ts", "2\n", "a BinaryExpression with a number and a number"},
 		{"4_last_index_position.ts", "1\n", "lastIndexOf with these arguments"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {

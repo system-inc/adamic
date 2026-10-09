@@ -1,0 +1,9 @@
+// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter)
+// From TypeScript 6.0.3, src/compiler/core.ts:1786,1934
+// Debug.getFunctionName receives the predicate as AnyFunction.
+type AnyFunction = (...args: never[]) => void;
+function nameOf(_func: AnyFunction): string { return "function"; }
+function describe<TIn, TOut extends TIn>(test: (value: TIn) => value is TOut): string {
+    return nameOf(test);
+}
+console.log("predicate view loaded");

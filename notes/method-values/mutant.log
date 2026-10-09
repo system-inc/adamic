@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "[object Map]\n[object Set]\n[object Function]\n[object Function]\n[object Null]\n[object Object]\n", stderr ""
+        native: exit 0, stdout "[object Set]\n[object Set]\n[object Function]\n[object Function]\n[object Null]\n[object Object]\n", stderr ""
+    oracle_test.go:586: JavaScript backend: stdout differs
+        node:    exit 0, stdout "[object Map]\n[object Set]\n[object Function]\n[object Function]\n[object Null]\n[object Object]\n", stderr ""
+        backend: exit 0, stdout "[object Set]\n[object Set]\n[object Function]\n[object Function]\n[object Null]\n[object Object]\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_tags.a (0.53s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.539s
+FAIL

@@ -1,0 +1,64 @@
+{
+  "tree": "/workspace/scratch/parser-temp65-oracle-tree",
+  "nproc": 5,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.855
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 25.464
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 290.2
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 106353,
+    "failing": 14,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "project/nodeModulesImportHigher/amd/nodeModulesImportHigher.errors.txt",
+    "project/nodeModulesImportHigher/amd/nodeModulesImportHigher.json",
+    "project/nodeModulesImportHigher/node/nodeModulesImportHigher.errors.txt",
+    "project/nodeModulesImportHigher/node/nodeModulesImportHigher.json",
+    "project/nodeModulesMaxDepthExceeded/amd/maxDepthExceeded/built/root.js",
+    "project/nodeModulesMaxDepthExceeded/amd/nodeModulesMaxDepthExceeded.errors.txt",
+    "project/nodeModulesMaxDepthExceeded/amd/nodeModulesMaxDepthExceeded.json",
+    "project/nodeModulesMaxDepthExceeded/node/maxDepthExceeded/built/root.js",
+    "project/nodeModulesMaxDepthExceeded/node/nodeModulesMaxDepthExceeded.errors.txt",
+    "project/nodeModulesMaxDepthExceeded/node/nodeModulesMaxDepthExceeded.json",
+    "project/nodeModulesMaxDepthIncreased/amd/nodeModulesMaxDepthIncreased.errors.txt",
+    "project/nodeModulesMaxDepthIncreased/amd/nodeModulesMaxDepthIncreased.json",
+    "project/nodeModulesMaxDepthIncreased/node/nodeModulesMaxDepthIncreased.errors.txt",
+    "project/nodeModulesMaxDepthIncreased/node/nodeModulesMaxDepthIncreased.json"
+  ],
+  "wall_seconds": 318.592
+}
