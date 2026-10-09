@@ -166,7 +166,7 @@ func checkThreePortCase(pair threePortCase, want, source, native []byte) error {
 func threePortProduct(t *testing.T, mutation threePortMutation) (string, string) {
 	t.Helper()
 	inputs := buildcache.Inputs{Name: "three-port-mutant-lowered-" + mutation.name,
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.sum", "go.work"},
+		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
 		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
