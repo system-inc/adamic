@@ -48,6 +48,10 @@ git -C "$TEST_HERE" show "$gated:setup.go" > "$TEST_ROOT/gated-setup.go"
 mkdir -p "$destination"
 echo "green: $(cat "$TEST_ROOT/gated") fast gate in 1.0 s" > "$destination/status.txt"
 echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
+if [ -f "$TEST_ROOT/big" ]; then
+  python3 -c 'import json, sys; json.dump({"sha": sys.argv[2], "failed_tests": ["t%d" % n for n in range(700000)]}, open(sys.argv[1], "w"))' "$destination/fast.json" "$(cat "$TEST_ROOT/gated")"
+  head -c 6000000 /dev/urandom > "$destination/determinism-adamic"
+fi
 ''')
 
     def script(self, name, text):
@@ -116,6 +120,18 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
         self.assertEqual((self.root / 'gated').read_text().strip(), sha)
         self.assertEqual(git(self.origin, 'for-each-ref', 'refs/gate-merges/'), '')
         self.assertNotIn('gated merged', self.record(sha))
+
+    def test_a_complete_run_s_large_fast_json_stays_in_its_record_and_a_stray_binary_does_not(self):
+        # Oct 9 11:07Z: the star's complete run wrote a 15.8 MB fast.json, and publishing moved it out of the record.
+        (self.root / 'big').write_text('yes')
+        sha = self.candidate('codex/feature', {'feature.go': 'package feature // big\n'})
+        result = self.gate(sha, 'codex/feature')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        refs = git(self.origin, 'for-each-ref', '--format=%(refname)', 'refs/heads/gate-logs/%s/' % sha[:12]).split()
+        files = git(self.origin, 'ls-tree', '--name-only', refs[0]).split()
+        self.assertIn('fast.json', files)
+        self.assertNotIn('determinism-adamic', files)
+        self.assertEqual(len(json.loads(git(self.origin, 'show', '%s:fast.json' % refs[0]))['failed_tests']), 700000)
 
     def test_main_s_canary_gates_main_against_main_ten_landings_back(self):
         # Oct 9 10:42Z: main gated against itself selected no test (tests=0.0s), and that green promoted tools.

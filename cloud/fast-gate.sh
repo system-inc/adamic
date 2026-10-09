@@ -354,9 +354,12 @@ MERGED
 fi
 fi
 # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
-# that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
+# that strayed in) never is. The record itself stays up to 50 MB, fast.json under its own name and the gzipped logs:
+# the star's complete run (Oct 9 11:07Z, 28,177 tests) wrote a 15.8 MB fast.json, and both it and test.jsonl.gz were
+# moved out, so its record held no verdict to read. Names go to stderr, never stdout, which a caller may be capturing.
 find "${local}/fast" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
-find "${local}/fast" -type f -size +5M -exec mv {} "${local}" \; -print >&2
+find "${local}/fast" -type f -size +5M ! \( -name '*.json' -o -name '*.gz' \) -exec mv {} "${local}" \; -print >&2
+find "${local}/fast" -type f -size +50M -exec mv {} "${local}" \; -print >&2
 logBranch=gate-logs/${sha:0:12}/${stamp}/fast
 index=$(mktemp -u)
 gitDirectory=$(git -C "${here}" rev-parse --absolute-git-dir)

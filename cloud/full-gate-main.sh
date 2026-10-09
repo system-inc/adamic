@@ -108,7 +108,10 @@ MERGED
   # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
   # that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
   find "${copy}/full-main" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
-  find "${copy}/full-main" -type f -size +5M -exec mv {} "${copy}" \; -print >&2
+  # The record itself stays up to 50 MB, full.json under its own name and the gzipped logs (a complete fast run's
+  # 15.8 MB fast.json was moved out of its record, Oct 9 11:07Z).
+  find "${copy}/full-main" -type f -size +5M ! \( -name '*.json' -o -name '*.gz' \) -exec mv {} "${copy}" \; -print >&2
+  find "${copy}/full-main" -type f -size +50M -exec mv {} "${copy}" \; -print >&2
   index=$(mktemp -u)
   gitDirectory=$(git -C "${here}" rev-parse --absolute-git-dir)
   tree=$(cd "${copy}/full-main" && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" --work-tree=. add -A -f . && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" write-tree)
