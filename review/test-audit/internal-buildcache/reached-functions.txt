@@ -1,0 +1,13 @@
+Starting commit: 7b18d0576930caca4e22ce2eef92fcf563af52d0
+Production file read whole: internal/buildcache/buildcache.go
+All package functions reached by these six tests:
+Product line 41; Get line 54; get line 59; Key line 120; hashPath line 141; Tool line 189; cacheDirectory line 203; repositoryRoot line 222; describe line 246; record line 262.
+Nested functions reached: Key.field line 122; hashPath WalkDir callback line 146; repositoryRoot.once callback line 223.
+Test-to-entry map:
+TestEveryInputChangesTheKey -> Key.
+TestABuildRunsOncePerKey -> Product.
+TestAFailedBuildPublishesNothing -> Get and Product.
+TestUncachedModeBuildsEveryTime -> Product.
+TestParallelCallersBuildOnce -> Get.
+TestToolNamesItselfOnce -> Tool.
+No families, helper rows, setup-checks or witnesses: all six test bodies have distinct assertions. Tests' callbacks and fixture-writing helpers are harness/oracle, not mutation targets.

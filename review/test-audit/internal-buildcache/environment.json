@@ -1,0 +1,67 @@
+{
+  "origin_main": "7b18d0576930caca4e22ce2eef92fcf563af52d0",
+  "nproc": 5,
+  "setup_skipped": true,
+  "npm": {
+    "command": "npm ci --prefix stage3/api",
+    "seconds": 0.5473123159972602,
+    "exit": 0
+  },
+  "list": {
+    "command": "timeout 120 go test -list . ./internal/buildcache/",
+    "seconds": 0.3141575940026087,
+    "exit": 0
+  },
+  "baseline": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+    "seconds": 0.25200038999901153,
+    "exit": 0,
+    "binary_seconds": 0.062
+  },
+  "timing_runs_wall_seconds": 4.093003404010233,
+  "matrix_runs_wall_seconds": 5.801543483998103,
+  "matrix_runs_binary_seconds": 1.932,
+  "standalone_validation_seconds": 2.080314595008531,
+  "restored": {
+    "label": "restored",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' timeout 120 go test -json -count=1 -timeout 90s -coverprofile=/tmp/u015/coverage.out ./internal/buildcache/ -run .",
+    "exit": 0,
+    "wall_seconds": 0.416471726999589,
+    "binary_seconds": 0.061,
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass"
+    },
+    "cooked": false
+  },
+  "switch_build": {
+    "command": "timeout 90 go test -c -o /tmp/u015/switched.test ./internal/buildcache/",
+    "exit": 0,
+    "seconds": 0.48281821600176045,
+    "output": ""
+  },
+  "survivor_probe_build": {
+    "build_command": "timeout 90 go build -o /tmp/u015/survivor-probe review/test-audit/internal-buildcache/survivor_probe.go",
+    "exit": 0,
+    "seconds": 0.2792141640020418
+  }
+}

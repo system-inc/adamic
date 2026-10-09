@@ -1,0 +1,75 @@
+{
+  "label": "TestAFailedBuildPublishesNothing-timing-1",
+  "selector": "",
+  "command": "ADAMIC_MUTANT='' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run ^TestAFailedBuildPublishesNothing$",
+  "exit": 0,
+  "wall_seconds": 0.2153147530007118,
+  "binary_seconds": 0.004,
+  "status": {
+    "TestAFailedBuildPublishesNothing": "pass"
+  },
+  "subcases": {},
+  "events": [
+    {
+      "Time": "2026-10-09T09:51:31.351088482Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/buildcache"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.354624315Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestAFailedBuildPublishesNothing"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.354710391Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestAFailedBuildPublishesNothing",
+      "Output": "=== RUN   TestAFailedBuildPublishesNothing\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.354943344Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestAFailedBuildPublishesNothing",
+      "Output": "    buildcache_test.go:164: build buildcache_test f39dafb47d38 miss 0.00\n"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.354980639Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestAFailedBuildPublishesNothing",
+      "Output": "--- PASS: TestAFailedBuildPublishesNothing (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.354984755Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestAFailedBuildPublishesNothing",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T09:51:31.355004694Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.355352121Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/buildcache\t0.004s\n"
+    },
+    {
+      "Time": "2026-10-09T09:51:31.355369587Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Elapsed": 0.004
+    }
+  ],
+  "cooked": false
+}

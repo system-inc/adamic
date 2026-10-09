@@ -1,0 +1,947 @@
+[
+  {
+    "Time": "2026-10-09T09:47:55.905389108Z",
+    "Action": "start",
+    "Package": "github.com/system-inc/adamic/internal/buildcache"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.90731066Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907376857Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey",
+    "Output": "=== RUN   TestEveryInputChangesTheKey\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907395635Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907398059Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907402385Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestABuildRunsOncePerKey"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907404077Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestABuildRunsOncePerKey",
+    "Output": "=== RUN   TestABuildRunsOncePerKey\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907523864Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestABuildRunsOncePerKey",
+    "Output": "    buildcache_test.go:133: build buildcache_test f39dafb47d38 miss 0.00\n"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907591944Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestABuildRunsOncePerKey",
+    "Output": "    buildcache_test.go:134: build buildcache_test f39dafb47d38 hit 0.00\n"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907720343Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestABuildRunsOncePerKey",
+    "Output": "--- PASS: TestABuildRunsOncePerKey (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907725761Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestABuildRunsOncePerKey",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907736617Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestAFailedBuildPublishesNothing"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.90773903Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestAFailedBuildPublishesNothing",
+    "Output": "=== RUN   TestAFailedBuildPublishesNothing\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907816124Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestAFailedBuildPublishesNothing",
+    "Output": "    buildcache_test.go:164: build buildcache_test f39dafb47d38 miss 0.00\n"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907902591Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestAFailedBuildPublishesNothing",
+    "Output": "--- PASS: TestAFailedBuildPublishesNothing (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907905836Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestAFailedBuildPublishesNothing",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907908029Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestUncachedModeBuildsEveryTime"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907909681Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestUncachedModeBuildsEveryTime",
+    "Output": "=== RUN   TestUncachedModeBuildsEveryTime\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907913527Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestUncachedModeBuildsEveryTime",
+    "Output": "    buildcache_test.go:176: build buildcache_test uncached off 0.00\n"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.90791575Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestUncachedModeBuildsEveryTime",
+    "Output": "    buildcache_test.go:177: build buildcache_test uncached off 0.00\n"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907948518Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestUncachedModeBuildsEveryTime",
+    "Output": "--- PASS: TestUncachedModeBuildsEveryTime (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907977Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestUncachedModeBuildsEveryTime",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.907980015Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestParallelCallersBuildOnce"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.908008467Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestParallelCallersBuildOnce",
+    "Output": "=== RUN   TestParallelCallersBuildOnce\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.95972864Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestParallelCallersBuildOnce",
+    "Output": "--- PASS: TestParallelCallersBuildOnce (0.05s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.959773145Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestParallelCallersBuildOnce",
+    "Elapsed": 0.05
+  },
+  {
+    "Time": "2026-10-09T09:47:55.959790311Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestToolNamesItselfOnce"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.959792754Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestToolNamesItselfOnce",
+    "Output": "=== RUN   TestToolNamesItselfOnce\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965029228Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestToolNamesItselfOnce",
+    "Output": "--- PASS: TestToolNamesItselfOnce (0.01s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965047325Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestToolNamesItselfOnce",
+    "Elapsed": 0.01
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965052032Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965054155Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey",
+    "Output": "=== CONT  TestEveryInputChangesTheKey\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965056428Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96505771Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/name\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965078531Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/name\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965079993Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965086442Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965087825Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/flag_order\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96511182Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/flag_order\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965113422Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965126642Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965130938Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/file_content\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965150517Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/file_content\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965152219Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965154623Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965156796Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/added_file\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965174252Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/added_file\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965175744Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965187671Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965189324Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/flag\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965203845Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/flag\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965205277Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965218296Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965220039Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/toolchain\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965289962Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/toolchain\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965292666Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965294569Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965296051Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/file_list\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965298615Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/file_list\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965300137Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965314208Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965318854Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/renamed_file\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965322249Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/renamed_file\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965323712Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965334818Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.9653364Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/exec_bit\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965354076Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/exec_bit\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965355999Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965368017Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965369479Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/empty_directory\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96539082Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/empty_directory\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965392393Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965395006Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965396569Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/nothing_changed\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965416638Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965418231Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965436037Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965440103Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository",
+    "Output": "=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965443788Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository",
+    "Output": "=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965446622Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965474313Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965475986Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/nothing_changed\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965495124Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965499971Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/name\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965502174Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965503706Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965666576Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96566943Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/outside_the_repository",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965671053Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965672525Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/toolchain\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965691553Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965693736Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/nothing_changed",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965695048Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.9656965Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/flag_order\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965698934Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965701027Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/name",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965702138Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96570335Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/flag\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96581186Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965815125Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965816416Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965817658Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/exec_bit\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965835705Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965838098Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/toolchain",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96583922Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965840472Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/empty_directory\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965860361Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965862504Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/flag_order",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965863606Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965864778Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/renamed_file\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965924616Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/exec_bit (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965926629Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/exec_bit",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965928501Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.965929763Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/file_list\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96601608Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966018654Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/empty_directory",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966020176Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966022069Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_list",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966024332Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966025935Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/added_file\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966028088Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966095257Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/renamed_file",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966096689Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966098121Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content",
+    "Output": "=== CONT  TestEveryInputChangesTheKey/file_content\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966205629Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966432823Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/file_content",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966448907Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file",
+    "Output": "--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966452192Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey/added_file",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966453784Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey",
+    "Output": "--- PASS: TestEveryInputChangesTheKey (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966455326Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Test": "TestEveryInputChangesTheKey",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T09:47:55.966456759Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Output": "PASS\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.96711363Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Output": "ok  \tgithub.com/system-inc/adamic/internal/buildcache\t0.061s\n"
+  },
+  {
+    "Time": "2026-10-09T09:47:55.967136494Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/buildcache",
+    "Elapsed": 0.062
+  }
+]

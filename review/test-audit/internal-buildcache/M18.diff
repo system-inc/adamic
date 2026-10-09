@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -192,7 +192,7 @@
+ 		return value.(string)
+ 	}
+ 	output, err := exec.Command(name, arguments...).CombinedOutput()
+-	value := command + ": " + strings.TrimSpace(string(output))
++	value := command + " " + strings.TrimSpace(string(output))
+ 	if err != nil {
+ 		value += " (" + err.Error() + ")"
+ 	}

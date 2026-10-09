@@ -1,0 +1,68 @@
+{
+  "label": "TestParallelCallersBuildOnce-timing-1",
+  "selector": "",
+  "command": "ADAMIC_MUTANT='' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run ^TestParallelCallersBuildOnce$",
+  "exit": 0,
+  "wall_seconds": 0.2669229750026716,
+  "binary_seconds": 0.055,
+  "status": {
+    "TestParallelCallersBuildOnce": "pass"
+  },
+  "subcases": {},
+  "events": [
+    {
+      "Time": "2026-10-09T09:51:32.648936351Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/buildcache"
+    },
+    {
+      "Time": "2026-10-09T09:51:32.651032666Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestParallelCallersBuildOnce"
+    },
+    {
+      "Time": "2026-10-09T09:51:32.651095648Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestParallelCallersBuildOnce",
+      "Output": "=== RUN   TestParallelCallersBuildOnce\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:51:32.703192045Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestParallelCallersBuildOnce",
+      "Output": "--- PASS: TestParallelCallersBuildOnce (0.05s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:51:32.703265663Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Test": "TestParallelCallersBuildOnce",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T09:51:32.703289188Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T09:51:32.703739661Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/buildcache\t0.054s\n"
+    },
+    {
+      "Time": "2026-10-09T09:51:32.703762424Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/buildcache",
+      "Elapsed": 0.055
+    }
+  ],
+  "cooked": false
+}

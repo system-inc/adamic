@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -263,7 +263,7 @@
+ 	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())
+ 	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
+ 		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+-			file.WriteString(line + "\n")
++			
+ 			file.Close()
+ 		}
+ 	}

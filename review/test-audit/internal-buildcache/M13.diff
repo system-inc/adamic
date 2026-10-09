@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -102,7 +102,7 @@
+ 		return "", "", err
+ 	}
+ 	if err = build(scratch); err != nil {
+-		os.RemoveAll(scratch)
++
+ 		return "", "", err
+ 	}
+ 	if err = os.WriteFile(product+".inputs", []byte(describe(inputs)), 0o644); err != nil {

@@ -1,0 +1,28 @@
+u015 internal/buildcache audit
+Starting origin/main: 7b18d0576930caca4e22ce2eef92fcf563af52d0
+Evidence branch: test-audit/internal-buildcache
+
+CODE UNDER TEST: internal/buildcache key hashing, cache publication and locking, uncached mode, census records, and tool-report caching. Production callbacks and test fixtures were not mutated.
+ORACLE: self-written key relationships, counters, directory equality, file contents, error identity, census text and tool-report prefixes. Tool executes Go as part of the code under test; the test does not independently run and compare a full external report. All six rows use self oracles.
+
+Scope came from go test -list . at the starting commit. Six distinct top-level tests, no family wrappers, helper entries, witnesses or opt-in skips. No names moved or vanished. All package rows ran for all 18 production mutants and four distinct entry probes. Every run completed, with no panic, cooked run or narrowed matrix. Uniqueness is package-local within this fixed mutant set; repository-wide uniqueness is unknown.
+
+Construction and budget details:
+The 18-mutant menu was fixed from the production function inventory before checking kills. Four probes are additional diagnostic executions, never counted as mutants or unique kills. M02, M03 and M16 drop whole loops rather than leaving unused loop variables. All standalone diffs apply to origin/main and pass go vet via an overlay. Switch instrumentation is saved separately. Production code was restored and the clean package passed again.
+Median timings use the isolated package binary elapsed line from three count=1 invocations each. This includes parallel subtests, whose parent Test elapsed would undercount them. nproc=5. All raw execution output went to log files; parsed complete Go JSON events are committed for replay.
+
+Brief ambiguities and findings that cost interpretation time:
+1. Product accepts testing.TB, but it is production code under test, not the oracle or callback harness. Product and Get are distinct externally called entries, so both receive empty-answer probes.
+2. The cap is applied to 18 production mutants, not to the four separately required probes. Empty-answer failures contribute only probe_kills. Key's nothing_changed subcase passes its probe, while its change/error subcases fail. The row is not vacuous.
+3. The flag_order subcase adds a second flag instead of reordering the same two flags. This session cannot prove flag-order discrimination; M02 proves only that the row notices omitted flag hashing.
+4. Outside-repository rejection accepts any error. With the guard disabled, the tested missing fixture still errors. An existing owned file outside the repository is accepted by M08, so that positive rejection test can pass for the wrong reason.
+5. TestToolNamesItselfOnce calls each command once. M17 removes memoization and survives; an independent counted executable demonstrates two executions instead of one. Its prefix check does not compare full external output.
+6. The v1-to-v2 namespace mutant changes actual keys while preserving the metamorphic relationships tested. No outside authority or fixed version value was established, so this is unguarded changed behavior, not proof that v2 violates a language specification.
+7. M10 exposes reuse behavior only when the lock path is unusable; the ordinary cache-hit fixture leaves that path usable. M16 drops tool metadata from the published description; the tests do not compare that metadata.
+8. The request for about three mutants per row is met as 18 code-derived mutants across six rows. They were spread over hashing, locking, failure cleanup, publication, reporting and tool caching, not authored after individual failures.
+
+Survivor witnesses: survivor-witnesses.json stores commands and before/after stdout. All five survivors have observed behavior changes, none is merely an equivalent candidate. The independent executable probe lives in survivor_probe.go and is not an edited test.
+
+Limits: no other package was tested. No cross-process lock contention, default cache-directory failure, repository-root failure, symlink handling or .git skipping mutation was attempted. These areas have no verdict from this session. Coverage confirms all inventoried functions were reached, not that all their behavior is proven. No external-authority value was checked because no row uses one.
+
+Timing: warm toolchain setup skipped; npm ci 0.547312316s. Scope listing 0.314157594s. Clean baseline 0.252000390s wall, 0.062s binary. Eighteen isolated timing invocations 4.093003404s wall. Standalone validation 2.080314595s. Switch test build 0.482818216s. Survivor executable build 0.279214164s. Twenty-two matrix runs 5.801543484s wall, 1.932s binary. Restored clean coverage run 0.416471727s wall, 0.061s binary. No native rebuilds and no setup or test step exceeded 90 seconds. Detailed timestamps and per-command timing are in environment.json and execution records.

@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -58,7 +58,7 @@
+ 
+ func get(inputs Inputs, build func(directory string) error) (string, string, error) {
+ 	started := time.Now()
+-	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
++	if false && os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
+ 		directory, err := os.MkdirTemp("", "adamic-build-")
+ 		if err != nil {
+ 			return "", "", err

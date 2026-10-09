@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -94,7 +94,7 @@
+ 		return "", "", err
+ 	}
+ 	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+-	if _, err = os.Stat(product); err == nil {
++	if _, err = os.Stat(product); false && err == nil {
+ 		return product, record(inputs.Name, key, "hit", started), nil
+ 	}
+ 	scratch, err := os.MkdirTemp(cache, ".building-"+key[:12]+"-")

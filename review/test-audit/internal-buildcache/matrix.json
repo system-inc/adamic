@@ -1,0 +1,956 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 126,
+    "before": "\tfield(\"name\", inputs.Name)",
+    "after": "",
+    "menu": "drop statement",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='M01' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the name left the key 097dcdda0d71a6e2032d325118b2b3234749bdfa6b4fc1ed6c4d84a06d55cf70",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n=== CONT  TestEveryInputChangesTheKey/name\n=== CONT  TestEveryInputChangesTheKey/toolchain\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n    buildcache_test.go:82: changing the name left the key 097dcdda0d71a6e2032d325118b2b3234749bdfa6b4fc1ed6c4d84a06d55cf70\n--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n--- FAIL: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/added_file\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_content\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag_order\n--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag\n--- PASS: TestEveryInputChangesTheKey/exec_bit (0.00s)\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/name": "fail",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass"
+    }
+  },
+  {
+    "id": "M02",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 132,
+    "before": "\tfor _, flag := range inputs.Flags {\n\t\tfield(\"flag\", flag)\n\t}",
+    "after": "",
+    "menu": "drop whole loop",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='M02' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the flag left the key 9c7f5c2ec4f02e17db88361d04fbf9886d7077e8d220349827bb795bb2f84f0c",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n=== CONT  TestEveryInputChangesTheKey/flag\n--- PASS: TestEveryInputChangesTheKey/exec_bit (0.00s)\n=== CONT  TestEveryInputChangesTheKey/name\n    buildcache_test.go:82: changing the flag left the key 9c7f5c2ec4f02e17db88361d04fbf9886d7077e8d220349827bb795bb2f84f0c\n--- FAIL: TestEveryInputChangesTheKey/flag (0.00s)\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/added_file\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_content\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/toolchain\n--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag_order\n--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n    buildcache_test.go:82: changing the flag order left the key 9c7f5c2ec4f02e17db88361d04fbf9886d7077e8d220349827bb795bb2f84f0c\n--- FAIL: TestEveryInputChangesTheKey/flag_order (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag": "fail",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "fail"
+    }
+  },
+  {
+    "id": "M03",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 135,
+    "before": "\tfor _, tool := range inputs.Toolchain {\n\t\tfield(\"tool\", tool)\n\t}",
+    "after": "",
+    "menu": "drop whole loop",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='M03' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the toolchain left the key 3fb8fee1999bcc373e4b647395401b60a8e2eede33625711e334cd80b8d0f263",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/name\n=== CONT  TestEveryInputChangesTheKey/file_content\n=== CONT  TestEveryInputChangesTheKey/flag_order\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n--- PASS: TestEveryInputChangesTheKey/exec_bit (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag\n--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n=== CONT  TestEveryInputChangesTheKey/added_file\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n=== CONT  TestEveryInputChangesTheKey/toolchain\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n    buildcache_test.go:82: changing the toolchain left the key 3fb8fee1999bcc373e4b647395401b60a8e2eede33625711e334cd80b8d0f263\n--- FAIL: TestEveryInputChangesTheKey/toolchain (0.00s)\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "fail",
+      "TestEveryInputChangesTheKey/added_file": "pass"
+    }
+  },
+  {
+    "id": "M04",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 164,
+    "before": "field(\"directory\", relative)",
+    "after": "",
+    "menu": "drop statement",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='M04' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the empty directory left the key 4f8265853b71f22c5613a97e9a5ce2ef4cf85037655a1cadb3f1708ddfdebe18",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/file_list\n=== CONT  TestEveryInputChangesTheKey/added_file\n=== CONT  TestEveryInputChangesTheKey/toolchain\n=== CONT  TestEveryInputChangesTheKey/flag_order\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_content\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n    buildcache_test.go:82: changing the empty directory left the key 4f8265853b71f22c5613a97e9a5ce2ef4cf85037655a1cadb3f1708ddfdebe18\n--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n=== CONT  TestEveryInputChangesTheKey/name\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n--- FAIL: TestEveryInputChangesTheKey/empty_directory (0.00s)\n--- PASS: TestEveryInputChangesTheKey/exec_bit (0.00s)\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "fail",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/name": "pass"
+    }
+  },
+  {
+    "id": "M05",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 176,
+    "before": "sha256.Sum256(content)",
+    "after": "sha256.Sum256(content[:0])",
+    "menu": "change bound",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='M05' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the file content left the key 22cc502ff679340e829cd9e99f6434ae74d8c1cd75f69ca009a82cf8298468e3",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n=== CONT  TestEveryInputChangesTheKey/flag_order\n=== CONT  TestEveryInputChangesTheKey/toolchain\n=== CONT  TestEveryInputChangesTheKey/added_file\n--- PASS: TestEveryInputChangesTheKey/exec_bit (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag\n--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_content\n--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n=== CONT  TestEveryInputChangesTheKey/name\n--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n    buildcache_test.go:82: changing the file content left the key 22cc502ff679340e829cd9e99f6434ae74d8c1cd75f69ca009a82cf8298468e3\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n--- FAIL: TestEveryInputChangesTheKey/file_content (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/file_content": "fail",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass"
+    }
+  },
+  {
+    "id": "M06",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 177,
+    "before": "info.Mode()&0o111 != 0",
+    "after": "false",
+    "menu": "change constant",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='M06' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the exec bit left the key e43a611259993bbe9338e4102714e0e870eaa62939607224b7855dc70a3f12de",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n=== CONT  TestEveryInputChangesTheKey/flag\n=== CONT  TestEveryInputChangesTheKey/added_file\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/name\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n=== CONT  TestEveryInputChangesTheKey/toolchain\n--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_content\n    buildcache_test.go:82: changing the exec bit left the key e43a611259993bbe9338e4102714e0e870eaa62939607224b7855dc70a3f12de\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag_order\n--- FAIL: TestEveryInputChangesTheKey/exec_bit (0.00s)\n--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "fail",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass"
+    }
+  },
+  {
+    "id": "M07",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 125,
+    "before": "field(\"buildcache\", \"v1\")",
+    "after": "field(\"buildcache\", \"v2\")",
+    "menu": "change constant",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {},
+    "subcases": {
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass"
+    }
+  },
+  {
+    "id": "M08",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 142,
+    "before": "if filepath.IsAbs(name) || strings.HasPrefix(filepath.Clean(name), \"..\") {",
+    "after": "if false && (filepath.IsAbs(name) || strings.HasPrefix(filepath.Clean(name), \"..\")) {",
+    "menu": "flip condition",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {},
+    "subcases": {
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass"
+    }
+  },
+  {
+    "id": "M09",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 61,
+    "before": "if os.Getenv(\"ADAMIC_BUILD_CACHE\") == \"off\" {",
+    "after": "if false && os.Getenv(\"ADAMIC_BUILD_CACHE\") == \"off\" {",
+    "menu": "flip condition",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestUncachedModeBuildsEveryTime"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "fail",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestUncachedModeBuildsEveryTime": {
+        "command": "ADAMIC_MUTANT='M09' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:179: 1 builds, products /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 and /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384",
+        "output": "=== RUN   TestUncachedModeBuildsEveryTime\n    buildcache_test.go:176: build buildcache_test 1c4fdcb46b45 miss 0.00\n    buildcache_test.go:177: build buildcache_test 1c4fdcb46b45 hit 0.00\n    buildcache_test.go:179: 1 builds, products /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 and /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384\n--- FAIL: TestUncachedModeBuildsEveryTime (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass"
+    }
+  },
+  {
+    "id": "M10",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 84,
+    "before": "if _, err = os.Stat(product); err == nil {",
+    "after": "if _, err = os.Stat(product); false && err == nil {",
+    "menu": "flip condition",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {},
+    "subcases": {
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass"
+    }
+  },
+  {
+    "id": "M11",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 97,
+    "before": "if _, err = os.Stat(product); err == nil {",
+    "after": "if _, err = os.Stat(product); false && err == nil {",
+    "menu": "flip condition",
+    "occurrence": 1,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestParallelCallersBuildOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "fail",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestParallelCallersBuildOnce": {
+        "command": "ADAMIC_MUTANT='M11' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-969159792 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists",
+        "output": "=== RUN   TestParallelCallersBuildOnce\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-969159792 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-2005006021 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-3860542070 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-3420551 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-1128970959 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-1466872295 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/.building-1c4fdcb46b45-1801690126 /tmp/adamic-gate/TestParallelCallersBuildOnce2961584656/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:206: 8 builds for one key\n--- FAIL: TestParallelCallersBuildOnce (0.40s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass"
+    }
+  },
+  {
+    "id": "M12",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 93,
+    "before": "syscall.LOCK_EX",
+    "after": "syscall.LOCK_SH",
+    "menu": "change option",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestParallelCallersBuildOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "fail",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestParallelCallersBuildOnce": {
+        "command": "ADAMIC_MUTANT='M12' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2285466777 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists",
+        "output": "=== RUN   TestParallelCallersBuildOnce\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2285466777 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-3444320789 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-731043091 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2109451344 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2448311712 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-1957734501 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-3920422964 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:206: 8 builds for one key\n--- FAIL: TestParallelCallersBuildOnce (0.05s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass"
+    }
+  },
+  {
+    "id": "M13",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 105,
+    "before": "\t\tos.RemoveAll(scratch)",
+    "after": "",
+    "menu": "drop statement",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestAFailedBuildPublishesNothing"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "fail",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestAFailedBuildPublishesNothing": {
+        "command": "ADAMIC_MUTANT='M13' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:160: a failed build left .building-1c4fdcb46b45-1822193634 in the cache",
+        "output": "=== RUN   TestAFailedBuildPublishesNothing\n    buildcache_test.go:160: a failed build left .building-1c4fdcb46b45-1822193634 in the cache\n--- FAIL: TestAFailedBuildPublishesNothing (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass"
+    }
+  },
+  {
+    "id": "M14",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 112,
+    "before": "os.Rename(scratch, product)",
+    "after": "os.Rename(product, scratch)",
+    "menu": "swap arguments",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestABuildRunsOncePerKey",
+      "TestAFailedBuildPublishesNothing",
+      "TestParallelCallersBuildOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "fail",
+      "TestAFailedBuildPublishesNothing": "fail",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "fail",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestABuildRunsOncePerKey": {
+        "command": "ADAMIC_MUTANT='M14' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:133: build buildcache test: rename /tmp/adamic-gate/TestABuildRunsOncePerKey3630641445/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestABuildRunsOncePerKey3630641445/001/.building-1c4fdcb46b45-3316166473: no such file or directory",
+        "output": "=== RUN   TestABuildRunsOncePerKey\n    buildcache_test.go:133: build buildcache test: rename /tmp/adamic-gate/TestABuildRunsOncePerKey3630641445/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestABuildRunsOncePerKey3630641445/001/.building-1c4fdcb46b45-3316166473: no such file or directory\n--- FAIL: TestABuildRunsOncePerKey (0.00s)\n"
+      },
+      "TestAFailedBuildPublishesNothing": {
+        "command": "ADAMIC_MUTANT='M14' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:164: build buildcache test: rename /tmp/adamic-gate/TestAFailedBuildPublishesNothing3672870636/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestAFailedBuildPublishesNothing3672870636/001/.building-1c4fdcb46b45-2990366716: no such file or directory",
+        "output": "=== RUN   TestAFailedBuildPublishesNothing\n    buildcache_test.go:164: build buildcache test: rename /tmp/adamic-gate/TestAFailedBuildPublishesNothing3672870636/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestAFailedBuildPublishesNothing3672870636/001/.building-1c4fdcb46b45-2990366716: no such file or directory\n--- FAIL: TestAFailedBuildPublishesNothing (0.00s)\n"
+      },
+      "TestParallelCallersBuildOnce": {
+        "command": "ADAMIC_MUTANT='M14' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-3241810676: no such file or directory",
+        "output": "=== RUN   TestParallelCallersBuildOnce\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-3241810676: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-2068424365: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-2421865594: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-604807593: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-159348800: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-1297663617: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-731370907: no such file or directory\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-3266580850: no such file or directory\n    buildcache_test.go:206: 8 builds for one key\n--- FAIL: TestParallelCallersBuildOnce (0.40s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass"
+    }
+  },
+  {
+    "id": "M15",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 266,
+    "before": "file.WriteString(line + \"\\n\")",
+    "after": "",
+    "menu": "drop statement",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestABuildRunsOncePerKey"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "fail",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestABuildRunsOncePerKey": {
+        "command": "ADAMIC_MUTANT='M15' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:143: census lines: \"\"",
+        "output": "=== RUN   TestABuildRunsOncePerKey\n    buildcache_test.go:133: build buildcache_test 1c4fdcb46b45 miss 0.00\n    buildcache_test.go:134: build buildcache_test 1c4fdcb46b45 hit 0.00\n    buildcache_test.go:143: census lines: \"\"\n--- FAIL: TestABuildRunsOncePerKey (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass"
+    }
+  },
+  {
+    "id": "M16",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 254,
+    "before": "\tfor _, tool := range inputs.Toolchain {\n\t\tlines = append(lines, \"tool \"+tool)\n\t}",
+    "after": "",
+    "menu": "drop whole loop",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {},
+    "subcases": {
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/name": "pass"
+    }
+  },
+  {
+    "id": "M17",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 199,
+    "before": "tools.Store(command, value)",
+    "after": "",
+    "menu": "drop statement",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {},
+    "subcases": {
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass"
+    }
+  },
+  {
+    "id": "M18",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 195,
+    "before": "value := command + \": \" + strings.TrimSpace(string(output))",
+    "after": "value := command + \" \" + strings.TrimSpace(string(output))",
+    "menu": "change constant",
+    "occurrence": 0,
+    "probe": false,
+    "supplemental": false,
+    "failed_rows": [
+      "TestToolNamesItselfOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "fail",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestToolNamesItselfOnce": {
+        "command": "ADAMIC_MUTANT='M18' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:218: Tool reported \"go version go version go1.27.1 linux/amd64\"",
+        "output": "=== RUN   TestToolNamesItselfOnce\n    buildcache_test.go:218: Tool reported \"go version go version go1.27.1 linux/amd64\"\n--- FAIL: TestToolNamesItselfOnce (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass"
+    }
+  },
+  {
+    "id": "P_PRODUCT",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 41,
+    "before": "func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {",
+    "after": "func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {\n if true { return \"\" }",
+    "menu": "empty answer",
+    "occurrence": 0,
+    "probe": true,
+    "supplemental": false,
+    "failed_rows": [
+      "TestABuildRunsOncePerKey",
+      "TestAFailedBuildPublishesNothing",
+      "TestUncachedModeBuildsEveryTime"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "fail",
+      "TestAFailedBuildPublishesNothing": "fail",
+      "TestUncachedModeBuildsEveryTime": "fail",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestABuildRunsOncePerKey": {
+        "command": "ADAMIC_MUTANT='P_PRODUCT' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:136: 0 builds, products  and",
+        "output": "=== RUN   TestABuildRunsOncePerKey\n    buildcache_test.go:136: 0 builds, products  and \n--- FAIL: TestABuildRunsOncePerKey (0.00s)\n"
+      },
+      "TestAFailedBuildPublishesNothing": {
+        "command": "ADAMIC_MUTANT='P_PRODUCT' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:166: the next call reused a failed build",
+        "output": "=== RUN   TestAFailedBuildPublishesNothing\n    buildcache_test.go:166: the next call reused a failed build\n--- FAIL: TestAFailedBuildPublishesNothing (0.00s)\n"
+      },
+      "TestUncachedModeBuildsEveryTime": {
+        "command": "ADAMIC_MUTANT='P_PRODUCT' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:179: 0 builds, products  and",
+        "output": "=== RUN   TestUncachedModeBuildsEveryTime\n    buildcache_test.go:179: 0 builds, products  and \n--- FAIL: TestUncachedModeBuildsEveryTime (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass"
+    }
+  },
+  {
+    "id": "P_GET",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 54,
+    "before": "func Get(inputs Inputs, build func(directory string) error) (string, error) {",
+    "after": "func Get(inputs Inputs, build func(directory string) error) (string, error) {\n if true { return \"\", nil }",
+    "menu": "empty answer",
+    "occurrence": 0,
+    "probe": true,
+    "supplemental": false,
+    "failed_rows": [
+      "TestAFailedBuildPublishesNothing",
+      "TestParallelCallersBuildOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "fail",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "fail",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestAFailedBuildPublishesNothing": {
+        "command": "ADAMIC_MUTANT='P_GET' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:155: the build's error was lost: <nil>",
+        "output": "=== RUN   TestAFailedBuildPublishesNothing\n    buildcache_test.go:155: the build's error was lost: <nil>\n--- FAIL: TestAFailedBuildPublishesNothing (0.00s)\n"
+      },
+      "TestParallelCallersBuildOnce": {
+        "command": "ADAMIC_MUTANT='P_GET' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:206: 0 builds for one key",
+        "output": "=== RUN   TestParallelCallersBuildOnce\n    buildcache_test.go:206: 0 builds for one key\n--- FAIL: TestParallelCallersBuildOnce (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass"
+    }
+  },
+  {
+    "id": "P_KEY",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 120,
+    "before": "func Key(root string, inputs Inputs) (string, error) {",
+    "after": "func Key(root string, inputs Inputs) (string, error) {\n if true { return \"\", nil }",
+    "menu": "empty answer",
+    "occurrence": 0,
+    "probe": true,
+    "supplemental": false,
+    "failed_rows": [
+      "TestEveryInputChangesTheKey",
+      "TestABuildRunsOncePerKey",
+      "TestAFailedBuildPublishesNothing",
+      "TestParallelCallersBuildOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "fail",
+      "TestAFailedBuildPublishesNothing": "fail",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "fail",
+      "TestToolNamesItselfOnce": "pass",
+      "TestEveryInputChangesTheKey": "fail"
+    },
+    "evidence": {
+      "TestEveryInputChangesTheKey": {
+        "command": "ADAMIC_MUTANT='P_KEY' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:82: changing the flag left the key",
+        "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/flag\n    buildcache_test.go:82: changing the flag left the key \n--- FAIL: TestEveryInputChangesTheKey/flag (0.00s)\n=== CONT  TestEveryInputChangesTheKey/name\n=== CONT  TestEveryInputChangesTheKey/flag_order\n    buildcache_test.go:82: changing the name left the key \n--- FAIL: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n    buildcache_test.go:82: changing the renamed file left the key \n--- FAIL: TestEveryInputChangesTheKey/renamed_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/added_file\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n    buildcache_test.go:82: changing the flag order left the key \n    buildcache_test.go:82: changing the added file left the key \n--- FAIL: TestEveryInputChangesTheKey/added_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n--- FAIL: TestEveryInputChangesTheKey/flag_order (0.00s)\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n=== CONT  TestEveryInputChangesTheKey/file_content\n    buildcache_test.go:82: changing the file list left the key \n--- FAIL: TestEveryInputChangesTheKey/file_list (0.00s)\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/toolchain\n    buildcache_test.go:105: input /etc/hosts was accepted\n    buildcache_test.go:82: changing the empty directory left the key \n--- FAIL: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n    buildcache_test.go:82: changing the exec bit left the key \n--- FAIL: TestEveryInputChangesTheKey/exec_bit (0.00s)\n    buildcache_test.go:82: changing the toolchain left the key \n--- FAIL: TestEveryInputChangesTheKey/empty_directory (0.00s)\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n    buildcache_test.go:82: changing the file content left the key \n--- FAIL: TestEveryInputChangesTheKey/toolchain (0.00s)\n--- FAIL: TestEveryInputChangesTheKey/file_content (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+      },
+      "TestABuildRunsOncePerKey": {
+        "command": "ADAMIC_MUTANT='P_KEY' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:136: 0 builds, products /tmp/adamic-gate/TestABuildRunsOncePerKey1427393546/001 and /tmp/adamic-gate/TestABuildRunsOncePerKey1427393546/001",
+        "output": "=== RUN   TestABuildRunsOncePerKey\n    buildcache_test.go:133: build buildcache_test  hit 0.00\n    buildcache_test.go:134: build buildcache_test  hit 0.00\n    buildcache_test.go:136: 0 builds, products /tmp/adamic-gate/TestABuildRunsOncePerKey1427393546/001 and /tmp/adamic-gate/TestABuildRunsOncePerKey1427393546/001\n--- FAIL: TestABuildRunsOncePerKey (0.00s)\n"
+      },
+      "TestAFailedBuildPublishesNothing": {
+        "command": "ADAMIC_MUTANT='P_KEY' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:155: the build's error was lost: <nil>",
+        "output": "=== RUN   TestAFailedBuildPublishesNothing\n    buildcache_test.go:155: the build's error was lost: <nil>\n--- FAIL: TestAFailedBuildPublishesNothing (0.00s)\n"
+      },
+      "TestParallelCallersBuildOnce": {
+        "command": "ADAMIC_MUTANT='P_KEY' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:206: 0 builds for one key",
+        "output": "=== RUN   TestParallelCallersBuildOnce\n    buildcache_test.go:206: 0 builds for one key\n--- FAIL: TestParallelCallersBuildOnce (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/flag": "fail",
+      "TestEveryInputChangesTheKey/name": "fail",
+      "TestEveryInputChangesTheKey/renamed_file": "fail",
+      "TestEveryInputChangesTheKey/added_file": "fail",
+      "TestEveryInputChangesTheKey/flag_order": "fail",
+      "TestEveryInputChangesTheKey/file_list": "fail",
+      "TestEveryInputChangesTheKey/outside_the_repository": "fail",
+      "TestEveryInputChangesTheKey/exec_bit": "fail",
+      "TestEveryInputChangesTheKey/empty_directory": "fail",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "fail",
+      "TestEveryInputChangesTheKey/file_content": "fail"
+    }
+  },
+  {
+    "id": "P_TOOL",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 189,
+    "before": "func Tool(name string, arguments ...string) string {",
+    "after": "func Tool(name string, arguments ...string) string {\n if true { return \"\" }",
+    "menu": "empty answer",
+    "occurrence": 0,
+    "probe": true,
+    "supplemental": false,
+    "failed_rows": [
+      "TestToolNamesItselfOnce"
+    ],
+    "status": {
+      "TestABuildRunsOncePerKey": "pass",
+      "TestAFailedBuildPublishesNothing": "pass",
+      "TestUncachedModeBuildsEveryTime": "pass",
+      "TestParallelCallersBuildOnce": "pass",
+      "TestToolNamesItselfOnce": "fail",
+      "TestEveryInputChangesTheKey": "pass"
+    },
+    "evidence": {
+      "TestToolNamesItselfOnce": {
+        "command": "ADAMIC_MUTANT='P_TOOL' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+        "line": "buildcache_test.go:218: Tool reported \"\"",
+        "output": "=== RUN   TestToolNamesItselfOnce\n    buildcache_test.go:218: Tool reported \"\"\n--- FAIL: TestToolNamesItselfOnce (0.00s)\n"
+      }
+    },
+    "subcases": {
+      "TestEveryInputChangesTheKey/exec_bit": "pass",
+      "TestEveryInputChangesTheKey/flag_order": "pass",
+      "TestEveryInputChangesTheKey/flag": "pass",
+      "TestEveryInputChangesTheKey/outside_the_repository": "pass",
+      "TestEveryInputChangesTheKey/name": "pass",
+      "TestEveryInputChangesTheKey/nothing_changed": "pass",
+      "TestEveryInputChangesTheKey/file_list": "pass",
+      "TestEveryInputChangesTheKey/toolchain": "pass",
+      "TestEveryInputChangesTheKey/renamed_file": "pass",
+      "TestEveryInputChangesTheKey/file_content": "pass",
+      "TestEveryInputChangesTheKey/added_file": "pass",
+      "TestEveryInputChangesTheKey/empty_directory": "pass"
+    }
+  }
+]

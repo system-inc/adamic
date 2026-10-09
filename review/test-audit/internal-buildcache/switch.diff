@@ -1,0 +1,215 @@
+diff --git a/internal/buildcache/buildcache.go b/internal/buildcache/buildcache.go
+index 754799b7..f6f0da79 100644
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -39,6 +39,9 @@ type Inputs struct {
+ 
+ // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
+ func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P_PRODUCT" {
++		return ""
++	}
+ 	t.Helper()
+ 	directory, line, err := get(inputs, build)
+ 	if line != "" {
+@@ -52,13 +55,16 @@ func Product(t testing.TB, inputs Inputs, build func(directory string) error) st
+ 
+ // Get is Product for TestMain and tools.
+ func Get(inputs Inputs, build func(directory string) error) (string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P_GET" {
++		return "", nil
++	}
+ 	directory, _, err := get(inputs, build)
+ 	return directory, err
+ }
+ 
+ func get(inputs Inputs, build func(directory string) error) (string, string, error) {
+ 	started := time.Now()
+-	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
++	if !(os.Getenv("ADAMIC_MUTANT") == "M09") && os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
+ 		directory, err := os.MkdirTemp("", "adamic-build-")
+ 		if err != nil {
+ 			return "", "", err
+@@ -81,7 +87,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
+ 		return "", "", err
+ 	}
+ 	product := filepath.Join(cache, key)
+-	if _, err = os.Stat(product); err == nil {
++	if _, err = os.Stat(product); err == nil && !(os.Getenv("ADAMIC_MUTANT") == "M10") {
+ 		return product, record(inputs.Name, key, "hit", started), nil
+ 	}
+ 	// One builder per key across every process on the machine: the rest wait, then find it built.
+@@ -90,11 +96,16 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
+ 		return "", "", err
+ 	}
+ 	defer lock.Close()
+-	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
++	if err = syscall.Flock(int(lock.Fd()), func() int {
++		if os.Getenv("ADAMIC_MUTANT") == "M12" {
++			return syscall.LOCK_SH
++		}
++		return syscall.LOCK_EX
++	}()); err != nil {
+ 		return "", "", err
+ 	}
+ 	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+-	if _, err = os.Stat(product); err == nil {
++	if _, err = os.Stat(product); err == nil && !(os.Getenv("ADAMIC_MUTANT") == "M11") {
+ 		return product, record(inputs.Name, key, "hit", started), nil
+ 	}
+ 	scratch, err := os.MkdirTemp(cache, ".building-"+key[:12]+"-")
+@@ -102,14 +113,21 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
+ 		return "", "", err
+ 	}
+ 	if err = build(scratch); err != nil {
+-		os.RemoveAll(scratch)
++		if !(os.Getenv("ADAMIC_MUTANT") == "M13") {
++			os.RemoveAll(scratch)
++		}
+ 		return "", "", err
+ 	}
+ 	if err = os.WriteFile(product+".inputs", []byte(describe(inputs)), 0o644); err != nil {
+ 		os.RemoveAll(scratch)
+ 		return "", "", err
+ 	}
+-	if err = os.Rename(scratch, product); err != nil {
++	if err = func() error {
++		if os.Getenv("ADAMIC_MUTANT") == "M14" {
++			return os.Rename(product, scratch)
++		}
++		return os.Rename(scratch, product)
++	}(); err != nil {
+ 		os.RemoveAll(scratch)
+ 		return "", "", err
+ 	}
+@@ -118,28 +136,41 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
+ 
+ // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
+ func Key(root string, inputs Inputs) (string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P_KEY" {
++		return "", nil
++	}
+ 	hash := sha256.New()
+ 	field := func(kind, value string) {
+ 		fmt.Fprintf(hash, "%s %d\n%s\n", kind, len(value), value)
+ 	}
+-	field("buildcache", "v1")
+-	field("name", inputs.Name)
++	if os.Getenv("ADAMIC_MUTANT") == "M07" {
++		field("buildcache", "v2")
++	} else {
++		field("buildcache", "v1")
++	}
++	if !(os.Getenv("ADAMIC_MUTANT") == "M01") {
++		field("name", inputs.Name)
++	}
+ 	for _, name := range inputs.Files {
+ 		if err := hashPath(hash, root, name, field); err != nil {
+ 			return "", err
+ 		}
+ 	}
+-	for _, flag := range inputs.Flags {
+-		field("flag", flag)
++	if !(os.Getenv("ADAMIC_MUTANT") == "M02") {
++		for _, flag := range inputs.Flags {
++			field("flag", flag)
++		}
+ 	}
+-	for _, tool := range inputs.Toolchain {
+-		field("tool", tool)
++	if !(os.Getenv("ADAMIC_MUTANT") == "M03") {
++		for _, tool := range inputs.Toolchain {
++			field("tool", tool)
++		}
+ 	}
+ 	return hex.EncodeToString(hash.Sum(nil)), nil
+ }
+ 
+ func hashPath(hash io.Writer, root, name string, field func(kind, value string)) error {
+-	if filepath.IsAbs(name) || strings.HasPrefix(filepath.Clean(name), "..") {
++	if !(os.Getenv("ADAMIC_MUTANT") == "M08") && (filepath.IsAbs(name) || strings.HasPrefix(filepath.Clean(name), "..")) {
+ 		return fmt.Errorf("input %q must be inside the repository, relative to its root", name)
+ 	}
+ 	// WalkDir visits in lexical order, so the same tree always hashes the same.
+@@ -161,7 +192,9 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
+ 			if entry.Name() == ".git" {
+ 				return filepath.SkipDir
+ 			}
+-			field("directory", relative)
++			if !(os.Getenv("ADAMIC_MUTANT") == "M04") {
++				field("directory", relative)
++			}
+ 		case info.Mode()&fs.ModeSymlink != 0:
+ 			target, err := os.Readlink(path)
+ 			if err != nil {
+@@ -173,8 +206,18 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
+ 			if err != nil {
+ 				return err
+ 			}
+-			sum := sha256.Sum256(content)
+-			field("file", fmt.Sprintf("%s %t %x", relative, info.Mode()&0o111 != 0, sum))
++			sum := sha256.Sum256(func() []byte {
++				if os.Getenv("ADAMIC_MUTANT") == "M05" {
++					return content[:0]
++				}
++				return content
++			}())
++			field("file", fmt.Sprintf("%s %t %x", relative, func() bool {
++				if os.Getenv("ADAMIC_MUTANT") == "M06" {
++					return false
++				}
++				return info.Mode()&0o111 != 0
++			}(), sum))
+ 		default:
+ 			return fmt.Errorf("input %s is neither a file, a directory nor a symlink", relative)
+ 		}
+@@ -187,16 +230,24 @@ var tools sync.Map
+ // Tool names a tool by its own report, such as Tool("clang", "--version"), running it once per process. A tool
+ // that can't run is named by its error, so the build that needs it fails rather than reusing another's product.
+ func Tool(name string, arguments ...string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P_TOOL" {
++		return ""
++	}
+ 	command := strings.Join(append([]string{name}, arguments...), " ")
+ 	if value, ok := tools.Load(command); ok {
+ 		return value.(string)
+ 	}
+ 	output, err := exec.Command(name, arguments...).CombinedOutput()
+ 	value := command + ": " + strings.TrimSpace(string(output))
++	if os.Getenv("ADAMIC_MUTANT") == "M18" {
++		value = command + " " + strings.TrimSpace(string(output))
++	}
+ 	if err != nil {
+ 		value += " (" + err.Error() + ")"
+ 	}
+-	tools.Store(command, value)
++	if !(os.Getenv("ADAMIC_MUTANT") == "M17") {
++		tools.Store(command, value)
++	}
+ 	return value
+ }
+ 
+@@ -251,8 +302,10 @@ func describe(inputs Inputs) string {
+ 	for _, flag := range inputs.Flags {
+ 		lines = append(lines, "flag "+flag)
+ 	}
+-	for _, tool := range inputs.Toolchain {
+-		lines = append(lines, "tool "+tool)
++	if !(os.Getenv("ADAMIC_MUTANT") == "M16") {
++		for _, tool := range inputs.Toolchain {
++			lines = append(lines, "tool "+tool)
++		}
+ 	}
+ 	return strings.Join(lines, "\n") + "\n"
+ }
+@@ -263,7 +316,9 @@ func record(name, key, outcome string, started time.Time) string {
+ 	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())
+ 	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
+ 		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+-			file.WriteString(line + "\n")
++			if !(os.Getenv("ADAMIC_MUTANT") == "M15") {
++				file.WriteString(line + "\n")
++			}
+ 			file.Close()
+ 		}
+ 	}

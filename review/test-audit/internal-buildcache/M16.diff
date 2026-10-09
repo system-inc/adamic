@@ -1,0 +1,13 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -251,9 +251,7 @@
+ 	for _, flag := range inputs.Flags {
+ 		lines = append(lines, "flag "+flag)
+ 	}
+-	for _, tool := range inputs.Toolchain {
+-		lines = append(lines, "tool "+tool)
+-	}
++
+ 	return strings.Join(lines, "\n") + "\n"
+ }
+ 

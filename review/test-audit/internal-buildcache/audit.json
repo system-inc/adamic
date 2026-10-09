@@ -1,0 +1,234 @@
+[
+  {
+    "test": "TestEveryInputChangesTheKey",
+    "package": "internal/buildcache",
+    "file": "internal/buildcache/buildcache_test.go",
+    "seconds": 0.006,
+    "oracle": "self-written metamorphic key comparisons; outside-input subcase accepts any error and survived the disabled guard M08",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "last_proven_fail": "M06: buildcache_test.go:82: changing the exec bit left the key e43a611259993bbe9338e4102714e0e870eaa62939607224b7855dc70a3f12de",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P_KEY"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "TestEveryInputChangesTheKey/nothing_changed"
+    ],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M06' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .; buildcache_test.go:82: changing the exec bit left the key e43a611259993bbe9338e4102714e0e870eaa62939607224b7855dc70a3f12de",
+    "evidence_details": {
+      "command": "ADAMIC_MUTANT='M06' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+      "line": "buildcache_test.go:82: changing the exec bit left the key e43a611259993bbe9338e4102714e0e870eaa62939607224b7855dc70a3f12de",
+      "output": "=== RUN   TestEveryInputChangesTheKey\n=== PAUSE TestEveryInputChangesTheKey\n=== CONT  TestEveryInputChangesTheKey\n=== RUN   TestEveryInputChangesTheKey/empty_directory\n=== PAUSE TestEveryInputChangesTheKey/empty_directory\n=== RUN   TestEveryInputChangesTheKey/toolchain\n=== PAUSE TestEveryInputChangesTheKey/toolchain\n=== RUN   TestEveryInputChangesTheKey/file_list\n=== PAUSE TestEveryInputChangesTheKey/file_list\n=== RUN   TestEveryInputChangesTheKey/added_file\n=== PAUSE TestEveryInputChangesTheKey/added_file\n=== RUN   TestEveryInputChangesTheKey/renamed_file\n=== PAUSE TestEveryInputChangesTheKey/renamed_file\n=== RUN   TestEveryInputChangesTheKey/name\n=== PAUSE TestEveryInputChangesTheKey/name\n=== RUN   TestEveryInputChangesTheKey/flag\n=== PAUSE TestEveryInputChangesTheKey/flag\n=== RUN   TestEveryInputChangesTheKey/flag_order\n=== PAUSE TestEveryInputChangesTheKey/flag_order\n=== RUN   TestEveryInputChangesTheKey/file_content\n=== PAUSE TestEveryInputChangesTheKey/file_content\n=== RUN   TestEveryInputChangesTheKey/exec_bit\n=== PAUSE TestEveryInputChangesTheKey/exec_bit\n=== RUN   TestEveryInputChangesTheKey/nothing_changed\n=== PAUSE TestEveryInputChangesTheKey/nothing_changed\n=== RUN   TestEveryInputChangesTheKey/outside_the_repository\n=== PAUSE TestEveryInputChangesTheKey/outside_the_repository\n=== CONT  TestEveryInputChangesTheKey/empty_directory\n=== CONT  TestEveryInputChangesTheKey/flag\n=== CONT  TestEveryInputChangesTheKey/added_file\n=== CONT  TestEveryInputChangesTheKey/renamed_file\n--- PASS: TestEveryInputChangesTheKey/empty_directory (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_list\n--- PASS: TestEveryInputChangesTheKey/flag (0.00s)\n=== CONT  TestEveryInputChangesTheKey/outside_the_repository\n--- PASS: TestEveryInputChangesTheKey/renamed_file (0.00s)\n=== CONT  TestEveryInputChangesTheKey/name\n--- PASS: TestEveryInputChangesTheKey/added_file (0.00s)\n--- PASS: TestEveryInputChangesTheKey/outside_the_repository (0.00s)\n=== CONT  TestEveryInputChangesTheKey/nothing_changed\n=== CONT  TestEveryInputChangesTheKey/exec_bit\n--- PASS: TestEveryInputChangesTheKey/file_list (0.00s)\n=== CONT  TestEveryInputChangesTheKey/toolchain\n--- PASS: TestEveryInputChangesTheKey/name (0.00s)\n=== CONT  TestEveryInputChangesTheKey/file_content\n    buildcache_test.go:82: changing the exec bit left the key e43a611259993bbe9338e4102714e0e870eaa62939607224b7855dc70a3f12de\n--- PASS: TestEveryInputChangesTheKey/nothing_changed (0.00s)\n=== CONT  TestEveryInputChangesTheKey/flag_order\n--- FAIL: TestEveryInputChangesTheKey/exec_bit (0.00s)\n--- PASS: TestEveryInputChangesTheKey/toolchain (0.00s)\n--- PASS: TestEveryInputChangesTheKey/file_content (0.00s)\n--- PASS: TestEveryInputChangesTheKey/flag_order (0.00s)\n--- FAIL: TestEveryInputChangesTheKey (0.00s)\n"
+    },
+    "entry_probes": [
+      "P_KEY"
+    ]
+  },
+  {
+    "test": "TestABuildRunsOncePerKey",
+    "package": "internal/buildcache",
+    "file": "internal/buildcache/buildcache_test.go",
+    "seconds": 0.003,
+    "oracle": "self-written build count, directory equality, product bytes and census text",
+    "oracle_kind": "self",
+    "kills": [
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [
+      "M15"
+    ],
+    "last_proven_fail": "M15: buildcache_test.go:143: census lines: \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P_PRODUCT",
+      "P_KEY"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M15' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .; buildcache_test.go:143: census lines: \"\"",
+    "evidence_details": {
+      "command": "ADAMIC_MUTANT='M15' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+      "line": "buildcache_test.go:143: census lines: \"\"",
+      "output": "=== RUN   TestABuildRunsOncePerKey\n    buildcache_test.go:133: build buildcache_test 1c4fdcb46b45 miss 0.00\n    buildcache_test.go:134: build buildcache_test 1c4fdcb46b45 hit 0.00\n    buildcache_test.go:143: census lines: \"\"\n--- FAIL: TestABuildRunsOncePerKey (0.00s)\n"
+    },
+    "entry_probes": [
+      "P_PRODUCT"
+    ]
+  },
+  {
+    "test": "TestAFailedBuildPublishesNothing",
+    "package": "internal/buildcache",
+    "file": "internal/buildcache/buildcache_test.go",
+    "seconds": 0.003,
+    "oracle": "self-written error identity, no leftover directory and next-build callback checks",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M14: buildcache_test.go:164: build buildcache test: rename /tmp/adamic-gate/TestAFailedBuildPublishesNothing3672870636/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestAFailedBuildPublishesNothing3672870636/001/.building-1c4fdcb46b45-2990366716: no such file or directory",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P_PRODUCT",
+      "P_GET",
+      "P_KEY"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M13' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .; buildcache_test.go:160: a failed build left .building-1c4fdcb46b45-1822193634 in the cache",
+    "evidence_details": {
+      "command": "ADAMIC_MUTANT='M13' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+      "line": "buildcache_test.go:160: a failed build left .building-1c4fdcb46b45-1822193634 in the cache",
+      "output": "=== RUN   TestAFailedBuildPublishesNothing\n    buildcache_test.go:160: a failed build left .building-1c4fdcb46b45-1822193634 in the cache\n--- FAIL: TestAFailedBuildPublishesNothing (0.00s)\n"
+    },
+    "entry_probes": [
+      "P_GET",
+      "P_PRODUCT"
+    ]
+  },
+  {
+    "test": "TestUncachedModeBuildsEveryTime",
+    "package": "internal/buildcache",
+    "file": "internal/buildcache/buildcache_test.go",
+    "seconds": 0.002,
+    "oracle": "self-written two-build count and distinct-directory comparison",
+    "oracle_kind": "self",
+    "kills": [
+      "M09"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "M09: buildcache_test.go:179: 1 builds, products /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 and /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P_PRODUCT"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M09' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .; buildcache_test.go:179: 1 builds, products /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 and /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384",
+    "evidence_details": {
+      "command": "ADAMIC_MUTANT='M09' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+      "line": "buildcache_test.go:179: 1 builds, products /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 and /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384",
+      "output": "=== RUN   TestUncachedModeBuildsEveryTime\n    buildcache_test.go:176: build buildcache_test 1c4fdcb46b45 miss 0.00\n    buildcache_test.go:177: build buildcache_test 1c4fdcb46b45 hit 0.00\n    buildcache_test.go:179: 1 builds, products /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 and /tmp/adamic-gate/TestUncachedModeBuildsEveryTime2548819875/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384\n--- FAIL: TestUncachedModeBuildsEveryTime (0.00s)\n"
+    },
+    "entry_probes": [
+      "P_PRODUCT"
+    ]
+  },
+  {
+    "test": "TestParallelCallersBuildOnce",
+    "package": "internal/buildcache",
+    "file": "internal/buildcache/buildcache_test.go",
+    "seconds": 0.055,
+    "oracle": "self-written one-build count and directory equality across eight goroutines",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M12",
+      "M14"
+    ],
+    "unique_kills": [
+      "M11",
+      "M12"
+    ],
+    "last_proven_fail": "M14: buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384 /tmp/adamic-gate/TestParallelCallersBuildOnce2742948050/001/.building-1c4fdcb46b45-3241810676: no such file or directory",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P_GET",
+      "P_KEY"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M12' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .; buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2285466777 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists",
+    "evidence_details": {
+      "command": "ADAMIC_MUTANT='M12' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+      "line": "buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2285466777 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists",
+      "output": "=== RUN   TestParallelCallersBuildOnce\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2285466777 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-3444320789 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-731043091 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2109451344 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-2448311712 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-1957734501 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:199: rename /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/.building-1c4fdcb46b45-3920422964 /tmp/adamic-gate/TestParallelCallersBuildOnce2495878102/001/1c4fdcb46b45c9a08c078506e672b7fc0ec38016b40fac1a68c525db9a346384: file exists\n    buildcache_test.go:206: 8 builds for one key\n--- FAIL: TestParallelCallersBuildOnce (0.05s)\n"
+    },
+    "entry_probes": [
+      "P_GET"
+    ]
+  },
+  {
+    "test": "TestToolNamesItselfOnce",
+    "package": "internal/buildcache",
+    "file": "internal/buildcache/buildcache_test.go",
+    "seconds": 0.006,
+    "oracle": "self-written Go report prefix and missing-tool markers; does not independently compare the full report or repeat a command; M17 survived",
+    "oracle_kind": "self",
+    "kills": [
+      "M18"
+    ],
+    "unique_kills": [
+      "M18"
+    ],
+    "last_proven_fail": "M18: buildcache_test.go:218: Tool reported \"go version go version go1.27.1 linux/amd64\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P_TOOL"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M18' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .; buildcache_test.go:218: Tool reported \"go version go version go1.27.1 linux/amd64\"",
+    "evidence_details": {
+      "command": "ADAMIC_MUTANT='M18' timeout 120 go test -json -count=1 -timeout 90s ./internal/buildcache/ -run .",
+      "line": "buildcache_test.go:218: Tool reported \"go version go version go1.27.1 linux/amd64\"",
+      "output": "=== RUN   TestToolNamesItselfOnce\n    buildcache_test.go:218: Tool reported \"go version go version go1.27.1 linux/amd64\"\n--- FAIL: TestToolNamesItselfOnce (0.00s)\n"
+    },
+    "entry_probes": [
+      "P_TOOL"
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -52,6 +52,7 @@
+ 
+ // Get is Product for TestMain and tools.
+ func Get(inputs Inputs, build func(directory string) error) (string, error) {
++ if true { return "", nil }
+ 	directory, _, err := get(inputs, build)
+ 	return directory, err
+ }

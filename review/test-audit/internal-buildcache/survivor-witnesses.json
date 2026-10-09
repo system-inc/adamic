@@ -1,0 +1,97 @@
+[
+  {
+    "build_command": "timeout 90 go build -o /tmp/u015/survivor-probe review/test-audit/internal-buildcache/survivor_probe.go",
+    "exit": 0,
+    "seconds": 0.2792141640020418
+  },
+  {
+    "mutant": "M07",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' /tmp/u015/survivor-probe key",
+    "exit": 0,
+    "stdout": "{\"error\":\"\\u003cnil\\u003e\",\"key\":\"206f68d1cdecffedf86a6139af0449d4436c76715634f161e8a94e6e9c6256fc\",\"mode\":\"key\"}\n",
+    "stderr": "",
+    "seconds": 0.0027464310005598236
+  },
+  {
+    "mutant": "M07",
+    "selector": "M07",
+    "command": "ADAMIC_MUTANT='M07' /tmp/u015/survivor-probe key",
+    "exit": 0,
+    "stdout": "{\"error\":\"\\u003cnil\\u003e\",\"key\":\"11c889db13884d44186b04915809f7b6e0710578b14f023f5110ee034f276ba5\",\"mode\":\"key\"}\n",
+    "stderr": "",
+    "seconds": 0.002359551999688847
+  },
+  {
+    "mutant": "M08",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' /tmp/u015/survivor-probe outside",
+    "exit": 0,
+    "stdout": "{\"error\":\"input \\\"../escape\\\" must be inside the repository, relative to its root\",\"key\":\"\",\"mode\":\"outside\"}\n",
+    "stderr": "",
+    "seconds": 0.0024669360027473886
+  },
+  {
+    "mutant": "M08",
+    "selector": "M08",
+    "command": "ADAMIC_MUTANT='M08' /tmp/u015/survivor-probe outside",
+    "exit": 0,
+    "stdout": "{\"error\":\"\\u003cnil\\u003e\",\"key\":\"1081ebdeddfcce04799f15761b36367b3b301da522d1af9361fd4ce7f07f92a6\",\"mode\":\"outside\"}\n",
+    "stderr": "",
+    "seconds": 0.0015208730001177173
+  },
+  {
+    "mutant": "M10",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' /tmp/u015/survivor-probe lock",
+    "exit": 0,
+    "stdout": "{\"error\":\"\\u003cnil\\u003e\",\"mode\":\"lock\",\"reused\":true}\n",
+    "stderr": "",
+    "seconds": 0.0025238739981432445
+  },
+  {
+    "mutant": "M10",
+    "selector": "M10",
+    "command": "ADAMIC_MUTANT='M10' /tmp/u015/survivor-probe lock",
+    "exit": 0,
+    "stdout": "{\"error\":\"open /tmp/u015/witness-3305814385/cache/4554d5d2779b540b1c4145bf9f7d1e320a819b99e93ae828007ba4101da72d1a.lock: is a directory\",\"mode\":\"lock\",\"reused\":false}\n",
+    "stderr": "",
+    "seconds": 0.0014925459981895983
+  },
+  {
+    "mutant": "M16",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' /tmp/u015/survivor-probe describe",
+    "exit": 0,
+    "stdout": "{\"description\":\"name describe-witness\\ntool tool-witness\\n\",\"error\":\"\\u003cnil\\u003e\",\"mode\":\"describe\"}\n",
+    "stderr": "",
+    "seconds": 0.0013729100028285757
+  },
+  {
+    "mutant": "M16",
+    "selector": "M16",
+    "command": "ADAMIC_MUTANT='M16' /tmp/u015/survivor-probe describe",
+    "exit": 0,
+    "stdout": "{\"description\":\"name describe-witness\\n\",\"error\":\"\\u003cnil\\u003e\",\"mode\":\"describe\"}\n",
+    "stderr": "",
+    "seconds": 0.002451176998874871
+  },
+  {
+    "mutant": "M17",
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' /tmp/u015/survivor-probe tool",
+    "exit": 0,
+    "stdout": "{\"executions\":1,\"mode\":\"tool\",\"same_report\":true}\n",
+    "stderr": "",
+    "seconds": 0.0037229490008030552
+  },
+  {
+    "mutant": "M17",
+    "selector": "M17",
+    "command": "ADAMIC_MUTANT='M17' /tmp/u015/survivor-probe tool",
+    "exit": 0,
+    "stdout": "{\"executions\":2,\"mode\":\"tool\",\"same_report\":true}\n",
+    "stderr": "",
+    "seconds": 0.0036513380000542384
+  }
+]

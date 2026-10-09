@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -109,7 +109,7 @@
+ 		os.RemoveAll(scratch)
+ 		return "", "", err
+ 	}
+-	if err = os.Rename(scratch, product); err != nil {
++	if err = os.Rename(product, scratch); err != nil {
+ 		os.RemoveAll(scratch)
+ 		return "", "", err
+ 	}

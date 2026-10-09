@@ -1,0 +1,12 @@
+{
+  "tests": [
+    "TestEveryInputChangesTheKey",
+    "TestABuildRunsOncePerKey",
+    "TestAFailedBuildPublishesNothing",
+    "TestUncachedModeBuildsEveryTime",
+    "TestParallelCallersBuildOnce",
+    "TestToolNamesItselfOnce"
+  ],
+  "families": [],
+  "skips": []
+}
