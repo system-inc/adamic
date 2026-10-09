@@ -14,8 +14,9 @@
         "file_line": "internal/native/runtime/string_share.c:59",
         "change": "Give every shared slice capacity size + 1.",
         "rows_failed": [
-          "TestSharedSliceAppendMatchesNode",
-          "TestFormatterMatchesGo"
+          "TestComposeMatchGo",
+          "TestFormatterMatchesGo",
+          "TestSharedSliceAppendMatchesNode"
         ]
       },
       {

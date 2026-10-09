@@ -10,7 +10,7 @@ Coverage commands: ADAMIC_YAML_LIBRARY=/tmp/u152/library timeout 120 go test -co
 
 Semantic lead: sharedSliceAppend.ts builds a 128-byte heap owner, shares an 80-byte view, and appends one byte. At offset 0 it checks an observable owner byte remains 'a'. At offset 48 the view ends exactly at the owner's byte allocation boundary. A slice header's capacity must be zero even when its own reference count is one. The property resolver builds different string histories and does not exercise this owner-end append boundary. The production mutation outcomes below establish that difference empirically; shared compiler lines alone do not prove it.
 
-D01 replaces zero shared capacity with size + 1. Target offset 0 prints x\nx\n instead of Node's a\nx\n; offset 48 triggers ASan. TestPropsMatchGo passes. TestFormatterMatchesGo also fails, so the broad mutant is not unique. Its remaining replay was stopped after that decisive counterexample; D01 has unknown results outside its completed groups. D01-stop.json records task-owned process cleanup and source restoration. D01's partial matrix never supports uniqueness.
+D01 replaces zero shared capacity with size + 1. Target offset 0 prints x\nx\n instead of Node's a\nx\n; offset 48 triggers ASan. TestPropsMatchGo passes. TestFormatterMatchesGo and TestComposeMatchGo also fail, so the broad mutant is not unique. Its remaining replay was stopped after that decisive counterexample; D01 has unknown results outside its completed groups. D01-stop.json records task-owned process cleanup and source restoration. D01's partial matrix never supports uniqueness.
 
 D02 makes that capacity mistake only for a slice whose end pointer equals its ultimate owner's end pointer. This is a change to the capacity option, aimed at the semantic owner-end boundary, without matching filenames, test names or literal input bytes. Offset 0 passes; offset 48 reaches the illegal append and ASan reports heap-buffer-overflow in adamic_string_append. Only TestSharedSliceAppendMatchesNode fails. TestPropsMatchGo, TestFormatterMatchesGo, all scalar/file execution shards and every other current row pass. D02-passed-rows.json gives the complete list; D02-matrix.json records top-level and subcase outcomes; D02-runs.json gives every exact command and duration.
 
@@ -46,8 +46,9 @@ Toolchain setup skipped, env.sh works, nproc=5. API npm ci ran before baseline. 
         "file_line": "internal/native/runtime/string_share.c:59",
         "change": "Give every shared slice capacity size + 1.",
         "rows_failed": [
-          "TestSharedSliceAppendMatchesNode",
-          "TestFormatterMatchesGo"
+          "TestComposeMatchGo",
+          "TestFormatterMatchesGo",
+          "TestSharedSliceAppendMatchesNode"
         ]
       },
       {
@@ -64,4 +65,4 @@ Toolchain setup skipped, env.sh works, nproc=5. API npm ci ran before baseline. 
 ]
 ```
 
-Timing update: complete D02 replay commands totaled 555.965 wall seconds in 24 selections. Whole-unit work took approximately 33 minutes, including dependency repair, baseline narrowing, two attempts, and publication. This exceeded the approximate 30-minute port budget while completing the expanded package matrix.
+Timing update: complete D02 replay commands totaled 555.965 wall seconds in 24 selections. Whole-unit work took approximately 34 minutes, including dependency repair, baseline narrowing, two attempts, and publication. This exceeded the approximate 30-minute port budget while completing the expanded package matrix. Final log enumeration also includes TestComposeMatchGo, which caught D01 before its remaining replay was stopped.
