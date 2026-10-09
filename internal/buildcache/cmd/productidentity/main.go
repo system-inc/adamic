@@ -942,7 +942,7 @@ const buildFlags = "-buildvcs=false -trimpath"
 // On macOS a product holding an archive is reported, not required: macOS's ar stamps the archive's symbol table with
 // the time it ran, so two builds of an archive differ there anywhere (byte-identical with ZERO_AR_DATE=1).
 func elsewhere(root, scratch, address, tokenPath string, server *store, units []productUnit, parallel int, timeout time.Duration) bool {
-	if status, err := gitOutput(root, "status", "--porcelain", "--untracked-files=no"); err != nil || status != "" {
+	if status, err := gitOutput(root, "status", "--porcelain", "--untracked-files=no", "--ignore-submodules=all"); err != nil || status != "" {
 		fmt.Printf("FAIL elsewhere: the checkout must be committed and clean to be cloned exactly (%v): %s\n", err, status)
 		return false
 	}
