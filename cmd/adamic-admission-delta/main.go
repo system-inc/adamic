@@ -54,21 +54,23 @@ type entry struct {
 	Sampled           bool         `json:"sampled"`
 }
 type report struct {
-	CompileTimeoutSeconds float64  `json:"compile_timeout_seconds"`
-	RuntimeTimeoutSeconds float64  `json:"runtime_timeout_seconds"`
-	Base                  string   `json:"base"`
-	Head                  string   `json:"head"`
-	GeneratorBlob         string   `json:"generator_blob"`
-	ManifestBlob          string   `json:"manifest_blob"`
-	Admitted              int      `json:"admitted"`
-	Programs              []entry  `json:"programs"`
-	Verdict               string   `json:"verdict"`
-	Corpora               []corpus `json:"corpora"`
-	SamplingSeed          string   `json:"sampling_seed"`
-	SamplingSize          int      `json:"sampling_size"`
-	Omitted               int      `json:"omitted"`
-	BudgetSeconds         float64  `json:"budget_seconds"`
-	BudgetUsedSeconds     float64  `json:"budget_used_seconds"`
+	Diff                  []program `json:"diff"`
+	DiffCount             int       `json:"diff_count"`
+	CompileTimeoutSeconds float64   `json:"compile_timeout_seconds"`
+	RuntimeTimeoutSeconds float64   `json:"runtime_timeout_seconds"`
+	Base                  string    `json:"base"`
+	Head                  string    `json:"head"`
+	GeneratorBlob         string    `json:"generator_blob"`
+	ManifestBlob          string    `json:"manifest_blob"`
+	Admitted              int       `json:"admitted"`
+	Programs              []entry   `json:"programs"`
+	Verdict               string    `json:"verdict"`
+	Corpora               []corpus  `json:"corpora"`
+	SamplingSeed          string    `json:"sampling_seed"`
+	SamplingSize          int       `json:"sampling_size"`
+	Omitted               int       `json:"omitted"`
+	BudgetSeconds         float64   `json:"budget_seconds"`
+	BudgetUsedSeconds     float64   `json:"budget_used_seconds"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -288,11 +290,23 @@ func run(args []string) error {
 			return err
 		}
 	}
+	for _, c := range m.Corpora {
+		if c.Name == "diff" {
+			return fmt.Errorf("manifest corpus name diff is reserved for computed revision coverage")
+		}
+	}
+	result.Diff, err = changedPrograms(root, result.Base, result.Head)
+	if err != nil {
+		return err
+	}
+	result.DiffCount = len(result.Diff)
+	m.Corpora = append([]corpus{{Name: "diff", Programs: result.Diff}}, m.Corpora...)
 	result.Corpora = m.Corpora
 	result.SamplingSeed = result.Head
 	result.BudgetSeconds = *budget
 	result.CompileTimeoutSeconds = compileLimit.Seconds()
 	result.RuntimeTimeoutSeconds = limit.Seconds()
+	seen := map[string]string{}
 	for _, c := range m.Corpora {
 		for _, p := range c.Programs {
 			clean := filepath.ToSlash(filepath.Clean(p.Path))
@@ -313,6 +327,13 @@ func run(args []string) error {
 			if blob != p.Blob {
 				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
 			}
+			if previous, exists := seen[p.Path]; exists {
+				if previous != p.Blob {
+					return fmt.Errorf("conflicting blob for %s", p.Path)
+				}
+				continue
+			}
+			seen[p.Path] = p.Blob
 			a := execute(headTree, *compileLimit, b, "c", p.Path)
 			z := execute(headTree, *compileLimit, h, "c", p.Path)
 			a.Stdout = ""
@@ -384,15 +405,18 @@ func run(args []string) error {
 	return nil
 }
 
-// Each selected program reserves five command timeouts. Witnesses override the budget.
+// Each selected program reserves five command timeouts. Diff and witnesses override the budget.
 func sample(programs []entry, seed string, seconds float64, limit time.Duration) ([]int, int) {
+	diff := []int{}
 	witnesses := []int{}
 	others := []int{}
 	for i, p := range programs {
 		if p.Class != "newly-accepted" {
 			continue
 		}
-		if p.Corpus == "witnesses" {
+		if p.Corpus == "diff" {
+			diff = append(diff, i)
+		} else if p.Corpus == "witnesses" {
 			witnesses = append(witnesses, i)
 		} else {
 			others = append(others, i)
@@ -404,7 +428,7 @@ func sample(programs []entry, seed string, seconds float64, limit time.Duration)
 	random.Shuffle(len(others), func(i, j int) { others[i], others[j] = others[j], others[i] })
 	take := len(others)
 	if seconds > 0 {
-		capacity := int(seconds/(5*limit.Seconds())) - len(witnesses)
+		capacity := int(seconds/(5*limit.Seconds())) - len(diff) - len(witnesses)
 		if capacity < 0 {
 			capacity = 0
 		}
@@ -412,7 +436,7 @@ func sample(programs []entry, seed string, seconds float64, limit time.Duration)
 			take = capacity
 		}
 	}
-	return append(witnesses, others[:take]...), len(others) - take
+	return append(append(diff, witnesses...), others[:take]...), len(others) - take
 }
 func outputsAgree(a, b, c observation) bool {
 	return a.Error == "" && b.Error == "" && c.Error == "" && a.Exit >= 0 && a.Exit == b.Exit && a.Exit == c.Exit && a.Stdout == b.Stdout && a.Stdout == c.Stdout

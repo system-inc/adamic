@@ -1,0 +1,12 @@
+--- FAIL: TestDiffCoverage (0.04s)
+    diff_test.go:62: [corpus/input.a]
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.040s
+FAIL
+omit-outside mutant exit 1
+--- FAIL: TestDiffSamplingIsMandatory (0.00s)
+    diff_test.go:91: diff or witness sampled away: [0], omitted 3
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.003s
+FAIL
+sample-away mutant exit 1

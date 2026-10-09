@@ -108,7 +108,7 @@ func TestNewAdmissionMismatch(t *testing.T) {
 	if p.Agree == nil || *p.Agree || p.Node.Stdout != "42\n" || p.JavaScript.Stdout != "42\n" || p.Native.Stdout != "41\n" {
 		t.Fatalf("observations: %+v", p)
 	}
-	if r.GeneratorBlob == "" || r.ManifestBlob == "" || len(r.Corpora[1].Programs) != 0 {
+	if r.GeneratorBlob == "" || r.ManifestBlob == "" || len(r.Corpora[2].Programs) != 0 {
 		t.Fatal("missing provenance or empty corpus")
 	}
 }
@@ -192,7 +192,7 @@ func TestEmptyCorpus(t *testing.T) {
 	if err = json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatal(err, o.Stderr)
 	}
-	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || len(r.Corpora) != 1 || len(r.Programs) != 0 {
+	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || len(r.Corpora) != 2 || len(r.Programs) != 0 {
 		t.Fatalf("empty corpus failed: %+v %s", r, o.Stderr)
 	}
 }

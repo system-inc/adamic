@@ -24,14 +24,20 @@ The manifest's `sha` must equal resolved head. Its named `corpora` each have a
 `programs` list of `{ "path": "...", "blob": "git blob hash" }`. Empty corpora
 are retained in JSON. Every entry is verified against head. The result records
 the generator blob, the manifest's Git blob hash even for an external manifest,
-and every program blob.
+and every program blob. The tool also computes a `diff` corpus from every `.a`
+added or changed between base and head, in any directory, including rename
+destinations. Deleted programs are excluded. JSON always lists `diff` paths and
+blobs and `diff_count`, including an empty list and zero for equal revisions.
+The diff corpus is first; duplicate paths are classified once, while every
+manifest blob is still verified. The name `diff` is reserved for this coverage.
 
 `--compile-timeout 45s` bounds each base/head classification compile.
 `--timeout 10s` bounds each backend build and execution. Both kill the process
 group on timeout. The JSON records both limits and each command wall time.
 `--budget <seconds>` limits selection, reserving five command timeouts per
 program. Classification and compiler preparation are outside this runtime
-budget. All witness programs run even if their reservation exceeds the budget.
+budget. All newly admitted diff programs run first, followed by all witness programs,
+even if their reservation exceeds the budget.
 Remaining paths are sorted then shuffled using a SHA-256-derived seed from head.
 Zero budget selects all programs. `sampling_seed`, `sampling_size`, `omitted`,
 `budget_seconds`, and actual `budget_used_seconds` describe the selection.

@@ -1,0 +1,11 @@
+--- main.go
++++ main.go
+@@ -414,7 +414,7 @@
+ 		if p.Class != "newly-accepted" {
+ 			continue
+ 		}
+-		if p.Corpus == "diff" {
++		if p.Corpus == "disabled-diff" {
+ 			diff = append(diff, i)
+ 		} else if p.Corpus == "witnesses" {
+ 			witnesses = append(witnesses, i)
