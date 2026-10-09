@@ -1,0 +1,7 @@
+run adamic-verify-20261009T141007-aeeb3729: red, 24616 tests in 88 units, 1 failed, 0 units broken, 0 killed over budget
+AGAIN tests-23-r4: from run adamic-verify-again-20261009T144013-a1ec13f5
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-28-r9)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	229.140s
+FAIL github.com/system-inc/adamic/stage1/cohere/json requested tests started 2176, verdicts 159 of: TestPortMatchesGoCohere (TestPortMatchesGoCohere_002, TestPortMatchesGoCohere_0032, TestPortMatchesGoCohere_0033, TestPortMatchesGoCohere_0034, TestPortMatchesGoCohere_0035, TestPortMatchesGoCohere_0036, ...) (tests-02)
+FAIL github.com/system-inc/adamic/stage1/cohere/json requested tests started 2065, verdicts 1758 of: TestUpstreamRepositoryCorpusParity (TestUpstreamRepositoryCorpusParity_000, TestUpstreamRepositoryCorpusParity_0000, TestUpstreamRepositoryCorpusParity_0001, TestUpstreamRepositoryCorpusParity_0002, TestUpstreamRepositoryCorpusParity_0003, TestUpstreamRepositoryCorpusParity_0004, ...) (tests-22)
+FAIL github.com/system-inc/adamic/stage1/cohere/json whole package started 4278, verdicts 1948 of: TestJSONUpstreamShardDisagreement, TestPortMatchesGoCohereClassOrder_000, TestProduct_JSONUpstreamOracle, TestUpstreamRepositoryCorpusParityShardProof, TestUpstreamRepositoryCorpusParityUnion, TestUpstreamRepositoryCorpusParity_Setup (tests-28-r9)
