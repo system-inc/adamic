@@ -1083,6 +1083,36 @@
       "log": "member-17-storage-fixtures-tests.jsonl"
     },
     {
+      "test": "TestClosedRepeatInTryGap",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-17-css-tests.jsonl"
+    },
+    {
+      "test": "TestClosedRepeatInTryGap",
+      "result": "pass",
+      "seconds": 0.36,
+      "log": "member-17-stage1-tests.jsonl"
+    },
+    {
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-17-stage1-tests.jsonl"
+    },
+    {
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts",
+      "result": "pass",
+      "seconds": 0.4,
+      "log": "member-17-stage1-tests.jsonl"
+    },
+    {
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-17-stage1-tests.jsonl"
+    },
+    {
       "test": "TestMiscompile2AErrorSpread",
       "result": "pass",
       "seconds": 0.3,

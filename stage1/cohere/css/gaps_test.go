@@ -108,6 +108,7 @@ func TestClosedOptionalBooleanConditionGap(t *testing.T) {
 
 // Step 21 makes the dynamic library failure catchable in both backends.
 func TestClosedRepeatInTryGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/5_repeat_in_try.ts")
 	if err != nil {
 		t.Fatal(err)
