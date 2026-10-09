@@ -274,6 +274,9 @@ func (l *lowering) chainMethodCall(member, node *ast.Node, object ir.Expression,
 	if stored, known := l.representation(memberType); !known || stored != ir.Closure || l.weakTarget(memberType) != nil {
 		return nil, l.notYet(node, "an optional chain method without closure member storage")
 	}
+	if err := l.optionalCallableStorage(member); err != nil {
+		return nil, err
+	}
 	symbol := l.memberSymbol(member)
 	if symbol == nil || accessorSymbol(symbol) || l.accessorNames[member.Name().Text()] {
 		return nil, l.notYet(node, "an optional chain callable accessor without represented selection")

@@ -291,6 +291,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
 	method := ""
+	invalid := ""
 	exactCount := false
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
@@ -309,18 +310,31 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			lookup := "adamic_object_callee"
 			if expression.Optional {
 				lookup = e.optionalCalleeLookup()
+				invalid = e.temporary()
+				e.line("bool %s = false;", invalid)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s))", lookup, receiver, cString(property.Name), e.cache(), method))
+			extra := ""
+			if invalid != "" {
+				extra = ", &" + invalid
+			}
+			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s%s))", lookup, receiver, cString(property.Name), e.cache(), method, extra))
 		}
 	}
 	if expression.Optional {
-		return e.optionalSelectedCall(expression, closure, receiver, method, exactCount)
+		return e.optionalSelectedCall(expression, closure, receiver, method, exactCount, invalid)
 	}
 	return e.callSelected(expression, closure, receiver, method, exactCount)
 }
 
 func (e *emitter) callSelected(expression ir.CallClosure, closure, receiver, method string, exactCount bool) string {
+	return e.callSelectedChecked(expression, closure, receiver, method, exactCount, "")
+}
+
+func (e *emitter) callSelectedChecked(expression ir.CallClosure, closure, receiver, method string, exactCount bool, invalid string) string {
 	packed, count := e.closureArguments(expression)
+	if invalid != "" {
+		e.line("if (%s) adamic_panic(\"TypeError: optional call value is not callable\", 46);", invalid)
+	}
 	call := e.packedClosureCall(expression, closure, packed, count)
 	if expression.Direct > 0 {
 		target := expression.Direct - 1

@@ -11,13 +11,24 @@ import (
 // method. An absent own slot must not fall through to its prototype.
 func (e *emitter) optionalCalleeLookup() string {
 	code := fmt.Sprintf(`#include <string.h>
-static adamic_closure *adamic_optional_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, %s *method) {
+static adamic_closure *adamic_optional_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, %s *method, bool *invalid) {
 	const adamic_shape *shape = object->shape;
 	for (size_t index = 0; index < shape->count; index++) {
 		if (strcmp(shape->names[index], name) == 0) {
 			cache->shape = shape;
 			cache->index = index;
-			return object->slots[index].reference;
+			unsigned char type = adamic_object_field_types(object)[index];
+            const adamic_value *slot = &object->slots[index];
+            if (type == 8) {
+                const adamic_heap *heap = slot->reference;
+                if (heap == NULL || heap->kind == adamic_kind_closure) return slot->reference;
+            } else if (type == 10) {
+                const adamic_heap *heap = slot->reference;
+                if (heap == NULL || heap == &adamic_null) return NULL;
+                if (heap->kind == adamic_kind_closure) return slot->reference;
+            }
+            *invalid = true;
+            return NULL;
 		}
 	}
 	for (size_t index = 0; shape->methods != NULL && index < shape->methods->count; index++) {
@@ -36,7 +47,7 @@ static adamic_closure *adamic_optional_callee(const adamic_object *object, const
 
 // Receiver, closure and method entry are selected and owned before this branch.
 // Only argument evaluation and invocation belong inside the present arm.
-func (e *emitter) optionalSelectedCall(call ir.CallClosure, closure, receiver, method string, exactCount bool) string {
+func (e *emitter) optionalSelectedCall(call ir.CallClosure, closure, receiver, method string, exactCount bool, invalid string) string {
 	present := closure + " != NULL"
 	if receiver != "" {
 		selected := method + " != NULL"
@@ -45,13 +56,16 @@ func (e *emitter) optionalSelectedCall(call ir.CallClosure, closure, receiver, m
 		}
 		present += " || " + selected
 	}
+	if invalid != "" {
+		present += " || " + invalid
+	}
 	of := call.OptionalResult
 	call.Optional = false
 	text, value, owned := e.asideWith(func() string {
 		if call.OptionalPresent != 0 {
 			e.line("%s = true;", e.localName(call.OptionalPresent-1))
 		}
-		value := e.callSelected(call, closure, receiver, method, exactCount)
+		value := e.callSelectedChecked(call, closure, receiver, method, exactCount, invalid)
 		if of.IsMaybe() && call.Returns == of.Present() {
 			return maybe(of, value)
 		}

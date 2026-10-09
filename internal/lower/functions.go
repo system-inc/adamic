@@ -115,6 +115,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for position, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
+		if this >= 0 && ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			continue
+		}
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})

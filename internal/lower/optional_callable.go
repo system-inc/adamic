@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -17,6 +19,9 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(written.Expression))
 	if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 1 {
 		return nil, true, l.notYet(node, "an optional call without one represented callable signature")
+	}
+	if err := l.optionalCallableStorage(callee); err != nil {
+		return nil, true, err
 	}
 	value, err := l.callClosure(node)
 	if err != nil {
@@ -53,7 +58,7 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 	}
 	if receiver, err := l.optionalCallableReceiver(callee); err != nil {
 		return nil, true, err
-	} else if receiver {
+	} else if receiver || callee.Kind == ast.KindPropertyAccessExpression {
 		property, known := call.Closure.(ir.Property)
 		symbol := l.memberSymbol(callee)
 		if !known || l.result.CheckedFields[property.Name] || l.result.UninitializedFields[property.Name] || l.accessorNames[property.Name] || (symbol != nil && accessorSymbol(symbol)) {
@@ -145,4 +150,29 @@ func optionalInvocationCallee(node *ast.Node) bool {
 	}
 	call := node.Parent.AsCallExpression()
 	return call.Expression == node && (call.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0)
+}
+
+// A narrowing can outlive a call that writes a non-callable into a union slot.
+// Adamic source promises a proven callable; TypeScript source keeps the runtime
+// evidence for the ruled delayed loud stop instead of trusting that narrowing.
+func (l *lowering) optionalCallableStorage(member *ast.Node) error {
+	if member.Kind != ast.KindPropertyAccessExpression {
+		return nil
+	}
+	symbol := l.memberSymbol(member)
+	if symbol == nil {
+		return l.notYet(member, "an optional callable without a declared storage contract")
+	}
+	declared := l.checker.GetTypeOfSymbol(symbol)
+	held, known := l.representation(declared)
+	if known && held == ir.Weak {
+		return l.notYet(member, "an optional callable through Weak storage")
+	}
+	if !known || (held != ir.Closure && held != ir.Union) {
+		return l.notYet(member, "an optional callable without represented storage")
+	}
+	if held == ir.Union && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(member)), ".a") {
+		return &Refused{Where: l.program.Where(member), What: "an optional call through storage not proven callable", Fix: "save and prove the callable before invoking it"}
+	}
+	return nil
 }

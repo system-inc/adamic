@@ -76,6 +76,24 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 			shape := l.checker.GetTypeAtLocation(candidate)
 			field := l.checker.GetPropertyOfType(shape, name)
 			if field != nil && l.iterationShapeFits(shape, view) {
+				if !isCallee(where) {
+					for _, root := range l.checker.GetRootSymbols(field) {
+						for _, declaration := range root.Declarations {
+							var initializer *ast.Node
+							if declaration.Kind == ast.KindPropertyAssignment {
+								initializer = declaration.AsPropertyAssignment().Initializer
+							}
+							if declaration.Kind == ast.KindPropertyDeclaration {
+								initializer = declaration.AsPropertyDeclaration().Initializer
+							}
+							if initializer != nil && dynamicReceiverFunction(ast.SkipParentheses(initializer)) {
+								found = &Refused{Where: l.program.Where(where), What: "a receiver-dependent function field read as a value (unbound-method)", Fix: "call it in an arrow that keeps its object"}
+								return true
+							}
+						}
+					}
+				}
+
 				if literalMethod(field) {
 					if isCallee(where) { // Calls carry the runtime closure's receiver convention.
 						return candidate.ForEachChild(visit)
@@ -455,4 +473,30 @@ func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator
 		module.AsNode().ForEachChild(visit)
 	}
 	return changed
+}
+
+// Arrows retain lexical this; only an ordinary function needs the call-site
+// receiver. Do not let a structural property type erase that dependency.
+func dynamicReceiverFunction(node *ast.Node) bool {
+	if node.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	if ast.GetThisParameter(node) != nil {
+		return true
+	}
+	found := false
+	var visit ast.Visitor
+	visit = func(inner *ast.Node) bool {
+		if ast.IsFunctionLike(inner) && inner.Kind != ast.KindArrowFunction {
+			return false
+		}
+		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) {
+			found = true
+		}
+		return inner.ForEachChild(visit)
+	}
+	if node.Body() != nil {
+		node.Body().ForEachChild(visit)
+	}
+	return found
 }
