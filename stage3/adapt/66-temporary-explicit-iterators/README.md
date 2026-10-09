@@ -154,3 +154,14 @@ The printed environment file is /workspace/adamic-tools/env.sh.
 No new Go test units or .a fixtures were added. Focused probes and mutants take
 less than 60 seconds each; the full existing upstream lane is the requested
 measurement. The whole Adamic gate and unrelated package tests were not run.
+
+The committed scratch unit also passed the required repository-root integration
+command:
+
+```sh
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 - > /tmp/adapt66-integration-checks.log 2>&1
+```
+
+It reported `lane checks 0.4 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages`.
+There are no changed Go packages to vet. Git's staged whitespace check passes;
+raw CRLF diff evidence is compressed without modifying its source bytes.
