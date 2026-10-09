@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/tmp/adamic-gate-tools/bcd3d4ba2b06/cloud/fast-gate/run.py", line 2269, in <module>
+    main()
+  File "/tmp/adamic-gate-tools/bcd3d4ba2b06/cloud/fast-gate/run.py", line 221, in main
+    gate = Gate(arguments)
+           ^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate-tools/bcd3d4ba2b06/cloud/fast-gate/run.py", line 276, in __init__
+    "tools_sha": self.git(arguments.tools, "rev-parse", "HEAD"),
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate-tools/bcd3d4ba2b06/cloud/fast-gate/run.py", line 1802, in git
+    return self.command(["git", "-C", directory] + list(arguments),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate-tools/bcd3d4ba2b06/cloud/fast-gate/run.py", line 1811, in command
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/bcd3d4ba2b06', 'rev-parse', 'HEAD']' returned non-zero exit status 128.

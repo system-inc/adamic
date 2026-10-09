@@ -1,0 +1,72 @@
+run adamic-gate-pilot-20261009T052202-643707ef: red, 25028 tests in 144 units, 17 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-08)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.044s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-10)
+    rules_agree_shards_test.go:154: build lint-rules-agree-lowered e485ad9040ca miss 74.10
+    lint_test.go:327: TestRulesAgree (setup lowered): 74.123s
+    lint_test.go:329: cooked: setup over 60s budget
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestWitnessScriptKind (tests-23)
+    harness_test.go:58: shared witness setup is not ready; select TestWitnessScriptKind_Setup together with the leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownLeafComposition (tests-33)
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+    leaf_composition_shards_test.go:50: leaf composition setup is not ready: select TestMarkdownLeafComposition_Setup together with the shard
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-92)
+    volume_test.go:105: phase command stage0 6.370107s
+    typeaware_test.go:153: phase command checker 90.056514s
+    volume_test.go:106: checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-93)
+    volume_test.go:105: phase command stage0 5.599108s
+    typeaware_test.go:153: phase command checker 90.086803s
+    volume_test.go:106: checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownLeafComposition (tests-102)
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+    leaf_composition_shards_test.go:50: leaf composition setup is not ready: select TestMarkdownLeafComposition_Setup together with the shard
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+    leaf_composition_shards_test.go:50: leaf composition setup is not ready: select TestMarkdownLeafComposition_Setup together with the shard
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownLeafComposition (tests-106)
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+    leaf_composition_shards_test.go:50: leaf composition setup is not ready: select TestMarkdownLeafComposition_Setup together with the shard
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-110)
+    volume_test.go:105: phase command stage0 5.380031s
+    typeaware_test.go:153: phase command checker 90.088655s
+    volume_test.go:106: checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-114)
+    panic: cooked: TestMarkdownTableLayout_Setup exceeded 90s: context deadline exceeded
+    table_layout_shards_test.go:63: build markdown_table_lowered 8d92a66c6ee9 miss 60.09
+    table_layout_shards_test.go:63: build markdown_table_Go_list e978b667ceeb miss 5.08
+    table_layout_shards_test.go:63: build markdown_table_Go_document bd25ebafd328 miss 3.80
+    table_layout_shards_test.go:200: build markdown_table_native_false 5aaeedb6a626 miss 12.38
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/stage1/cohere/markdownblocks.init.0()
+    /tmp/adamic/stage1/cohere/markdownblocks/table_layout_setup_test.go:60 +0x40e
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutantsUnion (tests-117)
+    acceptance_mutants_split_test.go:304: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_000 (tests-117)
+    acceptance_mutants_split_test.go:275: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_001 (tests-117)
+    acceptance_mutants_split_test.go:276: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_Setup (tests-117)
+    acceptance_mutants_split_test.go:182: shared setup exceeded 90s: context deadline exceeded
+    acceptance_mutants_split_test.go:120: build estree-acceptance-mutants-go-oracle 4b84b673d18e miss 2.81
+    acceptance_mutants_split_test.go:130: build estree-acceptance-mutant-lowered-catch-initializer 25122fae15c2 miss 23.07
+    acceptance_mutants_split_test.go:130: build estree-acceptance-mutant-native-catch-initializer 1f25b876218a miss 21.30
+    acceptance_mutants_split_test.go:130: build estree-acceptance-mutant-lowered-class-keyword-name 5fc0ac1a5ffe miss 28.84
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDotARename_Setup (tests-117)
+    dot_a_rename_split_test.go:270: P0: setup exceeded 90s: context deadline exceeded
+    dot_a_rename_split_test.go:244: union: 1/1 cases exactly once
+    dot_a_rename_split_test.go:246: build dot-a-rename-oracle 0458ca0b3fe9 miss 4.07
+    dot_a_rename_split_test.go:246: build dot-a-rename-renamed-source 3d7351d28a6d miss 1.05
+    dot_a_rename_split_test.go:246: build dot-a-rename-original-lowered 89e919d22668 miss 74.92
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-117)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	232.166s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.008s
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0338 (tests-143)
+    port_test.go:227: shard union: 3546 cases exactly once across 2048 shards
+    port_test.go:327: Go 8.402s
+    port_test.go:327: Node 5.448s
+    port_test.go:327: release 6.775s
+    port_test.go:327: ASan/UBSan 36.047s
+    port_test.go:327: JavaScript backend 6.449s
+    port_test.go:327: LeakSanitizer 20.156s
+    port_test.go:342: TestPortMatchesGoCohere_0338 LeakSanitizer exits -1:

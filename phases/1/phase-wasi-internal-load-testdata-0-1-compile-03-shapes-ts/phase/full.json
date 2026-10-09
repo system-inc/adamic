@@ -1,0 +1,112 @@
+{
+  "sha": "cd9930fa8c178e71eb6f4e2d81355b99b3e0d660",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "cd9930fa8c178e71eb6f4e2d81355b99b3e0d660",
+  "base_name": "main",
+  "tools_sha": "bcd3d4ba2b066ba225b136a1b83fc43bd3e56490",
+  "machine": {
+    "hostname": "3e1761c0c28c",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 2.2,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 1.7,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "internal/load/testdata/0.1/compile/03_shapes.ts",
+  "wasi_units": [
+    {
+      "name": "internal/load/testdata/0.1/compile/03_shapes.ts",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "-timeout",
+        "3h",
+        "-p",
+        "1",
+        "-parallel",
+        "1",
+        "-run",
+        "^(TestWASI)$/^(internal)$/^(load)$/^(testdata)$/^(0\\.1)$/^(compile)$/^(03_shapes\\.ts)$",
+        "./internal/native"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/loom-units/loom-unit-951352048/workspace/loom-out/phase/wasi-units/00-hd709die",
+      "exit": 0,
+      "ok": true,
+      "test": "TestWASI/internal/load/testdata/0.1/compile/03_shapes.ts",
+      "unexpected": [],
+      "passed": true,
+      "wall_seconds": 25.661671,
+      "over_budget": false
+    }
+  ],
+  "wasi_unit_count": 1,
+  "wasi_unit_budget_seconds": 30,
+  "wasi_slowest_unit_seconds": 25.661671,
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "3e1761c0c28c",
+    "cpus": 5,
+    "load": [
+      1.7,
+      2.7,
+      2.0
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 25.7,
+  "steps_seconds": {
+    "wasi": 25.662
+  },
+  "pass": 2,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "wasi"
+  ],
+  "stages_exit": {
+    "wasi": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}
