@@ -16,15 +16,25 @@ import (
 var volumeRules = []string{"no_unsafe_type_assertion", "no_unsafe_member_access", "prefer_nullish_coalescing", "no_shadow", "no_unsafe_enum_comparison", "no_unsafe_assignment", "no_confusing_void_expression", "consistent_return", "switch_exhaustiveness_check", "unbound_method"}
 
 func volumeOracle(h *harness, name, source string) string {
-	virtual := filepath.Join(h.repository, "cohere/adamic_"+name+".go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
+	h.t.Helper()
+	binary, err := sharedProduct("Go oracle "+source, func(directory string) (string, error) {
+		virtual := filepath.Join(h.repository, "cohere/adamic_"+name+".go")
+		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
+		if err != nil {
+			return "", err
+		}
+		overlay := filepath.Join(directory, "overlay.json")
+		if err := os.WriteFile(overlay, data, 0644); err != nil {
+			return "", err
+		}
+		binary := filepath.Join(directory, "oracle")
+		command := exec.Command("go", "build", "-overlay", overlay, "-o", binary, virtual)
+		command.Dir = filepath.Join(h.repository, "cohere")
+		return binary, buildProduct(h.t, name+"-build", command, directory)
+	})
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	binary := filepath.Join(h.directory, name)
-	cmd := exec.Command("go", "build", "-overlay", h.write(name+"-overlay.json", string(data)), "-o", binary, virtual)
-	cmd.Dir = filepath.Join(h.repository, "cohere")
-	h.must(name+"-build", cmd)
 	return binary
 }
 
@@ -83,8 +93,8 @@ func volumeControls() []string {
 	}
 }
 
-// Not parallel: archive builds and corpus runs share the optional artifact directory
-// and need the limited scratch space without another archive build competing.
+// Not parallel: volume controls and optional corpus timings run separately from
+// other suites. Mutants use their own directories and parallel subtests.
 func TestVolumeAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -101,8 +111,8 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	normal := h.archive("checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
 	binary := h.build(stage0, "volume", entry, normal, false)
@@ -147,9 +157,8 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 	}
 	for _, change := range changes {
 		t.Run(change.name, func(t *testing.T) {
-			previous := h.t
-			h.t = t
-			defer func() { h.t = previous }()
+			t.Parallel()
+			h := h.child(t)
 			overlay := h.overlay(change.name, change.path, change.from, change.to)
 			archive := h.archive(change.name+"-checker", overlay, false)
 			t.Cleanup(func() { os.Remove(archive) })
@@ -178,12 +187,18 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 		t.Fatalf("released program escaped: %v %s", observed.err, observed.stderr)
 	}
 	t.Log("released program queried with new question: panic 70, invalid or released checker handle")
-	overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
-	archive := h.archive("released-registry-checker", overlay, false)
-	mutated := h.build(stage0, "released-registry-native", releasedSource, archive, false)
-	observed = h.must("released-registry-run", exec.Command(mutated, config, probe))
-	t.Log("released registry mutant: exit 0 caught by required panic 70")
-	os.Remove(archive)
+
+	t.Run("released-registry", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
+		archive := h.archive("released-registry-checker", overlay, false)
+		mutated := h.build(stage0, "released-registry-native", releasedSource, archive, false)
+		h.must("released-registry-run", exec.Command(mutated, config, probe))
+		t.Log("released registry mutant: exit 0 caught by required panic 70")
+		os.Remove(archive)
+
+	})
 
 	// Repository roots are the pre-port manifest so rule selection and agreement
 	// describe the same measured population. Include declaration roots from config.
@@ -220,8 +235,8 @@ func TestVolumeConfigGuardAndMutant(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	archive := h.archive("checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
 	binary := h.build(stage0, "volume", entry, archive, false)

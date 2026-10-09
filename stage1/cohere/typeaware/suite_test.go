@@ -120,7 +120,8 @@ func suiteTSMutant(h *harness, stage0, normal, entry, name, relative, from, to s
 	return h.build(stage0, name, h.write(name+"-main.ts", main), normal, false)
 }
 
-// Not parallel: archive builds, sanitizer runs and benchmarks share the machine.
+// Not parallel: suite controls and optional timings stay separate from other
+// suites. Mutants share immutable products and run as parallel subtests.
 func TestSixRuleAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -137,8 +138,8 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	normal := h.archive("checker", "", false)
 	sanitized := h.archive("checker-asan", "", true)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/suite.ts")
@@ -190,14 +191,19 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	if !bytes.Contains(globalTruth.stdout, []byte("\tunsafeMerging\t")) {
 		t.Fatal("cross-file declaration control missing")
 	}
-	globalOverlay := h.overlay("declaration-source", "bridge/tsgo/checker/facts.go", "scanner.GetTokenPosOfNode(name, source, false)", "scanner.GetTokenPosOfNode(name, f, false)")
-	globalArchive := h.archive("declaration-source-checker", globalOverlay, false)
-	globalMutant := h.build(stage0, "declaration-source-suite", entry, globalArchive, false)
-	globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
-	if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
-		t.Fatal("cross-file declaration source mutant survived oracle")
-	}
-	t.Logf("declaration-source: production cohere oracle catches byte %d", firstDifference(globalGot.stdout, globalTruth.stdout))
+
+	t.Run("declaration-source", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		globalOverlay := h.overlay("declaration-source", "bridge/tsgo/checker/facts.go", "scanner.GetTokenPosOfNode(name, source, false)", "scanner.GetTokenPosOfNode(name, f, false)")
+		globalArchive := h.archive("declaration-source-checker", globalOverlay, false)
+		globalMutant := h.build(stage0, "declaration-source-suite", entry, globalArchive, false)
+		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
+		if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
+			t.Fatal("cross-file declaration source mutant survived oracle")
+		}
+		t.Logf("declaration-source: production cohere oracle catches byte %d", firstDifference(globalGot.stdout, globalTruth.stdout))
+	})
 
 	refusal := h.run("inspect-unlinked", exec.Command(stage0, "build", h.write("inspect-unlinked.ts", "import {tsgoInspect} from 'adamic'; console.log(tsgoInspect(1,'x',0,1,'Identifier','type'));\n"), "-o", filepath.Join(directory, "unlinked")))
 	if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
@@ -208,62 +214,76 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		{"last-declaration", "if(use && pos < earliestPos)", "if(use)"},
 		{"nullable-default", "if(!plain || nullable)", "if(!plain && !nullable)"},
 	} {
-		mutant := suiteTSMutant(h, stage0, normal, entry, change.name, "rules.ts", change.from, change.to)
-		got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
-		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
-			t.Fatalf("%s not caught by oracle alone", change.name)
+		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+			mutant := suiteTSMutant(h, stage0, normal, entry, change.name, "rules.ts", change.from, change.to)
+			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
+			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+				t.Fatalf("%s not caught by oracle alone", change.name)
+			}
+			t.Logf("%s: production cohere oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
+		})
+	}
+
+	t.Run("union-members", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		// Union test mutates the facts consumer and reroutes the Rules import too.
+		// A separate driver avoids a mutant whose unused module compiles but never runs.
+		factsText, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/types.ts"))
+		if err != nil {
+			t.Fatal(err)
 		}
-		t.Logf("%s: production cohere oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
-	}
-	// Union test mutates the facts consumer and reroutes the Rules import too.
-	// A separate driver avoids a mutant whose unused module compiles but never runs.
-	factsText, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/types.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	from := "return (type.flags & mask) !== 0 ? type.parts : [type.id];"
-	if strings.Count(string(factsText), from) != 1 {
-		t.Fatal("union anchor changed")
-	}
-	factsSource := string(factsText)
-	for _, file := range []string{"flags.ts", "type_fact.ts"} {
-		factsSource = strings.ReplaceAll(factsSource, "./"+file, filepath.Join(repository, "stage1/cohere/typeaware", file))
-	}
-	factsPath := h.write("union-mutant.ts", strings.Replace(factsSource, from, "return mask === 0 ? type.parts : [type.id];", 1))
-	decoder, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/facts.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	decoderText := strings.Replace(string(decoder), "from './types.ts'", "from '"+factsPath+"'", 1)
-	for _, file := range []string{"frames.ts", "type_fact.ts"} {
-		decoderText = strings.ReplaceAll(decoderText, "./"+file, filepath.Join(repository, "stage1/cohere/typeaware", file))
-	}
-	decoderPath := h.write("union-decoder.ts", decoderText)
-	parameters, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/parameters.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	parametersPath := h.write("union-parameters.ts", strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1))
-	unionBinary := suiteTSMutant(h, stage0, normal, entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
-	unionGot := h.must("union-members-run", exec.Command(unionBinary, config, manifest))
-	if len(unionGot.stderr) != 0 || bytes.Equal(unionGot.stdout, truth.stdout) {
-		t.Fatal("union mutant not caught by oracle alone")
-	}
-	t.Logf("union-members: production cohere oracle catches byte %d", firstDifference(unionGot.stdout, truth.stdout))
+		from := "return (type.flags & mask) !== 0 ? type.parts : [type.id];"
+		if strings.Count(string(factsText), from) != 1 {
+			t.Fatal("union anchor changed")
+		}
+		factsSource := string(factsText)
+		for _, file := range []string{"flags.ts", "type_fact.ts"} {
+			factsSource = strings.ReplaceAll(factsSource, "./"+file, filepath.Join(repository, "stage1/cohere/typeaware", file))
+		}
+		factsPath := h.write("union-mutant.ts", strings.Replace(factsSource, from, "return mask === 0 ? type.parts : [type.id];", 1))
+		decoder, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/facts.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		decoderText := strings.Replace(string(decoder), "from './types.ts'", "from '"+factsPath+"'", 1)
+		for _, file := range []string{"frames.ts", "type_fact.ts"} {
+			decoderText = strings.ReplaceAll(decoderText, "./"+file, filepath.Join(repository, "stage1/cohere/typeaware", file))
+		}
+		decoderPath := h.write("union-decoder.ts", decoderText)
+		parameters, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/parameters.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		parametersPath := h.write("union-parameters.ts", strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1))
+		unionBinary := suiteTSMutant(h, stage0, normal, entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
+		unionGot := h.must("union-members-run", exec.Command(unionBinary, config, manifest))
+		if len(unionGot.stderr) != 0 || bytes.Equal(unionGot.stdout, truth.stdout) {
+			t.Fatal("union mutant not caught by oracle alone")
+		}
+		t.Logf("union-members: production cohere oracle catches byte %d", firstDifference(unionGot.stdout, truth.stdout))
+	})
+
 	for _, change := range []struct{ name, from, to string }{
 		{"type-name", "out.text(c.TypeToString(p.typesByID[id-1]))", "out.text(c.TypeToString(p.typesByID[0]))"},
 		{"raw-shape-constraint", `if mode != "raw-type" && mode != "raw-shape"`, `if mode != "raw-type"`},
 		{"assignability-direction", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target))", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(target), c.GetTypeAtLocation(node))"},
 		{"resolved-signature", "signature := c.GetResolvedSignature(node)", `var firstCall *ast.Node; var findCall func(*ast.Node) bool; findCall = func(n *ast.Node) bool { if n.Kind == ast.KindCallExpression { firstCall = n; return true }; return n.ForEachChild(findCall) }; findCall(source.AsNode()); selected := node; if node.Kind == ast.KindCallExpression && firstCall != nil { selected = firstCall }; signature := c.GetResolvedSignature(selected)`},
 	} {
-		overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-		archive := h.archive(change.name+"-checker", overlay, false)
-		mutant := h.build(stage0, change.name+"-suite", entry, archive, false)
-		got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
-		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
-			t.Fatalf("%s not caught by oracle alone", change.name)
-		}
-		t.Logf("%s: production cohere oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
+		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
+			archive := h.archive(change.name+"-checker", overlay, false)
+			mutant := h.build(stage0, change.name+"-suite", entry, archive, false)
+			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
+			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+				t.Fatalf("%s not caught by oracle alone", change.name)
+			}
+			t.Logf("%s: production cohere oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
+		})
 	}
 	probe := h.write("probe.ts", "-1;\n")
 	releasedEntry := h.write("released-inspect.ts", "import {panic,programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';const a=programArguments();const p=tsgoProgram(a[0]??panic('config'),[a[1]??panic('file')]);tsgoRelease(p);console.log(tsgoInspect(p,a[1]??panic('file'),0,2,'PrefixUnaryExpression','type'));\n")
@@ -272,34 +292,50 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("invalid or released checker handle")) {
 		t.Fatalf("released inspect escaped: %v %s", got.err, got.stderr)
 	}
-	staleOverlay := h.overlay("retained-handle", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-	staleArchive := h.archive("retained-handle-checker", staleOverlay, false)
-	stale := h.build(stage0, "retained-handle", releasedEntry, staleArchive, false)
-	h.must("retained-handle-run", exec.Command(stale, config, probe))
-	t.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
+
+	t.Run("retained-handle", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		staleOverlay := h.overlay("retained-handle", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
+		staleArchive := h.archive("retained-handle-checker", staleOverlay, false)
+		stale := h.build(stage0, "retained-handle", releasedEntry, staleArchive, false)
+		h.must("retained-handle-run", exec.Command(stale, config, probe))
+		t.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
+	})
+
 	// Explicit C allocation length, not the native path's extra terminator.
-	lengthOverlay := h.overlay("facts-length", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "*facts = buffer(answer); facts.length++")
-	lengthArchive := h.archive("facts-length-checker", lengthOverlay, true)
-	length := h.build(stage0, "facts-length", entry, lengthArchive, true)
-	got = h.run("facts-length-run", exec.Command(length, config, manifest))
-	if got.err == nil || !bytes.Contains(got.stderr, []byte("AddressSanitizer: heap-buffer-overflow")) {
-		t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
-	}
-	t.Log("facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow")
+
+	t.Run("facts-length-asan", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		lengthOverlay := h.overlay("facts-length", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "*facts = buffer(answer); facts.length++")
+		lengthArchive := h.archive("facts-length-checker", lengthOverlay, true)
+		length := h.build(stage0, "facts-length", entry, lengthArchive, true)
+		got := h.run("facts-length-run", exec.Command(length, config, manifest))
+		if got.err == nil || !bytes.Contains(got.stderr, []byte("AddressSanitizer: heap-buffer-overflow")) {
+			t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
+		}
+		t.Log("facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow")
+	})
+
 	for _, change := range []struct{ name, value, message string }{
 		{"facts-empty", "", "invalid checker facts frame"},
 		{"facts-integer", "1\nx", "invalid checker facts integer"},
 		{"facts-length", "-1\n", "invalid checker facts length"},
 		{"facts-version", "1\n2", "unsupported checker facts schema"},
 	} {
-		overlay := h.overlay(change.name+"-bad", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "_ = answer; *facts = buffer("+strconv.Quote(change.value)+")")
-		archive := h.archive(change.name+"-bad-checker", overlay, false)
-		malformed := h.build(stage0, change.name+"-bad", entry, archive, false)
-		r := h.run(change.name+"-bad-run", exec.Command(malformed, config, manifest))
-		if code, ok := r.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(r.stderr, []byte(change.message)) {
-			t.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
-		}
-		t.Logf("%s: panic 70, %s", change.name, change.message)
+		t.Run(change.name+"-bad", func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+			overlay := h.overlay(change.name+"-bad", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "_ = answer; *facts = buffer("+strconv.Quote(change.value)+")")
+			archive := h.archive(change.name+"-bad-checker", overlay, false)
+			malformed := h.build(stage0, change.name+"-bad", entry, archive, false)
+			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, manifest))
+			if code, ok := r.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(r.stderr, []byte(change.message)) {
+				t.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
+			}
+			t.Logf("%s: panic 70, %s", change.name, change.message)
+		})
 	}
 	nativeCost := h.build(stage0, "facts-cost", filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), normal, false)
 	directCost := filepath.Join(directory, "direct-cost")
@@ -411,8 +447,8 @@ func TestFactsDecoderGuards(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	binary := filepath.Join(directory, "decoder")
 	h.must("decoder-build", exec.Command(stage0, "build", filepath.Join(repository, "stage1/cohere/typeaware/testdata/facts_decode.ts"), "-o", binary, "--sanitize"))
 	// Complete schema, one number type. Each record owns no other record.
@@ -469,7 +505,7 @@ func TestFactsDecoderGuards(t *testing.T) {
 	}
 }
 
-// Not parallel: each mutant is a separately linked archive and native program.
+// Not parallel: establish the request refusal controls before parallel mutants.
 func TestInspectRequestRefusals(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -486,8 +522,8 @@ func TestInspectRequestRefusals(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	normal := h.archive("checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts")
 	binary := h.build(stage0, "request", entry, normal, false)
@@ -505,15 +541,20 @@ func TestInspectRequestRefusals(t *testing.T) {
 		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node", `candidate.Kind.String() == "Kind"+kind`, `kind != ""`},
 		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question", `return "", fmt.Errorf("unsupported checker question: %s", question)`, `return out.String(), nil`},
 	} {
-		args := []string{config, probe, "0", "2", change.kind, change.question, "2"}
-		got := h.run(change.name+"-refused", exec.Command(binary, args...))
-		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
-			t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
-		}
-		overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-		archive := h.archive(change.name+"-checker", overlay, false)
-		mutant := h.build(stage0, change.name, entry, archive, false)
-		h.must(change.name+"-mutant-run", exec.Command(mutant, args...))
-		t.Logf("%s: panic 70; guard mutant exits 0 and fails the refusal expectation", change.name)
+		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+
+			args := []string{config, probe, "0", "2", change.kind, change.question, "2"}
+			got := h.run(change.name+"-refused", exec.Command(binary, args...))
+			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
+				t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
+			}
+			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
+			archive := h.archive(change.name+"-checker", overlay, false)
+			mutant := h.build(stage0, change.name, entry, archive, false)
+			h.must(change.name+"-mutant-run", exec.Command(mutant, args...))
+			t.Logf("%s: panic 70; guard mutant exits 0 and fails the refusal expectation", change.name)
+		})
 	}
 }

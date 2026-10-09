@@ -42,8 +42,8 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 	return h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
 }
 
-// Not parallel: archive builds and sanitizer corpora need the limited scratch
-// space, and performance runs must remain separate from these checks.
+// Not parallel: profile controls and optional corpus runs stay separate from
+// other suites. Each independent mutant has a parallel child harness.
 func TestVolumeProfileAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -60,8 +60,8 @@ func TestVolumeProfileAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	archive := h.archive("checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
 	binary := h.build(stage0, "volume", entry, archive, false)
@@ -84,15 +84,19 @@ func TestVolumeProfileAgreementAndMutants(t *testing.T) {
 		{"scope-containment", "if(node.pos > container.pos || node.end < container.end)", "if(node.pos > container.pos)"},
 		{"first-binding", "if(candidates[candidates.length - 2] !== at)", "if(true)"},
 	} {
-		mutant := profileSourceMutant(h, stage0, archive, change.name, change.from, change.to)
-		got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
-		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
-			t.Fatalf("%s mutant survived byte oracle", change.name)
-		}
-		t.Logf("%s: exit 0, independent Go byte oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
-		if err := os.Remove(mutant); err != nil {
-			t.Fatal(err)
-		}
+		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+			mutant := profileSourceMutant(h, stage0, archive, change.name, change.from, change.to)
+			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
+			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+				t.Fatalf("%s mutant survived byte oracle", change.name)
+			}
+			t.Logf("%s: exit 0, independent Go byte oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
+			if err := os.Remove(mutant); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 	// Index kind/range/file separation is independently held to the compiler AST.
 	for _, change := range []struct{ name, from, to string }{
@@ -100,12 +104,16 @@ func TestVolumeProfileAgreementAndMutants(t *testing.T) {
 		{"root-kind", `start == uint64(source.Pos()) && end == uint64(source.End()) && kind == "SourceFile"`, `start == uint64(source.Pos()) && end == uint64(source.End()) && kind != ""`},
 		{"index-end", `nodeRange{uint64(candidate.Pos()), uint64(candidate.End())}`, `nodeRange{uint64(candidate.Pos()), 0}`},
 	} {
-		overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-		result := h.run(change.name+"-compiler-node-test", exec.Command("go", "test", "-overlay", overlay, "./bridge/tsgo/checker", "-run", "^TestExactIndexMatchesCompilerNodes$", "-count=1"))
-		if result.err == nil || !bytes.Contains(result.stdout, []byte("exact index changed compiler node")) {
-			t.Fatalf("%s not caught by AST identity: %v %s %s", change.name, result.err, result.stdout, result.stderr)
-		}
-		t.Logf("%s: compiler AST identity oracle catches wrong selector", change.name)
+		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
+			result := h.run(change.name+"-compiler-node-test", exec.Command("go", "test", "-overlay", overlay, "./bridge/tsgo/checker", "-run", "^TestExactIndexMatchesCompilerNodes$", "-count=1"))
+			if result.err == nil || !bytes.Contains(result.stdout, []byte("exact index changed compiler node")) {
+				t.Fatalf("%s not caught by AST identity: %v %s %s", change.name, result.err, result.stdout, result.stderr)
+			}
+			t.Logf("%s: compiler AST identity oracle catches wrong selector", change.name)
+		})
 	}
 	sanitized := h.archive("checker-asan", "", true)
 	asan := h.build(stage0, "volume-asan", entry, sanitized, true)
@@ -138,8 +146,8 @@ func TestShadowIndexMissingBinding(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	archive := h.archive("checker", "", false)
 	mutant := profileSourceMutant(h, stage0, archive, "missing-binding", "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
 	source := h.write("input.ts", "const x=1;\nexport {};\n")
