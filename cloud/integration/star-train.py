@@ -197,6 +197,16 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
     # that won't merge drops out too and is integration's to fix: riders never hold the star.
     riders = []
     below = base
+    # A slice whose whole gate has started keeps the riders it has: a new one would rebuild it and
+    # restart that gate (@system_adamic: riders fold below a slice whose whole gate hasn't started).
+    # A red whole gate unfreezes it, since the slice rebuilds for its fix anyway.
+    frozen = None
+    for other, otherSha in trainHeads.items():
+        if other.startswith(f"cloud/land-train-{number}-{slug}-") and f"-{sourceSha[:8]}-" in other:
+            _, wholeStatus = newestLog(otherSha, "full-main")
+            if wholeStatus and not wholeStatus.startswith(("red", "void")):
+                frozen = {part[:8] for part in other.split("-with-")[1:]}
+                break
     for rider in riderBranches:
         riderSha = git("rev-parse", "-q", "--verify", f"origin/{rider}", check=False)
         if not riderSha:
@@ -207,7 +217,10 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
             continue
         # @system_adamic, October 8: a rider joins only after its own fast gate is green alone on main,
         # and at most three ride a slice; the rest wait for the next slice or land on their own.
-        if len(riders) >= 3 or not riderGreenAlone(rider, riderSha):
+        if frozen is not None:
+            if riderSha[:8] not in frozen:
+                continue
+        elif len(riders) >= 3 or not riderGreenAlone(rider, riderSha):
             continue
         merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", below, riderSha], capture_output=True, text=True)
         if merged.returncode != 0:
