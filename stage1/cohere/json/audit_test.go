@@ -128,49 +128,154 @@ func corpusCases(t *testing.T) []textCase {
 
 // Prettier is a separate upstream report. Only the nine named disagreements are known;
 // an added difference or a closed difference requires updating the report explicitly.
+const testUpstreamRepositoryCorpusParityShards = 518
+
+// ADAMIC_TEST_SHARD=i/n selects ordinal modulo n locally; the gate selects direct shard-NNN children.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 	if err := gatesample.Validate(); err != nil {
-		t.Fatalf("%s: %v", t.Name(), err)
+		t.Fatal(err)
 	}
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
 	cases := sampledCorpusCases(t, 8)
-	goAnswers, prettierAnswers := oracleAnswers(t, cases)
-	differences := 0
-	var report strings.Builder
-	for index, item := range cases {
-		if sameAnswer(goAnswers[index], prettierAnswers[index]) {
-			continue
-		}
-		differences++
-		known := item.Name == "stage1/cohere/json/gaps/numeric-separators.json" || strings.HasPrefix(item.Name, "generated/12/") || strings.HasPrefix(item.Name, "generated/13/") || strings.HasPrefix(item.Name, "generated/14/") || strings.HasPrefix(item.Name, "generated/16/")
-		if !known {
-			t.Errorf("unexpected upstream difference: %s", item.Name)
-		}
-		fmt.Fprintf(&report, "%s\nGo: %q error=%q\nPrettier: %q error=%q\n", item.Name,
-			goAnswers[index].Output, goAnswers[index].Error, prettierAnswers[index].Output, prettierAnswers[index].Error)
-		if differences <= 20 {
-			t.Logf("difference: %s (Go error=%q, Prettier error=%q)", item.Name, goAnswers[index].Error, prettierAnswers[index].Error)
-		}
+	shards := jsonPortShards(cases)
+	if len(shards) != testUpstreamRepositoryCorpusParityShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testUpstreamRepositoryCorpusParityShards)
 	}
-	if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" {
-		if err := os.WriteFile(path, []byte(report.String()), 0o644); err != nil {
-			t.Fatal(err)
-		}
+	if err := jsonPortUnion(cases, shards); err != nil {
+		t.Fatal(err)
 	}
-	knownReport, err := os.ReadFile("known-upstream-differences.txt")
+	index, count, err := jsonPortSelection(os.Getenv("ADAMIC_TEST_SHARD"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	if report.String() != string(knownReport) {
-		t.Error("upstream difference identities or answers changed; update the checked-in report")
+	knownBytes, err := os.ReadFile("known-upstream-differences.txt")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if differences != 9 {
-		t.Fatalf("known upstream report changed: %d differences, want exactly 9", differences)
+	lines := strings.Split(strings.TrimSuffix(string(knownBytes), "\n"), "\n")
+	if len(lines) != 27 {
+		t.Fatalf("known upstream report has %d lines, want 27", len(lines))
 	}
-	t.Logf("exactly nine known upstream differences in %d texts", len(cases))
+	known := map[string]string{}
+	for i := 0; i < len(lines); i += 3 {
+		id := lines[i]
+		if _, exists := known[id]; exists {
+			t.Fatalf("known report repeats %s", id)
+		}
+		known[id] = strings.Join(lines[i:i+3], "\n") + "\n"
+	}
+	ids := map[string]bool{}
+	for _, item := range cases {
+		ids[item.Name] = true
+	}
+	for id := range known {
+		if !ids[id] {
+			t.Fatalf("known difference missing from corpus: %s", id)
+		}
+	}
+	tools, err := jsonGoToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := filepath.Join(jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle), "go-cohere")
+	reports := make([]string, len(shards))
+	for ordinal, shard := range shards {
+		if ordinal%count != index {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+			t.Parallel()
+			items := cases[shard.start:shard.end]
+			goAnswers := jsonOracleAnswers(t, oracle, items)
+			directory := t.TempDir()
+			casesPath := filepath.Join(directory, "cases.json")
+			answersPath := filepath.Join(directory, "prettier.json")
+			writeJSON(t, casesPath, items)
+			// A cold process must accept the same deep nesting as the warmed whole-corpus process.
+			result := execute(t, nil, "node", "--stack-size=4096", "testdata/library.mjs", os.Getenv("ADAMIC_JSON_PRETTIER"), casesPath, answersPath)
+			if result.exitCode != 0 || len(result.stderr) != 0 {
+				t.Fatalf("%s Prettier exit %d: %s", t.Name(), result.exitCode, result.stderr)
+			}
+			encoded, err := os.ReadFile(answersPath)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var prettierAnswers []answer
+			if err := json.Unmarshal(encoded, &prettierAnswers); err != nil {
+				t.Fatal(err)
+			}
+			if len(prettierAnswers) != len(items) {
+				t.Fatalf("%s Prettier answered %d of %d", t.Name(), len(prettierAnswers), len(items))
+			}
+			var report strings.Builder
+			for i, item := range items {
+				block := ""
+				if !sameAnswer(goAnswers[i], prettierAnswers[i]) {
+					allowed := item.Name == "stage1/cohere/json/gaps/numeric-separators.json" || strings.HasPrefix(item.Name, "generated/12/") || strings.HasPrefix(item.Name, "generated/13/") || strings.HasPrefix(item.Name, "generated/14/") || strings.HasPrefix(item.Name, "generated/16/")
+					if !allowed {
+						t.Errorf("%s unexpected upstream difference: %s", t.Name(), item.Name)
+					}
+					block = fmt.Sprintf("%s\nGo: %q error=%q\nPrettier: %q error=%q\n", item.Name, goAnswers[i].Output, goAnswers[i].Error, prettierAnswers[i].Output, prettierAnswers[i].Error)
+				}
+				if err := jsonUpstreamBlockCheck(t.Name(), item.Name, block, known[item.Name]); err != nil {
+					t.Error(err)
+				}
+				report.WriteString(block)
+			}
+			reports[ordinal] = report.String()
+			t.Logf("case range [%d:%d]; %d cases", shard.start, shard.end, len(items))
+		})
+	}
+	t.Cleanup(func() {
+		if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" {
+			if err := os.WriteFile(path, []byte(strings.Join(reports, "")), 0644); err != nil {
+				t.Error(err)
+			}
+		}
+	})
+	t.Logf("exact union: %d cases; all nine checked-in differences assigned", len(cases))
+}
+
+func jsonUpstreamBlockCheck(shard, id, got, want string) error {
+	if got != want {
+		return fmt.Errorf("%s case %s: upstream difference identity or answer changed; update the checked-in report", shard, id)
+	}
+	return nil
+}
+
+func TestJSONUpstreamShardDisagreement(t *testing.T) {
+	t.Parallel()
+	cases := make([]textCase, 33)
+	for i := range cases {
+		cases[i] = textCase{Name: fmt.Sprintf("case-%d.json", i), Text: "{}"}
+	}
+	shards := jsonPortShards(cases)
+	if err := jsonPortUnion(cases, shards); err != nil {
+		t.Fatal(err)
+	}
+	caught := 0
+	for ordinal, shard := range shards {
+		name := fmt.Sprintf("shard-%03d", ordinal)
+		for i := shard.start; i < shard.end; i++ {
+			got := ""
+			if i == 17 {
+				got = "planted disagreement"
+			}
+			if err := jsonUpstreamBlockCheck(name, cases[i].Name, got, ""); err != nil {
+				caught++
+				if name != "shard-001" || !strings.Contains(err.Error(), name) {
+					t.Fatalf("wrong owner: %v", err)
+				}
+				t.Logf("caught planted disagreement only in %s: %v", name, err)
+			}
+		}
+	}
+	if caught != 1 {
+		t.Fatalf("planted disagreement caught by %d shards", caught)
+	}
 }
 
 func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {

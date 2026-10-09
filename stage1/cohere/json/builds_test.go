@@ -196,3 +196,21 @@ func jsonBuildUnit(parent *testing.T, name string, in jsonBuildInputs, build fun
 	}
 	return dir
 }
+
+func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
+	t.Helper()
+	input, _ := protocol(cases, make([]answer, len(cases)))
+	path := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result := execute(t, nil, oracle, "--cases", path)
+	if result.exitCode != 0 || len(result.stderr) != 0 {
+		t.Fatalf("%s Go oracle: exit %d stderr %s", t.Name(), result.exitCode, result.stderr)
+	}
+	answers, err := jsonPortAnswers(string(result.stdout), len(cases))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return answers
+}
