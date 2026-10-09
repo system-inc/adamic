@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-unsafe-negation/profile.a
++++ b/stage1/cohere/lint/rules/no-unsafe-negation/profile.a
+@@ -12,7 +12,7 @@
+ function visit(context: RuleContext, rule: Rule, index: number): void {
+     const node = context.node(index);
+     if(node.kind === 'BinaryExpression') { rule.visit(node, index); }
+-    for(const child of node.children) { visit(context, rule, child); }
++    
+ }
+ function run(row: string, countOnly: boolean): number {
+     const columns = row.split('\t');

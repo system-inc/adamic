@@ -1,0 +1,7 @@
+case 0
+finding 6 10 unexpected	The `!` binds tighter than the `in` after it, so this negates the left operand and then compares the resulting boolean, rather than negating the comparison. `!key in object` runs the `!` first and hands `in` a `true` or a `false`, which is almost never the question being asked, and it is a valid expression either way so nothing else reports it.
+suggestion negateTheComparison	Negate the whole `in` comparison, which is what the parentheses in `!(a in b)` say and is almost certainly the intent. This changes what the code does.
+edit 6 20	!(key in object)
+suggestion parenthesiseTheNegation	Wrap the negation in parentheses to say the `!` was meant to apply to the left operand alone. This preserves what the code does today and only makes it explicit.
+edit 6 10	(!key)
+fixed	"\u0080"; !key in object;\u000a

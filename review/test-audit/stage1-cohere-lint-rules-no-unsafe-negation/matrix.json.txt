@@ -1,0 +1,114 @@
+[
+  {
+    "label": "M01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/M01"
+    },
+    "exit": 0,
+    "wall_seconds": 34.34494564599663,
+    "log": "M01.log",
+    "binary_seconds": 32.39,
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "skipped_rows": []
+  },
+  {
+    "label": "M02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/M02"
+    },
+    "exit": 0,
+    "wall_seconds": 34.81443982500059,
+    "log": "M02.log",
+    "binary_seconds": 32.985,
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "skipped_rows": []
+  },
+  {
+    "label": "M03",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/M03"
+    },
+    "exit": 0,
+    "wall_seconds": 38.535848717998306,
+    "log": "M03.log",
+    "binary_seconds": 36.611,
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "skipped_rows": []
+  },
+  {
+    "label": "P01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u122/cache/P01"
+    },
+    "exit": 0,
+    "wall_seconds": 2.528996772998653,
+    "log": "P01.log",
+    "binary_seconds": 0.258,
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "skipped_rows": []
+  }
+]

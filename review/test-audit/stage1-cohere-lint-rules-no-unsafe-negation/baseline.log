@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:35:45.568843357Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation"}
+{"Time":"2026-10-09T12:35:45.576336712Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Test":"TestCompileProfiles"}
+{"Time":"2026-10-09T12:35:45.576400496Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Test":"TestCompileProfiles","Output":"=== RUN   TestCompileProfiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:20.189402927Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Test":"TestCompileProfiles","Output":"    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled\n"}
+{"Time":"2026-10-09T12:36:20.189489875Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Test":"TestCompileProfiles","Output":"--- PASS: TestCompileProfiles (34.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:20.1894936Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Test":"TestCompileProfiles","Elapsed":34.61}
+{"Time":"2026-10-09T12:36:20.189514942Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:20.192431463Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation\t34.623s\n"}
+{"Time":"2026-10-09T12:36:20.192474436Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation","Elapsed":34.624}

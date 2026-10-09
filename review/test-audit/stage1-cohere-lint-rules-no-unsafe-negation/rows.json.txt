@@ -1,0 +1,30 @@
+[
+  {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+    "file": "stage1/cohere/lint/rules/no-unsafe-negation/build_test.go",
+    "seconds": 34.251,
+    "oracle": "Self-written success expectations for Adamic Load/Lower, sanitized/release native.Build and emitted-JavaScript file write. Clang runs, but no product runs and no findings, messages, ranges or edits are compared.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestCompileProfiles"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u122/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/no-unsafe-negation/ -run . > M01.log 2>&1; --- PASS: TestCompileProfiles (32.38s). No failing line demonstrated.",
+    "timing_trials": [
+      34.251,
+      34.772,
+      33.464
+    ],
+    "verdict_limit": "All three compiler-valid behavioral mutations survived. The brief requires each standalone port diff to build, so this does not demonstrate whether the row detects a compilation failure."
+  }
+]

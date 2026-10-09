@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-unsafe-negation/rule.a
++++ b/stage1/cohere/lint/rules/no-unsafe-negation/rule.a
+@@ -13,7 +13,7 @@
+         if(text === '' && this.context.settings.read('enforcefororderingrelations', 'false') === 'true') {
+             text = operator === 'LessThanToken' ? '<' : operator === 'LessThanEqualsToken' ? '<=' : operator === 'GreaterThanToken' ? '>' : operator === 'GreaterThanEqualsToken' ? '>=' : '';
+         }
+-        if(text === '' || this.context.node(left).kind !== 'PrefixUnaryExpression' || this.context.node(left).operator !== 'ExclamationToken') { return; }
++        if(text === '' || this.context.node(left).kind !== 'PrefixUnaryExpression' || this.context.node(left).operator !== 'PlusToken') { return; }
+         const operand = this.context.node(left).children[0] ?? panic('negation operand');
+         const message = `The \`!\` binds tighter than the \`${text}\` after it, so this negates the left operand and then compares the resulting boolean, rather than negating the comparison. \`!key ${text} object\` runs the \`!\` first and hands \`${text}\` a \`true\` or a \`false\`, which is almost never the question being asked, and it is a valid expression either way so nothing else reports it.`;
+         const finding = this.context.report(left, 'no-unsafe-negation', 'unexpected', message, '', '', '');

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-unsafe-negation/profile.a
++++ b/stage1/cohere/lint/rules/no-unsafe-negation/profile.a
+@@ -36,7 +36,7 @@
+     for(let index = 0; index < source.length; index++) {
+         const code = source.codePointAt(index) ?? 0;
+         if(code > 65535) { offsets.push(bytes); index++; }
+-        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
++        bytes += code < 129 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+         offsets.push(bytes);
+     }
+     context.findings.sort((left, right) => left.start - right.start);

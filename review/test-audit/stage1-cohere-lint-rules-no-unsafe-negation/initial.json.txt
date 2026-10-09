@@ -1,0 +1,31 @@
+[
+  {
+    "name": "npm",
+    "command": [
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.4874923540010059
+  },
+  {
+    "name": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-negation/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 36.529722000999755
+  }
+]
