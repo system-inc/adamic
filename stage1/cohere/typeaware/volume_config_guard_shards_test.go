@@ -150,6 +150,7 @@ func volumeGuardBuckets() ([][]volumeGuardCase, []string) {
 	return buckets, controls
 }
 func TestVolumeConfigGuardAndMutantUnion(t *testing.T) {
+	t.Parallel()
 	buckets, controls := volumeGuardBuckets()
 	volumeGuardUnion(t, buckets, controls)
 	caught := 0
@@ -168,7 +169,6 @@ func TestVolumeConfigGuardAndMutantUnion(t *testing.T) {
 }
 func runVolumeConfigGuardShard(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	products := volumeGuardProductsFor(t)
 	repository, binary, mutant, oracle, asan := products.repository, products.binary, products.mutant, products.oracle, products.asan
 	buckets, _ := volumeGuardBuckets()
@@ -301,22 +301,70 @@ func volumeGuardCompare(h *harness, name, oracle, binary, config, manifest strin
 	return want
 }
 
-func TestVolumeConfigGuardAndMutant_000(t *testing.T) { runVolumeConfigGuardShard(t, 0) }
-func TestVolumeConfigGuardAndMutant_001(t *testing.T) { runVolumeConfigGuardShard(t, 1) }
-func TestVolumeConfigGuardAndMutant_002(t *testing.T) { runVolumeConfigGuardShard(t, 2) }
-func TestVolumeConfigGuardAndMutant_003(t *testing.T) { runVolumeConfigGuardShard(t, 3) }
-func TestVolumeConfigGuardAndMutant_004(t *testing.T) { runVolumeConfigGuardShard(t, 4) }
-func TestVolumeConfigGuardAndMutant_005(t *testing.T) { runVolumeConfigGuardShard(t, 5) }
-func TestVolumeConfigGuardAndMutant_006(t *testing.T) { runVolumeConfigGuardShard(t, 6) }
-func TestVolumeConfigGuardAndMutant_007(t *testing.T) { runVolumeConfigGuardShard(t, 7) }
-func TestVolumeConfigGuardAndMutant_008(t *testing.T) { runVolumeConfigGuardShard(t, 8) }
-func TestVolumeConfigGuardAndMutant_009(t *testing.T) { runVolumeConfigGuardShard(t, 9) }
-func TestVolumeConfigGuardAndMutant_010(t *testing.T) { runVolumeConfigGuardShard(t, 10) }
-func TestVolumeConfigGuardAndMutant_011(t *testing.T) { runVolumeConfigGuardShard(t, 11) }
-func TestVolumeConfigGuardAndMutant_012(t *testing.T) { runVolumeConfigGuardShard(t, 12) }
-func TestVolumeConfigGuardAndMutant_013(t *testing.T) { runVolumeConfigGuardShard(t, 13) }
-func TestVolumeConfigGuardAndMutant_014(t *testing.T) { runVolumeConfigGuardShard(t, 14) }
-func TestVolumeConfigGuardAndMutant_015(t *testing.T) { runVolumeConfigGuardShard(t, 15) }
+func TestVolumeConfigGuardAndMutant_000(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 0)
+}
+func TestVolumeConfigGuardAndMutant_001(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 1)
+}
+func TestVolumeConfigGuardAndMutant_002(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 2)
+}
+func TestVolumeConfigGuardAndMutant_003(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 3)
+}
+func TestVolumeConfigGuardAndMutant_004(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 4)
+}
+func TestVolumeConfigGuardAndMutant_005(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 5)
+}
+func TestVolumeConfigGuardAndMutant_006(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 6)
+}
+func TestVolumeConfigGuardAndMutant_007(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 7)
+}
+func TestVolumeConfigGuardAndMutant_008(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 8)
+}
+func TestVolumeConfigGuardAndMutant_009(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 9)
+}
+func TestVolumeConfigGuardAndMutant_010(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 10)
+}
+func TestVolumeConfigGuardAndMutant_011(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 11)
+}
+func TestVolumeConfigGuardAndMutant_012(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 12)
+}
+func TestVolumeConfigGuardAndMutant_013(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 13)
+}
+func TestVolumeConfigGuardAndMutant_014(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 14)
+}
+func TestVolumeConfigGuardAndMutant_015(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 15)
+}
 
 // Bound both the driver and compilers it launches without an external deadline tool.
 func volumeGuardCommand(name string, args ...string) (*exec.Cmd, context.CancelFunc) {

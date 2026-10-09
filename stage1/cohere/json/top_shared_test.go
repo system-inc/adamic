@@ -111,6 +111,7 @@ func jsonTopReport(t *testing.T, i int, value string) {
 
 // The local overlay must outlive all parallel leaves. Shared Product directories
 // are read-only and never removed by the test process.
+// Not parallel: owns process-wide oracle cleanup and report aggregation after m.Run.
 func TestMain(m *testing.M) {
 	code := m.Run()
 	if jsonTopState.oracleDir != "" {
@@ -134,6 +135,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 func TestPortMatchesGoCohereUnion(t *testing.T) {
+	t.Parallel()
 	cases, shards := jsonTopCorpus(t)
 	if len(shards)*4 != testPortMatchesGoCohereShards {
 		t.Fatal("static port count differs from enumeration")
@@ -144,6 +146,7 @@ func TestPortMatchesGoCohereUnion(t *testing.T) {
 	t.Logf("exact live union: %d cases", len(cases))
 }
 func TestUpstreamRepositoryCorpusParityUnion(t *testing.T) {
+	t.Parallel()
 	cases, shards := jsonTopCorpus(t)
 	if len(shards) != testUpstreamRepositoryCorpusParityShards {
 		t.Fatal("static upstream count differs from enumeration")

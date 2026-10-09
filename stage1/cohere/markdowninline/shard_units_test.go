@@ -12,6 +12,7 @@ var inlineSharedRun func(*testing.T, int)
 var inlineSharedOverlayDir string
 
 // Shared temporary products live through m.Run, including every parallel unit.
+// Not parallel: m.Run and process-wide cleanup of the shared overlay directory.
 func TestMain(m *testing.M) {
 	code := m.Run()
 	if inlineSharedOverlayDir != "" {
@@ -35,7 +36,7 @@ func sharedInlineShards(t *testing.T) func(*testing.T, int) {
 
 // Setup is a separately discoverable unit. A selected shard also initializes
 // setup once when run alone; cache products are shared and read-only.
-func TestMarkdownInlineSetup(t *testing.T) { sharedInlineShards(t) }
+func TestMarkdownInlineSetup(t *testing.T) { t.Parallel(); sharedInlineShards(t) }
 
 // ADAMIC_TEST_SHARD=i/n selects ordinal % n == i (zero-based); unset runs all.
 // Gate selectors use ^TestMarkdownInline_NNNN$, visible through go test -list.
