@@ -153,10 +153,10 @@ func (l *lowering) higherRankType(node *ast.Node, proven *checker.Type, path str
 		}
 	}
 	visit(proven, path, 0)
+	if incomplete != nil {
+		return incomplete
+	}
 	if len(slots) == 0 {
-		if incomplete != nil {
-			return incomplete
-		}
 		return nil
 	}
 	return l.higherRankError(node, slots)

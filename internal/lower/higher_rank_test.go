@@ -75,3 +75,9 @@ func TestGenericValueDeclaredDefault(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNodeNative(t, `function number<T = number>(): number { return 4; } const run: () => number = number; console.log("" + run());`)
 }
+
+func TestHigherRankBindersBeforeTraversalLimit(t *testing.T) {
+	t.Parallel()
+	checkHigherRank(t, ".a", `function use(run: <U, V>(value: U, extra: V, tree: Grow<number>) => U): void { }
+interface Grow<T> { readonly next: Grow<readonly T[]>; }`, "run", "U", "V")
+}
