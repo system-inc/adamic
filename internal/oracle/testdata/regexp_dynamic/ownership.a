@@ -1,0 +1,24 @@
+import { programArguments } from 'adamic';
+function iterator() {
+ const pattern = programArguments()[0] ?? '(?<word>a)';
+ return 'aba'.matchAll(new RegExp(pattern, 'gdu'));
+}
+const matches = iterator();
+const first = matches.next().value;
+if (first !== undefined) {
+ console.log(`${first.groups?.word}`);
+ const pair = first.indices?.groups?.word;
+ if (pair !== undefined) console.log(`${pair[0]}`);
+}
+const second = matches.next().value;
+if (second !== undefined) console.log(`${second[0]}`);
+console.log(`${matches.next().done}`);
+function groups() {
+ const pattern = programArguments()[0] ?? '(?<word>a)';
+ return new RegExp(pattern, 'u').exec('a')?.groups;
+}
+const escaped = groups();
+console.log(`${escaped?.word}`);
+if (escaped !== undefined) console.log(`${escaped['#compiler']}`);
+const pattern = programArguments()[0] ?? '(a)';
+console.log('aba'.split(new RegExp(pattern, 'u')).join('|'));

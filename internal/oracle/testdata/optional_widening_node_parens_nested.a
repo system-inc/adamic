@@ -1,0 +1,6 @@
+import { statSync } from 'node:fs';
+const presentOptions = (({ throwIfNoEntry: false }) as const);
+const present = statSync('.', (((presentOptions))));
+console.log(present === undefined ? 'missing' : present.isDirectory() ? 'directory' : 'other');
+const absentOptions = { throwIfNoEntry: false } as const;
+console.log(`absent=${statSync('missing-optional-widening-parens-entry', (((absentOptions)))) === undefined}`);

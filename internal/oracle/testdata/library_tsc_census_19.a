@@ -1,0 +1,5 @@
+// Reduced from path.ts:528
+const path = 'a\\b\\c';
+const backslashRegExp = /\\/g;
+const directorySeparator = '/';
+console.log(path.replace(backslashRegExp, directorySeparator));

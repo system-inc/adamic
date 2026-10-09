@@ -1,13 +1,21 @@
 package oracle
 
+import (
+	"errors"
+	"github.com/system-inc/adamic/internal/lower"
+	"path/filepath"
+	"testing"
+)
+
 // The shared oracle runs this fixture against source Node, generated JavaScript, native release,
 // ASan/UBSan and the leak check. Register separately to avoid changing oracle_test.go's fixture list.
+// Accessor spread remains refused when its getter can throw; library concat is now catchable.
 func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/class_features_static.a",
 		"internal/oracle/testdata/class_features_static_private.a",
 		"internal/oracle/testdata/class_features_private.a",
-		"internal/oracle/testdata/class_features_accessors.a",
+		"internal/oracle/testdata/class_features_refused/class_features_accessors.a",
 		"internal/oracle/testdata/class_features_twice.a",
 		"internal/oracle/testdata/class_features_retained.a",
 		"internal/oracle/testdata/class_features_distinct.a",
@@ -27,6 +35,18 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{path, true, false})
+		}{path, path != "internal/oracle/testdata/class_features_refused/class_features_accessors.a", false})
+	}
+}
+
+func TestScout22AccessorSpreadRefusal(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_features_refused/class_features_accessors.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, path)
+	var refusal *lower.NotYet
+	if !errors.As(err, &refusal) || refusal.What != "spreading an accessor literal whose getter may throw" {
+		t.Fatalf("want throwing getter spread refusal, got %v", err)
 	}
 }

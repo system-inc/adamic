@@ -17,7 +17,7 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
+	flags := Flags(Options{Sanitize: true, Count: true, Slabs: true, cpu: "haswell"})
 	key := runtimeKey(files, flags, "clang", "version 1")
 	for index, flag := range flags {
 		changed := append([]string{}, flags[:index]...)
@@ -132,8 +132,11 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 
 // Many callers begin on an empty cache together. A compiler wrapper records actual compilations,
 // so the test requires one build as well as an intact archive every caller can link.
+// Not parallel: the executable wrapper writable descriptor can be inherited by other tests' forked children until exec.
 func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
-	t.Parallel()
+	// Not parallel: publish the executable wrapper before other tests fork. An inherited
+	// writable descriptor can keep the script text busy until the child reaches exec.
+	// The 32 cache callers below still start together and must publish exactly one build.
 	directory := t.TempDir()
 	compiler, err := exec.LookPath("clang")
 	if err != nil {

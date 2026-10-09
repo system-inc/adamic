@@ -1,0 +1,78 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	1.120s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	109.997s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (21.17s)
+    flow_test.go:82: Lower: /workspace/adamic/internal/oracle/testdata/library_array_heterogeneous_refused.a:4:16: stage 0 can't lower an array search whose object element type can hide primitive slots (heterogeneous arrays need tagged elements) yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.00s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_array_heterogeneous_refused.a (0.20s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_array_heterogeneous_refused.a:4:16: stage 0 can't lower an array search whose object element type can hide primitive slots (heterogeneous arrays need tagged elements) yet
+--- FAIL: TestLivenessHoldsOnEveryPath (143.92s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.06s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_array_heterogeneous_refused.a (0.22s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_array_heterogeneous_refused.a:4:16: stage 0 can't lower an array search whose object element type can hide primitive slots (heterogeneous arrays need tagged elements) yet
+    trace_test.go:423: 18085013 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (159.02s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.14s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_array_heterogeneous_refused.a (0.23s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_array_heterogeneous_refused.a:4:16: stage 0 can't lower an array search whose object element type can hide primitive slots (heterogeneous arrays need tagged elements) yet
+    ranges_test.go:78: 77387 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	159.091s
+ok  	github.com/system-inc/adamic/internal/fresh	51.727s
+ok  	github.com/system-inc/adamic/internal/fuzz	17.577s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	2.814s
+ok  	github.com/system-inc/adamic/internal/lower	41.288s
+ok  	github.com/system-inc/adamic/internal/native	404.034s
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a (10.28s)
+        oracle_test.go:559: gate cache node miss
+        oracle_test.go:559: gate cache node miss
+        oracle_test.go:448: gate cache native miss
+        oracle_test.go:441: gate cache native miss
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "-Infinity: 0 -1 true -1\n-20: 0 -1 true -1\n-5: 0 0 true -1\n-2.9: -1 2 true -1\n-1: -1 2 false 4\n0: 0 0 true -1\n0: 0 0 true -1\n1.9: 2 0 true -1\n3: -1 2 true -1\n5: -1 2 false 4\n20: -1 2 false 4\nInfinity: -1 2 false 4\nNaN: 0 0 true -1\n2 0 -1 -1\n2 2 true\n0 2\n0\n2 0\n-1 -1\n-1 -1\n-Infinity: 2 -1\n-9: 2 -1\n-3: 2 -1\n-1.9: 2 2\n0: 2 -1\n0: 2 -1\n1.9: 2 -1\n3: -1 2\nInfinity: -1 2\nNaN: 2 -1\n2 -1\n2 2\n0 -1\n1 -1\n-1 -1\n0 4294967295\n1 1\n0 0\n-1 -1\n-1 -1\n-1\n0 1\n1 0\n2 10\n1 2\n", stderr ""
+            native: exit 0, stdout "-Infinity: 0 -1 true -1\n-20: 0 -1 true -1\n-5: 0 0 true -1\n-2.9: -1 2 true -1\n-1: -1 2 false 4\n0: 0 0 true -1\n0: 0 0 true -1\n1.9: 2 0 true -1\n3: -1 2 true -1\n5: -1 2 false 4\n20: -1 2 false 4\nInfinity: -1 2 false 4\nNaN: 0 0 true -1\n2 0 -1 -1\n2 2 true\n0 2\n0\n2 0\n-1 -1\n-1 -1\n-Infinity: 2 -1\n-9: 2 -1\n-3: 2 -1\n-1.9: 2 2\n0: 2 -1\n0: 2 -1\n1.9: 2 -1\n3: -1 2\nInfinity: -1 2\nNaN: 2 -1\n2 -1\n2 2\n0 -1\n1 -1\n-1 -1\n0 4294967295\n1 1\n0 0\n-1 -1\n-1 -1\n-1\n0 1\n1 0\n2 10\n2 1\n", stderr ""
+        oracle_test.go:586: JavaScript backend: stdout differs
+            node:    exit 0, stdout "-Infinity: 0 -1 true -1\n-20: 0 -1 true -1\n-5: 0 0 true -1\n-2.9: -1 2 true -1\n-1: -1 2 false 4\n0: 0 0 true -1\n0: 0 0 true -1\n1.9: 2 0 true -1\n3: -1 2 true -1\n5: -1 2 false 4\n20: -1 2 false 4\nInfinity: -1 2 false 4\nNaN: 0 0 true -1\n2 0 -1 -1\n2 2 true\n0 2\n0\n2 0\n-1 -1\n-1 -1\n-Infinity: 2 -1\n-9: 2 -1\n-3: 2 -1\n-1.9: 2 2\n0: 2 -1\n0: 2 -1\n1.9: 2 -1\n3: -1 2\nInfinity: -1 2\nNaN: 2 -1\n2 -1\n2 2\n0 -1\n1 -1\n-1 -1\n0 4294967295\n1 1\n0 0\n-1 -1\n-1 -1\n-1\n0 1\n1 0\n2 10\n1 2\n", stderr ""
+            backend: exit 0, stdout "-Infinity: 0 -1 true -1\n-20: 0 -1 true -1\n-5: 0 0 true -1\n-2.9: -1 2 true -1\n-1: -1 2 false 4\n0: 0 0 true -1\n0: 0 0 true -1\n1.9: 2 0 true -1\n3: -1 2 true -1\n5: -1 2 false 4\n20: -1 2 false 4\nInfinity: -1 2 false 4\nNaN: 0 0 true -1\n2 0 -1 -1\n2 2 true\n0 2\n0\n2 0\n-1 -1\n-1 -1\n-Infinity: 2 -1\n-9: 2 -1\n-3: 2 -1\n-1.9: 2 2\n0: 2 -1\n0: 2 -1\n1.9: 2 -1\n3: -1 2\nInfinity: -1 2\nNaN: 2 -1\n2 -1\n2 2\n0 -1\n1 -1\n-1 -1\n0 4294967295\n1 1\n0 0\n-1 -1\n-1 -1\n-1\n0 1\n1 0\n2 10\n2 1\n", stderr ""
+        oracle_test.go:455: gate cache native hit
+FAIL
+gate cache: native hits=232 misses=799
+gate cache: node hits=49 misses=524
+gate cache: probe hits=0 misses=24
+FAIL	github.com/system-inc/adamic/internal/oracle	307.638s
+ok  	github.com/system-inc/adamic/internal/regexp	18.362s
+legacy canonicalize values: 65536 code units against Node toUpperCase, disagreements 0
+legacy canonicalize: 65536 patterns x 65536 code units = 4294967296, disagreements 0
+--- FAIL: TestCanonicalizeUnicodeNode (395.07s)
+    canonicalize_test.go:238: node: signal: killed
+        
+node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0
+node string-property check: 7906 sequences, disagreements 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/unicodeproperties	528.755s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	294.428s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	43.691s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	86.383s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	49.381s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	162.218s
+--- FAIL: TestPortMatchesGoCohere (900.25s)
+    port_test.go:200: repository groups: map[Adamic:27 TypeScript:202 cohere:835]; generated 34; total 1098
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 1098 texts in 103.552s
+        --- PASS: TestAdamicJSONAudit (110.26s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	110.488s
+    port_test.go:227: native ASan/UBSan exits -1: 
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/json	982.035s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	782.150s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	73.739s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	172.240s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	176.351s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	157.552s

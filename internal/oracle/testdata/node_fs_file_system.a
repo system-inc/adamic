@@ -1,0 +1,20 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+import { readFileSync } from 'node:fs';
+import { writeFile, fileExists, getFileSize, getModifiedTime, setModifiedTime, deleteFile, createDirectory } from '../../load/node_fs_file_system.a';
+writeFile(root + '/out','hé🌍',true); console.log(`${readFileSync(root + '/out','utf8').charCodeAt(0)}`);
+console.log(`${fileExists(root + '/out')} ${getFileSize(root + '/out')} ${fileExists(root)} ${getFileSize(root)} ${getFileSize(root + '/missing')}`);
+setModifiedTime(root + '/out',new Date(1700000000123));
+const time=getModifiedTime(root + '/out'); console.log(`${time === undefined ? -1 : time.getTime()}`);
+console.log(`${getModifiedTime(root + '/missing') === undefined}`);
+setModifiedTime(root + '/missing',new Date(0)); deleteFile(root + '/missing');
+createDirectory(root + '/one'); createDirectory(root + '/one'); createDirectory(root + '/file');
+console.log(`${fileExists(root + '/file')}`);
+deleteFile(root + '/out'); console.log(`${fileExists(root + '/out')}`);
+try { createDirectory(root + '/locked/child'); } catch(error) { if (error instanceof Error) { failure(error); } }

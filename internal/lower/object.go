@@ -18,6 +18,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") || (l.checker.GetContextualType(node, checker.ContextFlagsNone) != nil && l.isLibraryType(l.checker.GetContextualType(node, checker.ContextFlagsNone), "Date")) {
+		return nil, l.notYet(node, "a structural object supplying Date internal slots")
+	}
 	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), Record: l.entriesRecordLiteral(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
@@ -51,6 +54,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "a string field with the reserved iterator slot name")
 			}
 			fieldName, known := l.methodName(property)
+			if !known {
+				fieldName, known = l.libraryArrayLikeFieldName(name)
+			}
 			if !known {
 				return nil, l.notYet(name, "a computed field name")
 			}
@@ -339,6 +345,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if node.Name().Text() == "now" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Date") {
+		return ir.NodeFSFile{Operation: "date_now_function", Of: ir.Closure}, nil
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -379,7 +388,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message" || name == "code")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -671,6 +680,24 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.regexGroupCall(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.libraryDateCall(node); known {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectStaticCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectCoercionCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectIntrinsicCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.librarySequenceIterator(node); handled {
+		return value, true, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}
@@ -681,6 +708,12 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
 	}
+	if value, known, err := l.nodeFSDirectoryCall(node); known {
+		return value, known, err
+	}
+	if value, known, err := l.processValue(node); known {
+		return value, true, err
+	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
 	}
@@ -688,6 +721,12 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMethodCall(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryArrayGenericCall(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryDateCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
@@ -1431,7 +1470,7 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+	return l.arraySearchContract(node, signatures[0], ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())})
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1485,6 +1524,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
+	if err := l.libraryCollectionKeySlots(node, key); err != nil {
+		return 0, 0, err
+	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
 	if !valueKnown || (slotless(value) && !(value == ir.Union && l.writable(arguments[1]))) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
@@ -1495,8 +1537,14 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "Date") {
+		return l.newDate(node)
+	}
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
+	}
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
+		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
@@ -1654,6 +1702,9 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)
