@@ -42,6 +42,7 @@ func commandFixture(t *testing.T) (string, string, string, string) {
 			t.Fatal(err)
 		}
 	}
+	write("cloud/admission-corpus/negative-witnesses.json", `{ "_comment": "Adding an entry is a ruling routed to @system_adamic", "witnesses": {} }`)
 	write("corpus/input.a", "console.log('42');\n")
 	write("oracle/node.mjs", "import {readFileSync} from 'node:fs';console.log(readFileSync(process.argv[2],'utf8').includes('42')?'42':'changed');\n")
 	write("generator.py", "# pinned generator\n")

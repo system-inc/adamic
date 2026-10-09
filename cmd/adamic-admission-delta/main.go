@@ -52,9 +52,13 @@ type entry struct {
 	JavaScriptCompile *observation `json:"javascript_compile,omitempty"`
 	NativeCompile     *observation `json:"native_compile,omitempty"`
 	Agree             *bool        `json:"agree"`
+	NegativeWitness   bool         `json:"negative_witness"`
 	Sampled           bool         `json:"sampled"`
 }
 type report struct {
+	NegativeWitnessCount  int                `json:"negative_witness_count"`
+	AcceptedWitnesses     int                `json:"accepted_witnesses"`
+	NodeAgreements        int                `json:"node_agreements"`
 	CorpusFilter          string             `json:"corpus_filter"`
 	Shard                 string             `json:"shard"`
 	CompleteCorpus        bool               `json:"complete_corpus"`
@@ -167,6 +171,7 @@ func run(args []string) error {
 	baseLowerBinary := flags.String("base-lower-binary", "", "base compiler with admission-lower adapter")
 	headLowerBinary := flags.String("head-lower-binary", "", "head compiler with admission-lower adapter")
 	headBinary := flags.String("head-binary", "", "built head compiler")
+	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -197,8 +202,14 @@ func run(args []string) error {
 	if err != nil {
 		return err
 	}
+	negatives, err := readNegativeWitnesses(*negativePath)
+	if err != nil {
+		return err
+	}
+	fmt.Fprintf(os.Stderr, "negative witnesses: %d\n", len(negatives.Witnesses))
 	startedAll := time.Now()
 	result := report{Programs: []entry{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
+	result.NegativeWitnessCount = len(negatives.Witnesses)
 	result.Base, err = git(root, "rev-parse", *base+"^{commit}")
 	if err != nil {
 		return err
@@ -430,9 +441,26 @@ func run(args []string) error {
 		}
 		record.NativeCompile = &nativeCompile
 		record.Native = &native
+		data, e := os.ReadFile(source)
+		if e != nil {
+			return e
+		}
+		witness, listed := negatives.Witnesses[contentHash(data)]
 		agree := outputsAgree(node, javascript, native)
+		if agree {
+			result.NodeAgreements++
+		}
+		if listed {
+			if e := validateWitnessSource(data, witness); e != nil {
+				return fmt.Errorf("%s: %w", record.Path, e)
+			}
+			record.NegativeWitness = !agree && acceptsNegativeWitness(witness, headTree, node, javascript, native)
+			if record.NegativeWitness {
+				result.AcceptedWitnesses++
+			}
+		}
 		record.Agree = &agree
-		if !agree {
+		if !agree && !record.NegativeWitness {
 			result.Verdict = "fail"
 		}
 	}

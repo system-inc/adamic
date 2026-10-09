@@ -71,3 +71,30 @@ on an unrun program. `admitted: 0` is explicit for equal admission sets.
 Tests use tiny fake compiler executables to test command contracts independently
 of the compiler. The real compiler proof and its lowering mutant are recorded
 under `review/compiler/admission-delta/`.
+
+Ruled negative witnesses are read from
+`cloud/admission-corpus/negative-witnesses.json` in the invoking repository,
+or an explicit `--negative-witnesses` path. This allows a separately delivered
+compiler branch to use this tool without merging its unlanded tool dependency.
+The valid JSON header is the `_comment` field; adding an entry is a ruling
+routed to @system_adamic. The map key is SHA-256 of exact program bytes,
+never a path. The declaration and ruling task are documentary evidence.
+The tool validates the declaration's literal type contradiction and a pinned
+literal repair. Supported forms are declared string initialized with
+`undefined!` or `null!`, and the bounded speculative callback returning
+`'wrong'` asserted as number. Other forms require an independent evidence
+validator before a ruling can use them. The repair's content hash cannot be
+listed. Every edit, including a type-correct repair, demands ordinary Node
+agreement unless independently re-ruled. Valid programs must never be listed.
+
+Ordinary comparison is exactly `outputsAgree`: stdout bytes and exit code,
+with execution errors rejected; stderr is retained in the report but not
+compared. An agreeing program remains an agreement even if its hash is listed.
+A negative witness instead requires source Node exit 0 and both backends'
+exact ruled exit 70 and entire stderr, plus equal backend stdout. `{root}`
+in the ruled diagnostic expands only to the head checkout's absolute path.
+Compilation failures never qualify. The list size prints to stderr on every
+run that loads it, including empty lists; JSON records
+`negative_witness_count`, `node_agreements`, and `accepted_witnesses`.
+`agree` remains false on a accepted listed witness; `negative_witness` records
+the separate exception. A wrong exit, diagnostic, or source repair fails.

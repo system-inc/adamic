@@ -1,0 +1,133 @@
+{"Time":"2026-10-09T23:51:05.376117671Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta"}
+{"Time":"2026-10-09T23:51:05.378784852Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch"}
+{"Time":"2026-10-09T23:51:05.378867183Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"=== RUN   TestNewAdmissionMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378886611Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"=== PAUSE TestNewAdmissionMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378889015Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch"}
+{"Time":"2026-10-09T23:51:05.378894553Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation"}
+{"Time":"2026-10-09T23:51:05.378896186Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation","Output":"=== RUN   TestHeadInputIsolation\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378898499Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation","Output":"=== PAUSE TestHeadInputIsolation\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378900262Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation"}
+{"Time":"2026-10-09T23:51:05.378902114Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch"}
+{"Time":"2026-10-09T23:51:05.378903647Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch","Output":"=== RUN   TestManifestMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378906461Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch","Output":"=== PAUSE TestManifestMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378908023Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch"}
+{"Time":"2026-10-09T23:51:05.378910837Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational"}
+{"Time":"2026-10-09T23:51:05.378913571Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational","Output":"=== RUN   TestNewlyRefusedIsInformational\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378915975Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational","Output":"=== PAUSE TestNewlyRefusedIsInformational\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378917587Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational"}
+{"Time":"2026-10-09T23:51:05.37891987Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus"}
+{"Time":"2026-10-09T23:51:05.378921283Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus","Output":"=== RUN   TestEmptyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378923957Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus","Output":"=== PAUSE TestEmptyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378925779Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus"}
+{"Time":"2026-10-09T23:51:05.378927502Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions"}
+{"Time":"2026-10-09T23:51:05.378935644Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions","Output":"=== RUN   TestBuildRevisions\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378938137Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions","Output":"=== PAUSE TestBuildRevisions\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.37893967Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions"}
+{"Time":"2026-10-09T23:51:05.378941352Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage"}
+{"Time":"2026-10-09T23:51:05.378943175Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage","Output":"=== RUN   TestDiffCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378945218Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage","Output":"=== PAUSE TestDiffCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.37894668Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage"}
+{"Time":"2026-10-09T23:51:05.378948473Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree"}
+{"Time":"2026-10-09T23:51:05.378950866Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree","Output":"=== RUN   TestOutputsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.37895324Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree","Output":"=== PAUSE TestOutputsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378954702Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree"}
+{"Time":"2026-10-09T23:51:05.378957276Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash"}
+{"Time":"2026-10-09T23:51:05.378959509Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash","Output":"=== RUN   TestNegativeContentHash\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378962563Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash","Output":"=== PAUSE TestNegativeContentHash\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378964226Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash"}
+{"Time":"2026-10-09T23:51:05.378967471Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop"}
+{"Time":"2026-10-09T23:51:05.378969043Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop","Output":"=== RUN   TestNegativeExactBackendStop\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378971436Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop","Output":"=== PAUSE TestNegativeExactBackendStop\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378973029Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop"}
+{"Time":"2026-10-09T23:51:05.378975102Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata"}
+{"Time":"2026-10-09T23:51:05.378977385Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata","Output":"=== RUN   TestNegativeRulingMetadata\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378979979Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata","Output":"=== PAUSE TestNegativeRulingMetadata\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378983234Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata"}
+{"Time":"2026-10-09T23:51:05.378985267Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted"}
+{"Time":"2026-10-09T23:51:05.378986809Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted","Output":"=== RUN   TestNegativeCommandAccepted\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378988782Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted","Output":"=== PAUSE TestNegativeCommandAccepted\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378990214Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted"}
+{"Time":"2026-10-09T23:51:05.378992027Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant"}
+{"Time":"2026-10-09T23:51:05.378993529Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant","Output":"=== RUN   TestNegativeTypeCorrectMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378996413Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant","Output":"=== PAUSE TestNegativeTypeCorrectMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.378998076Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant"}
+{"Time":"2026-10-09T23:51:05.378999888Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed"}
+{"Time":"2026-10-09T23:51:05.379001381Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed","Output":"=== RUN   TestNegativeValidProgramCannotBeListed\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379004776Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed","Output":"=== PAUSE TestNegativeValidProgramCannotBeListed\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379006568Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed"}
+{"Time":"2026-10-09T23:51:05.379008311Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted"}
+{"Time":"2026-10-09T23:51:05.379009723Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted","Output":"=== RUN   TestNegativeEmptyListPrinted\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379011806Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted","Output":"=== PAUSE TestNegativeEmptyListPrinted\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379013408Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted"}
+{"Time":"2026-10-09T23:51:05.379015071Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope"}
+{"Time":"2026-10-09T23:51:05.379016543Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope","Output":"=== RUN   TestShardCommandScope\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379020098Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope","Output":"=== PAUSE TestShardCommandScope\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379022742Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope"}
+{"Time":"2026-10-09T23:51:05.379024525Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch"}
+{"Time":"2026-10-09T23:51:05.379026007Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"=== CONT  TestNewAdmissionMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379356294Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus"}
+{"Time":"2026-10-09T23:51:05.379363464Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus","Output":"=== CONT  TestEmptyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379366909Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash"}
+{"Time":"2026-10-09T23:51:05.379368862Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash","Output":"=== CONT  TestNegativeContentHash\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379376453Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash","Output":"--- PASS: TestNegativeContentHash (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.379378697Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeContentHash","Elapsed":0}
+{"Time":"2026-10-09T23:51:05.379389643Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope"}
+{"Time":"2026-10-09T23:51:05.379391375Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope","Output":"=== CONT  TestShardCommandScope\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.381474596Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch"}
+{"Time":"2026-10-09T23:51:05.381485281Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch","Output":"=== CONT  TestManifestMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.381489427Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant"}
+{"Time":"2026-10-09T23:51:05.381491491Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant","Output":"=== CONT  TestNegativeTypeCorrectMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.418245771Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus","Output":"--- PASS: TestEmptyCorpus (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.4183126Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestEmptyCorpus","Elapsed":0.04}
+{"Time":"2026-10-09T23:51:05.418323566Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation"}
+{"Time":"2026-10-09T23:51:05.418327702Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation","Output":"=== CONT  TestHeadInputIsolation\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.425011192Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch","Output":"--- PASS: TestManifestMismatch (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.42502982Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestManifestMismatch","Elapsed":0.05}
+{"Time":"2026-10-09T23:51:05.425040105Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational"}
+{"Time":"2026-10-09T23:51:05.425042609Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational","Output":"=== CONT  TestNewlyRefusedIsInformational\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.444705238Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope","Output":"--- PASS: TestShardCommandScope (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.44473347Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestShardCommandScope","Elapsed":0.07}
+{"Time":"2026-10-09T23:51:05.444738007Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed"}
+{"Time":"2026-10-09T23:51:05.44474011Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed","Output":"=== CONT  TestNegativeValidProgramCannotBeListed\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.444812406Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed","Output":"--- PASS: TestNegativeValidProgramCannotBeListed (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.444834669Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeValidProgramCannotBeListed","Elapsed":0}
+{"Time":"2026-10-09T23:51:05.444837523Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted"}
+{"Time":"2026-10-09T23:51:05.444839096Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted","Output":"=== CONT  TestNegativeEmptyListPrinted\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.465391387Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational","Output":"--- PASS: TestNewlyRefusedIsInformational (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.46542062Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewlyRefusedIsInformational","Elapsed":0.04}
+{"Time":"2026-10-09T23:51:05.465425848Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage"}
+{"Time":"2026-10-09T23:51:05.465428472Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage","Output":"=== CONT  TestDiffCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.489088303Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation","Output":"--- PASS: TestHeadInputIsolation (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.489128672Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestHeadInputIsolation","Elapsed":0.07}
+{"Time":"2026-10-09T23:51:05.489134261Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree"}
+{"Time":"2026-10-09T23:51:05.489136564Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree","Output":"=== CONT  TestOutputsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.489140309Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree","Output":"--- PASS: TestOutputsAgree (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.489142202Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestOutputsAgree","Elapsed":0}
+{"Time":"2026-10-09T23:51:05.489149032Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop"}
+{"Time":"2026-10-09T23:51:05.489150855Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop","Output":"=== CONT  TestNegativeExactBackendStop\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.489153188Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop","Output":"--- PASS: TestNegativeExactBackendStop (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.489155772Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeExactBackendStop","Elapsed":0}
+{"Time":"2026-10-09T23:51:05.489157244Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted"}
+{"Time":"2026-10-09T23:51:05.489158677Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted","Output":"=== CONT  TestNegativeCommandAccepted\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.510242401Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"--- PASS: TestNewAdmissionMismatch (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.51029599Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Elapsed":0.13}
+{"Time":"2026-10-09T23:51:05.510301808Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata"}
+{"Time":"2026-10-09T23:51:05.510303791Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata","Output":"=== CONT  TestNegativeRulingMetadata\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.510625676Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata","Output":"--- PASS: TestNegativeRulingMetadata (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.51063564Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeRulingMetadata","Elapsed":0}
+{"Time":"2026-10-09T23:51:05.510638134Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions"}
+{"Time":"2026-10-09T23:51:05.510640578Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions","Output":"=== CONT  TestBuildRevisions\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.520816075Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant","Output":"    negative_test.go:148: type-correct copy demands Node agreement; backend exit 70 is a divergence\n"}
+{"Time":"2026-10-09T23:51:05.521584227Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant","Output":"--- PASS: TestNegativeTypeCorrectMutant (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.541074663Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeTypeCorrectMutant","Elapsed":0.14}
+{"Time":"2026-10-09T23:51:05.541103185Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage","Output":"--- PASS: TestDiffCoverage (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.554827003Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestDiffCoverage","Elapsed":0.08}
+{"Time":"2026-10-09T23:51:05.554880501Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted","Output":"--- PASS: TestNegativeEmptyListPrinted (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.605955293Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeEmptyListPrinted","Elapsed":0.11}
+{"Time":"2026-10-09T23:51:05.605997014Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted","Output":"--- PASS: TestNegativeCommandAccepted (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.686273289Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNegativeCommandAccepted","Elapsed":0.12}
+{"Time":"2026-10-09T23:51:05.686323213Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions","Output":"--- PASS: TestBuildRevisions (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.686331094Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestBuildRevisions","Elapsed":0.18}
+{"Time":"2026-10-09T23:51:05.686333758Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:51:05.686372115Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-admission-delta\t0.310s\n"}
+{"Time":"2026-10-09T23:51:05.686380637Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Elapsed":0.31}

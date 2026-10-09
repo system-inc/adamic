@@ -1,0 +1,18 @@
+{
+  "TestNegativeContentHash": 0,
+  "TestEmptyCorpus": 0.04,
+  "TestManifestMismatch": 0.05,
+  "TestShardCommandScope": 0.07,
+  "TestNegativeValidProgramCannotBeListed": 0,
+  "TestNewlyRefusedIsInformational": 0.04,
+  "TestHeadInputIsolation": 0.07,
+  "TestOutputsAgree": 0,
+  "TestNegativeExactBackendStop": 0,
+  "TestNewAdmissionMismatch": 0.13,
+  "TestNegativeRulingMetadata": 0,
+  "TestNegativeTypeCorrectMutant": 0.14,
+  "TestDiffCoverage": 0.08,
+  "TestNegativeEmptyListPrinted": 0.11,
+  "TestNegativeCommandAccepted": 0.12,
+  "TestBuildRevisions": 0.18
+}
