@@ -393,7 +393,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 			if err := os.WriteFile(path, source, 0644); err != nil {
 				return err
 			}
-			args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
+			args := append(native.SourceFlags(string(source), options), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
 			args = append(args, native.RuntimeLinkFlags(library)...)
 			args = append(args, "-lm")
 			output, err := combinedOutput(listLayoutCommand(t, "clang", args...))
@@ -472,14 +472,14 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 				t.Fatal(err)
 			}
 			sum := sha256.Sum256(source)
-			flags := native.Flags(native.Options{Sanitize: true})
+			flags := native.SourceFlags(string(source), native.Options{Sanitize: true})
 			for index, flag := range flags {
 				if flag == "-O1" {
 					flags[index] = "-O0"
 				}
 			}
 			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
-				library, err := native.RuntimeLibrary("", native.Options{Sanitize: true})
+				library, err := native.RuntimeLibraryForSource("", string(source), native.Options{Sanitize: true})
 				if err != nil {
 					return err
 				}

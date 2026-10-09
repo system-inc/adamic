@@ -169,7 +169,7 @@ func TestWASIEmission(t *testing.T) {
 			if err := os.WriteFile(source, []byte(native.C(program)), 0644); err != nil {
 				t.Fatal(err)
 			}
-			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
+			flags := append(native.SourceFlags(native.C(program), options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
 			if output, err := bounded(t, compiler, flags...).CombinedOutput(); err != nil {
 				t.Fatalf("emitted C: %v\n%s", err, output)
 			}

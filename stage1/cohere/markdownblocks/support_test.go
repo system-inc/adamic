@@ -339,7 +339,7 @@ func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
 	write(t, source, []byte(code))
-	flags := native.Flags(options)
+	flags := native.SourceFlags(code, options)
 	for index, flag := range flags {
 		if flag == "-O1" {
 			flags[index] = "-O0"
