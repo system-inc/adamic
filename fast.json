@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T102942-20f74c65",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "31d568946fe9190fd96da1c7311dab57c1a56863",
+  "branch": "devtools/cohere-gate-main",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "31d568946fe9190fd96da1c7311dab57c1a56863",
+  "gated": "4d9e251db67e5eb6465715a5b1d596c7390a50d8",
+  "unplanned_packages_not_run": 29
+}

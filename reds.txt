@@ -1,0 +1,32 @@
+run adamic-verify-20261009T102942-20f74c65: void, 1231 tests in 41 units, 1 failed, 22 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-02: no results (exited false, last output "loom-runner: still running after 870 s")
+BROKEN tests-06: no results (exited false, last output "")
+BROKEN tests-09: no results (exited false, last output "loom-runner: still running after 1110 s")
+BROKEN tests-00-r4: no results (exited true, last output "loom-pilot: tests took 14 s in all")
+BROKEN tests-00-r5: no results (exited false, last output "")
+BROKEN tests-00-r6: no results (exited false, last output "")
+BROKEN tests-00-r7: no results (exited false, last output "")
+BROKEN tests-06-r1: no results (exited false, last output "")
+BROKEN tests-06-r2: no results (exited false, last output "")
+BROKEN tests-06-r3: no results (exited false, last output "")
+BROKEN tests-06-r4: no results (exited false, last output "")
+BROKEN tests-06-r5: no results (exited false, last output "")
+BROKEN tests-06-r6: no results (exited false, last output "")
+BROKEN tests-06-r7: no results (exited false, last output "")
+BROKEN tests-06-r8: no results (exited false, last output "")
+BROKEN tests-06-r9: no results (exited false, last output "")
+BROKEN tests-06-r10: no results (exited false, last output "")
+BROKEN tests-06-r11: no results (exited false, last output "")
+BROKEN tests-06-r12: no results (exited false, last output "")
+BROKEN tests-06-r13: no results (exited false, last output "")
+BROKEN tests-06-r14: no results (exited false, last output "")
+FAIL github.com/system-inc/adamic/internal/skipcensus TestCensus (tests-05)
+    census_test.go:31: removed skip internal/native/units_tsgo_test.go:TestSplitTSGoAgrees:fe6e33c0c5029eba251ce8abd2b20d0057e044956c6b84aa601a203a9d9680ae
+    removed skip internal/native/wasm_test.go:TestWASI:362f333fa4b72ea7c25a5bb02fd791f13e6995ff1db70c6bcd5e8b503ce3da89
+    removed skip internal/native/wasm_test.go:TestWASI:84bb45dda60b9ac4a325def472053ec24083a3eca7b2cf2474e71763541bf80c
+    removed skip internal/native/wasm_test.go:TestWASI:c21b865ade4f7ec33e3c43e989d4915bb320441b56260e70d1b404d8e6ee400c
+    removed skip internal/native/wasm_test.go:TestWASI:e331d554fc45e12edd105c0ed30539b5b8161c822ca013eeb9b559b9a29e4822
+    removed skip internal/native/wasm_test.go:TestWASI:f69cd3364c297e515a7579901e72251584219181e3d65f6db4443ff8a7833420
+    removed skip stage1/cohere/css/css_test.go:TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc
+    removed skip stage1/cohere/css/print_test.go:TestCSSPrinterAgreesWithGo:de4d6cdc7826055c8adac955861d458fd0c38bd16cc8223dc9d2f51cd9d9ea4d
