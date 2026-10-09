@@ -19,7 +19,7 @@ FORMAT = 'adamic-stage3-tree-v1'
 
 
 def product_key():
-    # Names, modes, empty directories and bytes all participate. Tables outside
+    # Names, executable status, empty directories and bytes participate. Tables outside
     # adapt are generated outputs, not inputs. API locks pin the adapter parser.
     digest = hashlib.sha256(FORMAT.encode())
     for tool in ['node', 'npm', 'python3', 'git', 'tar']:
@@ -38,7 +38,9 @@ def product_key():
         kind = ('symlink:' + os.readlink(path)) if path.is_symlink() else (
             'directory' if path.is_dir() else 'file')
         data = b'' if path.is_dir() else path.read_bytes()
-        record = json.dumps([name, kind, path.stat().st_mode & 0o777,
+        executable = path.is_file() and not path.is_symlink() and bool(path.stat().st_mode & 0o111)
+        # Match buildcache.Key: read/write permissions depend on checkout umask.
+        record = json.dumps([name, kind, executable,
                              hashlib.sha256(data).hexdigest()], separators=(',', ':'))
         digest.update(record.encode() + b'\n')
     return digest.hexdigest()
