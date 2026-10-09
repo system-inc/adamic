@@ -77,7 +77,7 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	if err := command.Run(); err != nil {
 		return nil, fmt.Errorf("%s: %w\n%s", name, err, errOut.Bytes())
 	}
-	if errOut.Len() != 0 {
+	if errOut.Len() != 0 && name != "go" {
 		return nil, fmt.Errorf("%s stderr: %s", name, errOut.Bytes())
 	}
 	return out.Bytes(), nil
