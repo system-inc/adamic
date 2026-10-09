@@ -1,0 +1,25 @@
+run adamic-verify-20261009T101416-16bed371: red, 1574 tests in 12 units, 4 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/internal/fuzz TestPredicateGeneratorShapes/1 (tests-02)
+    predicates_test.go:37: unclear compiler failure: /tmp/adamic-gate/TestPredicateGeneratorShapes11447057069/002/program.a:3:20: stage 0 can't lower filter predicate element representation conversion from boxed union to number; use a loop with an explicit narrowed copy yet
+    function predIsTarget(x: string | number): x is number { return typeof x === "number"; }
+    const predItems: (string | number)[] = ["a", 2, "bc", 4];
+    const predResult = predItems.filter(predIsTarget);
+    console.log(String(predResult.length));
+    console.log(String(predResult[0])); console.log(predResult.join(","));
+FAIL github.com/system-inc/adamic/internal/fuzz TestPredicateGeneratorShapes/2 (tests-02)
+    predicates_test.go:37: unclear compiler failure: /tmp/adamic-gate/TestPredicateGeneratorShapes22893564827/002/program.a:3:20: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet
+    function predIsTarget(x: string | number): x is number { return typeof x === "number"; }
+    const predItems: (string | number)[] = ["a", 2, "bc", 4];
+    const predResult = predItems.find(predIsTarget);
+    console.log(String(predResult));
+FAIL github.com/system-inc/adamic/internal/fuzz TestPredicateGeneratorShapes/7 (tests-02)
+    predicates_test.go:37: unclear compiler failure: /tmp/adamic-gate/TestPredicateGeneratorShapes74148067314/002/program.a:2:20: stage 0 can't lower filter predicate element representation conversion from boxed union to number; use a loop with an explicit narrowed copy yet
+    const predItems: (string | number)[] = ["a", 4, "bc", 4];
+    const predResult = predItems.filter((x) => typeof x === "number");
+    console.log(String(predResult.length));
+    console.log(String(predResult[0])); console.log(predResult.join(","));
+FAIL github.com/system-inc/adamic/internal/fuzz TestPredicateGeneratorShapes/8 (tests-02)
+    predicates_test.go:37: unclear compiler failure: /tmp/adamic-gate/TestPredicateGeneratorShapes82120323694/002/program.a:2:20: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet
+    const predItems: (string | number)[] = ["a", 4, "bc", 4];
+    const predResult = predItems.find((x) => typeof x === "number");
+    console.log(String(predResult));
