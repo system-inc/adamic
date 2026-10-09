@@ -12,6 +12,8 @@ plain-wrong-answer-leaf	2df63b7390d02b3b70b9751369aa17069a30b640	tests	stage3/ce
 binary-dies-partway	a840ec0723dee3a596055f76146a36a44cc60b10	tests	internal/corpusfiles
 deferred-red-reaches-census	0096078f544f90bb5d48febbc5099a906699e734	census
 wasi-family-must-run	15e7f9faa8733da808570aa6b63777161d1402c0	tests	internal/native TestWASIUnit[0-9]+
-# Hole 5, a canary that runs nothing: ten docs-only commits on main ce1c5a2f, gated against its tip~10 as a canary is; it
-# must read as thin (under the canary's 500 passed tests), which a canary reads void and never promotes on.
-canary-inert-landings	8820bb5c45835b0adf6042b170e0a1fad948d3ad	thin	
+# Hole 5, a canary that runs nothing: ten empty commits on main ce1c5a2f, gated against its tip~10 as a canary is; it
+# must read as thin (under the canary's 500 passed tests), which a canary reads void and never promotes on. Empty, not
+# docs-only: gitignore's tests read every path and markdowninline's every .md, so the docs-only cut (8820bb5c) selected
+# both, passed 2170 tests and read as a wrong green (Oct 9 15:43Z).
+canary-empty-landings	fae5b2c14f1f05b31e1dc9bda30f4d32f58222ca	thin	
