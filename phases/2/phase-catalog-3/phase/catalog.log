@@ -1,0 +1,9 @@
+03 defined-lent wall=487.421s
+target cf735d9fba9e38de6368575e5630e44375a86eaf
+logs /tmp/loom-units/loom-unit-3348946215/workspace/loom-out/phase/catalog-units/00-bezhoo6h/adamic-catalog-logs-ey2qy0w3
+build flags: commit=cf735d9fba9e38de6368575e5630e44375a86eaf; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+03 defined-lent: applies-and-fails-as-recorded
+03 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+03 wall=487.345s setup=12.462s check=472.927s cleanup=0.486s load=2.85 3.46 2.14 1/298 95348 -> 1.06 1.49 1.67 1/297 97563
+total wall=487.368s load=2.85 3.46 2.14 1/297 95339 -> 1.06 1.49 1.67 1/296 97563

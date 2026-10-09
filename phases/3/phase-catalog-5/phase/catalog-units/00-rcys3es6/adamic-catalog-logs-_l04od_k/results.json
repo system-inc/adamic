@@ -1,0 +1,27 @@
+{
+  "target": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "jobs": 1,
+  "total_wall_seconds": 428.1517567580013,
+  "load_before": "0.44 1.23 1.67 1/271 108591",
+  "load_after": "1.10 1.09 1.43 1/278 109644",
+  "entries": [
+    {
+      "number": 5,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+      "worktree": "/tmp/loom-units/loom-unit-2408014704/workspace/loom-out/phase/catalog-units/00-rcys3es6/adamic-catalog-worktree-3wnf9ufm/entry-05",
+      "setup_seconds": 17.372104443000353,
+      "ok": true,
+      "check_seconds": 409.03934205800033,
+      "cleanup_seconds": 0.5459952340006566,
+      "wall_seconds": 428.11220071999924,
+      "load_before": "0.44 1.23 1.67 1/272 108600",
+      "load_after": "1.10 1.09 1.43 1/279 109644",
+      "messages": [
+        "05 spread-method-reuse: applies-and-fails-as-recorded",
+        "05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "05 wall=428.112s setup=17.372s check=409.039s cleanup=0.546s load=0.44 1.23 1.67 1/272 108600 -> 1.10 1.09 1.43 1/279 109644"
+      ]
+    }
+  ]
+}

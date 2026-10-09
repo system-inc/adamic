@@ -1,0 +1,5 @@
+run adamic-gate-phases-20261009T135754-9810cd3b: red, 0 tests in 49 units, 2 failed, 0 units broken, 0 killed over budget
+FAIL phase-build (stage)
+    red: cf735d9fba9e38de6368575e5630e44375a86eaf full gate, first failure at build after 180.1 s, under load (load 10.5 on 5 cores at first failure), cancelled after first failure (build=180.0s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.8 on 5 cores at start, load 10.5 on 5 cores at first failure, load 10.5 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-8 (stage)
+    red: cf735d9fba9e38de6368575e5630e44375a86eaf full gate, first failure at catalog/08 narrowed-number-field after 347.8 s, cancelled after first failure (catalog=347.8s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 2.8 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass

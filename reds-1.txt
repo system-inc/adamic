@@ -1,0 +1,61 @@
+run adamic-gate-pilot-again-20261009T140630-55843cf0: void, 343 tests in 237 units, 2 failed, 5 units broken, 2 killed over budget
+BROKEN product-20: no results (exited true, last output "loom-pilot: checkout of cf735d9fba9e38de6368575e5630e44375a86eaf failed")
+BROKEN product-84: no results (exited true, last output "loom-pilot: checkout of cf735d9fba9e38de6368575e5630e44375a86eaf failed")
+BROKEN product-117: no results (exited true, last output "loom-pilot: checkout of cf735d9fba9e38de6368575e5630e44375a86eaf failed")
+BROKEN product-414: no results (exited true, last output "loom-pilot: checkout of cf735d9fba9e38de6368575e5630e44375a86eaf failed")
+BROKEN product-418: no results (exited true, last output "loom-pilot: checkout of cf735d9fba9e38de6368575e5630e44375a86eaf failed")
+PRODUCT OVER 60 S product-11 github.com/system-inc/adamic/bridge/tsgo TestProduct_SanitizedNative: 301 s
+PRODUCT OVER 60 S product-13 github.com/system-inc/adamic/bridge/tsgo TestProduct_StaleArchive: 422 s
+PRODUCT OVER 60 S product-16 github.com/system-inc/adamic/bridge/tsgo TestProduct_TsgoSanitizedArchive: 289 s
+PRODUCT OVER 60 S product-17 github.com/system-inc/adamic/bridge/tsgo TestProduct_WrongArchive: 143 s
+PRODUCT OVER 60 S product-20 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSCompositionGoOracle: 121 s
+PRODUCT OVER 60 S product-64 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceCatchNative: 61 s
+PRODUCT OVER 60 S product-84 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_RecoveryMutantsNative0: 105 s
+PRODUCT OVER 60 S product-98 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantsSetup_001: 72 s
+PRODUCT OVER 60 S product-105 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortNative2: 63 s
+PRODUCT OVER 60 S product-117 github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeDanglingGit: 119 s
+PRODUCT OVER 60 S product-155 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementReleaseNative: 301 s
+PRODUCT OVER 60 S product-161 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_DecodedOptionsGoOracle: 70 s
+PRODUCT OVER 60 S product-172 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableEmitted: 86 s
+PRODUCT OVER 60 S product-177 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationCounted: 84 s
+PRODUCT OVER 60 S product-186 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeLowered: 79 s
+PRODUCT OVER 60 S product-187 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeNative: 187 s
+PRODUCT OVER 60 S product-189 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreePrepared: 114 s
+PRODUCT OVER 60 S product-192 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_SuggestionAlongsideNative: 216 s
+PRODUCT OVER 60 S product-201 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_jsx_tree_setup: 197 s
+PRODUCT OVER 60 S product-209 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownLeafNativeRelease: 174 s
+PRODUCT OVER 60 S product-227 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTable_native_true: 192 s
+PRODUCT OVER 60 S product-237 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_manifest: 129 s
+PRODUCT OVER 60 S product-288 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_017: 198 s
+PRODUCT OVER 60 S product-299 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_028: 198 s
+PRODUCT OVER 60 S product-358 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsNPM_011: 172 s
+PRODUCT OVER 60 S product-359 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsNPM_012: 67 s
+PRODUCT OVER 60 S product-368 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_checker: 125 s
+PRODUCT OVER 60 S product-369 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_checker_asan: 130 s
+PRODUCT OVER 60 S product-383 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native_asan: 150 s
+PRODUCT OVER 60 S product-385 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_binding_slot: 71 s
+PRODUCT OVER 60 S product-386 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_first_binding: 186 s
+PRODUCT OVER 60 S product-389 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_query_cost_native: 128 s
+PRODUCT OVER 60 S product-394 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_suite_asan: 339 s
+PRODUCT OVER 60 S product-414 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_parameters: 124 s
+PRODUCT OVER 60 S product-416 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_returns: 137 s
+PRODUCT OVER 60 S product-418 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_contextual_shape: 114 s
+PRODUCT OVER 60 S product-420 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_enum_types: 126 s
+PRODUCT OVER 60 S product-423 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_info: 124 s
+PRODUCT OVER 60 S product-427 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_released_handle_native: 136 s
+PRODUCT OVER 60 S product-433 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_symbol_origin: 82 s
+PRODUCT OVER 60 S product-435 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_type_origin: 164 s
+PRODUCT OVER 60 S product-436 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_type_origin_native: 214 s
+PRODUCT OVER 60 S product-437 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_volume: 73 s
+PRODUCT OVER 60 S product-441 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_widened_shape_native: 62 s
+PRODUCT OVER 60 S product-443 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_archive_checker_asan: 128 s
+PRODUCT OVER 60 S product-444 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_archive_strict_this_checker: 105 s
+PRODUCT OVER 60 S product-448 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume: 258 s
+PRODUCT OVER 60 S product-452 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_native_asan: 72 s
+PRODUCT OVER 60 S product-477 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_CompilerExpressionsNative: 104 s
+KILLED product-182 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationProfiled: over budget, P0
+KILLED product-271: over budget, P0
+FAIL product-182 (killed at 600 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationProfiled
+FAIL product-271 (killed at 600 s, over budget)
+    last output "Terminated"
