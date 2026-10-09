@@ -29,11 +29,11 @@ func (e *emitter) emitViewCallableEscape(property ir.Property, receiver, method 
 	constructor := "adamic_closure_new"
 	if e.program.ClosureConventionNeeded() {
 		extra = ", size_t count"
-		count = "count"
+		count = "count - 1"
 		constructor = "adamic_counted_closure_new"
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_value %s(adamic_closure *self, adamic_value *arguments%s) { return %s(self->view->underlying, NULL, %s, arguments, %s); }", wrapper, extra, invoke, methodZero, count))
-	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_closure *%s(adamic_closure *underlying, const void *key) { (void)underlying; (void)key; return %s(%s, 0); }", make, constructor, wrapper))
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_value %s(adamic_closure *self, adamic_value *arguments%s) { return %s(self->view->underlying, arguments[0].reference, %s, arguments + 1, %s); }", wrapper, extra, invoke, methodZero, count))
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_closure *%s(adamic_closure *underlying, const void *key) { (void)underlying; (void)key; adamic_closure *adapter = %s(%s, 0); adapter->receiver = true; return adapter; }", make, constructor, wrapper))
 	key := fmt.Sprintf("adamic_view_adapter_key_%d", property.ViewTypeID)
 	declaration := "static const char " + key + ";"
 	found := false

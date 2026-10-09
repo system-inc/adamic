@@ -89,6 +89,12 @@ func (l *lowering) viewCallableInvocationContract(node *ast.Node, target *checke
 	}
 	s := signatures[0]
 	c := ir.ViewContract{Kind: ir.ViewCallable, Name: l.checker.TypeToString(target)}
+	if receiver := s.ThisParameter(); receiver != nil {
+		c.Receiver = l.viewCallableValueContract(node, l.checker.GetTypeOfSymbol(receiver))
+		if c.Receiver == 0 {
+			return 0
+		}
+	}
 	for _, p := range s.Parameters() {
 		id := l.viewCallableValueContract(node, l.checker.GetTypeOfSymbol(p))
 		if id == 0 {

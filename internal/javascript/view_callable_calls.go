@@ -90,6 +90,11 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 			continue
 		}
 		fmt.Fprintf(&b, "if (code === %s) {\n", functionName(e.program, index))
+		if f.CallableReceiver != 0 {
+			message := fmt.Sprintf("callable call failed: %s at %s thisArg expected producer %s, view %s", p.View, call.CallWhere, e.program.ViewContracts[f.CallableReceiver-1].Name, p.ViewType)
+			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(f.CallableReceiver, "object"), quote(message))
+		}
+
 		for i, id := range f.CallableParameters {
 			actual := e.program.ViewContracts[id-1].Name
 			declared := "undefined"

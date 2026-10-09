@@ -27,7 +27,12 @@ const adamicViewAdapterIntern = (value, key, make) => {
     views.set(key, new WeakRef(adapter));
     return adapter;
 };
-` + viewCallableIdentityCollections
+` + viewCallableIdentityCollections + `
+const adamicCallReceiver = (value, receiver, arguments_) => {
+    if (adamicViewAdapterRoots.has(value)) return value.code(value, arguments_, receiver);
+    return adamicCall(value, value.receiver ? [receiver, ...arguments_] : arguments_);
+};
+`
 
 func (e *emitter) emitViewCallableEscape(property ir.Property) string {
 	target := e.program.ViewContracts[property.ViewEscapeContract-1]
@@ -37,5 +42,5 @@ func (e *emitter) emitViewCallableEscape(property ir.Property) string {
 	}
 	invoke := e.viewCallableInvoke(call, property)
 	raw := fmt.Sprintf("adamicViewCallablePreparedRead(%s, %s, %s, %t, %t, %t, %s)", e.value(property.Object), quote(property.Name), quote(property.View), property.Method, property.Optional, property.Absent, quote(property.ViewType))
-	return fmt.Sprintf("adamicViewAdapterIntern(%s, adamicViewAdapterKey(%d), underlying => new AdamicClosure((self, arguments_) => %s({value: underlying, object: undefined}, arguments_), []))", raw, property.ViewTypeID, invoke)
+	return fmt.Sprintf("adamicViewAdapterIntern(%s, adamicViewAdapterKey(%d), underlying => new AdamicClosure((self, arguments_, receiver = undefined) => %s({value: underlying, object: receiver}, arguments_), []))", raw, property.ViewTypeID, invoke)
 }

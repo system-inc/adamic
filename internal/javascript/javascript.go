@@ -1142,6 +1142,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.Receiver != nil {
+			return e.callWithReceiver(expression)
+		}
 		if property, ok := expression.Closure.(ir.Property); ok && property.View != "" && expression.CallContract != 0 {
 			return e.emitDirectViewCallable(expression, property)
 		}

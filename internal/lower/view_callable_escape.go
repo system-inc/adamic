@@ -26,6 +26,9 @@ classified:
 	}
 	property.ViewEscape = true
 	property.ViewEscapeAdamic = filepath.Ext(l.program.FileName(ast.GetSourceFileOfNode(node))) == ".a"
+	if !property.ViewEscapeAdamic {
+		l.result.ViewAdapters = true
+	}
 	target := l.checker.GetNonNullableType(declared)
 	property.ViewEscapeContract = l.viewCallableInvocationContract(node, target, l.checker.GetSignaturesOfType(target, checker.SignatureKindCall))
 }
@@ -53,6 +56,9 @@ func (graph *allocationFlowGraph) viewCallableEscapeProven(read ir.Property, rea
 	target := program.ViewContracts[read.ViewEscapeContract-1]
 	compatible := func(function int) bool {
 		producer := program.Functions[function]
+		if producer.CallableReceiver != 0 && !viewCallableDomainSubset(program, target.Receiver, producer.CallableReceiver) {
+			return false
+		}
 		if producer.RestElement != 0 || len(producer.CallableParameters) != len(target.Parameters) {
 			return false
 		}

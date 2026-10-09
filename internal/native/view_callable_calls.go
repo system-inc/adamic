@@ -170,7 +170,7 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 	}
 	for index, f := range e.program.Functions {
 		methodProducer := !f.Closure && f.MethodName != "" && e.dispatchable(index)
-		if !f.Closure && !methodProducer || len(f.CallableParameters) == 0 && len(f.Parameters) != 0 && !methodProducer || f.CallableResultName == "" || f.RestElement != 0 {
+		if !f.Closure && !methodProducer || f.CallableResultName == "" || f.RestElement != 0 {
 			continue
 		}
 		valid := true
@@ -202,6 +202,12 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 			}
 		}
 		fmt.Fprintf(&b, "if (%s) {\n", identity)
+		if f.CallableReceiver != 0 {
+			domain := e.viewCallableDomain(f.CallableReceiver)
+			message := fmt.Sprintf("callable call failed: %s at %s thisArg expected producer %s, view %s", property.View, call.CallWhere, e.program.ViewContracts[f.CallableReceiver-1].Name, property.ViewType)
+			fmt.Fprintf(&b, "if (!%s(adamic_view_union_heap((const adamic_heap *)receiver))) adamic_panic(%s, sizeof %s - 1);\n", domain, cString(message), cString(message))
+		}
+
 		n := max(1, len(f.Parameters), len(call.Arguments)+offset, e.program.FixedArgumentSlots+offset)
 		fmt.Fprintf(&b, "adamic_value adapted[%d] = {{.reference=NULL}};\n", n)
 		if offset != 0 {
@@ -220,7 +226,7 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 			if i < len(target.Parameters) {
 				sourceDomain = target.Parameters[i]
 			}
-			fmt.Fprintf(&b, "adamic_view_union_value %s = %s;\n", snapshot, e.viewCallableDomainSnapshot(from, slot, sourceDomain))
+			fmt.Fprintf(&b, "adamic_view_union_value %s = count > %d ? %s : (adamic_view_union_value){adamic_view_union_undefined,{.reference=NULL}};\n", snapshot, i, e.viewCallableDomainSnapshot(from, slot, sourceDomain))
 			domain := e.viewCallableDomain(id)
 			actual := e.program.ViewContracts[id-1].Name
 			declared := "undefined"

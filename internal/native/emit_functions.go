@@ -290,6 +290,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 // Method), the receiver's own function value or its class's method, found before the arguments are
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
+	if expression.Receiver != nil {
+		return e.callWithReceiver(expression, closure)
+	}
+
 	if property, ok := expression.Closure.(ir.Property); ok && property.View != "" && expression.CallContract != 0 {
 		return e.emitDirectViewCallable(expression, receiver)
 	}

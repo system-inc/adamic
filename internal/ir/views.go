@@ -66,6 +66,7 @@ type ViewContract struct {
 	// ProducerCertified requires immutable code identity in Functions, even when empty.
 	ProducerCertified bool
 	Parameters        []ViewContractID
+	Receiver          ViewContractID // explicit callable this parameter
 	Result            ViewContractID
 	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
 	DiscardResult bool

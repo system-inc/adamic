@@ -16,6 +16,7 @@ type Program struct {
 	ArrayViewTemplateWhere          string
 	ArrayViewNeedsSourceCertificate bool
 	ViewOrigins                     []Expression
+	ViewAdapters                    bool // escaped adapters receive an explicit dynamic this slot
 	ViewContracts                   []ViewContract
 	ViewContractTypes               map[int]ViewContractID
 
@@ -130,6 +131,7 @@ type Function struct {
 	// CallableMasks records producer signature members independently of any view.
 	CallableMasks      []uint16
 	CallableParameters []ViewContractID
+	CallableReceiver   ViewContractID // explicit source this parameter, when present
 	CallableResult     ViewContractID
 	CallableResultName string
 	CallableResultNull bool
@@ -761,6 +763,7 @@ type (
 		// Direct identifies canonical sibling code sharing Closure as its environment.
 		Direct       int
 		Closure      Expression
+		Receiver     Expression // call/apply thisArg, evaluated after the callee and before arguments
 		Arguments    []Expression
 		Spread       []bool
 		FunctionType int
