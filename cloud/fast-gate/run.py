@@ -1926,7 +1926,13 @@ class Gate:
         over = {(package, name) for package, name, _, _ in ledger}
         listed = sorted("%s %s" % key for key in over & burndown)
         offBurndown = [row for row in ledger if (row[0], row[1]) not in burndown]
-        unlisted = [row for row in offBurndown if not testInBase(self.arguments.tree, self.arguments.base, row[0], row[1])]
+        # New means added by this change: absent where the candidate forked from main, not from main's tip. A candidate
+        # cut from an older main otherwise reads main's later renames as its own new tests (Oct 9 05:13Z: gocacheprog
+        # 90b10e95 red at budget on 113 of main's own units, stage 3's fixture shards and TestOwnedWitnesses).
+        found = subprocess.run(["git", "-C", self.arguments.tree, "merge-base", self.arguments.base, self.arguments.sha],
+                               capture_output=True, text=True)
+        fork = found.stdout.strip() if found.returncode == 0 and found.stdout.strip() else self.arguments.base
+        unlisted = [row for row in offBurndown if not testInBase(self.arguments.tree, fork, row[0], row[1])]
         drift = [row for row in offBurndown if row not in unlisted]
         self.result.update({
             "budget_seconds": longTestSeconds,

@@ -1205,6 +1205,18 @@ class Budget(unittest.TestCase):
         self.assertEqual(gate.result["budget_can_leave_burndown"], [run.module + "/p TestShrunk"])
         self.assertEqual(gate.result["budget_instrument"]["box"], os.uname().nodename)
 
+    def test_a_test_main_renamed_after_the_fork_isnt_new_in_a_candidate_cut_before(self):
+        # Oct 9 05:13Z: a candidate cut from an older main read main's later renames as its own new tests.
+        realRun(["git", "-C", self.tree, "checkout", "-q", self.base], check=True, capture_output=True)
+        self.write("p/old_test.go", "package p\n\nfunc TestRenamed(t *testing.T) {}\nfunc TestListed(t *testing.T) {}\n")
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qam", "main renames TestOld"], check=True, capture_output=True)
+        mainTip = run.git(self.tree, "rev-parse", "HEAD")
+        realRun(["git", "-C", self.tree, "checkout", "-q", self.head], check=True, capture_output=True)
+        self.base = mainTip
+        gate = self.budget([("TestOld", 95.0), ("TestNew", 31.0)])
+        self.assertEqual(gate.result["budget_drift"], [run.module + "/p TestOld 95.0 s"])
+        self.assertEqual(gate.result["budget_over"], [run.module + "/p TestNew 31.0 s"], "the change's own new test is still new")
+
     def test_a_whole_gate_of_main_never_finds_a_new_unit(self):
         # Base is the candidate itself: every unit exists there.
         self.base = self.head
