@@ -113,7 +113,7 @@ func jsonTopReport(t *testing.T, i int, value string) {
 // are read-only and never removed by the test process.
 // Not parallel: owns process-wide oracle cleanup and report aggregation after m.Run.
 func TestMain(m *testing.M) {
-	code := m.Run()
+	code := upstreamParityTestRuns(m)
 	if jsonTopState.oracleDir != "" {
 		os.RemoveAll(jsonTopState.oracleDir)
 	}
