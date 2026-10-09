@@ -405,6 +405,30 @@ def busyWith(log, now):
     return ''
 
 
+testOnlyLanding = re.compile(r'^Land test-only [0-9a-f]+ over main [0-9a-f]+$')
+
+
+def testOnlyBases(head, depth=40):
+    """The mains under head reached through integration's test-only landings only, nearest first: each first parent
+    while the commit above it is a 'Land test-only <sha> over main <sha>' merge. A test names the chain in
+    ADAMIC_MAIN_CHAIN ('sha subject' lines, head first)."""
+    stand = os.environ.get('ADAMIC_MAIN_CHAIN')
+    if stand is not None:
+        chain = [line.split(None, 1) for line in lines(Path(stand)) if line.strip()]
+    else:
+        repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        subprocess.run(['git', '-C', repository, 'fetch', '-q', 'origin', head], capture_output=True)
+        listing = subprocess.run(['git', '-C', repository, 'log', '--first-parent', '--format=%H %s', '-n', str(depth), head],
+                                 capture_output=True, text=True).stdout
+        chain = [line.split(None, 1) for line in listing.splitlines() if line.strip()]
+    bases = []
+    for index, entry in enumerate(chain[:-1]):
+        if len(entry) < 2 or entry[0] != (bases[-1] if bases else head) or not testOnlyLanding.match(entry[1].strip()):
+            break
+        bases.append(chain[index + 1][0])
+    return bases
+
+
 def checkConfirmation(now):
     """A main that moved must have its whole gate started within a minute (@system_adamic, Oct 8: 54cbc125
     landed at about 20:59Z with the full-gate loop still paused, and nothing confirmed it until a hand found it).
@@ -424,6 +448,13 @@ def checkConfirmation(now):
     # The pool's record (or a box's published before its log line) confirms it as well as the loop's log does.
     if wholeGate(head)[0] in ('running', 'green', 'red'):
         return 'main %s confirming (%s record)' % (head[:12], wholeGate(head)[0]), None, None, []
+    # A main that moved only by integration's test-only landings over a main whose whole gate runs or ran is covered,
+    # like a record-only main: the lane checked the test delta and Loom's rerun by hash checks it again (@system_adamic,
+    # Oct 9 06:42Z: b5245943 paged while d25a7da5's pool whole gate ran under one test-only landing).
+    for base in testOnlyBases(head):
+        if wholeGate(base)[0] in ('running', 'green', 'red'):
+            return ('main %s covered by %s\'s %s whole gate (test-only landings since)' % (head[:12], base[:12], wholeGate(base)[0]),
+                    None, None, [])
     seen = state / 'main-head-first-seen'
     fields = (lines(seen) or [''])[0].split()
     if len(fields) != 2 or fields[0] != head:

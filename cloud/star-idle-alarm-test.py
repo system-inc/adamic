@@ -36,7 +36,7 @@ esac
                         ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'),
                         ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'),
                         ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
-                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'), ADAMIC_FULL_GATE_PREGATES=str(self.root / 'pregate'),
+                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'), ADAMIC_MAIN_CHAIN=str(self.root / 'main-chain'), ADAMIC_FULL_GATE_PREGATES=str(self.root / 'pregate'),
                         ADAMIC_POOL_PROMOTED=str(self.root / 'pool-promoted'))
         self.now = int(time.time())
         for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits', 'requests', 'whole-gates'):
@@ -356,6 +356,24 @@ esac
         (self.root / 'whole-gates').write_text('')
         self.assertIn('no whole gate has started', self.check()[0])
 
+    def test_a_main_moved_only_by_test_only_landings_over_a_gated_main_is_covered(self):
+        # Oct 9 06:42Z: b5245943 (d25a7da5 plus one test-only landing) paged while d25a7da5's pool whole gate ran.
+        head, base, older = '9' * 40, '8' * 40, '7' * 40
+        (self.root / 'main-head').write_text(head + '\n')
+        (self.root / 'main-head-first-seen').write_text('%s %d\n' % (head, self.now - 3600))
+        chain = self.root / 'main-chain'
+        self.env['ADAMIC_MAIN_CHAIN'] = str(chain)
+        chain.write_text('%s Land test-only abcdef12 over main 88888888\n%s Land test-only 1234abcd over main 77777777\n%s Some merge\n' % (head, base, older))
+        (self.root / 'whole-gates').write_text('%s running %d\n' % (older, self.now - 60))
+        self.assertEqual(self.check(), [], "two test-only landings over a running whole gate are covered")
+        (self.root / 'whole-gates').write_text('')
+        self.assertIn('no whole gate has started', self.check()[0], 'no gate under the chain is a page')
+        # A non-test-only commit in between ends the chain: the gate under it doesn't cover main.
+        (self.root / 'main-confirm-alarmed').unlink(missing_ok=True)
+        (self.root / 'sends').unlink(missing_ok=True)
+        chain.write_text('%s Land test-only abcdef12 over main 88888888\n%s Fix the parser\n%s Some merge\n' % (head, base, older))
+        (self.root / 'whole-gates').write_text('%s green %d\n' % (older, self.now - 60))
+        self.assertIn('no whole gate has started', self.check()[0], 'a real change in between is not covered')
 
 
 if __name__ == '__main__':
