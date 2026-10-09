@@ -731,12 +731,34 @@ class WatchTests(unittest.TestCase):
         star = [line for line in w.read('pool-args').splitlines() if 'cloud/land-train-9' in line][0]
         self.assertIn('--priority 30', star)
         self.assertNotIn('--priority', [line for line in w.read('pool-args').splitlines() if 'codex/side' in line][0])
-        # A pool void sends the tip to the boxes, never counting toward a void storm.
+        # A first pool void goes back to the pool, a second to the boxes, never counting toward a void storm.
         w.put('pool-mode', 'void')
-        w.wait(lambda: 'pool void codex/side' in w.read('output'))
+        side = 'pool void codex/side %s: ' % w.tips[1][1]
+        w.wait(lambda: [x.endswith('queued again for the pool once more') for x in w.read('output').splitlines() if side in x][:1] == [True])
+        w.wait(lambda: any(side in x and x.endswith('queued again for the boxes') for x in w.read('output').splitlines()))
+        self.assertEqual(w.read('pool-starts').count('codex/side '), 2)
         self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side 0' in w.read('starts'))
+
+    def test_a_front_tip_bound_for_the_pool_reserves_and_preempts_no_box(self):
+        # #7bjfzte: a queued star reserved Server and preempted its work while the star itself was bound for the pool.
+        w = self.reservation('server B\npool P\n', [('cloud/land-train-1', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-train-*\n')
+        holders = [subprocess.Popen(['sleep', '30']) for _ in range(2)]
+        for holder in holders:
+            self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holders[0].pid)).write_text('codex/old %s P pool P x %s\n' % ('7' * 40, w.state / 'logs/old.log'))
+        (w.state / 'running' / str(holders[1].pid)).write_text('codex/side %s B server B x %s\n' % ('6' * 40, w.state / 'logs/side.log'))
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        time.sleep(.6)
+        self.assertNotIn('preempted codex/side', w.read('output'))
+        self.assertEqual(w.read('state/star-boxes'), '')
+        # Once the pool has voided it twice, it goes to the boxes and takes Server as the star again.
+        (w.state / 'pool-void').write_text(w.tips[0][1] + '\n')
+        w.wait(lambda: 'preempted codex/side' in w.read('output'))
 
     def test_a_pool_green_reaches_its_owner_and_promotes_no_tools(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')

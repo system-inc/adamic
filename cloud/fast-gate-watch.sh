@@ -433,7 +433,7 @@ writeStarBoxes() {
       isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
     done
     while read -r class queued branch sha; do
-      isFront "${branch}" && reservedBoxes "${branch}" B
+      isFront "${branch}" && ! starOnPool "${branch}" "${sha}" && reservedBoxes "${branch}" B
     done < "${state}/queue"
   } | sort -u > "${state}/star-boxes.tmp"
   mv "${state}/star-boxes.tmp" "${state}/star-boxes"
@@ -630,6 +630,11 @@ poolTip() {
   [[ ${branch} == codex/* || ${branch} == devtools/* || ${branch} == cloud/land-* ]] || isFront "${branch}" || return 1
   ! grep -qx "${sha}" "${state}/pool-void" 2> /dev/null
 }
+# A queued front tip bound for the pool reserves and drains no box (#7bjfzte, @system_adamic Oct 9 09:21Z): Server and a
+# second star box were held, their work preempted, while the star itself then ran on the pool.
+starOnPool() {
+  [ -f "${state}/pool-side" ] && poolTip "$1" "$2"
+}
 # One pick from the ranked list: the tip with the lowest position * 100 + rank + extra that a free slot can
 # take now, as "score queued branch sha class slot box". Extra (a borrowed slot, 10) never crosses a
 # position (100 apart), so the walk stops at the first position past the best found.
@@ -741,6 +746,7 @@ drainingBoxes() {
   while read -r class queued branch sha; do
     # The star runs big whatever it was queued as (rankQueue), so it drains a big slot's box.
     isFront "${branch}" && class=B
+    isFront "${branch}" && starOnPool "${branch}" "${sha}" && continue
     matchesReservation "${branch}" && reservedBoxes "${branch}" "${class}"
   done < "${state}/queue" | sort -u
 }
@@ -875,10 +881,17 @@ while true; do
     fi
     cause=$(voidCause "${gateLog}")
     if [ "${box}" = pool ] && [ -n "${cause}" ] && [ "${stoppedOnPurpose}" = no ]; then
-      echo "${sha}" >> "${state}/pool-void"
+      # A first void goes back to the pool (#7bjfzte: tonight's voids were Loom's faults, each fixed within minutes); a
+      # second sends the tip to the boxes.
+      echo "${sha}" >> "${state}/pool-void-tries"
+      where="the pool once more"
+      if [ "$(grep -cx "${sha}" "${state}/pool-void-tries")" -ge 2 ]; then
+        echo "${sha}" >> "${state}/pool-void"
+        where="the boxes"
+      fi
       grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
       echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
-      echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; queued again for the boxes"
+      echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; queued again for ${where}"
       continue
     fi
     if [ "${branch}" = canary/main ]; then
