@@ -1,0 +1,8 @@
+import React from 'react';
+(React.useState)(1);
+((useReducer))(() => 1, 1);
+function Nested() { return React.useReducer(() => 2, 2); }
+React.useRef(null);
+Store.useState(1);
+React['useState'](1);
+(React).useState(1);

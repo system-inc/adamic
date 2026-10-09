@@ -1,0 +1,54 @@
+import type { RuleContext } from '../../context.ts';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { isNamespacedMember } from '../../helpers/react/namespaced_member.a';
+import { project } from '../../helpers/react/projection.a';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { pageStateRemountsMessage } from './messages.a';
+
+function stateHook(name: string): boolean {
+    return name === 'useState' || name === 'useReducer';
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly enabled: boolean;
+    nodes: readonly HelperNode[] | undefined = undefined;
+    constructor(context: RuleContext) {
+        this.context = context;
+        const file = structureFileContext(context.parser.path);
+        this.enabled = file.isReactFile && file.isPageFile;
+    }
+    visit(index: number): void {
+        if(!this.enabled) { return; }
+        const expression = this.context.node(index).children[0] ?? -1;
+        if(expression < 0) { return; }
+        const callee = this.context.unwrap(expression);
+        let matches = false;
+        if(this.context.kind(callee) === 'Identifier') {
+            matches = stateHook(this.context.node(callee).text);
+        }
+        else if(this.context.kind(callee) === 'PropertyAccessExpression') {
+            if(this.nodes === undefined) {
+                this.nodes = project(this.context.parser.nodes);
+            }
+            // Go's Name field excludes the parser's QuestionDotToken child.
+            // Adapt that field without changing the shared helper or its immutable projection.
+            const nodes = this.context.questionDot(callee)
+                ? this.nodes.map((node, position): HelperNode => {
+                    if(position !== callee) { return node; }
+                    return {
+                        kind: node.kind, text: node.text, expression: node.expression,
+                        name: this.context.property(callee), heritage: node.heritage, types: node.types,
+                    };
+                })
+                : this.nodes;
+            matches = isNamespacedMember(nodes, callee, stateHook);
+        }
+        if(matches) {
+            this.context.reportNode(callee, 'structure/next-no-page-state',
+                'pageStateRemounts', pageStateRemountsMessage);
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

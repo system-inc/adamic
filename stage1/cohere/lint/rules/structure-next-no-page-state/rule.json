@@ -1,0 +1,12 @@
+{
+  "name": "structure/next-no-page-state",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureNextNoPageState",
+  "upstreamPackage": "structure",
+  "upstreamTest": "Test"
+}

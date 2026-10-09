@@ -1,0 +1,3 @@
+import React from 'react';
+React.useReducer(() => 1, 1);
+useState(1);

@@ -1,0 +1,16 @@
+Base: origin/area/stage1-lint bd5490b6ff36cfc6013d549f78ffa4f9f9a6e075
+Remote duplicate check: git fetch --no-recurse-submodules origin '+refs/heads/*:refs/remotes/origin/*'; git grep -l '"name": "structure/next-no-page-state"' $(git for-each-ref --format='%(refname)' refs/remotes/origin) -- 'stage1/cohere/lint/rules/*/rule.json'
+Also checked whitespace-independent rule name: no remote descriptor.
+Setup: export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh
+Toolchain: source /workspace/adamic-tools/env.sh
+WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/page-state-typescript (clean detached checkout at 050880ce59e30b356b686bd3144efe24f875ebc8)
+ADAMIC_LINT_BENCH=1
+Selected: ADAMIC_LINT_RULES=structure-next-no-page-state go test ./stage1/cohere/lint -run '^(TestRulesAgree|TestMutants|TestOwnedRuleWitnesses)$' -count=1 -v -timeout=30m
+Note: TestOwnedRuleWitnesses is not a harness test name; witnesses are explicitly checked in TestPageStateUnit below and TestOwnedWitnesses in the whole gate.
+Selected profile inputs: ADAMIC_LINT_PROFILE_DIR=ADAMIC_LINT_PROFILE_SNAPSHOTS=/tmp/page-state-profile-selected-2 (fresh directory).
+Explicit selected: go test -overlay /tmp/page-state-unit-overlay.json ./stage1/cohere/lint -run '^TestPageStateUnit$' -count=1 -v -timeout=30m
+Overlay maps stage1/cohere/lint/page_state_unit_test.go to evidence/unit_test.go.txt, without editing the shared harness.
+Explicit selected profile inputs: ADAMIC_LINT_PROFILE_DIR=ADAMIC_LINT_PROFILE_SNAPSHOTS=/tmp/page-state-profile-unit (fresh directory).
+Registry: go run ./cmd/lint-registry
+Whole: unset ADAMIC_LINT_RULES; ADAMIC_LINT_PROFILE_DIR=ADAMIC_LINT_PROFILE_SNAPSHOTS=/tmp/page-state-profile-whole go test ./stage1/cohere/lint -count=1 -json -timeout=60m

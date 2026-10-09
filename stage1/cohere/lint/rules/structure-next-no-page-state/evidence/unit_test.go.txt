@@ -1,0 +1,38 @@
+package lint
+
+import (
+    "path/filepath"
+    "strings"
+    "testing"
+)
+
+func TestPageStateUnit(t *testing.T) {
+    t.Parallel()
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    oracle := goOracle(t)
+    var rows []string
+    count := 0
+    for _, row := range upstream(t) {
+        fields := strings.Split(row, "\t")
+        if len(fields) > 1 && fields[1] == "structure/next-no-page-state" {
+            rows = append(rows, row)
+            count++
+        }
+    }
+    if count != 47 { t.Fatalf("captured upstream cases: got %d, want 47 (14 rule-specific plus 33 absent nodes)", count) }
+    witnesses := 0
+    for _, descriptor := range prepareRegistry(t, ".") {
+        if descriptor.Name != "structure/next-no-page-state" { continue }
+        for _, row := range ownedWitnessRows(t, directory, descriptor) {
+            witnesses++
+            path := strings.SplitN(row, "\t", 2)[0]
+            rows = append(rows, row, path+"\tall")
+            answer := execute(t, "", oracle, "--manifest", manifest(t, []string{row}), "--count")
+            if string(answer.output) == "0\n" { t.Fatal("witness reports no finding", path) }
+            t.Logf("witness %s: %s findings", path, strings.TrimSpace(string(answer.output)))
+        }
+    }
+    compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, recoveryRows(t, oracle, rows)))
+    t.Logf("upstream cases matched: %d; witnesses matched: %d", count, witnesses)
+}
