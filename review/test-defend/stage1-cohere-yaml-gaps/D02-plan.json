@@ -1,0 +1,7 @@
+{
+  "mutant": "D02",
+  "file_line": "internal/native/runtime/string_share.c:59",
+  "change": "shared->capacity = string->bytes + offset + size == owner->bytes + owner->length ? size + 1 : 0;",
+  "menu": "change constant",
+  "difference": "A slice ending at its ultimate owner boundary is falsely given one byte of append room."
+}

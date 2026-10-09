@@ -1,0 +1,82 @@
+[
+  {
+    "group": "core",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode|TestLexerMutants|TestPropsMutants|TestScalarMutants)$"
+    ],
+    "exit": 1,
+    "wall": 69.97880769900075,
+    "rows_failed": [
+      "TestSharedSliceAppendMatchesNode"
+    ]
+  },
+  {
+    "group": "formatter",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo|TestBundledParserDifference)$"
+    ],
+    "exit": 1,
+    "wall": 54.799152555002365,
+    "rows_failed": [
+      "TestFormatterMatchesGo"
+    ]
+  },
+  {
+    "group": "files",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ],
+    "exit": 0,
+    "wall": 46.26008903700131,
+    "rows_failed": []
+  },
+  {
+    "group": "scalars",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestScalarsMatchGoUnion)$"
+    ],
+    "exit": 0,
+    "wall": 2.250648055000056,
+    "rows_failed": []
+  }
+]

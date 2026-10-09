@@ -1,0 +1,33 @@
+[
+  {
+    "test": "TestSharedSliceAppendMatchesNode",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPropsMatchGo"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 internal/native/runtime/string_share.c:59",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/native/runtime/string_share.c:59",
+        "change": "Give every shared slice capacity size + 1.",
+        "rows_failed": [
+          "TestComposeMatchGo",
+          "TestFormatterMatchesGo",
+          "TestSharedSliceAppendMatchesNode"
+        ]
+      },
+      {
+        "mutant": "D02",
+        "file_line": "internal/native/runtime/string_share.c:59",
+        "change": "Give a shared slice capacity size + 1 only when it ends at its ultimate owner byte boundary.",
+        "rows_failed": [
+          "TestSharedSliceAppendMatchesNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/defend-yaml/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode|TestLexerMutants|TestPropsMutants|TestScalarMutants)$' > D02-core.log 2>&1; scalar_runtime_gap_test.go:52: /tmp/adamic-gate/TestSharedSliceAppendMatchesNode2444970310/002/shared-sanitized: exit status 1; AddressSanitizer: heap-buffer-overflow"
+  }
+]

@@ -1,0 +1,4 @@
+exec(open('/tmp/defend-yaml/baseline.py').read().split('groups=')[0])
+groups={'compose':['TestComposeMatchGo','TestComposeMutants'],'parser':['TestCSTMatchesGo','TestCSTMutants','TestSchemaMatchesGo','TestSchemaMutants'],'views':['TestUnistMatchesGo','TestUnistMutants','TestWidthsMatchGo','TestSpeedCostProbes'],'scalar-shards':['TestScalarsMatchGo_'+f'{i:03}' for i in range(8)]+['TestScalarsMatchGoPlantedFailure','TestProduct_YamlScalarsLowered','TestProduct_YamlScalarsNative','TestProduct_YamlScalarsGo'],'file-shards':['TestFileDriver_'+f'{i:03}' for i in range(8)],'formatter-witnesses':['TestFormatterMutants_'+f'{i:03}' for i in range(6)]+['TestFormatterMutantsPlantedFailure']}
+old=json.loads((p/'groups.json').read_text());old.pop('other');old.update(groups);(p/'groups.json').write_text(json.dumps(old,indent=2))
+s=open('/tmp/defend-yaml/baseline.py').read();exec(s[s.index('results=[]'):].replace("'baseline-groups.json'","'baseline-more-groups.json'"))

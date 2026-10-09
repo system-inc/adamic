@@ -1,0 +1,12 @@
+[
+  {
+    "log": "D02-core.log",
+    "test": "TestSharedSliceAppendMatchesNode/48",
+    "line": "scalar_runtime_gap_test.go:52: /tmp/adamic-gate/TestSharedSliceAppendMatchesNode2444970310/002/shared-sanitized: exit status 1"
+  },
+  {
+    "log": "D02-core.log",
+    "test": "TestSharedSliceAppendMatchesNode/48",
+    "line": "==521505==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7cdc6d1e0100 at pc 0x55738978d05e bp 0x7ffe2178bbc0 sp 0x7ffe2178b380"
+  }
+]

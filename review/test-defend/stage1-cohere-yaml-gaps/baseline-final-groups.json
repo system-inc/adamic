@@ -1,0 +1,146 @@
+[
+  {
+    "group": "witness-TestFormatterMutants_000",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_000)$"
+    ],
+    "exit": 0,
+    "wall": 9.652980689999822
+  },
+  {
+    "group": "witness-TestFormatterMutants_001",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_001)$"
+    ],
+    "exit": 0,
+    "wall": 9.78498369099907
+  },
+  {
+    "group": "witness-TestFormatterMutants_002",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_002)$"
+    ],
+    "exit": 0,
+    "wall": 8.58151075099886
+  },
+  {
+    "group": "witness-TestFormatterMutants_003",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_003)$"
+    ],
+    "exit": 0,
+    "wall": 39.7582638290005
+  },
+  {
+    "group": "witness-TestFormatterMutants_004",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_004)$"
+    ],
+    "exit": 0,
+    "wall": 8.51141376400119
+  },
+  {
+    "group": "witness-TestFormatterMutants_005",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_005)$"
+    ],
+    "exit": 0,
+    "wall": 9.250326745997882
+  },
+  {
+    "group": "witness-TestFormatterMutantsPlantedFailure",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutantsPlantedFailure)$"
+    ],
+    "exit": 0,
+    "wall": 2.506965399999899
+  },
+  {
+    "group": "products",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_Setup|TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native)$"
+    ],
+    "exit": 0,
+    "wall": 13.52031991200056
+  }
+]
