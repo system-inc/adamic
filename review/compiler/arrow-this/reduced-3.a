@@ -1,0 +1,17 @@
+class Parent {
+    readonly label: string;
+    child: Child | undefined = undefined;
+    constructor(label: string) { this.label = ''; }
+    read(): string { return ''; }
+}
+class Child extends Parent {
+    readonly detail: string;
+    constructor(label: string) { super(''); this.detail = ''; }
+}
+class Grandchild extends Child {
+    override read(): string { return (() => super.read())(); }
+}
+function family(): void {
+    const parent = new Parent('');
+    parent.child = new Grandchild('');
+}

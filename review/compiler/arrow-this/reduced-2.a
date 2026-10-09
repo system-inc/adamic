@@ -1,0 +1,21 @@
+class Base {
+    readonly label: string;
+    constructor(index: number) { this.label = ''; }
+    read(): string { return ''; }
+}
+class Child extends Base {
+    readonly values: readonly string[];
+    constructor(index: number) { super(0); this.values = []; }
+}
+class Grandchild extends Child {
+    readonly details: { };
+    constructor(index: number) { super(0); this.details = { }; }
+}
+class Leaf extends Grandchild {
+    readonly extra: string;
+    constructor(index: number) { super(0); this.extra = ''; }
+    override read(): string { return (() => super.read())() + (() => this.extra)(); }
+}
+function make(): Base {
+    return new Leaf(0);
+}

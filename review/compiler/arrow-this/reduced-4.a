@@ -1,0 +1,22 @@
+class MetamorphicBlock2 {
+	run(): void {
+		const metamorphicTemporary = new Mapper().twice();
+	}
+}
+interface Box {
+}
+class Worker {
+	run(items: Box[]): number {
+		return 0;
+	}
+}
+class Mapper extends Worker {
+	twice(): string {
+		const items: Box[] = [];
+		const itemsAlias = items;
+		return (() => `${''} ${super.run(itemsAlias)}`)();
+	}
+}
+function metamorphicMain(): void {
+new MetamorphicBlock2().run();
+}

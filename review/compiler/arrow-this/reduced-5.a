@@ -1,0 +1,25 @@
+class MetamorphicBlock2 {
+	run(): void {
+		const show = function show(value: First): void {
+    const metamorphicTemporary2 = (() => `${true}/${true}/${true}/${value instanceof Fourth}`)();
+};
+	}
+}
+class First {
+    readonly seed: number;
+    readonly label: string;
+    constructor() {
+        this.seed = 0;
+        this.label = '';
+    }
+}
+class Second extends First {
+    readonly copy = (() => this.label)();
+}
+class Third extends Second {
+}
+class Fourth extends Third {
+}
+function metamorphicMain(): void {
+new MetamorphicBlock2().run();
+}

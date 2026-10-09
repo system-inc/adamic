@@ -1,0 +1,19 @@
+class First {
+    readonly seed: number;
+    readonly label: string;
+    constructor() {
+        this.seed = 0;
+        this.label = '';
+    }
+    describe(): string { return ''; }
+}
+class Second extends First {
+}
+class Third extends Second {
+}
+class Fourth extends Third {
+    override describe(): string { return (() => super.describe())(); }
+}
+function show(value: First): void {
+    console.log(`${true}/${true}/${true}/${value instanceof Fourth}`);
+}
