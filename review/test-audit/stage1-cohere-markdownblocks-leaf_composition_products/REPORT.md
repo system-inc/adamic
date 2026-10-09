@@ -176,7 +176,7 @@ Evidence branch: test-audit/stage1-cohere-markdownblocks-leaf_composition_produc
       "TestMarkdownLayout family",
       "TestMdastMalformedEvents family"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$; M3-list-family.log: list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$'; M3-list-family.log: list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn",
     "probe_passing_members": [
       "TestMarkdownListLayoutUnion"
     ],
@@ -311,7 +311,7 @@ Evidence branch: test-audit/stage1-cohere-markdownblocks-leaf_composition_produc
       "TestMarkdownLayout family",
       "TestMdastMalformedEvents family"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$; M3-block-layouts.log: lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$'; M3-block-layouts.log: lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md",
     "probe_passing_members": [],
     "vacuous_subcases": [
       "generated/root/edge/",
@@ -419,7 +419,7 @@ Evidence branch: test-audit/stage1-cohere-markdownblocks-leaf_composition_produc
       "TestMarkdownLayout family",
       "TestMdastMalformedEvents family"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents(_00[0-2]|Union))$; M4-malformed-family.log: malformed_events_independent_test.go:193: mismatch expected error exit70 got0",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastMalformedEvents(_00[0-2]|Union))$'; M4-malformed-family.log: malformed_events_independent_test.go:193: mismatch expected error exit70 got0",
     "probe_passing_members": [
       "TestMdastMalformedEventsUnion"
     ],

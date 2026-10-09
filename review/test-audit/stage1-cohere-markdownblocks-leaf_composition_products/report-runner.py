@@ -1,5 +1,5 @@
 from pathlib import Path
-import json,statistics,re,subprocess,hashlib,time
+import json,statistics,re,subprocess,hashlib,time,shlex
 out=Path('review/test-audit/stage1-cohere-markdownblocks-leaf_composition_products');pkg='stage1/cohere/markdownblocks'
 def records(file):
  result=[]
@@ -44,7 +44,7 @@ for name,group,members,sid in rows:
    other='block-layouts' if group=='list-family' else 'list-family';row['subsumed_by']=[groupname[other]];row['subsumer_seconds']=median(other);row['verdict']='subsumed';row['subsumption_basis']=3
   kills=[x for x in observed if x['id'] in row['kills']]
   if kills:
-   x=kills[-1];line=x['errors'][0]['Output'].strip() if x['errors'] else 'FAIL';row['last_proven_fail']=x['id']+' '+line;row['evidence']=' '.join(x['command'])+'; '+x['id']+'-'+group+'.log: '+line
+   x=kills[-1];line=x['errors'][0]['Output'].strip() if x['errors'] else 'FAIL';row['last_proven_fail']=x['id']+' '+line;row['evidence']=shlex.join(x['command'])+'; '+x['id']+'-'+group+'.log: '+line
  result.append(row)
 (out/'rows.json').write_text(json.dumps(result,indent=2)+'\n')
 mutants=[]
