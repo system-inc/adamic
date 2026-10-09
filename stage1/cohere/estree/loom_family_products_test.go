@@ -1,11 +1,17 @@
 package estree
 
 import (
+	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/gob"
+	"encoding/json"
 	"fmt"
+	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 	"testing"
@@ -314,4 +320,120 @@ func TestProduct_DeepMutantsIR1(t *testing.T) {
 func TestProduct_DeepMutantsIR2(t *testing.T) {
 	t.Parallel()
 	deepMutantsIRProduct(t, deepMutantsEnumeration()[2])
+}
+
+// Hash actual Go dependencies (including embeds and local modules), rather than
+// unrelated upstream test corpora. This caches metadata only, never a build.
+var estreeFamilyDependencies struct {
+	once     sync.Once
+	files    []string
+	external []string
+	err      error
+}
+
+func estreeFamilyDependencyFiles(t *testing.T) []string {
+	t.Helper()
+	estreeFamilyDependencies.once.Do(func() {
+		repo := root(t)
+		command := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
+		command.Dir = repo
+		output, err := command.Output()
+		if err != nil {
+			estreeFamilyDependencies.err = fmt.Errorf("Go dependencies: %w", err)
+			return
+		}
+		decoder := json.NewDecoder(bytes.NewReader(output))
+		files := map[string]bool{"go.mod": true, "go.work": true, "stage1/typescript": true, "stage1/cohere/estree": true}
+		add := func(path string) error {
+			relative, err := filepath.Rel(repo, path)
+			if err != nil {
+				return err
+			}
+			if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				data, err := os.ReadFile(path)
+				if err != nil {
+					return err
+				}
+				estreeFamilyDependencies.external = append(estreeFamilyDependencies.external, fmt.Sprintf("external=%s:%x", path, sha256.Sum256(data)))
+				return nil
+			}
+			files[filepath.ToSlash(relative)] = true
+			return nil
+		}
+		for {
+			var item struct {
+				Standard                                                                   bool
+				Dir                                                                        string
+				GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+				Module                                                                     *struct{ GoMod string }
+				Error                                                                      *struct{ Err string }
+			}
+			if err := decoder.Decode(&item); err == io.EOF {
+				break
+			} else if err != nil {
+				estreeFamilyDependencies.err = err
+				return
+			}
+			if item.Error != nil {
+				estreeFamilyDependencies.err = fmt.Errorf("Go dependency: %s", item.Error.Err)
+				return
+			}
+			if item.Standard {
+				continue
+			}
+			for _, group := range [][]string{item.GoFiles, item.CgoFiles, item.CFiles, item.CXXFiles, item.HFiles, item.SFiles, item.SysoFiles, item.EmbedFiles} {
+				for _, name := range group {
+					if err := add(filepath.Join(item.Dir, name)); err != nil {
+						estreeFamilyDependencies.err = err
+						return
+					}
+				}
+			}
+			if item.Module != nil && item.Module.GoMod != "" {
+				if err := add(item.Module.GoMod); err != nil {
+					estreeFamilyDependencies.err = err
+					return
+				}
+				sum := filepath.Join(filepath.Dir(item.Module.GoMod), "go.sum")
+				if _, err := os.Stat(sum); err == nil {
+					if err := add(sum); err != nil {
+						estreeFamilyDependencies.err = err
+						return
+					}
+				}
+			}
+		}
+		for file := range files {
+			estreeFamilyDependencies.files = append(estreeFamilyDependencies.files, file)
+		}
+		sort.Strings(estreeFamilyDependencies.files)
+		sort.Strings(estreeFamilyDependencies.external)
+	})
+	if estreeFamilyDependencies.err != nil {
+		t.Fatal(estreeFamilyDependencies.err)
+	}
+	return estreeFamilyDependencies.files
+}
+
+func TestProduct_SyntaxMutantIR_000(t *testing.T) {
+	t.Parallel()
+	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[0])
+}
+func TestProduct_SyntaxMutantIR_001(t *testing.T) {
+	t.Parallel()
+	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[1])
+}
+func TestProduct_SyntaxMutantIR_002(t *testing.T) {
+	t.Parallel()
+	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[2])
+}
+func TestProduct_UnattachedDecoratorIR(t *testing.T) {
+	t.Parallel()
+	syntaxMutantIRProduct(t, unattachedDecoratorMutation())
+}
+
+func estreeFamilyDependencyFlags(t *testing.T) []string {
+	t.Helper()
+	estreeFamilyDependencyFiles(t)
+	return estreeFamilyDependencies.external
 }

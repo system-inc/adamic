@@ -100,8 +100,8 @@ func deepMutantsSnapshot(t *testing.T, mutation deepMutantsMutation) (map[string
 	snapshot := map[string][]byte{}
 	inputs := buildcache.Inputs{
 		Name:      "deep-mutants-lowered-v1",
-		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.work", "stage1/cohere/estree/deep_mutants_product_shards_test.go", "stage1/cohere/estree/estree_test.go", "stage1/cohere/estree/loom_family_products_test.go"},
-		Flags:     []string{"root=" + root(t)},
+		Files:     estreeFamilyDependencyFiles(t),
+		Flags:     append([]string{"root=" + root(t)}, estreeFamilyDependencyFlags(t)...),
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	for _, file := range files {

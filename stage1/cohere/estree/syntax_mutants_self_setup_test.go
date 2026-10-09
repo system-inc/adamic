@@ -1,7 +1,6 @@
 package estree
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -16,8 +15,6 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -35,30 +32,47 @@ func syntaxMutantEnumeration() []syntaxMutant {
 
 func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Inputs {
 	t.Helper()
-	return buildcache.Inputs{
+	inputs := buildcache.Inputs{
 		Name:  "estree-syntax-mutant-lowered-" + item.name,
-		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
+		Files: estreeFamilyDependencyFiles(t),
 		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
+	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
+	return inputs
 }
 
+func syntaxMutantIRProduct(t *testing.T, item syntaxMutant) string {
+	t.Helper()
+	inputs := syntaxMutantProductInputs(t, item)
+	inputs.Name = "estree-syntax-mutant-ir-" + item.name
+	return buildcache.Product(t, inputs, func(dir string) error {
+		main := mutantPort(t, item.file, item.from, item.to)
+		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+		if err != nil {
+			return err
+		}
+		snapshot := map[string][]byte{}
+		for _, file := range files {
+			data, err := os.ReadFile(file)
+			if err != nil {
+				return err
+			}
+			snapshot[filepath.Base(file)] = data
+		}
+		return estreeFamilyLowerCheckpoint(dir, snapshot)
+	})
+}
 func syntaxMutantLoweredProduct(t *testing.T, item syntaxMutant) string {
 	t.Helper()
-	return buildcache.Product(t, syntaxMutantProductInputs(t, item), func(dir string) error {
-		main := mutantPort(t, item.file, item.from, item.to)
-		program, err := load.Load([]string{main})
+	checkpoint := syntaxMutantIRProduct(t, item)
+	inputs := syntaxMutantProductInputs(t, item)
+	inputs.Name = "estree-syntax-mutant-emitted-" + item.name
+	return buildcache.Product(t, inputs, func(dir string) error {
+		program, err := estreeFamilyReadCheckpoint(checkpoint)
 		if err != nil {
 			return err
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
-		}
-		// Source remains usable after the building test's temporary directories disappear.
-		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+		files, err := filepath.Glob(filepath.Join(checkpoint, "source", "*.ts"))
 		if err != nil {
 			return err
 		}
@@ -71,7 +85,7 @@ func syntaxMutantLoweredProduct(t *testing.T, item syntaxMutant) string {
 				return err
 			}
 		}
-		return nil
+		return os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0644)
 	})
 }
 
@@ -109,7 +123,9 @@ var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
 
 func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
-	return buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod", "go.work"}, Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
+	return inputs
 }
 
 // Both the build-phase unit and shard preparation use this exact oracle recipe.
