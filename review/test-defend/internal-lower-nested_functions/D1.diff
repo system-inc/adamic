@@ -1,0 +1,13 @@
+diff --git a/internal/lower/borrow.go b/internal/lower/borrow.go
+index 197e67ed..4caeadf3 100644
+--- a/internal/lower/borrow.go
++++ b/internal/lower/borrow.go
+@@ -27,7 +27,7 @@ func borrow(program *ir.Program) {
+ 		}
+ 		for _, parameter := range function.Parameters {
+ 			local := &program.Locals[parameter]
+-			local.Borrowed = local.Type.IsReference() && !local.EnvironmentCell && !assigned[parameter]
++			local.Borrowed = local.Type.IsReference() && !assigned[parameter]
+ 		}
+ 	}
+ }

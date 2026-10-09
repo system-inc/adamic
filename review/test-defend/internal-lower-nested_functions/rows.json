@@ -1,0 +1,40 @@
+[
+  {
+    "test": "TestNestedCycle family",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestLiteralMethodCapturesCannotMakeCycles",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/nested_functions.go:277",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/nested_functions.go:277",
+        "change": "Drop the whole frame-environment propagation loop.",
+        "rows_failed": [
+          "TestNestedEnvironmentCycleIncludesDisjointSlots"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lower-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; nested_functions_test.go:93: want complete environment cycle refusal, got <nil>"
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNestedEnvironmentHasOneAllocationSite",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/borrow.go:30",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/borrow.go:30",
+        "change": "Drop !local.EnvironmentCell from the Borrowed assignment.",
+        "rows_failed": [
+          "TestNestedCapturedParametersAreOwned"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lower-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; nested_functions_test.go:106: captured parameter is borrowed"
+  }
+]
