@@ -1,0 +1,22 @@
+// A delegate that holds a timer whose action closes the window: a timer isn't a leaf (what its
+// initializer and factories are handed, it keeps), so this reaches back.
+// want: refuses Keeper, handed to Apple as a delegate the Window holds
+
+import { FoundationDate } from 'apple/foundation/foundation-date';
+import { Timer } from 'apple/foundation/timer';
+import type { Window } from 'apple/appkit/window';
+import type { WindowDelegate } from 'apple/appkit/window-delegate';
+
+class Keeper implements WindowDelegate {
+	readonly timer: Timer;
+	constructor(timer: Timer) {
+		this.timer = timer;
+	}
+	windowShouldClose(sender: Window): boolean {
+		return sender.title.length > 0;
+	}
+}
+export function attach(window: Window): void {
+	const timer = new Timer({ fire: new FoundationDate(), interval: 1, selector: () => window.close(), userInfo: undefined, repeats: false });
+	window.delegate = new Keeper(timer);
+}

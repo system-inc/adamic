@@ -1,0 +1,24 @@
+// A program's class extending Url and adding a field that reaches the window: were it allowed, a Url
+// could be one of these and reach back. Extending Apple's classes is refused.
+// want: a class extending Apple's Url
+
+import { Url } from 'apple/foundation/url';
+import type { Window } from 'apple/appkit/window';
+import type { WindowDelegate } from 'apple/appkit/window-delegate';
+
+class Keeper implements WindowDelegate {
+	readonly home: Url;
+	constructor(home: Url) {
+		this.home = home;
+	}
+	windowShouldClose(sender: Window): boolean {
+		return sender.title.length > 0;
+	}
+}
+class Bookmark extends Url {
+	window: Window | undefined = undefined;
+}
+export function attach(window: Window, home: Bookmark): void {
+	home.window = window;
+	window.delegate = new Keeper(home);
+}

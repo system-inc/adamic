@@ -34,7 +34,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 			recordStorage = true
 		}
 	})
-	if len(program.Regexps) != 0 || recordStorage {
+	if len(program.Regexps) != 0 || recordStorage || hasJsonDecode(program) {
 		return map[string]int{}
 	}
 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),

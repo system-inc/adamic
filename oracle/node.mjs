@@ -5,6 +5,7 @@
 // It runs the source itself, with its types stripped, and never anything Adamic lowered: an oracle
 // built from Adamic's own output would agree with Adamic's bugs. Both .ts and .a load the same way,
 // and 'adamic' resolves to the runtime beside this file.
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { registerHooks, stripTypeScriptTypes } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -20,7 +21,16 @@ registerHooks({
 	},
 	load(url, context, nextLoad) {
 		if (url.endsWith('.a') || url.endsWith('.ts')) {
-			const source = readFileSync(fileURLToPath(url), 'utf8');
+			let source = readFileSync(fileURLToPath(url), 'utf8');
+			// Decode and encode use the identical source trigger and descriptor insertion path.
+			if (source.includes('decodeJson') || source.includes('encodeJson')) {
+				const root = fileURLToPath(new URL('../', import.meta.url));
+				// Go tests build this once per package run; direct invocations retain go run.
+				const binary = process.env.ADAMIC_JSON_TYPES;
+				const arguments_ = binary ? [fileURLToPath(url)] : ['run', './oracle/json_types.go', fileURLToPath(url)];
+				const sources = JSON.parse(execFileSync(binary || 'go', arguments_, { cwd: root, encoding: 'utf8' }));
+				source = sources[fileURLToPath(url)];
+			}
 			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform' }), shortCircuit: true };
 		}
 		return nextLoad(url, context);

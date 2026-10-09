@@ -1,0 +1,7 @@
+import { decodeJson } from 'adamic';
+type Tagged = { readonly '\uD800': '🌍'; readonly value: string } | { readonly '\uD800': '\uDC00'; readonly count: number };
+for (const text of ['{"\\uD800":"\\uD83C\\uDF0D","value":"ok"}', '{"\\uD800":"\\uDC00","count":2}', '{"\\uD800":"bad"}', '{}', '{"\\uD800":"\\uDC00","count":false}']) {
+ const r = decodeJson<Tagged>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else console.log(r.kind);
+}

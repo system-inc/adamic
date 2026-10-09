@@ -1,0 +1,94 @@
+// delegate.a: objects of the program's own classes handed to AppKit as a window's delegate and a
+// table view's data source, AppKit calling their methods, each step printed. delegate.m writes the
+// same classes in Objective-C and prints the same lines: the two must agree (witness_test.go).
+
+import { Application } from 'apple/appkit/application';
+import { TableView } from 'apple/appkit/table-view';
+import type { TableViewDataSource } from 'apple/appkit/table-view-data-source';
+import { Window } from 'apple/appkit/window';
+import type { WindowDelegate } from 'apple/appkit/window-delegate';
+import type { Notification } from 'apple/foundation/notification';
+
+class Keeper implements WindowDelegate {
+	readonly name: string;
+	asked = 0;
+
+	constructor(name: string) {
+		this.name = name;
+	}
+
+	windowShouldClose(sender: Window): boolean {
+		this.asked += 1;
+		const answer = this.asked > 1;
+		console.log(`${this.name}: may ${sender.title} close? ${answer ? 'yes' : 'not yet'} (asked ${this.asked})`);
+		return answer;
+	}
+
+	windowWillClose(notification: Notification): void {
+		console.log(`${this.name}: closing, ${notification.object === undefined ? 'no window' : 'its window'}`);
+	}
+}
+
+class Eager extends Keeper {
+	override windowShouldClose(sender: Window): boolean {
+		console.log(`${this.name}: ${sender.title} may close at once`);
+		return true;
+	}
+}
+
+class Shelf implements TableViewDataSource {
+	readonly names: string[] = ['Creatine', 'Magnesium'];
+
+	numberOfRows(tableView: TableView): number {
+		console.log(`shelf: asked for rows (${tableView.numberOfColumns} columns)`);
+		return this.names.length;
+	}
+}
+
+function window(title: string): Window {
+	const made = new Window({ contentRectangle: { x: 40, y: 40, width: 320, height: 200 }, styleMask: ['Titled', 'Closable'], backing: 'Buffered', defer: true });
+	made.title = title;
+	return made;
+}
+
+Application.shared.setActivationPolicy('Accessory');
+
+const first = window('First');
+const keeper = new Keeper('keeper');
+first.delegate = keeper;
+console.log(`delegate: ${first.delegate === undefined ? 'none' : 'set'}`);
+first.makeKeyAndOrderFront(undefined);
+console.log(`visible: ${first.isVisible}`);
+first.performClose(undefined);
+console.log(`visible: ${first.isVisible}`);
+first.performClose(undefined);
+console.log(`visible: ${first.isVisible}`);
+
+// A subclass's override answers, through a reference typed as the class it overrides.
+const second = window('Second');
+const eager: Keeper = new Eager('eager');
+second.delegate = eager;
+second.makeKeyAndOrderFront(undefined);
+second.performClose(undefined);
+console.log(`visible: ${second.isVisible}`);
+
+// A delegate replaced is let go of; one cleared asks nothing.
+const third = window('Third');
+third.delegate = new Keeper('replaced');
+const kept = new Keeper('kept');
+third.delegate = kept;
+third.makeKeyAndOrderFront(undefined);
+third.performClose(undefined);
+third.delegate = undefined;
+console.log(`delegate: ${third.delegate === undefined ? 'none' : 'set'}`);
+third.performClose(undefined);
+console.log(`visible: ${third.isVisible}, kept asked ${kept.asked}`);
+
+const table = new TableView({ frame: { x: 0, y: 0, width: 200, height: 100 } });
+const shelf = new Shelf();
+table.dataSource = shelf;
+console.log(`rows: ${table.numberOfRows}`);
+shelf.names.push('Vitamin D');
+table.reloadData();
+console.log(`rows: ${table.numberOfRows}`);
+table.dataSource = undefined;
