@@ -1,0 +1,101 @@
+{
+  "sha": "28a6655d48af451a7e6b9720922a1811279b451a",
+  "branch": "area/library",
+  "branch_source": "given",
+  "session": "01a117ca-cd36-77a5-9f11-c545912e9024",
+  "session_source": "ai.db reply naming the branch",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "base_name": "main",
+  "tools_sha": "9f6e7b768934657895954f7300f82409e59ecdc0",
+  "machine": {
+    "hostname": "Server",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 20.0,
+      "cores": 64
+    },
+    "first_failure": {
+      "load_1m": 20.0,
+      "cores": 64
+    },
+    "end": {
+      "load_1m": 20.0,
+      "cores": 64
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Server",
+    "cpus": 64,
+    "load": [
+      20.0,
+      52.2,
+      55.6
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [],
+  "wall_seconds": 1.5,
+  "steps_seconds": {},
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": true,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "census",
+    "detail": "compiler dependency census: undeclared compiler consumers: stage1/cohere/config/config_test.go, stage1/cohere/config/gaps_test.go, stage1/cohere/config/loader_test.go, stage1/cohere/config/string_units_test.go, stage1/typescript/collections/core_test.go. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the compiler packages it exercises (entries there add to the gate tools' map).",
+    "after_seconds": 1.5,
+    "under_load": false
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "determinism",
+    "census"
+  ],
+  "stages_exit": {
+    "darwin-compile": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "fast",
+  "darwin_compile": "green: darwin build and compile of internal/oracle/testdata/047cb0d_f_maybe.a on Sun2 in 7 s"
+}
