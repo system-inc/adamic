@@ -1,0 +1,4 @@
+FIRST FAILURE (wasi/TestWASIUnit19, at 48.8 s):
+{"name": "TestWASIUnit19", "command": ["go", "test", "-count=1", "-json", "-timeout", "3h", "-p", "1", "-parallel", "1", "-run", "^TestWASIUnit19$", "./internal/native"], "status": "failed", "scratch": "/tmp/loom-units/loom-unit-2031798275/workspace/loom-out/phase/wasi-units/00-_d_xfrop", "exit": 0, "ok": false, "test": "TestWASIUnit19", "unexpected": ["TestWASIUnit19/internal/oracle/testdata/reuse_weak_during_spread.a"], "passed": true, "wall_seconds": 48.840415, "over_budget": true}
+(box load 1.2 on 5 cores at first failure)
+red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at wasi/TestWASIUnit19 after 48.8 s, cancelled after first failure (wasi=48.9s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.4 on 5 cores at start, load 1.2 on 5 cores at first failure, load 1.2 on 5 cores at end), 0 fail, 2 pass

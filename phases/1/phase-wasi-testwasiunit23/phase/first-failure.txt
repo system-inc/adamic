@@ -1,0 +1,2 @@
+{"name": "TestWASIUnit23", "command": ["go", "test", "-count=1", "-json", "-timeout", "3h", "-p", "1", "-parallel", "1", "-run", "^TestWASIUnit23$", "./internal/native"], "status": "failed", "scratch": "/tmp/loom-units/loom-unit-2100535600/workspace/loom-out/phase/wasi-units/00-o4zkugch", "exit": 0, "ok": false, "test": "TestWASIUnit23", "unexpected": ["TestWASIUnit23/internal/oracle/testdata/stack_forever.a"], "passed": true, "wall_seconds": 1.647975, "over_budget": false}
+(box load 0.6 on 5 cores at first failure)

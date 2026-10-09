@@ -1,0 +1,9 @@
+06 constructor-capture-region wall=375.045s
+target b524594354a2abb7eaafd1286fd5189ff507ff2f
+logs /tmp/loom-units/loom-unit-4044376746/workspace/loom-out/phase/catalog-units/00-3o2fhdir/adamic-catalog-logs-lndrvco0
+build flags: commit=b524594354a2abb7eaafd1286fd5189ff507ff2f; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+06 constructor-capture-region: applies-and-fails-as-recorded
+06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+06 wall=374.982s setup=12.175s check=359.846s cleanup=0.414s load=1.30 1.68 1.95 1/309 150429 -> 1.00 1.19 1.63 1/314 151464
+total wall=374.999s load=1.30 1.68 1.95 1/308 150420 -> 1.00 1.19 1.63 1/313 151464

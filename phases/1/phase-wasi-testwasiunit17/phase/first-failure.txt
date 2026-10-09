@@ -1,0 +1,10 @@
+github.com/system-inc/adamic/internal/native TestWASIUnit17
+=== RUN   TestWASIUnit17
+    wasm_test.go:368: strict C11 runtime: 58 translation units compiled
+    wasm_test.go:368: compiler setup: [go build -o /home/agent/.cache/adamic-build/.building-291b73280d47-2137464578/adamic ./cmd/adamic]: exit status 1
+        # github.com/system-inc/adamic/cmd/adamic
+        compile: writing output: write $WORK/b001/_pkg_.a: no space left on device
+        
+--- FAIL: TestWASIUnit17 (13.63s)
+
+(box load 1.0 on 5 cores at first failure)

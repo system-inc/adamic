@@ -1,0 +1,16 @@
+{
+  "number": 4,
+  "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+  "target": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+  "worktree": "/tmp/loom-units/loom-unit-790354085/workspace/loom-out/phase/catalog-units/00-p81f26hb/adamic-catalog-worktree-t7e2a24d/entry-04",
+  "ok": false,
+  "cleanup_seconds": 0.33568996699978015,
+  "wall_seconds": 19.927065601999857,
+  "load_before": "1.13 1.18 1.03 1/248 63211",
+  "load_after": "0.87 1.11 1.01 1/244 63267",
+  "messages": [
+    "04 borrowed-array-move: error (Command '['git', '-C', '/tmp/loom-units/loom-unit-790354085/workspace/loom-out/phase/catalog-units/00-p81f26hb/adamic-catalog-worktree-t7e2a24d/entry-04', '-c', 'submodule.cohere.url=https://github.com/system-inc/cohere.git', 'submodule', 'update', '--init', '--recursive', '--depth', '1']' returned non-zero exit status 128.)",
+    "04 made against=d772b5c990de4304de990e723835f19ebb613641",
+    "04 wall=19.927s setup=0.000s check=0.000s cleanup=0.336s load=1.13 1.18 1.03 1/248 63211 -> 0.87 1.11 1.01 1/244 63267"
+  ]
+}

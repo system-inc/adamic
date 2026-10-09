@@ -1,0 +1,2 @@
+{"name": "TestWASIUnit08", "command": ["go", "test", "-count=1", "-json", "-timeout", "3h", "-p", "1", "-parallel", "1", "-run", "^TestWASIUnit08$", "./internal/native"], "status": "failed", "scratch": "/tmp/loom-units/loom-unit-2439416191/workspace/loom-out/phase/wasi-units/00-fufgr2b5", "exit": 0, "ok": false, "test": "TestWASIUnit08", "unexpected": ["TestWASIUnit08/internal/load/testdata/0.1/compile/09_tree.ts"], "passed": true, "wall_seconds": 17.730738, "over_budget": false}
+(box load 0.7 on 5 cores at first failure)

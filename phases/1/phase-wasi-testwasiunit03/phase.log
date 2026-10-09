@@ -1,0 +1,4 @@
+FIRST FAILURE (wasi/TestWASIUnit03, at 28.1 s):
+{"name": "TestWASIUnit03", "command": ["go", "test", "-count=1", "-json", "-timeout", "3h", "-p", "1", "-parallel", "1", "-run", "^TestWASIUnit03$", "./internal/native"], "status": "failed", "scratch": "/tmp/loom-units/loom-unit-3147609975/workspace/loom-out/phase/wasi-units/00-hz8rzp9x", "exit": 0, "ok": false, "test": "TestWASIUnit03", "unexpected": ["TestWASIUnit03/internal/load/testdata/0.1/compile/04_closures.ts"], "passed": true, "wall_seconds": 28.095272, "over_budget": false}
+(box load 1.2 on 5 cores at first failure)
+red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at wasi/TestWASIUnit03 after 28.1 s, cancelled after first failure (wasi=28.1s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.3 on 5 cores at start, load 1.2 on 5 cores at first failure, load 1.2 on 5 cores at end), 0 fail, 2 pass
