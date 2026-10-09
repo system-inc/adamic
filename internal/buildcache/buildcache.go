@@ -129,9 +129,6 @@ func Key(root string, inputs Inputs) (string, error) {
 			return "", err
 		}
 	}
-	for _, flag := range inputs.Flags {
-		field("flag", flag)
-	}
 	for _, tool := range inputs.Toolchain {
 		field("tool", tool)
 	}
