@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/frontmatter.ts
++++ b/stage1/cohere/markdownblocks/frontmatter.ts
+@@ -53,7 +53,7 @@
+ export function parseFrontMatter(text: string): FrontMatterResultInterface {
+     const startDelimiter = text.slice(0, 3);
+     if(startDelimiter !== '---' && startDelimiter !== '+++') return { frontMatter: undefined, content: text };
+-    const firstBreak = text.indexOf('\n', 3);
++    const firstBreak = text.indexOf('\n', 4);
+     if(firstBreak === -1) return { frontMatter: undefined, content: text };
+     const explicit = trimWhitespace(text.slice(3, firstBreak));
+     const language = explicit === '' ? (startDelimiter === '+++' ? 'toml' : 'yaml') : explicit;

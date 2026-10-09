@@ -1,0 +1,35 @@
+[
+  {
+    "mutant": "E1",
+    "apply_command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-markdownblocks-array_growth_gap/E1.diff"
+    ],
+    "exit": 0,
+    "compile_evidence": "E1-bounded.log: native sanitized and release build recipes"
+  },
+  {
+    "mutant": "F1",
+    "apply_command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-markdownblocks-array_growth_gap/F1.diff"
+    ],
+    "exit": 0,
+    "compile_evidence": "F1.log: successful native execution with stdout byte mismatch"
+  },
+  {
+    "mutant": "P1",
+    "apply_command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-markdownblocks-array_growth_gap/P1.diff"
+    ],
+    "exit": 0,
+    "compile_evidence": "P1-vet.log and P1-witness-build.log"
+  }
+]

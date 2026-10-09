@@ -1,0 +1,159 @@
+[
+  {
+    "test": "TestTokenizerEvents family",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMicromarkInputChunks"
+    ],
+    "defense": "defended",
+    "unique_mutant": "E1 stage1/cohere/markdownblocks/tokenizerEvents.ts:75",
+    "attempts": [
+      {
+        "mutant": "E1",
+        "file_line": "stage1/cohere/markdownblocks/tokenizerEvents.ts:75",
+        "change": "this.consumed = true; -> this.consumed = false;",
+        "rows_failed": [
+          "TestTokenizerEvents family"
+        ],
+        "failed_members": [
+          "TestTokenizerEvents_255",
+          "TestTokenizerEvents_511",
+          "TestTokenizerEvents_003"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/markdown-defense/cache/E1-bounded timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMicromarkInputChunks|TestFrontMatterStage|TestParserRepresentationProbes|TestArrayGrowthWitness|TestMarkdownASTPreprocessing|TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMdastIdentifierScalars|TestTokenizerEvents_003|TestTokenizerEvents_255|TestTokenizerEvents_511)$' > E1-bounded.log 2>&1; tokenizer_events_independent_test.go:117: TestTokenizerEvents_255: native disagreement in case id 631",
+    "rows_passed": [
+      "TestArrayGrowthWitness",
+      "TestFrontMatterStage",
+      "TestMicromarkInputChunks",
+      "TestMarkdownASTPreprocessing",
+      "TestMdastIdentifierScalars",
+      "TestParserRepresentationProbes",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003",
+      "TestMarkdownLeafComposition_000"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestMicromarkInputChunks",
+      "TestFrontMatterStage",
+      "TestParserRepresentationProbes",
+      "TestArrayGrowthWitness",
+      "TestMarkdownASTPreprocessing",
+      "TestMarkdownLeafComposition_000",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003",
+      "TestMdastIdentifierScalars",
+      "TestTokenizerEvents_003",
+      "TestTokenizerEvents_255",
+      "TestTokenizerEvents_511"
+    ],
+    "rows_outside_matrix": "unknown"
+  },
+  {
+    "test": "TestFrontMatterStage",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestParserRepresentationProbes"
+    ],
+    "defense": "defended",
+    "unique_mutant": "F1 stage1/cohere/markdownblocks/frontmatter.ts:56",
+    "attempts": [
+      {
+        "mutant": "F1",
+        "file_line": "stage1/cohere/markdownblocks/frontmatter.ts:56",
+        "change": "text.indexOf('\\n', 3) -> text.indexOf('\\n', 4)",
+        "rows_failed": [
+          "TestFrontMatterStage"
+        ],
+        "failed_members": [
+          "TestFrontMatterStage"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/markdown-defense/cache/F1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMicromarkInputChunks|TestFrontMatterStage|TestParserRepresentationProbes|TestArrayGrowthWitness|TestMarkdownASTPreprocessing|TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMdastIdentifierScalars|TestTokenizerEvents_003)$' > F1.log 2>&1; frontmatter_test.go:104: native front matter first byte difference at 67550 (lengths 654514/655456)",
+    "rows_passed": [
+      "TestArrayGrowthWitness",
+      "TestMicromarkInputChunks",
+      "TestMdastIdentifierScalars",
+      "TestTokenizerEvents_003",
+      "TestMarkdownASTPreprocessing",
+      "TestParserRepresentationProbes",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_003",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_000"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestMicromarkInputChunks",
+      "TestFrontMatterStage",
+      "TestParserRepresentationProbes",
+      "TestArrayGrowthWitness",
+      "TestMarkdownASTPreprocessing",
+      "TestMarkdownLeafComposition_000",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003",
+      "TestMdastIdentifierScalars",
+      "TestTokenizerEvents_003"
+    ],
+    "rows_outside_matrix": "unknown"
+  },
+  {
+    "test": "TestParserRepresentationProbes",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFrontMatterStage"
+    ],
+    "defense": "defended",
+    "unique_mutant": "P1 internal/lower/object.go:1265",
+    "attempts": [
+      {
+        "mutant": "P1",
+        "file_line": "internal/lower/object.go:1265",
+        "change": "if len(arguments) != 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\") -> if len(arguments) < 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+        "rows_failed": [
+          "TestParserRepresentationProbes"
+        ],
+        "failed_members": [
+          "TestParserRepresentationProbes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/markdown-defense/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMicromarkInputChunks|TestFrontMatterStage|TestParserRepresentationProbes|TestArrayGrowthWitness|TestMarkdownASTPreprocessing|TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMdastIdentifierScalars|TestTokenizerEvents_003)$' > P1.log 2>&1; gaps_test.go:51: NotYet gap changed: <nil>; update GAPS.md",
+    "rows_passed": [
+      "TestArrayGrowthWitness",
+      "TestFrontMatterStage",
+      "TestMicromarkInputChunks",
+      "TestMdastIdentifierScalars",
+      "TestTokenizerEvents_003",
+      "TestMarkdownASTPreprocessing",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003",
+      "TestMarkdownLeafComposition_000"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestMicromarkInputChunks",
+      "TestFrontMatterStage",
+      "TestParserRepresentationProbes",
+      "TestArrayGrowthWitness",
+      "TestMarkdownASTPreprocessing",
+      "TestMarkdownLeafComposition_000",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003",
+      "TestMdastIdentifierScalars",
+      "TestTokenizerEvents_003"
+    ],
+    "rows_outside_matrix": "unknown"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "native_compilation": "Native.Build and whitespaceLayoutNativeBuild, actual unchanged sanitizer/release clang flags. Execution before the full-byte failure proves the mutant compiled.",
+  "product_miss_timings": [
+    "pilot_family_products_test.go:273: build markdownblocks-pilot-identifier-lowered 063b03f3cf7a miss 2.07",
+    "pilot_family_products_test.go:263: build markdownblocks-pilot-identifier-go 1fcf4c57d90f miss 2.25",
+    "pilot_family_products_test.go:278: build markdownblocks-pilot-identifier-native-false 12b9dae06eaa miss 0.37",
+    "pilot_family_products_test.go:273: build markdownblocks-pilot-identifier-native-true 3059185a0ea2 miss 0.58",
+    "pilot_family_products_test.go:56: build markdownblocks-malformed-events-go-errors f8c02657bc6a miss 2.33",
+    "pilot_family_products_test.go:68: build markdownblocks-malformed-events-lowered ce0b87fa73ac miss 4.63",
+    "pilot_family_products_test.go:68: build markdownblocks-malformed-events-native c2ed67ad75ec miss 6.27"
+  ]
+}

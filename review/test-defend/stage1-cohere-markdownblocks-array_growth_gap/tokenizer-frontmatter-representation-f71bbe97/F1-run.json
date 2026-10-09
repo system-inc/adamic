@@ -1,0 +1,32 @@
+{
+  "id": "F1",
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/markdownblocks/",
+    "-run",
+    "^(TestMicromarkInputChunks|TestFrontMatterStage|TestParserRepresentationProbes|TestArrayGrowthWitness|TestMarkdownASTPreprocessing|TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMdastIdentifierScalars|TestTokenizerEvents_003)$"
+  ],
+  "cache": "/tmp/markdown-defense/cache/F1",
+  "rows": [
+    "TestMicromarkInputChunks",
+    "TestFrontMatterStage",
+    "TestParserRepresentationProbes",
+    "TestArrayGrowthWitness",
+    "TestMarkdownASTPreprocessing",
+    "TestMarkdownLeafComposition_000",
+    "TestMarkdownLeafComposition_001",
+    "TestMarkdownLeafComposition_002",
+    "TestMarkdownLeafComposition_003",
+    "TestMdastIdentifierScalars",
+    "TestTokenizerEvents_003"
+  ],
+  "exit": 1,
+  "wall": 79.21096279799895
+}

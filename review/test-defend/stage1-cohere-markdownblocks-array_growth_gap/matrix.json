@@ -1,0 +1,27 @@
+{
+  "bounded": true,
+  "rows_failed": [
+    "TestMdastIdentifierScalars"
+  ],
+  "rows_passed": [
+    "TestMdastIdentifierWitnesses",
+    "TestMdastMalformedEventsUnion",
+    "TestMdastMalformedEvents_000",
+    "TestMdastMalformedEvents_001",
+    "TestMdastMalformedEvents_002",
+    "TestMdastMalformedEvents_Setup",
+    "TestNativeMdastConstruction",
+    "TestParserRepresentationProbes",
+    "TestProduct_MarkdownIdentifierGo",
+    "TestProduct_MarkdownIdentifierLowered",
+    "TestProduct_MarkdownIdentifierNativeRelease",
+    "TestProduct_MarkdownIdentifierNativeSanitized",
+    "TestProduct_MarkdownMalformedEventsGo",
+    "TestProduct_MarkdownMalformedEventsLowered",
+    "TestProduct_MarkdownMalformedEventsNative"
+  ],
+  "rows_skipped": [],
+  "failing_output": [
+    "identifier_independent_test.go:27: identifier scalar oracle first byte difference at 753221 (lengths 7789593/7789593)"
+  ]
+}
