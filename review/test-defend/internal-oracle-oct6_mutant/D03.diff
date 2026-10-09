@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -147,7 +147,7 @@
+ 		if overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
+ 			continue
+ 		}
+-		ordinal++
++		ordinal += 2
+ 		if err := l.censusOverload(implementation, overload, ordinal); err != nil {
+ 			return err
+ 		}

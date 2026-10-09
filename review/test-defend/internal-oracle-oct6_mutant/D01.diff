@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -290,7 +290,6 @@
+ 
+ adamic_object *adamic_read_text_file(const adamic_string *path) {
+ 	// What was printed comes first, as on Node: the file may be stdin, waiting on a prompt.
+-	adamic_output_flush();
+ #ifdef ADAMIC_TARGET_WASI
+ 	// WASI libc cannot resolve an empty capability path. Node treats it as ENOENT.
+ 	if (path->length == 0) {
