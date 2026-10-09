@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -92,7 +93,7 @@ func TestNamedRecordAliasReadinessMutant(t *testing.T) {
 		t.Fatal("mutant removed no alias-copy readiness check")
 	}
 	want := onNode(t, path)
-	if want.exitCode != 70 {
+	if want.exitCode != 1 || !strings.Contains(string(want.stderr), "ReferenceError") {
 		t.Fatalf("Node did not stop in the dead zone: %+v", want)
 	}
 	native, _ := nativelyUncached(t, p)
@@ -100,7 +101,7 @@ func TestNamedRecordAliasReadinessMutant(t *testing.T) {
 		if got.exitCode != 0 || disagreement(want, got) != "exit codes differ" {
 			t.Fatalf("%s alias-copy readiness mutant survived: %+v", name, got)
 		}
-		t.Logf("%s alias-copy readiness mutant caught by Node's exit 70", name)
+		t.Logf("%s alias-copy readiness mutant caught by Node's ReferenceError exit 1", name)
 	}
 }
 
