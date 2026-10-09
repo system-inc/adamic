@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:45:51.42336192Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:45:51.43083449Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks"}
+{"Time":"2026-10-09T11:45:51.430954327Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks","Output":"=== RUN   TestProduct_CSSPrinterDarwinLeaks\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:51.430988608Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks","Output":"=== PAUSE TestProduct_CSSPrinterDarwinLeaks\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:51.430991221Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks"}
+{"Time":"2026-10-09T11:45:51.43099727Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks"}
+{"Time":"2026-10-09T11:45:51.430998953Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks","Output":"=== CONT  TestProduct_CSSPrinterDarwinLeaks\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:51.431001306Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks","Output":"    printer_shards_test.go:143: macOS leaks requires an unsanitized executable\n"}
+{"Time":"2026-10-09T11:45:51.431011141Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks","Output":"--- SKIP: TestProduct_CSSPrinterDarwinLeaks (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:51.431013084Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterDarwinLeaks","Elapsed":0}
+{"Time":"2026-10-09T11:45:51.431023649Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:51.431180581Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t0.007s\n"}
+{"Time":"2026-10-09T11:45:51.431197045Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":0.008}

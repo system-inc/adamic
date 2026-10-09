@@ -1,0 +1,13 @@
+{
+  "TestProduct_CSSPrinterOracle family": [
+    "TestProduct_CSSPrinterParserOracle",
+    "TestProduct_CSSPrinterOracle"
+  ],
+  "TestProduct_CSSPrinterNative family": [
+    "TestProduct_CSSPrinterSanitizedAndLowered",
+    "TestProduct_CSSPrinterSemicolonMutant",
+    "TestProduct_CSSPrinterIndentMutant",
+    "TestProduct_CSSPrinterWidthMutant",
+    "TestProduct_CSSPrinterDarwinLeaks"
+  ]
+}

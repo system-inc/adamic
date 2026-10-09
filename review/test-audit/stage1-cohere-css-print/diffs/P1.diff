@@ -1,0 +1,10 @@
+--- a/stage1/cohere/css/print.ts
++++ b/stage1/cohere/css/print.ts
+@@ -263,6 +263,7 @@
+ }
+ export type FormatResult = { readonly kind: 'Formatted'; readonly text: string } | { readonly kind: 'Refused'; readonly message: string };
+ export function format(text: string, scss: boolean = false, options: PrintOptions = defaults): FormatResult {
++    if(text.length >= 0) return {kind:'Formatted',text:''};
+     const parsed = compose(text, scss);
+     if(parsed.kind === 'Refused') return parsed;
+     const front = new Node(parsed.tree,parsed.tree.root).child('frontMatter');

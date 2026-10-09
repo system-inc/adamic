@@ -1,0 +1,106 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/css/print.ts",
+    "line": 12,
+    "before": "tabWidth: 2",
+    "after": "tabWidth: 3",
+    "category": "production"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/css/print_doc.ts",
+    "line": 103,
+    "before": "while(remaining >= 0)",
+    "after": "while(remaining > 0)",
+    "category": "production"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/mediaquery/index.ts",
+    "line": 33,
+    "before": "\tconst nodes = parseMediaList(params);",
+    "after": "\tif (params.length >= 0) return {kind: 'Error', message: 'audit early refusal'};\n\tconst nodes = parseMediaList(params);",
+    "category": "production"
+  },
+  {
+    "id": "M4",
+    "file": "internal/native/runtime/string_append.c",
+    "line": 86,
+    "before": "\tresult->length = written;",
+    "after": "",
+    "category": "production"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/css/print.ts",
+    "line": 266,
+    "before": "    const parsed = compose(text, scss);",
+    "after": "    if(text.length >= 0) return {kind:'Formatted',text:''};\n    const parsed = compose(text, scss);",
+    "category": "probe"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/mediaquery/index.ts",
+    "line": 33,
+    "before": "\tconst nodes = parseMediaList(params);",
+    "after": "\tif(params.length >= 0) return {kind:'Ok',value:newContainer(undefined,undefined,'','',undefined,[])};\n\tconst nodes = parseMediaList(params);",
+    "category": "probe"
+  },
+  {
+    "id": "P3",
+    "file": "internal/native/runtime/string_append.c",
+    "line": 34,
+    "before": "\tsize_t length = string->length, added = 0;",
+    "after": "\tadamic_release(string); return adamic_string_concat(0, NULL);\n\tsize_t length = string->length, added = 0;",
+    "category": "probe"
+  },
+  {
+    "id": "P4",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 621,
+    "before": "bool adamic_regex_test(adamic_object *regex, adamic_string *input) {",
+    "after": "bool adamic_regex_test(adamic_object *regex, adamic_string *input) {\n\treturn false;",
+    "category": "probe"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "line": 280,
+    "before": "difference != \"\" {",
+    "after": "difference != \"\" && false {",
+    "category": "construction"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "line": 124,
+    "before": "\t\t\treturn native.Build(code, filepath.Join(dir, \"native\"), native.Options{Sanitize: sanitize})",
+    "after": "\t\t\treturn nil",
+    "category": "construction"
+  },
+  {
+    "id": "S4",
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "line": 309,
+    "before": "func cssModeUnion(lines []string, plan []cssModeShard, count int) error {",
+    "after": "func cssModeUnion(lines []string, plan []cssModeShard, count int) error {\n\tif count >= 0 { return nil }",
+    "category": "construction"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "line": 70,
+    "before": "\t\t\toutput, err := cmd.CombinedOutput()\n\t\t\tif err != nil {\n\t\t\t\treturn fmt.Errorf(\"Go oracle build: %w\\n%s\", err, output)\n\t\t\t}\n",
+    "after": "",
+    "category": "construction"
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/css/profile_test.go",
+    "line": 62,
+    "before": "\"expected.txt\": []byte(expected)",
+    "after": "\"missing-expected.txt\": []byte(expected)",
+    "category": "construction"
+  }
+]

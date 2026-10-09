@@ -1,0 +1,10 @@
+--- a/stage1/cohere/css/printer_shards_test.go
++++ b/stage1/cohere/css/printer_shards_test.go
+@@ -307,6 +307,7 @@
+ }
+ 
+ func cssModeUnion(lines []string, plan []cssModeShard, count int) error {
++	if count >= 0 { return nil }
+ 	if count%8 != 0 || count == 0 {
+ 		return fmt.Errorf("invalid mode shard count %d", count)
+ 	}

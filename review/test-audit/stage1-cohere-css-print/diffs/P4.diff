@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -619,6 +619,7 @@
+ 	return result;
+ }
+ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
++	return false;
+ 	const adamic_regex_program *p = regex_program(regex);
+ 	size_t ascii_length = (size_t)adamic_string_length(input);
+ 	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&

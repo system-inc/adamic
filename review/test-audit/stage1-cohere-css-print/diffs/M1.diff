@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/print.ts
++++ b/stage1/cohere/css/print.ts
+@@ -9,7 +9,7 @@
+ import { Documents } from './print_doc.ts';
+ import { Node, Path, lower, maybeLower, inlineLast, emptyBefore, control, placeholder, operator, word, valueWord, inlineValue, pair, parenPair, parens, mapItem, breakList, precedeSoft, hasNewline, nextEmpty } from './print_utilities.ts';
+ export type PrintOptions = { readonly width: number; readonly tabWidth: number; readonly tabs: boolean; readonly single: boolean; readonly trailingComma: string };
+-export const defaults: PrintOptions = {width: 80, tabWidth: 2, tabs: false, single: false, trailingComma: 'all'};
++export const defaults: PrintOptions = {width: 80, tabWidth: 3, tabs: false, single: false, trailingComma: 'all'};
+ const knownUnits: readonly string[] = 'em rem ex rex cap rcap ch rch ic ric lh rlh vw svw lvw dvw vh svh lvh dvh vi svi lvi dvi vb svb lvb dvb vmin svmin lvmin dvmin vmax svmax lvmax dvmax cm mm q in pt pc px deg grad rad turn s ms hz khz dpi dpcm dppx x cqw cqh cqi cqb cqmin cqmax fr'.split(' ');
+ export class Printer {
+     readonly tree: Tree;

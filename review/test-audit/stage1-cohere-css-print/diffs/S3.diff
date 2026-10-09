@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/profile_test.go
++++ b/stage1/cohere/css/profile_test.go
+@@ -59,7 +59,7 @@
+ 			fmt.Fprintf(&manifest, "%d\t%d\t%d\n", i, len(input), units[i])
+ 		}
+ 	}
+-	for name, data := range map[string][]byte{"cases.txt": data, "expected.txt": []byte(expected), "narrow-expected.txt": []byte(narrow), "shared.txt": []byte(strings.Join(shared, "\n") + "\n"), "sample.txt": []byte(strings.Join(sample, "\n") + "\n"), "manifest.tsv": []byte(manifest.String()), "sample-expected.txt": []byte(fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", len(sample), len(sample), totalUnits))} {
++	for name, data := range map[string][]byte{"cases.txt": data, "missing-expected.txt": []byte(expected), "narrow-expected.txt": []byte(narrow), "shared.txt": []byte(strings.Join(shared, "\n") + "\n"), "sample.txt": []byte(strings.Join(sample, "\n") + "\n"), "manifest.tsv": []byte(manifest.String()), "sample-expected.txt": []byte(fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", len(sample), len(sample), totalUnits))} {
+ 		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
+ 			t.Fatal(err)
+ 		}

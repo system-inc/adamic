@@ -1,0 +1,346 @@
+[
+  {
+    "test": "TestClosedPrinterRegexGap",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/print_test.go:56",
+    "seconds": 1.099,
+    "oracle": "Node and both backends must equal the self-written literal 2\\nOk\\n. parse(screen).kind is checked, but its tree contents are ignored; P2 passes.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 print_test.go:67: native: 0 \"2\\nError\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": 37.794,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterThroughput",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3; selector /tmp/u079/selector=M3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$; print_test.go:67: native: 0 \"2\\nError\\n\"; log M3-fast.log",
+    "subsumption_mutants": 1,
+    "vacuous_entries": {
+      "mediaquery.parse": true,
+      "adamic_regex_test": false
+    },
+    "vacuous_subcases": [
+      "P2: media-query assertion accepts an empty Ok tree; all three backends still print Ok."
+    ]
+  },
+  {
+    "test": "TestCSSPrinterThroughput",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/print_test.go:145",
+    "seconds": 77.027,
+    "oracle": "Go cohere and the pinned Prettier fork choose shared successful cases. Native, source Node, npm Prettier and fork summaries must match formatted counts and aggregate UTF-16 lengths. Equal-length wrong text could pass this checksum.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4 print_test.go:211: native: 70 \"\" adamic: panic: RangeError: Invalid code point 4249537",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 37.794,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterThroughput",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4; selector /tmp/u079/selector=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterThroughput$; print_test.go:211: native: 70 \"\" adamic: panic: RangeError: Invalid code point 4249537; log M4-throughput.log",
+    "subsumption_mutants": 4
+  },
+  {
+    "test": "TestCSSPrinterBoundaryProofs",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/print_test.go:241",
+    "seconds": 1.244,
+    "oracle": "Go cohere directly formats four boundary cases; port source on Node must match complete answers. npm Prettier is run for separate logged boundary proofs.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1 print_test.go:258: boundary proof: 0 \"\\\"a {\\\\n   b: c;\\\\n}\\\\n\\\"\\n\\\"// x\\\\ra {\\\\n}\\\\n\\\"\\nerror {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word \\u00a0\\\"}\\nerror \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\\n\" ; Go \"\\\"a {\\\\n  b: c;\\\\n}\\\\n\\\"\\n\\\"// x\\\\ra {\\\\n}\\\\n\\\"\\nerror {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word \\u00a0\\\"}\\nerror \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\\",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 26.151,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterThroughput",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1; selector /tmp/u079/selector=M1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterBoundaryProofs$; print_test.go:258: boundary proof: 0 \"\\\"a {\\\\n   b: c;\\\\n}\\\\n\\\"\\n\\\"// x\\\\ra {\\\\n}\\\\n\\\"\\nerror {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word \\u00a0\\\"}\\nerror \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\\n\" ; Go \"\\\"a {\\\\n  b: c;\\\\n}\\\\n\\\"\\n\\\"// x\\\\ra {\\\\n}\\\\n\\\"\\nerror {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word \\u00a0\\\"}\\nerror \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\\; log M1-rerun-TestCSSPrinterBoundaryProofs.log",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestOptionalBooleanPrinterMatchesGo",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/print_test.go:296",
+    "seconds": 26.151,
+    "oracle": "Go cohere supplies complete six-case printer answers; Node source, native sanitizers and JavaScript backend must match exactly.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4 print_test.go:317: native ASan/UBSan: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  b: c;\\\\n}\\\\n\\\"\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 37.794,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterThroughput",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4; selector /tmp/u079/selector=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$; print_test.go:317: native ASan/UBSan: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  b: c;\\\\n}\\\\n\\\"\"; log M4-fast.log",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestProduct_CSSPrinterOracle family",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/printer_shards_test.go:134",
+    "seconds": 1.391,
+    "oracle": "Successful Go oracle compilation/path preparation, with no executable-existence or semantic-answer assertion. S2 publishes paths without building any Go oracle binary.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_CSSPrinterOracle family"
+    ],
+    "evidence": "ADAMIC_MUTANT=S2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSPrinter(ParserOracle|Oracle)$; TestProduct_CSSPrinterParserOracle: PASS; TestProduct_CSSPrinterOracle: PASS; construction-artifact-proofs.json",
+    "construction_checks": [
+      "S2"
+    ],
+    "members": [
+      "TestProduct_CSSPrinterParserOracle",
+      "TestProduct_CSSPrinterOracle"
+    ]
+  },
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/printer_shards_test.go:136",
+    "seconds": 1.684,
+    "oracle": "Successful native product preparation, with no execution or artifact-existence assertion. S1 publishes paths while omitting native.Build; no native files are produced.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_CSSPrinterNative family"
+    ],
+    "evidence": "ADAMIC_MUTANT=S1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant)$; TestProduct_CSSPrinterIndentMutant: PASS; TestProduct_CSSPrinterSanitizedAndLowered: PASS; TestProduct_CSSPrinterWidthMutant: PASS; TestProduct_CSSPrinterSemicolonMutant: PASS; construction-artifact-proofs.json",
+    "construction_checks": [
+      "S1"
+    ],
+    "members": [
+      "TestProduct_CSSPrinterSanitizedAndLowered",
+      "TestProduct_CSSPrinterSemicolonMutant",
+      "TestProduct_CSSPrinterIndentMutant",
+      "TestProduct_CSSPrinterWidthMutant",
+      "TestProduct_CSSPrinterDarwinLeaks"
+    ],
+    "skipped_members": [
+      "TestProduct_CSSPrinterDarwinLeaks"
+    ]
+  },
+  {
+    "test": "TestCSSPrinterShardingCatchesDisagreement",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/printer_shards_test.go:356",
+    "seconds": 4.035,
+    "oracle": "Self-written disagreement/hash-owner expectation and duplicate/missing-case rejection. W1 disables stdout comparison; S4 disables union validation, and each independently makes the row fail.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1 printer_shards_test.go:380: planted mode/case 0 caught by [], want exactly its hash owner",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCSSPrinterShardingCatchesDisagreement"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1; selector /tmp/u079/selector=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterShardingCatchesDisagreement$; printer_shards_test.go:380: planted mode/case 0 caught by [], want exactly its hash owner; log W1-construction.log",
+    "witness_kills": [
+      "W1"
+    ],
+    "construction_kills": [
+      "S4"
+    ]
+  },
+  {
+    "test": "TestCSSProfileArtifacts",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/profile_test.go:18",
+    "seconds": 47.061,
+    "oracle": "Go cohere and the fork select shared sample inputs, but artifact assertions cover only calls/build success. S3 writes expected.txt under the wrong name and the test passes.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCSSProfileArtifacts"
+    ],
+    "evidence": "ADAMIC_MUTANT=S3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileArtifacts$; TestCSSProfileArtifacts: PASS; construction-artifact-proofs.json",
+    "construction_checks": [
+      "S3"
+    ]
+  },
+  {
+    "test": "TestCSSProfileSnapshotsAgree",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/profile_test.go:134",
+    "seconds": 37.794,
+    "oracle": "Go cohere supplies complete answers in default and narrow modes. Fresh source snapshot on Node and printer/profiled/counted native products must match stdout exactly.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4 profile_test.go:154: /tmp/u079/switched-profile printer 70 adamic: panic: missing CSS byte offset",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCSSPrinterThroughput"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 77.027,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterThroughput",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4; selector /tmp/u079/selector=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$; profile_test.go:154: /tmp/u079/switched-profile printer 70 adamic: panic: missing CSS byte offset; log M4-snapshots.log",
+    "subsumption_mutants": 4
+  },
+  {
+    "test": "TestSharedSliceAppendAgreesWithNode",
+    "package": "stage1/cohere/css",
+    "file": "stage1/cohere/css/shared_slice_test.go:9",
+    "seconds": 0.355,
+    "oracle": "Node, native and JavaScript backend each must print the self-written length literal 1152. It checks a length, not the appended bytes; M4 fails with ASan heap-buffer-overflow.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4 shared_slice_test.go:24: native: exit 1, stdout \"\", stderr \"=================================================================\\n==95911==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c32e81e0061 at pc 0x5623454dc1e0 bp 0x7ffcb40ca530 sp 0x7ffcb40ca528\\nREAD of size 1 at 0x7c32e81e0061 thread T0\\n    #0 0x5623454dc1df in adamic_string_locate /home/agent/.cache/adamic/runtime/.build-1579466526/string_index.c:198:38\\n    #1 0x5623454d4d7c in adamic_string_slice /home/agent/.cache/adamic/runtime/.build-1579466526/string_slice_impl.h:34:40\\n    #2 0x562345483b3b in adamic_function_0_demonstrate /tmp/adamic-gate/adamic-build-3247023205",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": 26.151,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterThroughput",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4; selector /tmp/u079/selector=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$; shared_slice_test.go:24: native: exit 1, stdout \"\", stderr \"=================================================================\\n==95911==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c32e81e0061 at pc 0x5623454dc1e0 bp 0x7ffcb40ca530 sp 0x7ffcb40ca528\\nREAD of size 1 at 0x7c32e81e0061 thread T0\\n    #0 0x5623454dc1df in adamic_string_locate /home/agent/.cache/adamic/runtime/.build-1579466526/string_index.c:198:38\\n    #1 0x5623454d4d7c in adamic_string_slice /home/agent/.cache/adamic/runtime/.build-1579466526/string_slice_impl.h:34:40\\n    #2 0x562345483b3b in adamic_function_0_demonstrate /tmp/adamic-gate/adamic-build-3247023205; log M4-fast.log",
+    "subsumption_mutants": 1
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "code": 0,
+    "wall": 29.148650407791138,
+    "cache": "/tmp/u079/cache/baseline",
+    "log": "review/test-audit/stage1-cohere-css-print/M1-standalone-native-workspace.log"
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "code": 0,
+    "wall": 27.39644145965576,
+    "cache": "/tmp/u079/cache/baseline",
+    "log": "review/test-audit/stage1-cohere-css-print/M2-standalone-native-workspace.log"
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "code": 0,
+    "wall": 28.021753549575806,
+    "cache": "/tmp/u079/cache/baseline",
+    "log": "review/test-audit/stage1-cohere-css-print/M3-standalone-native-workspace.log"
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "code": 0,
+    "wall": 21.826741933822632,
+    "cache": "/tmp/u079/cache/baseline",
+    "log": "review/test-audit/stage1-cohere-css-print/P1-standalone-native-workspace.log"
+  },
+  {
+    "id": "P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "code": 0,
+    "wall": 28.882994174957275,
+    "cache": "/tmp/u079/cache/baseline",
+    "log": "review/test-audit/stage1-cohere-css-print/P2-standalone-native-workspace.log"
+  }
+]

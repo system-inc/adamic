@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/print_doc.ts
++++ b/stage1/cohere/css/print_doc.ts
+@@ -100,7 +100,7 @@
+     }
+     fits(next: Command, rest: readonly Command[], remaining: number, suffix: boolean, mustFlat: boolean): boolean {
+         const stack: Command[] = [next]; let ri = rest.length; let pending = false;
+-        while(remaining >= 0) {
++        while(remaining > 0) {
+             if(stack.length === 0) { if(ri === 0) return true; ri--; stack.push(rest[ri] ?? panic('fit rest')); continue; }
+             const c = stack.pop() ?? panic('fit command'); const n = this.at(c.doc);
+             if(n.kind === 'text') {

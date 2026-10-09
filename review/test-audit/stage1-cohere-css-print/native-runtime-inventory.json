@@ -1,0 +1,333 @@
+{
+  "observed_entries": [
+    "adamic_string_append",
+    "adamic_regex_test"
+  ],
+  "candidates": [
+    {
+      "function": "adamic_regex_set_step_limit",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 9,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_memory",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 10,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "high",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 18,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "low",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 19,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_read",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 20,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_canonical",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 45,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_word",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 67,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_line",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 72,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_contains",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 73,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_workspace_destroy",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 110,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_clone",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 118,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_free",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 156,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_push",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 164,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_run",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 170,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_new",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 408,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_program",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 421,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_to_length",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 424,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_input",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 429,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_execute",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 450,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_groups",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 526,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_result",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 544,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_done",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 575,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_group_lookup",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 585,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_property",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 597,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_exec",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 609,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_test",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 621,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_advance",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 670,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_match",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 673,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_require_global",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 704,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_match_all",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 708,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_iterator_step",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 719,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_next",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 743,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_search",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 750,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_split",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 763,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_piece",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 823,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "regex_substitution",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 827,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_regex_replace",
+      "file": "internal/native/runtime/regexp.c",
+      "line": 918,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "grown",
+      "file": "internal/native/runtime/string_append.c",
+      "line": 22,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_append",
+      "file": "internal/native/runtime/string_append.c",
+      "line": 33,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_unit_view",
+      "file": "internal/native/runtime/string.c",
+      "line": 22,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "sequence",
+      "file": "internal/native/runtime/string.c",
+      "line": 24,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "decode",
+      "file": "internal/native/runtime/string.c",
+      "line": 25,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_at_relative",
+      "file": "internal/native/runtime/string.c",
+      "line": 45,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_starts_with",
+      "file": "internal/native/runtime/string.c",
+      "line": 54,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_ends_with",
+      "file": "internal/native/runtime/string.c",
+      "line": 61,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "width",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 39,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_units",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 43,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "build",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 57,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "usable",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 113,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_units_before",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 126,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_locate",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 161,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_unit_view",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 216,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_free_index",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 224,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    },
+    {
+      "function": "adamic_string_share",
+      "file": "internal/native/runtime/string_share.c",
+      "line": 26,
+      "reachability": "conservative lexical candidate, not native function coverage"
+    }
+  ],
+  "limit": "Branches, function pointers, and downstream helpers were not measured with native coverage."
+}

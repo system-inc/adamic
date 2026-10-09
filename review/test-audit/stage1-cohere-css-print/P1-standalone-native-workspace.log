@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:12:44.754661276Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T12:12:44.761935492Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered"}
+{"Time":"2026-10-09T12:12:44.762006617Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered","Output":"=== RUN   TestProduct_CSSPrinterSanitizedAndLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:44.762031494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered","Output":"=== PAUSE TestProduct_CSSPrinterSanitizedAndLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:44.762033857Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered"}
+{"Time":"2026-10-09T12:12:44.762039175Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered"}
+{"Time":"2026-10-09T12:12:44.762040868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered","Output":"=== CONT  TestProduct_CSSPrinterSanitizedAndLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:13:04.391857511Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered","Output":"    printer_shards_test.go:99: build css-printer-executable--1 7582d9ca2190 miss 19.62\n"}
+{"Time":"2026-10-09T12:13:04.391934545Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered","Output":"--- PASS: TestProduct_CSSPrinterSanitizedAndLowered (19.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:13:04.391995535Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterSanitizedAndLowered","Elapsed":19.63}
+{"Time":"2026-10-09T12:13:04.392331591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:13:04.395725059Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t19.641s\n"}
+{"Time":"2026-10-09T12:13:04.395797656Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":19.641}

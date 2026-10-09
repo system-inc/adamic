@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T12:09:19.755176765Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T12:09:19.762961643Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap"}
+{"Time":"2026-10-09T12:09:19.763040549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Output":"=== RUN   TestClosedPrinterRegexGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:20.866150319Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Output":"--- PASS: TestClosedPrinterRegexGap (1.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:20.866203908Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Elapsed":1.1}
+{"Time":"2026-10-09T12:09:20.866227413Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:20.868268915Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t1.113s\n"}
+{"Time":"2026-10-09T12:09:20.868298849Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":1.113}

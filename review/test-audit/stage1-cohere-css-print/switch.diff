@@ -1,0 +1,158 @@
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index 2b43acf1..75dd7e79 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -619,6 +619,7 @@ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
+ 	return result;
+ }
+ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
++	if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P4") == 0) return false;
+ 	const adamic_regex_program *p = regex_program(regex);
+ 	size_t ascii_length = (size_t)adamic_string_length(input);
+ 	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&
+diff --git a/internal/native/runtime/string_append.c b/internal/native/runtime/string_append.c
+index 5b613b50..3b4f770c 100644
+--- a/internal/native/runtime/string_append.c
++++ b/internal/native/runtime/string_append.c
+@@ -15,6 +15,7 @@
+ #include "adamic.h"
+ 
+ #include <stdint.h>
++#include <stdlib.h>
+ #include <string.h>
+ 
+ // grown makes a string of length bytes with room for capacity, references 1, laid out as string.c's
+@@ -31,6 +32,7 @@ static adamic_string *grown(size_t length, size_t capacity) {
+ }
+ 
+ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]) {
++	if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P3") == 0) { adamic_release(string); return adamic_string_concat(0, NULL); }
+ 	size_t length = string->length, added = 0;
+ 	size_t units = adamic_string_units(string);
+ 	for (size_t index = 0; index < count; index++) {
+@@ -83,7 +85,7 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
+ 	for (size_t index = 0; index < count; index++) {
+ 		written = adamic_string_put((char *)result->bytes, written, parts[index]);
+ 	}
+-	result->length = written;
++	if (getenv("ADAMIC_MUTANT") == NULL || strcmp(getenv("ADAMIC_MUTANT"), "M4") != 0) result->length = written;
+ 	// A non-ASCII part clears the ASCII fact even when the original allocation is reused.
+ 	result->units = units + 1;
+ 	if (result != string) {
+diff --git a/stage1/cohere/css/print.ts b/stage1/cohere/css/print.ts
+index c6a9efe8..a16f2a08 100644
+--- a/stage1/cohere/css/print.ts
++++ b/stage1/cohere/css/print.ts
+@@ -1,3 +1,4 @@
++import { auditMutation } from './audit_selector.ts';
+ // cohere CSS printer-postcss, declaration/rule printers, and value-group printers.
+ import { Tree } from './tree.ts';
+ import { compose } from './compose.ts';
+@@ -9,7 +10,7 @@ import { adjustNumbers } from '../cssnumbers/numbers.ts';
+ import { Documents } from './print_doc.ts';
+ import { Node, Path, lower, maybeLower, inlineLast, emptyBefore, control, placeholder, operator, word, valueWord, inlineValue, pair, parenPair, parens, mapItem, breakList, precedeSoft, hasNewline, nextEmpty } from './print_utilities.ts';
+ export type PrintOptions = { readonly width: number; readonly tabWidth: number; readonly tabs: boolean; readonly single: boolean; readonly trailingComma: string };
+-export const defaults: PrintOptions = {width: 80, tabWidth: 2, tabs: false, single: false, trailingComma: 'all'};
++export const defaults: PrintOptions = {width: 80, tabWidth: auditMutation === 'M1' ? 3 : 2, tabs: false, single: false, trailingComma: 'all'};
+ const knownUnits: readonly string[] = 'em rem ex rex cap rcap ch rch ic ric lh rlh vw svw lvw dvw vh svh lvh dvh vi svi lvi dvi vb svb lvb dvb vmin svmin lvmin dvmin vmax svmax lvmax dvmax cm mm q in pt pc px deg grad rad turn s ms hz khz dpi dpcm dppx x cqw cqh cqi cqb cqmin cqmax fr'.split(' ');
+ export class Printer {
+     readonly tree: Tree;
+@@ -263,6 +264,7 @@ export class Printer {
+ }
+ export type FormatResult = { readonly kind: 'Formatted'; readonly text: string } | { readonly kind: 'Refused'; readonly message: string };
+ export function format(text: string, scss: boolean = false, options: PrintOptions = defaults): FormatResult {
++    if(auditMutation === 'P1') return {kind:'Formatted',text:''};
+     const parsed = compose(text, scss);
+     if(parsed.kind === 'Refused') return parsed;
+     const front = new Node(parsed.tree,parsed.tree.root).child('frontMatter');
+diff --git a/stage1/cohere/css/print_doc.ts b/stage1/cohere/css/print_doc.ts
+index b5616bec..3b00506c 100644
+--- a/stage1/cohere/css/print_doc.ts
++++ b/stage1/cohere/css/print_doc.ts
+@@ -1,3 +1,4 @@
++import { auditMutation } from './audit_selector.ts';
+ // The CSS-used subset of cohere's document IR and printer. Links are arena handles.
+ import { panic } from 'adamic';
+ import { repeatText } from './convert.ts';
+@@ -100,7 +101,7 @@ export class Documents {
+     }
+     fits(next: Command, rest: readonly Command[], remaining: number, suffix: boolean, mustFlat: boolean): boolean {
+         const stack: Command[] = [next]; let ri = rest.length; let pending = false;
+-        while(remaining >= 0) {
++        while(auditMutation === 'M2' ? remaining > 0 : remaining >= 0) {
+             if(stack.length === 0) { if(ri === 0) return true; ri--; stack.push(rest[ri] ?? panic('fit rest')); continue; }
+             const c = stack.pop() ?? panic('fit command'); const n = this.at(c.doc);
+             if(n.kind === 'text') {
+diff --git a/stage1/cohere/css/printer_shards_test.go b/stage1/cohere/css/printer_shards_test.go
+index a18a339d..8f3a532f 100644
+--- a/stage1/cohere/css/printer_shards_test.go
++++ b/stage1/cohere/css/printer_shards_test.go
+@@ -67,10 +67,12 @@ func cssOracleProduct(t *testing.T, printer bool) string {
+ 			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
+ 			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
+ 			cmd.Dir = filepath.Join(repo, "cohere")
++			if os.Getenv("ADAMIC_MUTANT") != "S2" {
+ 			output, err := cmd.CombinedOutput()
+ 			if err != nil {
+ 				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
+ 			}
++			}
+ 			return nil
+ 		})
+ 		cssOracles[index] = filepath.Join(directory, "oracle")
+@@ -121,6 +123,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
+ 			if err := os.WriteFile(filepath.Join(dir, "main.mjs"), []byte(javascript.JavaScript(program)), 0644); err != nil {
+ 				return err
+ 			}
++			if os.Getenv("ADAMIC_MUTANT") == "S1" { return nil }
+ 			return native.Build(code, filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+ 		})
+ 		cssExecutables[index] = cssExecutable{filepath.Join(directory, "native"), filepath.Join(directory, "main.mjs"), filepath.Join(directory, "sources/css/print_main.ts")}
+@@ -277,7 +280,7 @@ func cssAgreement(result run, expected string) error {
+ 	if result.exitCode != 0 || len(result.stderr) != 0 {
+ 		return fmt.Errorf("exit %d stderr %s", result.exitCode, result.stderr)
+ 	}
+-	if difference := firstDifference(string(result.stdout), expected); difference != "" {
++	if difference := firstDifference(string(result.stdout), expected); difference != "" && os.Getenv("ADAMIC_MUTANT") != "W1" {
+ 		return fmt.Errorf("%s", difference)
+ 	}
+ 	return nil
+@@ -307,6 +310,7 @@ func cssModePlan(lines []string, count int) []cssModeShard {
+ }
+ 
+ func cssModeUnion(lines []string, plan []cssModeShard, count int) error {
++	if os.Getenv("ADAMIC_MUTANT") == "S4" { return nil }
+ 	if count%8 != 0 || count == 0 {
+ 		return fmt.Errorf("invalid mode shard count %d", count)
+ 	}
+diff --git a/stage1/cohere/css/profile_test.go b/stage1/cohere/css/profile_test.go
+index 48ae7ed6..542b4c60 100644
+--- a/stage1/cohere/css/profile_test.go
++++ b/stage1/cohere/css/profile_test.go
+@@ -59,7 +59,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
+ 			fmt.Fprintf(&manifest, "%d\t%d\t%d\n", i, len(input), units[i])
+ 		}
+ 	}
+-	for name, data := range map[string][]byte{"cases.txt": data, "expected.txt": []byte(expected), "narrow-expected.txt": []byte(narrow), "shared.txt": []byte(strings.Join(shared, "\n") + "\n"), "sample.txt": []byte(strings.Join(sample, "\n") + "\n"), "manifest.tsv": []byte(manifest.String()), "sample-expected.txt": []byte(fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", len(sample), len(sample), totalUnits))} {
++	for name, data := range map[string][]byte{"cases.txt": data, map[bool]string{true:"missing-expected.txt",false:"expected.txt"}[os.Getenv("ADAMIC_MUTANT") == "S3"]: []byte(expected), "narrow-expected.txt": []byte(narrow), "shared.txt": []byte(strings.Join(shared, "\n") + "\n"), "sample.txt": []byte(strings.Join(sample, "\n") + "\n"), "manifest.tsv": []byte(manifest.String()), "sample-expected.txt": []byte(fmt.Sprintf("%d of %d stylesheets formatted, %d units\n", len(sample), len(sample), totalUnits))} {
+ 		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
+ 			t.Fatal(err)
+ 		}
+diff --git a/stage1/cohere/mediaquery/index.ts b/stage1/cohere/mediaquery/index.ts
+index 6760ea38..7ad47751 100644
+--- a/stage1/cohere/mediaquery/index.ts
++++ b/stage1/cohere/mediaquery/index.ts
+@@ -1,3 +1,4 @@
++import { auditMutation } from '../css/audit_selector.ts';
+ // A port of cohere's internal/format/css/mediaquery/index.go to Adamic 0.1: postcss-media-query-parser
+ // 0.2.3, dist/index.js, the parser Prettier's src/language-css/parse/parse-media-query.js runs on the
+ // params of @media and @custom-media.
+@@ -30,6 +31,8 @@ import { trim } from './whitespace.ts';
+  * units, the library's own, where the Go's is in bytes.
+  */
+ export function parse(params: string): Result<MediaNode> {
++	if (auditMutation === 'M3') return {kind: 'Error', message: 'audit early refusal'};
++	if(auditMutation === 'P2') return {kind:'Ok',value:newContainer(undefined,undefined,'','',undefined,[])};
+ 	const nodes = parseMediaList(params);
+ 	if (nodes.kind === 'Error') {
+ 		return nodes;

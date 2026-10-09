@@ -1,0 +1,26 @@
+[
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "attempt": 1,
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant|DarwinLeaks)$",
+    "code": 0,
+    "wall": 3.7204043865203857,
+    "log": "review/test-audit/stage1-cohere-css-print/timing-native-family-all-1.log"
+  },
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "attempt": 2,
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant|DarwinLeaks)$",
+    "code": 0,
+    "wall": 3.6043200492858887,
+    "log": "review/test-audit/stage1-cohere-css-print/timing-native-family-all-2.log"
+  },
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "attempt": 3,
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant|DarwinLeaks)$",
+    "code": 0,
+    "wall": 3.777050495147705,
+    "log": "review/test-audit/stage1-cohere-css-print/timing-native-family-all-3.log"
+  }
+]

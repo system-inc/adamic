@@ -1,0 +1,22 @@
+{"Time":"2026-10-09T11:44:55.316041177Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:44:55.323522766Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle"}
+{"Time":"2026-10-09T11:44:55.323627891Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle","Output":"=== RUN   TestProduct_CSSPrinterParserOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:55.323649633Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle","Output":"=== PAUSE TestProduct_CSSPrinterParserOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:55.323652327Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle"}
+{"Time":"2026-10-09T11:44:55.323654951Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle"}
+{"Time":"2026-10-09T11:44:55.323656663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle","Output":"=== RUN   TestProduct_CSSPrinterOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:55.323663193Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle","Output":"=== PAUSE TestProduct_CSSPrinterOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:55.3236751Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle"}
+{"Time":"2026-10-09T11:44:55.323677274Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle"}
+{"Time":"2026-10-09T11:44:55.323679918Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle","Output":"=== CONT  TestProduct_CSSPrinterParserOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:55.323682051Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle"}
+{"Time":"2026-10-09T11:44:55.323683823Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle","Output":"=== CONT  TestProduct_CSSPrinterOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:56.872609733Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle","Output":"    printer_shards_test.go:57: build css-printer-oracle-0 5961f1334a08 hit 1.55\n"}
+{"Time":"2026-10-09T11:44:56.872677403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle","Output":"--- PASS: TestProduct_CSSPrinterParserOracle (1.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:56.873540947Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterParserOracle","Elapsed":1.55}
+{"Time":"2026-10-09T11:44:56.873586464Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle","Output":"    printer_shards_test.go:57: build css-printer-oracle-1 eb799af65cc7 hit 1.55\n"}
+{"Time":"2026-10-09T11:44:56.873602638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle","Output":"--- PASS: TestProduct_CSSPrinterOracle (1.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:56.873623619Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSPrinterOracle","Elapsed":1.55}
+{"Time":"2026-10-09T11:44:56.873626063Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:56.874688161Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t1.558s\n"}
+{"Time":"2026-10-09T11:44:56.874724264Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":1.5590000000000002}

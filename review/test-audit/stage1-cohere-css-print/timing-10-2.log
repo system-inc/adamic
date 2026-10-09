@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:48:13.468454133Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:48:13.477758865Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode"}
+{"Time":"2026-10-09T11:48:13.477842989Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode","Output":"=== RUN   TestSharedSliceAppendAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:13.477869147Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode","Output":"=== PAUSE TestSharedSliceAppendAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:13.477871571Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode"}
+{"Time":"2026-10-09T11:48:13.477875556Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode"}
+{"Time":"2026-10-09T11:48:13.477877369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode","Output":"=== CONT  TestSharedSliceAppendAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:13.80516341Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode","Output":"--- PASS: TestSharedSliceAppendAgreesWithNode (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:13.805225691Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestSharedSliceAppendAgreesWithNode","Elapsed":0.33}
+{"Time":"2026-10-09T11:48:13.805262535Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:48:13.806753582Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t0.338s\n"}
+{"Time":"2026-10-09T11:48:13.806789695Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":0.338}

@@ -1,0 +1,10 @@
+--- a/stage1/cohere/mediaquery/index.ts
++++ b/stage1/cohere/mediaquery/index.ts
+@@ -30,6 +30,7 @@
+  * units, the library's own, where the Go's is in bytes.
+  */
+ export function parse(params: string): Result<MediaNode> {
++	if(params.length >= 0) return {kind:'Ok',value:newContainer(undefined,undefined,'','',undefined,[])};
+ 	const nodes = parseMediaList(params);
+ 	if (nodes.kind === 'Error') {
+ 		return nodes;

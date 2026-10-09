@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "root": "/tmp/u079/validate-M1",
+    "code": 124,
+    "wall": 120.01857399940491,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-standalone-native.log"
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestProduct_CSSPrinterSanitizedAndLowered$"
+    ],
+    "root": "/tmp/u079/validate-M2",
+    "code": 124,
+    "wall": 120.02398586273193,
+    "log": "review/test-audit/stage1-cohere-css-print/M2-standalone-native.log"
+  }
+]

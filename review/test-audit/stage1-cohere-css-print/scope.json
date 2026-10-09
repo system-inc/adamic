@@ -1,0 +1,107 @@
+[
+  {
+    "test": "TestClosedPrinterRegexGap",
+    "locations": [
+      "stage1/cohere/css/print_test.go:56"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestCSSPrinterThroughput",
+    "locations": [
+      "stage1/cohere/css/print_test.go:145"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestCSSPrinterBoundaryProofs",
+    "locations": [
+      "stage1/cohere/css/print_test.go:241"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestOptionalBooleanPrinterMatchesGo",
+    "locations": [
+      "stage1/cohere/css/print_test.go:296"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterParserOracle",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:134"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterOracle",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:135"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterSanitizedAndLowered",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:136"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterSemicolonMutant",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:137"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterIndentMutant",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:138"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterWidthMutant",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:139"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestProduct_CSSPrinterDarwinLeaks",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:140"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestCSSPrinterShardingCatchesDisagreement",
+    "locations": [
+      "stage1/cohere/css/printer_shards_test.go:356"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestCSSProfileArtifacts",
+    "locations": [
+      "stage1/cohere/css/profile_test.go:18"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestCSSProfileSnapshotsAgree",
+    "locations": [
+      "stage1/cohere/css/profile_test.go:134"
+    ],
+    "in_starting_list": true
+  },
+  {
+    "test": "TestSharedSliceAppendAgreesWithNode",
+    "locations": [
+      "stage1/cohere/css/shared_slice_test.go:9"
+    ],
+    "in_starting_list": true
+  }
+]

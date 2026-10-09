@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:04:31.053594474Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T12:04:31.061053203Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap"}
+{"Time":"2026-10-09T12:04:31.061137027Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Output":"=== RUN   TestClosedPrinterRegexGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:32.03714873Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Output":"    print_test.go:67: native: 0 \"0\\nOk\\n\" \n","OutputType":"error"}
+{"Time":"2026-10-09T12:04:32.037359361Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Output":"--- FAIL: TestClosedPrinterRegexGap (0.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:32.037365851Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedPrinterRegexGap","Elapsed":0.98}
+{"Time":"2026-10-09T12:04:32.037430036Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:32.040109966Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/css\t0.986s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:32.040132008Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":0.987}

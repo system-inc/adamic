@@ -1,0 +1,158 @@
+[
+  {
+    "id": "M4",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-c",
+      "/tmp/u079/standalone-checks/M4-string_append.c",
+      "-o",
+      "/tmp/u079/standalone-checks/M4.o"
+    ],
+    "code": 0,
+    "wall": 0.054424285888671875,
+    "log": "review/test-audit/stage1-cohere-css-print/M4-standalone-compile.log"
+  },
+  {
+    "id": "P3",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-c",
+      "/tmp/u079/standalone-checks/P3-string_append.c",
+      "-o",
+      "/tmp/u079/standalone-checks/P3.o"
+    ],
+    "code": 0,
+    "wall": 0.0384824275970459,
+    "log": "review/test-audit/stage1-cohere-css-print/P3-standalone-compile.log"
+  },
+  {
+    "id": "P4",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-c",
+      "/tmp/u079/standalone-checks/P4-regexp.c",
+      "-o",
+      "/tmp/u079/standalone-checks/P4.o"
+    ],
+    "code": 0,
+    "wall": 0.5070981979370117,
+    "log": "review/test-audit/stage1-cohere-css-print/P4-standalone-compile.log"
+  },
+  {
+    "id": "W1",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u079/standalone-checks/W1-overlay.json",
+      "./stage1/cohere/css/"
+    ],
+    "code": 0,
+    "wall": 0.24137091636657715,
+    "log": "review/test-audit/stage1-cohere-css-print/W1-standalone-compile.log"
+  },
+  {
+    "id": "S1",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u079/standalone-checks/S1-overlay.json",
+      "./stage1/cohere/css/"
+    ],
+    "code": 0,
+    "wall": 0.2285611629486084,
+    "log": "review/test-audit/stage1-cohere-css-print/S1-standalone-compile.log"
+  },
+  {
+    "id": "S4",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u079/standalone-checks/S4-overlay.json",
+      "./stage1/cohere/css/"
+    ],
+    "code": 0,
+    "wall": 0.24586272239685059,
+    "log": "review/test-audit/stage1-cohere-css-print/S4-standalone-compile.log"
+  },
+  {
+    "id": "S2",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u079/standalone-checks/S2-overlay.json",
+      "./stage1/cohere/css/"
+    ],
+    "code": 0,
+    "wall": 0.26441144943237305,
+    "log": "review/test-audit/stage1-cohere-css-print/S2-standalone-compile.log"
+  },
+  {
+    "id": "S3",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u079/standalone-checks/S3-overlay.json",
+      "./stage1/cohere/css/"
+    ],
+    "code": 0,
+    "wall": 0.23762059211730957,
+    "log": "review/test-audit/stage1-cohere-css-print/S3-standalone-compile.log"
+  }
+]

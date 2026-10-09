@@ -1,0 +1,371 @@
+[
+  {
+    "test": "TestCSSProfileArtifacts",
+    "attempt": 1,
+    "seconds": 46.839,
+    "wall": 51.36175727844238,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-00-1.log",
+    "pattern": "^TestCSSProfileArtifacts$"
+  },
+  {
+    "test": "TestCSSProfileArtifacts",
+    "attempt": 2,
+    "seconds": 47.062,
+    "wall": 50.34478807449341,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-00-2.log",
+    "pattern": "^TestCSSProfileArtifacts$"
+  },
+  {
+    "test": "TestCSSProfileArtifacts",
+    "attempt": 3,
+    "seconds": 52.152,
+    "wall": 54.291038036346436,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-00-3.log",
+    "pattern": "^TestCSSProfileArtifacts$"
+  },
+  {
+    "test": "TestClosedPrinterRegexGap",
+    "attempt": 1,
+    "seconds": 1.246,
+    "wall": 3.676198959350586,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-01-1.log",
+    "pattern": "^TestClosedPrinterRegexGap$"
+  },
+  {
+    "test": "TestClosedPrinterRegexGap",
+    "attempt": 2,
+    "seconds": 1.099,
+    "wall": 3.4786558151245117,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-01-2.log",
+    "pattern": "^TestClosedPrinterRegexGap$"
+  },
+  {
+    "test": "TestClosedPrinterRegexGap",
+    "attempt": 3,
+    "seconds": 1.047,
+    "wall": 3.46364426612854,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-01-3.log",
+    "pattern": "^TestClosedPrinterRegexGap$"
+  },
+  {
+    "test": "TestCSSPrinterThroughput",
+    "attempt": 1,
+    "seconds": 76.492,
+    "wall": 78.76612782478333,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-02-1.log",
+    "pattern": "^TestCSSPrinterThroughput$"
+  },
+  {
+    "test": "TestCSSPrinterThroughput",
+    "attempt": 2,
+    "seconds": 79.083,
+    "wall": 81.0218858718872,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-02-2.log",
+    "pattern": "^TestCSSPrinterThroughput$"
+  },
+  {
+    "test": "TestCSSPrinterThroughput",
+    "attempt": 3,
+    "seconds": 77.028,
+    "wall": 79.26995897293091,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-02-3.log",
+    "pattern": "^TestCSSPrinterThroughput$"
+  },
+  {
+    "test": "TestCSSPrinterBoundaryProofs",
+    "attempt": 1,
+    "seconds": 1.231,
+    "wall": 3.2164528369903564,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-03-1.log",
+    "pattern": "^TestCSSPrinterBoundaryProofs$"
+  },
+  {
+    "test": "TestCSSPrinterBoundaryProofs",
+    "attempt": 2,
+    "seconds": 1.244,
+    "wall": 3.256549596786499,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-03-2.log",
+    "pattern": "^TestCSSPrinterBoundaryProofs$"
+  },
+  {
+    "test": "TestCSSPrinterBoundaryProofs",
+    "attempt": 3,
+    "seconds": 1.313,
+    "wall": 3.3936986923217773,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-03-3.log",
+    "pattern": "^TestCSSPrinterBoundaryProofs$"
+  },
+  {
+    "test": "TestOptionalBooleanPrinterMatchesGo",
+    "attempt": 1,
+    "seconds": 26.151,
+    "wall": 28.36346936225891,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-04-1.log",
+    "pattern": "^TestOptionalBooleanPrinterMatchesGo$"
+  },
+  {
+    "test": "TestOptionalBooleanPrinterMatchesGo",
+    "attempt": 2,
+    "seconds": 25.166,
+    "wall": 27.179561614990234,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-04-2.log",
+    "pattern": "^TestOptionalBooleanPrinterMatchesGo$"
+  },
+  {
+    "test": "TestOptionalBooleanPrinterMatchesGo",
+    "attempt": 3,
+    "seconds": 26.422,
+    "wall": 28.37772512435913,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-04-3.log",
+    "pattern": "^TestOptionalBooleanPrinterMatchesGo$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterOracle family",
+    "attempt": 1,
+    "seconds": 1.5590000000000002,
+    "wall": 3.5683584213256836,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-05-1.log",
+    "pattern": "^TestProduct_CSSPrinter(ParserOracle|Oracle)$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterOracle family",
+    "attempt": 2,
+    "seconds": 1.391,
+    "wall": 3.3344016075134277,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-05-2.log",
+    "pattern": "^TestProduct_CSSPrinter(ParserOracle|Oracle)$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterOracle family",
+    "attempt": 3,
+    "seconds": 1.275,
+    "wall": 3.324737310409546,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-05-3.log",
+    "pattern": "^TestProduct_CSSPrinter(ParserOracle|Oracle)$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "attempt": 1,
+    "seconds": 32.312,
+    "wall": 34.358309745788574,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-06-1.log",
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant)$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "attempt": 2,
+    "seconds": 1.874,
+    "wall": 3.8625142574310303,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-06-2.log",
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant)$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterNative family",
+    "attempt": 3,
+    "seconds": 1.8359999999999999,
+    "wall": 3.870666742324829,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-06-3.log",
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant)$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterDarwinLeaks",
+    "attempt": 1,
+    "seconds": 0.008,
+    "wall": 1.901188850402832,
+    "code": 0,
+    "skipped": [
+      "TestProduct_CSSPrinterDarwinLeaks"
+    ],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-07-1.log",
+    "pattern": "^TestProduct_CSSPrinterDarwinLeaks$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterDarwinLeaks",
+    "attempt": 2,
+    "seconds": 0.011,
+    "wall": 1.9492557048797607,
+    "code": 0,
+    "skipped": [
+      "TestProduct_CSSPrinterDarwinLeaks"
+    ],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-07-2.log",
+    "pattern": "^TestProduct_CSSPrinterDarwinLeaks$"
+  },
+  {
+    "test": "TestProduct_CSSPrinterDarwinLeaks",
+    "attempt": 3,
+    "seconds": 0.008,
+    "wall": 1.9516932964324951,
+    "code": 0,
+    "skipped": [
+      "TestProduct_CSSPrinterDarwinLeaks"
+    ],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-07-3.log",
+    "pattern": "^TestProduct_CSSPrinterDarwinLeaks$"
+  },
+  {
+    "test": "TestCSSPrinterShardingCatchesDisagreement",
+    "attempt": 1,
+    "seconds": 4.071,
+    "wall": 6.156662940979004,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-08-1.log",
+    "pattern": "^TestCSSPrinterShardingCatchesDisagreement$"
+  },
+  {
+    "test": "TestCSSPrinterShardingCatchesDisagreement",
+    "attempt": 2,
+    "seconds": 4.036,
+    "wall": 6.13108229637146,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-08-2.log",
+    "pattern": "^TestCSSPrinterShardingCatchesDisagreement$"
+  },
+  {
+    "test": "TestCSSPrinterShardingCatchesDisagreement",
+    "attempt": 3,
+    "seconds": 3.8120000000000003,
+    "wall": 5.753614664077759,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-08-3.log",
+    "pattern": "^TestCSSPrinterShardingCatchesDisagreement$"
+  },
+  {
+    "test": "TestCSSProfileSnapshotsAgree",
+    "attempt": 1,
+    "seconds": 38.218,
+    "wall": 40.24086093902588,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-09-1.log",
+    "pattern": "^TestCSSProfileSnapshotsAgree$"
+  },
+  {
+    "test": "TestCSSProfileSnapshotsAgree",
+    "attempt": 2,
+    "seconds": 36.962,
+    "wall": 39.150161266326904,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-09-2.log",
+    "pattern": "^TestCSSProfileSnapshotsAgree$"
+  },
+  {
+    "test": "TestCSSProfileSnapshotsAgree",
+    "attempt": 3,
+    "seconds": 37.794,
+    "wall": 39.857149600982666,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-09-3.log",
+    "pattern": "^TestCSSProfileSnapshotsAgree$"
+  },
+  {
+    "test": "TestSharedSliceAppendAgreesWithNode",
+    "attempt": 1,
+    "seconds": 0.388,
+    "wall": 2.550236463546753,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-10-1.log",
+    "pattern": "^TestSharedSliceAppendAgreesWithNode$"
+  },
+  {
+    "test": "TestSharedSliceAppendAgreesWithNode",
+    "attempt": 2,
+    "seconds": 0.338,
+    "wall": 2.53289532661438,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-10-2.log",
+    "pattern": "^TestSharedSliceAppendAgreesWithNode$"
+  },
+  {
+    "test": "TestSharedSliceAppendAgreesWithNode",
+    "attempt": 3,
+    "seconds": 0.356,
+    "wall": 2.4436450004577637,
+    "code": 0,
+    "skipped": [],
+    "red": [],
+    "log": "review/test-audit/stage1-cohere-css-print/timing-10-3.log",
+    "pattern": "^TestSharedSliceAppendAgreesWithNode$"
+  }
+]

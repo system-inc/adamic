@@ -1,0 +1,5 @@
+mutant,TestClosedPrinterRegexGap,TestCSSPrinterThroughput,TestCSSPrinterBoundaryProofs,TestOptionalBooleanPrinterMatchesGo,TestCSSProfileSnapshotsAgree,TestSharedSliceAppendAgreesWithNode
+M1,pass,fail,fail,fail,fail,pass
+M2,pass,fail,pass,pass,fail,pass
+M3,fail,fail,pass,pass,fail,pass
+M4,pass,fail,pass,fail,fail,fail

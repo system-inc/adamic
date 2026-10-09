@@ -1,0 +1,61 @@
+{
+  "base": "cf79ecec3723604428ab91ebcb283400d05a1548",
+  "nproc": 5,
+  "port_reached_function_count": 384,
+  "runtime_entries": [
+    "adamic_regex_test",
+    "adamic_string_append"
+  ],
+  "construction_functions": [
+    "cssOracleProduct",
+    "cssPrinterProduct",
+    "cssAgreement",
+    "cssPrinterOwner",
+    "cssPartition",
+    "cssUnion",
+    "cssModePlan",
+    "cssModeUnion"
+  ],
+  "fixed_menu": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/css/print.ts",
+      "operation": "change constant",
+      "before": "tabWidth: 2",
+      "after": "tabWidth: 3"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/css/print_doc.ts",
+      "operation": "off-by-one bound",
+      "before": "while(remaining >= 0)",
+      "after": "while(remaining > 0)"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/mediaquery/index.ts",
+      "operation": "return early",
+      "after": "return {kind: 'Error', message: 'audit early refusal'}"
+    },
+    {
+      "id": "M4",
+      "file": "internal/native/runtime/string_append.c",
+      "operation": "drop statement",
+      "before": "result->length = written;",
+      "after": ""
+    }
+  ],
+  "probes": {
+    "P1": "format: empty Formatted text",
+    "P2": "mediaquery.parse: empty Ok container",
+    "P3": "adamic_string_append: empty string",
+    "P4": "adamic_regex_test: false"
+  },
+  "construction_checks": {
+    "W1": "cssAgreement: disable stdout comparison",
+    "S1": "cssPrinterProduct: omit native.Build",
+    "S2": "cssOracleProduct: omit Go oracle build, without changing Go cohere",
+    "S3": "TestCSSProfileArtifacts: expected.txt is written under the wrong name",
+    "S4": "cssModeUnion: accept every plan"
+  }
+}
