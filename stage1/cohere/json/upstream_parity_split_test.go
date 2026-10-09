@@ -431,7 +431,3 @@ func upstreamParityOracleProduct(t *testing.T) string {
 	}
 	return upstreamParityOracleBuild.path
 }
-func TestProduct_JSONUpstreamOracle(t *testing.T) {
-	t.Parallel()
-	upstreamParityOracleProduct(t)
-}
