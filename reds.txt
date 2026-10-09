@@ -1,0 +1,361 @@
+run adamic-verify-20261009T193550-9c2545ec: void, 202 tests in 601 units, 0 failed, 173 units broken, 0 killed over budget
+BROKEN product-40: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN product-41: no results (exited false, last output "loom-pilot: 34384f27ae48 slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 4 s, 2 packages at a time")
+BROKEN product-44: no results (exited true, last output "loom-pilot: tests took 11 s in all")
+BROKEN product-46: no results (exited false, last output "loom-pilot: 496bbfdff3cd slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 1 s, 2 packages at a time")
+BROKEN product-47: no results (exited false, last output "loom-pilot: d95b3b5a1a4a slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 1 s, 2 packages at a time")
+BROKEN product-48: no results (exited false, last output "loom-pilot: a6b8d6ecbf4b slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 2 s, 2 packages at a time")
+BROKEN product-49: no results (exited false, last output "loom-pilot: 87d7b65f9647 slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 1 s, 2 packages at a time")
+BROKEN product-50: no results (exited false, last output "")
+BROKEN product-51: no results (exited false, last output "")
+BROKEN product-52: no results (exited false, last output "")
+BROKEN product-53: no results (exited false, last output "")
+BROKEN product-54: no results (exited false, last output "")
+BROKEN product-55: no results (exited false, last output "")
+BROKEN product-56: no results (exited false, last output "")
+BROKEN product-57: no results (exited false, last output "")
+BROKEN product-58: no results (exited false, last output "")
+BROKEN product-59: no results (exited false, last output "")
+BROKEN product-60: no results (exited false, last output "")
+BROKEN product-61: no results (exited false, last output "")
+BROKEN product-62: no results (exited false, last output "")
+BROKEN product-114: no results (exited false, last output "loom-pilot: 9b2db9d42042 slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 2 s, 2 packages at a time")
+BROKEN product-149: no results (exited false, last output "")
+BROKEN product-150: no results (exited false, last output "")
+BROKEN product-151: no results (exited false, last output "")
+BROKEN product-152: no results (exited false, last output "")
+BROKEN product-153: no results (exited false, last output "")
+BROKEN product-154: no results (exited false, last output "")
+BROKEN product-155: no results (exited false, last output "")
+BROKEN product-156: no results (exited false, last output "")
+BROKEN product-157: no results (exited false, last output "")
+BROKEN product-158: no results (exited false, last output "")
+BROKEN product-159: no results (exited false, last output "")
+BROKEN product-160: no results (exited false, last output "")
+BROKEN product-161: no results (exited false, last output "")
+BROKEN product-162: no results (exited false, last output "")
+BROKEN product-163: no results (exited false, last output "")
+BROKEN product-164: no results (exited false, last output "")
+BROKEN product-165: no results (exited false, last output "")
+BROKEN product-166: no results (exited false, last output "")
+BROKEN product-167: no results (exited false, last output "")
+BROKEN product-168: no results (exited false, last output "")
+BROKEN product-169: no results (exited false, last output "")
+BROKEN product-170: no results (exited false, last output "")
+BROKEN product-171: no results (exited false, last output "")
+BROKEN product-172: no results (exited false, last output "")
+BROKEN product-173: no results (exited false, last output "")
+BROKEN product-174: no results (exited false, last output "")
+BROKEN product-175: no results (exited false, last output "")
+BROKEN product-176: no results (exited false, last output "")
+BROKEN product-177: no results (exited false, last output "")
+BROKEN product-178: no results (exited false, last output "")
+BROKEN product-179: no results (exited false, last output "")
+BROKEN product-180: no results (exited false, last output "")
+BROKEN product-181: no results (exited false, last output "")
+BROKEN product-182: no results (exited false, last output "")
+BROKEN product-183: no results (exited false, last output "")
+BROKEN product-184: no results (exited false, last output "")
+BROKEN product-185: no results (exited false, last output "")
+BROKEN product-186: no results (exited false, last output "")
+BROKEN product-187: no results (exited false, last output "")
+BROKEN product-188: no results (exited false, last output "")
+BROKEN product-189: no results (exited false, last output "")
+BROKEN product-190: no results (exited false, last output "")
+BROKEN product-191: no results (exited false, last output "")
+BROKEN product-192: no results (exited false, last output "")
+BROKEN product-193: no results (exited false, last output "")
+BROKEN product-194: no results (exited false, last output "")
+BROKEN product-195: no results (exited false, last output "")
+BROKEN product-196: no results (exited false, last output "")
+BROKEN product-197: no results (exited false, last output "")
+BROKEN product-198: no results (exited false, last output "")
+BROKEN product-199: no results (exited false, last output "")
+BROKEN product-200: no results (exited false, last output "")
+BROKEN product-201: no results (exited false, last output "")
+BROKEN product-202: no results (exited false, last output "loom-pilot: 8e38732c293f slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 2 s, 2 packages at a time")
+BROKEN product-220: no results (exited false, last output "loom-pilot: cb4fc588e96c slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 1 s, 2 packages at a time")
+BROKEN product-228: no results (exited false, last output "loom-pilot: ddf4d400950e slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 1 s, 2 packages at a time")
+BROKEN product-237: no results (exited false, last output "loom-pilot: d9a51227ce19 slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 1 s, 2 packages at a time")
+BROKEN product-239: no results (exited false, last output "loom-pilot: d24109916836 slot ? cpus ? tree 7166fe336ab560df66f5793291c233338ea48dda setup 2 s, 2 packages at a time")
+BROKEN product-246: no results (exited false, last output "")
+BROKEN product-247: no results (exited false, last output "")
+BROKEN product-248: no results (exited false, last output "")
+BROKEN product-249: no results (exited false, last output "")
+BROKEN product-250: no results (exited false, last output "")
+BROKEN product-251: no results (exited false, last output "")
+BROKEN product-252: no results (exited false, last output "")
+BROKEN product-253: no results (exited false, last output "")
+BROKEN product-254: no results (exited false, last output "")
+BROKEN product-255: no results (exited false, last output "")
+BROKEN product-256: no results (exited false, last output "")
+BROKEN product-257: no results (exited false, last output "")
+BROKEN product-258: no results (exited false, last output "")
+BROKEN product-259: no results (exited false, last output "")
+BROKEN product-260: no results (exited false, last output "")
+BROKEN product-261: no results (exited false, last output "")
+BROKEN product-262: no results (exited false, last output "")
+BROKEN product-263: no results (exited false, last output "")
+BROKEN product-264: no results (exited false, last output "")
+BROKEN product-265: no results (exited false, last output "")
+BROKEN tests-00: no results (exited false, last output "")
+BROKEN tests-01: no results (exited false, last output "")
+BROKEN tests-02: no results (exited false, last output "")
+BROKEN tests-03: no results (exited false, last output "")
+BROKEN tests-04: no results (exited false, last output "")
+BROKEN tests-05: no results (exited false, last output "")
+BROKEN tests-06: no results (exited false, last output "")
+BROKEN tests-07: no results (exited false, last output "")
+BROKEN tests-08: no results (exited false, last output "")
+BROKEN tests-09: no results (exited false, last output "")
+BROKEN tests-10: no results (exited false, last output "")
+BROKEN tests-11: no results (exited false, last output "")
+BROKEN tests-12: no results (exited false, last output "")
+BROKEN tests-13: no results (exited false, last output "")
+BROKEN tests-14: no results (exited false, last output "")
+BROKEN tests-15: no results (exited false, last output "")
+BROKEN tests-16: no results (exited false, last output "")
+BROKEN tests-17: no results (exited false, last output "")
+BROKEN tests-18: no results (exited false, last output "")
+BROKEN tests-19: no results (exited false, last output "")
+BROKEN tests-20: no results (exited false, last output "")
+BROKEN tests-21: no results (exited false, last output "")
+BROKEN tests-22: no results (exited false, last output "")
+BROKEN tests-23: no results (exited false, last output "")
+BROKEN tests-24: no results (exited false, last output "")
+BROKEN tests-25: no results (exited false, last output "")
+BROKEN tests-26: no results (exited false, last output "")
+BROKEN tests-27: no results (exited false, last output "")
+BROKEN tests-28: no results (exited false, last output "")
+BROKEN tests-29: no results (exited false, last output "")
+BROKEN tests-30: no results (exited false, last output "")
+BROKEN tests-31: no results (exited false, last output "")
+BROKEN tests-32: no results (exited false, last output "")
+BROKEN tests-33: no results (exited false, last output "")
+BROKEN tests-34: no results (exited false, last output "")
+BROKEN tests-35: no results (exited false, last output "")
+BROKEN tests-06-r1: no results (exited false, last output "")
+BROKEN tests-06-r2: no results (exited false, last output "")
+BROKEN tests-06-r3: no results (exited false, last output "")
+BROKEN tests-06-r4: no results (exited false, last output "")
+BROKEN tests-06-r5: no results (exited false, last output "")
+BROKEN tests-06-r6: no results (exited false, last output "")
+BROKEN tests-06-r7: no results (exited false, last output "")
+BROKEN tests-06-r8: no results (exited false, last output "")
+BROKEN tests-06-r9: no results (exited false, last output "")
+BROKEN tests-06-r10: no results (exited false, last output "")
+BROKEN tests-06-r11: no results (exited false, last output "")
+BROKEN tests-06-r12: no results (exited false, last output "")
+BROKEN tests-06-r13: no results (exited false, last output "")
+BROKEN tests-06-r14: no results (exited false, last output "")
+BROKEN tests-06-r15: no results (exited false, last output "")
+BROKEN tests-06-r16: no results (exited false, last output "")
+BROKEN tests-06-r17: no results (exited false, last output "")
+BROKEN tests-06-r18: no results (exited false, last output "")
+BROKEN tests-06-r19: no results (exited false, last output "")
+BROKEN tests-06-r20: no results (exited false, last output "")
+BROKEN tests-06-r21: no results (exited false, last output "")
+BROKEN tests-06-r22: no results (exited false, last output "")
+BROKEN tests-06-r23: no results (exited false, last output "")
+BROKEN tests-06-r24: no results (exited false, last output "")
+BROKEN tests-06-r25: no results (exited false, last output "")
+BROKEN tests-06-r26: no results (exited false, last output "")
+BROKEN tests-06-r27: no results (exited false, last output "")
+BROKEN tests-06-r28: no results (exited false, last output "")
+BROKEN tests-06-r29: no results (exited false, last output "")
+BROKEN tests-06-r30: no results (exited false, last output "")
+BROKEN tests-06-r31: no results (exited false, last output "")
+BROKEN tests-20-r1: no results (exited false, last output "")
+BROKEN tests-20-r2: no results (exited false, last output "")
+BROKEN tests-31-r1: no results (exited false, last output "")
+BROKEN tests-35-r1: no results (exited false, last output "")
+BROKEN tests-35-r2: no results (exited false, last output "")
+BROKEN tests-35-r3: no results (exited false, last output "")
+BROKEN tests-35-r4: no results (exited false, last output "")
+PRODUCT OVER 60 S product-04 github.com/system-inc/adamic/bridge/tsgo TestProduct_LengthArchive: 107 s
+PRODUCT OVER 60 S product-07 github.com/system-inc/adamic/bridge/tsgo TestProduct_Native: 114 s
+PRODUCT OVER 60 S product-09 github.com/system-inc/adamic/bridge/tsgo TestProduct_RegionNative: 122 s
+PRODUCT OVER 60 S product-11 github.com/system-inc/adamic/bridge/tsgo TestProduct_SanitizedNative: 112 s
+PRODUCT OVER 60 S product-13 github.com/system-inc/adamic/bridge/tsgo TestProduct_StaleArchive: 100 s
+PRODUCT OVER 60 S product-16 github.com/system-inc/adamic/bridge/tsgo TestProduct_TsgoSanitizedArchive: 105 s
+PRODUCT OVER 60 S product-17 github.com/system-inc/adamic/bridge/tsgo TestProduct_WrongArchive: 101 s
+PRODUCT OVER 60 S product-406 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_archive_checker: 147 s
+PRODUCT OVER 60 S product-409 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_assignable_types_native: 111 s
+PRODUCT OVER 60 S product-418 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_contextual_shape: 100 s
+PRODUCT OVER 60 S product-432 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_scope_locals_native: 116 s
+PRODUCT OVER 60 S product-438 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_volume_asan: 113 s
+PRODUCT OVER 60 S product-447 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_strict_this_native: 121 s
+PRODUCT OVER 60 S product-449 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume_asan: 151 s
+BROKEN product-40 on 1 placements, workers: 48ab18cc216d
+BROKEN product-41 on 1 placements, workers: 34384f27ae48
+BROKEN product-44 on 1 placements, workers: 5116fd40e771
+BROKEN product-46 on 1 placements, workers: 496bbfdff3cd
+BROKEN product-47 on 1 placements, workers: d95b3b5a1a4a
+BROKEN product-48 on 1 placements, workers: a6b8d6ecbf4b
+BROKEN product-49 on 1 placements, workers: 87d7b65f9647
+BROKEN product-50 on 1 placements, workers: 1b945d0fb2e7
+BROKEN product-51 on 1 placements, workers: b43331a6f868
+BROKEN product-52 on 0 placements, workers: none started
+BROKEN product-53 on 0 placements, workers: none started
+BROKEN product-54 on 0 placements, workers: none started
+BROKEN product-55 on 0 placements, workers: none started
+BROKEN product-56 on 0 placements, workers: none started
+BROKEN product-57 on 0 placements, workers: none started
+BROKEN product-58 on 0 placements, workers: none started
+BROKEN product-59 on 0 placements, workers: none started
+BROKEN product-60 on 0 placements, workers: none started
+BROKEN product-61 on 0 placements, workers: none started
+BROKEN product-62 on 0 placements, workers: none started
+BROKEN product-114 on 1 placements, workers: 9b2db9d42042
+BROKEN product-149 on 0 placements, workers: none started
+BROKEN product-150 on 0 placements, workers: none started
+BROKEN product-151 on 0 placements, workers: none started
+BROKEN product-152 on 0 placements, workers: none started
+BROKEN product-153 on 0 placements, workers: none started
+BROKEN product-154 on 0 placements, workers: none started
+BROKEN product-155 on 0 placements, workers: none started
+BROKEN product-156 on 0 placements, workers: none started
+BROKEN product-157 on 0 placements, workers: none started
+BROKEN product-158 on 0 placements, workers: none started
+BROKEN product-159 on 0 placements, workers: none started
+BROKEN product-160 on 0 placements, workers: none started
+BROKEN product-161 on 0 placements, workers: none started
+BROKEN product-162 on 0 placements, workers: none started
+BROKEN product-163 on 0 placements, workers: none started
+BROKEN product-164 on 0 placements, workers: none started
+BROKEN product-165 on 0 placements, workers: none started
+BROKEN product-166 on 0 placements, workers: none started
+BROKEN product-167 on 0 placements, workers: none started
+BROKEN product-168 on 0 placements, workers: none started
+BROKEN product-169 on 0 placements, workers: none started
+BROKEN product-170 on 0 placements, workers: none started
+BROKEN product-171 on 0 placements, workers: none started
+BROKEN product-172 on 0 placements, workers: none started
+BROKEN product-173 on 0 placements, workers: none started
+BROKEN product-174 on 0 placements, workers: none started
+BROKEN product-175 on 0 placements, workers: none started
+BROKEN product-176 on 0 placements, workers: none started
+BROKEN product-177 on 0 placements, workers: none started
+BROKEN product-178 on 0 placements, workers: none started
+BROKEN product-179 on 0 placements, workers: none started
+BROKEN product-180 on 0 placements, workers: none started
+BROKEN product-181 on 0 placements, workers: none started
+BROKEN product-182 on 0 placements, workers: none started
+BROKEN product-183 on 0 placements, workers: none started
+BROKEN product-184 on 0 placements, workers: none started
+BROKEN product-185 on 0 placements, workers: none started
+BROKEN product-186 on 0 placements, workers: none started
+BROKEN product-187 on 0 placements, workers: none started
+BROKEN product-188 on 0 placements, workers: none started
+BROKEN product-189 on 0 placements, workers: none started
+BROKEN product-190 on 0 placements, workers: none started
+BROKEN product-191 on 0 placements, workers: none started
+BROKEN product-192 on 0 placements, workers: none started
+BROKEN product-193 on 0 placements, workers: none started
+BROKEN product-194 on 0 placements, workers: none started
+BROKEN product-195 on 0 placements, workers: none started
+BROKEN product-196 on 0 placements, workers: none started
+BROKEN product-197 on 0 placements, workers: none started
+BROKEN product-198 on 0 placements, workers: none started
+BROKEN product-199 on 0 placements, workers: none started
+BROKEN product-200 on 0 placements, workers: none started
+BROKEN product-201 on 0 placements, workers: none started
+BROKEN product-202 on 1 placements, workers: 8e38732c293f
+BROKEN product-220 on 1 placements, workers: cb4fc588e96c
+BROKEN product-228 on 1 placements, workers: ddf4d400950e
+BROKEN product-237 on 1 placements, workers: d9a51227ce19
+BROKEN product-239 on 1 placements, workers: d24109916836
+BROKEN product-246 on 0 placements, workers: none started
+BROKEN product-247 on 0 placements, workers: none started
+BROKEN product-248 on 0 placements, workers: none started
+BROKEN product-249 on 0 placements, workers: none started
+BROKEN product-250 on 0 placements, workers: none started
+BROKEN product-251 on 0 placements, workers: none started
+BROKEN product-252 on 0 placements, workers: none started
+BROKEN product-253 on 0 placements, workers: none started
+BROKEN product-254 on 0 placements, workers: none started
+BROKEN product-255 on 0 placements, workers: none started
+BROKEN product-256 on 0 placements, workers: none started
+BROKEN product-257 on 0 placements, workers: none started
+BROKEN product-258 on 0 placements, workers: none started
+BROKEN product-259 on 0 placements, workers: none started
+BROKEN product-260 on 0 placements, workers: none started
+BROKEN product-261 on 0 placements, workers: none started
+BROKEN product-262 on 0 placements, workers: none started
+BROKEN product-263 on 0 placements, workers: none started
+BROKEN product-264 on 0 placements, workers: none started
+BROKEN product-265 on 0 placements, workers: none started
+BROKEN tests-00 on 0 placements, workers: none started
+BROKEN tests-01 on 0 placements, workers: none started
+BROKEN tests-02 on 0 placements, workers: none started
+BROKEN tests-03 on 0 placements, workers: none started
+BROKEN tests-04 on 0 placements, workers: none started
+BROKEN tests-05 on 0 placements, workers: none started
+BROKEN tests-06 on 0 placements, workers: none started
+BROKEN tests-07 on 0 placements, workers: none started
+BROKEN tests-08 on 0 placements, workers: none started
+BROKEN tests-09 on 0 placements, workers: none started
+BROKEN tests-10 on 0 placements, workers: none started
+BROKEN tests-11 on 0 placements, workers: none started
+BROKEN tests-12 on 0 placements, workers: none started
+BROKEN tests-13 on 0 placements, workers: none started
+BROKEN tests-14 on 0 placements, workers: none started
+BROKEN tests-15 on 0 placements, workers: none started
+BROKEN tests-16 on 0 placements, workers: none started
+BROKEN tests-17 on 0 placements, workers: none started
+BROKEN tests-18 on 0 placements, workers: none started
+BROKEN tests-19 on 0 placements, workers: none started
+BROKEN tests-20 on 0 placements, workers: none started
+BROKEN tests-21 on 0 placements, workers: none started
+BROKEN tests-22 on 0 placements, workers: none started
+BROKEN tests-23 on 0 placements, workers: none started
+BROKEN tests-24 on 0 placements, workers: none started
+BROKEN tests-25 on 0 placements, workers: none started
+BROKEN tests-26 on 0 placements, workers: none started
+BROKEN tests-27 on 0 placements, workers: none started
+BROKEN tests-28 on 0 placements, workers: none started
+BROKEN tests-29 on 0 placements, workers: none started
+BROKEN tests-30 on 0 placements, workers: none started
+BROKEN tests-31 on 0 placements, workers: none started
+BROKEN tests-32 on 0 placements, workers: none started
+BROKEN tests-33 on 0 placements, workers: none started
+BROKEN tests-34 on 0 placements, workers: none started
+BROKEN tests-35 on 0 placements, workers: none started
+BROKEN tests-06-r1 on 0 placements, workers: none started
+BROKEN tests-06-r2 on 0 placements, workers: none started
+BROKEN tests-06-r3 on 0 placements, workers: none started
+BROKEN tests-06-r4 on 0 placements, workers: none started
+BROKEN tests-06-r5 on 0 placements, workers: none started
+BROKEN tests-06-r6 on 0 placements, workers: none started
+BROKEN tests-06-r7 on 0 placements, workers: none started
+BROKEN tests-06-r8 on 0 placements, workers: none started
+BROKEN tests-06-r9 on 0 placements, workers: none started
+BROKEN tests-06-r10 on 0 placements, workers: none started
+BROKEN tests-06-r11 on 0 placements, workers: none started
+BROKEN tests-06-r12 on 0 placements, workers: none started
+BROKEN tests-06-r13 on 0 placements, workers: none started
+BROKEN tests-06-r14 on 0 placements, workers: none started
+BROKEN tests-06-r15 on 0 placements, workers: none started
+BROKEN tests-06-r16 on 0 placements, workers: none started
+BROKEN tests-06-r17 on 0 placements, workers: none started
+BROKEN tests-06-r18 on 0 placements, workers: none started
+BROKEN tests-06-r19 on 0 placements, workers: none started
+BROKEN tests-06-r20 on 0 placements, workers: none started
+BROKEN tests-06-r21 on 0 placements, workers: none started
+BROKEN tests-06-r22 on 0 placements, workers: none started
+BROKEN tests-06-r23 on 0 placements, workers: none started
+BROKEN tests-06-r24 on 0 placements, workers: none started
+BROKEN tests-06-r25 on 0 placements, workers: none started
+BROKEN tests-06-r26 on 0 placements, workers: none started
+BROKEN tests-06-r27 on 0 placements, workers: none started
+BROKEN tests-06-r28 on 0 placements, workers: none started
+BROKEN tests-06-r29 on 0 placements, workers: none started
+BROKEN tests-06-r30 on 0 placements, workers: none started
+BROKEN tests-06-r31 on 0 placements, workers: none started
+BROKEN tests-20-r1 on 0 placements, workers: none started
+BROKEN tests-20-r2 on 0 placements, workers: none started
+BROKEN tests-31-r1 on 0 placements, workers: none started
+BROKEN tests-35-r1 on 0 placements, workers: none started
+BROKEN tests-35-r2 on 0 placements, workers: none started
+BROKEN tests-35-r3 on 0 placements, workers: none started
+BROKEN tests-35-r4 on 0 placements, workers: none started
