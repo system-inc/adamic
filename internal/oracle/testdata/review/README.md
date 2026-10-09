@@ -18,6 +18,17 @@ awaits compiler/fix-branch: explanation of the miscompile
 The subtest skips with exactly that message. Remove the sidecar when the fix lands; the
 existing gate census tracks `awaits <branch>` skips. A malformed sidecar fails the subtest.
 
+While no fixing branch exists yet, the sidecar may name the task instead: `awaits #<task>: <reason>`
+(e.g. `awaits #cxr5x2v: catchable RangeError, step 21`). The Mac-side review census
+(cloud/review-census.py on the gate tools) pages integration once that task is Done and the sidecar
+is still there.
+
+A ruled difference from Node (an intended departure, such as step 24's loud stack guard where Node
+throws a catchable RangeError) is an `<name>.intended` sidecar, one line
+`intended: <ruling>: <what differs>`, with the pinned output in `<name>.expected.json`
+(`{"stdout": "...", "stderr": "...", "exit": 70}`). Native, the JavaScript backend and the release
+build are held to the pin instead of Node. A pin that Node now matches is stale and fails.
+
 `TestReviewProgramsSelfTest` plants a wrong expected stdout for `agree/smoke.a` and requires
 every backend comparison to reject it. It also plants an accepted program in a temporary
 `refused/` directory and a loose program in a temporary review root, and requires the same
