@@ -746,6 +746,19 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'codex/c ' in w.read('starts'))
         self.assertNotIn('codex/c ', w.read('good-starts'))
 
+    def test_a_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on(self):
+        # Oct 8 22:16Z to Oct 9 02:10Z: every box-side push restarted promotion, and nothing promoted for four hours.
+        w = Watcher(2, canaryBox='box1', mode='hold')
+        self.addCleanup(w.close)
+        w.wait(lambda: w.read('starts').strip() and w.read('good-starts').strip())
+        # The head moves while tools-one's canary gate runs.
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'staging tools tools-two' in w.read('output'))
+        w.put('mode', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-one')
+        self.assertIn('the canary box stages tools-two beyond them', w.read('output'))
+
     def test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary(self):
         # Staged tools: good is tools-zero, head tools-one, but tools-one changes only the Mac side.
         w = Watcher(2, canaryBox='box1', mode='hold', boxSides={'tools-one': 'tools-zero'})

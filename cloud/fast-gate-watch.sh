@@ -807,12 +807,16 @@ while true; do
     if [ -z "${cause}" ]; then
       verdict=$(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)
       echo "$(date -u +%H:%M:%S) done ${branch}: ${verdict}"
-      # A real tip green on the canary box with the staged tools promotes them to every box.
-      if staging && [[ ${testedHead} != *:good && ${verdict} == "green: ${sha} "* ]] &&
-         [ "$(boxTools "${testedHead%%:*}")" = "$(boxTools "${toolsHead}")" ]; then
-        echo "${toolsHead}" > "${state}/tools-good"
+      # A real tip green on the canary box promotes the tools it ran to every box, even when the head has moved on since:
+      # promoting only a green of the head's own tools meant every box-side push restarted promotion, and from Oct 8
+      # 22:16Z to Oct 9 02:10Z nothing promoted while developer tools pushed every half hour. The canary box keeps
+      # staging whatever the head is beyond them.
+      tested=${testedHead%%:*}
+      if staging && [[ ${testedHead} != *:good && ${testedHead} != *:pool && ${verdict} == "green: ${sha} "* ]] &&
+         [ "$(boxTools "${tested}")" != "$(boxTools "$(cat "${state}/tools-good")")" ]; then
+        echo "${tested}" > "${state}/tools-good"
         placeGoodTree
-        echo "$(date -u +%H:%M:%S) promoted tools ${toolsHead:0:9} to every box after ${branch} ${sha} green on ${box}"
+        echo "$(date -u +%H:%M:%S) promoted tools ${tested:0:9} to every box after ${branch} ${sha} green on ${box}$([ "${tested}" = "${toolsHead}" ] || echo "; the canary box stages ${toolsHead:0:9} beyond them")"
       fi
       # The verdict reaches the branch's owner (and integration for landings and areas) as it exists.
       (python3 "${here}/cloud/verdict-notify.py" "${branch}" "${sha}" "${gateLog}" >> "${state}/logs/verdict-notify.log" 2>&1 &)
