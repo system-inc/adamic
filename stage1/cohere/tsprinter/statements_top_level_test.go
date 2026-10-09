@@ -81,7 +81,8 @@ func TestStatementsAgainstGoAndPrettier_015(t *testing.T) {
 // Enumerate the live corpus and validate all slices before any box selection.
 func TestStatementsAgainstGoAndPrettierUnion(t *testing.T) {
 	t.Parallel()
-	cases, want, specs := statementCorpus(t)
+	products := statementReadyShared(t)
+	cases, want, specs := products.Cases, products.Want, products.Specs
 	shards := statementShards(t, cases, want, specs)
 	if len(shards) != testStatementsAgainstGoAndPrettierShards {
 		t.Fatalf("enumerated %d shards", len(shards))
