@@ -1,3 +1,4 @@
+// a-check: refused an unproven relation from
 // Refused: optional field value has no proven compatible presence/type
 // Representative member-count fixture. Not the full compiler interfaces.
 interface Left { readonly text: string; readonly note?: string; }
