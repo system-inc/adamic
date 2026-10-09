@@ -1,0 +1,5 @@
+The production revert was applied from revert.diff; both commands used the setup environment.
+First revert: timeout 180 go test ./internal/lower -run 'TestUnsupportedView|TestFX7RevertNative' -v -count=1 -timeout 90s
+Final revert: timeout 180 go test ./internal/lower ./internal/oracle -run 'TestUnsupportedView|TestFX7RevertNative|TestCheckedViewUntaggedOwnClassData.*Refused|TestCheckedViewUntaggedArray.*Refused|TestCheckedViewV2ArrayArmBoundary' -v -count=1 -timeout 90s
+Both exited 1 at the test command. A shell EXIT trap restored production sources and removed the temporary compiled probe.
+The final native witnesses are p37 and integration's exact p21.

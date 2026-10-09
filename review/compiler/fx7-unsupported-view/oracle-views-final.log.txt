@@ -1,0 +1,576 @@
+=== RUN   TestCheckedViewV2ReadsAfterWrites
+=== PAUSE TestCheckedViewV2ReadsAfterWrites
+=== RUN   TestCheckedViewV2ArrayArmBoundary
+=== PAUSE TestCheckedViewV2ArrayArmBoundary
+=== RUN   TestCheckedViewV2WrongFamilyMutant
+=== PAUSE TestCheckedViewV2WrongFamilyMutant
+=== RUN   TestCheckedViewV2RepresentationMutants
+=== PAUSE TestCheckedViewV2RepresentationMutants
+=== RUN   TestCheckedViewV2MembershipMutant
+=== PAUSE TestCheckedViewV2MembershipMutant
+=== RUN   TestCheckedViewV2TupleIdentityMutant
+=== PAUSE TestCheckedViewV2TupleIdentityMutant
+=== RUN   TestCheckedViewV2CallableProducerMutant
+=== PAUSE TestCheckedViewV2CallableProducerMutant
+=== RUN   TestCheckedViewV2MovedStage3Results
+=== PAUSE TestCheckedViewV2MovedStage3Results
+=== RUN   TestCheckedViewUntaggedSourceDispatch
+=== PAUSE TestCheckedViewUntaggedSourceDispatch
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== PAUSE TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedOptionalCallableControl
+=== PAUSE TestCheckedViewUntaggedOptionalCallableControl
+=== RUN   TestCheckedViewUntaggedSourceFlows
+=== PAUSE TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== PAUSE TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== RUN   TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== PAUSE TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== RUN   TestCheckedViewUntaggedRecursive
+=== PAUSE TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedArrayGoodRefused
+=== PAUSE TestCheckedViewUntaggedArrayGoodRefused
+=== RUN   TestCheckedViewUntaggedArrayWrongRefused
+=== PAUSE TestCheckedViewUntaggedArrayWrongRefused
+=== RUN   TestCheckedViewUntaggedArrayNestedRefused
+=== PAUSE TestCheckedViewUntaggedArrayNestedRefused
+=== RUN   TestCheckedViewUntaggedArrayEmptyRefused
+=== PAUSE TestCheckedViewUntaggedArrayEmptyRefused
+=== RUN   TestCheckedViewUntaggedArrayMixedRefused
+=== PAUSE TestCheckedViewUntaggedArrayMixedRefused
+=== CONT  TestCheckedViewV2ReadsAfterWrites
+=== RUN   TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/null-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/null-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/representation-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/representation-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+=== RUN   TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+=== CONT  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+=== CONT  TestCheckedViewV2MovedStage3Results
+=== CONT  TestCheckedViewV2TupleIdentityMutant
+=== CONT  TestCheckedViewV2CallableProducerMutant
+=== CONT  TestCheckedViewUntaggedArrayMixedRefused
+=== RUN   TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== RUN   TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== CONT  TestCheckedViewUntaggedArrayEmptyRefused
+--- PASS: TestCheckedViewUntaggedArrayEmptyRefused (0.26s)
+=== CONT  TestCheckedViewUntaggedArrayNestedRefused
+--- PASS: TestCheckedViewUntaggedArrayMixedRefused (0.28s)
+=== CONT  TestCheckedViewUntaggedArrayWrongRefused
+--- PASS: TestCheckedViewUntaggedArrayWrongRefused (0.15s)
+=== CONT  TestCheckedViewUntaggedArrayGoodRefused
+--- PASS: TestCheckedViewUntaggedArrayNestedRefused (0.17s)
+=== CONT  TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedRecursive/good
+=== PAUSE TestCheckedViewUntaggedRecursive/good
+=== RUN   TestCheckedViewUntaggedRecursive/absent
+=== PAUSE TestCheckedViewUntaggedRecursive/absent
+=== RUN   TestCheckedViewUntaggedRecursive/wrong
+=== PAUSE TestCheckedViewUntaggedRecursive/wrong
+=== RUN   TestCheckedViewUntaggedRecursive/nested
+=== PAUSE TestCheckedViewUntaggedRecursive/nested
+=== CONT  TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:194: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:225: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOwnClassDataWrongRefused
+    checked_views_v2_source_test.go:160: gate cache node miss
+--- PASS: TestCheckedViewUntaggedArrayGoodRefused (0.16s)
+=== CONT  TestCheckedViewUntaggedOwnClassDataGoodRefused
+    checked_views_v2_source_test.go:155: gate cache node miss
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:199: gate cache node miss
+--- PASS: TestCheckedViewUntaggedOwnClassDataWrongRefused (0.51s)
+=== CONT  TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/helper/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/generic/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/callback/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/stored/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== CONT  TestCheckedViewUntaggedOptionalCallableControl
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:230: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:116: gate cache node miss
+--- PASS: TestCheckedViewUntaggedOwnClassDataGoodRefused (0.47s)
+=== CONT  TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-number
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-string
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+=== PAUSE TestCheckedViewUntaggedCallableUnion/wrong
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+=== PAUSE TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedSourceDispatch
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:214: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== CONT  TestCheckedViewV2MembershipMutant
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:218: tuple flag removal caught by native: exit 0 stdout "first\n"
+    checked_views_v2_migration_test.go:218: tuple flag removal caught by native-sanitized: exit 0 stdout "first\n"
+    checked_views_v2_migration_test.go:218: tuple flag removal caught by javascript: exit 0 stdout "first\n"
+--- PASS: TestCheckedViewV2TupleIdentityMutant (1.50s)
+=== CONT  TestCheckedViewV2RepresentationMutants
+=== RUN   TestCheckedViewV2RepresentationMutants/null
+=== PAUSE TestCheckedViewV2RepresentationMutants/null
+=== RUN   TestCheckedViewV2RepresentationMutants/undefined
+=== PAUSE TestCheckedViewV2RepresentationMutants/undefined
+=== RUN   TestCheckedViewV2RepresentationMutants/uint8
+=== PAUSE TestCheckedViewV2RepresentationMutants/uint8
+=== RUN   TestCheckedViewV2RepresentationMutants/int32
+=== PAUSE TestCheckedViewV2RepresentationMutants/int32
+=== RUN   TestCheckedViewV2RepresentationMutants/float64
+=== PAUSE TestCheckedViewV2RepresentationMutants/float64
+=== CONT  TestCheckedViewV2WrongFamilyMutant
+=== NAME  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:163: gate cache node miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:245: gate cache node miss
+    checked_views_v2_migration_test.go:249: producer certificate removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:249: producer certificate removal caught by native-sanitized: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:249: producer certificate removal caught by javascript: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2CallableProducerMutant (1.78s)
+=== CONT  TestCheckedViewV2ArrayArmBoundary
+=== CONT  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:168: gate cache node miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:120: gate cache node miss
+=== NAME  TestCheckedViewV2ArrayArmBoundary
+    checked_views_v2_migration_test.go:47: gate cache node miss
+--- PASS: TestCheckedViewUntaggedOptionalCallableControl (1.10s)
+=== CONT  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+    checked_views_v2_migration_test.go:21: gate cache node miss
+--- PASS: TestCheckedViewV2ArrayArmBoundary (0.39s)
+=== CONT  TestCheckedViewV2ReadsAfterWrites/representation-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:183: gate cache node miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:81: gate cache node miss
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:187: membership check removal caught by javascript: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:187: membership check removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:187: membership check removal caught by native-sanitized: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2MembershipMutant (1.02s)
+=== CONT  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:85: wrong family caught by native: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+    checked_views_v2_migration_test.go:85: wrong family caught by native-sanitized: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+    checked_views_v2_migration_test.go:85: wrong family caught by javascript: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewV2WrongFamilyMutant (1.01s)
+=== CONT  TestCheckedViewV2ReadsAfterWrites/null-read-write
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/null-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/representation-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/representation-read-write
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/null-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== CONT  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:270: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    checked_views_v2_migration_test.go:270: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:270: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:270: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== CONT  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== CONT  TestCheckedViewUntaggedRecursive/good
+=== CONT  TestCheckedViewUntaggedRecursive/nested
+=== NAME  TestCheckedViewUntaggedRecursive/good
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/nested
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:270: gate cache node miss
+=== CONT  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/good
+    checked_views_v2_source_test.go:197: gate cache node miss
+    checked_views_v2_source_test.go:198: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedRecursive/absent
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/nested
+    checked_views_v2_source_test.go:197: gate cache node miss
+    checked_views_v2_source_test.go:198: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/helper/good
+=== NAME  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:197: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:198: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/generic/good
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/absent
+    checked_views_v2_source_test.go:197: gate cache node miss
+    checked_views_v2_source_test.go:198: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedRecursive (0.00s)
+    --- PASS: TestCheckedViewUntaggedRecursive/good (1.68s)
+    --- PASS: TestCheckedViewUntaggedRecursive/nested (2.04s)
+    --- PASS: TestCheckedViewUntaggedRecursive/wrong (1.48s)
+    --- PASS: TestCheckedViewUntaggedRecursive/absent (1.47s)
+=== CONT  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+--- PASS: TestCheckedViewV2MovedStage3Results (0.02s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a (1.51s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a (1.50s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a (1.83s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a (2.72s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a (3.55s)
+=== CONT  TestCheckedViewUntaggedSourceFlows/stored/good
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/callback/good
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:86: gate cache node hit
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedCallableUnion/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:86: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:86: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:90: gate cache node hit
+    checked_views_v2_source_test.go:91: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-string
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+--- PASS: TestCheckedViewUntaggedSourceFlows (0.00s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/good (1.47s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/good (2.11s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/good (1.93s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/wrong (2.37s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/wrong (2.23s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/wrong (2.47s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/good (2.35s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/wrong (3.27s)
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:86: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:56: gate cache node miss
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:90: gate cache node miss
+    checked_views_v2_source_test.go:91: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== NAME  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:90: gate cache node miss
+    checked_views_v2_source_test.go:91: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/absent
+    checked_views_v2_source_test.go:49: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:90: gate cache node miss
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:91: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedCallableUnion (0.01s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (2.47s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (3.05s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (2.45s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (2.68s)
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_v2_source_test.go:56: gate cache node hit
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_v2_source_test.go:58: gate cache node hit
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:59: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native-sanitized: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/absent
+    checked_views_v2_source_test.go:49: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+    checked_views_v2_source_test.go:49: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:58: gate cache node miss
+    checked_views_v2_source_test.go:59: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native-sanitized: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== CONT  TestCheckedViewV2RepresentationMutants/null
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:59: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native-sanitized: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== CONT  TestCheckedViewV2RepresentationMutants/int32
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewV2RepresentationMutants/float64
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewV2RepresentationMutants/null
+    checked_views_v2_migration_test.go:126: old-layout null caught: exit 1 stdout "" stderr "/home/agent/.cache/adamic/runtime/.build-4014600535/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-4014600535/typed_array.c:88:46 \n"
+=== CONT  TestCheckedViewV2RepresentationMutants/uint8
+=== NAME  TestCheckedViewV2RepresentationMutants/int32
+    checked_views_v2_migration_test.go:126: old-layout int32 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== CONT  TestCheckedViewV2RepresentationMutants/undefined
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+--- PASS: TestCheckedViewUntaggedSourceDispatch (0.39s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/absent (0.37s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/wrong (1.03s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/good (3.88s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/nested (2.34s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/nested (3.11s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/good (1.40s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/absent (1.01s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/absent (0.66s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/wrong (1.66s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/good (1.42s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/wrong (1.38s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/nested (2.61s)
+=== NAME  TestCheckedViewV2RepresentationMutants/float64
+    checked_views_v2_migration_test.go:126: old-layout float64 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== NAME  TestCheckedViewV2RepresentationMutants/uint8
+    checked_views_v2_migration_test.go:126: old-layout uint8 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== NAME  TestCheckedViewV2RepresentationMutants/undefined
+    checked_views_v2_migration_test.go:126: old-layout undefined caught: exit 1 stdout "" stderr "/home/agent/.cache/adamic/runtime/.build-4014600535/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-4014600535/typed_array.c:88:46 \n"
+--- PASS: TestCheckedViewV2RepresentationMutants (0.00s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/null (1.11s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/int32 (1.24s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/float64 (1.22s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/uint8 (0.70s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/undefined (0.79s)
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+    checked_views_v2_migration_test.go:23: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+--- PASS: TestCheckedViewV2ReadsAfterWrites (0.00s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/mixed-read-write (1.87s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/representation-read-write (1.20s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good (1.39s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/null-read-write (0.99s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/undefined-read-write (1.07s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/fs-option-boxing (30.82s)
+PASS
+gate cache: native hits=0 misses=11
+gate cache: node hits=4 misses=88
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	32.724s
