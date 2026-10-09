@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/string_slice_impl.h b/internal/native/runtime/string_slice_impl.h
+index bf5040b5..eb6dcb12 100644
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -35,7 +35,7 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
+ 	size_t middle = stop > offset ? stop - offset : 0;
+ 	if (!low && !ends_low) {
+ 		adamic_string *slice = adamic_string_share(string, offset, middle);
+-		slice->units = last - first + 1;
++		slice->units = last - first + 2;
+ 		return slice;
+ 	}
+ 	builder build = {NULL, 0, 0};

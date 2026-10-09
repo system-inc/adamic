@@ -1,0 +1,7 @@
+{
+  "code_under_test": "Adamic native and JavaScript emission, and native string-slice runtime, when compiling/executing the intentionally mutated JSX-comment-rule lint driver. Port, tests and built-in mutation descriptor are unchanged.",
+  "oracle": "Node executes the same copied mutant port and supplies byte-exact expected answers. Go cohere is executed but family merely logs its disagreement. Ordinary profile agreement compares unmutated Node/Go with compiled products.",
+  "coverage": "Per-test/family fresh cache misses with -coverpkg=./internal/lower,./internal/native,./internal/javascript. C runtime coverage is not supplied by Go. Runtime D3 semantic lead comes from unchanged source corpus and string-slice behavior.",
+  "difference": "The family executes the built-in !atLineStart variant through native and emitted JavaScript; normal profile uses original atLineStart and a plain no-var fixture. Native runtime also sees the family Unicode generated fixture. Exclusive Go blocks mostly implement split/sanitizer build modes, not independently established expression semantics.",
+  "bounded": "40 current top-level functions in JSX mutant graph plus normal profile graph. Other compiler callers and newly enumerated compiler corpus rows remain outside matrix; their catches unknown."
+}

@@ -1,0 +1,13 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..fddc9873 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -770,7 +770,7 @@ func (e *emitter) value(expression ir.Expression) string {
+ 		}
+ 		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
+ 	case ir.Unary:
+-		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
++		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "", ir.BitNot: "~"}[expression.Operator]
+ 		return "(" + operator + e.value(expression.Operand) + ")"
+ 	case ir.Binary:
+ 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"

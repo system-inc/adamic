@@ -1,0 +1,29 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/native/emit_expressions.go",
+    "before": "return \"(!\" + operand + \")\"",
+    "after": "return \"(\" + operand + \")\"",
+    "menu": "change constant",
+    "purpose": "Drop emitted native negation, including the built-in mutant !atLineStart. Source Node remains the oracle.",
+    "line": 84
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/javascript/javascript.go",
+    "before": "ir.Not: \"!\", ir.BitNot: \"~\"",
+    "after": "ir.Not: \"\", ir.BitNot: \"~\"",
+    "menu": "change constant",
+    "purpose": "Drop emitted JavaScript negation. Shards assert compiler fidelity rather than Go-versus-port disagreement.",
+    "line": 773
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "before": "slice->units = last - first + 1;\n\t\treturn slice;",
+    "after": "slice->units = last - first + 2;\n\t\treturn slice;",
+    "menu": "off-by-one bound",
+    "purpose": "Off-by-one UTF-16 unit count for shared non-ASCII slices; target generated corpus has Unicode, plain no-var profile case is ASCII.",
+    "line": 38
+  }
+]

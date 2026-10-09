@@ -1,0 +1,102 @@
+[
+  {
+    "row": "rows/030/generated-5.ts\tall\tAlways\tAlways\tfalse",
+    "source": "const é = '😀';\n é == null;\n debugger;\n if(é){} // outside\n"
+  },
+  {
+    "row": "rows/031/generated-5.ts\tall\tSmart\t\ttrue",
+    "source": "const é = '😀';\n é == null;\n debugger;\n if(é){} // outside\n"
+  },
+  {
+    "row": "rows/032/generated-5.ts\tall\tAlways\tNever\tfalse",
+    "source": "const é = '😀';\n é == null;\n debugger;\n if(é){} // outside\n"
+  },
+  {
+    "row": "rows/033/generated-5.ts\tall\tAlways\tIgnore\ttrue",
+    "source": "const é = '😀';\n é == null;\n debugger;\n if(é){} // outside\n"
+  },
+  {
+    "row": "rows/034/generated-5.ts\tall\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}",
+    "source": "const é = '😀';\n é == null;\n debugger;\n if(é){} // outside\n"
+  },
+  {
+    "row": "rows/035/generated-5.ts\tall\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}",
+    "source": "const é = '😀';\n é == null;\n debugger;\n if(é){} // outside\n"
+  },
+  {
+    "row": "rows/060/generated-10.ts\tall\tAlways\tAlways\tfalse",
+    "source": "// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});"
+  },
+  {
+    "row": "rows/061/generated-10.ts\tall\tSmart\t\ttrue",
+    "source": "// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});"
+  },
+  {
+    "row": "rows/062/generated-10.ts\tall\tAlways\tNever\tfalse",
+    "source": "// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});"
+  },
+  {
+    "row": "rows/063/generated-10.ts\tall\tAlways\tIgnore\ttrue",
+    "source": "// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});"
+  },
+  {
+    "row": "rows/064/generated-10.ts\tall\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}",
+    "source": "// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});"
+  },
+  {
+    "row": "rows/065/generated-10.ts\tall\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}",
+    "source": "// TODO: fix this xxx\nconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\n// TODOé and fixme\n/** TODO decorated */ const arr=[1, // FIXME trailing comma\n]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});"
+  },
+  {
+    "row": "rows/066/generated-11.ts\tall\tAlways\tAlways\tfalse",
+    "source": "﻿﻿ // TODO two marks\nconst x=1;"
+  },
+  {
+    "row": "rows/067/generated-11.ts\tall\tSmart\t\ttrue",
+    "source": "﻿﻿ // TODO two marks\nconst x=1;"
+  },
+  {
+    "row": "rows/068/generated-11.ts\tall\tAlways\tNever\tfalse",
+    "source": "﻿﻿ // TODO two marks\nconst x=1;"
+  },
+  {
+    "row": "rows/069/generated-11.ts\tall\tAlways\tIgnore\ttrue",
+    "source": "﻿﻿ // TODO two marks\nconst x=1;"
+  },
+  {
+    "row": "rows/070/generated-11.ts\tall\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}",
+    "source": "﻿﻿ // TODO two marks\nconst x=1;"
+  },
+  {
+    "row": "rows/071/generated-11.ts\tall\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}",
+    "source": "﻿﻿ // TODO two marks\nconst x=1;"
+  },
+  {
+    "row": "rows/072/generated-12.ts\tall\tAlways\tAlways\tfalse",
+    "source": "// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n"
+  },
+  {
+    "row": "rows/073/generated-12.ts\tall\tSmart\t\ttrue",
+    "source": "// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n"
+  },
+  {
+    "row": "rows/074/generated-12.ts\tall\tAlways\tNever\tfalse",
+    "source": "// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n"
+  },
+  {
+    "row": "rows/075/generated-12.ts\tall\tAlways\tIgnore\ttrue",
+    "source": "// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n"
+  },
+  {
+    "row": "rows/076/generated-12.ts\tall\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}",
+    "source": "// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n"
+  },
+  {
+    "row": "rows/077/generated-12.ts\tall\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}",
+    "source": "// ſomething\n// K\n// ſa\n// Σ σ ς\n// TODO éééééééééééééééééééé é\n// TODO \\ quoted \"text\"\n// ABC TODO\n// K ſ TODO\n// -/ TODO\n"
+  },
+  {
+    "row": "rows/085/react-jsx-no-comment-textnodes-0.tsx\treact/jsx-no-comment-textnodes",
+    "source": "const é='😀';const C=<div>\n // β 😀\n text // clean\n /* next */</div>;"
+  }
+]
