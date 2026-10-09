@@ -54,20 +54,28 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 			return nil, fmt.Errorf("repository JSON pin %s unavailable; fetch failed (no working-tree fallback): %w", pin, err)
 		}
 	}
-	tree, err := gitCorpus(root, "ls-tree", "-r", "--name-only", "-z", pin)
+	tree, err := gitCorpus(root, "ls-tree", "-r", "-z", pin)
 	if err != nil {
 		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
 	}
 	var names []string
-	for _, name := range strings.Split(string(tree), "\x00") {
-		if strings.HasSuffix(name, ".json") {
+	blobs := map[string]bool{}
+	for _, entry := range strings.Split(string(tree), "\x00") {
+		// <mode> <type> <object>TAB<path>
+		header, name, found := strings.Cut(entry, "\t")
+		fields := strings.Fields(header)
+		if found && len(fields) == 3 && fields[1] == "blob" && strings.HasSuffix(name, ".json") {
 			names = append(names, name)
+			blobs[fields[2]] = true
 		}
 	}
 	if len(names) == 0 {
 		return nil, fmt.Errorf("repository JSON pin %s has no JSON files", pin)
 	}
 	sort.Strings(names)
+	if err := prefetchPinnedBlobs(root, pin, blobs); err != nil {
+		return nil, err
+	}
 	var requests strings.Builder
 	for _, name := range names {
 		if strings.ContainsAny(name, "\r\n") {
@@ -111,6 +119,32 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 		return nil, fmt.Errorf("repository JSON pin %s: trailing batch output", pin)
 	}
 	return cases, nil
+}
+
+// Loom's pool units are blobless clones (--filter=blob:none): the pin's commit and trees are there, its blobs are
+// not, and cat-file --batch would fetch each missing one on its own, about 2,800 anonymous fetches on a fresh
+// instance's first json unit (developer tools' checkout table, #97s05vf). Fetch every missing JSON blob in one
+// request instead, the way Git's own promisor fetch does. A full clone has none missing and fetches nothing.
+func prefetchPinnedBlobs(root, pin string, blobs map[string]bool) error {
+	objects, err := gitCorpus(root, "rev-list", "--objects", "--missing=print", pin)
+	if err != nil {
+		return fmt.Errorf("repository JSON pin %s: %w", pin, err)
+	}
+	var missing []string
+	for _, line := range strings.Split(string(objects), "\n") {
+		if object, found := strings.CutPrefix(line, "?"); found && blobs[object] {
+			missing = append(missing, object)
+		}
+	}
+	if len(missing) == 0 {
+		return nil
+	}
+	sort.Strings(missing)
+	if _, err := gitCorpusInput(root, []byte(strings.Join(missing, "\n")+"\n"), "-c", "fetch.negotiationAlgorithm=noop", "fetch", "--quiet", "--no-tags",
+		"--no-write-fetch-head", "--recurse-submodules=no", "--filter=blob:none", "--stdin", "origin"); err != nil {
+		return fmt.Errorf("repository JSON pin %s: fetching %d missing JSON blobs in one batch failed (no working-tree fallback): %w", pin, len(missing), err)
+	}
+	return nil
 }
 
 func pinnedCorpusFiles(root, pin string) ([]textCase, error) {
@@ -288,4 +322,74 @@ func TestPinnedRepositoryCorpusShallowFetch(t *testing.T) {
 		t.Fatal("fresh shallow fetch changed pinned names or bytes")
 	}
 	t.Logf("fresh shallow checkout fetched pin %s: %d identical inputs, without working-tree files", pin, len(after))
+}
+
+// gitFetchesTracing counts the git processes a function starts whose arguments include fetch, from Git's trace2
+// event stream.
+func gitFetchesTracing(t *testing.T, run func()) int {
+	t.Helper()
+	trace := filepath.Join(t.TempDir(), "trace2.json")
+	t.Setenv("GIT_TRACE2_EVENT", trace)
+	run()
+	encoded, err := os.ReadFile(trace)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fetches := 0
+	for _, line := range strings.Split(string(encoded), "\n") {
+		var event struct {
+			Event string   `json:"event"`
+			Argv  []string `json:"argv"`
+		}
+		if json.Unmarshal([]byte(line), &event) != nil || event.Event != "start" {
+			continue
+		}
+		for _, argument := range event.Argv {
+			if argument == "fetch" {
+				fetches++
+				break
+			}
+		}
+	}
+	return fetches
+}
+
+func TestPinnedRepositoryCorpusBlobsFetchInOneBatch(t *testing.T) {
+	// Not parallel: it traces git through the environment.
+	fixture := newRepositoryFixture(t)
+	for index := 0; index < 8; index++ {
+		fixtureWrite(t, fixture.root, fmt.Sprintf("batch/%d.json", index), fmt.Sprintf("[%d]", index))
+	}
+	commitFixtureJSON(t, fixture.root, "batch")
+	head, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pin := strings.TrimSpace(string(head))
+	full, err := repositoryCasesAtPin(fixture.root, pin)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fixtureGit(t, fixture.root, "config", "uploadpack.allowFilter", "true")
+	fixtureGit(t, fixture.root, "config", "uploadpack.allowAnySHA1InWant", "true")
+	// The pool's checkout: every commit and tree, no blobs.
+	clone := filepath.Join(t.TempDir(), "blobless")
+	fixtureGit(t, fixture.root, "clone", "--quiet", "--filter=blob:none", "--no-checkout", "file://"+fixture.root, clone)
+	var blobless []textCase
+	fetches := gitFetchesTracing(t, func() {
+		if blobless, err = repositoryCasesAtPin(clone, pin); err != nil {
+			t.Fatal(err)
+		}
+	})
+	if fetches != 1 {
+		t.Fatalf("a blobless clone fetched its %d pinned JSON blobs in %d fetches, want 1", len(full), fetches)
+	}
+	if fmt.Sprint(full) != fmt.Sprint(blobless) {
+		t.Fatal("a blobless clone read different pinned names or bytes")
+	}
+	// A full clone has every blob and fetches nothing.
+	if fetches := gitFetchesTracing(t, func() { repositoryCasesAtPin(fixture.root, pin) }); fetches != 0 {
+		t.Fatalf("a full clone fetched %d times, want 0", fetches)
+	}
+	t.Logf("blobless clone: %d pinned JSON files in one fetch; full clone: none", len(full))
 }
