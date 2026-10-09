@@ -1203,6 +1203,9 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 	if err != nil {
 		return nil, true, err
 	}
+	if err := l.checkArrayCallbackRepresentation(node, receiver, name, written, element); err != nil {
+		return nil, true, err
+	}
 	array, err := l.expression(receiver)
 	if err != nil {
 		return nil, true, err
