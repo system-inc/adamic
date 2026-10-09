@@ -33,14 +33,18 @@ func syntaxMutantEnumeration() []syntaxMutant {
 	}
 }
 
-func syntaxMutantProducts(t *testing.T, item syntaxMutant) (string, string) {
+func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Inputs {
 	t.Helper()
-	inputs := buildcache.Inputs{
+	return buildcache.Inputs{
 		Name:  "estree-syntax-mutant-lowered-" + item.name,
 		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
 		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+}
+
+func syntaxMutantLoweredProduct(t *testing.T, item syntaxMutant) string {
+	t.Helper()
+	return buildcache.Product(t, syntaxMutantProductInputs(t, item), func(dir string) error {
 		main := mutantPort(t, item.file, item.from, item.to)
 		program, err := load.Load([]string{main})
 		if err != nil {
@@ -69,16 +73,28 @@ func syntaxMutantProducts(t *testing.T, item syntaxMutant) (string, string) {
 		}
 		return nil
 	})
+}
+
+func syntaxMutantNativeProduct(t *testing.T, item syntaxMutant) string {
+	t.Helper()
+	lowered := syntaxMutantLoweredProduct(t, item)
+	inputs := syntaxMutantProductInputs(t, item)
 	inputs.Name = "estree-syntax-mutant-native-" + item.name
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	product := buildcache.Product(t, inputs, func(dir string) error {
+	return buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
 		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
+}
+
+func syntaxMutantProducts(t *testing.T, item syntaxMutant) (string, string) {
+	t.Helper()
+	lowered := syntaxMutantLoweredProduct(t, item)
+	product := syntaxMutantNativeProduct(t, item)
 	return filepath.Join(lowered, "main.ts"), filepath.Join(product, "port")
 }
 
@@ -91,7 +107,6 @@ type syntaxMutantPrepared struct {
 // Preparation is shared within a process, including independently selected shards.
 var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
-var syntaxMutantsPreparedDirectory string
 
 func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
 	return buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod", "go.work"}, Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
@@ -111,6 +126,20 @@ func syntaxMutantRead(t *testing.T, dir string) []syntaxMutantPrepared {
 	return result
 }
 
+// Both the build-phase unit and shard preparation use this exact oracle recipe.
+func syntaxMutantOracleProduct(t *testing.T) string {
+	t.Helper()
+	inputs := syntaxMutantSetupInputs(t)
+	inputs.Name = "syntax-mutants-go-oracle-v1"
+	return buildcache.Product(t, inputs, func(dir string) error {
+		data, err := os.ReadFile(goOracle(t))
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
+	})
+}
+
 func prepareSyntaxMutants(t *testing.T) {
 	t.Helper()
 	dir := buildcache.Product(t, syntaxMutantSetupInputs(t), func(dir string) error {
@@ -121,16 +150,7 @@ func prepareSyntaxMutants(t *testing.T) {
 		oracleReady := make(chan struct{})
 		go func() {
 			defer close(oracleReady)
-			inputs := syntaxMutantSetupInputs(t)
-			inputs.Name = "syntax-mutants-go-oracle-v1"
-			product := buildcache.Product(t, inputs, func(dir string) error {
-				data, err := os.ReadFile(goOracle(t))
-				if err != nil {
-					return err
-				}
-				return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
-			})
-			oracle = filepath.Join(product, "oracle")
+			oracle = filepath.Join(syntaxMutantOracleProduct(t), "oracle")
 		}()
 		var workers sync.WaitGroup
 		for i, item := range items {
@@ -163,7 +183,6 @@ func prepareSyntaxMutants(t *testing.T) {
 		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0644)
 	})
 	syntaxMutantsPrepared = syntaxMutantRead(t, dir)
-	syntaxMutantsPreparedDirectory = dir
 }
 func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 	t.Helper()
@@ -174,11 +193,45 @@ func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 	return syntaxMutantsPrepared
 }
 
-func TestSyntaxMutants_Setup(t *testing.T) {
+// The setup manifest is itself a product; shards still prepare it independently.
+func TestProduct_SyntaxMutantsSetup(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
 	syntaxMutantReady(t)
-	t.Logf("TestSyntaxMutants (setup): %.3fs; ready: %s", time.Since(started).Seconds(), syntaxMutantsPreparedDirectory)
+}
+
+func TestProduct_SyntaxMutantsGoOracle(t *testing.T) {
+	t.Parallel()
+	syntaxMutantOracleProduct(t)
+}
+
+func TestProduct_SyntaxMutantLowered_000(t *testing.T) {
+	t.Parallel()
+	syntaxMutantLoweredProduct(t, syntaxMutantEnumeration()[0])
+}
+
+func TestProduct_SyntaxMutantLowered_001(t *testing.T) {
+	t.Parallel()
+	syntaxMutantLoweredProduct(t, syntaxMutantEnumeration()[1])
+}
+
+func TestProduct_SyntaxMutantLowered_002(t *testing.T) {
+	t.Parallel()
+	syntaxMutantLoweredProduct(t, syntaxMutantEnumeration()[2])
+}
+
+func TestProduct_SyntaxMutantNative_000(t *testing.T) {
+	t.Parallel()
+	syntaxMutantNativeProduct(t, syntaxMutantEnumeration()[0])
+}
+
+func TestProduct_SyntaxMutantNative_001(t *testing.T) {
+	t.Parallel()
+	syntaxMutantNativeProduct(t, syntaxMutantEnumeration()[1])
+}
+
+func TestProduct_SyntaxMutantNative_002(t *testing.T) {
+	t.Parallel()
+	syntaxMutantNativeProduct(t, syntaxMutantEnumeration()[2])
 }
 
 func runSyntaxMutantShard(t *testing.T, shard int) {
