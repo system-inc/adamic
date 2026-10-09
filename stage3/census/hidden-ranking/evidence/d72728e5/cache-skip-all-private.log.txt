@@ -1,0 +1,8 @@
+=== RUN   TestLatentCacheRollbackFacts
+--- PASS: TestLatentCacheRollbackFacts (0.04s)
+=== RUN   TestLatentUnknownPrivateField
+    latent_cache_test.go:102: unreviewed private field accepted: <nil>
+--- FAIL: TestLatentUnknownPrivateField (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.050s
+FAIL

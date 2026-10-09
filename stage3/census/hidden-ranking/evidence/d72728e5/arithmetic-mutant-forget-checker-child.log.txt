@@ -1,0 +1,14 @@
+test_attempted_parent_cannot_expose_skipped_child (__main__.Arithmetic.test_attempted_parent_cannot_expose_skipped_child) ... FAIL
+
+======================================================================
+FAIL: test_attempted_parent_cannot_expose_skipped_child (__main__.Arithmetic.test_attempted_parent_cannot_expose_skipped_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/hidden-d72728e5-tools/stage3/census/hidden/test_hidden.py", line 91, in test_attempted_parent_cannot_expose_skipped_child
+    self.assertEqual(total(rows, stock), 20, 'attempted parent retains checker-skipped child')
+AssertionError: 0 != 20 : attempted parent retains checker-skipped child
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

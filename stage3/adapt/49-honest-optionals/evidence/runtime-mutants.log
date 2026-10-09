@@ -1,0 +1,180 @@
+{
+  "mutants": [
+    {
+      "site": "src/compiler/checker.ts:14118:44@817755-817777",
+      "input": "003_commentOnClassAccessor1",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:16437:66@954630-954652",
+      "input": "029_enumLiteralUnionNotWidened",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:19889:118@1163333-1163340",
+      "input": "002_conditionalEqualityTestingNullability",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:20277:50@1185285-1185292",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:28392:41@1689830-1689847",
+      "input": "006_arrayDestructuringInSwitch1",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:32024:19@1904334-1904347",
+      "input": "014_keyofObjectWithGlobalSymbolIncluded",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:32724:37@1947391-1947404",
+      "input": "010_nestedTypeVariableInfersLiteral",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:38571:41@2281039-2281045",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:38572:35@2281130-2281136",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:43525:30@2560678-2560728",
+      "input": "030_asyncYieldStarContextualType",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:46972:59@2744990-2745015",
+      "input": "019_superHasMethodsFromMergedInterface",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:5553:61@280183-280190",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:5568:62@280784-280791",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:5790:30@294166-294199",
+      "input": "088_baseConstraintOfDecorator",
+      "stock_exit": 2,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/checker.ts:6191:44@318054-318062",
+      "input": "062_interfaceDeclaration1",
+      "stock_exit": 2,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/core.ts:1244:26@44154-44162",
+      "input": "045_discriminantUsingEvaluatableTemplateExpression",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/core.ts:2474:16@88172-88183",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/emitter.ts:1417:18@56597-56605",
+      "input": "015_decoratorReferences",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/emitter.ts:4954:16@208969-208973",
+      "input": "090_constraintWithIndexedAccess",
+      "stock_exit": 2,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/emitter.ts:4954:34@208987-208991",
+      "input": "090_constraintWithIndexedAccess",
+      "stock_exit": 2,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/scanner.ts:1034:16@70986-70998",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    },
+    {
+      "site": "src/compiler/utilities.ts:11868:13@488376-488396",
+      "input": "001_varianceCantBeStrictWhileStructureIsnt",
+      "stock_exit": 0,
+      "mutant_exit": 70,
+      "node_value": "undefined",
+      "caught": "process exit and named checked-unwrap diagnostic"
+    }
+  ]
+}
