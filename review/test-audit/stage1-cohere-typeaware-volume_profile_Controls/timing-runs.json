@@ -1,0 +1,275 @@
+[
+  {
+    "row": "lower",
+    "run": 1,
+    "pattern": "^TestVolumeProfileControlsLower$",
+    "wall": 3.92755263700019,
+    "returncode": 0
+  },
+  {
+    "row": "lower",
+    "run": 2,
+    "pattern": "^TestVolumeProfileControlsLower$",
+    "wall": 3.6215081400005147,
+    "returncode": 0
+  },
+  {
+    "row": "lower",
+    "run": 3,
+    "pattern": "^TestVolumeProfileControlsLower$",
+    "wall": 3.357503295001152,
+    "returncode": 0
+  },
+  {
+    "row": "controls",
+    "run": 1,
+    "pattern": "^TestVolumeProfileControls(Union|_[0-9]+)$",
+    "wall": 5.4956920730001,
+    "returncode": 0
+  },
+  {
+    "row": "controls",
+    "run": 2,
+    "pattern": "^TestVolumeProfileControls(Union|_[0-9]+)$",
+    "wall": 5.298635320001267,
+    "returncode": 0
+  },
+  {
+    "row": "controls",
+    "run": 3,
+    "pattern": "^TestVolumeProfileControls(Union|_[0-9]+)$",
+    "wall": 5.431523358998675,
+    "returncode": 0
+  },
+  {
+    "row": "missing-union",
+    "run": 1,
+    "pattern": "^TestShadowIndexMissingBindingUnion$",
+    "wall": 2.398290138999073,
+    "returncode": 0
+  },
+  {
+    "row": "missing-union",
+    "run": 2,
+    "pattern": "^TestShadowIndexMissingBindingUnion$",
+    "wall": 2.4295939879993966,
+    "returncode": 0
+  },
+  {
+    "row": "missing-union",
+    "run": 3,
+    "pattern": "^TestShadowIndexMissingBindingUnion$",
+    "wall": 2.37070938099896,
+    "returncode": 0
+  },
+  {
+    "row": "corpus-setup",
+    "run": 1,
+    "pattern": "^TestVolumeProfileCorpora_Setup$",
+    "wall": 5.590537629001119,
+    "returncode": 0
+  },
+  {
+    "row": "corpus-setup",
+    "run": 2,
+    "pattern": "^TestVolumeProfileCorpora_Setup$",
+    "wall": 5.317887549999796,
+    "returncode": 0
+  },
+  {
+    "row": "corpus-setup",
+    "run": 3,
+    "pattern": "^TestVolumeProfileCorpora_Setup$",
+    "wall": 5.602761678999741,
+    "returncode": 0
+  },
+  {
+    "row": "corpus-bounded",
+    "run": 1,
+    "pattern": "^TestVolumeProfileCorpora(Union|_0[0-5][0-9]|_06[0-3])$",
+    "wall": 11.246753964000163,
+    "returncode": 0
+  },
+  {
+    "row": "corpus-bounded",
+    "run": 2,
+    "pattern": "^TestVolumeProfileCorpora(Union|_0[0-5][0-9]|_06[0-3])$",
+    "wall": 10.772792383999331,
+    "returncode": 0
+  },
+  {
+    "row": "corpus-bounded",
+    "run": 3,
+    "pattern": "^TestVolumeProfileCorpora(Union|_0[0-5][0-9]|_06[0-3])$",
+    "wall": 11.359813503999248,
+    "returncode": 0
+  },
+  {
+    "row": "mutants",
+    "run": 1,
+    "pattern": "^TestVolumeProfileMutants(Union|_[0-9]+)$",
+    "wall": 45.56457569799932,
+    "returncode": 0
+  },
+  {
+    "row": "mutants",
+    "run": 2,
+    "pattern": "^TestVolumeProfileMutants(Union|_[0-9]+)$",
+    "wall": 6.262768489999871,
+    "returncode": 0
+  },
+  {
+    "row": "mutants",
+    "run": 3,
+    "pattern": "^TestVolumeProfileMutants(Union|_[0-9]+)$",
+    "wall": 5.928412421999383,
+    "returncode": 0
+  },
+  {
+    "row": "overlays",
+    "run": 1,
+    "pattern": "^TestVolumeProfileOverlays(Union|_[0-9]+)$",
+    "wall": 11.57647119900139,
+    "returncode": 0
+  },
+  {
+    "row": "overlays",
+    "run": 2,
+    "pattern": "^TestVolumeProfileOverlays(Union|_[0-9]+)$",
+    "wall": 4.069898359000945,
+    "returncode": 0
+  },
+  {
+    "row": "overlays",
+    "run": 3,
+    "pattern": "^TestVolumeProfileOverlays(Union|_[0-9]+)$",
+    "wall": 3.8270815659998334,
+    "returncode": 0
+  },
+  {
+    "row": "partition",
+    "run": 1,
+    "pattern": "^TestVolumeProfilePartition$",
+    "wall": 2.2046392540014494,
+    "returncode": 0
+  },
+  {
+    "row": "partition",
+    "run": 2,
+    "pattern": "^TestVolumeProfilePartition$",
+    "wall": 2.050460890000977,
+    "returncode": 0
+  },
+  {
+    "row": "partition",
+    "run": 3,
+    "pattern": "^TestVolumeProfilePartition$",
+    "wall": 2.0826865769995493,
+    "returncode": 0
+  },
+  {
+    "row": "agreement-bounded",
+    "run": 1,
+    "pattern": "^TestVolumeAgreementAndMutants(Union|_014|_030)$",
+    "wall": 62.1142544230006,
+    "returncode": 0
+  },
+  {
+    "row": "agreement-bounded",
+    "run": 2,
+    "pattern": "^TestVolumeAgreementAndMutants(Union|_014|_030)$",
+    "wall": 8.870461106998846,
+    "returncode": 0
+  },
+  {
+    "row": "agreement-bounded",
+    "run": 3,
+    "pattern": "^TestVolumeAgreementAndMutants(Union|_014|_030)$",
+    "wall": 8.961787865000588,
+    "returncode": 0
+  },
+  {
+    "row": "config-setup",
+    "run": 1,
+    "pattern": "^TestVolumeConfigGuardAndMutant$",
+    "wall": 85.92827192499863,
+    "returncode": 0
+  },
+  {
+    "row": "config-setup",
+    "run": 2,
+    "pattern": "^TestVolumeConfigGuardAndMutant$",
+    "wall": 8.360655054000745,
+    "returncode": 0
+  },
+  {
+    "row": "config-setup",
+    "run": 3,
+    "pattern": "^TestVolumeConfigGuardAndMutant$",
+    "wall": 7.9984446369999205,
+    "returncode": 0
+  },
+  {
+    "row": "symbol",
+    "run": 1,
+    "pattern": "^TestVolumeTypeSymbol(Union|_000)$",
+    "wall": 54.40096317300049,
+    "returncode": 0
+  },
+  {
+    "row": "symbol",
+    "run": 2,
+    "pattern": "^TestVolumeTypeSymbol(Union|_000)$",
+    "wall": 4.470357034999324,
+    "returncode": 0
+  },
+  {
+    "row": "symbol",
+    "run": 3,
+    "pattern": "^TestVolumeTypeSymbol(Union|_000)$",
+    "wall": 4.701021013999707,
+    "returncode": 0
+  },
+  {
+    "row": "symbol-planted",
+    "run": 1,
+    "pattern": "^TestVolumeTypeSymbolPlantedSurvivor$",
+    "wall": 2.337173576999703,
+    "returncode": 0
+  },
+  {
+    "row": "symbol-planted",
+    "run": 2,
+    "pattern": "^TestVolumeTypeSymbolPlantedSurvivor$",
+    "wall": 2.072346725999523,
+    "returncode": 0
+  },
+  {
+    "row": "symbol-planted",
+    "run": 3,
+    "pattern": "^TestVolumeTypeSymbolPlantedSurvivor$",
+    "wall": 2.179029631999583,
+    "returncode": 0
+  },
+  {
+    "row": "deadline",
+    "run": 1,
+    "pattern": "^TestVolumeTypeSymbolCommandDeadline$",
+    "wall": 2.180323982000118,
+    "returncode": 0
+  },
+  {
+    "row": "deadline",
+    "run": 2,
+    "pattern": "^TestVolumeTypeSymbolCommandDeadline$",
+    "wall": 2.1846820729988394,
+    "returncode": 0
+  },
+  {
+    "row": "deadline",
+    "run": 3,
+    "pattern": "^TestVolumeTypeSymbolCommandDeadline$",
+    "wall": 2.2483244220002234,
+    "returncode": 0
+  }
+]

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:20:55.979770065Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:20:55.986809313Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor"}
+{"Time":"2026-10-09T13:20:55.98688682Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"=== RUN   TestVolumeTypeSymbolPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:55.986911016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"=== PAUSE TestVolumeTypeSymbolPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:55.98691347Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor"}
+{"Time":"2026-10-09T13:20:55.986916024Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor"}
+{"Time":"2026-10-09T13:20:55.986917947Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"=== CONT  TestVolumeTypeSymbolPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:55.986920541Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"    volume_type_symbol_test.go:186: planted surviving type-symbol mutant caught exactly by TestVolumeTypeSymbol_000\n"}
+{"Time":"2026-10-09T13:20:55.986929724Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"--- PASS: TestVolumeTypeSymbolPlantedSurvivor (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:55.986934472Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Elapsed":0}
+{"Time":"2026-10-09T13:20:55.986945047Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:55.987106555Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.007s\n"}
+{"Time":"2026-10-09T13:20:55.987145354Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.007}

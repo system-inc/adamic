@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/shadow.ts
++++ b/stage1/cohere/typeaware/shadow.ts
+@@ -103,7 +103,7 @@
+         return this.rules.scanner.text.slice(at, at + 1) === '=' ? child : -1;
+     }
+     report(scopeIndex: number, binding: Binding): void {
+-        if(binding.name === 'this') {
++        if(binding.name !== 'this') {
+             return;
+         }
+         const container = this.rules.parser.node(this.scopes[scopeIndex]?.container ?? -1);

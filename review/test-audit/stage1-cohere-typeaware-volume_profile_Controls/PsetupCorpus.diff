@@ -1,0 +1,18 @@
+--- a/stage1/cohere/typeaware/volume_profile_Corpora_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Corpora_test.go
+@@ -396,14 +396,7 @@
+ }
+ 
+ func volumeProfileCorporaPrepare(t *testing.T) volumeProfileCorporaProductPaths {
+-	t.Helper()
+-	volumeProfileCorporaShared.once.Do(func() {
+-		volumeProfileCorporaShared.products = volumeProfileCorporaBuildProducts(t)
+-	})
+-	if volumeProfileCorporaShared.products.Oracle == "" {
+-		t.Fatal("shared corpus preparation did not complete")
+-	}
+-	return volumeProfileCorporaShared.products
++return volumeProfileCorporaProductPaths{}
+ }
+ 
+ func volumeProfileCorporaBuildProducts(t *testing.T) volumeProfileCorporaProductPaths {

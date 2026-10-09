@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_profile_Controls_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Controls_test.go
+@@ -302,7 +302,7 @@
+ func TestVolumeProfileControls_000(t *testing.T) { t.Parallel(); runVolumeProfileControls(t, 0) }
+ func TestVolumeProfileControls_001(t *testing.T) { t.Parallel(); runVolumeProfileControls(t, 1) }
+ 
+-const testShadowIndexMissingBindingShards = 1
++const testShadowIndexMissingBindingShards = 2
+ 
+ func TestShadowIndexMissingBindingUnion(t *testing.T) {
+ 	t.Parallel()

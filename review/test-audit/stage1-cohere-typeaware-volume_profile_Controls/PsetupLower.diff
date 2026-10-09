@@ -1,0 +1,38 @@
+--- a/stage1/cohere/typeaware/volume_profile_Controls_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Controls_test.go
+@@ -18,9 +18,6 @@
+ 	"time"
+ 
+ 	"github.com/system-inc/adamic/internal/buildcache"
+-	"github.com/system-inc/adamic/internal/load"
+-	"github.com/system-inc/adamic/internal/lower"
+-	"github.com/system-inc/adamic/internal/native"
+ )
+ 
+ // Generated controls are copied from profile_test.go at 7a10c877. Each mode
+@@ -181,24 +178,7 @@
+ // cold build unit can finish under the deadline. Both sanitizer modes use the
+ // exact same lowered C and the original BuildTSGo flags and runtime.
+ func volumeProfileControlsLowered(h *harness, stage0 string) string {
+-	inputs := volumeProfileNativeInputs(h, stage0, "", false, "typeaware volume lowered")
+-	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+-		program, err := load.Load([]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")})
+-		if err != nil {
+-			return err
+-		}
+-		program.EnableTSGo()
+-		ir, err := lower.Lower(context.Background(), program)
+-		if err != nil {
+-			return err
+-		}
+-		source, err := native.TSGoC(ir)
+-		if err != nil {
+-			return err
+-		}
+-		return os.WriteFile(filepath.Join(directory, "volume.c"), []byte(source), 0600)
+-	})
+-	return filepath.Join(directory, "volume.c")
++return ""
+ }
+ 
+ func TestVolumeProfileControlsLower(t *testing.T) {

@@ -1,0 +1,16 @@
+--- a/stage1/cohere/typeaware/volume_suite.ts
++++ b/stage1/cohere/typeaware/volume_suite.ts
+@@ -12,6 +12,7 @@
+ import { Shadow } from './shadow.ts';
+ import { Volume } from './volume.ts';
+ 
++/* empty-answer probe: entry body is disabled
+ const args = programArguments();
+ const config = args[0] ?? panic('usage: volume_suite.ts tsconfig manifest [--count]');
+ const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+@@ -65,3 +66,5 @@
+ }
+ console.log(`findings ${findings}`);
+ tsgoRelease(program);
++
++*/

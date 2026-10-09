@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:14:29.563592483Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:14:29.571981958Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion"}
+{"Time":"2026-10-09T13:14:29.572105264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion","Output":"=== RUN   TestShadowIndexMissingBindingUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:29.572129841Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion","Output":"=== PAUSE TestShadowIndexMissingBindingUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:29.572132084Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion"}
+{"Time":"2026-10-09T13:14:29.572138153Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion"}
+{"Time":"2026-10-09T13:14:29.572140026Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion","Output":"=== CONT  TestShadowIndexMissingBindingUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:29.57214256Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion","Output":"    volume_profile_Controls_test.go:322: missing-binding union: 1 cases\n"}
+{"Time":"2026-10-09T13:14:29.572150722Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion","Output":"--- PASS: TestShadowIndexMissingBindingUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:29.572152945Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBindingUnion","Elapsed":0}
+{"Time":"2026-10-09T13:14:29.572165454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:29.572326677Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.008s\n"}
+{"Time":"2026-10-09T13:14:29.572349872Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.009}

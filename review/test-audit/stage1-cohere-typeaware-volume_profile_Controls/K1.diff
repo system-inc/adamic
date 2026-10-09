@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_profile_Controls_test.go
++++ b/stage1/cohere/typeaware/volume_profile_Controls_test.go
+@@ -25,7 +25,7 @@
+ 
+ // Generated controls are copied from profile_test.go at 7a10c877. Each mode
+ // owns the whole manifest; adding a source never moves an existing check.
+-const testVolumeProfileControlsShards = 2
++const testVolumeProfileControlsShards = 3
+ 
+ // Keep the whole manifest together: its native global declaration is visible to
+ // native-console, and the original oracle checks the combined finding bytes.

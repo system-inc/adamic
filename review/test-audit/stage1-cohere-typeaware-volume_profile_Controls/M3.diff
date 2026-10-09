@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/assignment.ts
++++ b/stage1/cohere/typeaware/assignment.ts
+@@ -20,7 +20,7 @@
+     }
+     anyArray(facts: Types, id: number): boolean {
+         const root = facts.type(id);
+-        return root.array && root.arguments.length > 0 && (facts.type(root.arguments[0] ?? 0).flags & 1) !== 0;
++        return root.array && root.arguments.length > 0 && (facts.type(root.arguments[0] ?? 0).flags & 2) !== 0;
+     }
+     destructure(target: number, facts: Types, id: number, sender: number): boolean {
+         const node = this.rules.parser.node(target);

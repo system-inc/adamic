@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go
++++ b/stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go
+@@ -143,7 +143,7 @@
+ func volumeGuardProductsFor(t *testing.T) volumeGuardProducts {
+ 	t.Helper()
+ 	volumeGuardShared.once.Do(func() {
+-		volumeGuardShared.products = buildVolumeConfigGuardProducts(t)
++		volumeGuardShared.products = volumeGuardProducts{}
+ 	})
+ 	if volumeGuardShared.products.repository == "" {
+ 		t.Fatal("shared product preparation failed")

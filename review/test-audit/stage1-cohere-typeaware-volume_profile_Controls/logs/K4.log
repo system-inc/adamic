@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:32:56.510211117Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:32:56.517464333Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline"}
+{"Time":"2026-10-09T13:32:56.51754157Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline","Output":"=== RUN   TestVolumeTypeSymbolCommandDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.517564514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline","Output":"=== PAUSE TestVolumeTypeSymbolCommandDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.517582401Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline"}
+{"Time":"2026-10-09T13:32:56.517585265Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline"}
+{"Time":"2026-10-09T13:32:56.517587148Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline","Output":"=== CONT  TestVolumeTypeSymbolCommandDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:33:26.553062758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline","Output":"    volume_type_symbol_test.go:321: deadline child escaped cancellation\n","OutputType":"error"}
+{"Time":"2026-10-09T13:33:26.553172683Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline","Output":"--- FAIL: TestVolumeTypeSymbolCommandDeadline (30.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:33:26.553181306Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolCommandDeadline","Elapsed":30.04}
+{"Time":"2026-10-09T13:33:26.553204131Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:33:26.553840793Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t30.043s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:33:26.553861444Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":30.044}

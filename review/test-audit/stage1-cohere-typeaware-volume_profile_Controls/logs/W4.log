@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:39:10.490785594Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:39:10.498355613Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor"}
+{"Time":"2026-10-09T13:39:10.498460651Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"=== RUN   TestVolumeTypeSymbolPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:10.49848655Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"=== PAUSE TestVolumeTypeSymbolPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:10.498489064Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor"}
+{"Time":"2026-10-09T13:39:10.498491417Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor"}
+{"Time":"2026-10-09T13:39:10.498493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"=== CONT  TestVolumeTypeSymbolPlantedSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:10.498495403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"    volume_type_symbol_test.go:184: planted survivor caught by shards []\n","OutputType":"error"}
+{"Time":"2026-10-09T13:39:10.498507472Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Output":"--- FAIL: TestVolumeTypeSymbolPlantedSurvivor (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:10.498509705Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeTypeSymbolPlantedSurvivor","Elapsed":0}
+{"Time":"2026-10-09T13:39:10.498521132Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:10.498670166Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:10.498682084Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.008}

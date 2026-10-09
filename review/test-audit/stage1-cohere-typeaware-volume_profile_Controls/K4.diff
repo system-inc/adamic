@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_type_symbol_test.go
++++ b/stage1/cohere/typeaware/volume_type_symbol_test.go
+@@ -20,7 +20,7 @@
+ // Bound the complete process group, including compiler grandchildren. Unix
+ // process groups work on both Linux and macOS without an external timeout tool.
+ func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+-	ctx, cancel := context.WithTimeout(context.Background(), limit)
++	ctx, cancel := context.WithCancel(context.Background())
+ 	return typeSymbolExecContext(ctx, name, args...), cancel
+ }
+ 

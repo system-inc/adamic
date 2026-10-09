@@ -1,0 +1,86 @@
+[
+  {
+    "id": "K1",
+    "pattern": "^TestVolumeProfileControlsUnion$",
+    "wall": 6.5484265009999945,
+    "returncode": 1
+  },
+  {
+    "id": "K2",
+    "pattern": "^TestShadowIndexMissingBindingUnion$",
+    "wall": 6.4023304950005695,
+    "returncode": 1
+  },
+  {
+    "id": "K3",
+    "pattern": "^TestVolumeProfilePartition$",
+    "wall": 6.527199906999158,
+    "returncode": 1
+  },
+  {
+    "id": "K4",
+    "pattern": "^TestVolumeTypeSymbolCommandDeadline$",
+    "wall": 35.886409095999625,
+    "returncode": 1
+  },
+  {
+    "id": "W1",
+    "pattern": "^TestVolumeTypeSymbol(PlantedSurvivor|Union|_000)$",
+    "wall": 46.47739531700063,
+    "returncode": 1
+  },
+  {
+    "id": "W2",
+    "pattern": "^TestVolumeProfileMutants(Union|_[0-9]+)$",
+    "wall": 52.86992400800045,
+    "returncode": 1
+  },
+  {
+    "id": "W3",
+    "pattern": "^TestVolumeProfileOverlays(Union|_[0-9]+)$",
+    "wall": 10.825672225000744,
+    "returncode": 1
+  },
+  {
+    "id": "K5",
+    "pattern": "^TestVolumeProfileControlsLower$",
+    "wall": 10.03512949799915,
+    "returncode": 1
+  },
+  {
+    "id": "K6",
+    "pattern": "^TestVolumeProfileCorpora_Setup$",
+    "wall": 9.443899858000805,
+    "returncode": 1
+  },
+  {
+    "id": "K7",
+    "pattern": "^TestVolumeConfigGuardAndMutant$",
+    "wall": 5.789209683000081,
+    "returncode": 1
+  },
+  {
+    "id": "PsetupLower",
+    "pattern": "^TestVolumeProfileControlsLower$",
+    "wall": 9.760462395999639,
+    "returncode": 0
+  },
+  {
+    "id": "PsetupCorpus",
+    "pattern": "^TestVolumeProfileCorpora_Setup$",
+    "wall": 6.329368564998731,
+    "returncode": 0
+  },
+  {
+    "id": "PsetupConfig",
+    "pattern": "^TestVolumeConfigGuardAndMutant$",
+    "wall": 6.458060570999805,
+    "returncode": 0
+  },
+  {
+    "id": "W4",
+    "pattern": "^TestVolumeTypeSymbolPlantedSurvivor$",
+    "wall": 6.22069229599947,
+    "returncode": 1
+  }
+]

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume.ts
++++ b/stage1/cohere/typeaware/volume.ts
+@@ -649,7 +649,7 @@
+     }
+     walk(index: number): void {
+         const node = this.rules.parser.node(index);
+-        this.nullish(index);
++        // audit mutant drops nullish dispatch
+         if(node.kind === 'SwitchStatement') {
+             this.exhaustive(index);
+         }

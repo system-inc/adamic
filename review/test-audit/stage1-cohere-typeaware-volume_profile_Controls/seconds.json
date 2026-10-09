@@ -1,0 +1,106 @@
+{
+  "lower": {
+    "samples": [
+      1.73,
+      1.552,
+      1.518
+    ],
+    "median": 1.552
+  },
+  "controls": {
+    "samples": [
+      3.535,
+      3.294,
+      3.422
+    ],
+    "median": 3.422
+  },
+  "missing-union": {
+    "samples": [
+      0.009,
+      0.01,
+      0.011
+    ],
+    "median": 0.01
+  },
+  "corpus-setup": {
+    "samples": [
+      3.398,
+      3.325,
+      3.3529999999999998
+    ],
+    "median": 3.3529999999999998
+  },
+  "corpus-bounded": {
+    "samples": [
+      9.286,
+      8.768,
+      9.195
+    ],
+    "median": 9.195
+  },
+  "mutants": {
+    "samples": [
+      43.381,
+      3.983,
+      3.943
+    ],
+    "median": 3.983
+  },
+  "overlays": {
+    "samples": [
+      9.604,
+      1.85,
+      1.748
+    ],
+    "median": 1.85
+  },
+  "partition": {
+    "samples": [
+      0.017,
+      0.016,
+      0.012
+    ],
+    "median": 0.016
+  },
+  "agreement-bounded": {
+    "samples": [
+      60.099,
+      6.671,
+      6.797
+    ],
+    "median": 6.797
+  },
+  "config-setup": {
+    "samples": [
+      83.304,
+      6.053,
+      5.806
+    ],
+    "median": 6.053
+  },
+  "symbol": {
+    "samples": [
+      52.159,
+      2.48,
+      2.6390000000000002
+    ],
+    "median": 2.6390000000000002
+  },
+  "symbol-planted": {
+    "samples": [
+      0.007,
+      0.009,
+      0.01
+    ],
+    "median": 0.009
+  },
+  "deadline": {
+    "samples": [
+      0.109,
+      0.111,
+      0.111
+    ],
+    "median": 0.111
+  }
+}

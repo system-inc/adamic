@@ -1,0 +1,440 @@
+stage1/cohere/lint/finding.ts:18: constructor(
+stage1/cohere/lint/suggestions.a:16: constructor(id: string, message: string, edits: readonly SuggestionEdit[]) {
+stage1/cohere/lint/suggestions.a:6: constructor(start: number, end: number, text: string) {
+stage1/cohere/typeaware/assignment.ts:138: check(target: number, sender: number, reporting: number, mode: number): void {
+stage1/cohere/typeaware/assignment.ts:13: constructor(rules: Rules, volume: Volume, shadow: Shadow) {
+stage1/cohere/typeaware/assignment.ts:159: node.children.some((child) =>
+stage1/cohere/typeaware/assignment.ts:18: property(index: number, id: number, name: string): Types {
+stage1/cohere/typeaware/assignment.ts:196: target(index: number): boolean {
+stage1/cohere/typeaware/assignment.ts:21: anyArray(facts: Types, id: number): boolean {
+stage1/cohere/typeaware/assignment.ts:221: visit(index: number): void {
+stage1/cohere/typeaware/assignment.ts:25: destructure(target: number, facts: Types, id: number, sender: number): boolean {
+stage1/cohere/typeaware/assignment.ts:264: run(): void {
+stage1/cohere/typeaware/assignment.ts:51: entry.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')
+stage1/cohere/typeaware/assignment.ts:59: (child) => child !== initializer && this.rules.parser.node(child).kind !== 'DotDotDotToken',
+stage1/cohere/typeaware/binding.ts:6: constructor(name: string, identifier: number, declarations: readonly number[], flags: number) {
+stage1/cohere/typeaware/completion.ts:10: merge(other: Completion): void {
+stage1/cohere/typeaware/completion.ts:28: outward(other: Completion, target: number): void {
+stage1/cohere/typeaware/completion.ts:7: constructor(normal: boolean) {
+stage1/cohere/typeaware/diagnostic.ts:16: constructor(rule: string, id: string, message: string, start: number, end: number) {
+stage1/cohere/typeaware/diagnostic.ts:23: written(): string {
+stage1/cohere/typeaware/facts.ts:16: export function types(text: string, question: string): Types {
+stage1/cohere/typeaware/facts.ts:18: header(frames, question);
+stage1/cohere/typeaware/facts.ts:24: for(let index = 0; index < restCount; index++) {
+stage1/cohere/typeaware/facts.ts:29: for(let index = 0; index < count; index++) {
+stage1/cohere/typeaware/facts.ts:50: for(const root of roots) {
+stage1/cohere/typeaware/facts.ts:53: for(const record of records) {
+stage1/cohere/typeaware/facts.ts:7: function contains(records: readonly TypeFact[], id: number): boolean {
+stage1/cohere/typeaware/facts.ts:8: for(const record of records) {
+stage1/cohere/typeaware/frames.ts:10: for(let at = start; at < last; at++) {
+stage1/cohere/typeaware/frames.ts:17: if(!Number.isSafeInteger(value)) {
+stage1/cohere/typeaware/frames.ts:26: constructor(text: string) {
+stage1/cohere/typeaware/frames.ts:29: next(): number {
+stage1/cohere/typeaware/frames.ts:3: function decimal(text: string, first: number, last: number, message: string): number {
+stage1/cohere/typeaware/frames.ts:41: field(): string {
+stage1/cohere/typeaware/frames.ts:45: number(): number {
+stage1/cohere/typeaware/frames.ts:49: natural(): number {
+stage1/cohere/typeaware/frames.ts:56: yes(): boolean {
+stage1/cohere/typeaware/frames.ts:63: ids(): number[] {
+stage1/cohere/typeaware/frames.ts:6: if(start >= last || (text.charCodeAt(start) === 48 && (negative || start + 1 < last))) {
+stage1/cohere/typeaware/frames.ts:71: end(): void {
+stage1/cohere/typeaware/frames.ts:77: export function header(frames: Frames, expected: string): void {
+stage1/cohere/typeaware/frames.ts:78: if(frames.number() !== 1 || frames.field() !== expected) {
+stage1/cohere/typeaware/parameters.ts:10: constructor(facts: Types, fixed: readonly number[], rest: number, restIndex: number) {
+stage1/cohere/typeaware/parameters.ts:16: next(): number {
+stage1/cohere/typeaware/repair.ts:5: constructor(start: number, end: number, text: string) {
+stage1/cohere/typeaware/returns.ts:120: name(index: number, capital: boolean): string {
+stage1/cohere/typeaware/returns.ts:129: if(node.children.some((child) => this.rules.parser.node(child).kind === 'StaticKeyword')) {
+stage1/cohere/typeaware/returns.ts:137: if(node.children.some((child) => this.rules.parser.node(child).kind === 'AsyncKeyword')) {
+stage1/cohere/typeaware/returns.ts:140: if(node.children.some((child) => this.rules.parser.node(child).kind === 'AsteriskToken')) {
+stage1/cohere/typeaware/returns.ts:14: constructor(rules: Rules, shadow: Shadow) {
+stage1/cohere/typeaware/returns.ts:182: truthy(index: number): boolean {
+stage1/cohere/typeaware/returns.ts:18: scope(index: number): boolean {
+stage1/cohere/typeaware/returns.ts:207: throwable(index: number): boolean {
+stage1/cohere/typeaware/returns.ts:248: !parent.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken') &&
+stage1/cohere/typeaware/returns.ts:276: return node.children.some((child) => this.throwable(child));
+stage1/cohere/typeaware/returns.ts:278: sequence(children: readonly number[]): Completion {
+stage1/cohere/typeaware/returns.ts:289: jump(index: number, continueJump: boolean): number {
+stage1/cohere/typeaware/returns.ts:29: count(index: number, id: number): number {
+stage1/cohere/typeaware/returns.ts:326: flow(index: number): Completion {
+stage1/cohere/typeaware/returns.ts:330: result.thrown = node.children.some((child) => this.throwable(child));
+stage1/cohere/typeaware/returns.ts:36: thenable(index: number, facts: Types, subject: TypeFact): boolean {
+stage1/cohere/typeaware/returns.ts:401: (child) =>
+stage1/cohere/typeaware/returns.ts:420: !clauses.some((clause) => this.rules.parser.node(clause).kind === 'DefaultClause'),
+stage1/cohere/typeaware/returns.ts:440: const catchIndex = node.children.find((child) => this.rules.parser.node(child).kind === 'CatchClause');
+stage1/cohere/typeaware/returns.ts:476: judge(index: number): void {
+stage1/cohere/typeaware/returns.ts:486: if(returns.some((child) => this.rules.parser.node(child).children.length === 0) && this.suppress(index)) {
+stage1/cohere/typeaware/returns.ts:487: returns = returns.filter((child) => this.rules.parser.node(child).children.length > 0);
+stage1/cohere/typeaware/returns.ts:525: ? (node.children.find((child) => this.rules.parser.node(child).kind === 'EqualsGreaterThanToken') ??
+stage1/cohere/typeaware/returns.ts:533: run(): void {
+stage1/cohere/typeaware/returns.ts:56: promiseVoid(index: number, facts: Types, subject: TypeFact): boolean {
+stage1/cohere/typeaware/returns.ts:69: suppress(index: number): boolean {
+stage1/cohere/typeaware/returns.ts:76: .children.some((child) => this.rules.parser.node(child).kind === 'AsyncKeyword');
+stage1/cohere/typeaware/returns.ts:77: return facts.roots.some((id) =>
+stage1/cohere/typeaware/returns.ts:81: collect(index: number): void {
+stage1/cohere/typeaware/returns.ts:92: key(index: number): number {
+stage1/cohere/typeaware/rules.ts:101: ask(index: number, question: string): string {
+stage1/cohere/typeaware/rules.ts:106: name(type: TypeFact, index: number): string {
+stage1/cohere/typeaware/rules.ts:113: describe(type: TypeFact, index: number): string {
+stage1/cohere/typeaware/rules.ts:116: add(rule: string, id: string, message: string, index: number): Diagnostic {
+stage1/cohere/typeaware/rules.ts:122: skip(index: number, kind = 'ParenthesizedExpression'): number {
+stage1/cohere/typeaware/rules.ts:129: links(index: number, parent: number): void {
+stage1/cohere/typeaware/rules.ts:135: key(index: number): string {
+stage1/cohere/typeaware/rules.ts:158: getterPairs(index: number): void {
+stage1/cohere/typeaware/rules.ts:167: if(member.children.some((child) => this.parser.node(child).kind === 'AbstractKeyword')) {
+stage1/cohere/typeaware/rules.ts:170: const parameters = member.children.filter((child) => this.parser.node(child).kind === 'Parameter');
+stage1/cohere/typeaware/rules.ts:173: (child) =>
+stage1/cohere/typeaware/rules.ts:222: annotation(index: number): number {
+stage1/cohere/typeaware/rules.ts:227: (child) =>
+stage1/cohere/typeaware/rules.ts:22: export function unsafeAssignment(
+stage1/cohere/typeaware/rules.ts:240: merging(index: number): void {
+stage1/cohere/typeaware/rules.ts:281: plus(index: number): void {
+stage1/cohere/typeaware/rules.ts:309: : parts.length > 0 && parts.every((id) => (facts.type(id).flags & 1048576) !== 0);
+stage1/cohere/typeaware/rules.ts:30: if((sender.flags & 1) !== 0 && (receiver.flags & (1 | 2)) === 0) {
+stage1/cohere/typeaware/rules.ts:331: plusInvalid(index: number, name: string): void {
+stage1/cohere/typeaware/rules.ts:339: arguments(index: number): void {
+stage1/cohere/typeaware/rules.ts:34: if(visited.includes(pair)) {
+stage1/cohere/typeaware/rules.ts:39: if(sender.target === 0 || receiver.target === 0 || sender.target !== receiver.target || emptyMap) {
+stage1/cohere/typeaware/rules.ts:42: if(sender.arguments.length === 0 || receiver.arguments.length === 0) {
+stage1/cohere/typeaware/rules.ts:458: booleanCompare(index: number): void {
+stage1/cohere/typeaware/rules.ts:45: if(sender.arguments.length !== receiver.arguments.length) {
+stage1/cohere/typeaware/rules.ts:480: const survivors = parts.filter((id) => (facts.type(id).flags & nullish) === 0);
+stage1/cohere/typeaware/rules.ts:485: survivors.every((id) => (facts.type(id).flags & booleanLike) !== 0);
+stage1/cohere/typeaware/rules.ts:48: for(let index = 0; index < sender.arguments.length; index++) {
+stage1/cohere/typeaware/rules.ts:526: strong(index: number): boolean {
+stage1/cohere/typeaware/rules.ts:549: weakParent(index: number): boolean {
+stage1/cohere/typeaware/rules.ts:576: walk(index: number): void {
+stage1/cohere/typeaware/rules.ts:608: run(): void {
+stage1/cohere/typeaware/rules.ts:635: this.findings.sort((left, right) => (left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0));
+stage1/cohere/typeaware/rules.ts:75: constructor(
+stage1/cohere/typeaware/rules.ts:90: byte(pos: number): number {
+stage1/cohere/typeaware/rules.ts:93: start(node: ParseNode): number {
+stage1/cohere/typeaware/rules.ts:98: text(node: ParseNode): string {
+stage1/cohere/typeaware/scope.ts:5: constructor(container: number, bindings: Binding[]) {
+stage1/cohere/typeaware/shadow.ts:105: report(scopeIndex: number, binding: Binding): void {
+stage1/cohere/typeaware/shadow.ts:14: constructor(rules: Rules) {
+stage1/cohere/typeaware/shadow.ts:158: binding.declarations.every((decl) => {
+stage1/cohere/typeaware/shadow.ts:17: lookup(kind: string, start: number, end: number): number {
+stage1/cohere/typeaware/shadow.ts:199: .children.some((child) => this.rules.parser.node(child).kind === 'StaticKeyword') &&
+stage1/cohere/typeaware/shadow.ts:249: node.children.some((child) => this.rules.parser.node(child).text === 'global')
+stage1/cohere/typeaware/shadow.ts:273: !parent.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')
+stage1/cohere/typeaware/shadow.ts:283: const isEnum = outer.declarations.some((decl) => this.rules.parser.node(decl).kind === 'EnumDeclaration');
+stage1/cohere/typeaware/shadow.ts:297: run(): void {
+stage1/cohere/typeaware/shadow.ts:311: this.ordered.sort((a, b) => this.rules.parser.node(a).pos - this.rules.parser.node(b).pos);
+stage1/cohere/typeaware/shadow.ts:360: const scope = this.scopes.find((candidate) => candidate.container === index);
+stage1/cohere/typeaware/shadow.ts:383: const scope = this.scopes.find((candidate) => candidate.container === index);
+stage1/cohere/typeaware/shadow.ts:390: this.scopes.sort((a, b) => {
+stage1/cohere/typeaware/shadow.ts:42: name(index: number): number {
+stage1/cohere/typeaware/shadow.ts:47: (child) => child !== initializer && this.rules.parser.node(child).kind !== 'DotDotDotToken',
+stage1/cohere/typeaware/shadow.ts:62: value(binding: Binding): boolean {
+stage1/cohere/typeaware/shadow.ts:85: body(index: number): boolean {
+stage1/cohere/typeaware/shadow.ts:86: return this.rules.parser.node(index).children.some((child) => this.rules.parser.node(child).kind === 'Block');
+stage1/cohere/typeaware/shadow.ts:88: initializer(index: number): number {
+stage1/cohere/typeaware/suggestion.ts:7: constructor(id: string, message: string, repairs: readonly Repair[]) {
+stage1/cohere/typeaware/type_fact.ts:14: constructor(
+stage1/cohere/typeaware/types.ts:11: constructor(
+stage1/cohere/typeaware/types.ts:24: type(id: number): TypeFact {
+stage1/cohere/typeaware/types.ts:32: root(index = 0): TypeFact {
+stage1/cohere/typeaware/types.ts:35: parts(type: TypeFact, mask = unionFlag): readonly number[] {
+stage1/cohere/typeaware/types.ts:38: has(type: TypeFact, mask: number): boolean {
+stage1/cohere/typeaware/types.ts:39: return this.parts(type).some((part) => (this.type(part).flags & mask) !== 0);
+stage1/cohere/typeaware/unary_minus.ts:100: walk(index: number): void {
+stage1/cohere/typeaware/unary_minus.ts:106: run(): void {
+stage1/cohere/typeaware/unary_minus.ts:108: this.findings.sort((left, right) => left.start - right.start);
+stage1/cohere/typeaware/unary_minus.ts:10: export function byteOffsets(source: string): number[] {
+stage1/cohere/typeaware/unary_minus.ts:13: for(let index = 0; index < source.length; index++) {
+stage1/cohere/typeaware/unary_minus.ts:33: constructor(program: number, path: string, parser: Parser, scanner: Scanner, offsets: readonly number[]) {
+stage1/cohere/typeaware/unary_minus.ts:40: visit(index: number): void {
+stage1/cohere/typeaware/unbound.ts:12: constructor(rules: Rules, shadow: Shadow) {
+stage1/cohere/typeaware/unbound.ts:145: return bases.roots.some((id) => this.builtin(index, bases, bases.type(id), anyName, depth + 1));
+stage1/cohere/typeaware/unbound.ts:147: native(object: number, key: number): boolean {
+stage1/cohere/typeaware/unbound.ts:16: safe(index: number): boolean {
+stage1/cohere/typeaware/unbound.ts:189: report(index: number, id: number, name: string): boolean {
+stage1/cohere/typeaware/unbound.ts:232: constituent(index: number, facts: Types, name: string): boolean {
+stage1/cohere/typeaware/unbound.ts:242: member(index: number): void {
+stage1/cohere/typeaware/unbound.ts:281: insideType(index: number): boolean {
+stage1/cohere/typeaware/unbound.ts:290: node.children.some((child) => this.rules.parser.node(child).kind === 'DeclareKeyword')) ||
+stage1/cohere/typeaware/unbound.ts:292: node.children.some((child) => this.rules.parser.node(child).kind === 'AbstractKeyword'))
+stage1/cohere/typeaware/unbound.ts:300: pattern(index: number): void {
+stage1/cohere/typeaware/unbound.ts:325: if(item.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')) {
+stage1/cohere/typeaware/unbound.ts:347: run(): void {
+stage1/cohere/typeaware/unbound.ts:90: builtin(index: number, facts: Types, subject: TypeFact, anyName: boolean, depth = 0): boolean {
+stage1/cohere/typeaware/unbound.ts:95: return subject.parts.some((part) => this.builtin(index, facts, facts.type(part), anyName, depth + 1));
+stage1/cohere/typeaware/unbound.ts:98: return subject.parts.every((part) => this.builtin(index, facts, facts.type(part), anyName, depth + 1));
+stage1/cohere/typeaware/void.ts:13: ancestor(index: number): number {
+stage1/cohere/typeaware/void.ts:167: run(): void {
+stage1/cohere/typeaware/void.ts:58: gap(start: number, end: number, semicolon = false): boolean {
+stage1/cohere/typeaware/void.ts:67: visit(index: number): void {
+stage1/cohere/typeaware/void.ts:84: (child) => this.rules.parser.node(child).kind === 'EqualsGreaterThanToken',
+stage1/cohere/typeaware/void.ts:9: constructor(rules: Rules, volume: Volume) {
+stage1/cohere/typeaware/volume.ts:106: member(index: number): number {
+stage1/cohere/typeaware/volume.ts:139: computed(index: number): void {
+stage1/cohere/typeaware/volume.ts:15: constructor(rules: Rules) {
+stage1/cohere/typeaware/volume.ts:172: enumTypes(index: number): number[] {
+stage1/cohere/typeaware/volume.ts:179: primitive(facts: Types, flag: number): boolean {
+stage1/cohere/typeaware/volume.ts:17: this.memberStates = rules.parser.nodes.map(() => 0);
+stage1/cohere/typeaware/volume.ts:182: .every((id) =>
+stage1/cohere/typeaware/volume.ts:183: facts.parts(facts.type(id), intersectionFlag).some((part) => (facts.type(part).flags & flag) !== 0),
+stage1/cohere/typeaware/volume.ts:186: enumPair(index: number, left: number, right: number, isCase: boolean): void {
+stage1/cohere/typeaware/volume.ts:189: if((leftEnums.length === 0 && rightEnums.length === 0) || leftEnums.some((id) => rightEnums.includes(id))) {
+stage1/cohere/typeaware/volume.ts:196: if(ap.some((id) => bp.includes(id))) {
+stage1/cohere/typeaware/volume.ts:199: const an = ap.some((id) => (first.type(id).flags & 98304) !== 0 && (first.type(id).flags & 2048) !== 0);
+stage1/cohere/typeaware/volume.ts:19: facts(index: number, question = 'raw-shape'): Types {
+stage1/cohere/typeaware/volume.ts:200: const as = ap.some((id) => (first.type(id).flags & 98304) !== 0 && (first.type(id).flags & 2048) === 0);
+stage1/cohere/typeaware/volume.ts:201: const bn = bp.some((id) => (second.type(id).flags & 98304) !== 0 && (second.type(id).flags & 2048) !== 0);
+stage1/cohere/typeaware/volume.ts:202: const bs = bp.some((id) => (second.type(id).flags & 98304) !== 0 && (second.type(id).flags & 2048) === 0);
+stage1/cohere/typeaware/volume.ts:220: literalParts(facts: Types, id: number): number[] {
+stage1/cohere/typeaware/volume.ts:22: assignable(index: number, source: number, target: number): boolean {
+stage1/cohere/typeaware/volume.ts:233: exhaustive(index: number): void {
+stage1/cohere/typeaware/volume.ts:283: unionFlags(index: number): number {
+stage1/cohere/typeaware/volume.ts:291: conditional(index: number): boolean {
+stage1/cohere/typeaware/volume.ts:29: assertion(index: number): void {
+stage1/cohere/typeaware/volume.ts:331: similar(left: number, right: number): boolean {
+stage1/cohere/typeaware/volume.ts:359: memberLike(index: number): boolean {
+stage1/cohere/typeaware/volume.ts:364: wrappedText(index: number): string {
+stage1/cohere/typeaware/volume.ts:373: suggest(
+stage1/cohere/typeaware/volume.ts:391: comments(start: number, end: number, separator: string): string {
+stage1/cohere/typeaware/volume.ts:413: nullish(index: number): void {
+stage1/cohere/typeaware/volume.ts:650: walk(index: number): void {
+stage1/cohere/typeaware/volume.ts:686: run(): void {
+stage1/cohere/typeaware/volume.ts:691: this.rules.findings.sort((left, right) =>
+stage1/cohere/typeaware/volume_suite.ts:19: panic(manifest.message);
+stage1/cohere/typeaware/volume_suite.ts:21: const paths = manifest.text.split('\n').filter((path) => path !== '');
+stage1/cohere/typeaware/volume_suite.ts:27: if(source.kind === 'Error') {
+stage1/cohere/typeaware/volume_suite.ts:36: if(!optionsChecked) {
+stage1/cohere/typeaware/volume_suite.ts:59: if(!args.includes('--count')) {
+stage1/typescript/parser/grammar.ts:2: export function precedence(kind: string): number {
+stage1/typescript/parser/grammar.ts:3: switch(kind) {
+stage1/typescript/parser/jsx.ts:108: attributes(): number {
+stage1/typescript/parser/jsx.ts:10: readonly kind: () => string;
+stage1/typescript/parser/jsx.ts:11: readonly next: () => void;
+stage1/typescript/parser/jsx.ts:12: readonly expect: (kind: string) => void;
+stage1/typescript/parser/jsx.ts:13: readonly node: (index: number) => ParseNode;
+stage1/typescript/parser/jsx.ts:143: tagKey(index: number): string {
+stage1/typescript/parser/jsx.ts:14: readonly make: (kind: string, pos: number, children: number[]) => number;
+stage1/typescript/parser/jsx.ts:151: element(inExpression: boolean): number {
+stage1/typescript/parser/jsx.ts:15: readonly identifier: () => number;
+stage1/typescript/parser/jsx.ts:16: readonly token: () => number;
+stage1/typescript/parser/jsx.ts:17: readonly literal: () => number;
+stage1/typescript/parser/jsx.ts:18: readonly expression: () => number;
+stage1/typescript/parser/jsx.ts:19: readonly typeArguments: () => number[];
+stage1/typescript/parser/jsx.ts:20: readonly missingGreater: () => void;
+stage1/typescript/parser/jsx.ts:21: readonly typeTrailing: () => boolean;
+stage1/typescript/parser/jsx.ts:26: constructor(parser: JsxContextInterface) {
+stage1/typescript/parser/jsx.ts:29: make(kind: string, pos: number, children: number[] = []): number {
+stage1/typescript/parser/jsx.ts:32: identifier(): number {
+stage1/typescript/parser/jsx.ts:41: name(tag: boolean): number {
+stage1/typescript/parser/jsx.ts:64: text(): number {
+stage1/typescript/parser/jsx.ts:74: finishGreater(expression: boolean): void {
+stage1/typescript/parser/jsx.ts:87: expression(attribute: boolean): number {
+stage1/typescript/parser/lookahead.ts:101: if(kind(scanner) === 'AsyncKeyword') {
+stage1/typescript/parser/lookahead.ts:117: if(kind(scanner) === 'LessThanToken') {
+stage1/typescript/parser/lookahead.ts:132: if(kind(scanner) === 'OpenParenToken') {
+stage1/typescript/parser/lookahead.ts:16: function kind(scanner: Scanner): string {
+stage1/typescript/parser/lookahead.ts:188: export function jsxArrowAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:190: if(kind(scanner) === 'AsyncKeyword') {
+stage1/typescript/parser/lookahead.ts:193: if(kind(scanner) !== 'LessThanToken') {
+stage1/typescript/parser/lookahead.ts:198: if(kind(scanner) === 'ConstKeyword') {
+stage1/typescript/parser/lookahead.ts:203: if(kind(scanner) === 'ExtendsKeyword') {
+stage1/typescript/parser/lookahead.ts:212: export function typeArgumentsAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:220: while(kind(scanner) !== 'EndOfFile') {
+stage1/typescript/parser/lookahead.ts:31: constructor(scanner: Scanner) {
+stage1/typescript/parser/lookahead.ts:41: prepare(): void {
+stage1/typescript/parser/lookahead.ts:74: next(): void {
+stage1/typescript/parser/lookahead.ts:79: restore(): void {
+stage1/typescript/parser/lookahead.ts:90: function optionalParameterAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:98: export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+stage1/typescript/parser/nodes.ts:18: constructor(kind: string, pos: number, end: number, children: number[]) {
+stage1/typescript/parser/nodes.ts:26: export function written(text: string): string {
+stage1/typescript/parser/nodes.ts:28: for(let index = 0; index < text.length; index++) {
+stage1/typescript/parser/nodes.ts:38: export function printTree(
+stage1/typescript/parser/nodes.ts:50: for(const child of node.children) {
+stage1/typescript/parser/nodes.ts:56: export function countTree(nodes: readonly ParseNode[], root: number): number {
+stage1/typescript/parser/nodes.ts:59: for(const child of node.children) {
+stage1/typescript/parser/parser.ts:1027: statements(): Statements {
+stage1/typescript/parser/parser.ts:1032: kind: () => this.kind(),
+stage1/typescript/parser/parser.ts:1033: next: () => {
+stage1/typescript/parser/parser.ts:1036: expect: (kind) => {
+stage1/typescript/parser/parser.ts:1039: node: (index) => this.node(index),
+stage1/typescript/parser/parser.ts:1040: make: (kind, pos, children: number[] = []) => this.make(kind, pos, children),
+stage1/typescript/parser/parser.ts:1041: entityName: () => this.entityName(),
+stage1/typescript/parser/parser.ts:1042: identifier: () => this.identifier(),
+stage1/typescript/parser/parser.ts:1043: token: () => this.token(),
+stage1/typescript/parser/parser.ts:1044: type: (minimum = 0, conditional = true) => this.type(minimum, conditional),
+stage1/typescript/parser/parser.ts:1045: typeArguments: () => this.typeArguments(),
+stage1/typescript/parser/parser.ts:1046: typeParameters: () => this.typeParameters(),
+stage1/typescript/parser/parser.ts:1047: parameters: () => this.parameters(),
+stage1/typescript/parser/parser.ts:1048: returnType: () => this.returnType(),
+stage1/typescript/parser/parser.ts:1049: bindingName: () => this.bindingName(),
+stage1/typescript/parser/parser.ts:1050: rootAssignment: () => this.rootAssignment(),
+stage1/typescript/parser/parser.ts:1051: rootExpression: () => this.rootExpression(),
+stage1/typescript/parser/parser.ts:1052: peek: () => this.peek(),
+stage1/typescript/parser/parser.ts:1053: nextIdentifierSameLine: () => this.nextIdentifierSameLine(),
+stage1/typescript/parser/parser.ts:1054: propertyName: () => this.propertyName(),
+stage1/typescript/parser/parser.ts:1055: methodBody: (pos, prefix, kind, async, generator) => this.methodBody(pos, prefix, kind, async, generator),
+stage1/typescript/parser/parser.ts:1056: primary: () => this.primary(),
+stage1/typescript/parser/parser.ts:1057: suffix: (expression, call) => this.suffix(expression, call),
+stage1/typescript/parser/parser.ts:1058: typeLiteral: () => this.typeLiteral(),
+stage1/typescript/parser/parser.ts:1059: decorator: () => this.decorator(),
+stage1/typescript/parser/parser.ts:1060: getAwait: () => this.awaitContext,
+stage1/typescript/parser/parser.ts:1061: setAwait: (value) => {
+stage1/typescript/parser/parser.ts:1064: getYield: () => this.yieldContext,
+stage1/typescript/parser/parser.ts:1065: setYield: (value) => {
+stage1/typescript/parser/parser.ts:1068: getIn: () => this.disallowIn,
+stage1/typescript/parser/parser.ts:1069: setIn: (value) => {
+stage1/typescript/parser/parser.ts:1072: depth: () => this.expressionDepth,
+stage1/typescript/parser/parser.ts:1075: block(): number {
+stage1/typescript/parser/parser.ts:1078: statement(): number {
+stage1/typescript/parser/parser.ts:1081: semicolon(): void {
+stage1/typescript/parser/parser.ts:1084: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/typescript/parser/parser.ts:1088: peek(): string {
+stage1/typescript/parser/parser.ts:1107: optionalChain(index: number): boolean {
+stage1/typescript/parser/parser.ts:1122: spread(): number {
+stage1/typescript/parser/parser.ts:1128: arguments(): number[] {
+stage1/typescript/parser/parser.ts:1147: suffix(expression: number, allowCall: boolean): number {
+stage1/typescript/parser/parser.ts:1276: templatePart(): number {
+stage1/typescript/parser/parser.ts:1289: templateType(): number {
+stage1/typescript/parser/parser.ts:1305: template(): number {
+stage1/typescript/parser/parser.ts:1324: array(): number {
+stage1/typescript/parser/parser.ts:1351: propertyName(): number {
+stage1/typescript/parser/parser.ts:1367: methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {
+stage1/typescript/parser/parser.ts:1396: object(): number {
+stage1/typescript/parser/parser.ts:1478: unary(): number {
+stage1/typescript/parser/parser.ts:1548: binary(minimum: number): number {
+stage1/typescript/parser/parser.ts:1576: assignment(allowReturn = true): number {
+stage1/typescript/parser/parser.ts:1612: allowInAssignment(allowReturn = true): number {
+stage1/typescript/parser/parser.ts:1622: allowInExpression(): number {
+stage1/typescript/parser/parser.ts:1632: expression(): number {
+stage1/typescript/parser/parser.ts:1642: file(): number {
+stage1/typescript/parser/parser.ts:179: jsxParser(): Jsx {
+stage1/typescript/parser/parser.ts:184: kind: () => this.kind(),
+stage1/typescript/parser/parser.ts:185: next: () => {
+stage1/typescript/parser/parser.ts:188: expect: (kind) => {
+stage1/typescript/parser/parser.ts:191: node: (index) => this.node(index),
+stage1/typescript/parser/parser.ts:192: make: (kind, pos, children) => this.make(kind, pos, children),
+stage1/typescript/parser/parser.ts:193: identifier: () => this.identifier(),
+stage1/typescript/parser/parser.ts:194: token: () => this.token(),
+stage1/typescript/parser/parser.ts:195: literal: () => this.literal(),
+stage1/typescript/parser/parser.ts:196: expression: () => this.allowInExpression(),
+stage1/typescript/parser/parser.ts:197: typeArguments: () => this.typeArguments(),
+stage1/typescript/parser/parser.ts:198: missingGreater: () => {
+stage1/typescript/parser/parser.ts:19: constructor(text: string, path = 'source') {
+stage1/typescript/parser/parser.ts:201: typeTrailing: () => this.lastTypeTrailing,
+stage1/typescript/parser/parser.ts:204: bindingIdentifier(): boolean {
+stage1/typescript/parser/parser.ts:209: nextIdentifierSameLine(): boolean {
+stage1/typescript/parser/parser.ts:218: yieldOperandAhead(): boolean {
+stage1/typescript/parser/parser.ts:229: mark(): ParserStateInterface {
+stage1/typescript/parser/parser.ts:241: rewind(state: ParserStateInterface): void {
+stage1/typescript/parser/parser.ts:251: docTypes(): number[] {
+stage1/typescript/parser/parser.ts:27: kind(): string {
+stage1/typescript/parser/parser.ts:280: tupleNameAhead(): boolean {
+stage1/typescript/parser/parser.ts:294: typeArguments(): number[] {
+stage1/typescript/parser/parser.ts:30: next(): void {
+stage1/typescript/parser/parser.ts:310: typeParameters(): number[] {
+stage1/typescript/parser/parser.ts:33: node(index: number): ParseNode {
+stage1/typescript/parser/parser.ts:340: entityName(): number {
+stage1/typescript/parser/parser.ts:350: importType(): number {
+stage1/typescript/parser/parser.ts:36: make(kind: string, pos: number, children: number[] = []): number {
+stage1/typescript/parser/parser.ts:387: type(minimum = 0, conditional = true): number {
+stage1/typescript/parser/parser.ts:40: token(): number {
+stage1/typescript/parser/parser.ts:46: expect(kind: string): void {
+stage1/typescript/parser/parser.ts:52: literal(): number {
+stage1/typescript/parser/parser.ts:667: mappedAhead(): boolean {
+stage1/typescript/parser/parser.ts:685: mappedType(): number {
+stage1/typescript/parser/parser.ts:724: indexSignatureAhead(): boolean {
+stage1/typescript/parser/parser.ts:72: identifier(): number {
+stage1/typescript/parser/parser.ts:732: typeLiteral(): number {
+stage1/typescript/parser/parser.ts:80: primary(): number {
+stage1/typescript/parser/parser.ts:812: parameters(): number[] {
+stage1/typescript/parser/parser.ts:857: bindingName(): number {
+stage1/typescript/parser/parser.ts:897: decorator(): number {
+stage1/typescript/parser/parser.ts:909: rootAssignment(): number {
+stage1/typescript/parser/parser.ts:918: rootExpression(): number {
+stage1/typescript/parser/parser.ts:927: arrow(allowReturn: boolean): number {
+stage1/typescript/parser/parser.ts:964: returnType(): number {
+stage1/typescript/parser/parser.ts:988: functionExpression(): number {
+stage1/typescript/parser/statements.ts:10: readonly kind: () => string;
+stage1/typescript/parser/statements.ts:117: lookahead(offset: number): string {
+stage1/typescript/parser/statements.ts:11: readonly next: () => void;
+stage1/typescript/parser/statements.ts:12: readonly expect: (kind: string) => void;
+stage1/typescript/parser/statements.ts:13: readonly node: (index: number) => ParseNode;
+stage1/typescript/parser/statements.ts:140: decorator(): number {
+stage1/typescript/parser/statements.ts:143: canExportName(): boolean {
+stage1/typescript/parser/statements.ts:14: readonly make: (kind: string, pos: number, children?: number[]) => number;
+stage1/typescript/parser/statements.ts:150: specifiers(importing: boolean): number {
+stage1/typescript/parser/statements.ts:15: readonly entityName: () => number;
+stage1/typescript/parser/statements.ts:16: readonly identifier: () => number;
+stage1/typescript/parser/statements.ts:17: readonly token: () => number;
+stage1/typescript/parser/statements.ts:18: readonly type: (minimum?: number, conditional?: boolean) => number;
+stage1/typescript/parser/statements.ts:19: readonly typeArguments: () => number[];
+stage1/typescript/parser/statements.ts:20: readonly typeParameters: () => number[];
+stage1/typescript/parser/statements.ts:212: attributes(): number {
+stage1/typescript/parser/statements.ts:218: attributeBody(pos: number, operator: string): number {
+stage1/typescript/parser/statements.ts:21: readonly parameters: () => number[];
+stage1/typescript/parser/statements.ts:22: readonly returnType: () => number;
+stage1/typescript/parser/statements.ts:23: readonly bindingName: () => number;
+stage1/typescript/parser/statements.ts:244: importDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/typescript/parser/statements.ts:24: readonly rootAssignment: () => number;
+stage1/typescript/parser/statements.ts:25: readonly rootExpression: () => number;
+stage1/typescript/parser/statements.ts:26: readonly peek: () => string;
+stage1/typescript/parser/statements.ts:27: readonly nextIdentifierSameLine: () => boolean;
+stage1/typescript/parser/statements.ts:28: readonly propertyName: () => number;
+stage1/typescript/parser/statements.ts:335: exportDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/typescript/parser/statements.ts:35: ) => number;
+stage1/typescript/parser/statements.ts:36: readonly primary: () => number;
+stage1/typescript/parser/statements.ts:37: readonly suffix: (expression: number, call: boolean) => number;
+stage1/typescript/parser/statements.ts:389: moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+stage1/typescript/parser/statements.ts:38: readonly typeLiteral: () => number;
+stage1/typescript/parser/statements.ts:39: readonly decorator: () => number;
+stage1/typescript/parser/statements.ts:40: readonly getAwait: () => boolean;
+stage1/typescript/parser/statements.ts:41: readonly setAwait: (value: boolean) => void;
+stage1/typescript/parser/statements.ts:420: exportedClauseAhead(): boolean {
+stage1/typescript/parser/statements.ts:42: readonly getYield: () => boolean;
+stage1/typescript/parser/statements.ts:43: readonly setYield: (value: boolean) => void;
+stage1/typescript/parser/statements.ts:442: functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
+stage1/typescript/parser/statements.ts:44: readonly getIn: () => boolean;
+stage1/typescript/parser/statements.ts:45: readonly setIn: (value: boolean) => void;
+stage1/typescript/parser/statements.ts:46: readonly depth: () => number;
+stage1/typescript/parser/statements.ts:479: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/typescript/parser/statements.ts:51: constructor(parser: StatementContextInterface) {
+stage1/typescript/parser/statements.ts:54: block(): number {
+stage1/typescript/parser/statements.ts:640: forStatement(): number {
+stage1/typescript/parser/statements.ts:64: semicolon(): void {
+stage1/typescript/parser/statements.ts:682: switchStatement(): number {
+stage1/typescript/parser/statements.ts:713: tryStatement(): number {
+stage1/typescript/parser/statements.ts:741: statement(): number {
+stage1/typescript/parser/statements.ts:76: variableList(): number {
+stage1/typescript/scanner/characters.ts:240: function contains(ranges: readonly number[], code: number): boolean {
+stage1/typescript/scanner/characters.ts:243: while(low <= high) {
+stage1/typescript/scanner/characters.ts:259: export function isIdentifierStart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:268: export function isIdentifierPart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:271: export function isLineBreak(code: number): boolean {
+stage1/typescript/scanner/characters.ts:274: export function isSpace(code: number): boolean {
+stage1/typescript/scanner/characters.ts:290: export function digit(code: number): number {
+stage1/typescript/scanner/scanner.ts:122: unicode(report: boolean): number {
+stage1/typescript/scanner/scanner.ts:14: function decimalDigits(text: string, base: number): string {
+stage1/typescript/scanner/scanner.ts:16: for(const character of text) {
+stage1/typescript/scanner/scanner.ts:173: escape(report: boolean): string {
+stage1/typescript/scanner/scanner.ts:251: identifier(prefix: number): boolean {
+stage1/typescript/scanner/scanner.ts:289: string(): void {
+stage1/typescript/scanner/scanner.ts:31: while(first < result.length - 1 && result.charCodeAt(first) === 48) {
+stage1/typescript/scanner/scanner.ts:324: template(report: boolean): void {
+stage1/typescript/scanner/scanner.ts:370: bigint(): void {
+stage1/typescript/scanner/scanner.ts:37: function numberValue(text: string): string {
+stage1/typescript/scanner/scanner.ts:385: number(): void {
+stage1/typescript/scanner/scanner.ts:38: if(text === '') {
+stage1/typescript/scanner/scanner.ts:492: scan(): string {
+stage1/typescript/scanner/scanner.ts:62: constructor(text: string) {
+stage1/typescript/scanner/scanner.ts:65: code(offset = 0): number {
+stage1/typescript/scanner/scanner.ts:676: punctuation(code: number): string {
+stage1/typescript/scanner/scanner.ts:73: advance(code: number): void {
+stage1/typescript/scanner/scanner.ts:758: return '=>';
+stage1/typescript/scanner/scanner.ts:76: error(code: number, start: number = this.pos, length = 0): void {
+stage1/typescript/scanner/scanner.ts:817: rescanGreater(): void {
+stage1/typescript/scanner/scanner.ts:81: fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {
+stage1/typescript/scanner/scanner.ts:834: rescanTemplate(): void {
+stage1/typescript/scanner/scanner.ts:840: rescanSlash(): void {
+stage1/typescript/scanner/scanner.ts:936: scanJsxIdentifier(): void {
+stage1/typescript/scanner/scanner.ts:948: scanJsxAttributeValue(): void {
+stage1/typescript/scanner/scanner.ts:978: scanJsx(): string {
+stage1/typescript/scanner/tokens.ts:110: ['=>', 'EqualsGreaterThanToken'],

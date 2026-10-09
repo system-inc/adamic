@@ -1,0 +1,22 @@
+{
+  "base": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+  "nproc": 5,
+  "setup": "warm toolchain, no setup",
+  "npm_ci_seconds": 0.533,
+  "verdicts": {
+    "setup-check": 6,
+    "sacred": 1,
+    "subsumed": 2,
+    "witness": 4
+  },
+  "production_mutants": 4,
+  "survivors": [
+    "M3"
+  ],
+  "construction_vacuous": [
+    "TestVolumeProfileControlsLower",
+    "TestVolumeProfileCorpora_Setup",
+    "TestVolumeConfigGuardAndMutant"
+  ],
+  "not_covered": "154 compiler corpus leaves; other agreement leaves; other package rows; repository uniqueness"
+}
