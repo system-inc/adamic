@@ -1,0 +1,45 @@
+--- internal/lower/locals.go
++++ internal/lower/locals.go
+@@ -70,13 +70,18 @@
+ 			statements = append(statements, ir.Declare{Local: local, Uninitialized: true}, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: local, Value: value}}})
+ 			continue
+ 		}
++		preallocated := l.result.Locals[local].Preallocated
+ 		var value ir.Expression
+ 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
+ 			if l.initializing == nil {
+ 				l.initializing = map[int]*ast.Node{}
+ 			}
+ 			l.initializing[local] = name
+-			value, err = l.expression(initializer)
++			if list.Flags&ast.NodeFlagsConst != 0 && !l.result.Locals[local].Global && ast.SkipParentheses(initializer).Kind == ast.KindArrowFunction {
++				value, err = l.constantInitializerClosure(local, ast.SkipParentheses(initializer))
++			} else {
++				value, err = l.expression(initializer)
++			}
+ 			delete(l.initializing, local)
+ 			if err != nil {
+ 				return nil, err
+@@ -86,6 +91,9 @@
+ 			// is undefined, not the backend's unobservable storage placeholder. Namespace
+ 			// var was initialized when hoisted; a later declaration must not reset it.
+ 			value = ir.Undefined{Of: ir.Object}
++		}
++		if !preallocated && l.result.Locals[local].Preallocated {
++			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
+ 		}
+ 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
+ 			l.result.Locals[local].ConstantClosure = closure.Function + 1
+@@ -201,10 +209,8 @@
+ 		return
+ 	}
+ 	l.result.Locals[local].Captured = true
+-	if name, isInitializing := l.initializing[local]; isInitializing && l.unlowerable == nil {
+-		// const f = () => f(): the function value is made before the variable's cell is, so it has
+-		// nothing to capture yet.
+-		l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")
++	if _, isInitializing := l.initializing[local]; isInitializing {
++		l.result.Locals[local].Preallocated = true
+ 	}
+ 	start := 0
+ 	for position, closure := range l.closures {

@@ -1,0 +1,10 @@
+--- internal/native/runtime/object.c
++++ internal/native/runtime/object.c
+@@ -29,7 +29,6 @@
+ 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
+ 		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+ 		if (adamic_thrown != NULL) {
+-			adamic_release(object);
+ 			return NULL;
+ 		}
+ 		if (accessor == NULL) {

@@ -1,0 +1,10 @@
+--- internal/native/runtime/object.c
++++ internal/native/runtime/object.c
+@@ -32,6 +32,7 @@
+ 			adamic_release(object);
+ 			return NULL;
+ 		}
++		if (accessor != NULL) { adamic_retain(object->slots[index].reference); }
+ 		if (accessor == NULL) {
+ 			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
+ 			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];

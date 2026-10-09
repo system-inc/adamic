@@ -1,0 +1,11 @@
+--- internal/ir/accessor_spread.go
++++ internal/ir/accessor_spread.go
+@@ -74,7 +74,7 @@
+ 		}
+ 		return false
+ 	}
+-	return !data(literal.Spread, map[int]bool{})
++	return false && !data(literal.Spread, map[int]bool{})
+ }
+ 
+ func spreadStorageWalk(value reflect.Value, visit func(any)) {

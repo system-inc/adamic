@@ -1,0 +1,25 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 9db661abd..7b8adc1de 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1088,9 +1088,17 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
+ 		case ir.String:
+ 			value = l.spelled(span.AsTemplateSpan().Expression, value)
+ 		default:
+-			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
+-			// its source; 0.1 has no use for any of it.
+-			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
++			flags := l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression).Flags()
++			spelling := ""
++			if flags == checker.TypeFlagsNull {
++				spelling = "null"
++			} else if flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 && flags & ^(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) == 0 {
++				spelling = "undefined"
++			}
++			if spelling == "" {
++				return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
++			}
++			value = ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant(spelling)}}
+ 		}
+ 		parts = append(parts, value)
+ 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
