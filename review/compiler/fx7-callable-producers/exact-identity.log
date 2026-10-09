@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerLiteralReturn
+=== PAUSE TestCallableProducerLiteralReturn
+=== CONT  TestCallableProducerLiteralReturn
+    callable_producers_assignable_test.go:13: JavaScript backend stdout = "", source Node = "true\n"
+--- FAIL: TestCallableProducerLiteralReturn (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.191s
+FAIL
