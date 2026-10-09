@@ -83,6 +83,7 @@ func TestModuleNamespaceReadinessMutants(t *testing.T) {
 }
 
 func TestModuleNamespaceLiveBindingMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/module_namespace_reads/main.a"))
 	if err != nil {
 		t.Fatal(err)
