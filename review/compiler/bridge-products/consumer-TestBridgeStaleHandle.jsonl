@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:46.683299765Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:46.690433409Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle"}
+{"Time":"2026-10-09T06:52:46.690510462Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle","Output":"=== RUN   TestBridgeStaleHandle\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:47.058388139Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle","Output":"    units_test.go:71: build bridge-test-stale-driver cc37323fa0b0 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:47.469032829Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle","Output":"    units_test.go:217: build bridge-test-stale-driver cc37323fa0b0 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:47.561883215Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle","Output":"    units_test.go:217: stale-handle: tsgo_query(handle, file, 14, \u0026answer, \u0026error) == TSGO_HANDLE\n"}
+{"Time":"2026-10-09T06:52:47.561962311Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle","Output":"--- PASS: TestBridgeStaleHandle (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:47.561967599Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeStaleHandle","Elapsed":0.87}
+{"Time":"2026-10-09T06:52:47.561986267Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:47.569060832Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.885s\n"}
+{"Time":"2026-10-09T06:52:47.569118277Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.886}

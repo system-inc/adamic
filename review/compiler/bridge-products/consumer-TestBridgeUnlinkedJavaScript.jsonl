@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:40.830660125Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:40.838448961Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript"}
+{"Time":"2026-10-09T06:52:40.838518224Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript","Output":"=== RUN   TestBridgeUnlinkedJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:41.224429146Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript","Output":"    units_test.go:71: build bridge-test-stage0 6430d092d416 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:41.638201157Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript","Output":"    units_test.go:227: build bridge-test-stage0 6430d092d416 hit 0.04\n"}
+{"Time":"2026-10-09T06:52:41.717692296Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript","Output":"    units_test.go:231: js refuses unlinked checker calls\n"}
+{"Time":"2026-10-09T06:52:41.717800856Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript","Output":"--- PASS: TestBridgeUnlinkedJavaScript (0.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:41.717806735Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedJavaScript","Elapsed":0.88}
+{"Time":"2026-10-09T06:52:41.717828507Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:41.722967883Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.892s\n"}
+{"Time":"2026-10-09T06:52:41.723036183Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.892}

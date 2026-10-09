@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T06:52:55.372572855Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:55.379678491Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion"}
+{"Time":"2026-10-09T06:52:55.379747773Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"=== RUN   TestBridgeRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:55.741682842Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:71: build bridge-test-oracle c2591af0bb72 hit 0.04\n"}
+{"Time":"2026-10-09T06:52:56.079751703Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:71: build bridge-test-healthy-region 87b567f49f08 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:56.439507019Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:278: build bridge-test-oracle c2591af0bb72 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:56.823246136Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:279: build bridge-test-oracle c2591af0bb72 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:56.885906455Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:279: region-frame: tsgo: load_ns=25354862 query_ns=11004629 queries=1\n"}
+{"Time":"2026-10-09T06:52:57.187944761Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:292: build bridge-test-healthy-region 87b567f49f08 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:57.281430809Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"    units_test.go:299: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 5 releases 13 peak 8 regions 1\n"}
+{"Time":"2026-10-09T06:52:57.281655611Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Output":"--- PASS: TestBridgeRegion (1.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:57.281694178Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegion","Elapsed":1.9}
+{"Time":"2026-10-09T06:52:57.281803219Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:57.285541398Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t1.913s\n"}
+{"Time":"2026-10-09T06:52:57.285565594Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":1.913}
