@@ -4,40 +4,35 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"hash/fnv"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testgrain"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testRulesAgreeShards = 16
-const rulesAgreeKill = 90 * time.Second
+
+// The legacy unsharded helper also uses this deadline.
+const rulesAgreeKill = testgrain.Kill
 
 type rulesAgreeProducts struct {
 	directory, oracle, binary, module string
 	rows                              []string
 	assignments                       [][]int
 }
-
-var rulesAgreeSetupOnce sync.Once
-var rulesAgreeReady *rulesAgreeProducts
 
 var rulesAgreeOnce sync.Once
 var rulesAgreeLowerOnce sync.Once
@@ -202,27 +197,17 @@ func rulesAgreeNative(t *testing.T) string {
 
 // Setup leaves run sequentially; shards share process-lifetime products.
 // Not parallel: prepares shared native products before the comparison leaves.
-func TestRulesAgreeSetupNative(t *testing.T) {
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree native setup cooked: exceeded 90s") })
-	defer deadline.Stop()
-	started := time.Now()
-	rulesAgreeNative(t)
-	t.Logf("TestRulesAgree (setup native): %.3fs", time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: native setup over 60s")
-	}
+func TestRulesAgreeSetupNative(t *testing.T) { rulesAgreeNativeGrain(t) }
+
+func rulesAgreeNativeGrain(t *testing.T) string {
+	return testgrain.Setup(t, "rules-agree/native", func() (string, error) { return rulesAgreeNative(t), nil })
 }
 
 // Not parallel: prepares the shared corpus and cached Go oracle before the comparison leaves.
-func TestRulesAgreeSetupCorpus(t *testing.T) {
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree corpus setup cooked: exceeded 90s") })
-	defer deadline.Stop()
-	started := time.Now()
-	rulesAgreeCorpus(t)
-	t.Logf("TestRulesAgree (setup corpus): %.3fs", time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: corpus setup over 60s")
-	}
+func TestRulesAgreeSetupCorpus(t *testing.T) { rulesAgreeCorpusGrain(t) }
+
+func rulesAgreeCorpusGrain(t *testing.T) *rulesAgreeProducts {
+	return testgrain.Setup(t, "rules-agree/corpus", func() (*rulesAgreeProducts, error) { return rulesAgreeCorpus(t), nil })
 }
 
 func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
@@ -238,7 +223,7 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 			Toolchain: []string{runtime.Version()},
 		}
 		oracleDirectory := buildcache.Product(t, oracleInputs, func(output string) error {
-			_, err := rulesAgreeGoOracleIn(directory, output)
+			_, err := rulesAgreeGoOracleIn(t, directory, output)
 			return err
 		})
 		oracle := filepath.Join(oracleDirectory, "oracle")
@@ -321,55 +306,41 @@ func TestRulesAgree_Setup(t *testing.T) {
 // Filtered single-shard runs use this same preparation path and persistent cache.
 func rulesAgreeSetup(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
-	rulesAgreeSetupOnce.Do(func() {
-		started := time.Now()
-		deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree_Setup cooked: shared setup exceeded 90s") })
-		defer deadline.Stop()
+	return testgrain.Setup(t, "rules-agree/ready", func() (*rulesAgreeProducts, error) {
 		lowered := rulesAgreeLowered(t)
-		binary := rulesAgreeNative(t)
-		corpus := *rulesAgreeCorpus(t)
+		binary := rulesAgreeNativeGrain(t)
+		corpus := *rulesAgreeCorpusGrain(t)
 		corpus.binary = filepath.Join(binary, "scanner")
 		corpus.module = filepath.Join(lowered, "lint.mjs")
-		rulesAgreeReady = &corpus
-		t.Logf("TestRulesAgree_Setup: %.3fs cooked=%t", time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
+		return &corpus, nil
 	})
-	if rulesAgreeReady == nil {
-		t.Fatal("shared RulesAgree setup did not complete")
-	}
-	return rulesAgreeReady
 }
 
 // The hash includes source, fixture basename, and all options. Temporary
 // capture roots and corpus ordering never affect assignment.
 func rulesAgreeAssignments(t *testing.T, rows []string) [][]int {
 	t.Helper()
-	assignments := make([][]int, testRulesAgreeShards)
+	identities := make([]string, len(rows))
 	for index, row := range rows {
 		fields := strings.SplitN(row, "\t", 2)
 		source, err := os.ReadFile(fields[0])
 		if err != nil {
 			t.Fatal(err)
 		}
-		hash := fnv.New64a()
-		fmt.Fprintf(hash, "%q\n%q\n", filepath.Base(fields[0]), source)
+		identity := fmt.Sprintf("%q\n%q\n", filepath.Base(fields[0]), source)
 		if len(fields) == 2 {
-			fmt.Fprintf(hash, "%q", fields[1])
+			identity += fmt.Sprintf("%q", fields[1])
 		}
-		shard := int(hash.Sum64() % testRulesAgreeShards)
-		assignments[shard] = append(assignments[shard], index)
+		identities[index] = identity
 	}
-	return assignments
+	return testgrain.Assign(identities, testRulesAgreeShards)
 }
 
 func rulesAgreeRunShard(t *testing.T, shard int) {
 	t.Helper()
 	products := rulesAgreeSetup(t)
-	started := time.Now()
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic(fmt.Sprintf("%s cooked: over budget at 90s; split smaller", t.Name())) })
-	defer deadline.Stop()
-	defer func() {
-		t.Logf("shard-%03d: %.3fs cooked=%t cases=%d", shard, time.Since(started).Seconds(), time.Since(started) >= 60*time.Second, len(products.assignments[shard]))
-	}()
+	testgrain.Unit(t)
+	t.Logf("shard-%03d: cases=%d", shard, len(products.assignments[shard]))
 	var rows []string
 	for _, index := range products.assignments[shard] {
 		row := products.rows[index]
@@ -382,33 +353,16 @@ func rulesAgreeRunShard(t *testing.T, shard int) {
 	if len(rows) > 0 {
 		compareWithJavaScript(t, products.oracle, products.binary, products.directory, manifest(t, recoveryRows(t, products.oracle, rows)), products.module)
 	}
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: shard over 60s budget; split smaller")
-	}
 }
 
 func TestRulesAgreeUnion(t *testing.T) {
 	t.Parallel()
 	products := rulesAgreeSetup(t)
-	functions := []func(*testing.T){TestRulesAgree_000, TestRulesAgree_001, TestRulesAgree_002, TestRulesAgree_003, TestRulesAgree_004, TestRulesAgree_005, TestRulesAgree_006, TestRulesAgree_007, TestRulesAgree_008, TestRulesAgree_009, TestRulesAgree_010, TestRulesAgree_011, TestRulesAgree_012, TestRulesAgree_013, TestRulesAgree_014, TestRulesAgree_015}
-	if len(functions) != testRulesAgreeShards || len(products.assignments) != testRulesAgreeShards {
-		t.Fatal("shard enumeration differs from const")
-	}
-	seen := make([]int, len(products.rows))
-	for _, indices := range products.assignments {
-		for _, index := range indices {
-			seen[index]++
-		}
-	}
-	for index, count := range seen {
-		if count != 1 {
-			t.Fatalf("case %d covered %d times", index, count)
-		}
-	}
-	if len(seen) == 0 {
+	testgrain.Union(t, "TestRulesAgree", testRulesAgreeShards, products.assignments, len(products.rows))
+	if len(products.rows) == 0 {
 		t.Fatal("empty live corpus")
 	}
-	t.Logf("union: %d cases, each exactly once, %d top-level shards", len(seen), testRulesAgreeShards)
+	t.Logf("union: %d cases, each exactly once, %d top-level shards", len(products.rows), testRulesAgreeShards)
 }
 
 // Plant one output disagreement on a real corpus case. Routing and the same
@@ -513,7 +467,7 @@ func TestRulesAgree_015(t *testing.T) {
 	rulesAgreeRunShard(t, 15)
 }
 
-func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
+func rulesAgreeGoOracleIn(t *testing.T, sourceRoot, directory string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return "", err
@@ -557,30 +511,18 @@ func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
 	}
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := rulesAgreeCaptureRun(root, nil, args...); err != nil {
+	if _, err := rulesAgreeCaptureRun(t, root, nil, args...); err != nil {
 		return "", err
 	}
 	return binary, nil
 }
 
-// The context deadline covers Go compilation as well as test execution.
-// Preserve the child CPU guard and kill the entire compiler process group.
-func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), rulesAgreeKill)
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
+// Register compiler groups with the active setup grain and preserve the child CPU guard.
+func rulesAgreeCaptureRun(t *testing.T, directory string, environment []string, args ...string) ([]byte, error) {
+	command := testgrain.Command(t, "go", args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	command.Env = append(command.Env, "PWD="+directory)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
 	output, err := os.CreateTemp(sharedDirectory, "rules-agree-command-")
 	if err != nil {
 		return nil, err
@@ -591,12 +533,6 @@ func rulesAgreeCaptureRun(directory string, environment []string, args ...string
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	if ctx.Err() != nil {
-		return nil, fmt.Errorf("shared setup cooked: child deadline exceeded: %w", ctx.Err())
-	}
 	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("go %v: %v\n%s", args, err, &stderr)
 	}
@@ -657,12 +593,7 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			defer func() { <-slots }()
 			destination := filepath.Join(capture, name)
 			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
-			started := time.Now()
-			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=90s")
-			t.Logf("capture package %s: %.3fs cooked=%t", name, time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
-			if failures[index] == nil && time.Since(started) >= 60*time.Second {
-				failures[index] = fmt.Errorf("capture package %s cooked: over 60s; split smaller", name)
-			}
+			_, failures[index] = rulesAgreeCaptureRun(t, root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=90s")
 		}()
 	}
 	workers.Wait()
