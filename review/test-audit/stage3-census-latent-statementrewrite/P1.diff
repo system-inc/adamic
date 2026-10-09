@@ -1,0 +1,10 @@
+--- a/stage3/census/latent/statementrewrite/main.go
++++ b/stage3/census/latent/statementrewrite/main.go
+@@ -17,6 +17,7 @@
+ 	return b.String()
+ }
+ func main() {
++ if true { return }
+ 	if len(os.Args) != 3 {
+ 		panic("usage: statementrewrite input output")
+ 	}

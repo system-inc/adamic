@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:43:18.39866204Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite"}
+{"Time":"2026-10-09T13:43:18.400259685Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName"}
+{"Time":"2026-10-09T13:43:18.40031693Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName","Output":"=== RUN   TestMissingStatementFailsWithMethodName\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:18.400342277Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName","Output":"=== PAUSE TestMissingStatementFailsWithMethodName\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:18.400344781Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName"}
+{"Time":"2026-10-09T13:43:18.400346684Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName"}
+{"Time":"2026-10-09T13:43:18.400348116Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName","Output":"=== CONT  TestMissingStatementFailsWithMethodName\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:18.435240487Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName","Output":"--- PASS: TestMissingStatementFailsWithMethodName (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:18.4352696Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Test":"TestMissingStatementFailsWithMethodName","Elapsed":0.03}
+{"Time":"2026-10-09T13:43:18.435286665Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:18.435567701Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Output":"ok  \tgithub.com/system-inc/adamic/stage3/census/latent/statementrewrite\t0.037s\n"}
+{"Time":"2026-10-09T13:43:18.435580811Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/census/latent/statementrewrite","Elapsed":0.037}

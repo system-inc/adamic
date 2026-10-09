@@ -1,0 +1,40 @@
+{
+  "npm-ci": {
+    "command": [
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "exit": 0,
+    "seconds": 0.487526777000312
+  },
+  "list": {
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "seconds": 0.2194718090013339
+  },
+  "baseline": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "seconds": 0.2775464059996011
+  }
+}

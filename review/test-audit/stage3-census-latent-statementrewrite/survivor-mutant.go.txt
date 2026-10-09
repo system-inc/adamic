@@ -1,0 +1,4 @@
+package lower
+
+func (l *lowering) latentStatementRaw(node *ast.Node) ([]ir.Statement, error) { return nil, nil }
+func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error)          { return l.latentStatement(node) }

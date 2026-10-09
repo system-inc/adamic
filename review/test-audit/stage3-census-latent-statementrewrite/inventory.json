@@ -1,0 +1,10 @@
+{
+  "direct_entry": "main",
+  "reached_functions": [
+    "main"
+  ],
+  "other_package_functions": [
+    "printed: not reached by the missing-method fixture; reached by valid-method witness"
+  ],
+  "oracle": "self-written diagnostic substring and no-output-file assertions"
+}

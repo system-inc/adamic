@@ -1,0 +1,9 @@
+--- clean-output.go
++++ M3-output.go
+@@ -1,6 +1,4 @@
+-// package note
+ package lower
+ 
+-// statement comment
+ func (l *lowering) latentStatementRaw(node *ast.Node) ([]ir.Statement, error) { return nil, nil }
+ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error)          { return l.latentStatement(node) }

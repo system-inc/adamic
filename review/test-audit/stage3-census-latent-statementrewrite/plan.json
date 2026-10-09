@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "old": "latent statement rewrite: lowering.statement: expected exactly one function, found %d",
+    "new": "latent statement rewrite: lowering.expression: expected exactly one function, found %d",
+    "menu": "change constant",
+    "file": "stage3/census/latent/statementrewrite/main.go",
+    "line": 40
+  },
+  {
+    "id": "M2",
+    "old": "if len(matches) != 1 {",
+    "new": "if len(matches) == 1 {",
+    "menu": "flip condition",
+    "file": "stage3/census/latent/statementrewrite/main.go",
+    "line": 39
+  },
+  {
+    "id": "M3",
+    "old": "parser.ParseComments)",
+    "new": "0)",
+    "menu": "change option",
+    "file": "stage3/census/latent/statementrewrite/main.go",
+    "line": 24
+  },
+  {
+    "id": "P1",
+    "old": "func main() {",
+    "new": "func main() {\n if true { return }",
+    "menu": "empty-entry probe",
+    "file": "stage3/census/latent/statementrewrite/main.go",
+    "line": 19
+  }
+]

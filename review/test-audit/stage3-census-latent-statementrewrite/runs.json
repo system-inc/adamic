@@ -1,0 +1,246 @@
+[
+  {
+    "id": "timing-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "^TestMissingStatementFailsWithMethodName$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.16318077100004302
+  },
+  {
+    "id": "timing-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "^TestMissingStatementFailsWithMethodName$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.16701867499978107
+  },
+  {
+    "id": "timing-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "^TestMissingStatementFailsWithMethodName$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.17130956500113825
+  },
+  {
+    "id": "switch-vet",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.051384606000283384
+  },
+  {
+    "id": "switch-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/u162/switched",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.19335495599989372
+  },
+  {
+    "id": "M0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 0.16786722000142618
+  },
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall_seconds": 0.16984804999992775
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall_seconds": 0.17680607500005863
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 0.17689786200025992
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall_seconds": 0.1772513149990118
+  },
+  {
+    "id": "survivor-M0",
+    "command": [
+      "/tmp/u162/switched",
+      "/tmp/u162/comment-input.go",
+      "/tmp/u162/comment-M0.go"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0016324949992849724
+  },
+  {
+    "id": "survivor-M3",
+    "command": [
+      "/tmp/u162/switched",
+      "/tmp/u162/comment-input.go",
+      "/tmp/u162/comment-M3.go"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0011725250005838461
+  },
+  {
+    "id": "M1-standalone-vet",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.04734412200014049
+  },
+  {
+    "id": "M2-standalone-vet",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.04543780600033642
+  },
+  {
+    "id": "M3-standalone-vet",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.04766935800034844
+  },
+  {
+    "id": "P1-standalone-vet",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statementrewrite/"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.05663985099999991
+  },
+  {
+    "id": "restored",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 0.1664121060002799
+  }
+]

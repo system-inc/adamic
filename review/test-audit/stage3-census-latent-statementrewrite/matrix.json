@@ -1,0 +1,96 @@
+[
+  {
+    "id": "M1",
+    "failed_rows": [
+      "TestMissingStatementFailsWithMethodName"
+    ],
+    "failing_line": "main_test.go:31: missing statement mutant survived: exit status 1 panic: latent statement rewrite: lowering.expression: expected exactly one function, found 0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u162/cache/M1"
+    }
+  },
+  {
+    "id": "M2",
+    "failed_rows": [
+      "TestMissingStatementFailsWithMethodName"
+    ],
+    "failing_line": "main_test.go:31: missing statement mutant survived: exit status 1 panic: runtime error: index out of range [0] with length 0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u162/cache/M2"
+    }
+  },
+  {
+    "id": "M3",
+    "failed_rows": [],
+    "failing_line": null,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u162/cache/M3"
+    }
+  },
+  {
+    "id": "P1",
+    "failed_rows": [
+      "TestMissingStatementFailsWithMethodName"
+    ],
+    "failing_line": "main_test.go:31: missing statement mutant survived: <nil>",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statementrewrite/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u162/cache/P1"
+    }
+  }
+]

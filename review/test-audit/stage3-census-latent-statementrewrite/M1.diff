@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/statementrewrite/main.go
++++ b/stage3/census/latent/statementrewrite/main.go
+@@ -37,7 +37,7 @@
+ 		}
+ 	}
+ 	if len(matches) != 1 {
+-		panic(fmt.Sprintf("latent statement rewrite: lowering.statement: expected exactly one function, found %d", len(matches)))
++		panic(fmt.Sprintf("latent statement rewrite: lowering.expression: expected exactly one function, found %d", len(matches)))
+ 	}
+ 	fn := matches[0]
+ 	if printed(fn.Type) != "func(node *ast.Node) ([]ir.Statement, error)" {

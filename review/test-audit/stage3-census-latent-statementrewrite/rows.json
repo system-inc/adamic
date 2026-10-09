@@ -1,0 +1,32 @@
+[
+  {
+    "test": "TestMissingStatementFailsWithMethodName",
+    "package": "stage3/census/latent/statementrewrite",
+    "file": "stage3/census/latent/statementrewrite/main_test.go",
+    "seconds": 0.04,
+    "oracle": "Self-written CLI contract: nonzero exit must contain lowering.statement: expected exactly one function, found 0; output file must not exist. M2 demonstrates that an unrelated failure is rejected.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2"
+    ],
+    "last_proven_fail": "M2: main_test.go:31: missing statement mutant survived: exit status 1 panic: runtime error: index out of range [0] with length 0",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestMissingStatementFailsWithMethodName"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u162/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/statementrewrite/ -run . > M2.log 2>&1; main_test.go:31: missing statement mutant survived: exit status 1 panic: runtime error: index out of range [0] with length 0"
+  }
+]

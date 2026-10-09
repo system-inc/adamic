@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/statementrewrite/main.go
++++ b/stage3/census/latent/statementrewrite/main.go
+@@ -21,7 +21,7 @@
+ 		panic("usage: statementrewrite input output")
+ 	}
+ 	fs := token.NewFileSet()
+-	file, err := parser.ParseFile(fs, os.Args[1], nil, parser.ParseComments)
++	file, err := parser.ParseFile(fs, os.Args[1], nil, 0)
+ 	if err != nil {
+ 		panic(err)
+ 	}

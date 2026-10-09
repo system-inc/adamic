@@ -1,0 +1,34 @@
+--- a/stage3/census/latent/statementrewrite/main.go
++++ b/stage3/census/latent/statementrewrite/main.go
+@@ -17,11 +17,12 @@
+ 	return b.String()
+ }
+ func main() {
++ if os.Getenv("ADAMIC_MUTANT")=="P1" { return }
+ 	if len(os.Args) != 3 {
+ 		panic("usage: statementrewrite input output")
+ 	}
+ 	fs := token.NewFileSet()
+-	file, err := parser.ParseFile(fs, os.Args[1], nil, parser.ParseComments)
++	file, err := parser.ParseFile(fs, os.Args[1], nil, auditParseMode())
+ 	if err != nil {
+ 		panic(err)
+ 	}
+@@ -36,8 +37,8 @@
+ 			}
+ 		}
+ 	}
+-	if len(matches) != 1 {
+-		panic(fmt.Sprintf("latent statement rewrite: lowering.statement: expected exactly one function, found %d", len(matches)))
++	if (os.Getenv("ADAMIC_MUTANT")=="M2" && len(matches)==1) || (os.Getenv("ADAMIC_MUTANT")!="M2" && len(matches)!=1) {
++		panic(fmt.Sprintf(auditDiagnostic(), len(matches)))
+ 	}
+ 	fn := matches[0]
+ 	if printed(fn.Type) != "func(node *ast.Node) ([]ir.Statement, error)" {
+@@ -57,3 +58,6 @@
+ 		panic(err)
+ 	}
+ }
++
++func auditDiagnostic() string { if os.Getenv("ADAMIC_MUTANT")=="M1" { return "latent statement rewrite: lowering.expression: expected exactly one function, found %d" }; return "latent statement rewrite: lowering.statement: expected exactly one function, found %d" }
++func auditParseMode() parser.Mode { if os.Getenv("ADAMIC_MUTANT")=="M3" {return 0};return parser.ParseComments }
