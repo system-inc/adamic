@@ -2127,6 +2127,23 @@ class ReverseDependencies(unittest.TestCase):
         except ValueError as error:
             self.fail(error)
 
+    def test_reads_census_ignores_a_real_embed_seen_through_the_test_variant(self):
+        # go list lists a package's EmbedFiles on its test variant too: lint reading internal/load's prelude.d.ts
+        # reads production, which load's closure already selects.
+        self.packages[0]["EmbedFiles"] = ["runtime/header.h"]
+        self.packages.append(dict(self.packages[0], ForTest=run.module + "/internal/load",
+                                  ImportPath=run.module + "/internal/load [" + run.module + "/internal/load.test]"))
+        self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
+        path = os.path.join(self.tree, "internal/load/runtime/header.h")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as handle:
+            handle.write("header\n")
+        self.plantRead('"../internal/load/runtime/header.h"')
+        try:
+            self.gate.touched(["middle/reader_test.go"])
+        except ValueError as error:
+            self.fail(error)
+
     def test_invalid_map_fails_closed(self):
         self.declare({"stage1/gaps": ["internal/missing"]})
         with self.assertRaisesRegex(ValueError, "invalid compiler dependencies"):
@@ -2246,6 +2263,7 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("branch reads lines ignored", 'for root in (self.arguments.tools, vars(self.arguments).get("tree")):', 'for root in (self.arguments.tools,):', "test_reads_census_accepts_a_declared_read"),
             ("reads census on the base", 'for path in changed:\n            if not path.endswith(".go")', 'for path in self.git(tree, "ls-files").splitlines():\n            if not path.endswith(".go")', "test_reads_census_leaves_a_read_on_the_base_alone"),
             ("package paths read as testdata", 'or not testInput(target):', ':', "test_reads_census_ignores_a_package_built_by_path"),
+            ("real embeds read as test inputs", 'self.readsCensus(changed, directories, testEmbedded - realEmbedded)', 'self.readsCensus(changed, directories, testEmbedded)', "test_reads_census_ignores_a_real_embed_seen_through_the_test_variant"),
         ]
         for name, before, after, test in mutants:
             with self.subTest(mutant=name):

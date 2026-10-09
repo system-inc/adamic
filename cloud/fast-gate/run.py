@@ -1435,7 +1435,8 @@ class Gate:
                     else:
                         testEmbedded.add(path)
         dependencies = self.compilerDependencies(directories, changed)
-        self.readsCensus(changed, directories, testEmbedded)
+        # A real embed shows in its package's test variant too; reading it is reading production, not a test input.
+        self.readsCensus(changed, directories, testEmbedded - realEmbedded)
         for package, inputs in dependencies.items():
             for dependency in inputs:
                 reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
