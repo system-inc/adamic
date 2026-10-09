@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:33:53.200829847Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T14:33:53.235305757Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault"}
+{"Time":"2026-10-09T14:33:53.235393332Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault","Output":"=== RUN   TestEnumNeverDefault\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:33:53.235453197Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault","Output":"=== PAUSE TestEnumNeverDefault\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:33:53.235457576Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault"}
+{"Time":"2026-10-09T14:33:53.235466797Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault"}
+{"Time":"2026-10-09T14:33:53.23547013Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault","Output":"=== CONT  TestEnumNeverDefault\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:33:53.56629134Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault","Output":"--- PASS: TestEnumNeverDefault (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:33:53.566370442Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNeverDefault","Elapsed":0.33}
+{"Time":"2026-10-09T14:33:53.56640435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:33:53.576060902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 12.2% of statements in ./internal/lower\n"}
+{"Time":"2026-10-09T14:33:53.636087855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.434s\tcoverage: 12.2% of statements in ./internal/lower\n"}
+{"Time":"2026-10-09T14:33:53.636168246Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.435}
