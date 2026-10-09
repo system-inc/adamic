@@ -1,0 +1,68 @@
+=== RUN   TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode/shard-000
+=== PAUSE TestWASIAgreesWithNode/shard-000
+=== RUN   TestWASIAgreesWithNode/shard-001
+=== PAUSE TestWASIAgreesWithNode/shard-001
+=== RUN   TestWASIAgreesWithNode/shard-002
+=== PAUSE TestWASIAgreesWithNode/shard-002
+=== RUN   TestWASIAgreesWithNode/shard-003
+=== PAUSE TestWASIAgreesWithNode/shard-003
+=== RUN   TestWASIAgreesWithNode/shard-004
+=== PAUSE TestWASIAgreesWithNode/shard-004
+=== RUN   TestWASIAgreesWithNode/shard-005
+=== PAUSE TestWASIAgreesWithNode/shard-005
+=== RUN   TestWASIAgreesWithNode/shard-006
+=== PAUSE TestWASIAgreesWithNode/shard-006
+=== RUN   TestWASIAgreesWithNode/shard-007
+=== PAUSE TestWASIAgreesWithNode/shard-007
+=== CONT  TestWASIAgreesWithNode/shard-000
+=== CONT  TestWASIAgreesWithNode/shard-004
+=== CONT  TestWASIAgreesWithNode/shard-007
+=== CONT  TestWASIAgreesWithNode/shard-006
+=== CONT  TestWASIAgreesWithNode/shard-005
+=== NAME  TestWASIAgreesWithNode/shard-000
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.045s
+=== NAME  TestWASIAgreesWithNode/shard-004
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.045s
+=== NAME  TestWASIAgreesWithNode/shard-007
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.045s
+=== NAME  TestWASIAgreesWithNode/shard-006
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.045s
+=== NAME  TestWASIAgreesWithNode/shard-005
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.045s
+=== CONT  TestWASIAgreesWithNode/shard-002
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== CONT  TestWASIAgreesWithNode/shard-001
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== CONT  TestWASIAgreesWithNode/shard-003
+    wasi_test.go:29: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== NAME  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+    wasi_test.go:66: gate cache node miss
+=== NAME  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+    wasi_test.go:66: gate cache node miss
+=== NAME  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+    wasi_test.go:68: gate cache node miss
+=== NAME  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+    wasi_test.go:68: gate cache node miss
+--- PASS: TestWASIAgreesWithNode (0.00s)
+    --- PASS: TestWASIAgreesWithNode/shard-005 (0.05s)
+    --- PASS: TestWASIAgreesWithNode/shard-000 (0.06s)
+    --- PASS: TestWASIAgreesWithNode/shard-006 (0.06s)
+    --- PASS: TestWASIAgreesWithNode/shard-001 (0.01s)
+    --- PASS: TestWASIAgreesWithNode/shard-007 (0.09s)
+    --- PASS: TestWASIAgreesWithNode/shard-003 (0.04s)
+    --- PASS: TestWASIAgreesWithNode/shard-002 (0.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a (7.91s)
+    --- PASS: TestWASIAgreesWithNode/shard-004 (0.10s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a (7.88s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.999s

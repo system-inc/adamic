@@ -1,0 +1,24 @@
+{
+  "main_baseline": {
+    "error": "<fixture>/app/main.ts:2:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.",
+    "loaded": false
+  },
+  "before": {
+    "error": "<fixture>/app/main.ts:1:23: error TS6305: Output file '<fixture>/out/dependency/value.d.ts' has not been built from source file '<fixture>/dependency/value.ts'.",
+    "loaded": false
+  },
+  "node_output": "7\n",
+  "after": {
+    "entries": 1,
+    "loaded": true
+  },
+  "mutants_caught": [
+    "composite-roots",
+    "references",
+    "audit",
+    "no-check",
+    "host-console"
+  ],
+  "logs": "evidence/",
+  "source_roots_redirect": false
+}

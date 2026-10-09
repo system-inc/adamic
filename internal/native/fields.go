@@ -43,7 +43,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
 	offsets := map[string]int{
 		"0": 0, "1": 1, "name": 0, "message": 1, "kind": 0, "text": 1,
-		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
+		"#message": 1, "names": 1, "type": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
 		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},

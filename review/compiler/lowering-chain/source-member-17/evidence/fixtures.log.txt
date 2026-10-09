@@ -1,0 +1,97 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestStep21ProposalOutcomes
+=== PAUSE TestStep21ProposalOutcomes
+=== RUN   TestStep21FixtureMutants
+=== PAUSE TestStep21FixtureMutants
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestStep21FixtureMutants
+=== CONT  TestStep21ProposalOutcomes
+=== RUN   TestStep21FixtureMutants/catch_callback
+=== RUN   TestStep21ProposalOutcomes/any_value
+=== PAUSE TestStep21FixtureMutants/catch_callback
+=== PAUSE TestStep21ProposalOutcomes/any_value
+=== RUN   TestStep21ProposalOutcomes/saved_error
+=== PAUSE TestStep21ProposalOutcomes/saved_error
+=== RUN   TestStep21FixtureMutants/finally_callback
+=== PAUSE TestStep21FixtureMutants/finally_callback
+=== RUN   TestStep21FixtureMutants/rethrow
+=== RUN   TestStep21ProposalOutcomes/error_subclass
+=== PAUSE TestStep21FixtureMutants/rethrow
+=== PAUSE TestStep21ProposalOutcomes/error_subclass
+=== RUN   TestStep21ProposalOutcomes/unknown_read
+=== PAUSE TestStep21ProposalOutcomes/unknown_read
+=== RUN   TestStep21FixtureMutants/finally_completion
+=== PAUSE TestStep21FixtureMutants/finally_completion
+=== RUN   TestStep21ProposalOutcomes/library_failure
+=== PAUSE TestStep21ProposalOutcomes/library_failure
+=== CONT  TestStep21ProposalOutcomes/any_value
+=== CONT  TestStep21ProposalOutcomes/unknown_read
+=== CONT  TestStep21ProposalOutcomes/error_subclass
+=== RUN   TestStep21FixtureMutants/liveness
+=== PAUSE TestStep21FixtureMutants/liveness
+=== CONT  TestStep21ProposalOutcomes/saved_error
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_rethrow.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_rethrow.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a
+=== CONT  TestStep21ProposalOutcomes/library_failure
+=== NAME  TestStep21ProposalOutcomes/any_value
+    step21_exceptions_test.go:49: /workspace/adamic/docs/step-21-exceptions/proposals/any_value.a:2:13: Adamic 0.1 refuses throwing a undefined; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of
+=== NAME  TestStep21ProposalOutcomes/error_subclass
+    step21_exceptions_test.go:49: /workspace/adamic/docs/step-21-exceptions/proposals/error_subclass.a:2:17: stage 0 can't lower a computed class base; name the base class directly yet
+=== NAME  TestStep21ProposalOutcomes/saved_error
+    step21_exceptions_test.go:49: /workspace/adamic/docs/step-21-exceptions/proposals/saved_error.a:3:13: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet
+=== NAME  TestStep21ProposalOutcomes/unknown_read
+    step21_exceptions_test.go:49: /workspace/adamic/docs/step-21-exceptions/proposals/unknown_read.a:2:74: error TS18046: 'error' is of type 'unknown'.
+=== NAME  TestStep21ProposalOutcomes/library_failure
+    step21_exceptions_test.go:49: /workspace/adamic/docs/step-21-exceptions/proposals/library_failure.a:2:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+=== CONT  TestStep21FixtureMutants/catch_callback
+=== CONT  TestStep21FixtureMutants/finally_completion
+=== CONT  TestStep21FixtureMutants/liveness
+=== CONT  TestStep21FixtureMutants/rethrow
+--- PASS: TestStep21ProposalOutcomes (0.01s)
+    --- PASS: TestStep21ProposalOutcomes/error_subclass (0.19s)
+    --- PASS: TestStep21ProposalOutcomes/unknown_read (0.20s)
+    --- PASS: TestStep21ProposalOutcomes/any_value (0.21s)
+    --- PASS: TestStep21ProposalOutcomes/library_failure (0.18s)
+    --- PASS: TestStep21ProposalOutcomes/saved_error (0.25s)
+=== CONT  TestStep21FixtureMutants/finally_callback
+=== NAME  TestStep21FixtureMutants/catch_callback
+    step21_exceptions_test.go:105: mutant caught by stdout in both backends and release native; sanitizer and leak checks clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback.a
+=== NAME  TestStep21FixtureMutants/rethrow
+    step21_exceptions_test.go:105: mutant caught by stdout in both backends and release native; sanitizer and leak checks clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_rethrow.a
+=== NAME  TestStep21FixtureMutants/finally_completion
+    step21_exceptions_test.go:105: mutant caught by stdout in both backends and release native; sanitizer and leak checks clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a
+=== NAME  TestStep21FixtureMutants/liveness
+    step21_exceptions_test.go:105: mutant caught by stdout in both backends and release native; sanitizer and leak checks clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a
+=== NAME  TestStep21FixtureMutants/finally_callback
+    step21_exceptions_test.go:105: mutant caught by stdout in both backends and release native; sanitizer and leak checks clean
+--- PASS: TestStep21FixtureMutants (0.01s)
+    --- PASS: TestStep21FixtureMutants/catch_callback (0.67s)
+    --- PASS: TestStep21FixtureMutants/rethrow (0.66s)
+    --- PASS: TestStep21FixtureMutants/finally_completion (0.68s)
+    --- PASS: TestStep21FixtureMutants/liveness (0.68s)
+    --- PASS: TestStep21FixtureMutants/finally_callback (0.72s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_callback.a
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/step21_rethrow.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_callback.a (0.61s)
+PASS
+gate cache: native hits=0 misses=30
+gate cache: node hits=0 misses=20
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.595s

@@ -1,0 +1,11 @@
+--- internal/lower/generic_body_relations.go
++++ internal/lower/generic_body_relations.go
+@@ -377,7 +377,7 @@
+ 		return nil
+ 	}
+ 	source := l.genericOwnType(relation.source)
+-	if l.genericBodyAllows(source, relation.target) {
++	if true {
+ 		return nil
+ 	}
+ 	bounds := []string{}

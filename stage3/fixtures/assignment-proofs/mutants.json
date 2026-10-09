@@ -1,0 +1,62 @@
+[
+  {
+    "file": "01_scanner_keyword.a",
+    "exit": 1,
+    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
+    "mutation": {
+      "replace": "return token = keyword;",
+      "with": "return token = SyntaxKind.Identifier;",
+      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+    }
+  },
+  {
+    "file": "02_if_narrowing.a",
+    "exit": 1,
+    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
+    "mutation": {
+      "replace": "return present ? \"name\" : undefined;",
+      "with": "return present ? \"name\" : \"missing\";",
+      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+    }
+  },
+  {
+    "file": "03_return_defined.a",
+    "exit": 1,
+    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
+    "mutation": {
+      "replace": "return (cache = compute());",
+      "with": "return compute();",
+      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+    }
+  },
+  {
+    "file": "04_chained.a",
+    "exit": 1,
+    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
+    "mutation": {
+      "replace": "return a = b = value;",
+      "with": "return a = value;",
+      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+    }
+  },
+  {
+    "file": "05_compound.a",
+    "exit": 1,
+    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
+    "mutation": {
+      "replace": "return x += y;",
+      "with": "return x = y;",
+      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+    }
+  },
+  {
+    "file": "06_wider_target.a",
+    "exit": 1,
+    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
+    "mutation": {
+      "replace": "return wide = value;",
+      "with": "return value;",
+      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+    }
+  }
+]

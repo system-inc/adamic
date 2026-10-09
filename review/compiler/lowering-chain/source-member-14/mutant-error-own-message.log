@@ -1,0 +1,8 @@
+=== RUN   TestErrorUndefinedMessageHasNoOwnProperty
+=== PAUSE TestErrorUndefinedMessageHasNoOwnProperty
+=== CONT  TestErrorUndefinedMessageHasNoOwnProperty
+    error_message_test.go:47: native "[] true true\n[] true true\n[m] true true\n[] true true\n"; Node "[] false false\n[] true true\n[m] true true\n[] false false\n"
+--- FAIL: TestErrorUndefinedMessageHasNoOwnProperty (1.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.467s
+FAIL

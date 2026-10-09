@@ -1,0 +1,5 @@
+const value = { uniform: 42 };
+console.log(value.uniform.toString());
+console.log(/(?<uniform>x)/.exec('x')?.groups?.uniform ?? 'missing');
+console.log(/(?<uniform>x)/.exec('y')?.groups?.uniform ?? 'missing');
+console.log(/x/.exec('x')?.groups?.uniform ?? 'missing');

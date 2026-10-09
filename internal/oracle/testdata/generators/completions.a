@@ -1,0 +1,8 @@
+function* empty(): Generator<never,string,undefined> {console.log('body');return 'return';}
+const first=empty();console.log(`${first.return('before').value}`);console.log(`${first.next().done}`);
+const second=empty();console.log(`${second[Symbol.iterator]()===second}`);console.log(`${second.next().value}`);console.log(`${second.return('after').value}`);
+try {second.throw(new Error('completed'));}catch(error) {console.log('completed throw');}
+function* overwritten():Generator<number,number,undefined> {try {yield 1;}finally {return 4;}}
+const third=overwritten();console.log(`${third.next().value}`);console.log(`${third.return(9).value}`);
+function* catchThrow():Generator<number,number,undefined> {try {yield 1;}catch(error) {throw new Error('again');}finally {console.log('finally on catch throw');}return 2;}
+const fourth=catchThrow();fourth.next();try {fourth.throw(new Error('first'));}catch(error) {console.log('outer caught');}

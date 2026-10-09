@@ -1,0 +1,11 @@
+--- internal/lower/placeholder.go
++++ internal/lower/placeholder.go
+@@ -179,7 +179,7 @@
+ 				if ast.IsIdentifier(target) || target.Kind == ast.KindPropertyAccessExpression {
+ 					if target.Kind == ast.KindPropertyAccessExpression {
+ 						// An any-valued receiver has no declared property symbol. It cannot carry a placeholder slot.
+-						if symbol := l.symbol(target); symbol != nil {
++						if symbol := l.symbol(target); true {
+ 							key := l.placeholderKey(symbol)
+ 							inferred[key] = l.placeholderOptional(l.checker.GetTypeOfSymbol(symbol))
+ 						}

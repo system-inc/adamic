@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 55, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 29, in main
+    assert len(rows) == len({r['where'] for r in rows}) == len(expected), 'retirement coverage changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: retirement coverage changed
+coverage killed
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 55, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 43, in main
+    assert row['retired'] == actual, 'retirement classification changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: retirement classification changed
+retired killed
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 55, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 30, in main
+    assert {r['where'] for r in rows} == expected, 'retirement witness changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: retirement witness changed
+witness killed
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 55, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/audit_retirements.py", line 27, in main
+    assert hashlib.sha256(json.dumps(declarations, sort_keys=True, separators=(',', ':')).encode()).hexdigest() == digest, 'declaration snapshot changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: declaration snapshot changed
+declaration killed

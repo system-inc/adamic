@@ -1,0 +1,5 @@
+namespace State { export const value = 1; }
+function replace(state: { value: number }): void { state.value = 2; }
+const held = State;
+replace(held);
+console.log(String(held.value));

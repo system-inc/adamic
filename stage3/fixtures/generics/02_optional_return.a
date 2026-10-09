@@ -1,0 +1,9 @@
+// Reduced from TypeScript core.ts:67, firstDefined; pin 050880ce.
+// Its callback result is supplied directly; iteration and the callback are removed.
+function firstDefined<U>(value: U | undefined): U | undefined {
+    if (value !== undefined) return value;
+    return undefined;
+}
+const text = 'owned'.repeat(3);
+console.log(`${firstDefined(0) ?? 99} ${firstDefined(false) ?? true} ${firstDefined('') ?? 'wrong'}`);
+console.log(`${firstDefined(text) ?? 'missing'} ${firstDefined<string>(undefined) ?? 'absent'} ${firstDefined<number>(undefined) ?? 77}`);

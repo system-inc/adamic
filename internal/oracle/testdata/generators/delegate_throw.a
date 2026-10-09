@@ -1,0 +1,6 @@
+function* inner(): Generator<string, string, undefined> {
+ try {yield 'ready';} catch(error) {yield 'caught';} finally {console.log('inner finally');}
+ return 'inner return';
+}
+function* outer(): Generator<string, string, undefined> {const value=yield* inner();return value;}
+const g=outer();console.log(`${g.next().value}`);console.log(`${g.throw(new Error('sent')).value}`);console.log(`${g.next().value}`);

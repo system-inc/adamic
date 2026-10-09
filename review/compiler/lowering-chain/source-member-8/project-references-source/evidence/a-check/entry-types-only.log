@@ -1,0 +1,6 @@
+--- FAIL: TestProjectReferencesTypesUnion (1.65s)
+    --- FAIL: TestProjectReferencesTypesUnion/clean (1.65s)
+        project_references_test.go:220: ambient types union lost a project: /tmp/adamic-gate/TestProjectReferencesTypesUnionclean3348125675/001/dependency/value.ts:1:21: error TS2304: Cannot find name 'DependencyNumber'.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	1.676s
+FAIL

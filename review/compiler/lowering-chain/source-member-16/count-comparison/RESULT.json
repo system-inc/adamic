@@ -1,0 +1,18 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/regexp.a",
+    "C_identical": false,
+    "counts": {
+      "main": "adamic: counts: allocations 437 frees 437 retains 382 releases 417 peak 58 regions 0",
+      "generators": "adamic: counts: allocations 437 frees 437 retains 383 releases 418 peak 58 regions 0"
+    }
+  },
+  {
+    "fixture": "internal/fresh/testdata/regexp_tree.ts",
+    "C_identical": false,
+    "counts": {
+      "main": "adamic: counts: allocations 91 frees 91 retains 81 releases 85 peak 35 regions 0",
+      "generators": "adamic: counts: allocations 91 frees 91 retains 85 releases 89 peak 35 regions 0"
+    }
+  }
+]

@@ -19,5 +19,9 @@ func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
 	if !call.Returns.IsReference() {
 		return e.snapshot(call.Returns, code)
 	}
-	return e.own(call.Returns, code)
+	result := e.own(call.Returns, code)
+	if call.MayThrow() {
+		e.checkThrown()
+	}
+	return result
 }

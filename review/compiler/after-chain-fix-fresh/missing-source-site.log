@@ -1,0 +1,8 @@
+--- FAIL: TestFreshCorpusRemainder (0.04s)
+    --- FAIL: TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a (0.03s)
+        corpus_coverage_test.go:82: ../oracle/testdata/step21_saved_error.a: a write lowering didn't record, in function 1
+        corpus_coverage_test.go:82: 4 writes, 4 proven not to close a cycle
+    corpus_coverage_test.go:85: remainder ran 68 programs
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.044s
+FAIL

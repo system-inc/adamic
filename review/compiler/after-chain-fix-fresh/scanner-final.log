@@ -1,0 +1,8 @@
+=== RUN   TestGapStandsWhereGapsMdSays
+=== PAUSE TestGapStandsWhereGapsMdSays
+=== CONT  TestGapStandsWhereGapsMdSays
+    scanner_products_test.go:50: build scanner-go-oracle efebc3d117c0 hit 1.00
+    scanner_products_test.go:50: build scanner-native 3f9f612a38cb hit 1.27
+--- PASS: TestGapStandsWhereGapsMdSays (2.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	2.715s

@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -120,10 +121,37 @@ func TestParserNamespaceClassRegistrationMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Keep registration at module scope and catch only the omitted registration's readiness error.
+	source = []byte(strings.Replace(string(source), "const first =", "try {\nconst first =", 1) + `
+} catch (error) {
+    if (error instanceof ReferenceError) console.log(error.message);
+    else throw error;
+}
+`)
+	path = filepath.Join(t.TempDir(), "registration-catch.a")
+	if err := os.WriteFile(path, source, 0600); err != nil {
+		t.Fatal(err)
+	}
 	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "0:1:false\nconstruct;construct;\n" || len(truth.stderr) != 0 {
+		t.Fatalf("source Node registration: %+v", truth)
+	}
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)
+	}
+	control, controlBinary := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native": control, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s registration control: %s: %+v", backend, difference, got)
+		}
+	}
+	if report := leaksUncached(t, program, controlBinary); report != "" {
+		t.Fatal(report)
 	}
 	changed := false
 	body := program.Main[:0]
@@ -138,12 +166,16 @@ func TestParserNamespaceClassRegistrationMutant(t *testing.T) {
 	if !changed {
 		t.Fatal("mutant omitted no constructor registration")
 	}
-	compiled, _ := natively(t, program)
+	compiled, mutantBinary := natively(t, program)
 	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "ReferenceError: Cannot access 'DebugTypeMapper' before initialization") || disagreement(truth, got) == "" {
+		want := run{stdout: []byte("Cannot access 'DebugTypeMapper' before initialization\n")}
+		if disagreement(want, got) != "" || disagreement(truth, got) != "stdout differs" {
 			t.Fatalf("%s missing registration mutant survived: %+v", backend, got)
 		}
 		t.Logf("%s missing constructor registration stopped: %+v", backend, got)
+	}
+	if report := leaks(t, program, mutantBinary); report != "" {
+		t.Fatal(report)
 	}
 }
 

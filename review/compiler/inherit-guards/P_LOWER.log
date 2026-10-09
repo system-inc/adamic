@@ -1,0 +1,43 @@
+=== RUN   TestInheritanceAllowsSoundOverrides
+=== PAUSE TestInheritanceAllowsSoundOverrides
+=== RUN   TestInheritanceKeepsNominalTupleDestructuring
+=== PAUSE TestInheritanceKeepsNominalTupleDestructuring
+=== RUN   TestInheritanceNativeSignatureNeighbors
+=== PAUSE TestInheritanceNativeSignatureNeighbors
+=== CONT  TestInheritanceAllowsSoundOverrides
+=== CONT  TestInheritanceNativeSignatureNeighbors
+=== RUN   TestInheritanceNativeSignatureNeighbors/identical_default
+=== PAUSE TestInheritanceNativeSignatureNeighbors/identical_default
+=== RUN   TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== PAUSE TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== RUN   TestInheritanceNativeSignatureNeighbors/identical_optional
+=== PAUSE TestInheritanceNativeSignatureNeighbors/identical_optional
+=== RUN   TestInheritanceNativeSignatureNeighbors/void_result
+=== PAUSE TestInheritanceNativeSignatureNeighbors/void_result
+=== CONT  TestInheritanceNativeSignatureNeighbors/identical_default
+=== CONT  TestInheritanceKeepsNominalTupleDestructuring
+=== CONT  TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== CONT  TestInheritanceNativeSignatureNeighbors/identical_optional
+=== NAME  TestInheritanceNativeSignatureNeighbors/wider_same_representation
+    class_inheritance_test.go:355: accepted inheritance must produce classes and executable statements, not an empty answer
+=== CONT  TestInheritanceNativeSignatureNeighbors/void_result
+=== NAME  TestInheritanceNativeSignatureNeighbors/identical_default
+    class_inheritance_test.go:355: accepted inheritance must produce classes and executable statements, not an empty answer
+=== NAME  TestInheritanceKeepsNominalTupleDestructuring
+    class_inheritance_test.go:201: accepted inheritance must produce classes and executable statements, not an empty answer
+--- FAIL: TestInheritanceKeepsNominalTupleDestructuring (0.08s)
+=== NAME  TestInheritanceAllowsSoundOverrides
+    class_inheritance_test.go:99: accepted inheritance must produce classes and executable statements, not an empty answer
+--- FAIL: TestInheritanceAllowsSoundOverrides (0.09s)
+=== NAME  TestInheritanceNativeSignatureNeighbors/identical_optional
+    class_inheritance_test.go:355: accepted inheritance must produce classes and executable statements, not an empty answer
+=== NAME  TestInheritanceNativeSignatureNeighbors/void_result
+    class_inheritance_test.go:355: accepted inheritance must produce classes and executable statements, not an empty answer
+--- FAIL: TestInheritanceNativeSignatureNeighbors (0.00s)
+    --- FAIL: TestInheritanceNativeSignatureNeighbors/wider_same_representation (0.07s)
+    --- FAIL: TestInheritanceNativeSignatureNeighbors/identical_default (0.08s)
+    --- FAIL: TestInheritanceNativeSignatureNeighbors/identical_optional (0.09s)
+    --- FAIL: TestInheritanceNativeSignatureNeighbors/void_result (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.119s
+FAIL

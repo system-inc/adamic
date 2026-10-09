@@ -419,3 +419,11 @@ Executable namespaces retain SCC reachability and runtime readiness checks.
 The [sys initialization report](../stage3/namespace-init-sys/REPORT.md) records
 exact host reductions, Node observations, both backend diagnostics, runnable
 structural controls, the reaching-access mutant and the production rerun.
+
+## Namespace objects passed, stored or returned
+
+Escaped namespace values use one live object per namespace symbol. Its own keys appear when export assignments execute, and merged blocks preserve assignment order. Mutable exports share storage with qualified and internal reads. Readonly members are protected at writes through wider views with terminal exit 70; direct writes are refused.
+
+Descriptor reflection and freezing on escaped containers remain named NotYet. Nullable exports, object spread, runtime nested namespace, class and enum exports, and generic function exports remain named NotYet where the representation is not established. Every source file is an ES module. Namespace declarations merge within that module, and imported aliases share its one live object across files. Global-script linking is a separate unit if script-mode programs need it.
+
+See [the live namespace report](../stage3/namespace-value/LIVE_REPORT.md) for TypeScript-emitter comparisons, independent mutants and the production replay. The earlier [boundary report](../stage3/namespace-value/REPORT.md) is historical.

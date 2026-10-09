@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "packages": {
+    "stage3/checked-any/probe": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage3/project-loader/probe": [
+      "internal/load"
+    ]
+  }
+}

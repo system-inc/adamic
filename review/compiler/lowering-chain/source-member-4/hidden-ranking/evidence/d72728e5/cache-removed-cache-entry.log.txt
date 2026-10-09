@@ -1,0 +1,8 @@
+=== RUN   TestLatentCacheRollbackFacts
+    latent_cache_test.go:52: rollback did not recover: statement panic: latent state copy: unexported IR field argumentFacts []ir.Statement(nil)
+--- FAIL: TestLatentCacheRollbackFacts (0.06s)
+=== RUN   TestLatentUnknownPrivateField
+--- PASS: TestLatentUnknownPrivateField (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.096s
+FAIL

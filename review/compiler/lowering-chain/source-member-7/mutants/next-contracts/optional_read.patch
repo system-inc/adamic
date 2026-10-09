@@ -1,0 +1,11 @@
+--- a/internal/native/checked_json.go
++++ b/internal/native/checked_json.go
+@@ -126,7 +126,7 @@
+ func (e *emitter) dynamicProperty(v ir.DynamicProperty) string {
+ 	value := e.value(v.Object)
+ 	read := fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(v.Name))
+-	if v.Optional {
++	if false {
+ 		read = fmt.Sprintf("(%s==NULL || %s==&adamic_null ? NULL : %s)", value, value, read)
+ 	}
+ 	return e.own(ir.Union, read)

@@ -1,0 +1,8 @@
+=== RUN   TestCheckedAnyUnsupportedContracts
+=== RUN   TestCheckedAnyUnsupportedContracts/staged_field
+    checked_any_test.go:157: unsafe contract became accepted: <nil>
+--- FAIL: TestCheckedAnyUnsupportedContracts (0.03s)
+    --- FAIL: TestCheckedAnyUnsupportedContracts/staged_field (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.041s
+FAIL

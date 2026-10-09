@@ -1,0 +1,3 @@
+interface Item {readonly id:number;}
+function apply<T,U,R>(items:readonly T[], callback:(x:T|U)=>R):R[] {const result:R[]=[];for(const item of items)result.push(callback(item));return result;}
+console.log(apply<Item,number,string>([{id:1},{id:2},{id:3}],(x:Item | number):string => typeof x === 'number' ? `${x}` : `${x.id}`).join(","));

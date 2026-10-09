@@ -1,0 +1,13 @@
+// Derived from moduleNameResolver.ts:3103's continuation and checker narrowing across a call.
+interface Value { readonly text: string }
+interface Host { value: Value | undefined }
+function clear(host: Host): void { host.value = undefined; }
+function read(host: Host | undefined): string {
+	if (host !== undefined && host.value !== undefined) {
+		clear(host);
+		return host?.value.text ?? 'absent';
+	}
+	return 'absent';
+}
+console.log(read(undefined));
+console.log(read({ value: { text: 'present' } }));

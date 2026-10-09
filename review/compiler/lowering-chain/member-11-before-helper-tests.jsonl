@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T06:01:35.32379018Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T06:01:35.334046867Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication"}
+{"Time":"2026-10-09T06:01:35.33411546Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"=== RUN   TestSharedProductPublication\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334147388Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"=== PAUSE TestSharedProductPublication\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334149682Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication"}
+{"Time":"2026-10-09T06:01:35.334157964Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory"}
+{"Time":"2026-10-09T06:01:35.334160017Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"=== RUN   TestSixBuildCallbackUsesProductDirectory\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334165125Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"=== PAUSE TestSixBuildCallbackUsesProductDirectory\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334166797Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory"}
+{"Time":"2026-10-09T06:01:35.334168981Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T06:01:35.334170543Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== RUN   TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334172536Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== PAUSE TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334174228Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T06:01:35.334176161Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication"}
+{"Time":"2026-10-09T06:01:35.334178915Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"=== CONT  TestSharedProductPublication\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334538255Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T06:01:35.334550564Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== CONT  TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.334555451Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory"}
+{"Time":"2026-10-09T06:01:35.334557945Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"=== CONT  TestSixBuildCallbackUsesProductDirectory\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.335872329Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Output":"--- PASS: TestSharedProductPublication (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.34275643Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSharedProductPublication","Elapsed":0}
+{"Time":"2026-10-09T06:01:35.342787226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Output":"--- PASS: TestSixBuildCallbackUsesProductDirectory (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.350886442Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixBuildCallbackUsesProductDirectory","Elapsed":0.01}
+{"Time":"2026-10-09T06:01:35.350920714Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"--- PASS: TestTypeAwareTopShardPlantedFailure (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.350926132Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Elapsed":0.02}
+{"Time":"2026-10-09T06:01:35.350929437Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:01:35.351038386Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.027s\n"}
+{"Time":"2026-10-09T06:01:35.351056573Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.027}

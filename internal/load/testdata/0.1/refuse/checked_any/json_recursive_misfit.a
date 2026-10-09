@@ -1,0 +1,5 @@
+interface ConfigNode { value: number; readonly next?: ConfigNode; }
+function convert(raw: any): ConfigNode { return raw; }
+const raw: any = { value: 1, next: { value: "wrong" } };
+convert(raw);
+console.log("passed");

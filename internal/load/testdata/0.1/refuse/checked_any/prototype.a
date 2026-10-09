@@ -1,0 +1,1 @@
+function observe(value: any): string { return typeof value.charAt; }

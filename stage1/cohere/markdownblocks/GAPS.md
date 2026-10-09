@@ -175,9 +175,11 @@ message mutants retain exit70/empty stdout and are caught only by stderr bytes.
   ```
 
   Production task-list removal keeps discarded splice(0,1).
-- `gaps/17_long_optional_chain.ts`: Node prints `1`; lowering is NotYet,
-  `an optional chain longer than one step`. Production checks the chunk then
-  reads its text length. All three exact diagnostics and Node outputs are held.
+- `gaps/17_long_optional_chain.ts` is closed: the saved receiver carries the
+  guard across `.values.length`. The unchanged program prints `1` on source
+  Node, native and the JavaScript backend, with sanitizer and leak checks.
+  The probe now requires lowering; the other representation probes retain
+  their recorded diagnoses.
 
 The context source registry is readonly: a mutable array of chunk-owning source
 objects is refused as potentially cyclic, even after using a nominal wrapper.
@@ -257,8 +259,9 @@ Each numbered program is executable on source Node and covered by a test:
   property/index frames, with numeric IDs instead of owning graph edges.
   On compiler/area-next the array of string or number lowers; it stops later, at join on an array of
   objects, arrays, maps or functions.
-- `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments are
-  NotYet, `push with other than one value`. Production pushes one frame at a time.
+- `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments now lower and
+  agree on source Node, native and the JavaScript backend, including leak detection.
+  Production already pushes one frame at a time; no workaround needs removal.
 - `gaps/11_function_expression.ts` is closed: the unchanged direct function
   expression prints `value` on source Node, native and the JavaScript backend,
   with sanitizer/leak checks. Production map now supplies a capturing function

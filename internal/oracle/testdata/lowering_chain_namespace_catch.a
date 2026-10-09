@@ -1,0 +1,8 @@
+function read(): number { return Debug.answer; }
+function invoke(action: () => number): number { return action(); }
+let action = (): number => 0;
+action = read;
+try { console.log(`${invoke(action)}`); }
+catch (error) { if (error instanceof TypeError) console.log(`${error.name}: ${error.message}`); else throw error; }
+namespace Debug { export const answer = 42; }
+console.log(`${read()}`);

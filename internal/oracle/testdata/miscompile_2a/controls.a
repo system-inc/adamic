@@ -1,0 +1,44 @@
+class Ready {
+ readonly count: number;
+ constructor(count: number) {
+  this.count = count;
+  const read = (): number => this.count;
+  console.log(`${read()}`);
+ }
+}
+class ScalarGauge {
+ #level: number = 0;
+ get level(): number { return this.#level; }
+ set level(value: number) { this.#level = value; }
+}
+const ready = new Ready(2);
+console.log(`${ready.count}`);
+const gauge = new ScalarGauge();
+gauge.level = 3;
+function showGauge(g: ScalarGauge): string {
+ const level = g.level;
+ return `${level}`;
+}
+console.log(showGauge(gauge));
+const source = { name: 'plain', message: 'shown' };
+const copy = { ...source };
+console.log(`${copy.name} ${copy.message}`);
+console.log(new Error('m').message);
+class PlainIterator {
+ [Symbol.iterator]() {
+  let index = 0;
+  return { next() { index++; return { value: index, done: index > 2 }; } };
+ }
+}
+console.log([...new PlainIterator()].join(','));
+function safeError(message?: string): string {
+ return new Error(message ?? '').message;
+}
+console.log(`[${safeError()}] [${safeError('m')}]`);
+const error = new Error('bad');
+const explicit = { name: error.name, message: error.message };
+console.log(`${explicit.name} ${explicit.message}`);
+const optional: { amount: number | undefined } = { amount: undefined };
+console.log(`${optional.amount}`);
+optional.amount = 3;
+console.log(`${optional.amount}`);

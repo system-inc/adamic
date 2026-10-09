@@ -1,0 +1,63 @@
+=== RUN   TestSplitUnitCoverage
+=== PAUSE TestSplitUnitCoverage
+=== RUN   TestRetainedSplitCoverage
+=== PAUSE TestRetainedSplitCoverage
+=== RUN   TestSplitSelfCompareAgreesWithNode
+=== PAUSE TestSplitSelfCompareAgreesWithNode
+=== RUN   TestUnitsPreserveSharedState
+--- PASS: TestUnitsPreserveSharedState (0.69s)
+=== RUN   TestSplitTokensDoNotRewriteLiterals
+=== PAUSE TestSplitTokensDoNotRewriteLiterals
+=== RUN   TestSplitTSGoAgreesUnit00
+    units_tsgo_test.go:103: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgreesUnit00 (0.00s)
+=== RUN   TestSplitTSGoAgreesUnit01
+    units_tsgo_test.go:108: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgreesUnit01 (0.00s)
+=== CONT  TestSplitUnitCoverage
+=== RUN   TestSplitUnitCoverage/decode_prefixes
+=== CONT  TestSplitSelfCompareAgreesWithNode
+=== RUN   TestSplitUnitCoverage/normalize_points
+=== CONT  TestRetainedSplitCoverage
+=== CONT  TestSplitTokensDoNotRewriteLiterals
+--- PASS: TestSplitTokensDoNotRewriteLiterals (0.00s)
+=== RUN   TestRetainedSplitCoverage/shard_union
+--- PASS: TestSplitUnitCoverage (0.01s)
+    --- PASS: TestSplitUnitCoverage/decode_prefixes (0.00s)
+    --- PASS: TestSplitUnitCoverage/normalize_points (0.00s)
+=== RUN   TestRetainedSplitCoverage/decode_targets
+=== RUN   TestRetainedSplitCoverage/WASI
+=== RUN   TestRetainedSplitCoverage/split_cache
+=== RUN   TestRetainedSplitCoverage/record_mutants
+--- PASS: TestRetainedSplitCoverage (0.02s)
+    --- PASS: TestRetainedSplitCoverage/shard_union (0.02s)
+    --- PASS: TestRetainedSplitCoverage/decode_targets (0.00s)
+    --- PASS: TestRetainedSplitCoverage/WASI (0.00s)
+    --- PASS: TestRetainedSplitCoverage/split_cache (0.00s)
+    --- PASS: TestRetainedSplitCoverage/record_mutants (0.00s)
+--- PASS: TestSplitSelfCompareAgreesWithNode (0.29s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.996s
+=== RUN   TestSelfCompareClosure
+=== PAUSE TestSelfCompareClosure
+=== RUN   TestSelfCompareArrayFill
+=== PAUSE TestSelfCompareArrayFill
+=== RUN   TestSelfCompareSweep
+=== PAUSE TestSelfCompareSweep
+=== RUN   TestSelfCompareConstantMutant
+=== PAUSE TestSelfCompareConstantMutant
+=== CONT  TestSelfCompareClosure
+=== CONT  TestSelfCompareConstantMutant
+=== CONT  TestSelfCompareArrayFill
+=== CONT  TestSelfCompareSweep
+=== NAME  TestSelfCompareConstantMutant
+    self_compare_test.go:116: constant self-equality mutant compiled and ran; sweep.a caught NaN: true true instead of false true
+--- PASS: TestSelfCompareConstantMutant (0.53s)
+--- PASS: TestSelfCompareArrayFill (0.81s)
+--- PASS: TestSelfCompareClosure (0.84s)
+--- PASS: TestSelfCompareSweep (0.85s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.876s

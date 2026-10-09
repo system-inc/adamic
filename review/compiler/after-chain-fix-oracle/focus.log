@@ -1,0 +1,69 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== RUN   TestEnumInitializationUnknownPinned
+=== PAUSE TestEnumInitializationUnknownPinned
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestParserConstructionUnsetUse
+=== PAUSE TestParserConstructionUnsetUse
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== RUN   TestParserStackTinyLimit
+=== PAUSE TestParserStackTinyLimit
+=== CONT  TestCheckedJSONNextRefusals
+=== CONT  TestParserConstructionUnsetUse
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_alias_write
+=== CONT  TestGenericBodyRelationsMaybeBind
+=== CONT  TestEnumInitializationUnknownPinned
+=== CONT  TestParserStackTinyLimit
+=== RUN   TestEnumInitializationUnknownPinned/unknown-before
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-before
+=== RUN   TestEnumInitializationUnknownPinned/unknown-callback
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-callback
+=== RUN   TestEnumInitializationUnknownPinned/unknown-property
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-property
+=== CONT  TestEnumInitializationUnknownPinned/unknown-before
+--- PASS: TestGenericBodyRelationsMaybeBind (0.09s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-property
+=== NAME  TestCheckedJSONNextRefusals/json_dictionary_alias_write
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_alias_write2927334210/001/boundary.ts:5:1: stage 0 can't lower a write through a checked JSON view alias yet
+--- PASS: TestCheckedJSONNextRefusals (0.11s)
+    --- PASS: TestCheckedJSONNextRefusals/json_dictionary_alias_write (0.11s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-callback
+=== NAME  TestParserConstructionUnsetUse
+    parser_construction_test.go:72: gate cache node miss
+=== NAME  TestEnumInitializationUnknownPinned/unknown-before
+    enum_initialization_reach_test.go:78: gate cache node miss
+=== NAME  TestEnumInitializationUnknownPinned/unknown-property
+    enum_initialization_reach_test.go:78: gate cache node miss
+=== NAME  TestEnumInitializationUnknownPinned/unknown-callback
+    enum_initialization_reach_test.go:78: gate cache node miss
+--- PASS: TestParserStackTinyLimit (0.47s)
+=== CONT  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:139: gate cache node miss
+=== NAME  TestParserConstructionUnsetUse
+    parser_construction_test.go:83: gate cache node miss
+    parser_construction_test.go:88: undefined presence observation is accepted; declared string use stops naming field, factory and use
+--- PASS: TestParserConstructionUnsetUse (0.62s)
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestEnumInitializationUnknownPinned/unknown-property
+    enum_initialization_reach_test.go:89: gate cache node miss
+=== NAME  TestEnumInitializationUnknownPinned/unknown-before
+    enum_initialization_reach_test.go:89: gate cache node miss
+=== NAME  TestEnumInitializationUnknownPinned/unknown-callback
+    enum_initialization_reach_test.go:89: gate cache node miss
+--- PASS: TestEnumInitializationUnknownPinned (0.00s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-property (0.65s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-before (0.75s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-callback (0.68s)
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:161: gate cache node miss
+    parser_namespaces_test.go:166: native missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+    parser_namespaces_test.go:166: javascript missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+--- PASS: TestParserNamespaceClassRegistrationMutant (0.45s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.946s

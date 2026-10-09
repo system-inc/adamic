@@ -1,0 +1,54 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_alias_write
+--- FAIL: TestCheckedJSONNextRefusals (0.04s)
+    --- FAIL: TestCheckedJSONNextRefusals/json_dictionary_alias_write (0.04s)
+panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x4 pc=0x811ab2]
+
+goroutine 35 [running]:
+testing.tRunner.func1.2({0x1ef1280, 0x2005b20})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1ef1280?, 0x2005b20?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol(0x22081e91ea08?, 0x22081e910001?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16880 +0x12
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeOfSymbol(0x22081edfa200?, 0x22081eb49060?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/exports.go:196 +0x13
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots.func1(0x22081e62d040)
+	/workspace/adamic/internal/lower/placeholder.go:184 +0x431
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1588
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x22081e91ea08?, 0x22081eb498b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8734 +0x106a
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots.func1(0x22081e610a80)
+	/workspace/adamic/internal/lower/placeholder.go:221 +0xcdf
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x22081e90f888, 0x22081eb498b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x5?, 0x22081eb498b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots.func1(0x22081e90f888)
+	/workspace/adamic/internal/lower/placeholder.go:221 +0xcdf
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots(0x22081edfa200)
+	/workspace/adamic/internal/lower/placeholder.go:225 +0x27f
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x22081edfa200, 0x22081e90f888)
+	/workspace/adamic/internal/lower/refusals.go:39 +0x32
+github.com/system-inc/adamic/internal/lower.Lower({0x1f981e0?, 0x208a080?}, 0x22081e242030)
+	/workspace/adamic/internal/lower/lower.go:47 +0x411
+github.com/system-inc/adamic/internal/oracle.TestCheckedJSONNextRefusals.func1(0x22081e5a2248)
+	/workspace/adamic/internal/oracle/checked_json_next_test.go:107 +0x2c6
+testing.tRunner(0x22081e5a2248, 0x22081e5ae048)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 34
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.055s
+FAIL

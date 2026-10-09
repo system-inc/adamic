@@ -1,0 +1,7 @@
+project-node-roots: caught 7.17s
+standalone-node-prelude: caught 5.89s
+ordinary-project-old-selection: not caught as expected: # github.com/system-inc/adamic/internal/load [github.com/system-inc/adamic/internal/load.test]
+./review/compiler/lowering-chain-fixed/loader-mutants/ordinary-project-old-selection/project_loader.go.txt:42:4: declared and not used: config
+FAIL	github.com/system-inc/adamic/internal/load [build failed]
+FAIL
+

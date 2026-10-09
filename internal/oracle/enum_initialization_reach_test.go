@@ -76,14 +76,15 @@ func TestEnumInitializationUnknownPinned(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
-			if truth.exitCode == 0 || string(truth.stdout) != "before\n" || !strings.Contains(string(truth.stderr), "TypeError") {
+			if truth.exitCode != 1 || string(truth.stdout) != "before\n" || !strings.Contains(string(truth.stderr), "TypeError") {
 				t.Fatalf("source Node: %+v", truth)
 			}
 			program, err := lowered(t, path)
 			if err != nil {
 				t.Fatal(err)
 			}
-			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n"), exitCode: 70}
+			// Source Node confirms stdout and exit 1; uncaught backend errors omit engine-specific stderr.
+			want := run{stdout: truth.stdout, exitCode: truth.exitCode}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if d := disagreement(want, got); d != "" {

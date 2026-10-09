@@ -1,0 +1,12 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.272s)
+v24.19.0
+setup: node ready (0.419s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.934s)
+
+added 3 packages in 577ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.982s
+setup: markdown dependencies ready (1.514s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (16.547s)

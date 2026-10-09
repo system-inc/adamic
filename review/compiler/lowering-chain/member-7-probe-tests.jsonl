@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T05:39:50.461557979Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/checked-any/probe"}
+{"Time":"2026-10-09T05:39:50.47342185Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration"}
+{"Time":"2026-10-09T05:39:50.473519187Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration","Output":"=== RUN   TestRefusalMustBeInsideDeclaration\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473613979Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration","Output":"=== PAUSE TestRefusalMustBeInsideDeclaration\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473617154Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration"}
+{"Time":"2026-10-09T05:39:50.473619788Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement"}
+{"Time":"2026-10-09T05:39:50.473624635Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement","Output":"=== RUN   TestUnobservedUseNamesItsOutsideRequirement\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473630624Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement","Output":"=== PAUSE TestUnobservedUseNamesItsOutsideRequirement\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473632517Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement"}
+{"Time":"2026-10-09T05:39:50.473638205Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration"}
+{"Time":"2026-10-09T05:39:50.473639868Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration","Output":"=== CONT  TestRefusalMustBeInsideDeclaration\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473646838Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration","Output":"--- PASS: TestRefusalMustBeInsideDeclaration (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473649552Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestRefusalMustBeInsideDeclaration","Elapsed":0}
+{"Time":"2026-10-09T05:39:50.473659157Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement"}
+{"Time":"2026-10-09T05:39:50.473662842Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement","Output":"=== CONT  TestUnobservedUseNamesItsOutsideRequirement\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473665586Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement","Output":"--- PASS: TestUnobservedUseNamesItsOutsideRequirement (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.473667309Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Test":"TestUnobservedUseNamesItsOutsideRequirement","Elapsed":0}
+{"Time":"2026-10-09T05:39:50.473668992Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:39:50.474414156Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Output":"ok  \tgithub.com/system-inc/adamic/stage3/checked-any/probe\t0.010s\n"}
+{"Time":"2026-10-09T05:39:50.474446083Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/checked-any/probe","Elapsed":0.013}

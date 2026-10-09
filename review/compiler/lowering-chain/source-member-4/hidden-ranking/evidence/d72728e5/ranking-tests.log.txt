@@ -1,0 +1,10 @@
+test_checker_ancestor (__main__.RankingTest.test_checker_ancestor) ... ok
+test_conflicting_equal_and_crossing_spans (__main__.RankingTest.test_conflicting_equal_and_crossing_spans) ... ok
+test_nested_byte_mutant (__main__.RankingTest.test_nested_byte_mutant) ... ok
+test_synthetic_census (__main__.RankingTest.test_synthetic_census) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK
+CAUGHT: nested-byte mutant by exact-once accounting assertion

@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesTypesUnionDuplicateSkipped
+=== PAUSE TestProjectReferencesTypesUnionDuplicateSkipped
+=== CONT  TestProjectReferencesTypesUnionDuplicateSkipped
+    project_references_test.go:198: want both checker duplicate declarations, got <nil>
+--- FAIL: TestProjectReferencesTypesUnionDuplicateSkipped (1.72s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	1.733s
+FAIL

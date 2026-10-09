@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T07:31:10.788964431Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T07:31:10.827903542Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse"}
+{"Time":"2026-10-09T07:31:10.828019396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Output":"=== RUN   TestArtifactInputsAndReuse\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:10.873630934Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Output":"--- PASS: TestArtifactInputsAndReuse (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:10.873679427Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Elapsed":0.07}
+{"Time":"2026-10-09T07:31:10.873703113Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape"}
+{"Time":"2026-10-09T07:31:10.873709783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape","Output":"=== RUN   TestRegExpIteratorResultShape\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:10.873717034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape","Output":"=== PAUSE TestRegExpIteratorResultShape\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:10.873719097Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape"}
+{"Time":"2026-10-09T07:31:10.873721971Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape"}
+{"Time":"2026-10-09T07:31:10.873724685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape","Output":"=== CONT  TestRegExpIteratorResultShape\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:11.125642565Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape","Output":"--- PASS: TestRegExpIteratorResultShape (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:11.125694653Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpIteratorResultShape","Elapsed":0.24}
+{"Time":"2026-10-09T07:31:11.125701433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:11.127421334Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.338s\n"}
+{"Time":"2026-10-09T07:31:11.127459992Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.339}

@@ -1,0 +1,4052 @@
+[
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderOwnershipAndNoCheck/noCheck",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictNullChecks",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderOwnershipAndNoCheck/mixed",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderOwnershipAndNoCheck",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictFunctionTypes",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictBindCallApply",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictPropertyInitialization",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/useUnknownInCatchVariables",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noImplicitAny",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noImplicitThis",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/target",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/module",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/lib",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/paths",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/deduplicatePackages",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestMixedAdamicAndTypeScriptWithoutReferences",
+    "seconds": 0.25
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderOptionAuditFailsClosed",
+    "seconds": 0.57
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesDiamond",
+    "seconds": 0.52
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderReferenceSources",
+    "seconds": 1.01
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderHostConsoleAndCompositeEntries",
+    "seconds": 1.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderStandaloneNodeKeepsPrelude",
+    "seconds": 0.39
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectLoaderNodeImportsKeepReferenceRoots",
+    "seconds": 0.42
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesTransitive",
+    "seconds": 0.86
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesTransitiveTypes",
+    "seconds": 2.58
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesSharedPrelude",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesCycle",
+    "seconds": 0
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesCompatibleOptions",
+    "seconds": 0.31
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesAudit",
+    "seconds": 0.63
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/01_hello.ts",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/validated.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/transport.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/structural.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/string_length.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/stock_decode_entities.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/stale_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/staged_field.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/prototype.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/property_null_misfit.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/property_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/property.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/parameter_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/parameter.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/literal_result.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_validated.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_unprepared.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_union_misfit.a",
+    "seconds": 0.02
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_union.a",
+    "seconds": 0.02
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_symbol_contract.a",
+    "seconds": 0.12
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_reflection.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_recursive_misfit.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_recursive.a",
+    "seconds": 0.11
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "seconds": 4.77
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_callable_contract.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_optional.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_recovery.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesTypesUnion",
+    "seconds": 4.59
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_object_misfit.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_object.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_misfit.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_validated.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestProjectReferencesTypesUnionDuplicate",
+    "seconds": 4.63
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_array_misfit.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nul_literal.a",
+    "seconds": 0.02
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_array.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nested_list_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal_result_misfit.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_maplike_pending.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nested_list.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal_result.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_list_misfit.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_list.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_domain_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_proto_key.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_iteration.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_order_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_nul_key.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_computed_key.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_depth_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_alias_write.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/arithmetic.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/config_validated.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_boolean_list.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_array_method.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_alias_write.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_boxed_list.a",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/field_view.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/config_diagnostics.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_alias_update.a",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/callable.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/assertion_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/boolean.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/array_view.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/assertion.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/09_tree.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/05_covariance.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/arithmetic_misfit.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/04_type_guard.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/07_modules",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/08_results.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/02_cast.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/03_non_null.ts",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/10_unicode.ts",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/06_stack.ts",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/01_any.ts",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/05_wordcount.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/04_closures.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/03_shapes.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/02_fizzbuzz.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-final-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad",
+    "seconds": 0.01
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_exported_state",
+    "seconds": 0.46
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_factory_binding",
+    "seconds": 0.46
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/drop_returned_assignment",
+    "seconds": 0.47
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_scoped_function",
+    "seconds": 0.61
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_body_order",
+    "seconds": 0.44
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_namespace_enum",
+    "seconds": 0.45
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_scoped_constant",
+    "seconds": 0.48
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants/wrong_debug_initialization",
+    "seconds": 0.36
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceSemanticMutants",
+    "seconds": 0
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/01_identity",
+    "seconds": 0.07
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/02_optional_return",
+    "seconds": 0.04
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/03_callback_return",
+    "seconds": 0.08
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_object_step",
+    "seconds": 0.23
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/accessor_binding.a",
+    "seconds": 0.25
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/04_function_value",
+    "seconds": 0.07
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/05_nested_class",
+    "seconds": 0.05
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/06_polymorphic_recursion",
+    "seconds": 0.11
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/07_generic_cast",
+    "seconds": 0.08
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_object_iterator",
+    "seconds": 0.3
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/08_readonly_view",
+    "seconds": 0.07
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/collections.a",
+    "seconds": 0.32
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/09_recursive_optional",
+    "seconds": 0.09
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/10_identifier_multimap",
+    "seconds": 0.08
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_callable_next",
+    "seconds": 0.38
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/11_indexed_result",
+    "seconds": 0.18
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/12_mixed_indexed_result",
+    "seconds": 0.26
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_object_close",
+    "seconds": 0.37
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops",
+    "seconds": 1.28
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/13_constrained_local",
+    "seconds": 0.34
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceContainerLimitsStayNamed",
+    "seconds": 0.27
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/iterable_view.a",
+    "seconds": 0.33
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/14_optional_literal_union",
+    "seconds": 0.08
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/15_array_callback",
+    "seconds": 0.08
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep16GenericOutcomes",
+    "seconds": 1.68
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/object_binding.a",
+    "seconds": 0.4
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/object_binding_stress.a",
+    "seconds": 0.38
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/object_iteration.a",
+    "seconds": 0.43
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceObjectMutants/second-object",
+    "seconds": 3.21
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/strings.a",
+    "seconds": 0.53
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/user_forwarding.a",
+    "seconds": 0.44
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/intrinsic_iterator_write.a",
+    "seconds": 0.41
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceDirectWritesStayRefused",
+    "seconds": 3.22
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/intrinsic_iterator_alias.a",
+    "seconds": 0.7
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/intrinsic_iterator_prototype.a",
+    "seconds": 0.64
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceObjectAgreement/identity",
+    "seconds": 3.84
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/array_view_stress.a",
+    "seconds": 0.74
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/array_view_weak.a",
+    "seconds": 0.88
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceObjectMutants/early-key",
+    "seconds": 4.35
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/test262_array_views.a",
+    "seconds": 0.69
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/array_view_variance.a",
+    "seconds": 0.52
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceDescriptorBoundary",
+    "seconds": 4.78
+  },
+  {
+    "log": "owned-directory-tests.jsonl",
+    "test": "TestNamespaceStateMutants/lose_assignment",
+    "seconds": 0.85
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a",
+    "seconds": 0.25
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesPredicates",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a",
+    "seconds": 0.28
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesObjects/objects",
+    "seconds": 0.01
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesObjects",
+    "seconds": 5.28
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/native",
+    "seconds": 0.51
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a",
+    "seconds": 0.76
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/native",
+    "seconds": 0.52
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 0.77
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/native",
+    "seconds": 0.42
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a",
+    "seconds": 0.66
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/native",
+    "seconds": 0.5
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a",
+    "seconds": 0.74
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/native",
+    "seconds": 0.3
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a",
+    "seconds": 0.51
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/native",
+    "seconds": 0.32
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a",
+    "seconds": 0.53
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs",
+    "seconds": 0.01
+  },
+  {
+    "log": "stage3-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs",
+    "seconds": 5.28
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.28
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.24
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "seconds": 0.65
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "seconds": 0.68
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.21
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.17
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position",
+    "seconds": 7.6
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity",
+    "seconds": 7.7
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=",
+    "seconds": 7.82
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+    "seconds": 11.42
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "seconds": 7.61
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestLexerGaps",
+    "seconds": 0.38
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/01_any.ts",
+    "seconds": 0.12
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/09_tree.ts",
+    "seconds": 0.12
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/01_hello.ts",
+    "seconds": 0.13
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/03_non_null.ts",
+    "seconds": 0.15
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/08_results.ts",
+    "seconds": 0.11
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/07_modules",
+    "seconds": 0.11
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/06_stack.ts",
+    "seconds": 0.1
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/02_cast.ts",
+    "seconds": 0.14
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/05_wordcount.ts",
+    "seconds": 0.11
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/03_shapes.ts",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/04_closures.ts",
+    "seconds": 0.12
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/02_fizzbuzz.ts",
+    "seconds": 0.11
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/05_covariance.ts",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/04_type_guard.ts",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-5-load-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/10_unicode.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/main",
+    "seconds": 0.33
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/early",
+    "seconds": 0.25
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/initialized",
+    "seconds": 0.11
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_early",
+    "seconds": 0.19
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_initialized",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/hoisted",
+    "seconds": 0.24
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode",
+    "seconds": 1.22
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/early",
+    "seconds": 0.05
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/direct_early",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants",
+    "seconds": 0.14
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.02
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.05
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.03
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/lowering_chain_tdz_catch.a",
+    "seconds": 0.44
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "seconds": 0.49
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.01
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "seconds": 0.49
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "seconds": 0.53
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.06
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "seconds": 0.47
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.04
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/namespaces_unknown_before.a",
+    "seconds": 0.43
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/lowering_chain_namespace_catch.a",
+    "seconds": 0.58
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.1
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0.01
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestModuleNamespaceLiveBindingMutant",
+    "seconds": 0.08
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestStatementsSmallRulings/template",
+    "seconds": 0.17
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestStatementsSmallRulings/nonnull",
+    "seconds": 0.2
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestStatementsSmallRulings/capture",
+    "seconds": 0.2
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestStatementsSmallRulings",
+    "seconds": 0.57
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestLoweringChainTDZCatch",
+    "seconds": 0.82
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestLoweringChainRegexFields",
+    "seconds": 0.96
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestLoweringChainNamespaceCatch",
+    "seconds": 1.04
+  },
+  {
+    "log": "item-1-green-tests.jsonl",
+    "test": "TestLoweringChainStructuralError",
+    "seconds": 0.67
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestImportCycleLoadTimeReads/read/a.a",
+    "seconds": 0.46
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestImportCycleLoadTimeReads/classes/c.a",
+    "seconds": 0.41
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestImportCycleLoadTimeReads/classes/a.a",
+    "seconds": 0.38
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestImportCycleLoadTimeReads/indirect/b.a",
+    "seconds": 0.43
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestImportCycleLoadTimeReads/hoisted/a.a",
+    "seconds": 0.41
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestImportCycleLoadTimeReads",
+    "seconds": 2.1
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep21TerminalOracleDependencyHash",
+    "seconds": 0.09
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_object_step",
+    "seconds": 0.22
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep21TerminalOracleSourceHash",
+    "seconds": 0.19
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_object_iterator",
+    "seconds": 0.2
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseDeclarationMutants/unready_read",
+    "seconds": 0.47
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/accessor_binding.a",
+    "seconds": 0.22
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/01_identity",
+    "seconds": 0.05
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep21ReadinessIsCatchable",
+    "seconds": 0.56
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/02_optional_return",
+    "seconds": 0.05
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/03_callback_return",
+    "seconds": 0.06
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_callable_next",
+    "seconds": 0.22
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/04_function_value",
+    "seconds": 0.06
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/05_nested_class",
+    "seconds": 0.04
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/06_polymorphic_recursion",
+    "seconds": 0.08
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/07_generic_cast",
+    "seconds": 0.04
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops/non_object_close",
+    "seconds": 0.21
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestIterationDispatchPendingStops",
+    "seconds": 0.86
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/08_readonly_view",
+    "seconds": 0.04
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/09_recursive_optional",
+    "seconds": 0.05
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/10_identifier_multimap",
+    "seconds": 0.05
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestLibraryMethodAliasReadMutant",
+    "seconds": 0.45
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseDeadZoneStop",
+    "seconds": 0.15
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/collections.a",
+    "seconds": 0.64
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/11_indexed_result",
+    "seconds": 0.16
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseOverloadIsNotYet",
+    "seconds": 0.18
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/12_mixed_indexed_result",
+    "seconds": 0.16
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/13_constrained_local",
+    "seconds": 0.15
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/14_optional_literal_union",
+    "seconds": 0.04
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseDeclarationMutants/no_fallthrough",
+    "seconds": 0.5
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes/15_array_callback",
+    "seconds": 0.05
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep16GenericOutcomes",
+    "seconds": 1.07
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseDeclarationMutants/function_not_hoisted",
+    "seconds": 0.48
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseDeclarationMutants/unready_write",
+    "seconds": 0.41
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestSwitchCaseDeclarationMutants",
+    "seconds": 0
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/delegated_generator.a",
+    "seconds": 11.84
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/generator.a",
+    "seconds": 0.98
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/iterable_view.a",
+    "seconds": 0.16
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/object_binding.a",
+    "seconds": 0.15
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/object_binding_stress.a",
+    "seconds": 0.16
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/object_iteration.a",
+    "seconds": 0.5
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/strings.a",
+    "seconds": 0.59
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/user_forwarding.a",
+    "seconds": 0.79
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/intrinsic_iterator_write.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/intrinsic_iterator_alias.a",
+    "seconds": 0.19
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/intrinsic_iterator_prototype.a",
+    "seconds": 0.16
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/array_view_stress.a",
+    "seconds": 0.64
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/array_view_weak.a",
+    "seconds": 0.47
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/test262_array_views.a",
+    "seconds": 0.56
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes/array_view_variance.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "readiness-and-owned-tests.jsonl",
+    "test": "TestStep20IterationOutcomes",
+    "seconds": 18.39
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "seconds": 0.02
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/native",
+    "seconds": 0.42
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a",
+    "seconds": 0.99
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/native",
+    "seconds": 0.45
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 1.01
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/native",
+    "seconds": 0.45
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a",
+    "seconds": 1
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/native",
+    "seconds": 0.5
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a",
+    "seconds": 1.05
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a",
+    "seconds": 0.27
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesPredicates/predicates",
+    "seconds": 0.02
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesPredicates",
+    "seconds": 9.62
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a",
+    "seconds": 0.22
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesObjects/objects",
+    "seconds": 0.01
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesObjects",
+    "seconds": 9.63
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/native",
+    "seconds": 0.36
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a",
+    "seconds": 0.6
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/native",
+    "seconds": 0.33
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a",
+    "seconds": 0.61
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs",
+    "seconds": 0.01
+  },
+  {
+    "log": "stage3-final-tests.jsonl",
+    "test": "TestFixturesAssignmentProofs",
+    "seconds": 9.62
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/main",
+    "seconds": 15.72
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/initialized",
+    "seconds": 0.41
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_early",
+    "seconds": 0.42
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_initialized",
+    "seconds": 0.36
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/hoisted",
+    "seconds": 0.41
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/early",
+    "seconds": 0.25
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/direct_early",
+    "seconds": 0.26
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants",
+    "seconds": 0.51
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.01
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.03
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.02
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "seconds": 6.37
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.02
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "seconds": 6.36
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.03
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "seconds": 6.39
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.02
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "seconds": 6.38
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.01
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/namespaces_unknown_before.a",
+    "seconds": 0.28
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.02
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "item-1-tests.jsonl",
+    "test": "TestModuleNamespaceLiveBindingMutant",
+    "seconds": 0.28
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictNullChecks",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictFunctionTypes",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictBindCallApply",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictPropertyInitialization",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/useUnknownInCatchVariables",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noImplicitAny",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noImplicitThis",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/target",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/module",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/lib",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/paths",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions/deduplicatePackages",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesConflictingOptions",
+    "seconds": 0.02
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectLoaderOptionAuditFailsClosed",
+    "seconds": 0.62
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesDiamond",
+    "seconds": 0.53
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectLoaderReferenceSources",
+    "seconds": 1.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesTransitive",
+    "seconds": 1.1
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesTransitiveTypes",
+    "seconds": 3.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesCycle",
+    "seconds": 0
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesSharedPrelude",
+    "seconds": 0.11
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectLoaderStandaloneNodeKeepsPrelude",
+    "seconds": 0.35
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectLoaderNodeImportsKeepReferenceRoots",
+    "seconds": 0.37
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesCompatibleOptions",
+    "seconds": 0.4
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesAudit",
+    "seconds": 0.69
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/01_hello.ts",
+    "seconds": 0.09
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/validated.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesTypesUnion",
+    "seconds": 5.24
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/transport.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/structural.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/stock_decode_entities.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/string_length.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/staged_field.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/stale_misfit.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/prototype.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/property_null_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/property_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/property.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/parameter_misfit.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/parameter.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/literal_result.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_validated.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_unprepared.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_union_misfit.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_union.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_symbol_contract.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_reflection.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_recursive_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_recovery.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_recursive.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_object_misfit.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "seconds": 5.4
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_optional.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_object.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_validated.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestProjectReferencesTypesUnionDuplicate",
+    "seconds": 5.26
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_array_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nullable_array.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nul_literal.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nested_list_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_maplike_pending.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_nested_list.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal_result_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal_result.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_literal_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_list_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/callable.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_list.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_domain_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_iteration.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_nul_key.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_order_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_proto_key.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_computed_key.a",
+    "seconds": 0.03
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_depth_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_dictionary_alias_write.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_callable_contract.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_boolean_list.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_boxed_list.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_array_method.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_alias_write.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/config_validated.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/json_alias_update.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/field_view.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/config_diagnostics.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/assertion_misfit.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/boolean.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/02_cast.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/arithmetic_misfit.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/array_view.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/arithmetic.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/checked_any/assertion.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/04_type_guard.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/03_non_null.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/05_covariance.ts",
+    "seconds": 0.08
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/07_modules",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/08_results.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/10_unicode.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/refuse/01_any.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/09_tree.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/04_closures.ts",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/05_wordcount.ts",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/06_stack.ts",
+    "seconds": 0.07
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/03_shapes.ts",
+    "seconds": 0.06
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad/compile/02_fizzbuzz.ts",
+    "seconds": 0.05
+  },
+  {
+    "log": "loader-tests.jsonl",
+    "test": "TestTheProgramsInTheSpecLoad",
+    "seconds": 0.01
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.06
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.06
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.07
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.01
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/notyet_element_access/nodearray.a",
+    "seconds": 0.2
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.02
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/notyet_element_access/template.a",
+    "seconds": 0.2
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.09
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/notyet_element_access/sorted.a",
+    "seconds": 0.22
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.01
+  },
+  {
+    "log": "prefix-wasi.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.09
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.13
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.15
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.05
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.06
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/notyet_element_access/nodearray.a",
+    "seconds": 0.75
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.01
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/notyet_element_access/sorted.a",
+    "seconds": 0.81
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.01
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/notyet_element_access/template.a",
+    "seconds": 0.81
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.11
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/paths",
+    "seconds": 0.36
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/string_dictionary",
+    "seconds": 0.41
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessSortedAgreement",
+    "seconds": 1.1
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/numeric_record",
+    "seconds": 0.49
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessTemplateAgreement",
+    "seconds": 1.25
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessNodeArrayAgreement",
+    "seconds": 1.25
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/jsdoc",
+    "seconds": 0.39
+  },
+  {
+    "log": "item-2-correct-tools-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "seconds": 0
+  },
+  {
+    "log": "item-2-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/paths",
+    "seconds": 0.27
+  },
+  {
+    "log": "item-2-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/numeric_record",
+    "seconds": 0.2
+  },
+  {
+    "log": "item-2-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/jsdoc",
+    "seconds": 0.19
+  },
+  {
+    "log": "item-2-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/string_dictionary",
+    "seconds": 0.28
+  },
+  {
+    "log": "item-2-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "seconds": 0
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/main",
+    "seconds": 0.63
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/early",
+    "seconds": 0.54
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/initialized",
+    "seconds": 0.47
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_early",
+    "seconds": 0.47
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_initialized",
+    "seconds": 0.45
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/hoisted",
+    "seconds": 0.54
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode",
+    "seconds": 3.09
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/early",
+    "seconds": 0.58
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/direct_early",
+    "seconds": 0.58
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants",
+    "seconds": 1.16
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.03
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.07
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.08
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.02
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.17
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.18
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.14
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.08
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21ThrowPathLiveness",
+    "seconds": 0.14
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestModuleNamespaceLiveBindingMutant",
+    "seconds": 0.94
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestLoweringChainTDZCatch",
+    "seconds": 0.95
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestLoweringChainRegexFields",
+    "seconds": 1.13
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestLoweringChainMixedFileAgreement",
+    "seconds": 1.14
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.19
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestLoweringChainNamespaceCatch",
+    "seconds": 0.57
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestLoweringChainStructuralError",
+    "seconds": 0.63
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21ReadinessIsCatchable",
+    "seconds": 0.6
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21FixtureMutants/catch_callback",
+    "seconds": 0.73
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21FixtureMutants/finally_completion",
+    "seconds": 0.72
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21FixtureMutants/rethrow",
+    "seconds": 0.65
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21FixtureMutants/liveness",
+    "seconds": 0.68
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21FixtureMutants/finally_callback",
+    "seconds": 0.62
+  },
+  {
+    "log": "readiness-final-matrix.jsonl",
+    "test": "TestStep21FixtureMutants",
+    "seconds": 0
+  },
+  {
+    "log": "prefix-native.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_element_access/nodearray.a",
+    "seconds": 0.53
+  },
+  {
+    "log": "prefix-native.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_element_access/sorted.a",
+    "seconds": 0.55
+  },
+  {
+    "log": "prefix-native.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet_element_access/template.a",
+    "seconds": 0.55
+  },
+  {
+    "log": "prefix-native.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.03
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/paths",
+    "seconds": 0.3
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/string_dictionary",
+    "seconds": 0.19
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessNodeArrayAgreement",
+    "seconds": 0.58
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessSortedAgreement",
+    "seconds": 0.6
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessTemplateAgreement",
+    "seconds": 0.62
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/numeric_record",
+    "seconds": 0.22
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries/jsdoc",
+    "seconds": 0.21
+  },
+  {
+    "log": "item-2-retry-tests.jsonl",
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "seconds": 0
+  },
+  {
+    "log": "typeaware-products-final.jsonl",
+    "test": "TestProduct_volume_oracle",
+    "seconds": 8.05
+  },
+  {
+    "log": "typeaware-products-final.jsonl",
+    "test": "TestProduct_checker",
+    "seconds": 19.08
+  },
+  {
+    "log": "typeaware-products-final.jsonl",
+    "test": "TestProduct_checker_asan",
+    "seconds": 0
+  },
+  {
+    "log": "item-4-tests.jsonl",
+    "test": "TestRegexProgramsKeepCheckedFieldReads",
+    "seconds": 0.4
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.12
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.13
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.13
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.01
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.03
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.02
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/module_namespace_reads/direct_early.a",
+    "seconds": 0.73
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.15
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/module_namespace_reads/early.a",
+    "seconds": 0.76
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.03
+  },
+  {
+    "log": "wasi-module-actual.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "namespace-unready-restored.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unready.a",
+    "seconds": 0.39
+  },
+  {
+    "log": "namespace-unready-restored.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.02
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/04_function_value.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/01_identity.a",
+    "seconds": 0.6
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/09_recursive_optional.a",
+    "seconds": 0.61
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/03_callback_return.a",
+    "seconds": 0.58
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/15_array_callback.a",
+    "seconds": 0.76
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/14_optional_literal_union.a",
+    "seconds": 0.52
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/02_optional_return.a",
+    "seconds": 0.57
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/05_nested_class.a",
+    "seconds": 0.61
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/10_identifier_multimap.a",
+    "seconds": 0.64
+  },
+  {
+    "log": "native-generics-actual.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.01
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.09
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.1
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.1
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.02
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.13
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.05
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.02
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003/stage3/drivers/scanner/probes/cyclic-premature-value/main.a",
+    "seconds": 0.67
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.02
+  },
+  {
+    "log": "wasi-scanner-actual.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.21
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.22
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.2
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "seconds": 0.49
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.17
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "seconds": 0.45
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity",
+    "seconds": 6.85
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=",
+    "seconds": 7.01
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position",
+    "seconds": 7.22
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+    "seconds": 10.58
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "seconds": 4
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestLexerGaps",
+    "seconds": 0.37
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "seconds": 0.3
+  },
+  {
+    "log": "item-5-native-green-tests.jsonl",
+    "test": "TestRegexProgramsKeepCheckedFieldReads",
+    "seconds": 0.44
+  },
+  {
+    "log": "objects-status-final.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "objects-status-final.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "objects-status-final.jsonl",
+    "test": "TestFixturesObjects/objects/25_map_generator.a",
+    "seconds": 0.13
+  },
+  {
+    "log": "objects-status-final.jsonl",
+    "test": "TestFixturesObjects/objects",
+    "seconds": 0
+  },
+  {
+    "log": "objects-status-final.jsonl",
+    "test": "TestFixturesObjects",
+    "seconds": 4.2
+  },
+  {
+    "log": "item-3-4-oracle-tests.jsonl",
+    "test": "TestStep21Uncaught/step21_dynamic_uncaught",
+    "seconds": 0.73
+  },
+  {
+    "log": "item-3-4-oracle-tests.jsonl",
+    "test": "TestStep21Uncaught/exceptions_uncaught",
+    "seconds": 0.73
+  },
+  {
+    "log": "item-3-4-oracle-tests.jsonl",
+    "test": "TestStep21Uncaught/step21_object_uncaught",
+    "seconds": 0.77
+  },
+  {
+    "log": "item-3-4-oracle-tests.jsonl",
+    "test": "TestLoweringChainRegexFields",
+    "seconds": 0.8
+  },
+  {
+    "log": "item-3-4-oracle-tests.jsonl",
+    "test": "TestStep21Uncaught/closures_throw_uncaught",
+    "seconds": 0.5
+  },
+  {
+    "log": "item-3-4-oracle-tests.jsonl",
+    "test": "TestStep21Uncaught",
+    "seconds": 0
+  },
+  {
+    "log": "item-6-main-final-tests.jsonl",
+    "test": "TestFactsDecoderGuards",
+    "seconds": 3.19
+  },
+  {
+    "log": "loader-node-tests.jsonl",
+    "test": "TestLoweringChainMixedFileAgreement",
+    "seconds": 0.51
+  },
+  {
+    "log": "predicates-status-final.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "predicates-status-final.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "predicates-status-final.jsonl",
+    "test": "TestFixturesPredicates/predicates/10_nullish.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "predicates-status-final.jsonl",
+    "test": "TestFixturesPredicates/predicates",
+    "seconds": 0
+  },
+  {
+    "log": "predicates-status-final.jsonl",
+    "test": "TestFixturesPredicates",
+    "seconds": 0.7
+  },
+  {
+    "log": "item-6-fixed-tests.jsonl",
+    "test": "TestFactsDecoderGuards",
+    "seconds": 7.93
+  },
+  {
+    "log": "regex-final.jsonl",
+    "test": "TestRegexProgramsKeepCheckedFieldReads",
+    "seconds": 0.36
+  },
+  {
+    "log": "item-6-products-final-tests.jsonl",
+    "test": "TestProduct_volume_oracle",
+    "seconds": 4.34
+  },
+  {
+    "log": "item-6-products-final-tests.jsonl",
+    "test": "TestProduct_profile_controls_lowered",
+    "seconds": 45.16
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.01
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "seconds": 0.34
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "seconds": 0.32
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.11
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/dead_zone.a",
+    "seconds": 0.4
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/namespaces_unknown_before.a",
+    "seconds": 0.36
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/library_method_values_dead_zone.a",
+    "seconds": 0.39
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/lowering_chain_namespace_catch.a",
+    "seconds": 0.47
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.11
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/lowering_chain_tdz_catch.a",
+    "seconds": 0.37
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "seconds": 0.39
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.01
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_empty_alias_tdz.a",
+    "seconds": 0.2
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/nested_destructured_tdz.a",
+    "seconds": 7.6
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.09
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_tdz_write.a",
+    "seconds": 6.27
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.16
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/nested_tdz.a",
+    "seconds": 6.8
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "seconds": 0.26
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.07
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/user_iterators_rest_tdz.a",
+    "seconds": 7.81
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.04
+  },
+  {
+    "log": "wasi-scalar-actual.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.02
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.1
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005",
+    "seconds": 0.02
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.01
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a",
+    "seconds": 0.39
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.03
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/switch_case_declarations/dead_zone.a",
+    "seconds": 0.45
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.09
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a",
+    "seconds": 0.46
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.1
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a",
+    "seconds": 0.48
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.07
+  },
+  {
+    "log": "wasi-switch-actual.jsonl",
+    "test": "TestWASIAgreesWithNode",
+    "seconds": 0
+  },
+  {
+    "log": "item-3-final-tests.jsonl",
+    "test": "TestWASIRequestThrows",
+    "seconds": 7.58
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "seconds": 0.01
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/native",
+    "seconds": 0.54
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a",
+    "seconds": 0.84
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/native",
+    "seconds": 0.49
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a",
+    "seconds": 0.84
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/native",
+    "seconds": 0.64
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 0.95
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/native",
+    "seconds": 0.57
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a",
+    "seconds": 0.97
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/node",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/native",
+    "seconds": 0.29
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a",
+    "seconds": 0.55
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/native",
+    "seconds": 0.31
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/stage0",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a",
+    "seconds": 0.56
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs",
+    "seconds": 0
+  },
+  {
+    "log": "stage3-verify-final.jsonl",
+    "test": "TestFixturesAssignmentProofs",
+    "seconds": 5.02
+  },
+  {
+    "log": "item-6-main-retry-tests.jsonl",
+    "test": "TestFactsDecoderGuards",
+    "seconds": 7.14
+  },
+  {
+    "log": "request-final.jsonl",
+    "test": "TestWASIRequestThrows",
+    "seconds": 0.23
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/done_throw.a",
+    "seconds": 0.91
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/class.a",
+    "seconds": 0.93
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_body.a",
+    "seconds": 1.06
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/labeled_continue.a",
+    "seconds": 1.13
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/body_throw.a",
+    "seconds": 0.98
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/next_throw.a",
+    "seconds": 1.04
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/break.a",
+    "seconds": 0.94
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/return.a",
+    "seconds": 1.11
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/method_getters.a",
+    "seconds": 1.07
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/object.a",
+    "seconds": 1.22
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/cached_next.a",
+    "seconds": 1.25
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/completion.a",
+    "seconds": 1.32
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/value_throw.a",
+    "seconds": 1.18
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_break.a",
+    "seconds": 1.21
+  },
+  {
+    "log": "native-dispatch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.02
+  },
+  {
+    "log": "native-switch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a",
+    "seconds": 0.58
+  },
+  {
+    "log": "native-switch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a",
+    "seconds": 0.6
+  },
+  {
+    "log": "native-switch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a",
+    "seconds": 0.63
+  },
+  {
+    "log": "native-switch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone.a",
+    "seconds": 0.63
+  },
+  {
+    "log": "native-switch-actual.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.03
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "seconds": 0.59
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/dead_zone.a",
+    "seconds": 0.59
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "seconds": 0.6
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_empty_alias_tdz.a",
+    "seconds": 0.5
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values_dead_zone.a",
+    "seconds": 0.53
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a",
+    "seconds": 0.55
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/lowering_chain_tdz_catch.a",
+    "seconds": 0.58
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/lowering_chain_namespace_catch.a",
+    "seconds": 0.65
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators_rest_tdz.a",
+    "seconds": 0.71
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "seconds": 0.53
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "seconds": 0.49
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a",
+    "seconds": 9.68
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a",
+    "seconds": 11.46
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a",
+    "seconds": 9.25
+  },
+  {
+    "log": "native-scalar-actual.jsonl",
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.05
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/main",
+    "seconds": 0.55
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/early",
+    "seconds": 0.46
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/initialized",
+    "seconds": 0.36
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_early",
+    "seconds": 0.43
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_initialized",
+    "seconds": 0.35
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/hoisted",
+    "seconds": 0.41
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode",
+    "seconds": 2.56
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/early",
+    "seconds": 0.29
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants/direct_early",
+    "seconds": 0.27
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceReadinessMutants",
+    "seconds": 0.56
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "seconds": 0.02
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "seconds": 0.06
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-003",
+    "seconds": 0.05
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "seconds": 0.39
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-000",
+    "seconds": 0.05
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "seconds": 0.41
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-006",
+    "seconds": 0.03
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-005/internal/oracle/testdata/namespaces_unknown_before.a",
+    "seconds": 0.41
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "seconds": 0.38
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-001",
+    "seconds": 0.06
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "seconds": 0.35
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/lowering_chain_tdz_catch.a",
+    "seconds": 0.36
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestWASIAgreesWithNode/shard-007",
+    "seconds": 0.04
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestStatementsSmallRulings/template",
+    "seconds": 0.25
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestModuleNamespaceLiveBindingMutant",
+    "seconds": 0.44
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestStatementsSmallRulings/nonnull",
+    "seconds": 0.2
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestStatementsSmallRulings/capture",
+    "seconds": 0.2
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestStatementsSmallRulings",
+    "seconds": 0.64
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestLoweringChainRegexFields",
+    "seconds": 0.66
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestLoweringChainStructuralError",
+    "seconds": 0.6
+  },
+  {
+    "log": "item-1-final-tests.jsonl",
+    "test": "TestLoweringChainTDZCatch",
+    "seconds": 0.39
+  },
+  {
+    "log": "item-5-final-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.46
+  },
+  {
+    "log": "item-5-final-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.51
+  },
+  {
+    "log": "item-5-final-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.54
+  },
+  {
+    "log": "item-5-final-tests.jsonl",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.3
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/main",
+    "seconds": 0.54
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/early",
+    "seconds": 0.32
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/initialized",
+    "seconds": 0.38
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_early",
+    "seconds": 0.12
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/direct_initialized",
+    "seconds": 0.38
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode/hoisted",
+    "seconds": 0.54
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestModuleNamespaceReadsMatchNode",
+    "seconds": 2.27
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestLoweringChainTDZCatch",
+    "seconds": 0.51
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestNamespaceStateMutants/lose_assignment",
+    "seconds": 0.51
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestLoweringChainNamespaceCatch",
+    "seconds": 0.52
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestStep21ReadinessIsCatchable",
+    "seconds": 0.63
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestNamespaceStateMutants/lose_hoisting",
+    "seconds": 0.26
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestNamespaceStateMutants/skip_ready_check",
+    "seconds": 0.36
+  },
+  {
+    "log": "namespace-guard-final.jsonl",
+    "test": "TestNamespaceStateMutants",
+    "seconds": 0
+  },
+  {
+    "log": "item-6-loader-tests.jsonl",
+    "test": "TestFactsDecoderGuards",
+    "seconds": 14.6
+  }
+]

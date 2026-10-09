@@ -1,0 +1,8 @@
+=== RUN   TestProjectLoaderStandaloneNodeKeepsPrelude
+=== PAUSE TestProjectLoaderStandaloneNodeKeepsPrelude
+=== CONT  TestProjectLoaderStandaloneNodeKeepsPrelude
+    project_loader_test.go:160: standalone Node rebuild lost prelude: /workspace/scratch/optional-calls-main-tmp/TestProjectLoaderStandaloneNodeKeepsPrelude1471390260/001/main.a:1:68: error TS2307: Cannot find module 'adamic' or its corresponding type declarations.
+--- FAIL: TestProjectLoaderStandaloneNodeKeepsPrelude (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.262s
+FAIL
