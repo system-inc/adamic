@@ -12,7 +12,7 @@ The fixtures commit was applied with `git cherry-pick --no-commit 4d17f1d4`. Its
 
 Each program and each mutant has its own top-level Test function with Parallel as its first statement. No subtest was added and no pending test needs a skip. The six `.a` programs and expectations.json are unchanged from the fixtures commit. The tests first run stock TypeScript 6.0.3, then compare the source Node output to the ruled golden, and hold generated JavaScript, sanitized native and release native to that source. Every successful native run also passes leak detection.
 
-`internal/oracle/assignment_proofs_test.go:24` registers the six rows through the existing additionalFixtureCounts hook, keeping the programs out of the shared subtest loop. The twelve top-level tests start at `:147`; their common execution helper starts at `:74`. The source-mutant helper at `:123` requires exactly one real expression replacement, zero stock TypeScript diagnostics, normal exit and stderr, and stdout different from the original golden.
+`internal/oracle/assignment_proofs_test.go:21` registers the six rows through the existing additionalFixtureCounts hook, keeping the programs out of the shared subtest loop. The twelve top-level tests start at `:147`; their common execution helper starts at `:84`. The source-mutant helper at `:122` requires exactly one real expression replacement, zero stock TypeScript diagnostics, normal exit and stderr, and stdout different from the original golden.
 
 The conservative resolution assumption is that this unit retains only the requested six fixtures when the compiler commit is omitted. The seven absent implementation fixtures are not silently replaced with skips or imported from the omitted commit.
 
@@ -87,7 +87,7 @@ It returned 0 and printed:
 lane checks 1.8 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages
 ```
 
-The only new process command in the changed Go test file is declared `node`; integration also checked gofmt, all twelve Parallel declarations and vet for internal/oracle. No lane violation needed a fix. A final lane invocation after the report commit is preserved alongside this output.
+The only new process command in the changed Go test file is declared `node`; integration also checked gofmt, all twelve Parallel declarations and vet for internal/oracle. No lane violation needed a fix. After the report commit and the next landed-main merge, the exact command passed again: `lane checks 0.9 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages`. Its log is preserved as final-lane-checks.log.gz.
 
 **Toolchain setup**
 
