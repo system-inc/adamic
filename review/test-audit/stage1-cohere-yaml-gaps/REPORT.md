@@ -41,7 +41,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
       "TestPropsMatchGo",
       "TestSharedSliceAppendMatchesNode"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M1.log 2>&1; gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$' > M1.log 2>&1; gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround",
     "nproc": 5,
     "unknown_mutants": []
   },
@@ -80,7 +80,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
       "TestPropsMatchGo",
       "TestSharedSliceAppendMatchesNode"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M1.log 2>&1; gaps_test.go:71: refusal changed or closed: /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:11:37: stage 0 can't lower push with other than one value yet",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$' > M1.log 2>&1; gaps_test.go:71: refusal changed or closed: /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:11:37: stage 0 can't lower push with other than one value yet",
     "nproc": 5,
     "unknown_mutants": []
   },
@@ -119,7 +119,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
       "TestPropsMatchGo",
       "TestSharedSliceAppendMatchesNode"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M2.log 2>&1; gaps_test.go:97: native ASan/UBSan/LSan: \"TRUE\\n\", Node \"true\\n\"",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$' > M2.log 2>&1; gaps_test.go:97: native ASan/UBSan/LSan: \"TRUE\\n\", Node \"true\\n\"",
     "nproc": 5,
     "unknown_mutants": [],
     "members": [
@@ -160,7 +160,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
       "TestPropsMatchGo",
       "TestSharedSliceAppendMatchesNode"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M1.log 2>&1; lexer_test.go:203: /workspace/adamic/stage1/cohere/yaml/lexer.ts:4:43: stage 0 can't lower push with other than one value yet",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$' > M1.log 2>&1; lexer_test.go:203: /workspace/adamic/stage1/cohere/yaml/lexer.ts:4:43: stage 0 can't lower push with other than one value yet",
     "nproc": 5,
     "unknown_mutants": [
       "M4"
@@ -187,7 +187,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
     "matrix_rows": [
       "TestLexerMutants"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestLexerMutants$ > W1.log 2>&1; lexer_test.go:264: native missed mutant",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestLexerMutants$' > W1.log 2>&1; lexer_test.go:264: native missed mutant",
     "nproc": 5,
     "unknown_mutants": [],
     "witness_kills": [
@@ -228,7 +228,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
       "TestPropsMatchGo",
       "TestSharedSliceAppendMatchesNode"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M3.log 2>&1; props_test.go:101: /tmp/adamic-gate/TestPropsMatchGo1332184536/005/props: exit status 1; ERROR: AddressSanitizer: heap-buffer-overflow",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$' > M3.log 2>&1; props_test.go:101: /tmp/adamic-gate/TestPropsMatchGo1332184536/005/props: exit status 1; ERROR: AddressSanitizer: heap-buffer-overflow",
     "nproc": 5,
     "unknown_mutants": [
       "M4"
@@ -255,7 +255,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
     "matrix_rows": [
       "TestPropsMutants"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestPropsMutants$ > W2.log 2>&1; props_test.go:178: native missed mutant",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestPropsMutants$' > W2.log 2>&1; props_test.go:178: native missed mutant",
     "nproc": 5,
     "unknown_mutants": [],
     "witness_kills": [
@@ -297,7 +297,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
       "TestPropsMatchGo",
       "TestSharedSliceAppendMatchesNode"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M3.log 2>&1; scalar_runtime_gap_test.go:54: /tmp/adamic-gate/TestSharedSliceAppendMatchesNode2423637761/001/shared: native \"a\\n\\n\" Node \"a\\nx\\n\"",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$' > M3.log 2>&1; scalar_runtime_gap_test.go:54: /tmp/adamic-gate/TestSharedSliceAppendMatchesNode2423637761/001/shared: native \"a\\n\\n\" Node \"a\\nx\\n\"",
     "nproc": 5,
     "unknown_mutants": []
   },
@@ -322,7 +322,7 @@ Evidence branch: test-audit/stage1-cohere-yaml-gaps; path review/test-audit/stag
     "matrix_rows": [
       "TestScalarMutants"
     ],
-    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarMutants$ > W3.log 2>&1; scalar_test.go:154 (origin; log line 153): native missed mutant",
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestScalarMutants$' > W3.log 2>&1; scalar_test.go:154 (origin; log line 153): native missed mutant",
     "nproc": 5,
     "unknown_mutants": [],
     "witness_kills": [

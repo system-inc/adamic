@@ -1,3 +1,4 @@
+import shlex
 import pathlib,subprocess,os,time,json,difflib
 p=pathlib.Path('/tmp/u152');root=pathlib.Path('/workspace/adamic');records=[]
 prod=['TestLexerGaps','TestStructuralPositionRefusal','TestClosedStringPresenceGap','TestClosedLexerGaps','TestClosedValuePresenceGap','TestLexerMatchesGo','TestPropsMatchGo','TestSharedSliceAppendMatchesNode']
@@ -6,7 +7,7 @@ env=os.environ.copy();env['ADAMIC_YAML_LIBRARY']=str(p/'library')
 def run(id,cmd,environment=env):
  start=time.monotonic()
  with (p/(id+'.log')).open('w') as out:r=subprocess.run(cmd,env=environment,stdout=out,stderr=subprocess.STDOUT,cwd=root)
- rec={'id':id,'command':' '.join(cmd),'wall':round(time.monotonic()-start,3),'exit':r.returncode};records.append(rec);(p/'runs.json').write_text(json.dumps(records,indent=2));print(rec,flush=True);return r.returncode
+ rec={'id':id,'command':shlex.join(cmd),'wall':round(time.monotonic()-start,3),'exit':r.returncode};records.append(rec);(p/'runs.json').write_text(json.dumps(records,indent=2));print(rec,flush=True);return r.returncode
 def test(id,pat):
  e=env.copy();e['ADAMIC_BUILD_CACHE_DIR']=str(p/'cache'/id)
  return run(id,['timeout','120','go','test','-json','-count=1','-timeout','90s','./stage1/cohere/yaml/','-run',pat],e)

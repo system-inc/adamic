@@ -13,7 +13,7 @@
   },
   {
     "id": "M1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$'",
     "wall": 16.334,
     "exit": 1
   },
@@ -31,7 +31,7 @@
   },
   {
     "id": "M2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$'",
     "wall": 37.295,
     "exit": 1
   },
@@ -49,7 +49,7 @@
   },
   {
     "id": "M3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$'",
     "wall": 32.341,
     "exit": 1
   },
@@ -61,7 +61,7 @@
   },
   {
     "id": "M4",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$'",
     "wall": 92.252,
     "exit": 1
   },
@@ -79,7 +79,7 @@
   },
   {
     "id": "W1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestLexerMutants$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestLexerMutants$'",
     "wall": 19.089,
     "exit": 1
   },
@@ -97,7 +97,7 @@
   },
   {
     "id": "W2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestPropsMutants$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestPropsMutants$'",
     "wall": 18.286,
     "exit": 1
   },
@@ -115,7 +115,7 @@
   },
   {
     "id": "W3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarMutants$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestScalarMutants$'",
     "wall": 20.883,
     "exit": 1
   },
@@ -133,13 +133,13 @@
   },
   {
     "id": "P1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$'",
     "wall": 13.832,
     "exit": 1
   },
   {
     "id": "P1-shared",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSharedSliceAppendMatchesNode$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestSharedSliceAppendMatchesNode$'",
     "wall": 2.194,
     "exit": 1
   },
@@ -151,7 +151,7 @@
   },
   {
     "id": "P2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestLexerMatchesGo$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestLexerMatchesGo$'",
     "wall": 3.218,
     "exit": 1
   },
@@ -163,7 +163,7 @@
   },
   {
     "id": "P3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestPropsMatchGo$",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestPropsMatchGo$'",
     "wall": 4.183,
     "exit": 1
   }

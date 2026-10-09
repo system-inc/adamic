@@ -1,0 +1,113 @@
+ .../stage1-cohere-yaml-gaps/M1-apply-check.log     |     0
+ .../test-audit/stage1-cohere-yaml-gaps/M1-vet.log  |     0
+ review/test-audit/stage1-cohere-yaml-gaps/M1.diff  |    11 +
+ review/test-audit/stage1-cohere-yaml-gaps/M1.log   |   110 +
+ .../stage1-cohere-yaml-gaps/M2-apply-check.log     |     0
+ .../stage1-cohere-yaml-gaps/M2-build.log           |     1 +
+ .../stage1-cohere-yaml-gaps/M2-clang.log           |     0
+ review/test-audit/stage1-cohere-yaml-gaps/M2.diff  |    10 +
+ review/test-audit/stage1-cohere-yaml-gaps/M2.log   |   111 +
+ .../stage1-cohere-yaml-gaps/M3-apply-check.log     |     0
+ .../stage1-cohere-yaml-gaps/M3-build.log           |     1 +
+ .../stage1-cohere-yaml-gaps/M3-clang.log           |     0
+ review/test-audit/stage1-cohere-yaml-gaps/M3.diff  |    10 +
+ review/test-audit/stage1-cohere-yaml-gaps/M3.log   |   165 +
+ .../stage1-cohere-yaml-gaps/M4-apply-check.log     |     0
+ .../stage1-cohere-yaml-gaps/M4-behavior-after.log  |     0
+ .../stage1-cohere-yaml-gaps/M4-behavior-before.log |     1 +
+ .../stage1-cohere-yaml-gaps/M4-build.log           |     1 +
+ .../M4-narrow-TestLexerMatchesGo.log               |   135 +
+ .../M4-narrow-TestPropsMatchGo.log                 |   133 +
+ .../M4-other-TestClosed_family.log                 |    44 +
+ .../M4-other-TestLexerGaps.log                     |    21 +
+ .../M4-other-TestSharedSliceAppendMatchesNode.log  |    24 +
+ .../M4-other-TestStructuralPositionRefusal.log     |    13 +
+ review/test-audit/stage1-cohere-yaml-gaps/M4.diff  |    11 +
+ review/test-audit/stage1-cohere-yaml-gaps/M4.log   |   203 +
+ .../stage1-cohere-yaml-gaps/P1-apply-check.log     |     0
+ .../stage1-cohere-yaml-gaps/P1-shared.log          |    31 +
+ .../test-audit/stage1-cohere-yaml-gaps/P1-vet.log  |     0
+ review/test-audit/stage1-cohere-yaml-gaps/P1.diff  |    86 +
+ review/test-audit/stage1-cohere-yaml-gaps/P1.log   |    79 +
+ .../stage1-cohere-yaml-gaps/P2-apply-check.log     |     0
+ review/test-audit/stage1-cohere-yaml-gaps/P2.diff  |    28 +
+ review/test-audit/stage1-cohere-yaml-gaps/P2.log   |    14 +
+ .../stage1-cohere-yaml-gaps/P3-apply-check.log     |     0
+ review/test-audit/stage1-cohere-yaml-gaps/P3.diff  |    26 +
+ review/test-audit/stage1-cohere-yaml-gaps/P3.log   |    14 +
+ .../test-audit/stage1-cohere-yaml-gaps/REPORT.md   |   365 +
+ .../TestClosed_gaps_family-time1.log               |    44 +
+ .../TestClosed_gaps_family-time2.log               |    44 +
+ .../TestClosed_gaps_family-time3.log               |    44 +
+ .../TestLexerGaps-time1.log                        |    21 +
+ .../TestLexerGaps-time2.log                        |    21 +
+ .../TestLexerGaps-time3.log                        |    21 +
+ .../TestLexerMatchesGo-time1.log                   |    14 +
+ .../TestLexerMatchesGo-time2.log                   |    14 +
+ .../TestLexerMatchesGo-time3.log                   |    14 +
+ .../TestLexerMutants-time1.log                     |    43 +
+ .../TestLexerMutants-time2.log                     |    43 +
+ .../TestLexerMutants-time3.log                     |    43 +
+ .../TestPropsMatchGo-time1.log                     |    14 +
+ .../TestPropsMatchGo-time2.log                     |    14 +
+ .../TestPropsMatchGo-time3.log                     |    14 +
+ .../TestPropsMutants-time1.log                     |    31 +
+ .../TestPropsMutants-time2.log                     |    31 +
+ .../TestPropsMutants-time3.log                     |    31 +
+ .../TestScalarMutants-time1.log                    |    31 +
+ .../TestScalarMutants-time2.log                    |    31 +
+ .../TestScalarMutants-time3.log                    |    31 +
+ .../TestSharedSliceAppendMatchesNode-time1.log     |    24 +
+ .../TestSharedSliceAppendMatchesNode-time2.log     |    24 +
+ .../TestSharedSliceAppendMatchesNode-time3.log     |    24 +
+ .../TestStructuralPositionRefusal-time1.log        |    13 +
+ .../TestStructuralPositionRefusal-time2.log        |    13 +
+ .../TestStructuralPositionRefusal-time3.log        |    13 +
+ .../stage1-cohere-yaml-gaps/W1-apply-check.log     |     0
+ .../test-audit/stage1-cohere-yaml-gaps/W1-vet.log  |     0
+ review/test-audit/stage1-cohere-yaml-gaps/W1.diff  |    11 +
+ review/test-audit/stage1-cohere-yaml-gaps/W1.log   |    38 +
+ .../stage1-cohere-yaml-gaps/W2-apply-check.log     |     0
+ .../test-audit/stage1-cohere-yaml-gaps/W2-vet.log  |     0
+ review/test-audit/stage1-cohere-yaml-gaps/W2.diff  |    11 +
+ review/test-audit/stage1-cohere-yaml-gaps/W2.log   |    28 +
+ .../stage1-cohere-yaml-gaps/W3-apply-check.log     |     0
+ .../test-audit/stage1-cohere-yaml-gaps/W3-vet.log  |     0
+ review/test-audit/stage1-cohere-yaml-gaps/W3.diff  |    19 +
+ review/test-audit/stage1-cohere-yaml-gaps/W3.log   |    28 +
+ .../stage1-cohere-yaml-gaps/audit-progress.log     |    29 +
+ review/test-audit/stage1-cohere-yaml-gaps/base.txt |     1 +
+ .../stage1-cohere-yaml-gaps/baseline-slice.log     |   203 +
+ .../stage1-cohere-yaml-gaps/baseline.log           |   132 +
+ .../stage1-cohere-yaml-gaps/build-port.go.txt      |     3 +
+ .../stage1-cohere-yaml-gaps/build-progress.log     |     3 +
+ .../test-audit/stage1-cohere-yaml-gaps/builds.json |    23 +
+ .../stage1-cohere-yaml-gaps/coverage.out           | 15759 +++++++++++++++++++
+ .../stage1-cohere-yaml-gaps/discovery.log          |    73 +
+ .../stage1-cohere-yaml-gaps/final-check.txt        |     1 +
+ .../stage1-cohere-yaml-gaps/finish-m4.py           |     9 +
+ .../stage1-cohere-yaml-gaps/functions.txt          |  1102 ++
+ .../stage1-cohere-yaml-gaps/inventory-run.log      |   111 +
+ .../stage1-cohere-yaml-gaps/lexer-behavior.ts      |     2 +
+ .../stage1-cohere-yaml-gaps/library-package.json   |     6 +
+ .../stage1-cohere-yaml-gaps/m4-other-progress.log  |     4 +
+ .../stage1-cohere-yaml-gaps/m4-other-runs.json     |    30 +
+ .../stage1-cohere-yaml-gaps/make-report.py         |    83 +
+ .../test-audit/stage1-cohere-yaml-gaps/matrix.json |    47 +
+ .../stage1-cohere-yaml-gaps/narrow-m4.py           |    24 +
+ .../stage1-cohere-yaml-gaps/narrow-progress.log    |     5 +
+ .../stage1-cohere-yaml-gaps/narrow-runs.json       |    32 +
+ .../stage1-cohere-yaml-gaps/npm-library.log        |     2 +
+ review/test-audit/stage1-cohere-yaml-gaps/npm.log  |     2 +
+ .../stage1-cohere-yaml-gaps/orphan-cleanup.txt     |     3 +
+ review/test-audit/stage1-cohere-yaml-gaps/plan.txt |     8 +
+ .../stage1-cohere-yaml-gaps/port-functions.txt     |   125 +
+ .../reached-go-functions.txt                       |   562 +
+ .../test-audit/stage1-cohere-yaml-gaps/report.json |   325 +
+ .../stage1-cohere-yaml-gaps/restored-baseline.log  |   203 +
+ .../stage1-cohere-yaml-gaps/run-audit.py           |    51 +
+ .../test-audit/stage1-cohere-yaml-gaps/runs.json   |   170 +
+ .../stage1-cohere-yaml-gaps/timings.json           |   245 +
+ .../stage1-cohere-yaml-gaps/toolchain.txt          |     7 +
+ .../stage1-cohere-yaml-gaps/validate-builds.py     |    14 +
+ 112 files changed, 21887 insertions(+)
