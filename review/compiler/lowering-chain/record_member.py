@@ -17,11 +17,13 @@ def rows(path):
 before = rows(root / (prefix + '-before-counts.md'))
 incoming = rows(root / (prefix + '-incoming-counts.md'))
 after = rows(Path('internal/oracle/counts.md'))
-assert not before.keys() - after.keys(), 'own count rows lost'
-assert not incoming.keys() - after.keys(), 'incoming count rows lost'
+retired_path = root / (prefix + '-retired-counts.json')
+retired = json.loads(retired_path.read_text()) if retired_path.exists() else {}
+assert before.keys() - after.keys() == retired.keys(), 'unrecorded own count rows lost'
+assert not (incoming.keys() - after.keys()) - retired.keys(), 'unrecorded incoming count rows lost'
 changes = {'added': [{'row':key,'after':value} for key,value in after.items() if key not in before],
            'changed': [{'row':key,'before':before[key],'after':value,'reason':reason} for key,value in after.items() if key in before and before[key] != value],
-           'removed': [], 'rows':len(after)}
+           'removed': [{'row':key,'before':before[key],'reason':value} for key,value in retired.items()], 'rows':len(after)}
 (root / (prefix + '-count-changes.json')).write_text(json.dumps(changes,indent=2)+'\n')
 records = []
 for path in root.glob(prefix + '*tests.jsonl'):

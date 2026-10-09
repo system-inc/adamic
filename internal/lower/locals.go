@@ -258,6 +258,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 		}
 		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
 		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+			if l.checker.GetTypeOfSymbol(l.symbol(node)).Flags()&checker.TypeFlagsAny != 0 {
+				return l.checkedAnyType(node, read, l.arrayPredicateObservedType(node))
+			}
 			// Calls and captured writes can invalidate the checker's narrowing. Check the
 			// held member before casting it, with ordinary IR shared by both backends.
 			name := "object"

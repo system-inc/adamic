@@ -1,0 +1,7 @@
+// Reduced typeof validation from tsc's config-option conversion.
+function convert(value: any): string {
+    if (typeof value !== 'string') return 'diagnostic: expected string';
+    return value;
+}
+console.log(convert('node'));
+console.log(convert(14));

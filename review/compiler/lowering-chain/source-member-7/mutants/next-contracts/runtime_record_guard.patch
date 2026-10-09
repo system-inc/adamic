@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/checked_json.c
++++ b/internal/native/runtime/checked_json.c
+@@ -90,7 +90,7 @@
+  }
+  if (strcmp(kind, "object") == 0) {
+   const adamic_object *object = (const adamic_object *)value;
+-  if (adamic_record_is(object)) {
++  if (false && adamic_record_is(object)) {
+    if (terminal) mismatch(path, contract->name, "record object (awaits compiler/records-maplike)");
+    return false;
+   }

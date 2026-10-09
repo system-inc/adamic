@@ -1,0 +1,601 @@
+{
+  "added": [
+    {
+      "row": "checked .ts copy: checked_any/property.a",
+      "after": [
+        "1",
+        "1",
+        "4",
+        "4",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/property_misfit.a",
+      "after": [
+        "3",
+        "0",
+        "1",
+        "0",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/parameter.a",
+      "after": [
+        "2",
+        "2",
+        "0",
+        "2",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/parameter_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/arithmetic.a",
+      "after": [
+        "2",
+        "2",
+        "0",
+        "2",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/arithmetic_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/boolean.a",
+      "after": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/transport.a",
+      "after": [
+        "1",
+        "1",
+        "2",
+        "3",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/validated.a",
+      "after": [
+        "1",
+        "1",
+        "2",
+        "3",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/config_validated.a",
+      "after": [
+        "5",
+        "5",
+        "13",
+        "18",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/property_null_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/string_length.a",
+      "after": [
+        "5",
+        "5",
+        "2",
+        "7",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/assertion.a",
+      "after": [
+        "2",
+        "2",
+        "0",
+        "2",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/assertion_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/stale_misfit.a",
+      "after": [
+        "2",
+        "0",
+        "3",
+        "3",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/config_diagnostics.a",
+      "after": [
+        "6",
+        "6",
+        "6",
+        "12",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_object.a",
+      "after": [
+        "9",
+        "9",
+        "31",
+        "38",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_object_misfit.a",
+      "after": [
+        "2",
+        "0",
+        "5",
+        "2",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_list.a",
+      "after": [
+        "8",
+        "8",
+        "1",
+        "10",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_list_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "3",
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_validated.a",
+      "after": [
+        "4",
+        "4",
+        "8",
+        "16",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/structural.a",
+      "after": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_literal.a",
+      "after": [
+        "2",
+        "2",
+        "16",
+        "16",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_literal_misfit.a",
+      "after": [
+        "2",
+        "0",
+        "6",
+        "3",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_literal_result.a",
+      "after": [
+        "3",
+        "3",
+        "0",
+        "3",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_literal_result_misfit.a",
+      "after": [
+        "2",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_boolean_list.a",
+      "after": [
+        "1",
+        "1",
+        "1",
+        "9",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_optional.a",
+      "after": [
+        "7",
+        "7",
+        "2",
+        "11",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_recovery.a",
+      "after": [
+        "2",
+        "2",
+        "4",
+        "6",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_domain_misfit.a",
+      "after": [
+        "2",
+        "0",
+        "0",
+        "0",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_union.a",
+      "after": [
+        "2",
+        "2",
+        "12",
+        "12",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_union_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "3",
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nested_list.a",
+      "after": [
+        "3",
+        "3",
+        "25",
+        "27",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nested_list_misfit.a",
+      "after": [
+        "5",
+        "1",
+        "5",
+        "3",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_boxed_list.a",
+      "after": [
+        "9",
+        "9",
+        "6",
+        "18",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/stock_decode_entities.a",
+      "after": [
+        "36",
+        "36",
+        "76",
+        "77",
+        "35",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nul_literal.a",
+      "after": [
+        "2",
+        "2",
+        "6",
+        "8",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_recursive.a",
+      "after": [
+        "11",
+        "11",
+        "7",
+        "20",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_recursive_misfit.a",
+      "after": [
+        "4",
+        "2",
+        "8",
+        "7",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_depth_misfit.a",
+      "after": [
+        "146",
+        "64",
+        "145",
+        "145",
+        "82",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_dictionary.a",
+      "after": [
+        "5",
+        "5",
+        "5",
+        "12",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_dictionary_misfit.a",
+      "after": [
+        "3",
+        "2",
+        "5",
+        "5",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nullable.a",
+      "after": [
+        "14",
+        "14",
+        "63",
+        "82",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nullable_misfit.a",
+      "after": [
+        "3",
+        "1",
+        "2",
+        "3",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nullable_validated.a",
+      "after": [
+        "1",
+        "1",
+        "4",
+        "7",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nullable_array.a",
+      "after": [
+        "7",
+        "7",
+        "9",
+        "21",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_nullable_array_misfit.a",
+      "after": [
+        "1",
+        "0",
+        "4",
+        "2",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "checked .ts copy: checked_any/json_dictionary_order_misfit.a",
+      "after": [
+        "10",
+        "5",
+        "7",
+        "6",
+        "6",
+        "0"
+      ]
+    }
+  ],
+  "changed": [
+    {
+      "row": "internal/oracle/testdata/nested_destructured.a",
+      "before": [
+        "13",
+        "13",
+        "7",
+        "17",
+        "6",
+        "0"
+      ],
+      "after": [
+        "13",
+        "13",
+        "8",
+        "18",
+        "6",
+        "0"
+      ],
+      "reason": "Keep genericBodyRefusal plus all checked-any guards in refusals.go; retain IteratorField, IteratorMethod and CheckedJSON dispatch. Resolve counts conflict by generation. Checked .ts fitting programs match Node in both backends with sanitizers; point-of-use removal mutants caught. Two class-data count rows deliberately retire for the ruled explicit-any refusal; five uncounted array probes change NotYet to exact Refused. All seven Node controls remain byte-identical. Two existing nested_destructured and switch neighbors rows gain a retain/release pair for tag-preserving boxed string transport."
+    },
+    {
+      "row": "internal/oracle/testdata/switch_case_declarations/neighbors.a",
+      "before": [
+        "18",
+        "18",
+        "20",
+        "35",
+        "4",
+        "0"
+      ],
+      "after": [
+        "18",
+        "18",
+        "21",
+        "36",
+        "4",
+        "0"
+      ],
+      "reason": "Keep genericBodyRefusal plus all checked-any guards in refusals.go; retain IteratorField, IteratorMethod and CheckedJSON dispatch. Resolve counts conflict by generation. Checked .ts fitting programs match Node in both backends with sanitizers; point-of-use removal mutants caught. Two class-data count rows deliberately retire for the ruled explicit-any refusal; five uncounted array probes change NotYet to exact Refused. All seven Node controls remain byte-identical. Two existing nested_destructured and switch neighbors rows gain a retain/release pair for tag-preserving boxed string transport."
+    }
+  ],
+  "removed": [
+    {
+      "row": "stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
+      "before": [
+        "4",
+        "4",
+        "8",
+        "12",
+        "4",
+        "0"
+      ],
+      "reason": "Ruled explicit-any refusal at 1:98 replaces the earlier executable .a view proof; unchanged Node prints true."
+    },
+    {
+      "row": "stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
+      "before": [
+        "3",
+        "0",
+        "7",
+        "5",
+        "3",
+        "0"
+      ],
+      "reason": "Ruled explicit-any refusal at 1:98 replaces the earlier executable .a view proof; unchanged Node prints true."
+    }
+  ],
+  "rows": 1077
+}

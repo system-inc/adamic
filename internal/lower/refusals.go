@@ -37,6 +37,7 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	l.prepareJSONChecks()
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -86,6 +87,27 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if node.Kind == ast.KindVariableDeclaration && l.program.FileName(module) != module.FileName().AsString() {
+			declaration := node.AsVariableDeclaration()
+			if declaration.Type == nil && declaration.Initializer == nil && l.evolvingObject(node.Name()) == nil && l.checker.GetTypeAtLocation(node.Name()).Flags()&checker.TypeFlagsAny != 0 {
+				found = l.notYet(node.Name(), "a value of type any (an evolving unannotated .a binding; declare unknown)")
+				return true
+			}
+		}
+		if reason := l.jsonViewHazard(node); reason != "" {
+			found = l.notYet(node, reason)
+			return true
+		}
+		if node.Kind == ast.KindAnyKeyword && l.program.FileName(module) != module.FileName().AsString() {
+			found = &Refused{Where: l.program.Where(node), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}
+			return true
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny == 0 {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsAny != 0 {
+				found = l.notYet(node, "an any field in a typed object (dynamic slot adaptation is not established)")
+				return true
+			}
+		}
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
 		}
@@ -109,7 +131,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && (l.enumerationIndexSignature(node) || l.checkedJSONIndexSignature(node))) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}

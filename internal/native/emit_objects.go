@@ -425,6 +425,9 @@ func (e *emitter) cache() string {
 
 // Programs without reflection keep their original layouts and allocation code.
 func (e *emitter) dynamicProperties() bool {
+	if len(e.program.JSONCheckedFields) != 0 || e.program.JSONCheckedArrays || e.program.JSONCheckedDictionaries {
+		return true
+	}
 	found := false
 	walkExpressions(e.program, func(expression ir.Expression) {
 		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
@@ -445,7 +448,7 @@ func (e *emitter) methodEntryType() string {
 }
 
 func (e *emitter) fieldTypesNeeded() bool {
-	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
+	if len(e.program.CheckedFields) != 0 || len(e.program.JSONCheckedFields) != 0 || e.program.JSONCheckedArrays || e.dynamicProperties() {
 		return true
 	}
 	needed := false

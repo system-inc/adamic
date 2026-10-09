@@ -1,0 +1,4 @@
+interface Config { readonly options: { readonly limit: number }; }
+function convertToObject(raw: any): Config { return raw; }
+const config = convertToObject({ options: { limit: 'wrong' } });
+console.log(String(config.options.limit));

@@ -1138,6 +1138,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		result.merge(a.value(expression.Fallback))
 		a.value(expression.Panic)
 		return result
+	case ir.CheckedJSON:
+		// Validation reads data, preserves identity, and never mutates a source slot.
+		return a.value(expression.Value)
 	case ir.Box:
 		return a.value(expression.Value)
 	case ir.Narrow:

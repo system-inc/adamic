@@ -151,7 +151,13 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}
 	// What's present is made what ?? makes: text ?? count boxes a present number into the union.
-	unwrapped, fresh := converted(coalesce.Value.Type().Present(), coalesce.Of, unwrapped)
+	fresh := false
+	if coalesce.Value.Type() == ir.Union && coalesce.Of.IsReference() && coalesce.Of != ir.Union {
+		// The present arm excludes both nullish tags; its proven reference is borrowed.
+		unwrapped = fmt.Sprintf("((%s)%s)", cType(coalesce.Of), unwrapped)
+	} else {
+		unwrapped, fresh = converted(coalesce.Value.Type().Present(), coalesce.Of, unwrapped)
+	}
 	if coalesce.Panic != nil {
 		text, message, _ := e.aside(coalesce.Panic)
 		e.line("if (!(%s)) {", present)

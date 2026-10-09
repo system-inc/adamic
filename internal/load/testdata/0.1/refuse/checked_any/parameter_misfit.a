@@ -1,0 +1,3 @@
+function use(value: number): number { return value + 1; }
+function boundary(value: any): number { return use(value); }
+console.log(String(boundary('wrong')));

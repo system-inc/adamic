@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if ast.IsIdentifier(node) && l.evolvingObject(node) != nil {
+		return ir.Object, nil
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -49,7 +52,17 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Array, true
 	}
 	flags := proven.Flags()
-	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+	if flags == checker.TypeFlagsNull && l.result.JSONTaggedNull {
+		return ir.Union, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		for _, element := range l.typeArguments(proven) {
+			if element.Flags()&checker.TypeFlagsAny != 0 {
+				return 0, false
+			}
+		}
+	}
+	if flags&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
 	}
 	if flags&checker.TypeFlagsIntersection != 0 {
@@ -98,6 +111,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
+		if l.jsonRecoveryUnion(proven) {
+			return ir.Union, true
+		}
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
 			// Preserve the area's nullable reference and RegExp protocols. Only
 			// differently stored members need the boxed union representation.
@@ -217,6 +233,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	if err == nil {
 		err = l.readonlyArrayValue(node, value)
+	}
+	if err == nil {
+		value, err = l.checkedAnyContext(node, value)
 	}
 	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
@@ -529,6 +548,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	}
 	switch node.Kind {
 	case ast.KindNullKeyword:
+		if l.result.JSONTaggedNull {
+			return ir.Box{Value: ir.Null{}}, nil
+		}
 		return ir.Null{}, nil
 	case ast.KindRegularExpressionLiteral:
 		return l.regexConstant(node)
@@ -589,6 +611,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
+		if operand.Type() == ir.Union {
+			null = false
+		} // Tagged NULL is undefined; null has its own tag.
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
@@ -842,6 +867,11 @@ var comparisons = map[ast.Kind]ir.Operator{
 
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+	var err error
+	left, right, err = l.checkedAnyOperands(node, operator, left, right)
+	if err != nil {
+		return nil, err
+	}
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		spell := func(value ir.Expression) ir.Expression {

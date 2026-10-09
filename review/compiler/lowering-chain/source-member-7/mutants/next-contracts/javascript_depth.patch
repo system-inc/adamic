@@ -1,0 +1,19 @@
+--- a/internal/javascript/checked_json.go
++++ b/internal/javascript/checked_json.go
+@@ -9,7 +9,6 @@
+ const adamicCheckJSON = (value, contract, path, terminal = true, depth = 0) => {
+  const found = value === null ? 'null' : Array.isArray(value) ? 'array' : adamicTypeOf(value);
+  const fail = (actual = found) => { if (terminal) panic('checked any: ' + path + ' needs ' + contract.Name + ', found ' + actual); return false; };
+- if (depth > 64) return fail('non-JSON recursion');
+  if (contract.Kind === 'ref') return adamicCheckJSON(value,contract.Element,path,terminal,depth);
+  if (contract.Kind === 'union') {
+   for (const alternative of contract.Alternatives) if (adamicCheckJSON(value, alternative, path, false, depth)) return true;
+@@ -21,7 +20,7 @@
+   return fail();
+  }
+  const domain = contract.Kind === 'json';
+- if ((domain ? !['number','boolean','string','null','undefined','object','array'].includes(found) : found !== contract.Kind.replace('_literal','')) || depth > 64) return fail(depth > 64 ? 'non-JSON recursion' : found);
++ if ((domain ? !['number','boolean','string','null','undefined','object','array'].includes(found) : found !== contract.Kind.replace('_literal',''))) return fail(found);
+  if(contract.Kind.endsWith('_literal') && value !== (found==='number'?contract.LiteralNumber:found==='boolean'?contract.LiteralBoolean:contract.LiteralText)) return fail();
+  if (found === 'number' && !Number.isFinite(value)) return fail('non-JSON number');
+  if (found === 'object') {

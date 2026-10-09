@@ -26,6 +26,12 @@ type Program struct {
 	CheckedFields map[string]bool
 	NonNullChecks NonNullCheckCounts
 
+	JSONCheckedFields       map[string]bool
+	JSONCheckedArrays       bool
+	JSONCheckedDictionaries bool
+	JSONTaggedNull          bool
+	JSONChecksPrepared      bool
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 

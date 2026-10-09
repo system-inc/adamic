@@ -20,6 +20,13 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	if target.Flags()&checker.TypeFlagsAny != 0 {
+		value, err := l.expression(as.Expression)
+		if err != nil {
+			return nil, err
+		}
+		return fit(value, ir.Union), nil
+	}
 	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
 		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
 	}

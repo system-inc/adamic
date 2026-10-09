@@ -54,6 +54,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
+	builder.WriteString(checkedJSONRuntime)
 	counted := false
 	for _, function := range program.Functions {
 		counted = counted || function.ArgumentsCount != 0
@@ -737,7 +738,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
 	case ir.HasProperty:
 		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+	case ir.CheckedJSON:
+		return e.checkedJSON(expression)
 	case ir.DynamicProperty:
+		if expression.Optional {
+			return "(" + e.value(expression.Object) + ")?.[" + quote(expression.Name) + "]"
+		}
 		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
 	case ir.Null:
 		return "null"
@@ -922,6 +928,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "((object) => { const fn = " + read + "; " + absent + "if (fn instanceof AdamicClosure) return fn.receiver ? {code: (closure, values) => adamicCall(fn, [object, ...values])} : fn; return {code: (closure, values) => " + call + "}; })(" + object + ")"
 	case ir.Property:
+		if e.program.JSONCheckedFields[expression.Name] && expression.View == "" && expression.Readiness == "" && ir.JSONReadType(expression.Type()) {
+			operator := ")["
+			if expression.Optional {
+				operator = ")?.["
+			}
+			return "adamicCheckedJSON((" + e.value(expression.Object) + operator + quote(expression.Name) + "], " + checkedJSONSchema(runtimeJSONType(expression.Type())) + ", " + quote(expression.Name) + ")"
+		}
 		if expression.View != "" {
 			return e.checkedViewField(expression)
 		}
@@ -1069,6 +1082,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.CodePoints:
 		return "[..." + e.value(expression.Value) + "]"
 	case ir.ArrayIndex:
+		if e.program.JSONCheckedArrays && !expression.Array.Type().IsTypedArray() && ir.JSONReadType(expression.Type()) {
+			return "adamicCheckedJSON((" + e.value(expression.Array) + ")[" + e.value(expression.Index) + "], " + checkedJSONSchema(runtimeJSONType(expression.Type())) + ", \"array element\")"
+		}
 		if expression.Relative {
 			return e.value(expression.Array) + ".at(" + e.value(expression.Index) + ")"
 		}
