@@ -3,6 +3,7 @@ package estree
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"os/exec"
@@ -257,7 +258,25 @@ func checkRefusalModes(t *testing.T, main, binary, script, path, diagnostic stri
 // Emitted witnesses use immutable cached products alongside main's native products.
 func mutantEmittedProduct(t *testing.T, main string) string {
 	t.Helper()
-	inputs := buildcache.Inputs{Name: "estree-mutant-emitted", Files: []string{filepath.Dir(main), "stage1/typescript", "internal", "go.mod", "go.work"}, Flags: []string{main}, Toolchain: []string{runtime.Version()}}
+	inputs := buildcache.Inputs{
+		Name:      "estree-mutant-emitted",
+		Files:     estreeFamilyDependencyFiles(t),
+		Flags:     append([]string{"entry=" + filepath.Base(main)}, estreeFamilyDependencyFlags(t)...),
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
+	// A snapshot can live in a product or TempDir. Its contents, rather than
+	// that machine-local directory, identify the source consumed by this build.
+	files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		source, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("source=%s:%x", filepath.Base(file), sha256.Sum256(source)))
+	}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		program, err := load.Load([]string{main})
 		if err != nil {
