@@ -2,6 +2,7 @@ package buildcache
 
 import (
 	"crypto/sha256"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -72,8 +73,37 @@ func TestGoBuildKeysArgumentsAndEnvironment(t *testing.T) {
 			t.Fatalf("%s left the key %s", name, plain)
 		}
 	}
-	if _, err := GoInputs("hello", "./internal/buildcache/testdata/hello", []string{"-overlay", filepath.Join(t.TempDir(), "o.json")}, nil); err == nil {
-		t.Fatal("an -overlay build was keyed")
+	// An -overlay whose files are all inside the repository is keyed by its map and their content, not by where the
+	// overlay file itself sits (@system_adamic, Oct 9 04:57Z); one reading a file outside the repository is refused.
+	overlay := func(replacement string) string {
+		t.Helper()
+		path := filepath.Join(t.TempDir(), "overlay.json")
+		declared, _ := json.Marshal(map[string]map[string]string{"Replace": {
+			filepath.Join(root, "internal/buildcache/testdata/hello/main.go"): replacement}})
+		if err := os.WriteFile(path, declared, 0o644); err != nil {
+			t.Fatal(err)
+		}
+		return path
+	}
+	one := filepath.Join(root, "internal/buildcache/testdata/overlay/one.go.txt")
+	two := filepath.Join(root, "internal/buildcache/testdata/overlay/two.go.txt")
+	first, again, other := keyOf([]string{"-overlay=" + overlay(one)}), keyOf([]string{"-overlay", overlay(one)}), keyOf([]string{"-overlay=" + overlay(two)})
+	if first != again {
+		t.Fatalf("the same overlay at two temporary paths keyed %s and %s", first, again)
+	}
+	if first == other || first == plain {
+		t.Fatalf("a replacement's content didn't move the key: %s, %s, plain %s", first, other, plain)
+	}
+	// The replacement is an input file, hashed by content like any other, not just a name in the map.
+	inputs, err := GoInputs("hello", "./internal/buildcache/testdata/hello", []string{"-overlay=" + overlay(one)}, nil)
+	if err != nil || !slices.Contains(inputs.Files, "internal/buildcache/testdata/overlay/one.go.txt") {
+		t.Fatalf("the overlay's replacement isn't among the key's files: %v %v", inputs.Files, err)
+	}
+	outside := filepath.Join(t.TempDir(), "main.go")
+	os.WriteFile(outside, []byte("package main\n\nfunc main() {}\n"), 0o644)
+	if _, err := GoInputs("hello", "./internal/buildcache/testdata/hello", []string{"-overlay=" + overlay(outside)}, nil); err == nil ||
+		!strings.Contains(err.Error(), "outside the repository") {
+		t.Fatalf("an overlay reading a file outside the repository was keyed: %v", err)
 	}
 }
 

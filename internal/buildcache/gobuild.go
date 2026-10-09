@@ -17,8 +17,10 @@ import (
 // added: the stage 0 compiler, the checker archive, an oracle binary. It returns the built file's path. Its key is
 // every file of every package in this repository the build compiles (from go list -deps under the same arguments
 // and environment), each module's go.mod and go.sum (which pin every module outside it), the arguments, the build
-// environment as go itself resolves it, and the Go and C toolchains. An -overlay reads files from outside the
-// repository, which no key here can name, so it is refused: such a build stays the caller's own.
+// environment as go itself resolves it, and the Go and C toolchains. An -overlay build is keyed too when every file
+// its overlay reads is inside the repository (@system_adamic, Oct 9 04:57Z): the key adds the overlay's map and each
+// replacement file's content, and leaves out the overlay file's own path, which is a temporary name. One that reads a
+// file outside the repository is refused: such a build stays the caller's own.
 func GoBuild(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
 	t.Helper()
 	arguments = reproducible(arguments)
@@ -60,12 +62,25 @@ var goEnvironment = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIME
 
 // GoInputs is GoBuild's key: what go list says the build compiles, with everything that can change its output.
 func GoInputs(output, pkg string, arguments []string, environment []string) (Inputs, error) {
-	for _, argument := range arguments {
-		if argument == "-overlay" || strings.HasPrefix(argument, "-overlay=") {
-			return Inputs{}, errors.New("an -overlay build reads files outside the repository, so it can't be keyed")
+	root, err := repositoryRoot()
+	if err != nil {
+		return Inputs{}, err
+	}
+	overlayPath, keyed := "", []string{}
+	for index := 0; index < len(arguments); index++ {
+		switch argument := arguments[index]; {
+		case argument == "-overlay" && index+1 < len(arguments):
+			overlayPath = arguments[index+1]
+			index++
+		case strings.HasPrefix(argument, "-overlay="):
+			overlayPath = strings.TrimPrefix(argument, "-overlay=")
+		case argument == "-overlay":
+			return Inputs{}, errors.New("-overlay names no file")
+		default:
+			keyed = append(keyed, argument)
 		}
 	}
-	root, err := repositoryRoot()
+	overlay, err := overlayInputs(root, overlayPath)
 	if err != nil {
 		return Inputs{}, err
 	}
@@ -83,7 +98,11 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 		}
 		return output, nil
 	}
-	listing, err := run(append(append([]string{"list", "-deps", "-json"}, listArguments(arguments)...), pkg)...)
+	listed := listArguments(arguments)
+	if overlayPath != "" {
+		listed = append(listed, "-overlay="+overlayPath)
+	}
+	listing, err := run(append(append([]string{"list", "-deps", "-json"}, listed...), pkg)...)
 	if err != nil {
 		return Inputs{}, err
 	}
@@ -154,7 +173,10 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 		return Inputs{}, err
 	}
 	values := strings.Split(strings.TrimRight(string(resolved), "\n"), "\n")
-	inputs := Inputs{Name: "go build " + pkg + " " + output, Flags: []string{"arguments " + strings.Join(arguments, " ")}, Toolchain: []string{Tool("go", "version")}}
+	for _, target := range overlay.files {
+		files[target] = true
+	}
+	inputs := Inputs{Name: "go build " + pkg + " " + output, Flags: append([]string{"arguments " + strings.Join(keyed, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
 	for index, name := range goEnvironment {
 		if index < len(values) {
 			inputs.Flags = append(inputs.Flags, name+"="+values[index])
@@ -168,6 +190,59 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	}
 	sort.Strings(inputs.Files)
 	return inputs, nil
+}
+
+// overlayKey is what an -overlay adds to a key: one flag per replaced path (the map, as go reads it, made relative to
+// the repository) and the replacement files, whose content the key hashes like any other input file.
+type overlayKey struct {
+	flags, files []string
+}
+
+func overlayInputs(root, path string) (overlayKey, error) {
+	if path == "" {
+		return overlayKey{}, nil
+	}
+	if !filepath.IsAbs(path) {
+		path = filepath.Join(root, path)
+	}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+	}
+	var declared struct{ Replace map[string]string }
+	if err := json.Unmarshal(content, &declared); err != nil {
+		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+	}
+	relative := func(name string) string {
+		if !filepath.IsAbs(name) {
+			name = filepath.Join(root, name)
+		}
+		if inside(root, name) {
+			return filepath.ToSlash(mustRelative(root, name))
+		}
+		return name
+	}
+	var key overlayKey
+	for original, replacement := range declared.Replace {
+		if replacement == "" {
+			key.flags = append(key.flags, "overlay "+relative(original)+" deleted")
+			continue
+		}
+		absolute := replacement
+		if !filepath.IsAbs(absolute) {
+			absolute = filepath.Join(root, absolute)
+		}
+		if !inside(root, absolute) {
+			return overlayKey{}, fmt.Errorf("overlay %s replaces %s with %s, outside the repository, so it can't be keyed", path, original, replacement)
+		}
+		if _, err := os.Stat(absolute); err != nil {
+			return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		key.flags = append(key.flags, "overlay "+relative(original)+" = "+relative(absolute))
+		key.files = append(key.files, relative(absolute))
+	}
+	sort.Strings(key.flags)
+	return key, nil
 }
 
 // listArguments are the build arguments that change which files go list reports: tags and build modes.
