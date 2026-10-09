@@ -18,24 +18,29 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: list-layout fixture and markdown memory configuration.
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
 	listLayoutSetup(t)
 }
 
+// Not parallel: quote lowered and Go build products initialized before parallel shards.
 func TestMarkdownQuoteLayout(t *testing.T) {
 	quoteLayoutSetup(t)
 }
 
+// Not parallel: table-layout fixture initialized by testMarkdownTableLayout.
 func TestMarkdownTableLayout(t *testing.T) {
 	testMarkdownTableLayout(t)
 }
 
+// Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 func TestMarkdownCodeBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
+// Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "html")
@@ -68,16 +73,19 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 	return completeLayout
 }
 
+// Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
 	testMarkdownLeafShards(t)
 }
 
+// Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 func TestMarkdownRootLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "root")
 }
 
+// Not parallel: structure-layout fixture and markdown memory configuration.
 func TestMarkdownStructureLayout(t *testing.T) {
 	configureMarkdownMemory(t)
 	structureLayoutShared(t)
