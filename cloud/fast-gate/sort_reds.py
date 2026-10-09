@@ -65,6 +65,25 @@ def red(row):
         'exit' in row and row['exit'] != 0 and row.get('required', True))
 
 
+BUILD_COMMAND = re.compile(r"\bgo\s+(?:build\b|test\b[^\n]*?(?:^|\s)-c(?:\s|$))", re.M)
+BUILD_DIAGNOSTIC = re.compile(r"[^\s:]+:\d+:|^\s*(?:---\s+)?FAIL\b", re.M)
+NONZERO_EXIT = re.compile(r"\b(?:exited|exit(?: status)?)\s*[:=]?\s*(-?\d+)\b", re.I)
+
+
+def silent_build(name, row, detail):
+    """Require evidence of both compilation and a nonzero exit, without diagnostics."""
+    command = row.get('command', '')
+    if isinstance(command, list):
+        command = ' '.join(command)
+    build = (name.split(' ', 1)[0] == 'build' or name.endswith('-build') or
+             BUILD_COMMAND.search(name + '\n' + str(command) + '\n' + detail))
+    code = row.get('exit')
+    nonzero = isinstance(code, int) and code != 0
+    if code is None:
+        nonzero = any(int(match.group(1)) != 0 for match in NONZERO_EXIT.finditer(detail))
+    return bool(build and nonzero and not BUILD_DIAGNOSTIC.search(detail))
+
+
 def sort_reds(candidate, main=None, context=None):
     context = context or {}
     matching = bool(main and candidate.get('tools_fingerprint') and
@@ -109,6 +128,8 @@ def sort_reds(candidate, main=None, context=None):
             label, reason = 'infra', 'void, unreported unit or tool failure; rerun'
         elif SELECTION_INFRA.search(detail):
             label, reason = 'infra', 'missing gate selection artifact; rerun'
+        elif silent_build(name, row, detail):
+            label, reason = 'infra', 'build exited nonzero without compiler or FAIL diagnostic; rerun'
         elif not wrong and TIMING.search(detail) and cold and known_inputs and not touched and matching:
             label, reason = 'mains', 'cold timing red; candidate does not touch its inputs'
         elif 'Traceback (most recent call last)' in detail or INFRA.search(detail) and not wrong:
