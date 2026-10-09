@@ -2,6 +2,8 @@ package estree
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
 	"os"
 	"os/exec"
@@ -21,12 +23,13 @@ func estreeShardPlan(t *testing.T, count, cases int, groups [][]int) []bool {
 	if len(groups) != count {
 		t.Fatalf("enumerated %d shards, declared %d", len(groups), count)
 	}
+	if cases == 0 {
+		t.Fatal("empty live corpus")
+	}
 	seen := make(map[int]bool)
 	total := 0
 	for shard, group := range groups {
-		if len(group) == 0 {
-			t.Fatalf("shard-%03d is empty", shard)
-		}
+
 		for _, id := range group {
 			if id < 0 || id >= cases || seen[id] {
 				t.Fatalf("invalid or repeated case %d in shard-%03d", id, shard)
@@ -109,12 +112,28 @@ func estreeAccounting(t *testing.T) {
 	t.Cleanup(func() { t.Logf("total test CPU: %.3fs", estreeCPU()-before) })
 }
 
-func estreeSingles(cases int) [][]int {
-	groups := make([][]int, cases)
-	for id := range groups {
-		groups[id] = []int{id}
+// Repository fixtures are unpinned. Counts stay fixed with headroom; keys use
+// repository-relative file + mode + exact fixture identity, never list position.
+// Empty buckets are valid and are still enumerated for the fixed planner count.
+func estreeHashShard(count int, key string) int {
+	digest := sha256.Sum256([]byte(key))
+	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
+}
+func estreeHashedStrings(count int, file, mode string, sources []string) [][]int {
+	groups := make([][]int, count)
+	for id, source := range sources {
+		key := fmt.Sprintf("%s#%s#%x", file, mode, sha256.Sum256([]byte(source)))
+		shard := estreeHashShard(count, key)
+		groups[shard] = append(groups[shard], id)
 	}
 	return groups
+}
+func estreeLossyGroups() [][]int {
+	sources := make([]string, len(lossyInputs()))
+	for i, body := range lossyInputs() {
+		sources[i] = string(body)
+	}
+	return estreeHashedStrings(testLossyInputRefusalShards, "stage1/cohere/estree/utf8_test.go", "lossy refusal", sources)
 }
 func estreeAgreementVerdict(want, got []byte) error {
 	if diff := firstDifference(want, got); diff != "" {
@@ -233,11 +252,12 @@ func estreeShardFailure(t *testing.T, count, cases int, groups [][]int, mode str
 	t.Logf("case %d planted %s caught by exactly shard-%03d", planted, mode, owner)
 }
 
-func estreeAgreementShards(t *testing.T, count int, sources []string) {
+func estreeAgreementShards(t *testing.T, count int, file, mode string, sources []string) {
 	t.Helper()
 	estreeAccounting(t)
 	started := time.Now()
-	selected := estreeShardPlan(t, count, len(sources), estreeSingles(len(sources)))
+	groups := estreeHashedStrings(count, file, mode, sources)
+	selected := estreeShardPlan(t, count, len(sources), groups)
 	oracle := estreeTimedOracle(t)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -245,19 +265,56 @@ func estreeAgreementShards(t *testing.T, count int, sources []string) {
 	}
 	binary, script := estreeTimedBuild(t, main, true)
 	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
-	for i, source := range sources {
-		if !selected[i] {
+	for shard, group := range groups {
+		if !selected[shard] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", shard), func(t *testing.T) {
 			t.Parallel()
-			list := manifest(t, []string{source})
-			want := estreeOracleOutput(t, oracle, "--manifest", list)
-			for name, got := range map[string][]byte{"source Node": onNode(t, main, "--manifest", list), "sanitized native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
-				if err := estreeAgreementVerdict(want, got); err != nil {
-					t.Fatalf("case %d %s: %v", i, name, err)
+			for _, i := range group {
+				list := manifest(t, []string{sources[i]})
+				want := estreeOracleOutput(t, oracle, "--manifest", list)
+				for name, got := range map[string][]byte{"source Node": onNode(t, main, "--manifest", list), "sanitized native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
+					if err := estreeAgreementVerdict(want, got); err != nil {
+						t.Fatalf("case %d %s: %v", i, name, err)
+					}
 				}
 			}
 		})
 	}
+}
+
+// Inserting/reordering fixtures or introducing another repository file must not
+// move existing keys or change the planner's fixed count. Duplicate fixture
+// contents still have distinct live enumeration IDs and are counted twice.
+func TestEstreeStableShardAssignments(t *testing.T) {
+	const shards = 16
+	file, mode := "stage1/cohere/estree/syntax_test.go", "growth control"
+	before := []string{"alpha", "beta"}
+	after := []string{"new", "beta", "alpha", "alpha"}
+	original := estreeHashedStrings(shards, file, mode, before)
+	grown := estreeHashedStrings(shards, file, mode, after)
+	other := estreeHashedStrings(shards, "stage1/cohere/estree/new_fixture_test.go", mode, []string{"other"})
+	if len(original) != shards || len(grown) != shards || len(other) != shards {
+		t.Fatal("shard count changed with corpus")
+	}
+	owner := func(groups [][]int, id int) int {
+		for shard, group := range groups {
+			for _, candidate := range group {
+				if candidate == id {
+					return shard
+				}
+			}
+		}
+		t.Fatal("missing case")
+		return -1
+	}
+	for i, source := range before {
+		for j, candidate := range after {
+			if source == candidate && owner(original, i) != owner(grown, j) {
+				t.Fatalf("existing fixture %q moved after growth/reordering", source)
+			}
+		}
+	}
+	estreeShardPlan(t, shards, len(after), grown)
 }

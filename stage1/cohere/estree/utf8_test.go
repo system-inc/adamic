@@ -13,25 +13,21 @@ func cookedSurrogates() []string {
 	return []string{"'\\ud800a\\udc00';", "'\\ud800';", "'\\udfff';", "'\\ud800\\udc00';", "'\\ud800\\ud800';", "`a\\ud800b`;", "tag`a\\ud800b`;", "const key = {'\\ud800': 1};"}
 }
 
-const testCookedSurrogatesShards = 8
+const testCookedSurrogatesShards = 16
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestCookedSurrogates(t *testing.T) {
-	estreeAgreementShards(t, testCookedSurrogatesShards, cookedSurrogates())
+	estreeAgreementShards(t, testCookedSurrogatesShards, "stage1/cohere/estree/utf8_test.go", "cooked surrogates", cookedSurrogates())
 }
 func TestCookedSurrogatesShardFailure(t *testing.T) {
 	sources := cookedSurrogates()
-	estreeShardFailure(t, testCookedSurrogatesShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
+	estreeShardFailure(t, testCookedSurrogatesShards, len(sources), estreeHashedStrings(testCookedSurrogatesShards, "stage1/cohere/estree/utf8_test.go", "cooked surrogates", sources), "agreement", 4)
 }
 
 const testCookedSurrogateMutantShards = 1
 
 func cookedSurrogateMutantGroups() [][]int {
-	group := make([]int, len(cookedSurrogates()))
-	for id := range group {
-		group[id] = id
-	}
-	return [][]int{group}
+	return estreeHashedStrings(testCookedSurrogateMutantShards, "stage1/cohere/estree/utf8_test.go", "cooked surrogate mutant", cookedSurrogates())
 }
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
@@ -81,7 +77,7 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 	t.Log("Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates")
 }
 
-const testLossyInputRefusalShards = 2
+const testLossyInputRefusalShards = 16
 
 func lossyInputs() [][]byte {
 	return [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}}
@@ -92,41 +88,50 @@ func TestLossyInputRefusal(t *testing.T) {
 	estreeAccounting(t)
 	started := time.Now()
 	bodies := lossyInputs()
-	selected := estreeShardPlan(t, testLossyInputRefusalShards, len(bodies), estreeSingles(len(bodies)))
+	groups := estreeLossyGroups()
+	selected := estreeShardPlan(t, testLossyInputRefusalShards, len(bodies), groups)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
 	binary, script := estreeTimedBuild(t, main, true)
 	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
-	for i, body := range bodies {
-		if !selected[i] {
+	for shard, group := range groups {
+		if !selected[shard] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", shard), func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(t.TempDir(), "input.ts")
-			if err := os.WriteFile(path, body, 0644); err != nil {
-				t.Fatal(err)
-			}
-			for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-				estreeRefused(t, argv, "cannot recover original UTF-8 bytes")
+			for _, i := range group {
+				body := bodies[i]
+				path := filepath.Join(t.TempDir(), "input.ts")
+				if err := os.WriteFile(path, body, 0644); err != nil {
+					t.Fatal(err)
+				}
+				for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+					estreeRefused(t, argv, "cannot recover original UTF-8 bytes")
+				}
 			}
 		})
 	}
 }
 func TestLossyInputRefusalShardFailure(t *testing.T) {
 	bodies := lossyInputs()
-	estreeShardFailure(t, testLossyInputRefusalShards, len(bodies), estreeSingles(len(bodies)), "refusal", 1)
+	estreeShardFailure(t, testLossyInputRefusalShards, len(bodies), estreeLossyGroups(), "refusal", 1)
 }
 
 const testLossyInputControlShards = 1
+
+func lossyControlSources() []string { return []string{string(lossyInputs()[0])} }
+func lossyControlGroups() [][]int {
+	return estreeHashedStrings(testLossyInputControlShards, "stage1/cohere/estree/utf8_test.go", "lossy control", lossyControlSources())
+}
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestLossyInputControl(t *testing.T) {
 	estreeAccounting(t)
 	started := time.Now()
-	selected := estreeShardPlan(t, testLossyInputControlShards, 1, estreeSingles(1))
+	selected := estreeShardPlan(t, testLossyInputControlShards, len(lossyControlSources()), lossyControlGroups())
 	oracle := estreeTimedOracle(t)
 	main := mutantPort(t, "pipeline.ts", `if(text.includes('\ufffd'))`, `if(false)`)
 	binary, _ := estreeTimedBuild(t, main, true)
@@ -134,19 +139,21 @@ func TestLossyInputControl(t *testing.T) {
 	if selected[0] {
 		t.Run("shard-000", func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(t.TempDir(), "malformed.ts")
-			if err := os.WriteFile(path, lossyInputs()[0], 0644); err != nil {
-				t.Fatal(err)
-			}
-			want := estreeOracleOutput(t, oracle, path)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
-				if err := estreeMutantVerdict(want, got); err != nil {
-					t.Fatalf("%s lossy-input: %v", name, err)
+			for _, source := range lossyControlSources() {
+				path := filepath.Join(t.TempDir(), "malformed.ts")
+				if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+					t.Fatal(err)
+				}
+				want := estreeOracleOutput(t, oracle, path)
+				for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
+					if err := estreeMutantVerdict(want, got); err != nil {
+						t.Fatalf("%s lossy-input: %v", name, err)
+					}
 				}
 			}
 		})
 	}
 }
 func TestLossyInputControlShardFailure(t *testing.T) {
-	estreeShardFailure(t, testLossyInputControlShards, 1, estreeSingles(1), "mutant", 0)
+	estreeShardFailure(t, testLossyInputControlShards, len(lossyControlSources()), lossyControlGroups(), "mutant", 0)
 }

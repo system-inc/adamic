@@ -19,15 +19,15 @@ func scalarCases() []string {
 	}
 }
 
-const testScalarEdgesShards = 8
+const testScalarEdgesShards = 16
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestScalarEdges(t *testing.T) {
-	estreeAgreementShards(t, testScalarEdgesShards, scalarCases())
+	estreeAgreementShards(t, testScalarEdgesShards, "stage1/cohere/estree/scalars_test.go", "scalar edges", scalarCases())
 }
 func TestScalarEdgesShardFailure(t *testing.T) {
 	sources := scalarCases()
-	estreeShardFailure(t, testScalarEdgesShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
+	estreeShardFailure(t, testScalarEdgesShards, len(sources), estreeHashedStrings(testScalarEdgesShards, "stage1/cohere/estree/scalars_test.go", "scalar edges", sources), "agreement", 4)
 }
 
 func TestScalarOriginalLibraries(t *testing.T) {

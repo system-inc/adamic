@@ -23,25 +23,42 @@ func syntaxGrammar() []string {
 	}
 }
 
-const testSyntaxGrammarShards = 9
+const testSyntaxGrammarShards = 16
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestSyntaxGrammar(t *testing.T) {
-	estreeAgreementShards(t, testSyntaxGrammarShards, syntaxGrammar())
+	estreeAgreementShards(t, testSyntaxGrammarShards, "stage1/cohere/estree/syntax_test.go", "syntax grammar", syntaxGrammar())
 }
 func TestSyntaxGrammarShardFailure(t *testing.T) {
 	sources := syntaxGrammar()
-	estreeShardFailure(t, testSyntaxGrammarShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
+	estreeShardFailure(t, testSyntaxGrammarShards, len(sources), estreeHashedStrings(testSyntaxGrammarShards, "stage1/cohere/estree/syntax_test.go", "syntax grammar", sources), "agreement", 4)
 }
 
-const testSyntaxMutantsShards = 3
+const testSyntaxMutantsShards = 16
 
+type syntaxMutant struct {
+	name, file, from, to string
+	sources              []string
+	main, binary         string
+}
+
+func syntaxMutants() []syntaxMutant {
+	return []syntaxMutant{
+		{name: "mapped-constraint", file: "convert.ts", from: "this.set(result, 'constraint', this.converted(this.child(parameter, 1)));", to: "this.set(result, 'constraint', absent());", sources: syntaxGrammar()},
+		{name: "erasure-precedence", file: "sourceBinary.ts", from: "if(nextRank > lastRank ||", to: "if(false && nextRank > lastRank ||", sources: []string{"1+1 as number *2;"}},
+		{name: "reference-pragma", file: "pipeline.ts", from: "if(reference !== '')", to: "if(false)", sources: []string{"/// <reference path='missingquote.ts />\nx;"}},
+	}
+}
+func syntaxMutantShard(m syntaxMutant) int {
+	return estreeHashShard(testSyntaxMutantsShards, "stage1/cohere/estree/syntax_test.go#"+m.file+"#"+m.name)
+}
 func syntaxMutantGroups() ([][]int, int) {
-	groups := make([][]int, 3)
+	groups := make([][]int, testSyntaxMutantsShards)
 	id := 0
-	for i, count := range []int{len(syntaxGrammar()), 1, 1} {
-		for range count {
-			groups[i] = append(groups[i], id)
+	for _, m := range syntaxMutants() {
+		for range m.sources {
+			shard := syntaxMutantShard(m)
+			groups[shard] = append(groups[shard], id)
 			id++
 		}
 	}
@@ -55,26 +72,9 @@ func TestSyntaxMutants(t *testing.T) {
 	groups, cases := syntaxMutantGroups()
 	selected := estreeShardPlan(t, testSyntaxMutantsShards, cases, groups)
 	oracle := estreeTimedOracle(t)
-	type mutant struct {
-		name, file, from, to string
-		sources              []string
-		main, binary         string
-	}
-	mutants := []mutant{
-		{name: "mapped-constraint", file: "convert.ts", from: "this.set(result, 'constraint', this.converted(this.child(parameter, 1)));", to: "this.set(result, 'constraint', absent());", sources: syntaxGrammar()},
-		{name: "erasure-precedence", file: "sourceBinary.ts", from: "if(nextRank > lastRank ||", to: "if(false && nextRank > lastRank ||", sources: []string{"1+1 as number *2;"}},
-		{name: "reference-pragma", file: "pipeline.ts", from: "if(reference !== '')", to: "if(false)", sources: []string{"/// <reference path='missingquote.ts />\nx;"}},
-	}
-	if len(mutants) != len(groups) {
-		t.Fatal("mutant enumeration differs from shard plan")
-	}
-	for i, m := range mutants {
-		if len(m.sources) != len(groups[i]) {
-			t.Fatalf("shard-%03d has %d inputs, plan has %d IDs", i, len(m.sources), len(groups[i]))
-		}
-	}
+	mutants := syntaxMutants()
 	for i := range mutants {
-		if !selected[i] {
+		if !selected[syntaxMutantShard(mutants[i])] {
 			continue
 		}
 		m := &mutants[i]
@@ -82,37 +82,42 @@ func TestSyntaxMutants(t *testing.T) {
 		m.binary, _ = estreeTimedBuild(t, m.main, true)
 	}
 	t.Logf("setup including builds: %.3fs; union: %d cases", time.Since(started).Seconds(), cases)
-	for i, m := range mutants {
-		if !selected[i] {
+	for shard := range groups {
+		if !selected[shard] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", shard), func(t *testing.T) {
 			t.Parallel()
-			list := manifest(t, m.sources)
-			if i == 0 {
-				want := estreeOracleOutput(t, oracle, "--manifest", list)
-				for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
-					if err := estreeMutantVerdict(want, got); err != nil {
-						t.Fatalf("%s %s: %v", m.name, name, err)
-					}
+			for _, m := range mutants {
+				if syntaxMutantShard(m) != shard {
+					continue
 				}
-			} else {
-				statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
-				if !strings.Contains(statuses, `"status":"error"`) {
-					t.Fatal(statuses)
-				}
-				for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
-					if !strings.Contains(string(got), "0 Program ") {
-						t.Fatal(name + " control did not accept")
+				list := manifest(t, m.sources)
+				if m.name == "mapped-constraint" {
+					want := estreeOracleOutput(t, oracle, "--manifest", list)
+					for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
+						if err := estreeMutantVerdict(want, got); err != nil {
+							t.Fatalf("%s %s: %v", m.name, name, err)
+						}
 					}
-					t.Log(m.name + " " + name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
+				} else {
+					statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
+					if !strings.Contains(statuses, `"status":"error"`) {
+						t.Fatal(statuses)
+					}
+					for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
+						if !strings.Contains(string(got), "0 Program ") {
+							t.Fatal(name + " control did not accept")
+						}
+						t.Log(m.name + " " + name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
+					}
 				}
 			}
 		})
 	}
 }
 
-const testSyntaxRefusalsShards = 3
+const testSyntaxRefusalsShards = 16
 
 func syntaxRefusalCases() []string {
 	return []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
@@ -123,7 +128,8 @@ func TestSyntaxRefusals(t *testing.T) {
 	estreeAccounting(t)
 	started := time.Now()
 	sources := syntaxRefusalCases()
-	selected := estreeShardPlan(t, testSyntaxRefusalsShards, len(sources), estreeSingles(len(sources)))
+	groups := estreeHashedStrings(testSyntaxRefusalsShards, "stage1/cohere/estree/syntax_test.go", "syntax refusal", sources)
+	selected := estreeShardPlan(t, testSyntaxRefusalsShards, len(sources), groups)
 	oracle := estreeTimedOracle(t)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -131,24 +137,26 @@ func TestSyntaxRefusals(t *testing.T) {
 	}
 	binary, script := estreeTimedBuild(t, main, true)
 	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
-	for i, source := range sources {
-		if !selected[i] {
+	for shard, group := range groups {
+		if !selected[shard] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", shard), func(t *testing.T) {
 			t.Parallel()
-			list := manifest(t, []string{source})
-			statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
-			if strings.Count(statuses, `"status":"error"`) != 1 {
-				t.Fatal(statuses)
-			}
-			paths, err := os.ReadFile(list)
-			if err != nil {
-				t.Fatal(err)
-			}
-			for _, path := range strings.Fields(string(paths)) {
-				for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-					estreeRefused(t, argv, "ESTree parser")
+			for _, i := range group {
+				list := manifest(t, []string{sources[i]})
+				statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
+				if strings.Count(statuses, `"status":"error"`) != 1 {
+					t.Fatal(statuses)
+				}
+				paths, err := os.ReadFile(list)
+				if err != nil {
+					t.Fatal(err)
+				}
+				for _, path := range strings.Fields(string(paths)) {
+					for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+						estreeRefused(t, argv, "ESTree parser")
+					}
 				}
 			}
 		})
@@ -156,7 +164,7 @@ func TestSyntaxRefusals(t *testing.T) {
 }
 func TestSyntaxRefusalsShardFailure(t *testing.T) {
 	sources := syntaxRefusalCases()
-	estreeShardFailure(t, testSyntaxRefusalsShards, len(sources), estreeSingles(len(sources)), "refusal", 1)
+	estreeShardFailure(t, testSyntaxRefusalsShards, len(sources), estreeHashedStrings(testSyntaxRefusalsShards, "stage1/cohere/estree/syntax_test.go", "syntax refusal", sources), "refusal", 1)
 }
 
 func TestSyntaxLibraries(t *testing.T) {
