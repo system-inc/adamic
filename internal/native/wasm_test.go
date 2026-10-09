@@ -61,6 +61,8 @@ func wasiCompiler() string {
 
 func runWASIUnit(t *testing.T, unit int) {
 	t.Helper()
+	// Gate mutant 3 (#f3p1c0z): an undeclared skip site, so every TestWASI shard skips and the skip census must read red. Never merge.
+	t.Skip("planted: gate mutant 3")
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH")
 	}
