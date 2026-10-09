@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_object.go b/internal/lower/library_object.go
+index 3a2b5a8d..42b364aa 100644
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -142,7 +142,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
+ 				}
+ 			}
+ 			call.Checked = !l.enumerationProven(written[0], element, 0)
+-			call.ElementName = l.checker.TypeToString(element)
++			call.ElementName = "unknown"
+ 			call.Allowed = l.viewLiterals(element)
+ 			if l.openNumericEnumType(element) {
+ 				call.Allowed = nil

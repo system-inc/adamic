@@ -1,0 +1,136 @@
+[
+  {
+    "label": "whole",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "."
+    ]
+  },
+  {
+    "label": "provenance",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1"
+    },
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native,./internal/javascript",
+      "-coverprofile=/tmp/defend-conditions/provenance.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestEntriesProvenance$"
+    ]
+  },
+  {
+    "label": "readiness",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1"
+    },
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native,./internal/javascript",
+      "-coverprofile=/tmp/defend-conditions/readiness.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestEntriesRuntimeReadiness$"
+    ]
+  },
+  {
+    "label": "core",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1"
+    },
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEntriesAcceptance|TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$"
+    ]
+  },
+  {
+    "label": "general",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1"
+    },
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics\\.a|notyet_library_object_entries_const\\.a|enums_modules)$/^main\\.a$"
+    ]
+  },
+  {
+    "label": "review",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1"
+    },
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct9_native_p24_tuple_from_object_entries\\.a)$"
+    ]
+  },
+  {
+    "label": "counts",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1"
+    },
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCountsAreRecorded$"
+    ]
+  }
+]

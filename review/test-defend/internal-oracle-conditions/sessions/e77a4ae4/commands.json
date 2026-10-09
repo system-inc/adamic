@@ -1,0 +1,286 @@
+[
+  {
+    "mutant": "D1",
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 0.4466363379979157
+  },
+  {
+    "mutant": "D1",
+    "label": "core",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEntriesAcceptance|TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 1,
+    "wall": 12.797905589999573
+  },
+  {
+    "mutant": "D1",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics\\.a|notyet_library_object_entries_const\\.a|enums_modules)$/^main\\.a$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 4.7148820479997084
+  },
+  {
+    "mutant": "D1",
+    "label": "review",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct9_native_p24_tuple_from_object_entries\\.a)$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 2.138037586999417
+  },
+  {
+    "mutant": "D1",
+    "label": "counts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCountsAreRecorded$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 48.14171554799759
+  },
+  {
+    "mutant": "D2",
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/javascript/"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 0,
+    "wall": 0.07568285899833427
+  },
+  {
+    "mutant": "D2",
+    "label": "core",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEntriesAcceptance|TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 1,
+    "wall": 8.238913036002486
+  },
+  {
+    "mutant": "D2",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics\\.a|notyet_library_object_entries_const\\.a|enums_modules)$/^main\\.a$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 0,
+    "wall": 4.539102173999709
+  },
+  {
+    "mutant": "D2",
+    "label": "review",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct9_native_p24_tuple_from_object_entries\\.a)$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 0,
+    "wall": 2.1385429479996674
+  },
+  {
+    "mutant": "D2",
+    "label": "counts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCountsAreRecorded$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 0,
+    "wall": 47.03572966200227
+  },
+  {
+    "mutant": "D1",
+    "label": "general-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics[.]a|notyet_library_object_entries_const[.]a|enums_modules)$/^main[.]a$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 4.82370593000087
+  },
+  {
+    "mutant": "D1",
+    "label": "general-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics[.]a|notyet_library_object_entries_const[.]a|enums_modules)$/^main[.]a$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 4.632349662002525
+  },
+  {
+    "mutant": "D1",
+    "label": "review-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^(smoke[.]a|fxspptb_oct9_native_p24_tuple_from_object_entries[.]a)$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D1",
+    "exit": 0,
+    "wall": 2.1513130130006175
+  },
+  {
+    "mutant": "D2",
+    "label": "general-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics[.]a|notyet_library_object_entries_const[.]a|enums_modules)$/^main[.]a$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 0,
+    "wall": 4.983379915000114
+  },
+  {
+    "mutant": "D2",
+    "label": "review-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^(smoke[.]a|fxspptb_oct9_native_p24_tuple_from_object_entries[.]a)$"
+    ],
+    "cache": "/tmp/defend-conditions/cache/D2",
+    "exit": 0,
+    "wall": 2.206596656997135
+  }
+]

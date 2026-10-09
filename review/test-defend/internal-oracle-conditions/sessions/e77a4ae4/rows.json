@@ -1,0 +1,92 @@
+[
+  {
+    "test": "TestEntriesProvenance",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEntriesRuntimeReadiness"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/library_object.go:145",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/library_object.go:145",
+        "change": "Change the declared element diagnostic label to unknown; preserve the check and exit code",
+        "rows_failed": [
+          "TestEntriesProvenance"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-conditions/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEntriesAcceptance|TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$; entries_provenance_test.go:51: stderr differs: want oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x20, 0x27, 0x6c, 0x61, 0x74, 0x65, 0x27, 0x3a, 0x20, 0x61, 0x63, 0x74, 0x75, 0x61, 0x6c, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x64, 0x65, 0x63, 0x6c, 0x61, 0x72, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa}, exitCode:70}, got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x2",
+    "bounded": true,
+    "matrix_rows": [
+      "TestEntriesAcceptance",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestEntriesRuntimeReadiness",
+      "TestReviewProgramsSelfTest",
+      "TestEntriesProvenance",
+      "TestReviewProgramsRefuse",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestCountsAreRecorded"
+    ],
+    "rows_passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestEntriesRuntimeReadiness",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestCountsAreRecorded"
+    ],
+    "base": "e77a4ae41f473c149aee910c51b73637686a804a"
+  },
+  {
+    "test": "TestEntriesRuntimeReadiness",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEntriesProvenance"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/javascript/entries_provenance.go:21",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/javascript/entries_provenance.go:21",
+        "change": "Flip the checked enumeration readiness condition to false, reading the stored value of an uninitialized field",
+        "rows_failed": [
+          "TestEntriesRuntimeReadiness"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-conditions/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEntriesAcceptance|TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$; entries_provenance_test.go:129: exit codes differ: want oracle.run{stdout:[]uint8(nil), stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x20, 0x27, 0x7a, 0x27, 0x3a, 0x20, 0x61, 0x63, 0x74, 0x75, 0x61, 0x6c, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x2c, 0x20, 0x64, 0x65, 0x63, 0x6c, 0x61, 0x72, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa}, exitCode:70}, got oracle.run{stdout:[]uint8{0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}",
+    "bounded": true,
+    "matrix_rows": [
+      "TestEntriesAcceptance",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestEntriesRuntimeReadiness",
+      "TestReviewProgramsSelfTest",
+      "TestEntriesProvenance",
+      "TestReviewProgramsRefuse",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestCountsAreRecorded"
+    ],
+    "rows_passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestEntriesProvenance",
+      "TestReviewProgramsRefuse",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestCountsAreRecorded"
+    ],
+    "base": "e77a4ae41f473c149aee910c51b73637686a804a"
+  }
+]

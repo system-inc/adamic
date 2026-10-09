@@ -1,0 +1,42 @@
+{
+  "mutants": [
+    [
+      "D1",
+      "internal/lower/library_object.go",
+      "call.ElementName = l.checker.TypeToString(element)",
+      "call.ElementName = \"unknown\"",
+      145,
+      "Change the declared element diagnostic label to unknown; preserve the check and exit code",
+      "TestEntriesProvenance"
+    ],
+    [
+      "D2",
+      "internal/javascript/entries_provenance.go",
+      "adamicFieldReadiness.get(object)?.has(key) ? undefined : object[key]",
+      "false ? undefined : object[key]",
+      21,
+      "Flip the checked enumeration readiness condition to false, reading the stored value of an uninitialized field",
+      "TestEntriesRuntimeReadiness"
+    ]
+  ],
+  "regexes": [
+    [
+      "core",
+      "^(TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEntriesAcceptance|TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$"
+    ],
+    [
+      "general",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(entries_.*|library_object_.*|method_coverage_object_statics\\.a|notyet_library_object_entries_const\\.a|enums_modules)$/^main\\.a$"
+    ],
+    [
+      "review",
+      "^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct9_native_p24_tuple_from_object_entries\\.a)$"
+    ],
+    [
+      "counts",
+      "^TestCountsAreRecorded$"
+    ]
+  ],
+  "code_under_test": "Adamic enumeration lowering and JavaScript/native backends",
+  "oracle": "Node on successful original sources; self-authored exact checked failure contracts"
+}
