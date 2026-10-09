@@ -33,6 +33,7 @@
 set -euo pipefail
 
 fastGate=""
+alsoGates=()
 gateKind=fast
 smokeReviewed=no
 pauseException=""
@@ -44,6 +45,11 @@ while [ "$#" -gt 0 ]; do
 	# and main's confirmation in one (@system_adamic, October 8). It is a superset of the fast gate,
 	# deferred tests included, so the landed tree is exactly the tree that passed everything.
 	--full-gate) fastGate=${2#origin/}; gateKind=full; shift 2 ;;
+	# --also-gate <gate-logs ref>, repeatable: another record of the same sha whose stages complete the
+	# gate's (@system_adamic, Oct 9 04:34Z: a pool record of Go tests only lands beside a record of the
+	# build, vet, smoke and census stages; a stage that ran on another runner counts when it ran on the
+	# same sha). Every record must be green and finished, and together they must cover every stage.
+	--also-gate) alsoGates+=("${2#origin/}"); shift 2 ;;
 	--smoke-list-reviewed) smokeReviewed=yes; shift ;;
 	# --test-only <sha> "<branches>": a change that touches only tests goes to main with no gate in front of it;
 	# Loom's next whole-suite run of main is its check (Kirk, Oct 8). The merged diff must be tests only.
@@ -168,6 +174,43 @@ if [ -n "$fastGate" ]; then
 		echo "refused: ${fastGate} has no ${gateKind}.json" >&2
 		exit 1
 	fi
+	for also in ${alsoGates[@]+"${alsoGates[@]}"}; do
+		if ! git fetch -q origin "+refs/heads/${also}:refs/remotes/origin/${also}" 2>/dev/null; then
+			echo "refused: no gate log ${also} on origin" >&2
+			exit 1
+		fi
+		alsoStatus=$(git show "origin/${also}:status.txt" 2>/dev/null | head -n 1)
+		alsoJSON=$(git show "origin/${also}:fast.json" 2>/dev/null || git show "origin/${also}:full.json" 2>/dev/null || true)
+		if ! printf '%s' "$alsoStatus" | grep -q '^green' || [ -z "$alsoJSON" ]; then
+			echo "refused: ${also} isn't a green record (${alsoStatus:-no status})" >&2
+			exit 1
+		fi
+		# The union: the stages either ran, failures summed, wall time added, the first record's base and
+		# packages kept (its diff chose them). The verdict below then judges the union as one record.
+		if ! printf '%s' "$alsoJSON" | python3 -c '
+import json, sys
+path, sha = sys.argv[1], sys.argv[2]
+first, other = json.load(open(path)), json.load(sys.stdin)
+if other.get("sha") != sha or other.get("finished") is not True:
+    sys.exit("it gated %s (finished %r), not %s" % (other.get("sha"), other.get("finished"), sha))
+for key in ("steps_seconds", "stages_exit"):
+    first[key] = dict(first.get(key) or {}, **(other.get(key) or {}))
+first["planned_stages"] = sorted(set(first.get("planned_stages") or []) | set(other.get("planned_stages") or []))
+first["fail"] = (first.get("fail") or 0) + (other.get("fail") or 0)
+first["wall_seconds"] = float(first.get("wall_seconds") or 0) + float(other.get("wall_seconds") or 0)
+for key in ("build_ok", "vet_ok", "uncached_tests"):
+    first[key] = bool(first.get(key) or other.get(key))
+for key in ("unclassified_skips", "required_input_skips", "undeclared_tools"):
+    first[key] = (first.get(key) or []) + (other.get(key) or [])
+for key in ("smoke_list", "smoke_list_blob", "machine", "tools_sha"):
+    first.setdefault(key, other.get(key))
+json.dump(first, open(path, "w"))
+' "$fastJSON" "$sha"; then
+			echo "refused: ${also} doesn't complete ${fastGate} for ${sha:0:8}" >&2
+			exit 1
+		fi
+		fastGate="${fastGate} + ${also}"
+	done
 	if ! verdict=$(GATE_KIND="$gateKind" RERUN_MERGE="$(dirname "${BASH_SOURCE[0]}")/rerun_merge.py" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
 import json, os, subprocess, sys
 sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]

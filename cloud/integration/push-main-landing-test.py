@@ -8,6 +8,7 @@ usage: python3 cloud/integration/push-main-landing-test.py
 """
 import csv
 import io
+import json
 import os
 from pathlib import Path
 import shutil
@@ -149,6 +150,36 @@ class LandingTests(unittest.TestCase):
         # The gate finishes: the held change lands.
         (root / 'watch' / 'running' / '123').unlink()
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
+
+
+    def publish(self, sha, name, record):
+        # A gate-logs record on origin: status.txt and fast.json in a commit of their own.
+        tree = Path(self.tmp.name) / ('record-' + name)
+        tree.mkdir()
+        (tree / 'fast.json').write_text(json.dumps(record))
+        (tree / 'status.txt').write_text('green: %s fast gate\n' % sha)
+        index = str(Path(self.tmp.name) / ('index-' + name))
+        environment = dict(os.environ, GIT_INDEX_FILE=index, **identity)
+        gitDirectory = git(self.repository, 'rev-parse', '--absolute-git-dir')
+        subprocess.run(['git', '--git-dir', gitDirectory, '--work-tree', str(tree), 'add', '-A', '.'], env=environment, check=True)
+        treeSha = subprocess.run(['git', '--git-dir', gitDirectory, 'write-tree'], env=environment, check=True, capture_output=True, text=True).stdout.strip()
+        reference = 'gate-logs/%s/20261009T000000Z/%s' % (sha[:12], name)
+        git(self.repository, 'push', '-q', 'origin', '%s:refs/heads/%s' % (git(self.repository, 'commit-tree', treeSha, '-m', 'record'), reference))
+        return reference
+
+    def test_a_go_tests_only_record_lands_only_beside_a_record_of_the_other_stages(self):
+        sha = self.change(self.main, 'other/b.go', 'package other\n\n// pooled\n', 'pooled')
+        common = {'sha': sha, 'base': self.main, 'finished': True, 'skip': 0, 'packages': ['other']}
+        tests = self.publish(sha, 'fast', dict(common, runner='pool', covers='go-tests', fail=0, **{'pass': 10}, uncached_tests=True, wall_seconds=100,
+                                               steps_seconds={'tests': 90}, stages_exit={'tests': 0}, planned_stages=['tests']))
+        stages = self.publish(sha, 'stages', dict(common, fail=0, **{'pass': 0}, build_ok=True, vet_ok=True, wall_seconds=50,
+                                                  steps_seconds={stage: 5 for stage in ('build', 'vet', 'smoke', 'census')},
+                                                  stages_exit={stage: 0 for stage in ('build', 'vet', 'smoke', 'census')},
+                                                  planned_stages=['build', 'vet', 'smoke', 'census']))
+        alone = self.push('--fast-gate', tests, sha, 'pooled')
+        self.assertNotEqual(alone.returncode, 0)
+        self.assertIn('go build or go vet failed', alone.stderr)
+        self.assertLanded(self.push('--fast-gate', tests, '--also-gate', stages, sha, 'pooled'), self.main, sha)
 
 
 if __name__ == '__main__':
