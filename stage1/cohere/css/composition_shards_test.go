@@ -131,7 +131,6 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 }
 
 func compositionRunShard(t *testing.T, index int) {
-	t.Parallel()
 	started := time.Now()
 	timer := time.AfterFunc(75*time.Second, func() { panic("cooked: composition shard exceeded 75s") })
 	defer timer.Stop()
@@ -181,6 +180,7 @@ func compositionRunShard(t *testing.T, index int) {
 }
 
 func TestCompositionMatchesGoUnion(t *testing.T) {
+	t.Parallel()
 	started := time.Now()
 	timer := time.AfterFunc(75*time.Second, func() { panic("cooked: composition union exceeded 75s") })
 	defer timer.Stop()
@@ -272,37 +272,85 @@ func compositionCases(t *testing.T) string {
 	return cases
 }
 
-func TestCompositionMatchesGo_000(t *testing.T) { compositionRunShard(t, 0) }
+func TestCompositionMatchesGo_000(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 0)
+}
 
-func TestCompositionMatchesGo_001(t *testing.T) { compositionRunShard(t, 1) }
+func TestCompositionMatchesGo_001(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 1)
+}
 
-func TestCompositionMatchesGo_002(t *testing.T) { compositionRunShard(t, 2) }
+func TestCompositionMatchesGo_002(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 2)
+}
 
-func TestCompositionMatchesGo_003(t *testing.T) { compositionRunShard(t, 3) }
+func TestCompositionMatchesGo_003(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 3)
+}
 
-func TestCompositionMatchesGo_004(t *testing.T) { compositionRunShard(t, 4) }
+func TestCompositionMatchesGo_004(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 4)
+}
 
-func TestCompositionMatchesGo_005(t *testing.T) { compositionRunShard(t, 5) }
+func TestCompositionMatchesGo_005(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 5)
+}
 
-func TestCompositionMatchesGo_006(t *testing.T) { compositionRunShard(t, 6) }
+func TestCompositionMatchesGo_006(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 6)
+}
 
-func TestCompositionMatchesGo_007(t *testing.T) { compositionRunShard(t, 7) }
+func TestCompositionMatchesGo_007(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 7)
+}
 
-func TestCompositionMatchesGo_008(t *testing.T) { compositionRunShard(t, 8) }
+func TestCompositionMatchesGo_008(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 8)
+}
 
-func TestCompositionMatchesGo_009(t *testing.T) { compositionRunShard(t, 9) }
+func TestCompositionMatchesGo_009(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 9)
+}
 
-func TestCompositionMatchesGo_010(t *testing.T) { compositionRunShard(t, 10) }
+func TestCompositionMatchesGo_010(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 10)
+}
 
-func TestCompositionMatchesGo_011(t *testing.T) { compositionRunShard(t, 11) }
+func TestCompositionMatchesGo_011(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 11)
+}
 
-func TestCompositionMatchesGo_012(t *testing.T) { compositionRunShard(t, 12) }
+func TestCompositionMatchesGo_012(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 12)
+}
 
-func TestCompositionMatchesGo_013(t *testing.T) { compositionRunShard(t, 13) }
+func TestCompositionMatchesGo_013(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 13)
+}
 
-func TestCompositionMatchesGo_014(t *testing.T) { compositionRunShard(t, 14) }
+func TestCompositionMatchesGo_014(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 14)
+}
 
-func TestCompositionMatchesGo_015(t *testing.T) { compositionRunShard(t, 15) }
+func TestCompositionMatchesGo_015(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 15)
+}
 
 var compositionShardFunctions = [...]func(*testing.T){
 	TestCompositionMatchesGo_000,
