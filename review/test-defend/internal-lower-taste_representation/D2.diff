@@ -1,0 +1,13 @@
+diff --git a/internal/lower/view_contracts.go b/internal/lower/view_contracts.go
+index df213614..23375323 100644
+--- a/internal/lower/view_contracts.go
++++ b/internal/lower/view_contracts.go
+@@ -56,7 +56,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
+ 	if !known {
+ 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
+ 	}
+-	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
++	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: "", Of: of}
+ 	if isClassInstance(target) {
+ 		if declaration := l.classNodeFor(target); declaration != nil {
+ 			contract.Nominal = l.program.Where(declaration) + ":" + contract.Name

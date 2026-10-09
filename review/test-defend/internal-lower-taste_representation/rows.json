@@ -1,0 +1,65 @@
+[
+  {
+    "test": "TestViewObjectWritesNeedSourceCertificate",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefaultTaggedInterfaceAdmission"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/interface_cast.go:74",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/interface_cast.go:74",
+        "change": "Drop object-field assignment refusal block",
+        "rows_failed": [
+          "TestViewObjectWritesNeedSourceCertificate"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-taste/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; view_objects_test.go:54: unchecked write could invalidate another alias: <nil>"
+  },
+  {
+    "test": "TestMixedUnionContractGraph",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMixedUnionContractRecursiveMember"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/view_contracts.go:59",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/view_contracts.go:59",
+        "change": "Change completed scalar/object contract name to empty string",
+        "rows_failed": [
+          "TestMixedUnionContractGraph"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-taste/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; view_unions_mixed_test.go:61: member was substituted: ir.ViewContract{Intersection:false, IntersectionTag:\"\", IntersectionRecursive:false, IntersectionBounded:false, ObjectPresent:0, RepresentationMask:0x0, Payload:0, PayloadTypeID:0, Unsupported:\"\", NominalClass:0, NominalBases:[]string(nil), Nominal:\"\", Undefined:false, Null:false, Kind:0x1, Name:\"\", Of:3, Allowed:[]ir.ViewLiteral(nil), Fields:[]ir.ViewFieldContract(nil), Members:[]ir.ViewContractID(nil), Key:0, MapReadonly:false, ArrayReadonly:false, Element:0, TupleUnion:false, FixedTuple:false, TupleVariable:false, TupleMinimum:0, TupleRest:0, Tuple:[]ir.ViewContractID(nil), Functions:[]int(nil), ProducerCertified:false, Parameters:[]ir.ViewContractID(nil), Result:0, DiscardResult:false}"
+  },
+  {
+    "test": "TestUntaggedViewStructuralFallback",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestUntaggedViewMemberTags"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/view_unions_untagged.go:45",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/view_unions_untagged.go:45",
+        "change": "Flip member rejection connective from OR to AND",
+        "rows_failed": [
+          "TestUntaggedViewStructuralFallback"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-taste/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; view_unions_untagged_test.go:57: member kind 0 admitted without its adapter"
+  }
+]
