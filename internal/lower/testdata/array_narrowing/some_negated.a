@@ -1,0 +1,7 @@
+function isNumber(value: string | number): value is number { return typeof value === 'number'; }
+const items: (string | number)[] = ['a', 'b'];
+if (!items.some(isNumber)) {
+ let text = '';
+ for (const value of items) if (typeof value === 'string') text += value;
+ console.log(text);
+}

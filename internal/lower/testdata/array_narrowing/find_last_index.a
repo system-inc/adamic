@@ -1,0 +1,3 @@
+function isNumber(value: string | number): value is number { return typeof value === 'number'; }
+const items: (string | number)[] = ['x', 2, 4];
+console.log('index ' + items.findLastIndex(isNumber));

@@ -1,0 +1,18 @@
+command: go test ./internal/lower -run ^Test(ArrayNarrowingEveryRefused|Fx5MutantWitness)$ -count=1 -v -timeout 90s
+=== RUN   TestArrayNarrowingEveryRefused
+=== PAUSE TestArrayNarrowingEveryRefused
+=== RUN   TestFx5MutantWitness
+=== PAUSE TestFx5MutantWitness
+=== CONT  TestArrayNarrowingEveryRefused
+=== CONT  TestFx5MutantWitness
+=== NAME  TestArrayNarrowingEveryRefused
+    array_narrowing_test.go:75: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/every.a:4:5, got <nil>
+--- FAIL: TestArrayNarrowingEveryRefused (0.04s)
+=== NAME  TestFx5MutantWitness
+    fx5_mutant_witness_test.go:8: native stdout="total 9.36276791094653e-310\n" stderr="" exit=0
+    fx5_mutant_witness_test.go:10: Node stdout="total 3\n" stderr="" exit=0
+    fx5_mutant_witness_test.go:11: Native backend stdout = "total 9.36276791094653e-310\n", source Node = "total 3\n"
+--- FAIL: TestFx5MutantWitness (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.303s
+FAIL
