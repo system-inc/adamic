@@ -1795,3 +1795,9 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-09T16:27:45.894865Z,developer_tools,1,4,4,040-heavy-units-m9es0rv.md,01a11436-aecb-7090-84c0-8b06e8a5201c,sent
 2026-10-09T16:27:53.879368Z,developer_tools,2,4,3,050-hole1-mutant-pcghsyd.md,01a11436-cff8-77a3-b90e-ef3e2c4ef010,sent
 2026-10-09T16:27:53.884402Z,developer_tools,3,4,2,,,pass_cap
+2026-10-09T16:30:45.105617Z,compiler,8,30,0,,,"gate_backpressure: 69 queued, 17 slots"
+2026-10-09T16:31:27.293237Z,cohere_adamic,0,30,0,,,"gate_backpressure: 69 queued, 17 slots"
+2026-10-09T16:31:31.316542Z,typescript,0,10,0,,,"gate_backpressure: 69 queued, 17 slots"
+2026-10-09T16:31:36.084431Z,runtime,3,8,0,,,"gate_backpressure: 69 queued, 17 slots"
+2026-10-09T16:31:39.854696Z,library,0,8,0,,,"gate_backpressure: 69 queued, 17 slots"
+2026-10-09T16:31:51.226492Z,developer_tools,2,4,0,,,"gate_backpressure: 69 queued, 17 slots"
