@@ -124,6 +124,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 }
 
 func TestIndirectPredicateOverloadIsPending(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `function lie(value: number | string): value is number; function lie(value: number | string): boolean { return true; } const alias=lie; alias("text");`)
 	if err == nil || !strings.Contains(err.Error(), "indirect call of a checked predicate overload") {
 		t.Fatalf("want explicit indirect-call capability gap, got %v", err)
