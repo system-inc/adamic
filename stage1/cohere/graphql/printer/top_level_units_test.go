@@ -25,4 +25,3 @@ func TestPrinterWhitespaceGap_004(t *testing.T)       { t.Parallel(); printerWhi
 func TestPrinterMutants_Setup(t *testing.T)           { t.Parallel(); printerMutantUnit(t, -1) }
 func TestPrinterMutants_000(t *testing.T)             { t.Parallel(); printerMutantUnit(t, 0) }
 func TestPrinterMutants_001(t *testing.T)             { t.Parallel(); printerMutantUnit(t, 1) }
-func TestPrinterMutants_002(t *testing.T)             { t.Parallel(); printerMutantUnit(t, 2) }

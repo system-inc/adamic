@@ -123,6 +123,7 @@ var printerMutations = [...]struct{ name, file, from, to string }{
 // original sides. ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i;
 // unset runs all. Build inputs are prepared before case timing.
 func printerMutantUnit(t *testing.T, unit int) {
+	setupStart := time.Now()
 	if len(printerMutations) != testPrinterMutantsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(printerMutations), testPrinterMutantsShards)
 	}
@@ -136,8 +137,10 @@ func printerMutantUnit(t *testing.T, unit int) {
 	products := make([]printerProducts, len(printerMutations))
 	for number, mutation := range printerMutations {
 		shards[number] = printerShard{mode: "defaults", path: cases, cases: printerMutantCases(number, enumeration)}
-		path := printerDirectory(t, mutation.file, mutation.from, mutation.to)
-		products[number] = preparePrinterProducts(t, path)
+		if unit < 0 || number == unit {
+			path := printerDirectory(t, mutation.file, mutation.from, mutation.to)
+			products[number] = preparePrinterProducts(t, path)
+		}
 	}
 	if len(shards) != testPrinterMutantsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterMutantsShards)
@@ -159,8 +162,10 @@ func printerMutantUnit(t *testing.T, unit int) {
 		}
 		product := products[number]
 		{
+			t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 			start := time.Now()
 			t.Cleanup(func() {
+				t.Logf("own work wall %.3fs", time.Since(start).Seconds())
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
 					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
 				}
