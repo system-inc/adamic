@@ -1,0 +1,12 @@
+run adamic-verify-20261009T075432-6773c0bd: void, 1147 tests in 20 units, 0 failed, 11 units broken, 0 killed over budget
+BROKEN tests-03: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-06: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-07: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-08: no results (exited false, last output "loom-runner: still running after 1110 s")
+BROKEN tests-00-r1: no results (exited false, last output "")
+BROKEN tests-01-r1: no results (exited false, last output "")
+BROKEN tests-02-r1: no results (exited false, last output "")
+BROKEN tests-07-r1: no results (exited false, last output "")
+BROKEN tests-07-r2: no results (exited false, last output "")
+BROKEN tests-07-r3: no results (exited false, last output "")
+BROKEN tests-08-r1: no results (exited false, last output "")
