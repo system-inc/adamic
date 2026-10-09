@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:20:49.293710736Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:20:49.301218506Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints"}
+{"Time":"2026-10-09T10:20:49.301295549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints","Output":"=== RUN   TestInheritanceGenericNominalConstraints\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.301400142Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints","Output":"=== PAUSE TestInheritanceGenericNominalConstraints\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.301404007Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints"}
+{"Time":"2026-10-09T10:20:49.301408824Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints"}
+{"Time":"2026-10-09T10:20:49.301411128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints","Output":"=== CONT  TestInheritanceGenericNominalConstraints\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.334222721Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints","Output":"    class_inheritance_test.go:303: want nominal constraint refusal with structural repair, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:20:49.334297821Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints","Output":"--- FAIL: TestInheritanceGenericNominalConstraints (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.33430359Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericNominalConstraints","Elapsed":0.03}
+{"Time":"2026-10-09T10:20:49.334333874Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.334481249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.040s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:49.334500417Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.041}

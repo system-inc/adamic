@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:20:45.013826837Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:20:45.023088203Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules"}
+{"Time":"2026-10-09T10:20:45.023199546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"=== RUN   TestInheritanceConditionalThisRules\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:45.023228328Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"=== PAUSE TestInheritanceConditionalThisRules\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:45.023230732Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules"}
+{"Time":"2026-10-09T10:20:45.023234447Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules"}
+{"Time":"2026-10-09T10:20:45.023236039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"=== CONT  TestInheritanceConditionalThisRules\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:45.063853203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"    class_inheritance_test.go:276: want pre-super binding refusal with fix, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:20:45.063972438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"--- FAIL: TestInheritanceConditionalThisRules (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:45.063979458Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Elapsed":0.04}
+{"Time":"2026-10-09T10:20:45.064007609Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:45.066177872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.052s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:45.066213634Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.052}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:20:40.770138869Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:20:40.77694164Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses"}
+{"Time":"2026-10-09T10:20:40.777011853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses","Output":"=== RUN   TestInheritanceRefusesGrowingGenericClasses\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:40.777970154Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses","Output":"=== PAUSE TestInheritanceRefusesGrowingGenericClasses\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:40.777987569Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses"}
+{"Time":"2026-10-09T10:20:40.777991074Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses"}
+{"Time":"2026-10-09T10:20:40.777992907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses","Output":"=== CONT  TestInheritanceRefusesGrowingGenericClasses\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:40.812566715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses","Output":"    class_inheritance_test.go:241: want bounded monomorphization refusal with fix, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:20:40.812807567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses","Output":"--- FAIL: TestInheritanceRefusesGrowingGenericClasses (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:40.812852874Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesGrowingGenericClasses","Elapsed":0.04}
+{"Time":"2026-10-09T10:20:40.812873584Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:40.814486557Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.044s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:40.814517522Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.044}

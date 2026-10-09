@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:20:24.288635499Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:20:24.295928386Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides"}
+{"Time":"2026-10-09T10:20:24.296024567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"=== RUN   TestInheritanceAllowsSoundOverrides\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:24.296059117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"=== PAUSE TestInheritanceAllowsSoundOverrides\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:24.296062402Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides"}
+{"Time":"2026-10-09T10:20:24.296065607Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides"}
+{"Time":"2026-10-09T10:20:24.29606779Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"=== CONT  TestInheritanceAllowsSoundOverrides\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:24.33484053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"--- PASS: TestInheritanceAllowsSoundOverrides (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:24.334916742Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Elapsed":0.04}
+{"Time":"2026-10-09T10:20:24.334945744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:24.337470564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.048s\n"}
+{"Time":"2026-10-09T10:20:24.337499616Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.049}

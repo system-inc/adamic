@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:20:34.622827589Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:20:34.629586988Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns"}
+{"Time":"2026-10-09T10:20:34.629644432Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns","Output":"=== RUN   TestInheritanceRefusesThisBeforeSuperReturns\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:34.629663931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns","Output":"=== PAUSE TestInheritanceRefusesThisBeforeSuperReturns\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:34.629666194Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns"}
+{"Time":"2026-10-09T10:20:34.629668457Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns"}
+{"Time":"2026-10-09T10:20:34.62967017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns","Output":"=== CONT  TestInheritanceRefusesThisBeforeSuperReturns\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:34.663694106Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns","Output":"    class_inheritance_test.go:187: want pre-super this refusal with fix, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:20:34.66381986Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns","Output":"--- FAIL: TestInheritanceRefusesThisBeforeSuperReturns (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:34.663829354Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceRefusesThisBeforeSuperReturns","Elapsed":0.03}
+{"Time":"2026-10-09T10:20:34.663853169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:34.664919569Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.042s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:34.664938747Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.042}
