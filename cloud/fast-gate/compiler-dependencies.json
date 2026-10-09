@@ -217,6 +217,9 @@
       "internal/flow",
       "cmd/adamic"
     ],
+    "internal/skipcensus/cmd": [
+      "internal/skipcensus"
+    ],
     "internal/testguard": [
       "internal/load",
       "internal/lower",
