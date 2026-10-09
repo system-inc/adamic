@@ -48,10 +48,11 @@ func TestJSXAgreement(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary, script := miscBuild(t, main)
+	answers := miscTextAnswers(t, oracle, cases, ".tsx")
 	finishSetup()
 	miscRunShards(t, testJSXAgreementShards, ids, func(t *testing.T, i int) {
 		list := jsxManifestCases(t, cases[i:i+1])
-		want := execute(t, "", oracle, "--manifest", list)
+		want := answers[i].Data
 		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
 			if err := miscCompare(want, got, false); err != nil {
 				t.Fatalf("%s %s: %v", ids[i], name, err)
@@ -152,12 +153,13 @@ func TestJSXMutant(t *testing.T) {
 	}
 	ids := miscIDs("jsx-mutant", len(cases))
 	oracle := miscOracle(t)
-	path := mutantPort(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
+	path := miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
 	binary, _ := miscBuild(t, path)
+	answers := miscTextAnswers(t, oracle, cases, ".tsx")
 	finishSetup()
 	miscRunShards(t, testJSXMutantShards, ids, func(t *testing.T, i int) {
 		list := jsxManifestCases(t, cases[i:i+1])
-		want := execute(t, "", oracle, "--manifest", list)
+		want := answers[i].Data
 		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 			if err := miscCompare(want, got, true); err != nil {
 				t.Fatalf("%s %s: %v", ids[i], name, err)

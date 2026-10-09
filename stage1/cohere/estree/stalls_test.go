@@ -3,7 +3,6 @@ package estree
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -77,6 +76,13 @@ func TestBoundedPortParser(t *testing.T) {
 	}
 	binary, script := miscBuild(t, main)
 	oracle := miscOracle(t)
+	audited := make([]boundedPortCase, 0, len(cases)-3)
+	for _, item := range cases {
+		if item.audit {
+			audited = append(audited, item)
+		}
+	}
+	answers := miscAnswers(t, oracle, audited)
 	finishSetup()
 	miscRunShards(t, testBoundedPortParserShards, boundedPortIDs(cases), func(t *testing.T, i int) {
 		item := cases[i]
@@ -84,20 +90,9 @@ func TestBoundedPortParser(t *testing.T) {
 		if err := os.WriteFile(path, []byte(item.text), 0644); err != nil {
 			t.Fatal(err)
 		}
-		accepted := false
-		if item.audit {
-			list := filepath.Join(t.TempDir(), "manifest")
-			if err := os.WriteFile(list, []byte(path+"\n"), 0644); err != nil {
-				t.Fatal(err)
-			}
-			var record struct{ Status string }
-			if err := json.Unmarshal(execute(t, "", oracle, "--audit", list, t.TempDir()), &record); err != nil {
-				t.Fatal(err)
-			}
-			accepted = record.Status == "ok"
-		}
+		accepted := item.audit && answers[i-3].Status == "ok"
 		if accepted {
-			want := execute(t, "", oracle, path)
+			want := answers[i-3].Data
 			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path), "emitted": onNode(t, script, path)} {
 				if err := miscCompare(want, got, false); err != nil {
 					t.Fatalf("%s %s: %v", item.id, name, err)
@@ -134,7 +129,7 @@ func portStallControlResult(timedOut bool, err error) error {
 // mutant case. Both source Node and sanitized native stay together in its leaf.
 func TestPortStallControl(t *testing.T) {
 	finishSetup := miscStart(t)
-	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
+	main := miscMutant(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
 	binary, _ := miscBuild(t, main)
 	finishSetup()
 	miscRunShards(t, testPortStallControlShards, []string{"guard-disabled"}, func(t *testing.T, _ int) {
