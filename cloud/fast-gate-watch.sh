@@ -306,6 +306,26 @@ endRace() {
       echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper}: ${winner} answered the race first"
   done
 }
+# With no box slot for a canary, the cheapest box work yields it: a box race, whose tip's pool job answers alone (Oct 9
+# 10:55Z: two stars held their boxes whole and a race the third, so the stage canary waited on all three). One at a time;
+# the freed slot reaps before the canaries pick theirs, so the canary takes it ahead of the queue.
+yieldRaceForCanary() {
+  local file pid branch sha slot box rest
+  [ -s "${state}/canary-yield" ] && kill -0 "$(cat "${state}/canary-yield")" 2> /dev/null && return 0
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    read -r branch sha slot box rest < "${file}"
+    [ "${box:-threadripper}" != pool ] && [ -f "${state}/racing/${sha}" ] && [ ! -f "${state}/stopped-running/${pid}" ] || continue
+    rm -f "${state}/racing/${sha}"
+    touch "${state}/race-lost/${pid}"
+    if stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone"; then
+      echo "${pid}" > "${state}/canary-yield"
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}'s box race on ${box:-threadripper}: a canary takes its slot, and the pool job answers alone"
+    fi
+    return 0
+  done
+}
 # Integration's skip list names tips that won't land (superseded candidates), and skip-globs whole families: one
 # still running there is stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8; three
 # codex/coverage-* gates held pool slots for 75 minutes after their glob went in, Oct 9 05:54Z).
@@ -1126,6 +1146,8 @@ while true; do
         dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" staged
         echo "${now}" > "${state}/canary-started"
         echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with staged tools ${toolsHead:0:9} (${canarySlot} on ${box}, log ${log})"
+      elif [ -z "${box}" ]; then
+        yieldRaceForCanary
       fi
     fi
   fi
@@ -1143,6 +1165,8 @@ while true; do
       dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" main
       echo "${now}" > "${state}/main-canary-started"
       echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with the good tools, the half-hourly canary (${canarySlot} on ${box}, log ${log})"
+    elif [ -z "${box}" ]; then
+      yieldRaceForCanary
     fi
   fi
   pruneQueue

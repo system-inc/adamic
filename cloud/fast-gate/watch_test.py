@@ -772,9 +772,9 @@ class WatchTests(unittest.TestCase):
         time.sleep(.3)
         self.assertEqual([x for x in w.read('starts').splitlines() if x.startswith('codex/')], [])
 
-    def race(self):
+    def race(self, mainCanary=100000):
         """A side tip on the pool whose job Loom hasn't started asks for a box race, as cloud/pool-job.sh does at 600 s."""
-        w = Watcher(1, mode='hold', slots='box0 S\npool P\n')
+        w = Watcher(1, mode='hold', slots='box0 S\npool P\n', mainCanary=mainCanary)
         self.addCleanup(w.close)
         (w.state / 'pool-side').touch()
         w.put('initial', 'pass')
@@ -794,6 +794,20 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'lost the race' in w.read('output'))
         self.assertIn("the race's other route (box0) answered first", (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
         self.assertFalse((w.state / 'racing' / sha).exists())
+
+    def test_a_canary_with_no_box_slot_takes_a_race_s_and_the_pool_job_answers_alone(self):
+        w, sha = self.race(mainCanary=1800)
+        w.put('canary', 'hold')
+        w.put('clock', '2800')
+        w.wait(lambda: "stopped codex/test0 %s's box race on box0: a canary takes its slot" % sha in w.read('output'))
+        w.wait(lambda: 'ended codex/test0 %s on box0: it lost the race' % sha in w.read('output'))
+        w.wait(lambda: w.read('starts').splitlines()[-1].startswith('canary/main '))
+        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box0'))
+        self.assertFalse((w.state / 'racing' / sha).exists())
+        self.assertEqual(w.read('stops').count(sha), 1)
+        # The pool job runs on, and its verdict is the tip's own.
+        w.put('pool-mode', 'green')
+        w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
 
     def test_a_pool_that_answers_the_race_first_stops_the_box_run_and_its_partial_red_is_no_verdict(self):
         w, sha = self.race()
