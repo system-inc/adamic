@@ -1389,6 +1389,20 @@ class PhaseUnitTests(unittest.TestCase):
         gate.fail = lambda name, detail: gate.failures.append(name)
         return gate
 
+    def test_the_pool_lists_the_whole_gate_s_units_from_a_plain_checkout(self):
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "verify/catalog"))
+            open(os.path.join(tree, "verify/catalog/check.sh"), "w").close()
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number": 1, "name": "one"}, {"number": 12, "name": "twelve"}], handle)
+            os.makedirs(os.path.join(tree, "internal/native"))
+            with open(os.path.join(tree, "internal/native/wasm_test.go"), "w") as handle:
+                handle.write('func TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"a.a",\n\t}\n\tt.Run(fixture, f)\n\tt.Run("requests", f)\n}\n')
+            listed = subprocess.run([sys.executable, run.__file__, "--full", "--list-units", "--tree", tree], capture_output=True, text=True, check=True).stdout.split("\n")
+            self.assertEqual([line for line in listed if line], ["coverage", "tools", "build", "vet", "wasi a.a", "wasi requests",
+                                                                "stage3 stage3-apply-tests", "stage3 stage3-lane-tests", "stage3 stage3-lane",
+                                                                "catalog 1", "catalog 12", "determinism"])
+
     def test_one_catalog_entry_runs_alone_by_its_number(self):
         with tempfile.TemporaryDirectory() as tree:
             os.makedirs(os.path.join(tree, "verify/catalog"))

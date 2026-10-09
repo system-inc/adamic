@@ -165,6 +165,14 @@ class TestQueue:
 
 
 def main():
+    if "--list-units" in sys.argv:
+        # The pool's planner reads the units from here, from a plain checkout, so it never parses what run.py owns.
+        lister = argparse.ArgumentParser()
+        lister.add_argument("--full", action="store_true")
+        lister.add_argument("--list-units", action="store_true")
+        lister.add_argument("--tree", required=True)
+        print("\n".join(wholeUnits(lister.parse_args().tree)))
+        return
     parser = argparse.ArgumentParser()
     parser.add_argument("--tree", required=True)
     parser.add_argument("--sha", required=True)
@@ -633,6 +641,7 @@ class Gate:
         commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"], None),
                     ("stage3-lane-tests", ["bash", "-c", install + " && python3 -m unittest test_check test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
                     ("stage3-lane", ["bash", "stage3/lane/run.sh", results], None)]
+        assert [name for name, _, _ in commands] == stage3Units
         chosen = self.selectedUnits("stage3", [name for name, _, _ in commands])
         commands = [command for command in commands if command[0] in chosen]
         codes = {}
@@ -2021,6 +2030,24 @@ def longTests(units):
 
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
 wholePhases = ["coverage", "tools", "build", "vet", "wasi", "stage3", "catalog", "determinism"]
+stage3Units = ["stage3-apply-tests", "stage3-lane-tests", "stage3-lane"]
+
+
+def wholeUnits(tree):
+    """Every pool unit of the whole gate, as '<phase>' or '<phase> <unit>' (run.py --full --list-units): each wasi
+    fixture, stage 3's three commands, each catalog entry by number, and the other phases whole."""
+    units = []
+    for phase in wholePhases:
+        if phase == "wasi":
+            units += ["wasi " + name for name in wasiFixtures(tree)]
+        elif phase == "stage3":
+            units += ["stage3 " + name for name in stage3Units]
+        elif phase == "catalog" and os.path.exists(os.path.join(tree, "verify/catalog/check.sh")):
+            with open(os.path.join(tree, "verify/catalog/catalog.json")) as handle:
+                units += ["catalog %d" % entry["number"] for entry in json.load(handle)]
+        elif phase != "catalog":
+            units.append(phase)
+    return units
 
 
 def slotCPUs():
