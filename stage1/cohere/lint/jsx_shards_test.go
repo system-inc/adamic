@@ -23,6 +23,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -108,7 +109,7 @@ func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
-		command := exec.Command("go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := jsxDeadlineCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
@@ -626,7 +627,7 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command(executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=75s")
+	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=75s")
 	command.Env = append(os.Environ(), "ADAMIC_JSX_SHARD_CHILD=1")
 	output, err := command.CombinedOutput()
 	if err == nil {
@@ -643,4 +644,23 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 		t.Fatalf("want only %s, got %v:\n%s", expected, failed, output)
 	}
 	t.Logf("planted disagreement caught only by %s", expected)
+}
+
+// Cancel the entire child process group, including any spawned compilers.
+// This uses Go's context deadline and needs no external timeout executable.
+func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 2 * time.Second
+	return command
 }
