@@ -1,0 +1,15 @@
+FIRST FAILURE (stage3, at 308.7 s):
+stage 3 tier 1 failed: stage3-apply-tests exit 1, stage3-lane exit 1 (logs: stage3-apply-tests.log, stage3-lane.log)
+FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log
+stage3-apply-tests, last lines:
+ProductTests.test_unconfigured_cold_cache_builds_without_remote_read shard=14/18
+ProductTests.test_unkeyed_parser_override_is_refused shard=15/18
+ProductTests.test_write_table_is_explicit shard=16/18
+ProofShardTests.test_every_indexed_read_file_has_one_shard shard=17/18
+/tmp/adamic-gate/tmpebg7avnj/output
+/tmp/adamic-gate/tmpxkbxafyc/output
+stage3-lane, last lines:
+/home/ahra/fast-gate/tree-stage3-lane
+apply exit: expected 0, observed 1; see apply.log
+FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log
+(box load 7.1 on 64 cores at first failure)
