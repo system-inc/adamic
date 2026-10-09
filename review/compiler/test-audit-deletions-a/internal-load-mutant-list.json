@@ -1,0 +1,151 @@
+[
+  {
+    "mutant": "M03",
+    "diff": "review/test-audit/internal-load-export_collision/M03.diff",
+    "file_line": "internal/load/load.go:59",
+    "branch": "test-audit/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "diff_hunk_location": "internal/load/load.go:56"
+  },
+  {
+    "mutant": "M05",
+    "diff": "review/test-audit/internal-load-export_collision/M05.diff",
+    "file_line": "internal/load/load.go:72",
+    "branch": "test-audit/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "diff_hunk_location": "internal/load/load.go:69"
+  },
+  {
+    "mutant": "M12",
+    "diff": "review/test-audit/internal-load-export_collision/M12.diff",
+    "file_line": "internal/load/source_fs.go:40",
+    "branch": "test-audit/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestAdamicFilesImportEachOther",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "diff_hunk_location": "internal/load/source_fs.go:37"
+  },
+  {
+    "mutant": "M19",
+    "diff": "review/test-audit/internal-load-export_collision/M19.diff",
+    "file_line": "internal/load/load.go:214",
+    "branch": "test-audit/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestAdamicFilesImportEachOther",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "diff_hunk_location": "internal/load/load.go:211"
+  },
+  {
+    "mutant": "D04",
+    "diff": "review/test-defend/internal-load-export_collision/D04.diff",
+    "file_line": "internal/load/load.go:71",
+    "branch": "test-defend/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "diff_hunk_location": "internal/load/load.go:68"
+  },
+  {
+    "mutant": "D07",
+    "diff": "review/test-defend/internal-load-export_collision/D07.diff",
+    "file_line": "internal/load/load.go:70",
+    "branch": "test-defend/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "diff_hunk_location": "internal/load/load.go:67"
+  },
+  {
+    "mutant": "D08",
+    "diff": "review/test-defend/internal-load-export_collision/D08.diff",
+    "file_line": "internal/load/load.go:66",
+    "branch": "test-defend/internal-load-export_collision",
+    "candidates_failed": [
+      "TestExplicitExportResolvesStarCollision"
+    ],
+    "other_rows_failed": [
+      "TestAdamicFilesImportEachOther",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "diff_hunk_location": "internal/load/load.go:63"
+  }
+]

@@ -1,0 +1,6 @@
+{"mutant": "fuzz-S1", "command": ["timeout", "89", "go", "test", "./internal/fuzz", "-json", "-count=1", "-timeout", "85s", "-run", "^(TestOctoberFeaturesAppear|TestUndefinedNumbersShapes)$"], "exit": 124, "wall_seconds": 89.015, "caught_by": []}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/test-audit-deletions-a/replay.py", line 29, in <module>
+    assert run.returncode == 1 and rows, 'Mutant was not caught by a remaining test'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Mutant was not caught by a remaining test

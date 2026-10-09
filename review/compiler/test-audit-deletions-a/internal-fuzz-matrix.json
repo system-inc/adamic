@@ -1,0 +1,329 @@
+{
+  "baseline": {
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/baseline go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip '^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)'",
+    "binary_seconds": 16.008,
+    "failed": [],
+    "log": "review/test-defend/deletion-set/internal-fuzz/logs/baseline.log"
+  },
+  "mutants": [
+    {
+      "replay": "R001",
+      "mutant": "M10",
+      "file_line": "internal/fuzz/generate.go:167",
+      "branch": "test-audit/internal-fuzz",
+      "source_diff": "review/test-audit/internal-fuzz/M10.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R001-M10.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "other_rows_failed": [
+        "TestOverridesShapesAndLower",
+        "TestOwnershipShapes",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": false,
+      "stale": false,
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R001-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 7.508,
+          "exit": -15,
+          "failed": [
+            "TestOwnershipShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R001-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R002",
+      "mutant": "G1",
+      "file_line": "internal/fuzz/generate.go:1086",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/G1.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R002-G1.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower"
+      ],
+      "other_rows_failed": [
+        "TestOverridesShapesAndLower",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestOverridesShapesAndLower"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R002-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 10.627,
+          "exit": -15,
+          "failed": [
+            "TestOverridesShapesAndLower"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R002-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R003",
+      "mutant": "G2",
+      "file_line": "internal/fuzz/generate.go:952",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/G2.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R003-G2.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower"
+      ],
+      "other_rows_failed": [
+        "TestOverridesShapesAndLower",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestUndefinedNumbersShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R003-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 12.516,
+          "exit": -15,
+          "failed": [
+            "TestUndefinedNumbersShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R003-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R004",
+      "mutant": "G3",
+      "file_line": "internal/fuzz/generate.go:1093",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/G3.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R004-G3.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower"
+      ],
+      "other_rows_failed": [
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestUndefinedNumbersShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R004-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 13.376,
+          "exit": -15,
+          "failed": [
+            "TestUndefinedNumbersShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R004-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R005",
+      "mutant": "R1",
+      "file_line": "internal/fuzz/generate.go:218",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/R1.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R005-R1.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "other_rows_failed": [
+        "TestOwnershipShapes",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R005-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 6.958,
+          "exit": -15,
+          "failed": [
+            "TestOwnershipShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R005-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R006",
+      "mutant": "R2",
+      "file_line": "internal/fuzz/generate.go:1226",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/R2.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R006-R2.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "other_rows_failed": [
+        "TestOwnershipShapes",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R006-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 7.467,
+          "exit": -15,
+          "failed": [
+            "TestOwnershipShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R006-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R007",
+      "mutant": "R3",
+      "file_line": "internal/fuzz/generate.go:1214",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/R3.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R007-R3.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "other_rows_failed": [
+        "TestOwnershipShapes",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R007-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 8.893,
+          "exit": -15,
+          "failed": [
+            "TestOwnershipShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R007-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    },
+    {
+      "replay": "R008",
+      "mutant": "S1",
+      "file_line": "internal/fuzz/generate.go:27",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/S1.diff",
+      "diff": "review/test-defend/deletion-set/internal-fuzz/diffs/R008-S1.diff",
+      "candidates_failed": [
+        "TestOneSeedOneProgram"
+      ],
+      "other_rows_failed": [
+        "TestOctoberFeaturesAppear",
+        "TestOwnershipShapes",
+        "TestUndefinedNumbersShapes"
+      ],
+      "supplemental_filename": true,
+      "stale": false,
+      "still_caught_by": [
+        "TestOctoberFeaturesAppear",
+        "TestUndefinedNumbersShapes"
+      ],
+      "runs": [
+        {
+          "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R008-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+          "wall_seconds": 6.125,
+          "exit": -15,
+          "failed": [
+            "TestOctoberFeaturesAppear",
+            "TestUndefinedNumbersShapes"
+          ],
+          "witness_failures": [],
+          "pin_failures": [],
+          "panic": null,
+          "stopped_after_catch": true,
+          "log": "review/test-defend/deletion-set/internal-fuzz/logs/R008-0.log"
+        }
+      ],
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": [],
+      "completed_without_valid_catch": false
+    }
+  ]
+}
