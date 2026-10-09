@@ -3,6 +3,7 @@ package ir
 import "testing"
 
 func TestClosureArgumentsCountTargets(t *testing.T) {
+	t.Parallel()
 	p := Program{Functions: []Function{{}, {ArgumentsCount: 1, ReadsArguments: true}}, FunctionTypeTargets: map[int][]int{10: {0}, 11: {0, 1}}}
 	for _, probe := range []struct {
 		kind  int

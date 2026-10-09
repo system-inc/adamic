@@ -65,6 +65,7 @@ func TestNamespaceTypesErase(t *testing.T) {
 }
 
 func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("testdata/namespaces_notyet/tracing_escape.a")
 	if err != nil {
 		t.Fatal(err)
@@ -77,12 +78,14 @@ func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
 }
 
 func TestDebugNamespaceMergedCapabilities(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ name, reason string }{
 		{"debug_log.a", ""},
 		{"class_merge.a", "merged with a runtime value"},
 		{"debug_class.a", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			source, err := os.ReadFile("testdata/namespaces_notyet/" + test.name)
 			if err != nil {
 				t.Fatal(err)
@@ -103,6 +106,7 @@ func TestDebugNamespaceMergedCapabilities(t *testing.T) {
 }
 
 func TestNamespaceReturnedAssignmentLimits(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		"namespace N {let text=''; export function set():string{return text='built'.repeat(2);}}",
 		"namespace N {let optional:number|undefined; export function set():number{return optional=1;}}",

@@ -101,6 +101,7 @@ func composeCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-compose-* diagnostic files.
 func TestComposeMatchGo(t *testing.T) {
 	cases, files, count := composeCases(t)
 	expected := goCompose(t, cases)
@@ -150,6 +151,7 @@ func TestComposeMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d compose answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestComposeMutants(t *testing.T) {
 	cases, _, _ := composeCases(t)
 	expected := goCompose(t, cases)

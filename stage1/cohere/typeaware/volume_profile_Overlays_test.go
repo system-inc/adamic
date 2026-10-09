@@ -95,19 +95,18 @@ func runVolumeProfileOverlayShard(t *testing.T, shard int) {
 			}
 			found = true
 			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
+			// The deadline kills the whole process group, compiler children included;
+			// go test's own -timeout doesn't bound dependency compilation.
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			t.Cleanup(cancel)
 			command := exec.CommandContext(ctx, "go", "test", "-overlay", overlay, "./bridge/tsgo/checker", "-run", "^TestExactIndexMatchesCompilerNodes$", "-count=1", "-timeout=90s")
-			// Bound compilation too, and kill compiler descendants on cancellation.
 			command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-			command.Cancel = func() error {
-				return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			}
+			command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 			command.WaitDelay = 5 * time.Second
 			result := h.run(change.name+"-compiler-node-test", command)
-			cooked := ctx.Err() == context.DeadlineExceeded
+			deadline := ctx.Err() == context.DeadlineExceeded
 			cancel()
-			if cooked {
+			if deadline {
 				t.Fatalf("COOKED: %s exceeded the 90s hard deadline (60s budget); go test %.6fs", change.name, result.elapsed.Seconds())
 			}
 			if result.elapsed > 60*time.Second {

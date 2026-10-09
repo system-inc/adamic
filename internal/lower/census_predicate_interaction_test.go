@@ -13,6 +13,7 @@ import (
 // predicates merge. Node observes the declaration; Adamic must refuse its live
 // contract before considering the callback's representation.
 func TestCensusPredicateInteractionBoundary(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("testdata/census_marker_live_boundary.a")
 	if err != nil {
 		t.Fatal(err)
@@ -37,6 +38,7 @@ func TestCensusPredicateInteractionBoundary(t *testing.T) {
 }
 
 func TestCensusPredicateInteractionEscapes(t *testing.T) {
+	t.Parallel()
 	for index, source := range []string{
 		`function apply(callback: (value: number) => value is number): boolean { return callback(1); }
    function guard(value: number): value is number { return typeof value === 'number'; }
@@ -49,6 +51,7 @@ func TestCensusPredicateInteractionEscapes(t *testing.T) {
    apply(guard);`,
 	} {
 		t.Run([]string{"function alias", "callback escape", "exported function"}[index], func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, "there is no body proving this parameter") {
