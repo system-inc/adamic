@@ -1,0 +1,6 @@
+TestSerialSlabsSkipRemoteScans passed (29.28s).
+Both non-sanitized and ASan/UBSan + ADAMIC_SLABS lanes were checked.
+Fixed: successful exit, "serial skip; remote reuse".
+Always-scan mutant (> 1 replaced by true): rejected with nonzero exit, "serial scan".
+Never-scan mutant (> 1 replaced by false): rejected with nonzero exit, "remote slots lost".
+The test verifies exact output and a nonzero exit for each mutant.

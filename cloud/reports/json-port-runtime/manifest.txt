@@ -1,0 +1,19 @@
+{
+  "base_commit": "c1c6073021e8e5cd6005fcdee59eb3b377395fd8",
+  "machine": "3ee19de862f2",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "generated_c_sha256": "dc7c70777a4fb2bcd2d6c8dc4b19b18b9ce4177c2cbe68e9cecdd60beb2834e0",
+  "generated_c_unchanged": true,
+  "profile_before_samples": 46616,
+  "profile_after_samples": 11316,
+  "profile_event": "cpu-clock:u",
+  "profile_frequency": 499,
+  "profile_debug_option": "-g appended to the shipped release compilation and link flags",
+  "counts_regeneration": "passed; counts.md unchanged",
+  "tools": {
+    "Go": "1.27.1",
+    "clang": "20.1.8",
+    "Node": "24.19.0",
+    "perf": "6.12.107"
+  }
+}
