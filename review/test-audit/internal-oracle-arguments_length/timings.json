@@ -1,0 +1,16 @@
+{
+  "starting_commit": "0942c5169d0ea736d9dfaa19881af1ad8adad162",
+  "nproc": 5,
+  "setup": "warm toolchain, setup skipped; WASI SDK downloaded and extracted, install duration not separately measured",
+  "whole_baseline_seconds": 90.116,
+  "whole_baseline": "90-second timeout; no individual assertion failure observed before timeout",
+  "selected_baseline_seconds": 5.368,
+  "final_clean_seconds": 4.9190000000000005,
+  "wasi_emission_seconds": 38.656,
+  "switch_build_seconds": 12.536012550000123,
+  "matrix_wall_seconds": 27.173149006000585,
+  "matrix_binary_seconds": 18.765,
+  "probe_wall_seconds": 67.8804296129988,
+  "construction_witness_wall_seconds": 41.40561382199985,
+  "solo_binary_seconds": 8.823
+}

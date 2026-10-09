@@ -1,0 +1,39 @@
+internal/oracle/oracle_test.go:500 func execute(t *testing.T, name string, arguments ...string) run {
+internal/oracle/oracle_test.go:507 func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
+internal/oracle/oracle_test.go:529 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+internal/oracle/oracle_test.go:543 func onNode(t *testing.T, path string) run {
+internal/oracle/oracle_test.go:551 func onJavaScriptBackend(t *testing.T, program *ir.Program) run {
+internal/oracle/oracle_test.go:561 func lowered(t *testing.T, path string) (*ir.Program, error) {
+internal/oracle/oracle_test.go:584 func released(t *testing.T, program *ir.Program) run {
+internal/oracle/oracle_test.go:591 func natively(t *testing.T, program *ir.Program) (run, string) {
+internal/oracle/oracle_test.go:598 func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+internal/oracle/oracle_test.go:606 func releasedUncached(t *testing.T, program *ir.Program) run {
+internal/oracle/oracle_test.go:615 func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
+internal/oracle/oracle_test.go:634 func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
+internal/oracle/oracle_test.go:657 func leaksCounted(t *testing.T, code string) string {
+internal/oracle/oracle_test.go:671 func leaksTool(report run) string {
+internal/oracle/oracle_test.go:680 func unbalanced(t *testing.T, counted run) string {
+internal/oracle/oracle_test.go:694 func countOf(t *testing.T, digits []byte) int64 {
+internal/oracle/oracle_test.go:706 func leakSanitizer(t *testing.T, binary string) string {
+internal/oracle/oracle_test.go:716 func disagreement(oracle run, native run) string {
+internal/oracle/cache_test.go:35 func record(result run) recordedRun {
+internal/oracle/cache_test.go:38 func (result recordedRun) run() run { return run{result.Stdout, result.Stderr, result.ExitCode} }
+internal/oracle/cache_test.go:67 func cacheKey(parts ...string) string {
+internal/oracle/cache_test.go:76 func nativeResultKey(code, runtimeKey, nodeVersion, context string) string {
+internal/oracle/cache_test.go:80 func nodeResultKey(source, javascript, nodeVersion, context string) string {
+internal/oracle/cache_test.go:84 func (cache *resultCache) read(key string, value any) bool {
+internal/oracle/cache_test.go:96 func (cache *resultCache) write(t *testing.T, key string, value any) {
+internal/oracle/cache_test.go:126 func cachedResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
+internal/oracle/cache_test.go:138 func reusableResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
+internal/oracle/cache_test.go:172 func identity(t *testing.T) gateIdentity {
+internal/oracle/cache_test.go:243 func rememberImports(path string, text string, program *load.Program) []string {
+internal/oracle/cache_test.go:263 func sourceIdentity(t *testing.T, path string) string {
+internal/oracle/cache_test.go:310 func cachedNode(t *testing.T, path string, execute func() run) run {
+internal/oracle/cache_test.go:327 func cachedNative(t *testing.T, program *ir.Program, release bool) nativeResult {
+internal/oracle/cache_test.go:365 func rememberRun(t *testing.T, result run) {
+internal/oracle/cache_test.go:371 func rememberLeak(t *testing.T, leak string) {
+internal/oracle/cache_test.go:381 func inputIdentity(t *testing.T) string {
+internal/oracle/cache_test.go:417 func cacheProbe(t *testing.T, path string, program *ir.Program, external string, execute func()) {
+internal/oracle/cast_test.go:123 func castFixture(t *testing.T, name string) (*ir.Program, string) {
+internal/oracle/call_targets_guards_test.go:19 func callTargetFixtureAgrees(t *testing.T, name, stdout string) {
+internal/oracle/library_string_test.go:131 func mutateStringExpressions(value reflect.Value, mutate func(ir.Expression) ir.Expression) {

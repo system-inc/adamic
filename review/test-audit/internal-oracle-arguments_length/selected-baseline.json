@@ -1,0 +1,5 @@
+{
+  "exit": 0,
+  "wall_seconds": 7.887665248999838,
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$"
+}

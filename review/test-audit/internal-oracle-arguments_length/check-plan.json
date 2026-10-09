@@ -1,0 +1,50 @@
+[
+  {
+    "id": "S01",
+    "file": "internal/oracle/cache_test.go",
+    "line": 77,
+    "old": "return cacheKey(\"adamic-native-result-v1\", code, runtimeKey, nodeVersion, context)",
+    "new": "return cacheKey(\"adamic-native-result-v1\", \"\", runtimeKey, nodeVersion, context)",
+    "kind": "change constant"
+  },
+  {
+    "id": "S02",
+    "file": "internal/oracle/cache_test.go",
+    "line": 77,
+    "old": "return cacheKey(\"adamic-native-result-v1\", code, runtimeKey, nodeVersion, context)",
+    "new": "return cacheKey(\"adamic-native-result-v1\", code, \"\", nodeVersion, context)",
+    "kind": "change constant"
+  },
+  {
+    "id": "S03",
+    "file": "internal/oracle/cache_test.go",
+    "line": 81,
+    "old": "return cacheKey(\"adamic-node-result-v1\", source, javascript, nodeVersion, context)",
+    "new": "return cacheKey(\"adamic-node-result-v1\", \"\", javascript, nodeVersion, context)",
+    "kind": "change constant"
+  },
+  {
+    "id": "S04",
+    "file": "internal/oracle/cache_test.go",
+    "line": 121,
+    "old": "\tif err := os.Rename(temporary.Name(), filepath.Join(cache.directory, key+\".json\")); err != nil {\n\t\tt.Fatal(err)\n\t}\n",
+    "new": "",
+    "kind": "drop statement"
+  },
+  {
+    "id": "S05",
+    "file": "internal/oracle/cache_test.go",
+    "line": 129,
+    "old": "if os.Getenv(\"ADAMIC_GATE_UNCACHED\") == \"1\" {\n\t\tcache.misses[kind].Add(1)",
+    "new": "if os.Getenv(\"ADAMIC_GATE_UNCACHED\") == \"2\" {\n\t\tcache.misses[kind].Add(1)",
+    "kind": "change constant"
+  },
+  {
+    "id": "W01",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "old": "func disagreement(oracle run, native run) string {",
+    "new": "func disagreement(oracle run, native run) string {\n\tif true {return \"\"}",
+    "kind": "weaken comparison at entry"
+  }
+]

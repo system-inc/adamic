@@ -1,0 +1,20 @@
+[
+  {
+    "id": "M03",
+    "classification": "behavior changed, unguarded in bounded matrix; outside kills unknown",
+    "observations": [
+      {
+        "label": "before",
+        "exit": 0,
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestAuditSurvivorObservation$",
+        "output": "audit_observer_test.go:3: OBSERVATION closureThrown=\"if (adamic_thrown != NULL) {\\n\\tadamic_uncaught();\\n}\\n\""
+      },
+      {
+        "label": "after",
+        "exit": 0,
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestAuditSurvivorObservation$",
+        "output": "audit_observer_test.go:3: OBSERVATION closureThrown=\"\""
+      }
+    ]
+  }
+]

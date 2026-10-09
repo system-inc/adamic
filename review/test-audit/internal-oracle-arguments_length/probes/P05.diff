@@ -1,0 +1,10 @@
+--- a/internal/oracle/cache_test.go
++++ b/internal/oracle/cache_test.go
+@@ -136,6 +136,7 @@
+ // The primitive is tested with isolated directories even during an uncached integration gate.
+ // Fixture callers always go through cachedResult, which owns the environment bypass.
+ func reusableResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
++	if true { var value T; return value }
+ 	t.Helper()
+ 	value, _ := cache.locks.LoadOrStore(key, &sync.Mutex{})
+ 	lock := value.(*sync.Mutex)

@@ -1,0 +1,11 @@
+--- a/internal/native/exceptions.go
++++ b/internal/native/exceptions.go
+@@ -84,7 +84,7 @@
+ // the emitter writes (map, the visits, reduce, Array.from), when a function value in the program can
+ // throw: which one the call reaches isn't known. holds is what the loop holds across the call.
+ func (e *emitter) closureThrown(holds ...string) {
+-	if e.program.ClosuresMayThrow {
++	if false {
+ 		e.checkThrown(holds...)
+ 	}
+ }

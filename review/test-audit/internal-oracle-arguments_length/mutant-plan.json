@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/emit_functions.go",
+    "line": 66,
+    "old": "count := \"(double)argument_count\"",
+    "new": "count := \"(double)argument_count + 1\"",
+    "kind": "off-by-one",
+    "vet_seconds": 0.8734484130000055,
+    "vet_exit": 0
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/cast_proof.go",
+    "line": 215,
+    "old": "reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value())",
+    "new": "!reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value())",
+    "kind": "flip condition",
+    "vet_seconds": 0.5823629510000501,
+    "vet_exit": 0
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/exceptions.go",
+    "line": 87,
+    "old": "if e.program.ClosuresMayThrow {\n\t\te.checkThrown(holds...)",
+    "new": "if false {\n\t\te.checkThrown(holds...)",
+    "kind": "flip condition",
+    "vet_seconds": 0.31022511399987707,
+    "vet_exit": 0
+  },
+  {
+    "id": "M04",
+    "file": "internal/javascript/readiness.go",
+    "line": 27,
+    "old": "allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message)",
+    "new": "!allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message)",
+    "kind": "flip condition",
+    "vet_seconds": 0.0932436900002358,
+    "vet_exit": 0
+  }
+]

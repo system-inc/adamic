@@ -1,0 +1,11 @@
+--- a/internal/oracle/cache_test.go
++++ b/internal/oracle/cache_test.go
+@@ -74,7 +74,7 @@
+ }
+ 
+ func nativeResultKey(code, runtimeKey, nodeVersion, context string) string {
+-	return cacheKey("adamic-native-result-v1", code, runtimeKey, nodeVersion, context)
++	return cacheKey("adamic-native-result-v1", "", runtimeKey, nodeVersion, context)
+ }
+ 
+ func nodeResultKey(source, javascript, nodeVersion, context string) string {

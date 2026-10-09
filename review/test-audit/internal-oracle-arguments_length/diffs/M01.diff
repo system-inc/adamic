@@ -1,0 +1,11 @@
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -63,7 +63,7 @@
+ 		}
+ 		e.line("(void)arguments;")
+ 		if function.ArgumentsCount != 0 {
+-			count := "(double)argument_count"
++			count := "(double)argument_count + 1"
+ 			if function.Receiver {
+ 				count += " - 1"
+ 			}

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "entry": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "line": 20,
+    "empty": "return &ir.Program{}, nil",
+    "tests": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract"
+    ]
+  },
+  {
+    "id": "P02",
+    "file": "internal/native/emit.go",
+    "entry": "func C(program *ir.Program) string {",
+    "line": 22,
+    "empty": "return \"\"",
+    "tests": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastFailureContract"
+    ]
+  },
+  {
+    "id": "P03",
+    "file": "internal/javascript/javascript.go",
+    "entry": "func JavaScript(program *ir.Program) string {",
+    "line": 24,
+    "empty": "return \"\"",
+    "tests": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract"
+    ]
+  },
+  {
+    "id": "P04",
+    "file": "internal/oracle/cache_test.go",
+    "entry": "func nativeResultKey(code, runtimeKey, nodeVersion, context string) string {",
+    "line": 76,
+    "empty": "return \"\"",
+    "tests": [
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains"
+    ]
+  },
+  {
+    "id": "P05",
+    "file": "internal/oracle/cache_test.go",
+    "entry": "func reusableResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {",
+    "line": 138,
+    "empty": "var value T; return value",
+    "tests": [
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheAtomicEvidence"
+    ]
+  },
+  {
+    "id": "P06",
+    "file": "internal/oracle/cache_test.go",
+    "entry": "func nodeResultKey(source, javascript, nodeVersion, context string) string {",
+    "line": 80,
+    "empty": "return \"\"",
+    "tests": [
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs"
+    ]
+  },
+  {
+    "id": "P07",
+    "file": "internal/oracle/cache_test.go",
+    "entry": "func sourceIdentity(t *testing.T, path string) string {",
+    "line": 263,
+    "empty": "return \"\"",
+    "tests": [
+      "TestGateCacheNodeInputs"
+    ]
+  },
+  {
+    "id": "P08",
+    "file": "internal/oracle/cache_test.go",
+    "entry": "func cacheKey(parts ...string) string {",
+    "line": 67,
+    "empty": "return \"\"",
+    "tests": [
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached"
+    ]
+  },
+  {
+    "id": "P09",
+    "file": "internal/oracle/cache_test.go",
+    "entry": "func cachedResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {",
+    "line": 126,
+    "empty": "var value T; return value",
+    "tests": [
+      "TestGateCacheUncached"
+    ]
+  }
+]

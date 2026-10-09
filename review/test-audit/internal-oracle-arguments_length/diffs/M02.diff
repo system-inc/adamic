@@ -1,0 +1,11 @@
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -212,7 +212,7 @@
+ 			// Enum aliases compare by runtime value, including aliases from different enums.
+ 			for _, previous := range literals {
+ 				mask := checker.TypeFlagsStringLiteral | checker.TypeFlagsNumberLiteral | checker.TypeFlagsBooleanLiteral
+-				if previous.Flags()&mask != literal.Flags()&mask || reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value()) {
++				if previous.Flags()&mask != literal.Flags()&mask || !reflect.DeepEqual(previous.AsLiteralType().Value(), literal.AsLiteralType().Value()) {
+ 					valid = false
+ 				}
+ 			}

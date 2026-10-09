@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestWASIShardPlantedFixture",
+    "output": "--- SKIP: TestWASIShardPlantedFixture (0.00s)"
+  },
+  {
+    "test": "TestWASIAgreesWithNode",
+    "output": "--- SKIP: TestWASIAgreesWithNode (0.00s)"
+  },
+  {
+    "test": "TestWASIOracleCatchesMutants",
+    "output": "--- SKIP: TestWASIOracleCatchesMutants (0.00s)"
+  },
+  {
+    "test": "TestWASIRunnerCatchesMutants",
+    "output": "--- SKIP: TestWASIRunnerCatchesMutants (0.00s)"
+  },
+  {
+    "test": "TestWASIEmission",
+    "output": "--- SKIP: TestWASIEmission (0.00s)"
+  },
+  {
+    "test": "TestStage3FixtureHook",
+    "output": "--- SKIP: TestStage3FixtureHook (0.00s)"
+  },
+  {
+    "test": "TestCheckedViewUntaggedArrayPending/good",
+    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/good (0.07s)"
+  },
+  {
+    "test": "TestEntriesAcceptance",
+    "output": "--- SKIP: TestEntriesAcceptance (0.00s)"
+  },
+  {
+    "test": "TestCheckedViewUntaggedArrayPending/empty",
+    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/empty (0.03s)"
+  },
+  {
+    "test": "TestCheckedViewUntaggedArrayPending/nested",
+    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/nested (0.03s)"
+  },
+  {
+    "test": "TestCheckedViewUntaggedArrayPending/mixed",
+    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/mixed (0.05s)"
+  },
+  {
+    "test": "TestCheckedViewUntaggedArrayPending/wrong",
+    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/wrong (0.04s)"
+  },
+  {
+    "test": "TestCheckedViewObjectPrimitiveSource/comment-boolean",
+    "output": "--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.00s)"
+  },
+  {
+    "test": "TestCheckedViewObjectPrimitiveSource/comment-good",
+    "output": "--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-good (0.00s)"
+  },
+  {
+    "test": "TestCheckedViewObjectPrimitiveSource/comment-flags-wrong",
+    "output": "--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.00s)"
+  }
+]

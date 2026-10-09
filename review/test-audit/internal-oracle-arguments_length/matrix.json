@@ -1,0 +1,1195 @@
+[
+  {
+    "id": "M01",
+    "exit": 1,
+    "kills": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$",
+    "environment": {
+      "ADAMIC_MUTANT": "M01",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u055/cache/M01"
+    },
+    "wall_seconds": 6.931652872000086,
+    "panic": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T10:51:46.832222753Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthWrongSlotMutant",
+        "Output": "    arguments_length_test.go:85: reader binding mutation site changed\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:46.832278076Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthWrongSlotMutant",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T10:51:49.67184034Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"1\\n\", compiled \"2\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:49.671879288Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"1\\n\", compiled \"2\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:49.671895573Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a",
+        "Elapsed": 0.66
+      },
+      {
+        "Time": "2026-10-09T10:51:49.904428239Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"12\\n112\\n22\\n14\\nundefined\\n12\\n112\\n\", compiled \"12\\n112\\n22\\n14\\nundefined\\n112\\n112\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:49.904460788Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"12\\n112\\n22\\n14\\nundefined\\n12\\n112\\n\", compiled \"12\\n112\\n22\\n14\\nundefined\\n112\\n112\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:49.906216008Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a",
+        "Elapsed": 0.72
+      },
+      {
+        "Time": "2026-10-09T10:51:49.999510093Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"3,3\\n3,3\\ntrue true\\n8\\n2\\n1,2\\n2\\n1,2\\n3:1\\n3:2\\n2,3\\n\", compiled \"4,4\\n4,4\\nfalse false\\n10\\n2\\n1,2\\n3\\n1,2\\n4:1\\n4:2\\n3,4\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:49.999555822Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"3,3\\n3,3\\ntrue true\\n8\\n2\\n1,2\\n2\\n1,2\\n3:1\\n3:2\\n2,3\\n\", compiled \"4,4\\n4,4\\nfalse false\\n10\\n2\\n1,2\\n3\\n1,2\\n4:1\\n4:2\\n3,4\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.001633778Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a",
+        "Elapsed": 0.82
+      },
+      {
+        "Time": "2026-10-09T10:51:50.693300753Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"77\\n2\\n3\\n\", compiled \"77\\n3\\n4\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.693344799Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"77\\n2\\n3\\n\", compiled \"77\\n3\\n4\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.694925046Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a",
+        "Elapsed": 0.69
+      },
+      {
+        "Time": "2026-10-09T10:51:50.739655631Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_spread.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"0:\\n3:1,2,3\\n7:0,1,2,3,4,5,6\\n4:1,2,3,7\\n4:1,2,3,9\\n0:\\n5:1,2,3,9,10\\n6:0,1,2,3,9,10\\n3:a1,b2,d4\\n\", compiled \"0:\\n3:1,2,3\\n7:0,1,2,3,4,5,6\\n4:1,2,3,7\\n4:1,2,3,9\\n1:\\n6:1,2,3,9,10\\n7:0,1,2,3,9,10\\n3:a1,b2,d4\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.739696482Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_spread.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"0:\\n3:1,2,3\\n7:0,1,2,3,4,5,6\\n4:1,2,3,7\\n4:1,2,3,9\\n0:\\n5:1,2,3,9,10\\n6:0,1,2,3,9,10\\n3:a1,b2,d4\\n\", compiled \"0:\\n3:1,2,3\\n7:0,1,2,3,4,5,6\\n4:1,2,3,7\\n4:1,2,3,9\\n1:\\n6:1,2,3,9,10\\n7:0,1,2,3,9,10\\n3:a1,b2,d4\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.740443396Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_spread.a",
+        "Elapsed": 0.83
+      },
+      {
+        "Time": "2026-10-09T10:51:50.742309263Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_extended.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"0:0\\n1:1\\n1:9\\n0:0\\n1:1\\n0 1 8\\n3:,2,\\n3:,2,\\n0 1 8\\n0 1 8\\n0\\n1:9\\n0\\n\", compiled \"0:0\\n1:1\\n1:9\\n1:1\\n2:2\\n0 1 8\\n3:,2,\\n4:,2,\\n0 1 8\\n0 1 8\\n0\\n1:9\\n1\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.742322543Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_extended.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"0:0\\n1:1\\n1:9\\n0:0\\n1:1\\n0 1 8\\n3:,2,\\n3:,2,\\n0 1 8\\n0 1 8\\n0\\n1:9\\n0\\n\", compiled \"0:0\\n1:1\\n1:9\\n1:1\\n2:2\\n0 1 8\\n3:,2,\\n4:,2,\\n0 1 8\\n0 1 8\\n0\\n1:9\\n1\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.743993257Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_value.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"plain:-1\\n0:-1\\n1:-1\\n1:4\\n3\\n0:-1\\n1:-1\\n1:-1\\n1:hi a\\n2:hi b\\n2:hello c\\n\", compiled \"plain:-1\\n1:-1\\n2:-1\\n2:4\\n4\\n1:-1\\n2:-1\\n2:-1\\n2:hi a\\n3:hi b\\n3:hello c\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.744009962Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_value.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"plain:-1\\n0:-1\\n1:-1\\n1:4\\n3\\n0:-1\\n1:-1\\n1:-1\\n1:hi a\\n2:hi b\\n2:hello c\\n\", compiled \"plain:-1\\n1:-1\\n2:-1\\n2:4\\n4\\n1:-1\\n2:-1\\n2:-1\\n2:hi a\\n3:hi b\\n3:hello c\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.744849705Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_value.a",
+        "Elapsed": 0.73
+      },
+      {
+        "Time": "2026-10-09T10:51:50.794657277Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_extended.a",
+        "Elapsed": 0.88
+      },
+      {
+        "Time": "2026-10-09T10:51:50.923065529Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"0:-1\\n1:-1\\n1:7\\n1:1:\\n4:1:2,3,4\\n0:9\\n1:9\\n1:5\\n0:-1\\n1:-1\\n1:8\\n\", compiled \"0:-1\\n1:-1\\n1:7\\n1:1:\\n4:1:2,3,4\\n0:9\\n1:9\\n1:5\\n1:-1\\n2:-1\\n2:8\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:50.923099601Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"0:-1\\n1:-1\\n1:7\\n1:1:\\n4:1:2,3,4\\n0:9\\n1:9\\n1:5\\n0:-1\\n1:-1\\n1:8\\n\", compiled \"0:-1\\n1:-1\\n1:7\\n1:1:\\n4:1:2,3,4\\n0:9\\n1:9\\n1:5\\n1:-1\\n2:-1\\n2:8\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:51.057481806Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length.a",
+        "Elapsed": 0.61
+      },
+      {
+        "Time": "2026-10-09T10:51:51.170807312Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a",
+        "Output": "    arguments_length_test.go:59: native: stdout differs; Node \"plain\\n1\\n\", compiled \"plain\\n2\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:51.170847122Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a",
+        "Output": "    arguments_length_test.go:59: release: stdout differs; Node \"plain\\n1\\n\", compiled \"plain\\n2\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:51.197515508Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a",
+        "Elapsed": 0.48
+      },
+      {
+        "Time": "2026-10-09T10:51:51.286317074Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestArgumentsLengthTypeScriptSource",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:51:51.288350504Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 4.8309999999999995
+      }
+    ],
+    "observed_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheToolchains",
+      "TestGateCacheUncached",
+      "TestUncheckableCastAdmission"
+    ],
+    "binary_seconds": 4.8309999999999995
+  },
+  {
+    "id": "M02",
+    "exit": 1,
+    "kills": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestUncheckableCastAdmission"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$",
+    "environment": {
+      "ADAMIC_MUTANT": "M02",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u055/cache/M02"
+    },
+    "wall_seconds": 5.963744856000176,
+    "panic": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T10:51:53.711921265Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFlushesOutput",
+        "Output": "    cast_test.go:35: /workspace/adamic/internal/oracle/testdata/cast_enum_string_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:53.711997139Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFlushesOutput",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-09T10:51:53.934822867Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastRunsNoCatchOrFinally/cast_enum_numeric_fails",
+        "Output": "    cast_test.go:80: /workspace/adamic/internal/oracle/testdata/cast_enum_numeric_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:53.934886543Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastRunsNoCatchOrFinally/cast_enum_numeric_fails",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-09T10:51:54.067634573Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncheckableCastAdmission",
+        "Output": "    cast_test.go:72: uncheckable cast admitted: Node exit 0 stdout \"wrongwrong1\\n\"; native exit 70 stdout \"\" stderr \"adamic: panic: field read failed: cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n is not a number; expected number, found string\\n\"; exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:54.071089631Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncheckableCastAdmission",
+        "Elapsed": 0.44
+      },
+      {
+        "Time": "2026-10-09T10:51:54.095278372Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastRunsNoCatchOrFinally",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:51:55.996889185Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_numeric",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_enum_numeric_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:55.996970648Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_numeric",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-09T10:51:56.032352226Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/twice_class_operand",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_operand_once.a:9:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.032422071Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/twice_class_operand",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:51:56.083583954Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/twice_tag_operand",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_operand_once.a:9:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.083663704Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/twice_tag_operand",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-09T10:51:56.203583051Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_string_tag",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_enum_string.a:5:43: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.20364283Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_string_tag",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-09T10:51:56.274797005Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_enum_numeric.a:6:54: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.295650677Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:51:56.580105887Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_class_identity",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.673007569Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_subunion_const_string_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.673059327Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-09T10:51:56.709394779Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_subunion_const_numeric_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.709456312Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:51:56.717704491Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_generic_class",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.725151013Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string_sub-union",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_subunion_string_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.725178975Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string_sub-union",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-09T10:51:56.771735145Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_sub-union",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_subunion_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.771789406Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_sub-union",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:51:56.791863165Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_enum_const_string_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.791981263Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:51:56.798656205Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_enum_const_numeric_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.79870641Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:51:56.835042063Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_numeric_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_enum_numeric_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.835101353Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_numeric_fails",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:51:56.835443407Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string",
+        "Output": "    cast_test.go:182: /workspace/adamic/internal/oracle/testdata/cast_enum_string_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.835461224Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-09T10:51:56.843082139Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_numeric_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_subunion_const_numeric_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.843107807Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_numeric_fails",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:51:56.846092858Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_class",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.866144364Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_class_union",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.867585752Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:51:56.911085013Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_string_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_enum_const_string_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.911128588Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_string_fails",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-09T10:51:56.911140065Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_string_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_subunion_const_string_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.911145534Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_string_fails",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-09T10:51:56.962554534Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_string_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_subunion_string_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.962631129Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_string_fails",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-09T10:51:56.98200113Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_subunion_fails.a:5:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:56.982067099Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_fails",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T10:51:57.040408127Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_numeric_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_enum_const_numeric_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:57.040717282Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_numeric_fails",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-09T10:51:57.040733376Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_string_fails",
+        "Output": "    cast_test.go:143: /workspace/adamic/internal/oracle/testdata/cast_enum_string_fails.a:4:41: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:51:57.040746065Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_string_fails",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-09T10:51:57.250319288Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:51:57.255008427Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 3.643
+      }
+    ],
+    "observed_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheToolchains",
+      "TestGateCacheUncached",
+      "TestUncheckableCastAdmission"
+    ],
+    "binary_seconds": 3.643
+  },
+  {
+    "id": "M03",
+    "exit": 0,
+    "kills": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$",
+    "environment": {
+      "ADAMIC_MUTANT": "M03",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u055/cache/M03"
+    },
+    "wall_seconds": 6.843732060000093,
+    "panic": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "events": [],
+    "observed_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheToolchains",
+      "TestGateCacheUncached",
+      "TestUncheckableCastAdmission"
+    ],
+    "binary_seconds": 4.91
+  },
+  {
+    "id": "M04",
+    "exit": 1,
+    "kills": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$",
+    "environment": {
+      "ADAMIC_MUTANT": "M04",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u055/cache/M04"
+    },
+    "wall_seconds": 7.4340192180002305,
+    "panic": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T10:52:07.309197942Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFlushesOutput",
+        "Output": "    cast_test.go:43: JavaScript: panic must flush 340009 bytes, got 340011, exit 0 stderr \"\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:07.315123286Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFlushesOutput",
+        "Elapsed": 0.93
+      },
+      {
+        "Time": "2026-10-09T10:52:08.875484451Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastRunsNoCatchOrFinally/cast_enum_numeric_fails",
+        "Output": "    cast_test.go:97: panic failed: exit 0 stdout \"casting\\n2\\nfinally\\n\" stderr \"\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:08.875581718Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastRunsNoCatchOrFinally/cast_enum_numeric_fails",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-09T10:52:08.919425768Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastRunsNoCatchOrFinally",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:52:09.268342931Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_numeric_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\nfinally\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B is not a A\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:09.269044637Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_numeric_fails",
+        "Elapsed": 0.35
+      },
+      {
+        "Time": "2026-10-09T10:52:09.420397117Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_numeric",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:09.420660403Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_numeric",
+        "Elapsed": 0.55
+      },
+      {
+        "Time": "2026-10-09T10:52:09.478540079Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/twice_tag_operand",
+        "Output": "    cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:09.515517604Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/twice_class_operand",
+        "Output": "    cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:09.860548745Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_class_identity",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:09.862007019Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_string_tag",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.065342714Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.076308541Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_class_union",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.115443568Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_generic_class",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.223071006Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_class",
+        "Output": "    cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\"\n"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.392427861Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.392774092Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "Elapsed": 0.53
+      },
+      {
+        "Time": "2026-10-09T10:52:10.583150166Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string_sub-union",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.583516667Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string_sub-union",
+        "Elapsed": 0.51
+      },
+      {
+        "Time": "2026-10-09T10:52:10.619086573Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.619143869Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "Elapsed": 0.55
+      },
+      {
+        "Time": "2026-10-09T10:52:10.683888935Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_sub-union",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.684169006Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_sub-union",
+        "Elapsed": 0.57
+      },
+      {
+        "Time": "2026-10-09T10:52:10.714618099Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.714896578Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_string",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-09T10:52:10.865726796Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.866198345Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_const_numeric",
+        "Elapsed": 0.47
+      },
+      {
+        "Time": "2026-10-09T10:52:10.927850354Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_numeric_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B | C is not a A | C\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:10.928257847Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_numeric_fails",
+        "Elapsed": 0.31
+      },
+      {
+        "Time": "2026-10-09T10:52:11.166421475Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string",
+        "Output": "    cast_test.go:245: mutant not caught\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.166743279Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants/skip_string",
+        "Elapsed": 0.58
+      },
+      {
+        "Time": "2026-10-09T10:52:11.166753344Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastMutants",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:52:11.271130341Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_string_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B | C is not a A | C\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.27114946Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_const_string_fails",
+        "Elapsed": 0.34
+      },
+      {
+        "Time": "2026-10-09T10:52:11.360560119Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_string_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B | C is not a A | C\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.374691966Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_string_fails",
+        "Elapsed": 0.32
+      },
+      {
+        "Time": "2026-10-09T10:52:11.374808482Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_string_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B is not a A\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.480421348Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_string_fails",
+        "Elapsed": 0.36
+      },
+      {
+        "Time": "2026-10-09T10:52:11.480468378Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B | C is not a A | C\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.508186548Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_subunion_fails",
+        "Elapsed": 0.31
+      },
+      {
+        "Time": "2026-10-09T10:52:11.508279768Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_numeric_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B is not a A\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.5432923Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_const_numeric_fails",
+        "Elapsed": 0.32
+      },
+      {
+        "Time": "2026-10-09T10:52:11.543342716Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_string_fails",
+        "Output": "    cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B is not a A\\n\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T10:52:11.544416206Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract/cast_enum_string_fails",
+        "Elapsed": 0.27
+      },
+      {
+        "Time": "2026-10-09T10:52:11.544422656Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedCastFailureContract",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T10:52:11.546595895Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 5.381
+      }
+    ],
+    "observed_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheToolchains",
+      "TestGateCacheUncached",
+      "TestUncheckableCastAdmission"
+    ],
+    "binary_seconds": 5.381
+  }
+]

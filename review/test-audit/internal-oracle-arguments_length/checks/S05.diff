@@ -1,0 +1,11 @@
+--- a/internal/oracle/cache_test.go
++++ b/internal/oracle/cache_test.go
+@@ -126,7 +126,7 @@
+ func cachedResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
+ 	t.Helper()
+ 	// Check dynamically so a forced integration run bypasses both reads and writes, including probes.
+-	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
++	if os.Getenv("ADAMIC_GATE_UNCACHED") == "2" {
+ 		cache.misses[kind].Add(1)
+ 		return execute()
+ 	}

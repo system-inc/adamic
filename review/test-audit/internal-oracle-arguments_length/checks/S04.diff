@@ -1,0 +1,12 @@
+--- a/internal/oracle/cache_test.go
++++ b/internal/oracle/cache_test.go
+@@ -116,9 +116,6 @@
+ 		t.Fatal(err)
+ 	}
+ 	if err := temporary.Close(); err != nil {
+-		t.Fatal(err)
+-	}
+-	if err := os.Rename(temporary.Name(), filepath.Join(cache.directory, key+".json")); err != nil {
+ 		t.Fatal(err)
+ 	}
+ }

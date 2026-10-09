@@ -1,0 +1,11 @@
+--- a/internal/oracle/cache_test.go
++++ b/internal/oracle/cache_test.go
+@@ -78,7 +78,7 @@
+ }
+ 
+ func nodeResultKey(source, javascript, nodeVersion, context string) string {
+-	return cacheKey("adamic-node-result-v1", source, javascript, nodeVersion, context)
++	return cacheKey("adamic-node-result-v1", "", javascript, nodeVersion, context)
+ }
+ 
+ func (cache *resultCache) read(key string, value any) bool {

@@ -1,0 +1,3 @@
+package oracle
+import("testing";"github.com/system-inc/adamic/internal/native")
+func TestAuditSurvivorObservation(t *testing.T){t.Logf("OBSERVATION closureThrown=%q",native.AuditClosureThrownObservation())}

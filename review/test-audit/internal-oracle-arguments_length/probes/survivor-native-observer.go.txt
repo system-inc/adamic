@@ -1,0 +1,3 @@
+package native
+import "github.com/system-inc/adamic/internal/ir"
+func AuditClosureThrownObservation() string {e:=emitter{program:&ir.Program{ClosuresMayThrow:true}};e.closureThrown();return e.out.String()}
