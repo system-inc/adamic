@@ -1,0 +1,12 @@
+FIRST FAILURE (tests, at 98.7 s):
+github.com/system-inc/adamic/cmd/adamic-gate TestEveryTestIsParallelOrSaysWhy
+=== RUN   TestEveryTestIsParallelOrSaysWhy
+=== PAUSE TestEveryTestIsParallelOrSaysWhy
+=== CONT  TestEveryTestIsParallelOrSaysWhy
+    parallel_test.go:93: checked 23335 top-level tests; 63 fail the parallel rule
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/tsc_corpus_test.go	TestTSCCorpusAgreement
+    parallel_test.go:130: serial baseline contains 63 entries
+    parallel_test.go:137: cmd/adamic-gate/main_test.go	TestShardChildren: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason
+--- FAIL: TestEveryTestIsParallelOrSaysWhy (0.52s)
+
+(box load 105.3 on 64 cores at first failure)
