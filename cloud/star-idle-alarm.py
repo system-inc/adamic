@@ -50,20 +50,28 @@ def ahra(*arguments):
     return subprocess.run(['ahra', *arguments], cwd=ahraDirectory, capture_output=True, text=True, check=True).stdout
 
 
-def step(identifier):
-    """A roadmap step's id, owner and Branches globs (none if it declares none)."""
+def step(identifier, node=None):
+    """A roadmap step's id, owner and branch globs (none if it declares none). The globs are the task's branches field
+    (Oct 9: a real field, read from the waterfall's node), else a 'Branches:' line where a node doesn't carry one."""
     shown = ahra('tasks', 'show', identifier)
     owner = re.search(r'^owner\s+@(\S+)', shown, re.M)
     branches = re.search(r'^\s*Branches:\s*(.+)$', shown, re.M)
-    return {'id': identifier, 'owner': owner.group(1) if owner else '', 'globs': branches.group(1).split() if branches else []}
+    globs = list((node or {}).get('branches') or []) or (branches.group(1).split() if branches else [])
+    return {'id': identifier, 'owner': owner.group(1) if owner else '', 'globs': globs}
 
 
 def star():
     """The critical path's wave-0 step, and its first three steps (the chain), as step() reads them."""
     waterfall = json.loads(ahra('tasks', 'waterfall', 'system_adamic', '--json'))
     waves = {node['id']: node.get('wave') for node in waterfall['nodes']}
+    nodes = {node['id']: node for node in waterfall['nodes']}
     path = waterfall.get('criticalPath', [])
-    chain = [step(identifier) for identifier in path[:3]]
+    # A step the waterfall doesn't list as ready waits on steps before it, not on its worker (compiler, Oct 9: V5 paged
+    # quiet while it waited on V4, which waited on V2 and V3). A waterfall without a ready list leaves every step ready.
+    ready = {entry if isinstance(entry, str) else entry.get('id') for entry in waterfall['ready']} if 'ready' in waterfall else None
+    chain = [step(identifier, nodes.get(identifier)) for identifier in path[:3]]
+    for entry in chain:
+        entry['ready'] = ready is None or entry['id'] in ready
     first = [entry for entry in chain if waves.get(entry['id']) == 0]
     return (first[0] if first else None), chain
 
@@ -224,6 +232,9 @@ def checkQuiet(chain, now):
             continue
         if runningTurn(entry['globs']) or any(matches(branch, entry['globs']) for branch in queued):
             results.append(('%s: in the gate' % entry['id'], None, None, []))
+            continue
+        if not entry.get('ready', True):
+            results.append(('%s: waits on the steps before it' % entry['id'], None, None, []))
             continue
         own = [glob for glob in entry['globs'] if counts[glob] == 1]
         if pregating(entry['globs'], own):

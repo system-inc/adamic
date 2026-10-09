@@ -233,6 +233,21 @@ esac
         self.assertEqual(self.check(), [], 'a gate running on one of its branches is a live turn')
 
 
+    def test_a_step_that_isnt_ready_waits_on_the_steps_before_it(self):
+        # Compiler, Oct 9: V5 paged quiet while it waited on V4. Not ready on the waterfall, it isn't its worker's quiet.
+        waterfall = {'nodes': [{'id': 'a03mesg', 'wave': 0}, {'id': 'v5', 'wave': 1, 'branches': ['compiler/views-v5*']}],
+                     'criticalPath': ['a03mesg', 'v5'], 'ready': ['a03mesg']}
+        (self.root / 'waterfall.json').write_text(json.dumps(waterfall))
+        (self.root / 'show-v5').write_text('owner     @system_adamic_compiler (direct)\n')
+        (self.root / 'chain-first-seen.json').write_text(json.dumps({'a03mesg': self.now, 'v5': self.now - 3600}))
+        self.assertEqual(self.check(), [])
+        # Ready, the same step pages, its globs read from the waterfall's branches field.
+        waterfall['ready'] = ['a03mesg', 'v5']
+        (self.root / 'waterfall.json').write_text(json.dumps(waterfall))
+        sends = self.check()
+        self.assertIn('#v5 is on the critical path and its worker is quiet', sends[0])
+        self.assertIn('compiler/views-v5*', sends[0])
+
     def test_a_step_in_its_pre_gate_is_not_quiet(self):
         # @system_adamic, Oct 9 01:45Z: V2's complete candidate waited in Loom's pre-gate, and the alarm paged its worker.
         waterfall = {'nodes': [{'id': 'a03mesg', 'wave': 0}, {'id': 'v2', 'wave': 1}], 'criticalPath': ['a03mesg', 'v2']}
