@@ -1,7 +1,9 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -82,4 +84,93 @@ func TestCheckedViewValues(t *testing.T) {
 func TestCheckedViewEntries(t *testing.T) {
 	t.Parallel()
 	checkedViewElementFixture(t, "entries", "field read failed: Object.entries(view) (field count) expected 7, found number 9")
+}
+
+func TestCheckedViewElementP19(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "p19", "field read failed: view['value'] expected Target, found function with incompatible parameter representations")
+}
+func TestCheckedViewElementP72(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "p72", "field read failed: viewed['value'] matches no member of string | number; expected string | number, found boolean")
+}
+
+func TestCheckedViewCorrectSpread(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "spread", "count: 'seven'", "count: 7", false)
+}
+
+func TestCheckedViewCorrectIn(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "in", "count: 'seven'", "count: 7", false)
+}
+
+func TestCheckedViewCorrectKeys(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "keys", "count: 'seven'", "count: 7", false)
+}
+
+func TestCheckedViewCorrectKeysAlias(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "keys_alias", "count: 'seven'", "count: 7", false)
+}
+
+func TestCheckedViewCorrectValues(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "values", "count: 9", "count: 7", false)
+}
+
+func TestCheckedViewCorrectEntries(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "entries", "count: 9", "count: 7", false)
+}
+
+func TestCheckedViewCorrectP19NumberRead(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "p19", "(value: string): number => value.length", "(value: number): number => value + 1", true)
+}
+
+func TestCheckedViewCorrectP19StringRead(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "p19", "(value: string): number => value.length", "(value: number): string => `value${value}`", true)
+}
+
+func TestCheckedViewCorrectP72String(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "p72", "value: true", "value: 'hello'", false)
+}
+
+func TestCheckedViewCorrectP72Number(t *testing.T) {
+	t.Parallel()
+	checkedViewCorrectFixture(t, "p72", "value: true", "value: 5", false)
+}
+
+// Successful reads must preserve the source answer on both compiler backends.
+// p19's invocation ABI is a separate recorded gap; these controls observe the
+// checked callable identity without invoking a synthesized union signature.
+func checkedViewCorrectFixture(t *testing.T, name, before, after string, readOnly bool) {
+	t.Helper()
+	source, err := os.ReadFile(filepath.Join(repository, "internal/lower/testdata/view_element_reads", name+".a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	control := strings.Replace(string(source), before, after, 1)
+	if control == string(source) {
+		t.Fatal("control replacement did not change its input")
+	}
+	if readOnly {
+		control = strings.Replace(control, "console.log(`${callable(5)}`);", "console.log(`${typeof callable}`);", 1)
+	}
+	path := filepath.Join(t.TempDir(), "control.a")
+	if err := os.WriteFile(path, []byte(control), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := reviewAgreement(t, path, nil); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckedViewElementP19Read(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "p19_read", "field read failed: view['value'] expected Target, found function with incompatible parameter representations")
 }

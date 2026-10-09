@@ -86,7 +86,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
 		}
 		if name == "keys" || name == "values" || name == "entries" {
-			value, err = l.checkedViewMembers(node, written[0], value, "")
+			value, err = l.checkedViewMembers(node, written[0], value, nil)
 			if err != nil {
 				return nil, true, err
 			}

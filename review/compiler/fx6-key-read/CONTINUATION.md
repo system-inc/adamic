@@ -13,3 +13,31 @@ Object.keys routes both the specialized ObjectKeys path and the ObjectCall path 
 Object.values checks each declared member through the shared helper before enumeration, retaining the existing homogeneous result check for hidden values. The misfit is a numeric 9 in a literal-7 slot; the ordinary number enumeration check alone cannot catch it. Control 0.31s and misfit 0.41s passed. The bypass mutant prints 1,9 and exits 0 on all backends and is caught. Full lowering 102.153s, counts 121.348s, reader guard 39.734s. Three existing count rows changed. Commands follow the same bounded full-lower/counts/guard grain.
 
 Object.entries now reaches the same member checks as values, retaining the existing result-value enumeration validation. Literal-7 control 0.59s and misfit 0.51s passed. The bypass mutant prints kind:1 and count:9 with exit 0 and is caught. Full lowering 136.680s, counts 154.959s, reader guard 44.722s. Seven existing count rows changed. Commands follow the same bounded full-lower/counts/guard grain.
+
+The original p19 and p72 review fixtures are active: pending sidecars were removed and the P0 exit-70 pins added. The originals stop at the checked member read in JavaScript, sanitized native and release. Both p19 producer result arms and both p72 value arms agree with source Node in the required lowersAndAgreesWithNode controls. Additional native controls cover every completed syntax, aliased keys, both p19 callable reads, and both p72 arms. All new leaves are top-level parallel tests; observed seconds are in p19-p72-tests.log and final-native-controls.log (all below 1s in those focused runs).
+
+The member selector now uses nil for all fields and an AST key for in. An empty-string key therefore checks only that key instead of demanding unrelated view fields. TestViewInEmptyKeyControl agrees with Node and native in 0.79s. Its mutant restores the sentinel collision and fails the JavaScript stdout comparison. No tuple/destructuring path outside the previously completed object member bindings was changed.
+
+Final validation:
+- timeout 300 go test ./internal/lower -count=1 -timeout 240s: PASS, 114.440s.
+- timeout 480 go test ./internal/oracle -run 'TestCountsAreRecorded|TestCheckedView(Element|LiteralTypedKey|Destructured|Spread|In|Keys|Values|Entries|Correct)|TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p(0[1567]|19|49|72)_' -count=1 -v -timeout 6m -args -update-counts: PASS, 125.314s. Counts unchanged in this final phase.
+- timeout 120 go test ./internal/ir -run TestCallTargetReaders -count=1 -timeout 90s: PASS, 48.981s.
+- git diff --check: PASS.
+Full native/oracle packages and the whole repository gate were not run. Committed-tree lane checks run before every push and include vet on both changed packages.
+
+Final mutation runs use run-syntax-mutant.py with the saved source diffs. Each oracle invocation is go test ./internal/oracle -run '^<test>$' -count=1 -v -timeout 90s with an outer subprocess timeout. All source changes are restored in finally blocks.
+- final-spread: TestCheckedViewSpread catches exit 0 and false instead of the ruled exit 70.
+- final-in: TestCheckedViewIn catches exit 0 and true.
+- final-keys: TestCheckedViewKeys catches exit 0 and kind,count.
+- final-keys-alias: TestCheckedViewKeysAlias catches exit 0 and kind,count.
+- final-values: TestCheckedViewValues catches exit 0 and 1,9, proving the literal-7 member contract beyond homogeneous number enumeration.
+- final-entries: TestCheckedViewEntries catches exit 0 and kind:1/count:9.
+- p19-read: TestCheckedViewElementP19Read catches exit 0 and function when the quoted-key read bypasses the callable producer contract. This read-only witness avoids the independent invocation failure below.
+- p72-input: TestCheckedViewElementP72 catches exit 0 when a compatible string replaces the boolean misfit. This is an input substitution, not a bypass mutant.
+- in-empty-selector: go test ./internal/lower -run '^TestViewInEmptyKeyControl$' -count=1 -v -timeout 90s catches the unrelated count check introduced by the old empty-string sentinel.
+- spread-method: TestViewSpreadMethodRefused catches removal of the conservative own-slot refusal with got <nil>.
+All ten accepted mutations are runtime or lowering assertion failures, with valid Go/C and no sanitizer failure. The final eight oracle mutation subprocesses return test exit 1; the runner succeeds. Initial stage mutation evidence remains archived separately.
+
+An extra p19 compatible-producer substitution was rejected as a valid mutant because it exposed a separate native result-boxing defect. The producer returns adamic_value.number, but a synthesized callable-union invocation reads that result as .reference and passes it to adamic_union_to_string. Source Node and JavaScript print 6; sanitized native reports SEGV in adamic_union_to_string, and release exits -1. p19-native-call-gap.a, its generated .c.txt and p19-producer-mutant.log preserve this observation. This invocation defect is not fixed or claimed covered by native success controls; the native p19 controls observe the checked callable without invoking the synthesized union signature. The original p19 misfit still stops correctly before invocation. No backend emitter was edited.
+
+Delivered syntax commits: spread 239a3a8f plus correction/counts 54a37a21, in 2affad66, keys 785b665b, values 577c3271, entries 218592bb. Each green syntax was pushed before starting the next. The final coverage/selector commit SHA is reported in the final response. This finishes the requested member-read routing and activates p19/p72 coverage toward task #1fk58py item 132. Remaining obligations: native callable-union numeric-result boxing, checked method enumeration without an own-slot certificate, and tuple/destructuring consumers outside object member bindings.

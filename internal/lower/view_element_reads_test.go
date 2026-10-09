@@ -118,3 +118,31 @@ func TestViewEntriesControl(t *testing.T) {
 	source := viewElementFixture(t, "entries")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 9", "count: 7", 1))
 }
+
+func TestViewElementP19Control(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p19")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "(value: string): number => value.length", "(value: number): number => value + 1", 1))
+}
+func TestViewElementP72Control(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p72")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "value: true", "value: 'hello'", 1))
+}
+
+func TestViewElementP19StringControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p19")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "(value: string): number => value.length", "(value: number): string => `value${value}`", 1))
+}
+func TestViewElementP72NumberControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p72")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "value: true", "value: 5", 1))
+}
+
+func TestViewInEmptyKeyControl(t *testing.T) {
+	t.Parallel()
+	// Presence of the empty key must not demand the unrelated count contract.
+	lowersAndAgreesWithNodeNative(t, `interface Root {readonly kind:1} interface View extends Root {readonly '':number;readonly count:number} const raw={kind:1 as const, '':7, count:'unread'}; const base:Root=raw; const view=base as View; console.log(String('' in view));`)
+}

@@ -47,13 +47,13 @@ func (l *lowering) readViewMember(node *ast.Node, property ir.Property, field *a
 
 // checkedViewMembers holds the source once and checks declared own slots before
 // exposing their presence or copying values. Copies retain hidden fields and tags.
-func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expression, member string) (ir.Expression, error) {
+func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expression, member *ast.Node) (ir.Expression, error) {
 	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source))
 	b := l.libraryArrayBuilder([]ir.Expression{value})
 	held := b.read(b.parameters[0])
 	checks := []ir.Statement{}
 	for _, field := range l.checker.GetPropertiesOfType(receiver) {
-		if member != "" && field.Name != member {
+		if member != nil && field.Name != member.Text() {
 			continue
 		}
 		if accessorSymbol(field) {

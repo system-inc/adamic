@@ -65,7 +65,7 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(binary.Right, "in on this runtime representation")
 	}
 	if object.Type() == ir.Object {
-		object, err = l.checkedViewMembers(node, binary.Right, object, key.Text())
+		object, err = l.checkedViewMembers(node, binary.Right, object, key)
 		if err != nil {
 			return nil, err
 		}
