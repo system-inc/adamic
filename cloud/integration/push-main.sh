@@ -30,6 +30,7 @@
 # usage: cloud/integration/push-main.sh [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 #        cloud/integration/push-main.sh [same options] (--fast-gate | --full-gate) <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
 #        cloud/integration/push-main.sh --test-only <full sha> "<branches landed>"
+#        cloud/integration/push-main.sh --deletion <full sha> "<branches landed>"
 set -euo pipefail
 
 fastGate=""
@@ -39,6 +40,7 @@ gateKind=fast
 smokeReviewed=no
 pauseException=""
 testOnly=no
+deletion=no
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
@@ -60,6 +62,10 @@ while [ "$#" -gt 0 ]; do
 	# --test-only <sha> "<branches>": a change that touches only tests goes to main with no gate in front of it;
 	# Loom's next whole-suite run of main is its check (Kirk, Oct 8). The merged diff must be tests only.
 	--test-only) testOnly=yes; shift ;;
+	# --deletion <sha> "<branches>": a change that only deletes files no code reads goes to main with no gate,
+	# since a gate of it would test main's tree unchanged (@system_adamic, Oct 9 07:53Z: "a deletion no code
+	# reads lands ungated", first for the velocity table's CSV). It rides the test-only lane's checks.
+	--deletion) testOnly=yes; deletion=yes; shift ;;
 	--revert) pauseException=revert; shift ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
@@ -72,6 +78,7 @@ if [ "$testOnly" = yes ]; then
 	fi
 	sha=$1
 	branches="$2; test-only lane, no gate (Kirk, Oct 8)"
+	[ "$deletion" = no ] || branches="$2; deletion no code reads, no gate (@system_adamic, Oct 9 07:53Z)"
 	gateMinutes=0
 	pass=0
 	fail=0
@@ -488,7 +495,7 @@ PAUSE
 case "$pause" in
 red\ *)
 	if [ "$testOnly" = yes ]; then
-		echo "Landing test-only files while main's whole gate is red (${pause#red }); they can't change it."
+		echo "Landing $([ "$deletion" = yes ] && echo 'a deletion no code reads' || echo 'test-only files') while main's whole gate is red (${pause#red }); they can't change it."
 	else
 	redLog=$(printf '%s' "$pause" | awk '{print $2}')
 	if [ "$pauseException" = revert ]; then
@@ -533,6 +540,36 @@ if [ "$testOnly" = yes ]; then
 	# Harness directories read only by tests and gates, never by the compiler, runtime, library or a shipped
 	# tool, are allowed too, each added by ruling (@system_adamic, Oct 8: stage3/fixtures and stage3/meter).
 	changed=$(git diff --name-only "$old" "$tree")
+	if [ "$deletion" = yes ]; then
+		# Every path a deletion, in its history too, and none named by code on main or by developer tools'
+		# gate tools, which read main's tree: then nothing that runs can see the change.
+		kept=$(git diff --name-only --diff-filter=d "$old" "$tree")
+		if [ -z "$changed" ] || [ -n "$kept" ]; then
+			echo "refused: not deletions only against main ${old:0:8}: $(printf '%s' "$kept" | head -n 5 | paste -sd ' ' -)" >&2
+			exit 1
+		fi
+		for commit in $(git rev-list --reverse --topo-order --no-merges "${old}..${gated}"); do
+			outside=$(git diff-tree --no-commit-id --name-only --diff-filter=d -r "$commit")
+			if [ -n "$outside" ]; then
+				echo "refused: carries more than deletions: ${commit:0:8} changes $(printf '%s' "$outside" | head -n 3 | paste -sd ' ' -)" >&2
+				exit 1
+			fi
+		done
+		tools=$(git rev-parse -q --verify origin/devtools/fast-gate 2>/dev/null || true)
+		for path in $changed; do
+			for where in "$old" $tools; do
+				if readers=$(git grep -l -F -e "$path" -e "${path##*/}" "$where" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.json' '*.yml' '*.yaml' '*.toml' ':!*/testdata/*'); then
+					echo "refused: code reads ${path}: $(printf '%s\n' "$readers" | sed 's/^[^:]*://' | head -n 3 | paste -sd ' ' -)" >&2
+					exit 1
+				fi
+			done
+		done
+		landingSubject="Land deletion ${gated:0:8} over main ${old:0:8}"
+		landingBody="It only deletes $(printf '%s' "$changed" | paste -sd ' ' -), which no code on main or in developer tools'
+gate tools reads, so a gate would test main's tree unchanged; it lands with no gate (@system_adamic, Oct 9
+07:53Z: a deletion no code reads lands ungated)."
+		echo "Landing deletion ${gated:0:8} over main ${old:0:8}."
+	else
 	nonTest=$(printf '%s\n' "$changed" | grep -v -E "$testOnlyPattern" | grep . || true)
 	if [ -n "$nonTest" ]; then
 		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
@@ -568,6 +605,7 @@ if [ "$testOnly" = yes ]; then
 	landingBody="Every path it changes against main is a test, testdata, review evidence, a shard table or ruled harness,
 so it lands with no gate (Kirk, Oct 8); Loom's next whole-suite run of main is its check."
 	echo "Landing test-only ${gated:0:8} over main ${old:0:8}."
+	fi
 elif git merge-base --is-ancestor "$old" "$gated"; then
 	tree=$(git rev-parse "${gated}^{tree}")
 	landingSubject="Land ${gated:0:8} over main ${old:0:8}"
