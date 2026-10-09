@@ -1,0 +1,3 @@
+[compiler/views-v4 de06d2b2d] Keep existing method receivers when recording explicit this contracts
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+ create mode 100644 internal/oracle/checked_views_v4_method_receiver_test.go

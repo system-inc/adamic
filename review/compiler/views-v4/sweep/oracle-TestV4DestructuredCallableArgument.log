@@ -1,0 +1,17 @@
+=== RUN   TestV4DestructuredCallableArgument
+=== PAUSE TestV4DestructuredCallableArgument
+=== CONT  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: gate cache node miss
+    checked_views_v4_destructured_test.go:20: gate cache node miss
+    checked_views_v4_destructured_test.go:20: native exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument3045622894/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument3045622894/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:20: sanitized exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument3045622894/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument3045622894/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:20: javascript exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument3045622894/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument3045622894/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:21: gate cache node hit
+    checked_views_v4_destructured_test.go:36: gate cache node miss
+    checked_views_v4_destructured_test.go:40: destructured adapter omission caught in native ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4DestructuredCallableArgument (1.06s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.066s

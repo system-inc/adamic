@@ -1,0 +1,10 @@
+=== RUN   TestV4EscapeAdapterCallRefusal
+=== PAUSE TestV4EscapeAdapterCallRefusal
+=== CONT  TestV4EscapeAdapterCallRefusal
+    checked_views_v4_call_apply_test.go:92: gate cache node miss
+--- PASS: TestV4EscapeAdapterCallRefusal (0.20s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.213s

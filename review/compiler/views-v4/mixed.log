@@ -1,0 +1,44 @@
+=== RUN   TestV4MixedCallableFieldBoxing
+=== PAUSE TestV4MixedCallableFieldBoxing
+=== RUN   TestV4MixedCallableFieldArgument
+=== PAUSE TestV4MixedCallableFieldArgument
+=== RUN   TestV4MixedLongFieldDiagnostic
+=== PAUSE TestV4MixedLongFieldDiagnostic
+=== CONT  TestV4MixedCallableFieldBoxing
+=== CONT  TestV4MixedLongFieldDiagnostic
+=== CONT  TestV4MixedCallableFieldArgument
+=== NAME  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: gate cache node miss
+=== NAME  TestV4MixedLongFieldDiagnostic
+    checked_views_v4_mixed_test.go:51: gate cache node miss
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:25: gate cache node miss
+=== NAME  TestV4MixedLongFieldDiagnostic
+    checked_views_v4_mixed_test.go:53: gate cache node miss
+=== NAME  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: gate cache node miss
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:25: gate cache node miss
+--- PASS: TestV4MixedLongFieldDiagnostic (0.60s)
+=== NAME  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in native: exit 0 output "2\n"
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in sanitized: exit 0 output "2\n"
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in javascript: exit 0 output "2\n"
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:25: native exit70 at first call: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4MixedCallableFieldArgument991173184/001/identity.ts:4:128 argument 1 expected producer Payload, view string | Payload
+    checked_views_v4_mixed_test.go:25: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4MixedCallableFieldArgument991173184/001/identity.ts:4:128 argument 1 expected producer Payload, view string | Payload
+    checked_views_v4_mixed_test.go:25: javascript exit70 at first call: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4MixedCallableFieldArgument991173184/001/identity.ts:4:128 argument 1 expected producer Payload, view string | Payload
+--- PASS: TestV4MixedCallableFieldBoxing (0.61s)
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:26: gate cache node hit
+    checked_views_v4_mixed_test.go:40: gate cache node miss
+    checked_views_v4_mixed_test.go:40: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_mixed_test.go:40: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_mixed_test.go:40: guard mutant admitted in javascript: exit 0 output "7\n"
+    checked_views_v4_mixed_test.go:41: mixed aggregate producer-domain omission caught against Node in both backends with sanitizers
+--- PASS: TestV4MixedCallableFieldArgument (0.99s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.995s

@@ -79,7 +79,20 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
    if(contract.ProducerCertified && !(contract.Functions || []).includes(recorded?.function)) return false;
    return adamicViewCallableSignaturesMatch(recorded,expected);
   }
-  if(contract.Kind===3) return false; // awaits views-v3: array element kind
+  if(contract.Kind===3){
+   if(!Array.isArray(value) || !contract.Element) return false;
+   const child=contracts[contract.Element-1];
+   return Object.getOwnPropertyNames(value).filter(key=>String(Number(key))===key && Number.isInteger(Number(key)) && Number(key)>=0 && Number(key)<value.length).every(key=>{
+    const actual=slot(value,key);
+    if(actual===undefined) return false;
+    if(child?.Kind===2 && !child.FixedTuple){
+     if(actual.value===null || typeof actual.value!=='object' || Array.isArray(actual.value) || actual.value instanceof Map) return false;
+     const selectors=(child.Fields || []).filter(field=>!field.Optional && contracts[field.Contract-1]?.Kind===1 && (field.Name==='kind' || contracts[field.Contract-1]?.Allowed?.length));
+     return selectors.every(field=>{const selected=slot(actual.value,field.Name);return selected!==undefined && matches(selected.value,field.Contract,depth+1);});
+    }
+    return matches(actual.value,contract.Element,depth+1);
+   });
+  }
   if(contract.Kind===6) return value===null;
   if(contract.Kind===7) return value===undefined;
   if(contract.Kind===4) return (contract.Members || []).some(member=>matches(value,member,depth+1));

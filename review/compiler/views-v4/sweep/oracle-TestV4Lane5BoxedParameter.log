@@ -1,0 +1,19 @@
+=== RUN   TestV4Lane5BoxedParameter
+=== PAUSE TestV4Lane5BoxedParameter
+=== CONT  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: gate cache node miss
+    checked_views_v4_lane5_test.go:100: gate cache node miss
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in sanitized: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in javascript: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:102: gate cache node miss
+    checked_views_v4_lane5_test.go:102: gate cache node miss
+    checked_views_v4_lane5_test.go:102: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter1068373868/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter1068373868/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:102: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter1068373868/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter1068373868/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:102: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter1068373868/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter1068373868/005/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedParameter (1.05s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.064s

@@ -1,0 +1,17 @@
+=== RUN   TestV4EscapeAdapterApplyArgument
+=== PAUSE TestV4EscapeAdapterApplyArgument
+=== CONT  TestV4EscapeAdapterApplyArgument
+    checked_views_v4_call_apply_test.go:63: gate cache node miss
+    checked_views_v4_call_apply_test.go:63: gate cache node miss
+    checked_views_v4_call_apply_test.go:63: native apply argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument2943167832/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument2943167832/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:63: sanitized apply argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument2943167832/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument2943167832/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:63: javascript apply argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument2943167832/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument2943167832/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:63: native/ASan/UBSan/LSan apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+    checked_views_v4_call_apply_test.go:63: gate cache node miss
+    checked_views_v4_call_apply_test.go:63: JavaScript apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+--- PASS: TestV4EscapeAdapterApplyArgument (0.81s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.819s

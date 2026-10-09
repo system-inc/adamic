@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:2198-2200
+// NotYet: length-form Array construction; not separately named in the census.
+function allocate(s2: string): void {
+    let previous = new Array(s2.length + 1);
+    console.log(`${previous.length}`);
+}
+allocate("abc");

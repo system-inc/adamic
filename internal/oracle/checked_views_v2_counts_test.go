@@ -1,6 +1,9 @@
 package oracle
 
-import "testing"
+import (
+	"path/filepath"
+	"testing"
+)
 
 func init() { additionalFixtureCounts = append(additionalFixtureCounts, checkedViewsV2Counts) }
 func checkedViewsV2Counts(t *testing.T) []string {
@@ -58,6 +61,23 @@ func checkedViewsV2Counts(t *testing.T) []string {
 		"stage3/interface-downcasts/v2/tuple-identity-wrong.a",
 		"stage3/interface-downcasts/v2/undefined-read-write.a",
 	} {
+		// V4's ruled .a escapes stop before emission, so they no longer have
+		// runtime counts. Keep their Node control and path-and-fix refusal here.
+		field := ""
+		switch path {
+		case "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a":
+			field = "view.holder.value"
+		case "stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a", "stage3/interface-downcasts/v2/callable-producer-wrong.a":
+			field = "view.value"
+		}
+		if field != "" {
+			absolute, err := filepath.Abs(filepath.Join(repository, path))
+			if err != nil {
+				t.Fatal(err)
+			}
+			v4UnionReadRefusal(t, absolute, field)
+			continue
+		}
 		rows = append(rows, counted(t, path, false, nil, false, false))
 	}
 	return rows

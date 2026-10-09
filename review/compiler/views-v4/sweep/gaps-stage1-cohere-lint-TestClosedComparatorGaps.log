@@ -1,0 +1,18 @@
+=== RUN   TestClosedComparatorGaps
+=== PAUSE TestClosedComparatorGaps
+=== CONT  TestClosedComparatorGaps
+=== RUN   TestClosedComparatorGaps/3_numeric_or.ts
+=== PAUSE TestClosedComparatorGaps/3_numeric_or.ts
+=== RUN   TestClosedComparatorGaps/2_optional_index.ts
+=== PAUSE TestClosedComparatorGaps/2_optional_index.ts
+=== RUN   TestClosedComparatorGaps/4_last_index_position.ts
+=== PAUSE TestClosedComparatorGaps/4_last_index_position.ts
+=== CONT  TestClosedComparatorGaps/3_numeric_or.ts
+=== CONT  TestClosedComparatorGaps/4_last_index_position.ts
+=== CONT  TestClosedComparatorGaps/2_optional_index.ts
+--- PASS: TestClosedComparatorGaps (0.00s)
+    --- PASS: TestClosedComparatorGaps/3_numeric_or.ts (1.42s)
+    --- PASS: TestClosedComparatorGaps/4_last_index_position.ts (1.42s)
+    --- PASS: TestClosedComparatorGaps/2_optional_index.ts (1.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.686s

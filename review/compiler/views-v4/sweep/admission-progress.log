@@ -1,0 +1,2 @@
+/workspace/adamic/review/compiler/views-v4/sweep/run.py:23: SyntaxWarning: invalid escape sequence '\w'
+  if re.fullmatch('Test\w+',n):jobs.append(('gaps-'+package.replace('/','-')+'-'+n,['go','test','./'+package,'-run','^'+n+'$','-count=1','-timeout','90s','-v']))

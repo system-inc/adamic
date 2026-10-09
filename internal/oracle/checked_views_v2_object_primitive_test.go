@@ -35,10 +35,6 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 	} {
 		t.Run(sample.name, func(t *testing.T) {
 			t.Parallel()
-			if strings.HasPrefix(sample.name, "comment-") {
-				// Array membership needs V3 element-kind metadata and hole-aware reads.
-				t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
-			}
 			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/" + sample.name + ".a")
 			if err != nil {
 				t.Fatal(err)

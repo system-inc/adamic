@@ -1,0 +1,16 @@
+=== RUN   TestV4EscapeAdapterBindRemainingArgument
+=== PAUSE TestV4EscapeAdapterBindRemainingArgument
+=== CONT  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+    checked_views_v4_bind_test.go:102: gate cache node miss
+    checked_views_v4_bind_test.go:102: gate cache node miss
+    checked_views_v4_bind_test.go:102: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: later argument omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+--- PASS: TestV4EscapeAdapterBindRemainingArgument (1.18s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.189s

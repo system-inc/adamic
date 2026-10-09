@@ -1,0 +1,81 @@
+=== RUN   TestCheckedViewV2WrongFamilyMutant
+=== PAUSE TestCheckedViewV2WrongFamilyMutant
+=== RUN   TestCheckedViewV2CallableProducerMutant
+=== PAUSE TestCheckedViewV2CallableProducerMutant
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== PAUSE TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedOptionalCallableControl
+=== PAUSE TestCheckedViewUntaggedOptionalCallableControl
+=== CONT  TestCheckedViewV2WrongFamilyMutant
+=== CONT  TestCheckedViewUntaggedCallableUnion
+=== CONT  TestCheckedViewUntaggedOptionalCallableControl
+=== CONT  TestCheckedViewV2CallableProducerMutant
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-number
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-string
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+=== PAUSE TestCheckedViewUntaggedCallableUnion/wrong
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+=== PAUSE TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-number
+=== CONT  TestCheckedViewUntaggedCallableUnion/wrong
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:97: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:127: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:225: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:93: gate cache node miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:52: gate cache node hit
+=== CONT  TestCheckedViewUntaggedCallableUnion/nested
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:53: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:93: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:234: gate cache node hit
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-string
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:239: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:97: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:101: gate cache node hit
+    checked_views_v2_source_test.go:102: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: javascript: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:131: gate cache node miss
+--- PASS: TestCheckedViewUntaggedOptionalCallableControl (1.12s)
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:78: gate cache node miss
+    checked_views_v2_migration_test.go:82: wrong family caught by native-sanitized: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+    checked_views_v2_migration_test.go:82: wrong family caught by javascript: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_migration_test.go:82: wrong family caught by native: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+--- PASS: TestCheckedViewV2WrongFamilyMutant (1.32s)
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:101: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:254: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:102: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedCallableUnion (0.00s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (0.47s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (0.31s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (1.00s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (0.73s)
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:258: producer certificate removal caught by javascript: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:258: producer certificate removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:258: producer certificate removal caught by native-sanitized: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2CallableProducerMutant (1.55s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.597s

@@ -1,0 +1,1305 @@
+=== RUN   TestV4EscapeAdapterBoundCallRefusal
+=== PAUSE TestV4EscapeAdapterBoundCallRefusal
+=== RUN   TestV4EscapeAdapterBoundApplyRefusal
+=== PAUSE TestV4EscapeAdapterBoundApplyRefusal
+=== RUN   TestV4EscapeAdapterBoundBindRefusal
+=== PAUSE TestV4EscapeAdapterBoundBindRefusal
+=== RUN   TestV4EscapeAdapterBoundAliasCallRefusal
+=== PAUSE TestV4EscapeAdapterBoundAliasCallRefusal
+=== RUN   TestV4EscapeAdapterBoundHelperApplyRefusal
+=== PAUSE TestV4EscapeAdapterBoundHelperApplyRefusal
+=== RUN   TestV4EscapeAdapterBoundHelperBindRefusal
+=== PAUSE TestV4EscapeAdapterBoundHelperBindRefusal
+=== RUN   TestV4EscapeAdapterBoundViewRefusal
+=== PAUSE TestV4EscapeAdapterBoundViewRefusal
+=== RUN   TestV4EscapeAdapterBindCompatible
+=== PAUSE TestV4EscapeAdapterBindCompatible
+=== RUN   TestV4EscapeAdapterBindPrefix
+=== PAUSE TestV4EscapeAdapterBindPrefix
+=== RUN   TestV4EscapeAdapterBindRemainingArgument
+=== PAUSE TestV4EscapeAdapterBindRemainingArgument
+=== RUN   TestV4EscapeAdapterBindResult
+=== PAUSE TestV4EscapeAdapterBindResult
+=== RUN   TestV4EscapeAdapterBindReceiverAndCapture
+=== PAUSE TestV4EscapeAdapterBindReceiverAndCapture
+=== RUN   TestV4EscapeAdapterBindCountAndSurface
+=== PAUSE TestV4EscapeAdapterBindCountAndSurface
+=== RUN   TestV4EscapeAdapterBindBoxed
+=== PAUSE TestV4EscapeAdapterBindBoxed
+=== RUN   TestV4EscapeAdapterBindAllArguments
+=== PAUSE TestV4EscapeAdapterBindAllArguments
+=== RUN   TestV4EscapeAdapterBindNameOwnership
+=== PAUSE TestV4EscapeAdapterBindNameOwnership
+=== RUN   TestV4EscapeAdapterBlameArgument
+=== PAUSE TestV4EscapeAdapterBlameArgument
+=== RUN   TestV4EscapeAdapterBlameResult
+=== PAUSE TestV4EscapeAdapterBlameResult
+=== RUN   TestV4EscapeAdapterBlameCall
+=== PAUSE TestV4EscapeAdapterBlameCall
+=== RUN   TestV4EscapeAdapterBlameApply
+=== PAUSE TestV4EscapeAdapterBlameApply
+=== RUN   TestV4EscapeAdapterBlameBound
+=== PAUSE TestV4EscapeAdapterBlameBound
+=== RUN   TestV4EscapeAdapterBlameNestedResult
+=== PAUSE TestV4EscapeAdapterBlameNestedResult
+=== RUN   TestV4EscapeAdapterBlameRuntimeCallback
+=== PAUSE TestV4EscapeAdapterBlameRuntimeCallback
+=== RUN   TestV4EscapeAdapterCallArgument
+=== PAUSE TestV4EscapeAdapterCallArgument
+=== RUN   TestV4EscapeAdapterCallResult
+=== PAUSE TestV4EscapeAdapterCallResult
+=== RUN   TestV4EscapeAdapterApplyArgument
+=== PAUSE TestV4EscapeAdapterApplyArgument
+=== RUN   TestV4EscapeAdapterApplyResult
+=== PAUSE TestV4EscapeAdapterApplyResult
+=== RUN   TestV4EscapeAdapterCallApplyReceiver
+=== PAUSE TestV4EscapeAdapterCallApplyReceiver
+=== RUN   TestV4EscapeAdapterCallApplyCount
+=== PAUSE TestV4EscapeAdapterCallApplyCount
+=== RUN   TestV4EscapeAdapterCallRefusal
+=== PAUSE TestV4EscapeAdapterCallRefusal
+=== RUN   TestV4EscapeAdapterSurfaceSortCallback
+=== PAUSE TestV4EscapeAdapterSurfaceSortCallback
+=== RUN   TestV4EscapeAdapterSurfaceRegExpCallback
+=== PAUSE TestV4EscapeAdapterSurfaceRegExpCallback
+=== RUN   TestV4EscapeAdapterCallReceiverCheck
+=== PAUSE TestV4EscapeAdapterCallReceiverCheck
+=== RUN   TestV4EscapeAdapterCallReceiverRefusal
+=== PAUSE TestV4EscapeAdapterCallReceiverRefusal
+=== RUN   TestV4EscapeAdapterCallApplyZeroReceiver
+=== PAUSE TestV4EscapeAdapterCallApplyZeroReceiver
+=== RUN   TestV4EscapeAdapterConstructSignatureRefusal
+=== PAUSE TestV4EscapeAdapterConstructSignatureRefusal
+=== RUN   TestV4EscapeAdapterWithoutConstructSignatureRefusal
+=== PAUSE TestV4EscapeAdapterWithoutConstructSignatureRefusal
+=== RUN   TestV4DestructuredCallableArgument
+=== PAUSE TestV4DestructuredCallableArgument
+=== RUN   TestV4DestructuredCallableReadOnly
+=== PAUSE TestV4DestructuredCallableReadOnly
+=== RUN   TestV4DestructuredCallableAdamicRefusal
+=== PAUSE TestV4DestructuredCallableAdamicRefusal
+=== RUN   TestV4DirectArgument
+=== PAUSE TestV4DirectArgument
+=== RUN   TestV4DirectResult
+=== PAUSE TestV4DirectResult
+=== RUN   TestV4DirectCompatible
+=== PAUSE TestV4DirectCompatible
+=== RUN   TestV4DirectMethod
+=== PAUSE TestV4DirectMethod
+=== RUN   TestV4DirectObjectArgument
+=== PAUSE TestV4DirectObjectArgument
+=== RUN   TestV4DirectArrayArgument
+=== PAUSE TestV4DirectArrayArgument
+=== RUN   TestV4DirectCalleeOrder
+=== PAUSE TestV4DirectCalleeOrder
+=== RUN   TestV4DirectBoxed
+=== PAUSE TestV4DirectBoxed
+=== RUN   TestV4DirectUnused
+=== PAUSE TestV4DirectUnused
+=== RUN   TestV4DirectOptionalReceiver
+=== PAUSE TestV4DirectOptionalReceiver
+=== RUN   TestV4DirectVoid
+=== PAUSE TestV4DirectVoid
+=== RUN   TestV4DirectNull
+=== PAUSE TestV4DirectNull
+=== RUN   TestV4DirectUnknownProducerParameter
+=== PAUSE TestV4DirectUnknownProducerParameter
+=== RUN   TestV4DirectClassResult
+=== PAUSE TestV4DirectClassResult
+=== RUN   TestV4DirectRecursiveRefusal
+=== PAUSE TestV4DirectRecursiveRefusal
+=== RUN   TestV4DirectProducerRefusal
+=== PAUSE TestV4DirectProducerRefusal
+=== RUN   TestV4EscapeArgumentRefusal
+=== PAUSE TestV4EscapeArgumentRefusal
+=== RUN   TestV4EscapeResultRefusal
+=== PAUSE TestV4EscapeResultRefusal
+=== RUN   TestV4EscapePassedRefusal
+=== PAUSE TestV4EscapePassedRefusal
+=== RUN   TestV4EscapeReturnedRefusal
+=== PAUSE TestV4EscapeReturnedRefusal
+=== RUN   TestV4EscapeMixedProducerRefusal
+=== PAUSE TestV4EscapeMixedProducerRefusal
+=== RUN   TestV4EscapeCompatible
+=== PAUSE TestV4EscapeCompatible
+=== RUN   TestV4EscapeTypeScriptBoundary
+=== PAUSE TestV4EscapeTypeScriptBoundary
+=== RUN   TestV4EscapeOrdinaryRead
+=== PAUSE TestV4EscapeOrdinaryRead
+=== RUN   TestV4EscapeAdapterArgument
+=== PAUSE TestV4EscapeAdapterArgument
+=== RUN   TestV4EscapeAdapterResult
+=== PAUSE TestV4EscapeAdapterResult
+=== RUN   TestV4EscapeAdapterIdentity
+=== PAUSE TestV4EscapeAdapterIdentity
+=== RUN   TestV4EscapeAdapterNoStacking
+=== PAUSE TestV4EscapeAdapterNoStacking
+=== RUN   TestV4EscapeAdapterUnusedMisfit
+=== PAUSE TestV4EscapeAdapterUnusedMisfit
+=== RUN   TestV4EscapeAdapterReturned
+=== PAUSE TestV4EscapeAdapterReturned
+=== RUN   TestV4EscapeAdapterBoxed
+=== PAUSE TestV4EscapeAdapterBoxed
+=== RUN   TestV4EscapeAdapterCounted
+=== PAUSE TestV4EscapeAdapterCounted
+=== RUN   TestV4EscapeAdapterUncheckableRefusal
+=== PAUSE TestV4EscapeAdapterUncheckableRefusal
+=== RUN   TestV4EscapeAdapterNull
+=== PAUSE TestV4EscapeAdapterNull
+=== RUN   TestV4EscapeAdapterVoid
+=== PAUSE TestV4EscapeAdapterVoid
+=== RUN   TestV4GenericProducerInstantiation
+=== PAUSE TestV4GenericProducerInstantiation
+=== RUN   TestV4GenericErasedReadRefusal
+=== PAUSE TestV4GenericErasedReadRefusal
+=== RUN   TestV4GenericViewCallInstantiation
+=== PAUSE TestV4GenericViewCallInstantiation
+=== RUN   TestV4EscapeAdapterConstructorIdentity
+=== PAUSE TestV4EscapeAdapterConstructorIdentity
+=== RUN   TestV4EscapeAdapterCollectionKeyContract
+=== PAUSE TestV4EscapeAdapterCollectionKeyContract
+=== RUN   TestV4EscapeAdapterScalarIdentityControls
+=== PAUSE TestV4EscapeAdapterScalarIdentityControls
+=== RUN   TestV4Lane5FactoryIdentifier
+=== PAUSE TestV4Lane5FactoryIdentifier
+=== RUN   TestV4Lane5FactoryStringLiteral
+=== PAUSE TestV4Lane5FactoryStringLiteral
+=== RUN   TestV4Lane5FactoryUniqueName
+=== PAUSE TestV4Lane5FactoryUniqueName
+=== RUN   TestV4Lane5FactoryImport
+=== PAUSE TestV4Lane5FactoryImport
+=== RUN   TestV4Lane5FactoryYield
+=== PAUSE TestV4Lane5FactoryYield
+=== RUN   TestV4Lane5FactoryResult
+=== PAUSE TestV4Lane5FactoryResult
+=== RUN   TestV4Lane5FactoryClone
+=== PAUSE TestV4Lane5FactoryClone
+=== RUN   TestV4Lane5FactoryModifier
+=== PAUSE TestV4Lane5FactoryModifier
+=== RUN   TestV4Lane5FactoryWiderWritePending
+=== PAUSE TestV4Lane5FactoryWiderWritePending
+=== RUN   TestV4Lane5BoxedParameter
+=== PAUSE TestV4Lane5BoxedParameter
+=== RUN   TestV4Lane5BoxedParameterMembers
+=== PAUSE TestV4Lane5BoxedParameterMembers
+=== RUN   TestV4Lane5BoxedResult
+=== PAUSE TestV4Lane5BoxedResult
+=== RUN   TestV4Lane5BoxedResultMembers
+=== PAUSE TestV4Lane5BoxedResultMembers
+=== RUN   TestV4Lane5SkipAdapterMutant
+=== PAUSE TestV4Lane5SkipAdapterMutant
+=== RUN   TestV4Lane5BoxedAdamicRefusal
+=== PAUSE TestV4Lane5BoxedAdamicRefusal
+=== RUN   TestV4Lane5FactoryWiderWriteRefusal
+=== PAUSE TestV4Lane5FactoryWiderWriteRefusal
+=== RUN   TestV4Lane5FactoryReadonlyTargetControl
+=== PAUSE TestV4Lane5FactoryReadonlyTargetControl
+=== RUN   TestV4MixedCallableFieldBoxing
+=== PAUSE TestV4MixedCallableFieldBoxing
+=== RUN   TestV4MixedCallableFieldArgument
+=== PAUSE TestV4MixedCallableFieldArgument
+=== RUN   TestV4MixedLongFieldDiagnostic
+=== PAUSE TestV4MixedLongFieldDiagnostic
+=== RUN   TestV4EscapeAdapterDynamicApplyRefusal
+=== PAUSE TestV4EscapeAdapterDynamicApplyRefusal
+=== RUN   TestV4EscapeAdapterPrimitiveCallRefusal
+=== PAUSE TestV4EscapeAdapterPrimitiveCallRefusal
+=== RUN   TestV4EscapeAdapterPrimitiveApplyRefusal
+=== PAUSE TestV4EscapeAdapterPrimitiveApplyRefusal
+=== RUN   TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== PAUSE TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== RUN   TestV4EscapeAdapterLength
+=== PAUSE TestV4EscapeAdapterLength
+=== RUN   TestV4EscapeAdapterName
+=== PAUSE TestV4EscapeAdapterName
+=== RUN   TestV4EscapeAdapterSurfaceDefaults
+=== PAUSE TestV4EscapeAdapterSurfaceDefaults
+=== RUN   TestV4EscapeAdapterSurfaceReturned
+=== PAUSE TestV4EscapeAdapterSurfaceReturned
+=== RUN   TestV4EscapeAdapterSurfaceLengthRefusal
+=== PAUSE TestV4EscapeAdapterSurfaceLengthRefusal
+=== RUN   TestV4EscapeAdapterSurfaceNameRefusal
+=== PAUSE TestV4EscapeAdapterSurfaceNameRefusal
+=== RUN   TestV4EscapeAdapterSurfaceComputedName
+=== PAUSE TestV4EscapeAdapterSurfaceComputedName
+=== RUN   TestV4EscapeAdapterSurfaceAnonymousName
+=== PAUSE TestV4EscapeAdapterSurfaceAnonymousName
+=== CONT  TestV4EscapeAdapterBoundCallRefusal
+=== CONT  TestV4EscapeResultRefusal
+=== CONT  TestV4EscapeAdapterSurfaceAnonymousName
+=== CONT  TestV4EscapeAdapterSurfaceComputedName
+=== CONT  TestV4EscapeAdapterSurfaceNameRefusal
+    checked_views_v4_surface_test.go:103: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundCallRefusal
+    checked_views_v4_bind_refusals_test.go:41: gate cache node miss
+=== NAME  TestV4EscapeResultRefusal
+    checked_views_v4_escape_test.go:65: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceAnonymousName
+    checked_views_v4_surface_test.go:125: gate cache node miss
+--- PASS: TestV4EscapeResultRefusal (0.33s)
+=== CONT  TestV4EscapeAdapterSurfaceLengthRefusal
+--- PASS: TestV4EscapeAdapterSurfaceNameRefusal (0.34s)
+=== CONT  TestV4EscapeAdapterSurfaceReturned
+=== NAME  TestV4EscapeAdapterBoundCallRefusal
+    checked_views_v4_bind_refusals_test.go:41: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundCallRefusal2728304595/001/bound-surface.ts:4:130: Adamic 0.1 refuses call on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundCallRefusal (0.38s)
+=== CONT  TestV4EscapeAdapterSurfaceDefaults
+=== NAME  TestV4EscapeAdapterSurfaceLengthRefusal
+    checked_views_v4_surface_test.go:95: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceReturned
+    checked_views_v4_surface_test.go:90: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceDefaults
+    checked_views_v4_surface_test.go:77: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceLengthRefusal (0.25s)
+=== CONT  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: native sanitized surface counts: [3 3 5 6 3 0]
+=== NAME  TestV4EscapeAdapterSurfaceAnonymousName
+    checked_views_v4_surface_test.go:125: native sanitized surface counts: [3 3 5 6 3 0]
+=== NAME  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceAnonymousName
+    checked_views_v4_surface_test.go:125: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceComputedName (0.90s)
+=== CONT  TestV4EscapeAdapterLength
+--- PASS: TestV4EscapeAdapterSurfaceAnonymousName (0.92s)
+=== CONT  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== NAME  TestV4EscapeAdapterSurfaceReturned
+    checked_views_v4_surface_test.go:90: native sanitized surface counts: [7 7 12 19 7 0]
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: gate cache node miss
+=== NAME  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:47: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceDefaults
+    checked_views_v4_surface_test.go:77: native sanitized surface counts: [5 5 5 8 5 0]
+=== NAME  TestV4EscapeAdapterSurfaceReturned
+    checked_views_v4_surface_test.go:90: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceReturned (0.79s)
+=== CONT  TestV4EscapeAdapterPrimitiveApplyRefusal
+=== NAME  TestV4EscapeAdapterSurfaceDefaults
+    checked_views_v4_surface_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:47: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterNullablePrimitiveCallRefusal2417895575/001/unsupported-surface.ts:4:144: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterNullablePrimitiveCallRefusal (0.25s)
+=== CONT  TestV4EscapeAdapterPrimitiveCallRefusal
+=== NAME  TestV4EscapeAdapterPrimitiveApplyRefusal
+    checked_views_v4_surface_refusals_test.go:43: gate cache node miss
+=== NAME  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: native sanitized surface counts: [3 3 6 8 3 0]
+--- PASS: TestV4EscapeAdapterSurfaceDefaults (0.85s)
+=== CONT  TestV4EscapeAdapterDynamicApplyRefusal
+=== NAME  TestV4EscapeAdapterPrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:39: gate cache node miss
+=== NAME  TestV4EscapeAdapterDynamicApplyRefusal
+    checked_views_v4_surface_refusals_test.go:35: gate cache node miss
+=== NAME  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterPrimitiveApplyRefusal
+    checked_views_v4_surface_refusals_test.go:43: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterPrimitiveApplyRefusal77072343/001/unsupported-surface.ts:4:145: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterPrimitiveApplyRefusal (0.25s)
+=== CONT  TestV4MixedLongFieldDiagnostic
+    checked_views_v4_mixed_test.go:51: gate cache node hit
+=== NAME  TestV4EscapeAdapterPrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:39: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterPrimitiveCallRefusal109922207/001/unsupported-surface.ts:4:144: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterPrimitiveCallRefusal (0.31s)
+=== CONT  TestV4MixedCallableFieldArgument
+=== NAME  TestV4EscapeAdapterDynamicApplyRefusal
+    checked_views_v4_surface_refusals_test.go:35: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterDynamicApplyRefusal4272130247/001/unsupported-surface.ts:4:155: Adamic 0.1 refuses apply with a dynamic argument list; spell the arguments in a dense literal or use call until dynamic apply argument lists are checked
+--- PASS: TestV4EscapeAdapterDynamicApplyRefusal (0.28s)
+=== CONT  TestV4MixedCallableFieldBoxing
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: native sanitized surface counts: [5 5 5 9 5 0]
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:25: gate cache node miss
+=== NAME  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: gate cache node miss
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: gate cache node miss
+=== NAME  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: native/ASan/UBSan/LSan own-surface mutant caught: expected "producer\n", got "\n"
+    checked_views_v4_surface_test.go:67: gate cache node miss
+    checked_views_v4_surface_test.go:67: JavaScript own-surface mutant caught: expected "producer\n", got "\n"
+--- PASS: TestV4EscapeAdapterName (1.26s)
+=== CONT  TestV4Lane5FactoryReadonlyTargetControl
+    checked_views_v4_lane5_test.go:189: awaits compiler/views-v4: runtime-checkable higher-order callable parameter contracts
+--- SKIP: TestV4Lane5FactoryReadonlyTargetControl (0.00s)
+=== CONT  TestV4Lane5FactoryWiderWriteRefusal
+    checked_views_v4_lane5_test.go:173: gate cache node miss
+=== NAME  TestV4MixedLongFieldDiagnostic
+    checked_views_v4_mixed_test.go:53: gate cache node hit
+--- PASS: TestV4MixedLongFieldDiagnostic (0.63s)
+=== CONT  TestV4Lane5BoxedAdamicRefusal
+    checked_views_v4_lane5_test.go:155: gate cache node miss
+=== NAME  TestV4Lane5FactoryWiderWriteRefusal
+    checked_views_v4_lane5_test.go:182: rank165 refusal: /tmp/adamic-gate/TestV4Lane5FactoryWiderWriteRefusal1256194327/001/wider-write.ts:6:48: Adamic 0.1 refuses a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void would replace; keep onEmitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+--- PASS: TestV4Lane5FactoryWiderWriteRefusal (0.28s)
+=== CONT  TestV4Lane5SkipAdapterMutant
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: native/ASan/UBSan/LSan own-surface mutant caught: expected "3\n", got "2\n"
+    checked_views_v4_surface_test.go:56: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: gate cache node miss
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:25: gate cache node miss
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: JavaScript own-surface mutant caught: expected "3\n", got "2\n"
+--- PASS: TestV4EscapeAdapterLength (1.33s)
+=== CONT  TestV4Lane5BoxedResultMembers
+=== NAME  TestV4Lane5BoxedAdamicRefusal
+    checked_views_v4_lane5_test.go:164: readonly unknown storage grants no .a signature proof: /tmp/adamic-gate/TestV4Lane5BoxedAdamicRefusal2788728262/001/boxed.a:5:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+=== CONT  TestV4Lane5BoxedResult
+=== NAME  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: gate cache node miss
+--- PASS: TestV4Lane5BoxedAdamicRefusal (0.27s)
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:25: javascript exit70 at first call: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4MixedCallableFieldArgument2616665022/001/identity.ts:4:128 argument 1 expected producer Payload, view string | Payload
+    checked_views_v4_mixed_test.go:25: native exit70 at first call: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4MixedCallableFieldArgument2616665022/001/identity.ts:4:128 argument 1 expected producer Payload, view string | Payload
+    checked_views_v4_mixed_test.go:25: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4MixedCallableFieldArgument2616665022/001/identity.ts:4:128 argument 1 expected producer Payload, view string | Payload
+=== NAME  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: gate cache node miss
+=== NAME  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in native: exit 0 output "2\n"
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in sanitized: exit 0 output "2\n"
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in javascript: exit 0 output "2\n"
+--- PASS: TestV4MixedCallableFieldBoxing (0.84s)
+=== CONT  TestV4Lane5BoxedParameterMembers
+=== NAME  TestV4Lane5BoxedResult
+    checked_views_v4_lane5_test.go:113: gate cache node miss
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:26: gate cache node hit
+=== NAME  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:107: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: gate cache node miss
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:40: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: native exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3432141036/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3432141036/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:125: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3432141036/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3432141036/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:125: javascript exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3432141036/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3432141036/001/identity.ts:4:94
+=== NAME  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: gate cache node miss
+=== NAME  TestV4MixedCallableFieldArgument
+    checked_views_v4_mixed_test.go:40: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_mixed_test.go:40: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_mixed_test.go:40: guard mutant admitted in javascript: exit 0 output "7\n"
+    checked_views_v4_mixed_test.go:41: mixed aggregate producer-domain omission caught against Node in both backends with sanitizers
+--- PASS: TestV4MixedCallableFieldArgument (1.46s)
+=== CONT  TestV4Lane5BoxedParameter
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:126: gate cache node hit
+=== NAME  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1692128326/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1692128326/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:117: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1692128326/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1692128326/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:117: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1692128326/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1692128326/001/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedResultMembers (0.74s)
+=== CONT  TestV4Lane5FactoryWiderWritePending
+    checked_views_v4_lane5_test.go:94: awaits compiler/checked-wider-writes: checked write through a wider view
+--- SKIP: TestV4Lane5FactoryWiderWritePending (0.00s)
+=== CONT  TestV4Lane5FactoryModifier
+=== NAME  TestV4Lane5BoxedResult
+    checked_views_v4_lane5_test.go:113: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: gate cache node miss
+=== NAME  TestV4Lane5BoxedResult
+    checked_views_v4_lane5_test.go:113: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResult727292021/001/identity.ts:5:19) result expected view string | number, producer boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResult727292021/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:113: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResult727292021/001/identity.ts:5:19) result expected view string | number, producer boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResult727292021/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:113: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResult727292021/001/identity.ts:5:19) result expected view string | number, producer boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResult727292021/001/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedResult (0.80s)
+=== CONT  TestV4Lane5FactoryClone
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:88: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:107: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:80: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:107: guard mutant admitted in sanitized: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:107: guard mutant admitted in javascript: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:107: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:109: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:141: gate cache node miss
+    checked_views_v4_lane5_test.go:145: skip-adapter mutant caught in native ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4Lane5SkipAdapterMutant (1.29s)
+=== CONT  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:88: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in sanitized: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in javascript: exit 0 output "5\n"
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:80: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:88: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:88: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:88: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:80: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:80: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:80: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:102: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:90: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:83: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:109: gate cache node miss
+    checked_views_v4_lane5_test.go:109: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers3143856986/005/identity.ts:5:19) argument 1 expected producer number | boolean, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers3143856986/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:109: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers3143856986/005/identity.ts:5:19) argument 1 expected producer number | boolean, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers3143856986/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:109: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers3143856986/005/identity.ts:5:19) argument 1 expected producer number | boolean, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers3143856986/005/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedParameterMembers (1.69s)
+=== CONT  TestV4Lane5FactoryYield
+=== NAME  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:69: gate cache node miss
+=== NAME  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: native exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2158171010/001/identity.ts:7:64 result expected view Identifier, producer void
+    checked_views_v4_lane5_test.go:75: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2158171010/001/identity.ts:7:64 result expected view Identifier, producer void
+    checked_views_v4_lane5_test.go:75: javascript exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2158171010/001/identity.ts:7:64 result expected view Identifier, producer void
+=== CONT  TestV4Lane5FactoryImport
+--- PASS: TestV4Lane5FactoryResult (0.73s)
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:62: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:83: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:90: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:102: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:90: native exit70 at first call: adamic: panic: callable call failed: factory.createModifier at /tmp/adamic-gate/TestV4Lane5FactoryModifier635199837/005/identity.ts:6:79 result expected view ModifierToken<1>, producer { readonly value: string; }
+    checked_views_v4_lane5_test.go:90: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createModifier at /tmp/adamic-gate/TestV4Lane5FactoryModifier635199837/005/identity.ts:6:79 result expected view ModifierToken<1>, producer { readonly value: string; }
+    checked_views_v4_lane5_test.go:90: javascript exit70 at first call: adamic: panic: callable call failed: factory.createModifier at /tmp/adamic-gate/TestV4Lane5FactoryModifier635199837/005/identity.ts:6:79 result expected view ModifierToken<1>, producer { readonly value: string; }
+--- PASS: TestV4Lane5FactoryModifier (1.59s)
+=== CONT  TestV4Lane5FactoryUniqueName
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:83: javascript exit70 at first call: adamic: panic: callable call failed: factory.cloneNode at /tmp/adamic-gate/TestV4Lane5FactoryClone1814139184/005/identity.ts:5:79 result expected view { readonly value: number; readonly label: string; }, producer Node
+    checked_views_v4_lane5_test.go:83: native exit70 at first call: adamic: panic: callable call failed: factory.cloneNode at /tmp/adamic-gate/TestV4Lane5FactoryClone1814139184/005/identity.ts:5:79 result expected view { readonly value: number; readonly label: string; }, producer Node
+    checked_views_v4_lane5_test.go:83: sanitized exit70 at first call: adamic: panic: callable call failed: factory.cloneNode at /tmp/adamic-gate/TestV4Lane5FactoryClone1814139184/005/identity.ts:5:79 result expected view { readonly value: number; readonly label: string; }, producer Node
+--- PASS: TestV4Lane5FactoryClone (1.50s)
+=== CONT  TestV4Lane5FactoryStringLiteral
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:102: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter644608414/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter644608414/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:102: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter644608414/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter644608414/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:102: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter644608414/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter644608414/005/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedParameter (1.64s)
+=== CONT  TestV4Lane5FactoryIdentifier
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:48: gate cache node miss
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:55: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:41: gate cache node miss
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:62: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:69: gate cache node miss
+    checked_views_v4_lane5_test.go:69: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:69: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:69: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:62: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:62: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:62: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:71: gate cache node miss
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:64: gate cache node miss
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:48: gate cache node miss
+    checked_views_v4_lane5_test.go:48: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:48: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:48: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:55: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:41: gate cache node miss
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:55: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:55: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:55: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:50: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:41: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:41: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:41: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:57: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:43: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:71: gate cache node miss
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:64: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:71: native exit70 at first call: adamic: panic: callable call failed: factory.createYieldExpression at /tmp/adamic-gate/TestV4Lane5FactoryYield3469316181/005/identity.ts:9:79 argument 1 expected producer undefined, view AsteriskToken
+    checked_views_v4_lane5_test.go:71: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createYieldExpression at /tmp/adamic-gate/TestV4Lane5FactoryYield3469316181/005/identity.ts:9:79 argument 1 expected producer undefined, view AsteriskToken
+    checked_views_v4_lane5_test.go:71: javascript exit70 at first call: adamic: panic: callable call failed: factory.createYieldExpression at /tmp/adamic-gate/TestV4Lane5FactoryYield3469316181/005/identity.ts:9:79 argument 1 expected producer undefined, view AsteriskToken
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:64: native exit70 at first call: adamic: panic: callable call failed: nodeFactory.createImportClause at /tmp/adamic-gate/TestV4Lane5FactoryImport471960704/005/identity.ts:9:83 argument 1 expected producer boolean, view number | undefined
+    checked_views_v4_lane5_test.go:64: sanitized exit70 at first call: adamic: panic: callable call failed: nodeFactory.createImportClause at /tmp/adamic-gate/TestV4Lane5FactoryImport471960704/005/identity.ts:9:83 argument 1 expected producer boolean, view number | undefined
+    checked_views_v4_lane5_test.go:64: javascript exit70 at first call: adamic: panic: callable call failed: nodeFactory.createImportClause at /tmp/adamic-gate/TestV4Lane5FactoryImport471960704/005/identity.ts:9:83 argument 1 expected producer boolean, view number | undefined
+--- PASS: TestV4Lane5FactoryYield (1.72s)
+=== CONT  TestV4EscapeAdapterScalarIdentityControls
+--- PASS: TestV4Lane5FactoryImport (1.62s)
+=== CONT  TestV4EscapeAdapterCollectionKeyContract
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:216: gate cache node miss
+=== NAME  TestV4EscapeAdapterCollectionKeyContract
+    checked_views_v4_identity_test.go:200: gate cache node miss
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:50: gate cache node miss
+    checked_views_v4_lane5_test.go:50: native exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral2793982770/005/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+    checked_views_v4_lane5_test.go:50: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral2793982770/005/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+    checked_views_v4_lane5_test.go:50: javascript exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral2793982770/005/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+--- PASS: TestV4Lane5FactoryStringLiteral (1.41s)
+=== CONT  TestV4EscapeAdapterConstructorIdentity
+    checked_views_v4_identity_test.go:190: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:43: gate cache node miss
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:57: gate cache node miss
+=== NAME  TestV4EscapeAdapterConstructorIdentity
+    checked_views_v4_identity_test.go:190: source Node: exit=0 stdout="true\n"
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:57: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createUniqueName at /tmp/adamic-gate/TestV4Lane5FactoryUniqueName17397669/005/identity.ts:8:79 argument 3 expected producer number | undefined, view string | GeneratedNamePart | undefined
+    checked_views_v4_lane5_test.go:57: javascript exit70 at first call: adamic: panic: callable call failed: factory.createUniqueName at /tmp/adamic-gate/TestV4Lane5FactoryUniqueName17397669/005/identity.ts:8:79 argument 3 expected producer number | undefined, view string | GeneratedNamePart | undefined
+    checked_views_v4_lane5_test.go:57: native exit70 at first call: adamic: panic: callable call failed: factory.createUniqueName at /tmp/adamic-gate/TestV4Lane5FactoryUniqueName17397669/005/identity.ts:8:79 argument 3 expected producer number | undefined, view string | GeneratedNamePart | undefined
+--- PASS: TestV4Lane5FactoryUniqueName (1.65s)
+=== CONT  TestV4GenericViewCallInstantiation
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:43: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryIdentifier3957407742/005/identity.ts:7:79 argument 2 expected producer string | undefined, view number | undefined
+    checked_views_v4_lane5_test.go:43: javascript exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryIdentifier3957407742/005/identity.ts:7:79 argument 2 expected producer string | undefined, view number | undefined
+    checked_views_v4_lane5_test.go:43: native exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryIdentifier3957407742/005/identity.ts:7:79 argument 2 expected producer string | undefined, view number | undefined
+--- PASS: TestV4Lane5FactoryIdentifier (1.64s)
+=== CONT  TestV4GenericErasedReadRefusal
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:88: gate cache node miss
+=== NAME  TestV4GenericErasedReadRefusal
+    checked_views_v4_generics_test.go:57: gate cache node miss
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: gate cache node miss
+=== NAME  TestV4EscapeAdapterCollectionKeyContract
+    checked_views_v4_identity_test.go:202: gate cache node miss
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+--- PASS: TestV4EscapeAdapterCollectionKeyContract (0.76s)
+=== CONT  TestV4GenericProducerInstantiation
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:216: gate cache node miss
+=== NAME  TestV4EscapeAdapterConstructorIdentity
+    checked_views_v4_identity_test.go:190: gate cache node miss
+=== NAME  TestV4GenericErasedReadRefusal
+    checked_views_v4_generics_test.go:69: erased relation refused: /tmp/adamic-gate/TestV4GenericErasedReadRefusal2748172695/001/erased.ts:4:73: Adamic 0.1 refuses an escaping callable read of view.run with an unsupported value contract; prove the callable relation or use a callable with runtime-checkable parameter and result types
+--- PASS: TestV4GenericErasedReadRefusal (0.34s)
+=== CONT  TestV4EscapeAdapterVoid
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:21: gate cache node miss
+=== NAME  TestV4EscapeAdapterVoid
+    checked_views_v4_escape_test.go:373: gate cache node miss
+--- PASS: TestV4EscapeAdapterConstructorIdentity (0.68s)
+=== CONT  TestV4EscapeAdapterNull
+    checked_views_v4_escape_test.go:364: gate cache node miss
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:90: gate cache node miss
+    checked_views_v4_generics_test.go:94: sanitized view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation821699858/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:94: javascript view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation821699858/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:94: native view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation821699858/001/identity.ts:4:69 result expected view "ok", producer string
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:23: gate cache node miss
+=== NAME  TestV4EscapeAdapterVoid
+    checked_views_v4_escape_test.go:373: gate cache node miss
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:27: native actual instantiation checked: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4GenericProducerInstantiation1785131458/001/identity.ts:5:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4GenericProducerInstantiation1785131458/001/identity.ts:5:114
+    checked_views_v4_generics_test.go:27: sanitized actual instantiation checked: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4GenericProducerInstantiation1785131458/001/identity.ts:5:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4GenericProducerInstantiation1785131458/001/identity.ts:5:114
+    checked_views_v4_generics_test.go:27: javascript actual instantiation checked: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4GenericProducerInstantiation1785131458/001/identity.ts:5:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4GenericProducerInstantiation1785131458/001/identity.ts:5:114
+=== NAME  TestV4EscapeAdapterVoid
+    checked_views_v4_escape_test.go:373: guard mutant admitted in sanitized: exit 0 output "done\n"
+    checked_views_v4_escape_test.go:373: guard mutant admitted in javascript: exit 0 output "done\n"
+    checked_views_v4_escape_test.go:373: guard mutant admitted in native: exit 0 output "done\n"
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: gate cache node miss
+--- PASS: TestV4EscapeAdapterVoid (0.82s)
+=== CONT  TestV4EscapeAdapterUncheckableRefusal
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+=== NAME  TestV4EscapeAdapterUncheckableRefusal
+    checked_views_v4_escape_test.go:351: gate cache node miss
+--- PASS: TestV4EscapeAdapterScalarIdentityControls (1.69s)
+=== CONT  TestV4EscapeAdapterCounted
+=== NAME  TestV4EscapeAdapterNull
+    checked_views_v4_escape_test.go:364: gate cache node miss
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:106: gate cache node miss
+=== NAME  TestV4EscapeAdapterNull
+    checked_views_v4_escape_test.go:364: guard mutant admitted in native: exit 0 output "true\n"
+    checked_views_v4_escape_test.go:364: guard mutant admitted in sanitized: exit 0 output "true\n"
+    checked_views_v4_escape_test.go:364: guard mutant admitted in javascript: exit 0 output "true\n"
+--- PASS: TestV4EscapeAdapterNull (0.86s)
+=== CONT  TestV4EscapeAdapterBoxed
+=== NAME  TestV4EscapeAdapterCounted
+    checked_views_v4_escape_test.go:332: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoxed
+    checked_views_v4_escape_test.go:323: gate cache node miss
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:106: guard mutant admitted in native: exit 0 output "producer\nbad\n"
+    checked_views_v4_generics_test.go:106: guard mutant admitted in sanitized: exit 0 output "producer\nbad\n"
+    checked_views_v4_generics_test.go:106: guard mutant admitted in javascript: exit 0 output "producer\nbad\n"
+--- PASS: TestV4GenericViewCallInstantiation (1.40s)
+=== CONT  TestV4EscapeAdapterReturned
+--- PASS: TestV4EscapeAdapterUncheckableRefusal (0.28s)
+=== CONT  TestV4EscapeAdapterUnusedMisfit
+=== NAME  TestV4EscapeAdapterReturned
+    checked_views_v4_escape_test.go:314: gate cache node miss
+=== NAME  TestV4EscapeAdapterUnusedMisfit
+    checked_views_v4_escape_test.go:305: gate cache node miss
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:44: gate cache node miss
+    checked_views_v4_generics_test.go:44: guard mutant admitted in javascript: exit 0 output "read\nproducer\nok\n"
+    checked_views_v4_generics_test.go:44: guard mutant admitted in native: exit 0 output "read\nproducer\nok\n"
+    checked_views_v4_generics_test.go:44: guard mutant admitted in sanitized: exit 0 output "read\nproducer\nok\n"
+    checked_views_v4_generics_test.go:45: instantiation domain omission caught in both backends and sanitized native
+--- PASS: TestV4GenericProducerInstantiation (1.36s)
+=== CONT  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: gate cache node miss
+    checked_views_v4_escape_test.go:201: gate cache node miss
+=== NAME  TestV4EscapeAdapterCounted
+    checked_views_v4_escape_test.go:332: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoxed
+    checked_views_v4_escape_test.go:323: gate cache node miss
+=== NAME  TestV4EscapeAdapterReturned
+    checked_views_v4_escape_test.go:314: gate cache node miss
+=== NAME  TestV4EscapeAdapterCounted
+    checked_views_v4_escape_test.go:332: guard mutant admitted in native: exit 0 output "0:absent\n1:ok\n"
+    checked_views_v4_escape_test.go:332: guard mutant admitted in sanitized: exit 0 output "0:absent\n1:ok\n"
+    checked_views_v4_escape_test.go:332: guard mutant admitted in javascript: exit 0 output "0:absent\n1:ok\n"
+--- PASS: TestV4EscapeAdapterCounted (0.90s)
+=== CONT  TestV4EscapeAdapterIdentity
+=== NAME  TestV4EscapeAdapterBoxed
+    checked_views_v4_escape_test.go:323: guard mutant admitted in javascript: exit 0 output "5\n"
+    checked_views_v4_escape_test.go:323: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_escape_test.go:323: guard mutant admitted in sanitized: exit 0 output "5\n"
+=== NAME  TestV4EscapeAdapterReturned
+    checked_views_v4_escape_test.go:314: guard mutant admitted in native: exit 0 output "ok\nok\n"
+    checked_views_v4_escape_test.go:314: guard mutant admitted in sanitized: exit 0 output "ok\nok\n"
+    checked_views_v4_escape_test.go:314: guard mutant admitted in javascript: exit 0 output "ok\nok\n"
+--- PASS: TestV4EscapeAdapterBoxed (0.84s)
+=== NAME  TestV4EscapeAdapterUnusedMisfit
+    checked_views_v4_escape_test.go:305: gate cache node miss
+=== CONT  TestV4EscapeAdapterResult
+--- PASS: TestV4EscapeAdapterReturned (0.76s)
+=== CONT  TestV4EscapeAdapterArgument
+=== NAME  TestV4EscapeAdapterIdentity
+    checked_views_v4_escape_test.go:196: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: gate cache node miss
+=== NAME  TestV4EscapeAdapterUnusedMisfit
+    checked_views_v4_escape_test.go:305: guard mutant admitted in native: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:305: guard mutant admitted in sanitized: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:305: guard mutant admitted in javascript: exit 0 output "read\n"
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: gate cache node miss
+--- PASS: TestV4EscapeAdapterUnusedMisfit (0.81s)
+=== CONT  TestV4EscapeOrdinaryRead
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: gate cache node miss
+=== NAME  TestV4EscapeOrdinaryRead
+    checked_views_v4_escape_test.go:177: gate cache node miss
+    checked_views_v4_escape_test.go:177: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: gate cache node miss
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: native argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument3720188578/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterArgument3720188578/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:186: sanitized argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument3720188578/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterArgument3720188578/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:186: javascript argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument3720188578/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterArgument3720188578/001/adapter.ts:5:118\n"
+=== NAME  TestV4EscapeAdapterIdentity
+    checked_views_v4_escape_test.go:196: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: javascript result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult3371432794/001/adapter.ts:5:75) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterResult3371432794/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:191: native result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult3371432794/001/adapter.ts:5:75) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterResult3371432794/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:191: sanitized result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult3371432794/001/adapter.ts:5:75) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterResult3371432794/001/adapter.ts:5:118\n"
+=== NAME  TestV4EscapeOrdinaryRead
+    checked_views_v4_escape_test.go:177: gate cache node miss
+--- PASS: TestV4EscapeOrdinaryRead (0.88s)
+=== CONT  TestV4EscapeTypeScriptBoundary
+    checked_views_v4_escape_test.go:164: gate cache node miss
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: gate cache node miss
+=== NAME  TestV4EscapeAdapterIdentity
+    checked_views_v4_escape_test.go:196: native/sanitized unequal-read mutant caught: "true:false:false:true\ntrue:true:true\n1:true:true:updated\n1:true:true\nok\nok\ntrue:true:0:0\n"
+    checked_views_v4_escape_test.go:196: gate cache node miss
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: native argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+    checked_views_v4_escape_test.go:186: sanitized argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+    checked_views_v4_escape_test.go:186: javascript argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: gate cache node miss
+=== NAME  TestV4EscapeAdapterIdentity
+    checked_views_v4_escape_test.go:196: JavaScript unequal-read mutant caught: "true:false:false:true\ntrue:false:false\n2:true:false:updated\n2:true:false\nok\nok\nok\nok\nfalse:true:2:1\n"
+--- PASS: TestV4EscapeAdapterIdentity (1.39s)
+=== CONT  TestV4EscapeCompatible
+--- PASS: TestV4EscapeAdapterArgument (1.36s)
+=== CONT  TestV4EscapeMixedProducerRefusal
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: bounded native allocation/retain rows: zero=[3 3 7 9 3 0] 1000=[1003 1003 5007 4009 4 0] 2000=[2003 2003 10007 8009 4 0]
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: sanitized result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: javascript result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+    checked_views_v4_escape_test.go:191: native result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+=== NAME  TestV4EscapeCompatible
+    checked_views_v4_escape_test.go:138: gate cache node miss
+--- PASS: TestV4EscapeAdapterResult (1.46s)
+=== CONT  TestV4EscapeReturnedRefusal
+=== NAME  TestV4EscapeMixedProducerRefusal
+    checked_views_v4_escape_test.go:91: gate cache node miss
+=== NAME  TestV4EscapeReturnedRefusal
+    checked_views_v4_escape_test.go:83: gate cache node miss
+=== NAME  TestV4EscapeTypeScriptBoundary
+    checked_views_v4_escape_test.go:172: gate cache node miss
+--- PASS: TestV4EscapeMixedProducerRefusal (0.34s)
+=== CONT  TestV4EscapePassedRefusal
+--- PASS: TestV4EscapeReturnedRefusal (0.28s)
+=== CONT  TestV4EscapeAdapterCallRefusal
+=== NAME  TestV4EscapeTypeScriptBoundary
+    checked_views_v4_escape_test.go:172: guard mutant admitted in native: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:172: guard mutant admitted in sanitized: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:172: guard mutant admitted in javascript: exit 0 output "read\n"
+--- PASS: TestV4EscapeTypeScriptBoundary (0.81s)
+=== CONT  TestV4EscapeArgumentRefusal
+=== NAME  TestV4EscapePassedRefusal
+    checked_views_v4_escape_test.go:74: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallRefusal
+    checked_views_v4_call_apply_test.go:92: gate cache node miss
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: native/sanitized unconditional-wrap caught by bounded allocation: [2003 2003 5007 4009 5 0] vs [1003 1003 5007 4009 4 0]
+    checked_views_v4_escape_test.go:201: gate cache node miss
+=== NAME  TestV4EscapeArgumentRefusal
+    checked_views_v4_escape_test.go:57: gate cache node miss
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: gate cache node miss
+--- PASS: TestV4EscapePassedRefusal (0.27s)
+=== CONT  TestV4DirectProducerRefusal
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: JavaScript unconditional-wrap caught by bounded allocation: "ok\nadapter-makes:1001\n"
+--- PASS: TestV4EscapeAdapterNoStacking (2.47s)
+=== CONT  TestV4DirectRecursiveRefusal
+--- PASS: TestV4EscapeAdapterCallRefusal (0.30s)
+=== CONT  TestV4DirectClassResult
+--- PASS: TestV4EscapeArgumentRefusal (0.25s)
+=== CONT  TestV4DirectUnknownProducerParameter
+=== NAME  TestV4EscapeCompatible
+    checked_views_v4_escape_test.go:143: gate cache node miss
+=== NAME  TestV4DirectProducerRefusal
+    checked_views_v4_direct_test.go:339: gate cache node miss
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: gate cache node miss
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: gate cache node miss
+--- PASS: TestV4EscapeCompatible (0.74s)
+=== CONT  TestV4DirectNull
+=== NAME  TestV4DirectRecursiveRefusal
+    checked_views_v4_direct_test.go:317: gate cache node miss
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: gate cache node miss
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: source Node: exit=0 stdout="ok\n"
+--- PASS: TestV4DirectProducerRefusal (0.31s)
+=== CONT  TestV4DirectVoid
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: source Node: exit=0 stdout="true\n"
+--- PASS: TestV4DirectRecursiveRefusal (0.38s)
+=== CONT  TestV4DirectOptionalReceiver
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: gate cache node miss
+=== NAME  TestV4DirectOptionalReceiver
+    checked_views_v4_direct_test.go:260: gate cache node miss
+    checked_views_v4_direct_test.go:260: source Node: exit=0 stdout="undefined\nargument\nok\n"
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: source Node: exit=0 stdout="done\n"
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: gate cache node miss
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: gate cache node miss
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: gate cache node miss
+--- PASS: TestV4DirectClassResult (0.93s)
+=== CONT  TestV4DirectUnused
+--- PASS: TestV4DirectUnknownProducerParameter (0.98s)
+=== CONT  TestV4DirectBoxed
+--- PASS: TestV4DirectNull (0.92s)
+=== CONT  TestV4DirectCalleeOrder
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: gate cache node miss
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: gate cache node miss
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: gate cache node miss
+=== NAME  TestV4DirectOptionalReceiver
+    checked_views_v4_direct_test.go:260: gate cache node miss
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: gate cache node miss
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: source Node: exit=0 stdout="Receiver\n"
+--- PASS: TestV4DirectOptionalReceiver (0.84s)
+=== CONT  TestV4DirectArrayArgument
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: source Node: exit=70 stdout="argument\n"
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: source Node: exit=0 stdout="5\n"
+--- PASS: TestV4DirectVoid (0.97s)
+=== CONT  TestV4DirectObjectArgument
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: gate cache node miss
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: source Node: exit=0 stdout="producer\n"
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: source Node: exit=0 stdout="producer\n"
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: gate cache node miss
+--- PASS: TestV4DirectUnused (0.68s)
+=== CONT  TestV4DirectMethod
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: gate cache node miss
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: gate cache node miss
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: gate cache node miss
+=== CONT  TestV4DirectCompatible
+--- PASS: TestV4DirectBoxed (0.73s)
+--- PASS: TestV4DirectCalleeOrder (0.76s)
+=== CONT  TestV4DirectResult
+=== NAME  TestV4DirectCompatible
+    checked_views_v4_direct_test.go:117: gate cache node miss
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: gate cache node miss
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: gate cache node miss
+--- PASS: TestV4DirectMethod (0.63s)
+=== CONT  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: gate cache node miss
+=== NAME  TestV4DirectCompatible
+    checked_views_v4_direct_test.go:117: gate cache node miss
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:213: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:213: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+--- PASS: TestV4DirectObjectArgument (1.20s)
+=== CONT  TestV4DestructuredCallableAdamicRefusal
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:222: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:222: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+--- PASS: TestV4DirectArrayArgument (1.30s)
+=== CONT  TestV4DestructuredCallableReadOnly
+--- PASS: TestV4DirectCompatible (0.77s)
+=== CONT  TestV4DestructuredCallableArgument
+=== NAME  TestV4DestructuredCallableAdamicRefusal
+    checked_views_v4_destructured_test.go:60: gate cache node miss
+=== NAME  TestV4DestructuredCallableReadOnly
+    checked_views_v4_destructured_test.go:48: gate cache node miss
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: gate cache node miss
+--- PASS: TestV4DestructuredCallableAdamicRefusal (0.25s)
+=== CONT  TestV4EscapeAdapterWithoutConstructSignatureRefusal
+    checked_views_v4_construct_refusals_test.go:54: Node succeeds; checker refuses before lowering: /tmp/adamic-gate/TestV4EscapeAdapterWithoutConstructSignatureRefusal346858642/001/no-construct.ts:5:37: error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.; use a producer with a construct signature directly, or call the callable directly
+--- PASS: TestV4EscapeAdapterWithoutConstructSignatureRefusal (0.19s)
+=== CONT  TestV4EscapeAdapterConstructSignatureRefusal
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+=== NAME  TestV4EscapeAdapterConstructSignatureRefusal
+    checked_views_v4_construct_refusals_test.go:23: gate cache node miss
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: native result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: sanitized result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: javascript result check omission caught: exit 0 output "argument\nbad\n"
+--- PASS: TestV4DirectResult (1.22s)
+=== CONT  TestV4EscapeAdapterCallApplyZeroReceiver
+    checked_views_v4_call_apply_test.go:172: gate cache node miss
+=== NAME  TestV4EscapeAdapterConstructSignatureRefusal
+    checked_views_v4_construct_refusals_test.go:32: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterConstructSignatureRefusal744913179/001/construct.ts:7:60: stage 0 can't lower new an Identifier yet; construct the producer directly with its declared parameter types; checked construction through a view is not implemented
+--- PASS: TestV4EscapeAdapterConstructSignatureRefusal (0.26s)
+=== CONT  TestV4EscapeAdapterCallReceiverRefusal
+=== NAME  TestV4DestructuredCallableReadOnly
+    checked_views_v4_destructured_test.go:48: gate cache node miss
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallReceiverRefusal
+    checked_views_v4_call_apply_test.go:162: gate cache node miss
+=== NAME  TestV4DestructuredCallableReadOnly
+    checked_views_v4_destructured_test.go:48: guard mutant admitted in javascript: exit 0 output "run\n"
+    checked_views_v4_destructured_test.go:48: guard mutant admitted in native: exit 0 output "run\n"
+    checked_views_v4_destructured_test.go:48: guard mutant admitted in sanitized: exit 0 output "run\n"
+--- PASS: TestV4DestructuredCallableReadOnly (0.77s)
+=== CONT  TestV4EscapeAdapterCallReceiverCheck
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: sanitized exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument2635753368/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument2635753368/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:20: javascript exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument2635753368/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument2635753368/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:20: native exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument2635753368/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument2635753368/001/identity.ts:4:88
+=== NAME  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:123: gate cache node miss
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:21: gate cache node hit
+--- PASS: TestV4EscapeAdapterCallReceiverRefusal (0.25s)
+=== CONT  TestV4EscapeAdapterSurfaceRegExpCallback
+    checked_views_v4_call_apply_test.go:112: gate cache node miss
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+    checked_views_v4_direct_test.go:109: native argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: sanitized argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: javascript argument check omission caught: exit 0 output "argument\nproducer\n"
+--- PASS: TestV4DirectArgument (1.28s)
+=== CONT  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyZeroReceiver
+    checked_views_v4_call_apply_test.go:172: native sanitized surface counts: [5 5 11 12 4 0]
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:36: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyZeroReceiver
+    checked_views_v4_call_apply_test.go:172: gate cache node miss
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:40: destructured adapter omission caught in native ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4DestructuredCallableArgument (1.34s)
+=== CONT  TestV4EscapeAdapterBindNameOwnership
+--- PASS: TestV4EscapeAdapterCallApplyZeroReceiver (0.87s)
+=== CONT  TestV4EscapeAdapterCallApplyCount
+=== NAME  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:125: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindNameOwnership
+    checked_views_v4_bind_test.go:154: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyCount
+    checked_views_v4_call_apply_test.go:87: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceRegExpCallback
+    checked_views_v4_call_apply_test.go:112: native sanitized surface counts: [14 14 17 16 13 0]
+=== NAME  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: native sanitized surface counts: [5 5 5 8 5 0]
+=== NAME  TestV4EscapeAdapterSurfaceRegExpCallback
+    checked_views_v4_call_apply_test.go:112: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceRegExpCallback (0.79s)
+=== CONT  TestV4EscapeAdapterCallApplyReceiver
+    checked_views_v4_call_apply_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:148: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceSortCallback (0.79s)
+=== CONT  TestV4EscapeAdapterApplyResult
+=== NAME  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:152: receiver-domain omission caught in native/ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4EscapeAdapterCallReceiverCheck (1.12s)
+=== CONT  TestV4EscapeAdapterApplyArgument
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyCount
+    checked_views_v4_call_apply_test.go:87: native sanitized surface counts: [11 11 13 22 5 0]
+=== NAME  TestV4EscapeAdapterApplyArgument
+    checked_views_v4_call_apply_test.go:63: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindNameOwnership
+    checked_views_v4_bind_test.go:154: native sanitized surface counts: [7 7 12 13 7 0]
+=== NAME  TestV4EscapeAdapterCallApplyCount
+    checked_views_v4_call_apply_test.go:87: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindNameOwnership
+    checked_views_v4_bind_test.go:154: gate cache node miss
+--- PASS: TestV4EscapeAdapterCallApplyCount (0.78s)
+=== CONT  TestV4EscapeAdapterCallResult
+--- PASS: TestV4EscapeAdapterBindNameOwnership (0.85s)
+=== CONT  TestV4EscapeAdapterCallArgument
+=== NAME  TestV4EscapeAdapterCallResult
+    checked_views_v4_call_apply_test.go:59: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyReceiver
+    checked_views_v4_call_apply_test.go:77: native sanitized surface counts: [7 7 11 14 5 0]
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyReceiver
+    checked_views_v4_call_apply_test.go:77: gate cache node miss
+--- PASS: TestV4EscapeAdapterCallApplyReceiver (0.74s)
+=== CONT  TestV4EscapeAdapterBlameRuntimeCallback
+    checked_views_v4_blame_test.go:149: awaits compiler/views-v4: source call sites on runtime callback IR
+--- SKIP: TestV4EscapeAdapterBlameRuntimeCallback (0.00s)
+=== CONT  TestV4EscapeAdapterBlameNestedResult
+    checked_views_v4_blame_test.go:121: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyArgument
+    checked_views_v4_call_apply_test.go:63: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: native apply result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult2021835883/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult2021835883/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:67: sanitized apply result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult2021835883/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult2021835883/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:67: javascript apply result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult2021835883/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult2021835883/001/identity.ts:6:114\n"
+=== NAME  TestV4EscapeAdapterApplyArgument
+    checked_views_v4_call_apply_test.go:63: sanitized apply argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument1997415976/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument1997415976/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:63: javascript apply argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument1997415976/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument1997415976/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:63: native apply argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument1997415976/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyArgument1997415976/001/identity.ts:6:114\n"
+=== NAME  TestV4EscapeAdapterCallResult
+    checked_views_v4_call_apply_test.go:59: gate cache node miss
+    checked_views_v4_call_apply_test.go:59: native call result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallResult3659280445/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterCallResult3659280445/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:59: sanitized call result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallResult3659280445/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterCallResult3659280445/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:59: javascript call result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallResult3659280445/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterCallResult3659280445/001/identity.ts:6:114\n"
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: native/ASan/UBSan/LSan apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+    checked_views_v4_call_apply_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyArgument
+    checked_views_v4_call_apply_test.go:63: native/ASan/UBSan/LSan apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+    checked_views_v4_call_apply_test.go:63: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: JavaScript apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+--- PASS: TestV4EscapeAdapterApplyResult (1.16s)
+=== CONT  TestV4EscapeAdapterBlameBound
+=== NAME  TestV4EscapeAdapterApplyArgument
+    checked_views_v4_call_apply_test.go:63: JavaScript apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+--- PASS: TestV4EscapeAdapterApplyArgument (1.15s)
+=== CONT  TestV4EscapeAdapterBlameApply
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: native call argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument888739224/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument888739224/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:55: sanitized call argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument888739224/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument888739224/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:55: javascript call argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument888739224/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument888739224/001/identity.ts:6:114\n"
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameNestedResult
+    checked_views_v4_blame_test.go:139: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallResult
+    checked_views_v4_call_apply_test.go:59: native/ASan/UBSan/LSan call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+    checked_views_v4_call_apply_test.go:59: gate cache node miss
+--- PASS: TestV4EscapeAdapterBlameNestedResult (0.83s)
+=== CONT  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallResult
+    checked_views_v4_call_apply_test.go:59: JavaScript call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+--- PASS: TestV4EscapeAdapterCallResult (1.20s)
+=== CONT  TestV4EscapeAdapterBlameResult
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: native/ASan/UBSan/LSan call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+    checked_views_v4_call_apply_test.go:55: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: JavaScript call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+--- PASS: TestV4EscapeAdapterCallArgument (1.23s)
+=== CONT  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: gate cache node miss
+    checked_views_v4_blame_test.go:99: native apply/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply3797943685/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply3797943685/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:99: sanitized apply/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply3797943685/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply3797943685/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:99: javascript apply/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply3797943685/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply3797943685/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: gate cache node miss
+    checked_views_v4_blame_test.go:102: native bound/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound3597635793/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound3597635793/001/identity.ts:12:8 exit=70
+    checked_views_v4_blame_test.go:102: sanitized bound/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound3597635793/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound3597635793/001/identity.ts:12:8 exit=70
+    checked_views_v4_blame_test.go:102: javascript bound/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound3597635793/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound3597635793/001/identity.ts:12:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: gate cache node miss
+    checked_views_v4_blame_test.go:98: native call/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3723109556/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3723109556/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:98: sanitized call/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3723109556/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3723109556/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:98: javascript call/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3723109556/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3723109556/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: native direct/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult4042605091/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult4042605091/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:96: sanitized direct/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult4042605091/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult4042605091/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:96: javascript direct/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult4042605091/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult4042605091/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: native direct/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument877909463/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument877909463/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:92: sanitized direct/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument877909463/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument877909463/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:92: javascript direct/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument877909463/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument877909463/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: gate cache node miss
+    checked_views_v4_blame_test.go:99: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:99: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:99: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameApply (1.25s)
+=== CONT  TestV4EscapeAdapterBindPrefix
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:30: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:102: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:102: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameBound (1.44s)
+=== CONT  TestV4EscapeAdapterBindAllArguments
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:98: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:98: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameCall (1.20s)
+=== CONT  TestV4EscapeAdapterBindBoxed
+=== NAME  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindBoxed
+    checked_views_v4_bind_test.go:133: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: gate cache node miss
+    checked_views_v4_blame_test.go:92: javascript read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:92: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:92: sanitized read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameArgument (1.30s)
+=== CONT  TestV4EscapeAdapterBindCountAndSurface
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: javascript read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:96: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:96: sanitized read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameResult (1.40s)
+=== CONT  TestV4EscapeAdapterBindReceiverAndCapture
+=== NAME  TestV4EscapeAdapterBindCountAndSurface
+    checked_views_v4_bind_test.go:123: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindReceiverAndCapture
+    checked_views_v4_bind_test.go:113: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:32: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: native sanitized surface counts: [10 10 23 23 10 0]
+=== NAME  TestV4EscapeAdapterBindBoxed
+    checked_views_v4_bind_test.go:133: native sanitized surface counts: [10 10 19 21 10 0]
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:36: sanitized prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix4053378746/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:36: javascript prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix4053378746/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:36: native prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix4053378746/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+=== NAME  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindBoxed
+    checked_views_v4_bind_test.go:133: gate cache node miss
+--- PASS: TestV4EscapeAdapterBindAllArguments (0.84s)
+=== CONT  TestV4EscapeAdapterBindResult
+--- PASS: TestV4EscapeAdapterBindBoxed (0.86s)
+=== CONT  TestV4EscapeAdapterBindRemainingArgument
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindCountAndSurface
+    checked_views_v4_bind_test.go:123: native sanitized surface counts: [16 16 48 56 10 0]
+=== NAME  TestV4EscapeAdapterBindReceiverAndCapture
+    checked_views_v4_bind_test.go:113: native sanitized surface counts: [17 17 34 41 13 0]
+=== NAME  TestV4EscapeAdapterBindCountAndSurface
+    checked_views_v4_bind_test.go:123: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindReceiverAndCapture
+    checked_views_v4_bind_test.go:113: gate cache node miss
+--- PASS: TestV4EscapeAdapterBindReceiverAndCapture (0.89s)
+=== CONT  TestV4EscapeAdapterBoundHelperApplyRefusal
+--- PASS: TestV4EscapeAdapterBindCountAndSurface (0.91s)
+=== CONT  TestV4EscapeAdapterBindCompatible
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:52: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindCompatible
+    checked_views_v4_bind_test.go:17: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundHelperApplyRefusal
+    checked_views_v4_bind_refusals_test.go:57: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:52: guard mutant admitted in native: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:52: guard mutant admitted in sanitized: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:52: guard mutant admitted in javascript: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:53: prefix omission caught in both backends, native ASan/UBSan/LeakSanitizer clean; producer never invoked
+--- PASS: TestV4EscapeAdapterBindPrefix (1.50s)
+=== CONT  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundHelperApplyRefusal
+    checked_views_v4_bind_refusals_test.go:57: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundHelperApplyRefusal3751393149/001/bound-surface.ts:4:193: Adamic 0.1 refuses apply on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundHelperApplyRefusal (0.29s)
+=== CONT  TestV4EscapeAdapterBoundHelperBindRefusal
+    checked_views_v4_bind_refusals_test.go:61: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:90: bound re-view .ts refused with path and fix: /tmp/adamic-gate/TestV4EscapeAdapterBoundViewRefusal2861097867/001/bound-view.ts:5:241: Adamic 0.1 refuses an escaping callable read of again.run with an unsupported value contract; prove the callable relation or use a callable with runtime-checkable parameter and result types
+=== NAME  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundHelperBindRefusal
+    checked_views_v4_bind_refusals_test.go:61: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundHelperBindRefusal1719182663/001/bound-surface.ts:4:193: Adamic 0.1 refuses binding a bound function again; bind once
+--- PASS: TestV4EscapeAdapterBoundHelperBindRefusal (0.31s)
+=== CONT  TestV4EscapeAdapterBoundBindRefusal
+    checked_views_v4_bind_refusals_test.go:49: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindCompatible
+    checked_views_v4_bind_test.go:17: native sanitized surface counts: [11 11 26 29 9 0]
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:90: bound re-view .a refused with path and fix: /tmp/adamic-gate/TestV4EscapeAdapterBoundViewRefusal2861097867/002/bound-view.a:5:241: Adamic 0.1 refuses an unproven escaping callable read of again.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+=== CONT  TestV4EscapeAdapterBoundAliasCallRefusal
+--- PASS: TestV4EscapeAdapterBoundViewRefusal (0.64s)
+=== NAME  TestV4EscapeAdapterBoundAliasCallRefusal
+    checked_views_v4_bind_refusals_test.go:53: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundBindRefusal
+    checked_views_v4_bind_refusals_test.go:49: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundBindRefusal1431542502/001/bound-surface.ts:4:130: Adamic 0.1 refuses binding a bound function again; bind once
+--- PASS: TestV4EscapeAdapterBoundBindRefusal (0.31s)
+=== CONT  TestV4EscapeAdapterBoundApplyRefusal
+=== NAME  TestV4EscapeAdapterBindCompatible
+    checked_views_v4_bind_test.go:17: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundApplyRefusal
+    checked_views_v4_bind_refusals_test.go:45: gate cache node miss
+--- PASS: TestV4EscapeAdapterBindCompatible (1.00s)
+=== NAME  TestV4EscapeAdapterBoundAliasCallRefusal
+    checked_views_v4_bind_refusals_test.go:53: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundAliasCallRefusal878055581/001/bound-surface.ts:4:185: Adamic 0.1 refuses call on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundAliasCallRefusal (0.26s)
+=== NAME  TestV4EscapeAdapterBoundApplyRefusal
+    checked_views_v4_bind_refusals_test.go:45: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundApplyRefusal1666058394/001/bound-surface.ts:4:130: Adamic 0.1 refuses apply on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundApplyRefusal (0.24s)
+=== NAME  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: later argument omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+--- PASS: TestV4EscapeAdapterBindRemainingArgument (1.54s)
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nbad\n"
+    checked_views_v4_bind_test.go:104: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nbad\n"
+    checked_views_v4_bind_test.go:104: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nbad\n"
+    checked_views_v4_bind_test.go:104: later result omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+--- PASS: TestV4EscapeAdapterBindResult (1.64s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=5 misses=240
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.803s
