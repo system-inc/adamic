@@ -135,42 +135,64 @@ func serializationPort(t *testing.T) string {
 	return directory
 }
 
+const testCompleteSuggestionSerializationShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects local case shards; unset runs all. The gate uses
+// -run '^TestCompleteSuggestionSerialization$/^shard-NNN$'. Builds are shared
+// once in setup until internal/buildcache can supply their products by hash.
 func TestCompleteSuggestionSerialization(t *testing.T) {
 	t.Parallel()
-	directory := serializationPort(t)
-	source := filepath.Join(t.TempDir(), "suggestions.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{source + "\tno-debugger"})
-	oracle := goOracleFrom(t, directory)
-	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
-	for _, field := range []string{"suggestion\tfirst", "suggestion\tsecond", "suggestion\tempty", "suggestion-edit\t8 9", "fixed\t/*"} {
-		if !bytes.Contains(want, []byte(field)) {
-			t.Fatalf("missing field %q: %s", field, want)
+	products, supplied := harnessSuppliedProducts(t)
+	if !supplied {
+		directory := serializationPort(t)
+		source := filepath.Join(t.TempDir(), "suggestions.ts")
+		if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+			t.Fatal(err)
 		}
-	}
-	changed := filepath.Join(directory, "rules/no-debugger/rule.a")
-	data, err := os.ReadFile(changed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	data = bytes.Replace(data, []byte("start + 1, start + 2, ''"), []byte("start + 1, start + 3, ''"), 1)
-	if err := os.WriteFile(changed, data, 0644); err != nil {
-		t.Fatal(err)
-	}
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-	} {
-		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("second suggestion edit mutant survived on %s", side.name)
+		products.Rows = []string{source + "\tno-debugger"}
+		oracle := harnessOracle(t, directory, "serialization")
+		archive := ""
+		products.Original = harnessBuild(t, directory, "serialization-original", &archive, true)
+		products.Original.Oracle = oracle
+		changedDirectory := serializationPort(t)
+		changed := filepath.Join(changedDirectory, "rules/no-debugger/rule.a")
+		data, err := os.ReadFile(changed)
+		if err != nil {
+			t.Fatal(err)
 		}
-		t.Logf("second suggestion edit mutant caught on %s: %s", side.name, difference(side.run.output, want))
+		if bytes.Count(data, []byte("start + 1, start + 2, ''")) != 1 {
+			t.Fatal("second suggestion edit anchor changed")
+		}
+		data = bytes.Replace(data, []byte("start + 1, start + 2, ''"), []byte("start + 1, start + 3, ''"), 1)
+		if err := os.WriteFile(changed, data, 0644); err != nil {
+			t.Fatal(err)
+		}
+		products.Changed = harnessBuild(t, changedDirectory, "serialization-edit-mutant", &archive, false)
 	}
+	harnessShards(t, []string{"unicode-complete-suggestions"}, testCompleteSuggestionSerializationShards, func(t *testing.T) {
+		path := manifest(t, products.Rows)
+		want := harnessCompare(t, products.Original, path)
+		for _, field := range []string{"suggestion\tfirst", "suggestion\tsecond", "suggestion\tempty", "suggestion-edit\t8 9", "fixed\t/*"} {
+			if !bytes.Contains(want, []byte(field)) {
+				t.Fatalf("missing field %q: %s", field, want)
+			}
+		}
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"Node", node(t, products.Changed.Directory, path, false)},
+			{"emitted JavaScript", runJavaScript(t, products.Changed.JavaScript, path, false)},
+		} {
+			if bytes.Equal(side.run.output, want) {
+				t.Fatalf("second suggestion edit mutant survived on %s", side.name)
+			}
+			t.Logf("second suggestion edit mutant caught on %s: %s", side.name, difference(side.run.output, want))
+		}
+		if !supplied {
+			harnessPlantedDisagreement(t, products, false)
+		}
+	})
 }
 
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
