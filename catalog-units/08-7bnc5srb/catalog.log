@@ -2,3 +2,7 @@ target c9df51ed69496ff039642fc0092df08e7b8380e9
 logs /home/cloud/full-gate/out/c9df51ed6949-20261009T065222Z/catalog-units/08-7bnc5srb/adamic-catalog-logs-dbgti5mc
 build flags: commit=c9df51ed69496ff039642fc0092df08e7b8380e9; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
 jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+09 literal-undefined-field: applies-and-fails-as-recorded
+09 made against=d772b5c990de4304de990e723835f19ebb613641
+09 wall=1008.436s setup=104.233s check=875.269s cleanup=3.301s load=27.69 35.14 30.37 81/1010 492253 -> 32.81 43.57 47.50 9/857 729194
+total wall=1008.489s load=27.69 35.14 30.37 63/976 492099 -> 32.81 43.57 47.50 10/856 729194

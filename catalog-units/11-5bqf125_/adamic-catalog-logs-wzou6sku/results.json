@@ -1,0 +1,27 @@
+{
+  "target": "c9df51ed69496ff039642fc0092df08e7b8380e9",
+  "jobs": 1,
+  "total_wall_seconds": 992.8462862919987,
+  "load_before": "27.69 35.14 30.37 64/978 492113",
+  "load_after": "22.76 42.15 47.11 75/1183 728248",
+  "entries": [
+    {
+      "number": 12,
+      "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "target": "c9df51ed69496ff039642fc0092df08e7b8380e9",
+      "worktree": "/home/cloud/full-gate/out/c9df51ed6949-20261009T065222Z/catalog-units/11-5bqf125_/adamic-catalog-worktree-od51_kog/entry-12",
+      "setup_seconds": 94.82711637999455,
+      "ok": true,
+      "check_seconds": 889.7593094479962,
+      "cleanup_seconds": 4.756188118990394,
+      "wall_seconds": 992.7827445809962,
+      "load_before": "27.69 35.14 30.37 62/1013 492318",
+      "load_after": "22.76 42.15 47.11 72/1184 728248",
+      "messages": [
+        "12 refuse-suppression-directives: applies-and-fails-as-recorded",
+        "12 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+        "12 wall=992.783s setup=94.827s check=889.759s cleanup=4.756s load=27.69 35.14 30.37 62/1013 492318 -> 22.76 42.15 47.11 72/1184 728248"
+      ]
+    }
+  ]
+}

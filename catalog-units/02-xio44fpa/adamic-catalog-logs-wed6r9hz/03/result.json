@@ -1,0 +1,18 @@
+{
+  "number": 3,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "c9df51ed69496ff039642fc0092df08e7b8380e9",
+  "worktree": "/home/cloud/full-gate/out/c9df51ed6949-20261009T065222Z/catalog-units/02-xio44fpa/adamic-catalog-worktree-s652veri/entry-03",
+  "setup_seconds": 232.83166564699786,
+  "ok": true,
+  "check_seconds": 755.1540680729959,
+  "cleanup_seconds": 4.347019794993685,
+  "wall_seconds": 994.853704129011,
+  "load_before": "27.69 35.14 30.37 66/1005 492321",
+  "load_after": "33.11 43.97 47.67 136/1212 728320",
+  "messages": [
+    "03 defined-lent: applies-and-fails-as-recorded",
+    "03 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "03 wall=994.854s setup=232.832s check=755.154s cleanup=4.347s load=27.69 35.14 30.37 66/1005 492321 -> 33.11 43.97 47.67 136/1212 728320"
+  ]
+}

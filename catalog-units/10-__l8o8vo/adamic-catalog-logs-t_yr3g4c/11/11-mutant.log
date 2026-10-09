@@ -1,0 +1,5 @@
+--- FAIL: TestDefiniteAssignmentUsesReadiness (0.05s)
+    definite_assignment_test.go:42: 0 checked reads, want 1
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.065s
+FAIL
