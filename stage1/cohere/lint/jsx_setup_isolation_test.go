@@ -19,7 +19,7 @@ func TestJsxLintTreesSetupIsolation(t *testing.T) {
 	if err != nil {
 		t.Fatalf("standalone cold shard failed: %v\n%s", err, output)
 	}
-	for _, evidence := range []string{"build jsx-parser cold wall", "build jsx-membership cold wall", " miss ", "--- PASS: TestJsxLintTrees_001"} {
+	for _, evidence := range []string{"build jsx-parser", "build jsx-membership", " miss ", "--- PASS: TestJsxLintTrees_001"} {
 		if !bytes.Contains(output, []byte(evidence)) {
 			t.Fatalf("missing preparation proof %q:\n%s", evidence, output)
 		}

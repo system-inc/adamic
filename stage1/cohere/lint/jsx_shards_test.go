@@ -29,9 +29,7 @@ import (
 	"time"
 )
 
-// Each build has its inputs beside its closure. Non-Go products and the
-// completed setup use internal/buildcache; overlay Go builds are shared within
-// the setup child because buildcache refuses overlay builds.
+// Each build has its inputs beside its closure and uses internal/buildcache.
 type jsxProductInputs struct {
 	Name      string
 	Files     []string
@@ -80,27 +78,10 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 	return result
 }
 
-func jsxOverlayProduct(t *testing.T, inputs jsxProductInputs, build func(dir string) error) string {
-	t.Helper()
-	value := shared(fmt.Sprintf("jsx product %+v", inputs), func(value *sharedValue) {
-		value.path, value.err = os.MkdirTemp(sharedDirectory, "jsx-product-")
-		if value.err != nil {
-			return
-		}
-		started := time.Now()
-		value.err = build(value.path)
-		t.Logf("build %s cold wall: %s", inputs.Name, time.Since(started))
-	})
-	if value.err != nil {
-		t.Fatal(value.err)
-	}
-	return value.path
-}
-
 func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay"}, Toolchain: runtime.Version()}
-	directory := jsxOverlayProduct(t, inputs, func(dir string) error {
+	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: runtime.Version()}
+	directory := jsxProduct(t, inputs, func(dir string) error {
 		virtual := filepath.Join(root, virtualName)
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 		if err != nil {
@@ -425,8 +406,7 @@ func TestJsxLintTreesShardCoverage(t *testing.T) {
 	}
 }
 
-// Products are read-only inputs. Overlay Go builds are run-local because
-// buildcache refuses overlays; non-Go products use the shared build cache.
+// Products are read-only inputs, shared across product and shard processes.
 func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error) string {
 	t.Helper()
 	files := make([]string, len(inputs.Files))
@@ -446,10 +426,14 @@ func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error)
 	}
 	return buildcache.Product(t, buildcache.Inputs{Name: inputs.Name, Files: files, Flags: inputs.Flags, Toolchain: []string{inputs.Toolchain}}, build)
 }
-func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
+func jsxTreeInputs(t *testing.T, entry string) jsxProductInputs {
 	t.Helper()
-	inputs := jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: runtime.Version()}
-	lowered := jsxProduct(t, inputs, func(dir string) error {
+	return jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: runtime.Version()}
+}
+
+func jsxTreeLowered(t *testing.T, entry string) string {
+	t.Helper()
+	return jsxProduct(t, jsxTreeInputs(t, entry), func(dir string) error {
 		program, err := load.Load([]string{entry})
 		if err != nil {
 			return err
@@ -460,8 +444,16 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 		}
 		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(lowered)), 0644)
 	})
-	source := filepath.Join(lowered, "program.c")
-	inputs = jsxProductInputs{Name: "jsx-tree-native", Files: append(append([]string(nil), inputs.Files...), jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: string(execute(t, "", "clang", "--version").output)}
+}
+
+func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
+	t.Helper()
+	source := filepath.Join(jsxTreeLowered(t, entry), "program.c")
+	inputs := jsxTreeInputs(t, entry)
+	inputs.Name = "jsx-tree-native"
+	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
+	inputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
+	inputs.Toolchain = string(execute(t, "", "clang", "--version").output)
 	built := jsxProduct(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(source)
 		if err != nil {
@@ -470,6 +462,29 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 		return native.Build(string(data), filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
 	})
 	return filepath.Join(built, "native")
+}
+
+func jsxParserEntry(t *testing.T) string {
+	t.Helper()
+	entry, err := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/main.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return entry
+}
+
+func jsxParserOracle(t *testing.T) string {
+	t.Helper()
+	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
+	return jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
+}
+
+func jsxMembershipOracle(t *testing.T) string {
+	t.Helper()
+	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
+	side, _ := filepath.Abs("testdata/jsx_inventory.go")
+	return jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
 }
 
 // Every consumer prepares the immutable capture, build, and inventory product
@@ -505,11 +520,8 @@ func jsxPrepareTrees(t *testing.T) string {
 			if err != nil {
 				return err
 			}
-			root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-			side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-			oracle := jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
-			parserDirectory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
-			binary := jsxTreeNative(t, filepath.Join(parserDirectory, "main.ts"), true)
+			oracle := jsxParserOracle(t)
+			binary := jsxTreeNative(t, jsxParserEntry(t), true)
 			copied := map[string]string{}
 			for _, path := range paths {
 				components := strings.Split(filepath.ToSlash(path), "/")
@@ -601,9 +613,7 @@ func jsxTreeSources(t *testing.T) []string {
 	for i, row := range rows {
 		all[i] = strings.Split(row, "\t")[0]
 	}
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
-	side, _ := filepath.Abs("testdata/jsx_inventory.go")
-	oracle := jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
+	oracle := jsxMembershipOracle(t)
 	output := execute(t, "", oracle, manifest(t, all)).output
 	membership := map[string]bool{}
 	for _, line := range strings.Split(strings.TrimSpace(string(output)), "\n") {
