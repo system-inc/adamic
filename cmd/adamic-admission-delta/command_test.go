@@ -200,3 +200,34 @@ func TestCompilerTimeoutIsError(t *testing.T) {
 		t.Fatalf("timeout became refusal: %+v", o)
 	}
 }
+
+func TestBuildRevisions(t *testing.T) {
+	t.Parallel()
+	dir, _, _, _ := commandFixture(t)
+	if err := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	for path, text := range map[string]string{"go.mod": "module admission-fixture\n\ngo 1.27\n", "cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\n"} {
+		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, err := git(dir, "add", "go.mod", "cmd/adamic/main.go"); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := git(dir, "commit", "-qm", "built compiler fixture"); err != nil {
+		t.Fatal(err)
+	}
+	sha, err := git(dir, "rev-parse", "HEAD")
+	if err != nil {
+		t.Fatal(err)
+	}
+	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--corpus", "corpus", "--json")
+	var r report
+	if err = json.Unmarshal([]byte(o.Stdout), &r); err != nil {
+		t.Fatal(err, o.Stderr)
+	}
+	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "accepted-by-both" {
+		t.Fatalf("revision build failed: %+v %s", r, o.Stderr)
+	}
+}

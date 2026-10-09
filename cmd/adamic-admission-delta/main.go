@@ -116,6 +116,14 @@ func compileClass(o observation) string {
 	return "error"
 }
 func classify(a, b observation) string {
+	if a.Error == "timeout" || b.Error == "timeout" {
+		return "compiler-timeout"
+	}
+	for _, o := range []observation{a, b} {
+		if o.Error == "crash" || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:") {
+			return "compiler-crash"
+		}
+	}
 	x, y := compileClass(a), compileClass(b)
 	if x == "error" || y == "error" {
 		return "compiler-error"
@@ -209,7 +217,10 @@ func run(args []string) error {
 	if err != nil {
 		return err
 	}
-	h, err := build(result.Head, "head-build", *headBinary)
+	h := b
+	if result.Base != result.Head || *baseBinary != "" || *headBinary != "" {
+		h, err = build(result.Head, "head-build", *headBinary)
+	}
 	if err != nil {
 		return err
 	}
@@ -300,7 +311,7 @@ func run(args []string) error {
 			if record.Class == "newly-accepted" {
 				result.Admitted++
 			}
-			if record.Class == "compiler-error" {
+			if strings.HasPrefix(record.Class, "compiler-") {
 				result.Verdict = "fail"
 			}
 			result.Programs = append(result.Programs, record)

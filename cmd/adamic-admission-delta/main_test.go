@@ -8,6 +8,11 @@ import (
 
 func TestClassification(t *testing.T) {
 	t.Parallel()
+	for _, o := range []observation{{Exit: -1, Error: "timeout"}, {Exit: 1, Stderr: "panic: broken"}} {
+		if compileClass(o) != "error" {
+			t.Fatal("compiler failure treated as refusal")
+		}
+	}
 	accepted := observation{Exit: 0}
 	refused := observation{Exit: 1, Stderr: "adamic: x: stage 0 can't lower view yet"}
 	cases := []struct {
@@ -16,8 +21,8 @@ func TestClassification(t *testing.T) {
 	}{
 		{accepted, accepted, "accepted-by-both"}, {refused, refused, "refused-by-both"},
 		{refused, accepted, "newly-accepted"}, {accepted, refused, "newly-refused"},
-		{observation{Exit: 1, Stderr: "panic: broken"}, accepted, "compiler-error"},
-		{observation{Exit: -1, Error: "timeout"}, refused, "compiler-error"},
+		{observation{Exit: 1, Stderr: "panic: broken"}, accepted, "compiler-crash"},
+		{observation{Exit: -1, Error: "timeout"}, refused, "compiler-timeout"},
 		{observation{Exit: 1, Stderr: "missing input"}, accepted, "compiler-error"},
 	}
 	for _, c := range cases {
