@@ -1,0 +1,65 @@
+[
+  {
+    "mutant": "drop-Node",
+    "caught": true,
+    "expected_caught": true,
+    "exit": 1,
+    "seconds": 20.953277920000005,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check-7/drop-Node.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionTscNodeMemberSites$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-NodeArray",
+    "caught": true,
+    "expected_caught": true,
+    "exit": 1,
+    "seconds": 25.222094889000005,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check-7/drop-NodeArray.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionTscNodeMemberSites$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "select-acyclic-type",
+    "caught": true,
+    "expected_caught": true,
+    "exit": 1,
+    "seconds": 20.472938778000014,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/program-region-node-check-7/select-acyclic-type.json",
+      "./internal/lower",
+      "-run",
+      "^TestProgramRegionScoutParseSelectionEmpty$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  }
+]

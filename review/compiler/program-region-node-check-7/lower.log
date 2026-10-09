@@ -1,0 +1,64 @@
+=== RUN   TestProgramRegionCensusMembership
+=== PAUSE TestProgramRegionCensusMembership
+=== RUN   TestProgramRegionCensusPairwise
+=== PAUSE TestProgramRegionCensusPairwise
+=== RUN   TestProgramRegionHost14MemberSites
+=== PAUSE TestProgramRegionHost14MemberSites
+=== RUN   TestProgramRegionScoutParseSelectionEmpty
+=== PAUSE TestProgramRegionScoutParseSelectionEmpty
+=== RUN   TestProgramRegionSCCOwningEdges
+=== PAUSE TestProgramRegionSCCOwningEdges
+=== RUN   TestProgramRegionShapeKeySeparators
+=== PAUSE TestProgramRegionShapeKeySeparators
+=== RUN   TestProgramRegionMembership
+=== PAUSE TestProgramRegionMembership
+=== RUN   TestProgramRegionViewCycleIsNotOwnership
+=== PAUSE TestProgramRegionViewCycleIsNotOwnership
+=== RUN   TestProgramRegionTaskBoundary
+=== PAUSE TestProgramRegionTaskBoundary
+=== RUN   TestProgramRegionConcreteContainers
+=== PAUSE TestProgramRegionConcreteContainers
+=== RUN   TestProgramRegionEntryPairsRefused
+=== PAUSE TestProgramRegionEntryPairsRefused
+=== RUN   TestProgramRegionTscNodeMemberSites
+=== PAUSE TestProgramRegionTscNodeMemberSites
+=== CONT  TestProgramRegionCensusMembership
+    program_region_census_test.go:36: set ADAMIC_PROGRAM_CENSUS_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestProgramRegionCensusMembership (0.00s)
+=== CONT  TestProgramRegionShapeKeySeparators
+--- PASS: TestProgramRegionShapeKeySeparators (0.00s)
+=== CONT  TestProgramRegionSCCOwningEdges
+--- PASS: TestProgramRegionSCCOwningEdges (0.00s)
+=== CONT  TestProgramRegionScoutParseSelectionEmpty
+=== CONT  TestProgramRegionMembership
+=== CONT  TestProgramRegionHost14MemberSites
+=== CONT  TestProgramRegionCensusPairwise
+=== CONT  TestProgramRegionConcreteContainers
+=== NAME  TestProgramRegionCensusPairwise
+    program_region_census_test.go:37: set ADAMIC_PROGRAM_CENSUS_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestProgramRegionCensusPairwise (0.00s)
+=== CONT  TestProgramRegionTscNodeMemberSites
+--- PASS: TestProgramRegionMembership (0.36s)
+=== CONT  TestProgramRegionEntryPairsRefused
+=== NAME  TestProgramRegionTscNodeMemberSites
+    program_region_tsc_node_test.go:49: allocation BaseNode at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:34:12: selected=true
+    program_region_tsc_node_test.go:49: allocation never[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:40:43: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:44:41: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:46:41: selected=true
+    program_region_tsc_node_test.go:66: selector member Node: Node
+    program_region_tsc_node_test.go:66: selector member NodeArray<Node>: NodeArray<Node>
+--- PASS: TestProgramRegionConcreteContainers (0.37s)
+=== CONT  TestProgramRegionTaskBoundary
+--- PASS: TestProgramRegionTscNodeMemberSites (0.38s)
+=== CONT  TestProgramRegionViewCycleIsNotOwnership
+--- PASS: TestProgramRegionViewCycleIsNotOwnership (0.00s)
+--- PASS: TestProgramRegionTaskBoundary (0.12s)
+--- PASS: TestProgramRegionEntryPairsRefused (0.14s)
+=== NAME  TestProgramRegionHost14MemberSites
+    program_region_host_witness_test.go:39: pending non-null assertion lowering: host fixture 14
+--- SKIP: TestProgramRegionHost14MemberSites (1.25s)
+=== NAME  TestProgramRegionScoutParseSelectionEmpty
+    program_region_host_witness_test.go:169: parse.a selector member set empty: all parser allocations stay counted
+--- PASS: TestProgramRegionScoutParseSelectionEmpty (25.77s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	25.864s

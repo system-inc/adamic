@@ -1,0 +1,18 @@
+=== RUN   TestProgramRegionCoreASan
+    program_region_core_test.go:64: end adamic: counts: allocations 11 frees 7 retains 14 releases 22 peak 11 regions 4
+    program_region_core_test.go:64: exit adamic: counts: allocations 11 frees 7 retains 14 releases 22 peak 11 regions 4
+--- PASS: TestProgramRegionCoreASan (21.91s)
+=== RUN   TestProgramRegionCoreASanSlabs
+    program_region_core_test.go:65: end adamic: counts: allocations 11 frees 7 retains 14 releases 22 peak 11 regions 4
+    program_region_core_test.go:65: exit adamic: counts: allocations 11 frees 7 retains 14 releases 22 peak 11 regions 4
+--- PASS: TestProgramRegionCoreASanSlabs (10.96s)
+=== RUN   TestProgramRegionCoreCounted
+    program_region_core_test.go:66: end adamic: counts: allocations 11 frees 7 retains 14 releases 22 peak 11 regions 4
+    program_region_core_test.go:66: exit adamic: counts: allocations 11 frees 7 retains 14 releases 22 peak 11 regions 4
+--- PASS: TestProgramRegionCoreCounted (3.91s)
+=== RUN   TestProgramRegionCoreUnion
+--- PASS: TestProgramRegionCoreUnion (0.00s)
+=== RUN   TestProgramRegionTarget
+--- PASS: TestProgramRegionTarget (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	36.801s

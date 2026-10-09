@@ -1,0 +1,132 @@
+=== RUN   TestProgramRegionHost14AgreesWithNode
+=== PAUSE TestProgramRegionHost14AgreesWithNode
+=== RUN   TestProgramRegionCountedMapperStorage
+=== PAUSE TestProgramRegionCountedMapperStorage
+=== RUN   TestProgramRegionMemberMapperStorage
+=== PAUSE TestProgramRegionMemberMapperStorage
+=== RUN   TestProgramRegionGraphParent
+=== PAUSE TestProgramRegionGraphParent
+=== RUN   TestProgramRegionGraphRelations
+=== PAUSE TestProgramRegionGraphRelations
+=== RUN   TestProgramRegionGraphSymbols
+=== PAUSE TestProgramRegionGraphSymbols
+=== RUN   TestProgramRegionWeakParent
+=== PAUSE TestProgramRegionWeakParent
+=== RUN   TestProgramRegionWeakRelations
+=== PAUSE TestProgramRegionWeakRelations
+=== RUN   TestProgramRegionWeakSymbols
+=== PAUSE TestProgramRegionWeakSymbols
+=== RUN   TestProgramRegionConstructor
+=== PAUSE TestProgramRegionConstructor
+=== RUN   TestProgramRegionOwnership
+=== PAUSE TestProgramRegionOwnership
+=== RUN   TestProgramRegionCapturedCell
+=== PAUSE TestProgramRegionCapturedCell
+=== RUN   TestProgramRegionTscNodesAgreeWithNode
+=== PAUSE TestProgramRegionTscNodesAgreeWithNode
+=== CONT  TestProgramRegionHost14AgreesWithNode
+=== CONT  TestProgramRegionTscNodesAgreeWithNode
+=== CONT  TestProgramRegionWeakParent
+=== CONT  TestProgramRegionCapturedCell
+=== CONT  TestProgramRegionOwnership
+=== NAME  TestProgramRegionHost14AgreesWithNode
+    program_region_host_witness_test.go:14: pending non-null assertion lowering: host fixture 14
+--- SKIP: TestProgramRegionHost14AgreesWithNode (0.81s)
+=== CONT  TestProgramRegionConstructor
+=== NAME  TestProgramRegionCapturedCell
+    program_region_test.go:153: gate cache node miss
+=== NAME  TestProgramRegionOwnership
+    program_region_test.go:141: gate cache node miss
+=== NAME  TestProgramRegionConstructor
+    program_region_test.go:137: gate cache node miss
+=== NAME  TestProgramRegionWeakParent
+    program_region_test.go:120: gate cache node miss
+=== NAME  TestProgramRegionTscNodesAgreeWithNode
+    program_region_tsc_node_test.go:7: gate cache node miss
+=== NAME  TestProgramRegionConstructor
+    program_region_test.go:137: gate cache node miss
+=== NAME  TestProgramRegionCapturedCell
+    program_region_test.go:153: gate cache node miss
+=== NAME  TestProgramRegionOwnership
+    program_region_test.go:141: gate cache node miss
+=== NAME  TestProgramRegionTscNodesAgreeWithNode
+    program_region_tsc_node_test.go:7: gate cache node miss
+=== NAME  TestProgramRegionWeakParent
+    program_region_test.go:120: gate cache node miss
+    program_region_test.go:120: adamic: counts: allocations 4004 frees 2002 retains 3004 releases 7007 peak 3004 regions 2002
+--- PASS: TestProgramRegionWeakParent (58.65s)
+=== CONT  TestProgramRegionWeakSymbols
+=== NAME  TestProgramRegionCapturedCell
+    program_region_test.go:153: adamic: counts: allocations 2 frees 0 retains 4 releases 7 peak 2 regions 2
+--- PASS: TestProgramRegionCapturedCell (58.66s)
+=== CONT  TestProgramRegionWeakRelations
+=== NAME  TestProgramRegionConstructor
+    program_region_test.go:137: adamic: counts: allocations 3 frees 2 retains 3 releases 6 peak 3 regions 1
+--- PASS: TestProgramRegionConstructor (57.87s)
+=== CONT  TestProgramRegionGraphParent
+=== NAME  TestProgramRegionTscNodesAgreeWithNode
+    program_region_tsc_node_test.go:7: adamic: counts: allocations 11 frees 4 retains 19 releases 26 peak 11 regions 7
+--- PASS: TestProgramRegionTscNodesAgreeWithNode (58.70s)
+=== CONT  TestProgramRegionGraphSymbols
+=== NAME  TestProgramRegionOwnership
+    program_region_test.go:141: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+--- PASS: TestProgramRegionOwnership (58.71s)
+=== CONT  TestProgramRegionGraphRelations
+=== NAME  TestProgramRegionGraphParent
+    program_region_test.go:108: gate cache node miss
+=== NAME  TestProgramRegionGraphRelations
+    program_region_test.go:112: gate cache node miss
+=== NAME  TestProgramRegionGraphSymbols
+    program_region_test.go:116: gate cache node miss
+=== NAME  TestProgramRegionGraphParent
+    program_region_test.go:108: gate cache node miss
+=== NAME  TestProgramRegionWeakSymbols
+    program_region_test.go:128: gate cache node miss
+=== NAME  TestProgramRegionWeakRelations
+    program_region_test.go:124: gate cache node miss
+=== NAME  TestProgramRegionGraphRelations
+    program_region_test.go:112: gate cache node miss
+=== NAME  TestProgramRegionGraphSymbols
+    program_region_test.go:116: gate cache node miss
+=== NAME  TestProgramRegionWeakSymbols
+    program_region_test.go:128: gate cache node miss
+=== NAME  TestProgramRegionWeakRelations
+    program_region_test.go:124: gate cache node miss
+=== NAME  TestProgramRegionGraphParent
+    program_region_test.go:108: adamic: counts: allocations 4003 frees 2001 retains 2003 releases 5005 peak 3003 regions 2002
+--- PASS: TestProgramRegionGraphParent (0.80s)
+=== CONT  TestProgramRegionMemberMapperStorage
+    program_region_map_storage_test.go:24: gate cache node miss
+=== NAME  TestProgramRegionGraphRelations
+    program_region_test.go:112: adamic: counts: allocations 6005 frees 4003 retains 6003 releases 10009 peak 4004 regions 2002
+--- PASS: TestProgramRegionGraphRelations (0.87s)
+=== CONT  TestProgramRegionCountedMapperStorage
+    program_region_map_storage_test.go:20: gate cache node hit
+=== NAME  TestProgramRegionGraphSymbols
+    program_region_test.go:116: adamic: counts: allocations 3005 frees 2002 retains 3007 releases 5011 peak 2004 regions 1003
+--- PASS: TestProgramRegionGraphSymbols (0.92s)
+=== NAME  TestProgramRegionWeakSymbols
+    program_region_test.go:128: adamic: counts: allocations 3006 frees 3006 retains 3008 releases 3010 peak 2005 regions 0
+--- PASS: TestProgramRegionWeakSymbols (0.97s)
+=== NAME  TestProgramRegionWeakRelations
+    program_region_test.go:124: adamic: counts: allocations 8005 frees 8005 retains 4004 releases 6007 peak 6004 regions 0
+--- PASS: TestProgramRegionWeakRelations (0.99s)
+=== NAME  TestProgramRegionMemberMapperStorage
+    program_region_map_storage_test.go:24: gate cache node miss
+=== NAME  TestProgramRegionCountedMapperStorage
+    program_region_map_storage_test.go:20: gate cache node hit
+=== NAME  TestProgramRegionMemberMapperStorage
+    program_region_map_storage_test.go:24: flag=true: adamic: counts: allocations 12 frees 7 retains 4 releases 15 peak 10 regions 5
+    program_region_map_storage_test.go:24: flag=true: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed
+=== NAME  TestProgramRegionCountedMapperStorage
+    program_region_map_storage_test.go:20: flag=false: adamic: counts: allocations 11 frees 11 retains 5 releases 12 peak 8 regions 0
+    program_region_map_storage_test.go:20: flag=false: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed
+--- PASS: TestProgramRegionCountedMapperStorage (0.42s)
+=== NAME  TestProgramRegionMemberMapperStorage
+    program_region_map_storage_test.go:24: reuse-admitted mutant caught by actual storage invariant under ASan/UBSan
+--- PASS: TestProgramRegionMemberMapperStorage (0.70s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=22
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	60.199s

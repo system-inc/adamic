@@ -1,0 +1,12 @@
+=== RUN   TestProgramRegionTscNodeMemberSites
+=== PAUSE TestProgramRegionTscNodeMemberSites
+=== CONT  TestProgramRegionTscNodeMemberSites
+    program_region_tsc_node_test.go:49: allocation BaseNode at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:34:12: selected=true
+    program_region_tsc_node_test.go:49: allocation never[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:40:43: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:44:41: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:46:41: selected=true
+    program_region_tsc_node_test.go:64: selector left Node (Node) counted
+--- FAIL: TestProgramRegionTscNodeMemberSites (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.145s
+FAIL

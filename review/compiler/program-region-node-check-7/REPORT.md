@@ -1,0 +1,30 @@
+Verified step 24 point 4 Program membership on slice 7; the check was already ported.
+Base 52252d5a; equivalent source picks eeca0e32 and d7dd19a9; delivery commit is the commit containing this report.
+Bounded lower, oracle, native, CallTargetReaders and focused vet commands passed; logs accompany this report.
+Drop-Node and drop-NodeArray fail explicit membership assertions; select-acyclic-type fails the parse.a empty-set assertion.
+Fixture 14 remains skipped on unsupported non-null assertions; full tsc, NodeArray metadata and external census are not certified.
+
+The branch is compiler/program-region-node-check-7, based directly on origin/runtime/slice-7-on-c2 at 52252d5a. The requested net diff was computed with `git diff f2de9280 75f116e1` and applied with `git apply --3way`. Slice 7 already carries all those changes: eccdb2f8 became 08bd0c97, bbc3eb35 became 53d361fe, aaf58882 became eeca0e32, and 75f116e1 became d7dd19a9. Only the host test and counts table conflicted. Taking slice 7 for both preserves its explicit feature-pending checks and every counts row. The final tracked source diff against 52252d5a is empty. This unit adds verification evidence only, with no production selector or cycle-policy change and no old 06e ancestry merged.
+
+Assumption: the explicit instruction to deliver own commits on the area tip overrides the generic main-merge instruction. No main merge was performed. Host 14 has no Node or NodeArray declarations: it is the cell/closure host control. The tsc declaration projection is the separate Node/NodeArray witness, as the original unit documents.
+
+Observed selector output: Node and NodeArray<Node> admitted. BaseNode factory at 34:12; empty declarations array at 40:43; populated declarations array at 44:41; NodeArray allocation at 46:41, all selected. The IR allocation assertions pass. The acyclic pinned parse.a member set remains empty (25.77s). Selector leaf 0.38s. Host selector skips (1.25s), host oracle skips (0.81s), both on `pending non-null assertion lowering: host fixture 14`. The pristine external TypeScript census is unavailable, and its two existing tests skip. These skips are not passes.
+
+The positive tsc oracle leaf passes in 58.70s, including initial runtime cache construction while other verification ran. It reports allocations 11, frees 4, retains 19, releases 26, peak 11, region members 7, exactly the existing row. Node, emitted JavaScript, native release, ASan/UBSan and the independent leak helper agree. There are no new tests or fixtures. counts.md is byte-identical to slice 7, so no counts regeneration is necessary and none was run. Every existing row remains unchanged; no row is added by this unit. All selected Program fixture observations retain their recorded counts. No whole-package or full repository gate ran.
+
+Mutants were regenerated from slice 7 using overlays, never modifying production files. Sources end in .go.txt. Drop-Node exits 1 with `selector left Node (Node) counted`; drop-NodeArray exits 1 with `selector left NodeArray<Node> (NodeArray<Node>) counted`; select-acyclic-type exits 1 because parse.a selected a type identity. The runner exits 0 after requiring the actual failing test leaves. No compile error or timeout counts as a caught mutant. Exact commands and elapsed seconds are in mutants-results.json. The host callback mutant was not run because its control is skipped on this base.
+
+Commands, all from the repository root with /workspace/adamic-tools/env.sh sourced, test output redirected directly to the named logs:
+
+- `timeout 90 go test ./internal/lower -run '^TestProgramRegion' -count=1 -timeout 85s -v`: lower.log, PASS 25.864s, with the three skips above.
+- `timeout 90 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 85s -v`: call-targets.log, PASS 38.037s.
+- `timeout 280 python3 review/compiler/program-region-node-check-7/run-mutants.py`: mutants.log, PASS; exact per-mutant commands in results JSON.
+- `timeout 90 go test ./internal/oracle -run '^TestProgramRegion(TscNodesAgreeWithNode|Host14AgreesWithNode|GraphParent|GraphRelations|GraphSymbols|WeakParent|WeakRelations|WeakSymbols|Constructor|Ownership|CapturedCell|CountedMapperStorage|MemberMapperStorage)$' -count=1 -timeout 85s -v`: oracle.log, PASS 60.199s aggregate; each executed leaf below 60s.
+- `timeout 90 go test ./internal/native -run '^TestProgramRegion(CoreASan|CoreASanSlabs|CoreCounted|CoreUnion|Target)$' -count=1 -timeout 85s -v`: native.log, PASS 36.801s. Leaves 21.91s, 10.96s, 3.91s, 0.00s, 0.00s. Core counts 11/7/14/22/11/4 in end and exit modes.
+- `timeout 90 go vet ./internal/lower ./internal/oracle`: vet.log, exit 0, no output.
+
+Setup: exported GOPROXY=https://proxy.golang.org|direct; `timeout 600 bash cloud/setup.sh`, exit 0. Go ready 0.058s, Node 0.080s, clang 0.469s, markdown 1.213s, submodules 17.401s, Go build 282.290s, cache warm 282.391s, done 282.418s. nproc 5, cgroup quota 4 CPUs. Setup printed /workspace/adamic-tools/env.sh; /opt/adamic-tools/env.sh does not exist. Pinned host dependencies installed with `timeout 120 npm ci --ignore-scripts` in stage3/api, exit 0. Initial test invocations during cold compilation timed out externally with exit 124 and no test result; reruns above supersede them. Initial overlay timeout was not counted as a killed mutant. See attempts.txt.
+
+Required lane checks run after committing; their output is in lane-checks.log. The default checker compares the whole area stack with origin/main; a separate own-diff check compares against 52252d5a if necessary. No approval to change inherited runtime code is inferred from inherited lane findings.
+
+This is verification toward step 24 point 4 and task #wny5r9y. A fully passing fixture 14 is not possible on the specified base without the missing non-null assertion lowering. No replacement projection is passed off as the original host. Full native tsc.ts, NodeArray metadata construction, all parser allocations, optional delete storage, external census and the whole gate remain outside this report's certification.
