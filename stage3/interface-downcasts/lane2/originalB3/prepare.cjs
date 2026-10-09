@@ -127,14 +127,14 @@ for (const [target, field] of targets) {
   else if (mode === 'alias' && !callableElement) body += `function mutate(): void { raw.${field}[0] = ${callableElement ? '() => (' : ''} ${nested ? '[9]' : stringElement ? "'second'" : `{${elementPrefix}${leaf}: ${stringField ? "'second'" : aliasNumber}}`}${callableElement ? ')' : ''}; }\n`;
   body += `read(${mode === 'receiver-undefined' ? 'undefined' : 'raw'});\n`;
   const name = prefix + '-' + mode;
-  fs.writeFileSync(path.join(__dirname, name + '.a'), body);
+  fs.writeFileSync(path.join(__dirname, name + '.ts'), body);
   probes.push({name, source: output, refusal: target === 'ParsedCommandLine | undefined' && field === 'projectReferences' && mode !== 'lazy' ? 'Adamic 0.1 refuses checked view read of field path with unsupported intersection contract; prove or implement the intersection contract before reading this field' : '', diagnostic: mode === 'absent' && !(member.flags & ts.SymbolFlags.Optional) ? `field read failed: viewed${target.includes('undefined') ? '?' : ''}.${field} is not initialized; expected ${pair.declared_type}, found missing` : mode !== 'bad' ? '' : nested ? 'element read failed: items[0]![0] expected IncrementalBuildInfoFileId, found string' : stringElement ? `element read failed: items.slice(0, 1)[element] expected ${checker.typeToString(array && checker.getIndexTypeOfType(array, ts.IndexKind.Number))}, found number` : `field read failed: items[0]!${callableElement ? '()' : ''}.${leaf} is not a ${checker.typeToString(scalarType)}; expected ${checker.typeToString(scalarType)}, found ${stringField ? 'number' : 'string'}`, contracts: mode === 'lazy' ? receiverNames : [...receiverNames, ...(elementName ? [elementName] : [])], pair: target + '.' + field, mode, stringElement, nested, leaf, callable: callableElement});
  }
  manifest.pairs.push(pair);
 }
 // A replacement write is a separate unbuilt operation, not read credit.
 const replacementName = 'deferredmapper-targets-replacement';
-fs.writeFileSync(path.join(__dirname, replacementName + '.a'), `import type { TypeMapper, TypeMapKind } from 'original-tsc-types';
+fs.writeFileSync(path.join(__dirname, replacementName + '.ts'), `import type { TypeMapper, TypeMapKind } from 'original-tsc-types';
 interface Base { readonly kind: number; }
 function read(base: Base): void {
  const viewed = base as Extract<TypeMapper, {kind: TypeMapKind.Deferred}>;

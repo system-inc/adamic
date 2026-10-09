@@ -2,6 +2,9 @@ package javascript
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/ir"
+	"strconv"
+	"strings"
 )
 
 // Lane 1 includes this with the shared readiness runtime when array contracts
@@ -27,4 +30,118 @@ func emitViewArrayRead(array, index, expression, check string) string {
 // not call the element checker; elements are checked at their own read sites.
 func emitViewArrayFieldRead(object, member, expression, expected string) string {
 	return fmt.Sprintf("adamicViewArray(adamicReadField(%s, %s, %s, false, false, %s), %s, %s)", object, quote(member), quote(expression), quote(expected), quote(expression), quote(expected))
+}
+
+const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, relative, check) => {
+    if (relative) { index = Math.trunc(Number(index)) || 0; if (index < 0) index += array.length; }
+    if (!Number.isInteger(index) || index < 0 || index >= array.length) return undefined;
+    return check(array[index]);
+};
+const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
+    if (value === undefined) { if (required) panic("element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
+    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 || type === 9 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : false;
+    if (!valid) panic("element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
+    if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
+    return value;
+};
+`
+
+func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
+	if read.Optional {
+		read.Optional = false
+		array := e.value(read.Array)
+		read.Array = ir.Read{Local: -1, Of: ir.Array}
+		return "((adamicArray)=>adamicArray===undefined?undefined:" + e.viewOptionalArrayIndex(read, "adamicArray") + ")(" + array + ")"
+	}
+	array, index := e.value(read.Array), e.value(read.Index)
+	allowed := []string{}
+	for _, literal := range read.ViewAllowed {
+		switch literal.Of {
+		case ir.Number:
+			allowed = append(allowed, strconv.FormatFloat(literal.Number, 'g', -1, 64))
+		case ir.Boolean:
+			allowed = append(allowed, strconv.FormatBool(literal.Boolean))
+		case ir.String:
+			allowed = append(allowed, quote(literal.String))
+		}
+	}
+	checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => adamicViewArrayElement(value, %s, %d, %s, [%s], %t))", array, index, read.Relative, quote(read.View), read.Element, quote(read.ViewType), strings.Join(allowed, ", "), !read.UndefinedAllowed)
+	return checked
+}
+
+const viewArrayOperationsRuntime = `const adamicArrayStorage = new WeakMap();
+const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage); return array; };
+const adamicViewSlice = (array, arguments_) => adamicArrayStorageValue(array.slice(...arguments_), adamicArrayStorage.get(array));
+const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== storage) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : adamicViewTypeNames[actual] || "uncertified storage")); };
+const adamicViewMap = (array, callback, check) => adamicMap(array, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
+const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
+const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
+const adamicViewReduce = (array, callback, initial, check) => adamicReduce(array, new AdamicClosure((self, values) => adamicCall(callback, [values[0], check(values[1]), values[2], values[3]]), []), initial);
+const adamicViewPop = (array, check) => { if (array.length === 0) return undefined; const value = check(array[array.length - 1]); array.pop(); return value; };
+const adamicViewPush = (array, value, storage) => { adamicArrayWriteCheck(array, storage); return array.push(value); };
+const adamicViewSetIndex = (array, index, value, storage) => { adamicArrayWriteCheck(array, storage); adamicSetIndex(array, index, value); };
+`
+
+func (e *emitter) value(expression ir.Expression) string {
+	value := e.valueWithoutViewArrays(expression)
+	if !ir.HasArrayViews(e.program) {
+		return value
+	}
+	storage := ir.Type(0)
+	switch expression := expression.(type) {
+	case ir.ArrayLiteral:
+		storage = expression.Element
+	case ir.ArrayMap:
+		storage = expression.Result
+	case ir.ArrayFrom:
+		storage = expression.Element
+	case ir.ArrayFill:
+		if expression.Array == nil {
+			storage = expression.Element
+		}
+	case ir.ArrayVisit:
+		if expression.Method == "filter" {
+			storage = expression.Element
+		}
+	case ir.CodePoints:
+		storage = ir.String
+	case ir.MapEntries:
+		storage = ir.Object
+	case ir.StringCall:
+		if expression.Method == "split" {
+			storage = ir.String
+		}
+	}
+	if storage != 0 {
+		return fmt.Sprintf("adamicArrayStorageValue(%s, %d)", value, storage)
+	}
+	return value
+}
+
+func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) string {
+	literals := []string{}
+	for _, literal := range read.ViewAllowed {
+		switch literal.Of {
+		case ir.String:
+			literals = append(literals, quote(literal.String))
+		case ir.Number:
+			literals = append(literals, strconv.FormatFloat(literal.Number, 'g', -1, 64))
+		case ir.Boolean:
+			literals = append(literals, strconv.FormatBool(literal.Boolean))
+		}
+	}
+	checked := fmt.Sprintf("adamicViewArrayElement(%s, %s, %d, %s, [%s], %t)", value, quote(read.View), read.Element, quote(read.ViewType), strings.Join(literals, ", "), !read.UndefinedAllowed)
+	return checked
+}
+
+func (e *emitter) viewArrayChecker(read ir.ArrayViewRead) string {
+	return "(adamicElement) => " + e.viewArrayElementCheck(read, "adamicElement")
+}
+
+const viewArrayJoinRuntime = `const adamicViewJoin=(array,separator,check)=>{const normalized=[];for(let index=0;index<array.length;index++)normalized.push(check(array[index]));return normalized.join(separator);};
+`
+
+func (e *emitter) viewOptionalArrayIndex(read ir.ArrayIndex, array string) string {
+	meta := ir.ArrayViewRead{View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, Element: read.Element, UndefinedAllowed: read.UndefinedAllowed}
+	return "adamicViewArrayIndex(" + array + ", " + e.value(read.Index) + ", false, " + e.viewArrayChecker(meta) + ")"
 }

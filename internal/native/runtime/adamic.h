@@ -404,8 +404,10 @@ static inline void adamic_object_check_data_write(const adamic_object *object, c
 }
 
 // adamic_array is an array (array.c). references says whether its elements are references.
+#include "view_arrays.h"
 typedef struct adamic_array {
 	adamic_heap heap;
+	adamic_array_view_metadata view;
 	size_t length;
 	size_t capacity;
 	bool references;

@@ -26,7 +26,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if l.callableViewContract(target) {
 		family = "callable"
 	}
-	if l.checker.IsArrayType(target) {
+	if l.checker.IsArrayType(target) && viewArrayContractHook == nil {
 		family = "array"
 	}
 	if of, known := l.representation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
@@ -142,6 +142,9 @@ func (l *lowering) checkLazyViewReads() error {
 				}
 			}
 		}
+	}
+	if err := l.activateViewArrayReads(graph, viewed, unknown); err != nil {
+		return err
 	}
 	// Wider interfaces and instantiated helpers can give the same member a
 	// different checker type id. Field-name fallback retains the refusal until

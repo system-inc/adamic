@@ -13,6 +13,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
+	array->view.storage = 0;
 	array->elements = NULL;
 	array->properties = NULL;
 	if (capacity > 0) {
@@ -119,6 +120,7 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	}
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
 	adamic_array *sliced = adamic_array_new(to - from, array->references);
+	sliced->view = array->view;
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {

@@ -20,12 +20,19 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
-	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
+	if !proof.arrayView && !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
 		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
 	}
 	value, err := l.expression(as.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if proof.arrayView {
+		if err := l.widened(source, target, map[[2]*checker.Type]bool{}); err != nil {
+			l.result.ArrayViewNeedsSourceCertificate = true
+		}
+		l.result.ArrayViewEnabled = true
+		return l.view(node, value, l.checker.GetNonNullableType(target))
 	}
 	if proof.structuralView {
 		return l.structuralViewCast(node, value, source, target)
