@@ -174,6 +174,18 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 fi
 "$tools/bin/node" --version
 step "node ready"
+# Stock tsc, TypeScript 6.0.3 as cohere's checks pin it: library's test262 runner starts it as an oracle
+# (cmd/adamic-test262/typescript.go, exec.LookPath("tsc")), so a missing or other tsc fails setup, never a skipped test.
+typescriptVersion=6.0.3
+if ! "$tools/bin/tsc" --version 2> /dev/null | grep -qx "Version $typescriptVersion"; then
+	typescriptArchive=$(verifiedDownload "https://registry.npmjs.org/typescript/-/typescript-$typescriptVersion.tgz" 33cd0ee1beaa8c9e9d15a9da836c62ddea4c34a42d7c2d349dbc80d94165d22a)
+	installDirectory "$typescriptArchive" "$tools/typescript" -xz --strip-components 1
+	printf '#!/bin/sh\nexec %q %q "$@"\n' "$tools/bin/node" "$tools/typescript/lib/tsc.js" > "$tools/bin/tsc.partial"
+	chmod 755 "$tools/bin/tsc.partial"
+	mv "$tools/bin/tsc.partial" "$tools/bin/tsc"
+fi
+"$tools/bin/tsc" --version | grep -qx "Version $typescriptVersion" || { echo "setup: $tools/bin/tsc isn't TypeScript $typescriptVersion" >&2; return 1; }
+step "tsc ready (TypeScript $typescriptVersion)"
 python3 "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
