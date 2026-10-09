@@ -1,0 +1,20 @@
+run adamic-gate-pilot-20261009T062950-36459d95: void, 23934 tests in 143 units, 3 failed, 3 units broken, 0 killed over budget
+BROKEN tests-90: exited 1 with no failed test (last output "loom-pilot: tests took 346 s in all")
+BROKEN tests-108: exited 1 with no failed test (last output "loom-pilot: tests took 244 s in all")
+BROKEN tests-137: exited 1 with no failed test (last output "loom-pilot: tests took 324 s in all")
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-19)
+    rules_agree_shards_test.go:154: build lint-rules-agree-lowered a962f78650b7 miss 76.12
+    lint_test.go:327: TestRulesAgree (setup lowered): 76.147s
+    lint_test.go:329: cooked: setup over 60s budget
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestUnattachedDecorator (tests-43)
+    recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=73.285746s
+    expressions_test.go:46: build estree-lowered-program 30876881cdde miss 73.39
+    recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=92.640036s
+    expressions_test.go:46: build estree-sanitized-native 439234a552c2 miss 92.67
+    recovery_shards_test.go:38: setup wall=166.667873s builds=166.065118s without-builds=0.602755s
+    expressions_test.go:51: [node --disable-warning=ExperimentalWarning /tmp/adamic/oracle/node.mjs /tmp/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestUnattachedDecorator3482580947/001/input.ts]: child CPU deadline exceeded: used 2.02604s, budget 2s
+    expressions_test.go:51: [node --disable-warning=ExperimentalWarning /tmp/adamic/oracle/node.mjs /tmp/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestUnattachedDecorator3482580947/001/input.ts]: timeout=true exit=exit status 70 stdout=0 stderr=adamic: panic: ESTree unattached decorator
+    recovery_shards_test.go:33: TEST totalCPU=156.593434s
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-94)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	90.348s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	90.087s

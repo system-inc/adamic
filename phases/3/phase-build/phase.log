@@ -1,0 +1,21 @@
+FIRST FAILURE (build, at 122.3 s):
+# github.com/system-inc/adamic/bridge/tsgo/archive
+/home/agent/.adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device
+# github.com/system-inc/cohere/internal/lint/ecmascript/imports
+compile: writing output: write $WORK/b237/_pkg_.a: no space left on device
+github.com/system-inc/adamic/cmd/adamic-fuzz: write /tmp/adamic-gate/go-build4250965537/b250/importcfg: no space left on device
+github.com/system-inc/adamic/cmd/adamic-reduce: write /tmp/adamic-gate/go-build4250965537/b256/importcfg: no space left on device
+github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage: write /tmp/adamic-gate/go-build4250965537/b275/importcfg: no space left on device
+github.com/system-inc/adamic/stage3/ledger/checker-259: write /tmp/adamic-gate/go-build4250965537/b286/importcfg.link: no space left on device
+github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08: write /tmp/adamic-gate/go-build4250965537/b287/importcfg: no space left on device
+# github.com/system-inc/cohere/internal/lint/checking
+compile: writing output: write $WORK/b229/_pkg_.a: no space left on device
+# github.com/system-inc/cohere/internal/lint/ecmascript/comments
+compile: writing output: write $WORK/b234/_pkg_.a: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/cost
+/home/agent/.adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device
+# github.com/system-inc/cohere/internal/lint/ecmascript/reference
+compile: writing output: write $WORK/b244/_pkg_.a: no space left on device
+
+(box load 6.2 on 5 cores at first failure)
+red: 995010af8e291bedb3c491ccd64ece06b416c5fa full gate, first failure at build after 122.3 s, under load (load 6.2 on 5 cores at first failure), cancelled after first failure (build=122.3s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 5.4 on 5 cores at start, load 6.2 on 5 cores at first failure, load 6.2 on 5 cores at end), 0 fail, 0 pass
