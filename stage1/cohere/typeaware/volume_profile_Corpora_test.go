@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"io/fs"
@@ -13,6 +14,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"strings"
 	"sync"
@@ -48,16 +50,12 @@ func volumeProfileCorporaCommand(ctx context.Context, name string, args ...strin
 	return command
 }
 
-func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize bool) string {
+func volumeProfileCorporaInputs(h *harness, ctx context.Context, sanitize bool, name string) buildcache.Inputs {
 	h.t.Helper()
-	name := "typeaware volume"
-	if sanitize {
-		name += " asan"
-	}
 	// Use the compiler source recipe rather than executable metadata: workers
 	// have different Git revisions and Go archives embed different scratch paths.
 	archiveName, archiveFlags := "typeaware checker archive", ""
-	toolContext, cancelTool := context.WithTimeout(context.Background(), 90*time.Second)
+	toolContext, cancelTool := context.WithTimeout(ctx, 90*time.Second)
 	defer cancelTool()
 	cc, err := volumeProfileCorporaCommand(toolContext, "go", "env", "CC").Output()
 	if err != nil {
@@ -74,7 +72,7 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "cohere/go.mod", "cohere/go.sum"},
 		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
 	}
-	listContext, cancelList := context.WithTimeout(context.Background(), 90*time.Second)
+	listContext, cancelList := context.WithTimeout(ctx, 90*time.Second)
 	defer cancelList()
 	list := volumeProfileCorporaCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
 	list.Dir = h.repository
@@ -157,12 +155,25 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 			h.t.Fatal(err)
 		}
 	}
+	return inputs
+}
+
+func volumeProfileCorporaNative(h *harness, ctx context.Context, stage0, archive string, sanitize, prepare bool) string {
+	h.t.Helper()
+	name := "typeaware volume"
+	if sanitize {
+		name += " asan"
+	}
+	inputs := volumeProfileCorporaInputs(h, ctx, sanitize, name)
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+		if !prepare {
+			return fmt.Errorf("shared product %s is not ready; run TestVolumeProfileCorpora_Setup first", name)
+		}
 		args := []string{"build", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), "-o", filepath.Join(directory, "volume"), "--tsgo", archive}
 		if sanitize {
 			args = append(args, "--sanitize")
 		}
-		buildContext, cancelBuild := context.WithTimeout(context.Background(), 90*time.Second)
+		buildContext, cancelBuild := context.WithTimeout(ctx, 90*time.Second)
 		defer cancelBuild()
 		command := volumeProfileCorporaCommand(buildContext, stage0, args...)
 		command.Dir = h.repository
@@ -288,100 +299,143 @@ func volumeProfileCorporaEnumeration(t *testing.T) (string, []volumeProfileCorpo
 	return repository, shards
 }
 
-var volumeProfileCorporaProducts struct {
-	once                 sync.Once
-	binary, asan, oracle string
-}
+// Only the setup test may populate shared products. Shards can wait for that
+// test in a package run, but never start setup themselves. Separate gate
+// processes fetch the products published by the setup test.
+var volumeProfileCorporaSetup = struct {
+	once  sync.Once
+	ready chan struct{}
+}{ready: make(chan struct{})}
 
-func volumeProfileCorporaPrepare(t *testing.T, repository string) {
-	t.Helper()
-	volumeProfileCorporaProducts.once.Do(func() {
-		started := time.Now()
-		// Go builds keep the original commands. These process-lifetime scratch
-		// products must outlive the first parallel test; native products use Product.
-		directory, err := os.MkdirTemp("", "typeaware-corpora-go-")
-		if err != nil {
-			t.Fatal(err)
+func volumeProfileCorporaGoProduct(h *harness, ctx context.Context, name string, sanitize, prepare bool) string {
+	inputs := volumeProfileCorporaInputs(h, ctx, sanitize, name)
+	inputs.Files = append(inputs.Files, "go.work", "cohere/internal", "stage1/cohere/typeaware/testdata/oracle_volume.go")
+	inputs.Flags = append(inputs.Flags, "shared Go product="+name)
+	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+		if !prepare {
+			return fmt.Errorf("shared product %s is not ready; run TestVolumeProfileCorpora_Setup first", name)
 		}
-		scratch := func() string {
-			path, err := os.MkdirTemp(directory, "build-")
-			if err != nil {
-				t.Fatal(err)
-			}
-			return path
-		}
-		h := &harness{t: t, repository: repository, directory: scratch()}
-		// These are Go builds; keep the original commands until GoBuild lands.
-		runGo := func(h *harness, name string, command *exec.Cmd) {
-			deadline, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-			defer cancel()
-			bounded := volumeProfileCorporaCommand(deadline, command.Path, command.Args[1:]...)
-			bounded.Dir, bounded.Env = command.Dir, command.Env
-			r := h.run(name, bounded)
-			if deadline.Err() != nil {
-				t.Fatalf("cooked: Go build %s exceeded 90s hard deadline (60s budget)", name)
-			}
-			if r.err != nil {
-				t.Fatalf("%s: %v\n%s\n%s", name, r.err, r.stdout, r.stderr)
-			}
-		}
-		buildArchive := func(h *harness, sanitize bool) string {
-			name := "checker"
-			if sanitize {
-				name += "-asan"
-			}
-			path := filepath.Join(h.directory, name+".a")
-			command := exec.Command("go", "build", "-buildmode=c-archive", "-o", path, "./bridge/tsgo/archive")
+		path := filepath.Join(directory, "product")
+		var command *exec.Cmd
+		switch name {
+		case "typeaware stage0":
+			command = volumeProfileCorporaCommand(ctx, "go", "build", "-o", path, "./cmd/adamic")
+		case "typeaware checker archive", "typeaware checker archive asan":
+			command = volumeProfileCorporaCommand(ctx, "go", "build", "-buildmode=c-archive", "-o", path, "./bridge/tsgo/archive")
 			if sanitize {
 				command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 			}
-			runGo(h, name, command)
-			return path
+		case "typeaware volume oracle":
+			virtual := filepath.Join(h.repository, "cohere/adamic_volume-oracle.go")
+			data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
+			if err != nil {
+				return err
+			}
+			overlay := filepath.Join(directory, "overlay.json")
+			if err := os.WriteFile(overlay, data, 0600); err != nil {
+				return err
+			}
+			command = volumeProfileCorporaCommand(ctx, "go", "build", "-overlay", overlay, "-o", path, virtual)
+			command.Dir = filepath.Join(h.repository, "cohere")
+		default:
+			return fmt.Errorf("unknown shared Go product %s", name)
 		}
-		var stage0, archive, sanitized string
+		if command.Dir == "" {
+			command.Dir = h.repository
+		}
+		if output, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("%s: %w\n%s", name, err, output)
+		}
+		return nil
+	})
+	return filepath.Join(directory, "product")
+}
+
+func TestVolumeProfileCorpora_Setup(t *testing.T) {
+	t.Parallel()
+	volumeProfileCorporaSetup.once.Do(func() {
+		defer close(volumeProfileCorporaSetup.ready)
+		if os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST") == "" && os.Getenv("ADAMIC_VOLUME_COMPILER_MANIFEST") == "" {
+			t.Skip("no enabled volume profile corpus")
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		repository, err := filepath.Abs("../../..")
+		if err != nil {
+			t.Fatal(err)
+		}
+		var stage0, archive, sanitized, oracle string
 		var builds sync.WaitGroup
 		for _, job := range []struct {
-			name    string
-			product *string
-			build   func(*harness) string
+			name     string
+			sanitize bool
+			product  *string
 		}{
-			{"typeaware stage0", &stage0, func(h *harness) string {
-				path := filepath.Join(h.directory, "adamic")
-				runGo(h, "stage0", exec.Command("go", "build", "-o", path, "./cmd/adamic"))
-				return path
-			}},
-			{"typeaware checker archive", &archive, func(h *harness) string { return buildArchive(h, false) }},
-			{"typeaware checker archive asan", &sanitized, func(h *harness) string { return buildArchive(h, true) }},
-			{"typeaware volume oracle", &volumeProfileCorporaProducts.oracle, func(h *harness) string {
-				virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
-				data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-				if err != nil {
-					t.Fatal(err)
-				}
-				path := filepath.Join(h.directory, "volume-oracle")
-				command := exec.Command("go", "build", "-overlay", h.write("volume-oracle-overlay.json", string(data)), "-o", path, virtual)
-				command.Dir = filepath.Join(repository, "cohere")
-				runGo(h, "volume-oracle-build", command)
-				return path
-			}},
+			{"typeaware stage0", false, &stage0},
+			{"typeaware checker archive", false, &archive},
+			{"typeaware checker archive asan", true, &sanitized},
+			{"typeaware volume oracle", false, &oracle},
 		} {
-			builder := &harness{t: t, repository: repository, directory: scratch()}
 			builds.Add(1)
 			go func() {
 				defer builds.Done()
-				started := time.Now()
-				*job.product = job.build(builder)
-				t.Logf("Go build %s: %.3fs", job.name, time.Since(started).Seconds())
+				h := &harness{t: t, repository: repository}
+				*job.product = volumeProfileCorporaGoProduct(h, ctx, job.name, job.sanitize, true)
 			}()
 		}
 		builds.Wait()
 		if t.Failed() {
 			return
 		}
-		volumeProfileCorporaProducts.binary = volumeProfileCorporaNative(h, stage0, archive, false)
-		volumeProfileCorporaProducts.asan = volumeProfileCorporaNative(h, stage0, sanitized, true)
-		t.Logf("corpus preparation including cache fetch: %.3fs", time.Since(started).Seconds())
+		for _, job := range []struct {
+			archive  string
+			sanitize bool
+		}{{archive, false}, {sanitized, true}} {
+			builds.Add(1)
+			go func() {
+				defer builds.Done()
+				h := &harness{t: t, repository: repository}
+				volumeProfileCorporaNative(h, ctx, stage0, job.archive, job.sanitize, true)
+			}()
+		}
+		builds.Wait()
+		if ctx.Err() != nil {
+			t.Fatalf("shared setup exceeded the 90s deadline: %v", ctx.Err())
+		}
+		if oracle == "" {
+			t.Fatal("shared oracle preparation failed")
+		}
 	})
+}
+
+func volumeProfileCorporaWaitSetup(t *testing.T) {
+	t.Helper()
+	// A one-shard gate invocation does not select the setup test; it fetches
+	// cached products instead. In a normal package run, wait outside case time.
+	run := strings.SplitN(flag.Lookup("test.run").Value.String(), "/", 2)[0]
+	selected, err := regexp.MatchString(run, "TestVolumeProfileCorpora_Setup")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if skip := flag.Lookup("test.skip"); skip != nil {
+		skipped, err := regexp.MatchString(skip.Value.String(), "TestVolumeProfileCorpora_Setup")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if skip.Value.String() != "" && skipped {
+			selected = false
+		}
+	}
+	if !selected {
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	select {
+	case <-volumeProfileCorporaSetup.ready:
+	case <-ctx.Done():
+		t.Fatal("shared setup was not ready within 90s")
+	}
 }
 
 func TestVolumeProfileCorporaUnion(t *testing.T) {
@@ -402,15 +456,17 @@ func volumeProfileCorporaRun(t *testing.T, index int) {
 	if len(s.paths) == 0 {
 		t.Skip("empty shard")
 	}
-	volumeProfileCorporaPrepare(t, repository)
-	if volumeProfileCorporaProducts.binary == "" || volumeProfileCorporaProducts.asan == "" || volumeProfileCorporaProducts.oracle == "" {
-		t.Fatal("corpus product preparation failed")
-	}
+	volumeProfileCorporaWaitSetup(t)
+	// A cache miss here is an actionable setup error, never a lazy shared build.
+	fetch, cancelFetch := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancelFetch()
 	h := &harness{t: t, repository: repository, directory: t.TempDir()}
+	oracle := volumeProfileCorporaGoProduct(h, fetch, "typeaware volume oracle", false, false)
+	executable := volumeProfileCorporaNative(h, fetch, "", "", s.sanitize, false)
 	manifest := h.write("corpus.manifest", strings.Join(s.paths, "\n")+"\n")
-	executable, name := volumeProfileCorporaProducts.binary, s.corpus
+	name := s.corpus
 	if s.sanitize {
-		executable, name = volumeProfileCorporaProducts.asan, name+"-asan"
+		name += "-asan"
 	}
 	t.Logf("%s: %d files, first=%s last=%s", name, len(s.paths), s.paths[0], s.paths[len(s.paths)-1])
 	started := time.Now()
@@ -426,7 +482,7 @@ func volumeProfileCorporaRun(t *testing.T, index int) {
 		}
 		return r
 	}
-	want := run(name+"-go", volumeProfileCorporaProducts.oracle)
+	want := run(name+"-go", oracle)
 	got := run(name+"-native", executable)
 	if len(got.stderr) != 0 {
 		t.Fatalf("sanitizer stderr: %s", got.stderr)
