@@ -1,0 +1,5 @@
+// a-check: type error TS2345
+function arrayFrom<T>(iterator: Iterable<T>): T[] { const result: T[] = []; for (const value of iterator) result.push(value); return result; }
+const names = arrayFrom(new Map<string, number>([['ok', 1]]).keys());
+const deprecated = new Set<string>();
+console.log(names.filter(key => !deprecated.has(key)).join(','));

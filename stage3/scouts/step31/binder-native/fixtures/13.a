@@ -1,0 +1,5 @@
+// NotYet witness; see fixtures.json for the exact measured message.
+function hooks(): { now: () => number } { return { now: () => 1 }; }
+const nativeHooks = hooks();
+namespace Later { export const ready = 1; }
+console.log(String(nativeHooks.now()));

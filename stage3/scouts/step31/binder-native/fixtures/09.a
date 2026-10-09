@@ -1,0 +1,4 @@
+// NotYet witness; see fixtures.json for the exact measured message.
+const measures = new Map<string, number>();
+enum Phase { Ready = 1 }
+console.log(String(measures.size));

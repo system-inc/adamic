@@ -1,0 +1,90 @@
+// a-check: type error TS2307
+import { panic, programArguments, readTextFile } from 'adamic';
+import { bindSourceFile } from './src/compiler/binder.ts';
+import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
+import { convertCompilerOptionsFromJson } from './src/compiler/commandLineParser.ts';
+import { flattenDiagnosticMessageText } from './src/compiler/program.ts';
+import { version } from './src/compiler/corePublic.ts';
+import { ScriptKind, ScriptTarget } from './src/compiler/types.ts';
+import type { Node, Symbol, Diagnostic, DiagnosticMessageChain, JSDoc, SymbolTable, __String } from './src/compiler/types.ts';
+
+interface InputFile { path: string; text: string; scriptKind?: ScriptKind; }
+interface Project { id: string; options?: Record<string, unknown>; files: InputFile[]; }
+interface Request { projects: Project[]; }
+interface ChainRow { message: string; code: number; category: number; next: ChainRow[]; }
+interface DiagnosticRow { start: number | null; length: number | null; code: number; category: number; message: string | ChainRow; related: DiagnosticRow[]; }
+function chain(value: DiagnosticMessageChain): ChainRow {
+    return { message: value.messageText, code: value.code, category: value.category, next: (value.next || []).map(chain) };
+}
+function diagnostic(value: Diagnostic): DiagnosticRow {
+    return { start: value.start ?? null, length: value.length ?? null, code: value.code, category: value.category,
+        message: typeof value.messageText === 'string' ? value.messageText : chain(value.messageText),
+        related: (value.relatedInformation || []).map(diagnostic) };
+}
+const pathname = programArguments()[0] ?? panic('binder request pathname required');
+const input = readTextFile(pathname);
+if (input.kind !== 'Ok') panic(input.message);
+// This source boundary is deliberately visible to the compiler: it must check
+// the complete request before native admission. No source/proof bypass is used.
+const request = JSON.parse(input.text) as Request;
+if (version !== '6.0.3') throw new Error('expected TypeScript 6.0.3');
+const projectNames = new Set<string>();
+for (const project of request.projects) {
+    if (projectNames.has(project.id)) throw new Error('duplicate project id');
+    projectNames.add(project.id);
+    const converted = convertCompilerOptionsFromJson(project.options || {}, '/');
+    if (converted.errors.length) throw new Error(flattenDiagnosticMessageText(converted.errors[0]?.messageText, '\n'));
+    const files = [...project.files].sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+    if (new Set(files.map(file => file.path)).size !== files.length) throw new Error('duplicate file');
+    console.log(JSON.stringify({ record: 'project', format: 'adamic-binder-v1', typescript: version, id: project.id,
+        options: Object.fromEntries(Object.entries(project.options || {}).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) }) ?? panic('project serialization returned undefined'));
+    for (const fileInput of files) {
+        if (!fileInput.path || fileInput.path.startsWith('/') || fileInput.path.includes('\\') || fileInput.path.split('/').includes('..')) throw new Error('expected relative virtual file path');
+        const file = createSourceFile(fileInput.path.replace(/\.a$/, '.ts'), fileInput.text,
+            converted.options.target ?? ScriptTarget.Latest, true,
+            fileInput.scriptKind ?? (fileInput.path.endsWith('.tsx') ? ScriptKind.TSX : fileInput.path.endsWith('.js') ? ScriptKind.JS : ScriptKind.TS));
+        bindSourceFile(file, converted.options);
+        const nodes: Node[] = [];
+        const nodeIds = new Map<Node, number>();
+        function visit(node: Node): void {
+            nodeIds.set(node, nodes.length); nodes.push(node);
+            forEachChild(node, child => { visit(child); }, children => { for (const child of children) visit(child); });
+            // Attached docs are outside forEachChild's ordinary child edges.
+            const docs = (node as Node & { jsDoc?: JSDoc[] }).jsDoc;
+            if (docs) for (const doc of docs) if (!nodeIds.has(doc)) visit(doc);
+        }
+        visit(file);
+        const symbols: Symbol[] = [];
+        const symbolIds = new Map<Symbol, number>();
+        function symbolId(symbol: Symbol | undefined): number | null {
+            if (!symbol) return null;
+            if (!symbolIds.has(symbol)) { symbolIds.set(symbol, symbols.length); symbols.push(symbol); }
+            return symbolIds.get(symbol) ?? panic('symbol id missing after insertion');
+        }
+        function table(value: SymbolTable | undefined): [__String, number | null][] | null {
+            if (!value) return null;
+            return [...value.entries()].sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)
+                .map(([name, symbol]) => [name, symbolId(symbol)]);
+        }
+        function location(node: Node | undefined): number | null {
+            if (!node) return null;
+            if (!nodeIds.has(node)) throw new Error('binder declaration outside observed AST');
+            return nodeIds.get(node) ?? panic('node id missing after presence check');
+        }
+        const nodeRows = nodes.map((plainNode, index) => {
+            const node = plainNode as Node & { symbol?: Symbol; localSymbol?: Symbol; locals?: SymbolTable; };
+            return { id: index, kind: node.kind, pos: node.pos, end: node.end,
+            flags: node.flags, symbol: symbolId(node.symbol), localSymbol: symbolId(node.localSymbol),
+            locals: table(node.locals), flowFlags: (node as Node & { flowNode?: { flags: number } }).flowNode?.flags ?? null }; });
+        const symbolRows = [];
+        for (let index = 0; index < symbols.length; index++) {
+            const symbol = symbols[index] ?? panic('symbol queue element missing');
+            symbolRows.push({ id: index, name: symbol.escapedName, flags: symbol.flags,
+                declarations: (symbol.declarations || []).map(location), valueDeclaration: location(symbol.valueDeclaration),
+                parent: symbolId(symbol.parent), exportSymbol: symbolId(symbol.exportSymbol),
+                exports: table(symbol.exports), members: table(symbol.members), constEnumOnlyModule: symbol.constEnumOnlyModule ?? null });
+        }
+        console.log(JSON.stringify({ record: 'file', path: fileInput.path, nodes: nodeRows, symbols: symbolRows,
+            parseDiagnostics: file.parseDiagnostics.map(diagnostic), bindDiagnostics: (file.bindDiagnostics || []).map(diagnostic) }) ?? panic('file serialization returned undefined'));
+    }
+}
