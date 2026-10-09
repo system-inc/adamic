@@ -1,0 +1,11 @@
+FIRST FAILURE (products, at 2802.1 s):
+github.com/system-inc/adamic/bridge/tsgo TestProduct_HealthyRegion
+=== RUN   TestProduct_HealthyRegion
+=== PAUSE TestProduct_HealthyRegion
+=== CONT  TestProduct_HealthyRegion
+    products_test.go:282: build bridge-test-stage0 e96883f28de4 miss 226.85
+    products_test.go:283: build bridge-test-tsgo-asan.a b95181029c36 hit 67.29
+    product_units_test.go:123: build bridge-test-healthy-region: healthy-region: signal: killed
+--- FAIL: TestProduct_HealthyRegion (300.92s)
+
+(box load 1.7 on 64 cores at first failure)
