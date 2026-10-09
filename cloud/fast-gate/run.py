@@ -243,6 +243,15 @@ def main():
 class Gate:
     def __init__(self, arguments):
         self.arguments = arguments
+        # Queue ownership follows this run, not the user's shared cache. Keep these
+        # beside the slot tree so publishing gate artifacts never publishes products.
+        queueRoot = tempfile.mkdtemp(prefix="build-store-", dir=os.path.dirname(os.path.abspath(arguments.tree)))
+        self.buildStoreEnvironment = {
+            "ADAMIC_BUILD_STORE_SPOOL": os.path.join(queueRoot, "spool"),
+            "ADAMIC_BUILD_STORE_AUDITS": os.path.join(queueRoot, "audits"),
+        }
+        for directory in self.buildStoreEnvironment.values():
+            os.mkdir(directory)
         self.started = time.monotonic()
         self.failure = None
         self.stopped = None
@@ -262,6 +271,9 @@ class Gate:
         self.watchers = []
         self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "determinism", "census"] if arguments.full
                         else ["coverage", "tools", "build", "vet", "tests", "smoke", "determinism", "census"])
+        if os.path.isfile(os.path.join(arguments.tree, "internal/buildcache/cmd/buildcache-publish/main.go")):
+            index = self.planned.index("tests") + 1
+            self.planned[index:index] = ["audit", "upload"]
         selected = vars(arguments).get("phases")
         phase = vars(arguments).get("phase")
         if selected is not None:
@@ -420,6 +432,7 @@ class Gate:
         for thread in threads:
             thread.join()
         log.close()
+        self.cacheDrains()
         if self.failure is not None:
             return
         self.requestedRan()
@@ -651,6 +664,7 @@ class Gate:
         for thread in threads:
             thread.join()
         log.close()
+        self.cacheDrains()
         try:
             self.checkCensus()
             self.deferredRanWhole()
@@ -1833,7 +1847,44 @@ class Gate:
         self.exits[name] = 1 if code is None else code
         self.steps[name] = round(time.monotonic() - started, 1)
 
-    def stream(self, name, command, log, directory=None, environment=None):
+    def cacheDrains(self):
+        # Both gates drain after their test threads join. The candidate owns the publisher;
+        # older trees have neither stage. Pool scheduling is managed separately by Loom.
+        if "audit" not in self.planned or self.stopped or getattr(self, "cancelled", False):
+            return
+        if self.failure is not None and not self.arguments.full and not self.complete:
+            return
+        self.cacheDrain("audit")
+        if self.failure is None:
+            self.cacheDrain("upload")
+
+    def cacheDrain(self, name):
+        required = name == "audit"
+        command = ["go", "run", "./internal/buildcache/cmd/buildcache-publish"]
+        if required:
+            command.append("-audit")
+        started = time.monotonic()
+        row = {"package": module + "/internal/buildcache/cmd/buildcache-publish",
+               "test": name, "command": command, "required": required}
+        self.result.setdefault("cache_drain_units", []).append(row)
+        try:
+            with open(os.path.join(self.arguments.out, name + ".log"), "w") as log:
+                code = self.stream(name, command, log, fatal=required)
+            code = 1 if code is None else code
+        except BaseException:
+            code = 1
+            self.result.setdefault("cache_drain_output", {})[name] = traceback.format_exc()
+            if required:
+                self.fail(name, self.result["cache_drain_output"][name])
+        seconds = round(time.monotonic() - started, 1)
+        row.update(seconds=seconds, exit=code, status="passed" if code == 0 else "failed",
+                   detail=self.result.get("cache_drain_output", {}).get(name, ""))
+        # Publishing is the store's gain: record its actual exit in the unit, while the
+        # optional stage completes successfully even when the store is unavailable.
+        self.exits[name] = code if required else 0
+        self.steps[name] = seconds
+
+    def stream(self, name, command, log, directory=None, environment=None, fatal=True):
         """Runs one go test (or test2json) process, copying its events to the log; the first failing
         event fails the gate. Returns the exit code, or None if the gate failed."""
         stderrPath = os.path.join(self.arguments.out, "%s-%d.stderr" % (re.sub(r"[^A-Za-z0-9_.-]", "_", name), threading.get_ident()))
@@ -1845,23 +1896,31 @@ class Gate:
             raise
         deadline = None
         drained = threading.Event()
-        if name == "products" and "test2json" in command:
+        drain = name in ("audit", "upload")
+        transcript = []
+        if drain or (name == "products" and "test2json" in command):
             def expired():
                 if not drained.is_set():
-                    package = command[command.index("-p") + 1]
-                    test = command[command.index("-test.run") + 1]
-                    self.fail(name, "%s %s killed at %d s" % (package, test, productKillSeconds))
+                    seconds = unitKillSeconds if drain else productKillSeconds
+                    identity = name if drain else "%s %s" % (command[command.index("-p") + 1], command[command.index("-test.run") + 1])
+                    transcript.append("%s killed at %d s\n" % (identity, seconds))
+                    if fatal:
+                        self.fail(name, "%s killed at %d s" % (identity, seconds))
                     with self.lock:
                         self.killSessions({process.pid})
-            deadline = threading.Timer(productKillSeconds, expired)
+            deadline = threading.Timer(unitKillSeconds if drain else productKillSeconds, expired)
             deadline.daemon = True
             deadline.start()
         output = {}
         for line in process.stdout:
+            if drain:
+                transcript.append(line)
             if log is not None:
                 with self.lock:
                     log.write(line)
             if id(process) in getattr(self, "killedByStop", set()):
+                continue
+            if drain:
                 continue
             for watch in self.watchers:
                 watch(line)
@@ -1902,13 +1961,20 @@ class Gate:
         stderr.close()
         if id(process) in getattr(self, "killedByStop", set()):
             return None
-        if code != 0 and self.failure is None:
+        if drain:
+            with open(stderrPath) as handle:
+                text = "".join(transcript) + handle.read()
+            self.result.setdefault("cache_drain_output", {})[name] = text
+            if code != 0 and fatal and self.failure is None:
+                detail = text if len(text) <= 4000 else text[:2000] + "\n...\n" + text[-2000:]
+                self.fail(name, "%s exited %d\n%s" % (" ".join(command), code, detail))
+        if not drain and code != 0 and fatal and self.failure is None:
             with open(stderrPath) as handle:
                 identity = " ".join(command[:4])
                 if "test2json" in command and "-test.run" in command:
                     identity = "%s %s" % (command[command.index("-p") + 1], command[command.index("-test.run") + 1])
                 self.fail(name, "%s exited %d\n%s" % (identity, code, handle.read()[-4000:]))
-        return None if self.failure is not None and not self.arguments.full and not self.complete else code
+        return None if fatal and self.failure is not None and not self.arguments.full and not self.complete else code
 
     def checkCensus(self):
         started = time.monotonic()
@@ -1959,6 +2025,7 @@ class Gate:
             # The box has Node but no npm; stage 3's apply runs npm ci, so the gates' pinned npm is on PATH.
             variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
             variables.update(environment or {})
+            variables.update(self.buildStoreEnvironment)
             process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
             self.processes.append(process)
             self.recordTestStart(command)
@@ -2111,11 +2178,14 @@ class Gate:
                      if not (unit[0] == key[0] and (unit[1] == key[1] or unit[1].startswith(key[1] + "/") or unit[1] == key[1] + " (setup)"))}
             if "seconds" in row:
                 units[key] = (row["seconds"], "pass" if row["status"] == "passed" else "fail")
+        # Drains have a 90 s wall deadline, not the tests' 30 s budget.
+        self.budget(longTests(units), units)
+        for row in self.result.get("cache_drain_units", []):
+            units[row["package"], row["test"]] = (row["seconds"], "pass" if row["exit"] == 0 else "fail")
         self.result["units"] = [{"package": package, "test": name, "seconds": seconds, "action": action,
                                  "product": name.startswith("TestProduct_")}
                                 for (package, name), (seconds, action) in sorted(units.items())]
         ledger = longTests(units)
-        self.budget(ledger, units)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
         if unfinished and self.failure is None and not getattr(self, "stopped", None):
             self.fail(unfinished[0], "planned stages without a recorded exit 0: %s (exits %s)" % (", ".join(unfinished), self.exits))

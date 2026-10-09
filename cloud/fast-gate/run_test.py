@@ -33,6 +33,8 @@ def stage(command):
         return "build"
     if command[:2] == ["go", "vet"]:
         return "vet"
+    if command[:3] == ["go", "run", "./internal/buildcache/cmd/buildcache-publish"]:
+        return "audit" if "-audit" in command else "upload"
     if command[:2] == ["go", "run"]:
         return "census"
     if command[:2] == ["go", "test"] and "-c" not in command:
@@ -1007,6 +1009,7 @@ class OracleSelection(unittest.TestCase):
     def select(self, base):
         gate = run.Gate.__new__(run.Gate)
         gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit(), full=False)
+        gate.buildStoreEnvironment = {}  # This bare fixture only spawns git for selection.
         gate.lock, gate.processes, gate.failure = threading.Lock(), [], None
         return gate.selectOracle()
 
@@ -2015,6 +2018,178 @@ class PhaseUnitTests(unittest.TestCase):
             self.assertTrue(gate.result["wasi_units"][0]["over_budget"])
             self.assertEqual(gate.exits["wasi"], 0)
             self.assertNotIn("wasi/slow", failures)
+
+class CacheDrains(unittest.TestCase):
+    setUp = FailClosed.setUp
+    gate = FailClosed.gate
+
+    def tearDown(self):
+        shutil.rmtree(self.directory)
+
+    def publisher(self):
+        directory = os.path.join(self.tree, "internal/buildcache/cmd/buildcache-publish")
+        os.makedirs(directory)
+        with open(os.path.join(directory, "main.go"), "w") as handle:
+            handle.write("package main\nfunc main() {}\n")
+
+    def probe(self, full=False, broken=None):
+        initialize = FakeProcess.__init__
+        calls = []
+        key = "a" * 64
+
+        def process(instance, command, stdout):
+            initialize(instance, command, stdout)
+            name = stage(command)
+            calls.append(name)
+            if name in ("audit", "upload"):
+                instance.wait = lambda: instance.returncode
+                if name == broken:
+                    instance.returncode = 1
+                    text = ("cache poisoning: the stored product for %s differs from a rebuild" % key
+                            if name == "audit" else "upload: store unavailable")
+                    instance.stdout = io.StringIO(text + "\n")
+        with mock.patch.object(FakeProcess, "__init__", process):
+            gate, status, result = self.gate(full=full)
+        return gate, status, result, calls, key
+
+    def test_poisoned_audit_is_red_naming_key(self):
+        self.publisher()
+        for full in (False, True):
+            with self.subTest(full=full):
+                gate, status, result, calls, key = self.probe(full, "audit")
+                self.assertIn("first failure at audit", status)
+                self.assertIn("cache poisoning", result["failure"]["detail"])
+                self.assertIn(key, result["failure"]["detail"])
+                self.assertNotEqual(result["stages_exit"]["audit"], 0)
+                self.assertEqual(result["cache_drain_units"][0]["status"], "failed")
+                self.assertTrue(any(row["test"] == "audit" and row["action"] == "fail" for row in result["units"]))
+
+    def test_failed_upload_is_recorded_and_green(self):
+        self.publisher()
+        for full in (False, True):
+            with self.subTest(full=full):
+                gate, status, result, calls, key = self.probe(full, "upload")
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertIsNone(gate.failure)
+                self.assertEqual(result["stages_exit"]["upload"], 0)
+                row = result["cache_drain_units"][1]
+                self.assertEqual(row["exit"], 1)
+                self.assertFalse(row["required"])
+                self.assertIn("store unavailable", row["detail"])
+                self.assertEqual(result["fail"], 0)
+                self.assertLess(calls.index("audit"), calls.index("upload"))
+                self.assertTrue(all(name not in ("tests", "wasi", "smoke") for name in calls[calls.index("audit"):]))
+                for name in ("audit", "upload"):
+                    self.assertIn(name, result["planned_stages"])
+                    self.assertIn(name, result["steps_seconds"])
+                    self.assertTrue(any(unit["test"] == name for unit in result["units"]))
+
+    def test_tree_without_publisher_plans_neither_drain(self):
+        for full in (False, True):
+            gate, status, result, calls, key = self.probe(full)
+            self.assertTrue(status.startswith("green:"), status)
+            for name in ("audit", "upload"):
+                self.assertNotIn(name, result["planned_stages"])
+                self.assertNotIn(name, calls)
+            self.assertNotIn("cache_drain_units", result)
+
+    def test_upload_spawn_failure_is_optional(self):
+        self.publisher()
+        gate, status, result = self.gate(broken="upload")
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertIn("Too many open files", result["cache_drain_units"][1]["detail"])
+
+    def test_two_runs_keep_test_and_drain_queues_isolated(self):
+        self.publisher()
+        # Two runs of the very same slot must still get fresh queues. Real child
+        # processes consume the environment passed by spawn, just as the publisher does.
+        first, _, _ = self.gate()
+        second, _, _ = self.gate(full=True)
+        shared = os.path.join(self.directory, "shared-default")
+        os.makedirs(shared)
+        key = "poisoned-gate-A-key"
+        script = """import os, pathlib, sys
+spool = pathlib.Path(os.environ.get('ADAMIC_BUILD_STORE_SPOOL', sys.argv[1]))
+audits = pathlib.Path(os.environ.get('ADAMIC_BUILD_STORE_AUDITS', sys.argv[1]))
+if sys.argv[2] == 'test':
+    (audits / 'poison').write_text('poisoned-gate-A-key')
+    (spool / 'product').write_text('gate-A-product')
+elif sys.argv[2] == 'audit' and (audits / 'poison').exists():
+    print('cache poisoning: ' + (audits / 'poison').read_text() + ' differs from a rebuild', file=sys.stderr)
+    sys.exit(1)
+elif sys.argv[2] == 'upload':
+    print('products=' + str(len(list(spool.iterdir()))))
+"""
+        def popen(command, **options):
+            name = stage(command)
+            mode = name if name in ("audit", "upload") else "test"
+            return realPopen([sys.executable, "-c", script, shared, mode], **options)
+        # Explicit inherited defaults simulate the box's shared user cache too.
+        with mock.patch.dict(os.environ, ADAMIC_BUILD_STORE_SPOOL=shared, ADAMIC_BUILD_STORE_AUDITS=shared), \
+                mock.patch.object(run.subprocess, "Popen", side_effect=popen), mock.patch("builtins.print"):
+            process = first.spawn(["go", "test", "./probe"], subprocess.PIPE)
+            process.communicate()
+            self.assertEqual(process.returncode, 0)
+            second.cacheDrains()
+            self.assertIsNone(second.failure, second.failure)
+            self.assertEqual(second.result["cache_drain_units"][-1]["detail"], "products=0\n")
+            first.cacheDrains()
+            self.assertEqual(first.failure["step"], "audit")
+            self.assertIn(key, first.failure["detail"])
+        for gate in (first, second):
+            for directory in gate.buildStoreEnvironment.values():
+                self.assertEqual(os.path.dirname(os.path.dirname(directory)), os.path.dirname(self.tree))
+                self.assertFalse(directory.startswith(gate.arguments.out + os.sep))
+        self.assertNotEqual(first.buildStoreEnvironment, second.buildStoreEnvironment)
+
+    def test_drain_wall_deadlines_kill_processes(self):
+        self.publisher()
+        for name in ("audit", "upload"):
+            gate, _, _ = self.gate()
+            gate.failure = None
+            gate.arguments.complete = True
+            gate.complete = True
+            original = gate.spawn
+            def spawn(command, *args):
+                return original([sys.executable, "-c", "import time; time.sleep(600)"], *args)
+            with mock.patch.object(gate, "spawn", spawn), mock.patch.object(run, "unitKillSeconds", 0.05), mock.patch("builtins.print"):
+                gate.cacheDrain(name)
+            row = gate.result["cache_drain_units"][-1]
+            self.assertNotEqual(row["exit"], 0)
+            self.assertIn("killed at 90 s", row["detail"])
+            self.assertTrue(all(process.poll() is not None for process in gate.processes))
+            self.assertEqual(gate.failure is not None, name == "audit")
+            self.assertEqual(gate.exits[name] == 0, name == "upload")
+
+
+class CacheDrainMutants(unittest.TestCase):
+    def test_shared_default_queues_are_caught(self):
+        with open(run.__file__) as handle:
+            source = handle.read()
+        needle = "            variables.update(self.buildStoreEnvironment)"
+        self.assertEqual(source.count(needle), 1)
+        namespace = dict(run.__dict__)
+        exec(compile(source.replace(needle, "            pass # mutant: shared defaults restored"), run.__file__, "exec"), namespace)
+        result = unittest.TestResult()
+        with mock.patch.object(run.Gate, "spawn", namespace["Gate"].spawn):
+            CacheDrains("test_two_runs_keep_test_and_drain_queues_isolated").run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1, result.failures)
+        self.assertIn("cache poisoning", result.failures[0][1])
+
+    def test_dropped_audit_stage_is_caught(self):
+        with open(run.__file__) as handle:
+            source = handle.read()
+        needle = '        self.cacheDrain("audit")'
+        self.assertEqual(source.count(needle), 1)
+        namespace = dict(run.__dict__)
+        exec(compile(source.replace(needle, "        pass # mutant: audit dropped"), run.__file__, "exec"), namespace)
+        result = unittest.TestResult()
+        with mock.patch.object(run.Gate, "cacheDrains", namespace["Gate"].cacheDrains):
+            CacheDrains("test_poisoned_audit_is_red_naming_key").run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 2, result.failures)
+
 
 if __name__ == "__main__":
     unittest.main()
