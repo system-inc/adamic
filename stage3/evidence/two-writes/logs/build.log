@@ -1,0 +1,74 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests --no-typecheck
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /tmp/two-writes-typescript/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-tsc in 36ms
+Finished shim-compile-cache-tsserver in 36ms
+Finished shim-compile-cache-typings-installer in 36ms
+Finished bundle-watch-guard in 44ms
+Finished generate-types-map in 45ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 274ms
+Starting localize
+> /workspace/adamic-tools/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished copy-built-local-diagnostic-messages in 13ms
+Finished lib in 466ms
+Finished bundle-tsserver in 417ms
+Finished bundle-typings-installer in 472ms
+Finished bundle-tsc in 2.3s
+Finished bundle-services in 2.4s
+Finished build-watch-guard in 2.6s
+Finished localize in 2.8s
+Finished build-tsc in 30.8s
+Finished build-services in 30.8s
+Finished build-tsserver in 30.8s
+Finished build-typings-installer in 30.8s
+Starting dts-services
+> /workspace/adamic-tools/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Starting lssl
+Finished lssl in 1ms
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 1.8s
+Starting dts-lssl
+Finished dts-lssl in 1ms
+Completed local in 32.9s
+npm warn Unknown cli config "--typecheck". This will stop working in the next major version of npm.
+
+> typescript@6.0.3 build:tests
+> hereby tests
+
+Using /tmp/two-writes-typescript/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 65ms
+Finished generate-diagnostics in 84ms
+Starting bundle-tests
+Starting build-tests
+Finished bundle-tests in 815ms
+Finished build-tests in 4.9s
+Completed tests in 5s

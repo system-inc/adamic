@@ -1,0 +1,41 @@
+{
+  "definitions": {
+    "JsonRecoveryValue": "string | number | boolean | null | JsonRecoveryValue[] | JsonRecoveryObject",
+    "JsonRecoveryObject": "{ [key: string]: JsonRecoveryValue | undefined }",
+    "JsonValue": "string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue }"
+  },
+  "callees": {
+    "src/compiler/commandLineParser.ts:2437:1": {
+      "type": "JsonRecoveryObject",
+      "evidence": "Invalid non-object roots return {}; array recovery selects an object; absent roots yield {}; valid object roots recursively construct an object. returnValue is true."
+    },
+    "src/compiler/commandLineParser.ts:2467:1": {
+      "type": "JsonRecoveryValue | undefined",
+      "evidence": "Delegates to convertToJson with returnValue true; arbitrary recovered root expressions can be invalid."
+    },
+    "src/compiler/commandLineParser.ts:2478:1": {
+      "type": "JsonRecoveryValue | undefined",
+      "evidence": "Absent root yields {} or undefined; other roots delegate to the recursive JSON syntax visitor."
+    },
+    "src/compiler/commandLineParser.ts:2491:5": {
+      "type": "JsonRecoveryObject | undefined",
+      "evidence": "Returns the {} or undefined accumulator. Object fields receive recursively converted values, including undefined for invalid property values."
+    },
+    "src/compiler/commandLineParser.ts:2538:5": {
+      "type": "JsonRecoveryValue | undefined",
+      "evidence": "Switch returns booleans, null, strings, numbers, recursively constructed objects or arrays; invalid expressions return undefined. Array conversion filters undefined entries."
+    },
+    "src/compiler/sys.ts:51:1": {
+      "type": null,
+      "evidence": "Ambient tsc-local host shim has no body. A universal opaque timer handle or a host-specific handle needs a matching clearTimeout contract; Node's declaration was not the failing declaration."
+    },
+    "src/compiler/utilities.ts:7809:1": {
+      "type": "JsonValue | undefined",
+      "evidence": "JSON.parse(text) has no reviver and returns a JSON value; the catch returns undefined. External any producer is lib.es5.d.ts JSON.parse."
+    },
+    "src/compiler/utilities.ts:8553:25": {
+      "type": "typeof Node",
+      "evidence": "Expression body returns the local Node constructor through an explicit as any assertion. Preserve the constructor contract instead of that assertion."
+    }
+  }
+}

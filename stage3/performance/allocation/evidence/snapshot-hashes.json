@@ -1,0 +1,66 @@
+{
+  "fixture/released.heapsnapshot": {
+    "sha256": "c2872ac961e1752eccd2cbdcefc1894ec89a2ef09f2305551aa46268dee3e003",
+    "bytes": 5450555
+  },
+  "fixture/check.heapsnapshot": {
+    "sha256": "87d4c7656c8b6e83af2a9b53425dbf69516bec6201feaea31ef496fea5af5165",
+    "bytes": 5440327
+  },
+  "fixture/bind.heapsnapshot": {
+    "sha256": "0aff4975bab516713a62b53889ad16d999cac27a4351a49f9c961fcd544f68d3",
+    "bytes": 5445787
+  },
+  "fixture/parse.heapsnapshot": {
+    "sha256": "a72801307f6dc9f0c6afdb1a956b87e89083b0a48a398265f5392e2a06b6c801",
+    "bytes": 5441532
+  },
+  "mitt/lifetime/released.heapsnapshot": {
+    "sha256": "afb865edda5f3a4eb9ac97c48f7bfb17c13eaa25db11f2c4a031c5c234f52d8c",
+    "bytes": 5644883
+  },
+  "mitt/lifetime/check.heapsnapshot": {
+    "sha256": "db5fc2f57f8b3af3ac7c5e1a48a3d93ba6c61ca93ba2c36058306f1b884ab6fe",
+    "bytes": 54925926
+  },
+  "mitt/lifetime/bind.heapsnapshot": {
+    "sha256": "7c0682fc053e7805b4ce13e0567349db49150c60ea053493adffb10a23978d43",
+    "bytes": 52744208
+  },
+  "mitt/lifetime/parse.heapsnapshot": {
+    "sha256": "20bc3687f68cdbd15beebd3da15cb5da106b004c7c51d388a9a71bdf1368b410",
+    "bytes": 37079645
+  },
+  "mitt/lifetime/baseline.heapsnapshot": {
+    "sha256": "9c20784cb06613e2d79fe51233cc97395ed9e352d8354318bbe6e211fe826045",
+    "bytes": 9972706
+  },
+  "mitt/peak/peak.heapsnapshot": {
+    "sha256": "d280719585ec9b77b10ac62ed2868bbcf74ab6d09c1093b3d208ccc78c7e5240",
+    "bytes": 54690903
+  },
+  "compiler/lifetime/released.heapsnapshot": {
+    "sha256": "27d9641009126facc68801b3e64b7c63b606d25a7f433fdb9d4609735d8c1927",
+    "bytes": 5662247
+  },
+  "compiler/lifetime/check.heapsnapshot": {
+    "sha256": "61be8cd5ba0919c547f47414d72f5ae1d3fc7626dbed29814c4ee277a9675557",
+    "bytes": 555100172
+  },
+  "compiler/lifetime/bind.heapsnapshot": {
+    "sha256": "70bbbec3d5c5967f33960bdf6814c2be72f6a03d23256293ec21e464387f78dc",
+    "bytes": 301516614
+  },
+  "compiler/lifetime/parse.heapsnapshot": {
+    "sha256": "a8bc97b2b1b9c082ae76f7ab0914afa26648b64189913d49205c0eef07e05cee",
+    "bytes": 224334802
+  },
+  "compiler/lifetime/baseline.heapsnapshot": {
+    "sha256": "4cc9815df64d447b383f14e1f6a9a64f5dc721b7ce56ac8dd23ef4361bd4a974",
+    "bytes": 10122399
+  },
+  "compiler/peak/peak.heapsnapshot": {
+    "sha256": "c6c35832371f16ace996b6c0f8aa975f77652d558a4e0258bf3ddc3d11ebb52e",
+    "bytes": 552000712
+  }
+}
