@@ -91,6 +91,15 @@
       "internal/flow",
       "cmd/adamic"
     ],
+    "internal/buildcache": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
     "internal/childguard": [
       "internal/load",
       "internal/lower",
@@ -173,6 +182,15 @@
       "cmd/adamic"
     ],
     "internal/native": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "internal/native/testbuildcache": [
       "internal/load",
       "internal/lower",
       "internal/native",
