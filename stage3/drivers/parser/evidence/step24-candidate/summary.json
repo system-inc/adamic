@@ -1,0 +1,18 @@
+{
+  "delivery_base": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "candidate": "0c99fc545e0f49d8407467321355fd45e2934c21",
+  "candidate_already_on_main": false,
+  "retained_scratch": "9d09100b623ce6923c74da78eed81f1a99d28f70",
+  "sdk": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "parser_source_workflow": "ec71eb48",
+  "comparator": "a661f9f3",
+  "compiler_binary_sha256": "3da697da6c01d17db9d69747c04b75caeaa516a316d3bc3e27a60d999ecde034",
+  "ordered_stops": 9,
+  "probe_counts": {
+    "total": 21,
+    "native_equal": 6,
+    "byte_mutants_caught": 6
+  },
+  "native_parser_binaries": 0,
+  "limits": "Only row 1 is an unmodified build stop; rows 2 onward are discovery-only. Two checker artifacts excluded. No native parser comparison or recovery corpus run."
+}

@@ -1,0 +1,222 @@
+{
+  "warning": "Discovery only. Unmodified native attempts are separate; no Node/native acceptance for this edited copy.",
+  "rows": [
+    {
+      "order": 1,
+      "exit": 1,
+      "behind_discovery_placeholders": false,
+      "file": "src/compiler/debug.ts",
+      "line": 113,
+      "column": 19,
+      "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+      "diagnostics": "/tmp/step24-candidate-discovery/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/tmp/step24-candidate-discovery/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/debug.ts",
+        "line": 113,
+        "column": 19,
+        "name": "fail",
+        "edits": [
+          {
+            "start": 5235,
+            "end": 5533,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      }
+    },
+    {
+      "order": 2,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/core.ts",
+        "line": 11,
+        "column": 52,
+        "name": "emptyMap",
+        "start": 386,
+        "end": 409,
+        "replacement": "parserProofMissingemptyMap()"
+      }
+    },
+    {
+      "order": 3,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/debug.ts",
+      "line": 333,
+      "column": 29,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/debug.ts",
+        "line": 333,
+        "column": 29,
+        "name": "enumMemberCache",
+        "start": 17566,
+        "end": 17665,
+        "replacement": "enumMemberCache: Map<Record<string, string | number>, ts.SortedReadonlyArray<[number, string]>> = parserProofMissingenumMemberCache()"
+      }
+    },
+    {
+      "order": 4,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/performanceCore.ts",
+      "line": 37,
+      "column": 37,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:37:37: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts",
+        "line": 37,
+        "column": 37,
+        "name": "tryGetPerformance",
+        "edits": [
+          {
+            "start": 942,
+            "end": 2009,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      }
+    },
+    {
+      "order": 5,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/performance.ts",
+      "line": 15,
+      "column": 18,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/performance.ts:15:18: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/performance.ts",
+        "line": 15,
+        "column": 18,
+        "name": "timeorigin",
+        "start": 597,
+        "end": 621,
+        "replacement": "timeorigin: number = parserProofMissingtimeorigin()"
+      }
+    },
+    {
+      "order": 6,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/performance.ts",
+      "line": 16,
+      "column": 15,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/performance.ts:16:15: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/performance.ts",
+        "line": 16,
+        "column": 15,
+        "name": "marks",
+        "start": 657,
+        "end": 690,
+        "replacement": "marks: Map<string, number> = parserProofMissingmarks()"
+      }
+    },
+    {
+      "order": 7,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/performance.ts",
+      "line": 17,
+      "column": 16,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/performance.ts:17:16: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/performance.ts",
+        "line": 17,
+        "column": 16,
+        "name": "counts",
+        "start": 720,
+        "end": 754,
+        "replacement": "counts: Map<string, number> = parserProofMissingcounts()"
+      }
+    },
+    {
+      "order": 8,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/performance.ts",
+      "line": 18,
+      "column": 19,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/performance.ts:18:19: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/performance.ts",
+        "line": 18,
+        "column": 19,
+        "name": "durations",
+        "start": 785,
+        "end": 822,
+        "replacement": "durations: Map<string, number> = parserProofMissingdurations()"
+      }
+    },
+    {
+      "order": 9,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+      "diagnostics": "adamic: /tmp/step24-candidate-discovery/src/compiler/core.ts:11:52: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+      "stub_exit": 0,
+      "placeholder": {
+        "file": "/tmp/step24-candidate-discovery/src/compiler/core.ts",
+        "line": 11,
+        "column": 52,
+        "name": "emptyMap",
+        "start": 386,
+        "end": 414,
+        "replacement": "parserProofMissingemptyMap()"
+      }
+    }
+  ],
+  "excluded_attempts": [
+    {
+      "order": 5,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/performanceCore.ts",
+      "line": 65,
+      "column": 10,
+      "message": "error TS1345: An expression of type 'void' cannot be tested for truthiness.",
+      "diagnostics": "/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:65:10: error TS1345: An expression of type 'void' cannot be tested for truthiness.\n/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:74:28: error TS2339: Property 'timeOrigin' does not exist on type 'never'.\n/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:74:74: error TS2339: Property 'now' does not exist on type 'never'.\n/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:80:28: error TS2339: Property 'mark' does not exist on type 'never'.\n/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:81:28: error TS2339: Property 'measure' does not exist on type 'never'.\n/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:82:28: error TS2339: Property 'clearMarks' does not exist on type 'never'.\n/tmp/step24-candidate-discovery/src/compiler/performanceCore.ts:83:28: error TS2339: Property 'clearMeasures' does not exist on type 'never'.\n",
+      "unresolved": "Discovery introduced checker diagnostics; excluded from original-source blocker count"
+    },
+    {
+      "order": 10,
+      "exit": 1,
+      "behind_discovery_placeholders": true,
+      "file": "src/compiler/core.ts",
+      "line": 893,
+      "column": 10,
+      "message": "error TS2393: Duplicate function implementation.",
+      "diagnostics": "/tmp/step24-candidate-discovery/src/compiler/core.ts:893:10: error TS2393: Duplicate function implementation.\n/tmp/step24-candidate-discovery/src/compiler/core.ts:895:10: error TS2393: Duplicate function implementation.\n",
+      "unresolved": "Discovery checker artifact; excluded"
+    }
+  ],
+  "discovery_type_preservation": {
+    "function": "tryGetPerformance",
+    "original_inferred_return": "{ shouldWriteNativeEvents: boolean; performance: Performance; } | undefined",
+    "reason": "Retain the original inferred return when replacing its body by throw; no inference from the placeholder."
+  }
+}

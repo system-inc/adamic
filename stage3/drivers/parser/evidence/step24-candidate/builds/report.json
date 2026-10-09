@@ -1,0 +1,33 @@
+{
+  "compiler": "9d09100b623ce6923c74da78eed81f1a99d28f70",
+  "attempts": [
+    {
+      "split": 0,
+      "command": [
+        "/tmp/step24-candidate-adamic",
+        "build",
+        "/tmp/step24-candidate-slice/parser-proof-main.a",
+        "-o",
+        "/tmp/step24-candidate-evidence/builds/parser-split-0"
+      ],
+      "exit": 1,
+      "attempt_wall_seconds": 0.5659022049999294,
+      "binary": null,
+      "clang_seconds": null
+    },
+    {
+      "split": 1,
+      "command": [
+        "/tmp/step24-candidate-adamic",
+        "build",
+        "/tmp/step24-candidate-slice/parser-proof-main.a",
+        "-o",
+        "/tmp/step24-candidate-evidence/builds/parser-split-1"
+      ],
+      "exit": 1,
+      "attempt_wall_seconds": 0.5177998880003543,
+      "binary": null,
+      "clang_seconds": null
+    }
+  ]
+}
