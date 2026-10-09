@@ -94,6 +94,10 @@ if (mode === 'semantics') {
   for(let i=2;i<=n;i+=2) delete r[String(i*3)];
   for(let i=n;i>0;i--) r[String(i*3)]=i;
   pairs(r);
+} else if (mode === 'two-indices') {
+  const r={};
+  define(r,'10',0); define(r,'2',1);
+  snapshot(r);
 } else if (mode === 'bench' || mode === 'workload') {
   const n=Number(process.argv[3]), r={};
   const now=()=>Number(process.hrtime.bigint())/1e9;
