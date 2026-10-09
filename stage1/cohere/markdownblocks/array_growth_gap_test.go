@@ -6,6 +6,7 @@ import (
 )
 
 // Explicit gap observation, not the oracle for the production map, which uses push.
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestArrayGrowthWitness(t *testing.T) {
 	parallelMarkdownMemory(t, 1)
 	path, e := filepath.Abs("gaps/13_array_growth.ts")
