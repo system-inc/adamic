@@ -40,11 +40,6 @@ mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for clou
 verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
 pushLine = re.compile(r'^(\d\d:\d\d:\d\d) queued (\S+) ([0-9a-f]{40})\b')
 quietLimit = int(os.environ.get('ADAMIC_CHAIN_QUIET_SECONDS', '1200'))
-# Kirk, Oct 9 04:44Z: nothing in wave 0 sits untouched for 10 minutes, the star or not.
-waveQuietLimit = int(os.environ.get('ADAMIC_WAVE_QUIET_SECONDS', '600'))
-# The owner is paged first; the parent only when the task still hasn't moved one tick after that (@system_adamic, Oct 9
-# 04:48Z: a repeat page reached the parent before the owner had a chance).
-waveEscalateSeconds = int(os.environ.get('ADAMIC_WAVE_ESCALATE_SECONDS', '900'))
 requestsFile = Path(os.environ.get('ADAMIC_FULL_GATE_REQUESTS', os.path.expanduser('~/.adamic-full-gate/requests')))
 
 
@@ -84,78 +79,7 @@ def star():
     for entry in chain:
         entry['ready'] = ready is None or entry['id'] in ready
     first = [entry for entry in chain if waves.get(entry['id']) == 0]
-    global waveZero, waveBlockers
-    # A task's blockers are the tasks its waterfall edges come from: what it waits on.
-    touchedAt = {node['id']: int(node.get('lastTouchedAt') or 0) for node in waterfall['nodes']}
-    waveBlockers = {}
-    for edge in waterfall.get('edges', []):
-        waveBlockers.setdefault(edge['to'], []).append(touchedAt.get(edge['from'], 0))
-    waveZero = [node for node in waterfall['nodes']
-                if node.get('wave') == 0 and node.get('kind', 'Task') == 'Task' and node.get('status') not in ('Done', 'Cancelled', 'Failed')]
     return (first[0] if first else None), chain
-
-
-# Every open wave-0 task, as the waterfall's nodes: refreshed with the star, once a minute.
-waveZero = []
-waveOwners = {}
-waveBlockers = {}
-
-
-def waveOwner(identifier):
-    """A task's owner username, read once (ownership rarely moves) from ahra tasks show."""
-    if identifier not in waveOwners:
-        try:
-            waveOwners[identifier] = step(identifier)['owner']
-        except (subprocess.CalledProcessError, OSError):
-            return ''
-    return waveOwners[identifier]
-
-
-def checkWaveZero(now):
-    """(name, key, text, owners, louder) for each wave-0 task that needs a page: no motion for waveQuietLimit seconds
-    (its owner), or a new status saying exactly what the last one said (its owner and the parent, louder: a repeat is a
-    stall wearing a status). Keys change with the task's clock, so each quiet spell or repeat pages once."""
-    alarms = []
-    for node in waveZero:
-        identifier = node['id']
-        touched = int(node.get('lastTouchedAt') or 0) // 1000
-        # A Blocked task can't move until what it waits on does (typescript, Oct 9 05:22Z): its quiet clock is its
-        # blockers' newest motion, so it pages only when they've gone quiet too.
-        if node.get('status') == 'Blocked' and waveBlockers.get(node['id']):
-            touched = max([touched] + [blocker // 1000 for blocker in waveBlockers[node['id']]])
-        quiet = now - touched
-        key = 'quiet:%s:%d' % (identifier, touched) if touched and quiet >= waveQuietLimit else None
-        text = ("#%s is in wave 0 and hasn't moved for %d minutes (%s, last status: %s). Kirk's rule: nothing in wave 0 "
-                "sits untouched for 10. Post what is happening this second with an ETA, or reap, split or ask up."
-                % (identifier, quiet // 60, node.get('status'), node.get('statusText') or 'none')) if key else None
-        alarms.append(('wave-quiet-alarmed-' + identifier, key, text, [waveOwner(identifier)] if key else [], False))
-        statusAt, statusText = str(node.get('statusAt') or ''), (node.get('statusText') or '').strip()
-        seen = state / ('wave-status-' + identifier)
-        previous = seen.read_text().split('\t', 1) if seen.exists() else ['', '']
-        repeat = None
-        if statusAt and statusText and statusAt != previous[0]:
-            if statusText == previous[1].strip():
-                repeat = 'repeat:%s:%s' % (identifier, statusAt)
-            seen.write_text(statusAt + '\t' + statusText + '\n')
-        if repeat:
-            alarms.append(('wave-repeat-alarmed-' + identifier, repeat,
-                           '#%s posted the same status twice in a row: "%s". A repeated status is a stall: what changed, '
-                           'and what is the next move this tick?' % (identifier, statusText), [waveOwner(identifier)], False))
-        # Escalation: a page whose task still hasn't moved waveEscalateSeconds later goes to the parent, once.
-        paged = state / ('wave-paged-' + identifier)
-        if key or repeat:
-            if not paged.exists():
-                paged.write_text('%d %d\n' % (now, touched))
-        elif paged.exists():
-            paged.unlink()
-        if paged.exists():
-            pagedAt, pagedTouched = (int(value) for value in paged.read_text().split())
-            escalate = 'escalate:%s:%d' % (identifier, pagedTouched) if touched == pagedTouched and now - pagedAt >= waveEscalateSeconds else None
-            alarms.append(('wave-escalated-' + identifier, escalate,
-                           "#%s (owner @%s) was paged %d minutes ago and still hasn't moved (%s, last status: %s)."
-                           % (identifier, waveOwner(identifier), (now - pagedAt) // 60, node.get('status'), statusText or 'none'),
-                           ['system_adamic'] if escalate else [], False))
-    return alarms
 
 
 def lines(path):
@@ -604,15 +528,11 @@ def once(step, chain=()):
     alarms += [('chain-quiet-alarmed-' + entry['id'], quietKey, quietText, owners)
                for entry, (_, quietKey, quietText, owners) in zip(chain, quiet)]
     alarms = [alarm + (True,) for alarm in alarms]
-    wave = checkWaveZero(now)
-    print('%s wave 0: %d open, %d quiet' % (time.strftime('%H:%M:%S', time.gmtime()), len(waveZero),
-                                           sum(1 for _, key, _, _, louder in wave if key and not louder)), flush=True)
-    for name, alarmKey, alarmText, owners, parent in alarms + wave:
+    for name, alarmKey, alarmText, owners, parent in alarms:
         alarmed = state / name
         previous = alarmed.read_text().strip() if alarmed.exists() else ''
         if alarmKey is None:
-            if not name.startswith('wave-repeat-'):
-                alarmed.unlink(missing_ok=True)
+            alarmed.unlink(missing_ok=True)
         elif alarmKey != previous:
             page({'owner': ','.join(owners)}, alarmText, parent)
             alarmed.write_text(alarmKey + '\n')
