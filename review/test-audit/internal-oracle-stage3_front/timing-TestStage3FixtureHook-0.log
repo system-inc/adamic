@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:16:21.542572639Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:21.550794067Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook"}
+{"Time":"2026-10-09T11:16:21.5508779Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook","Output":"=== RUN   TestStage3FixtureHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:21.550902556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook","Output":"=== PAUSE TestStage3FixtureHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:21.55090502Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook"}
+{"Time":"2026-10-09T11:16:21.550909507Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook"}
+{"Time":"2026-10-09T11:16:21.55091202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook","Output":"=== CONT  TestStage3FixtureHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:21.841685145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook","Output":"--- PASS: TestStage3FixtureHook (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:21.841820664Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3FixtureHook","Elapsed":0.29}
+{"Time":"2026-10-09T11:16:21.8418455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:21.843414268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.300s\n"}
+{"Time":"2026-10-09T11:16:21.843445534Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.301}

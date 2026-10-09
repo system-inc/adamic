@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T11:16:16.356136797Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:16.36512425Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough"}
+{"Time":"2026-10-09T11:16:16.365326838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough","Output":"=== RUN   TestStage3EnumFallthrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365386415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough","Output":"=== PAUSE TestStage3EnumFallthrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365388929Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough"}
+{"Time":"2026-10-09T11:16:16.365398463Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough"}
+{"Time":"2026-10-09T11:16:16.365401437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough","Output":"=== CONT  TestStage3EnumFallthrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365405143Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched"}
+{"Time":"2026-10-09T11:16:16.365408057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched","Output":"=== RUN   TestStage3EnumFallthrough/matched\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365412934Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched","Output":"=== PAUSE TestStage3EnumFallthrough/matched\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365416049Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched"}
+{"Time":"2026-10-09T11:16:16.365419724Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched"}
+{"Time":"2026-10-09T11:16:16.365421888Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched","Output":"=== RUN   TestStage3EnumFallthrough/unmatched\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365425833Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched","Output":"=== PAUSE TestStage3EnumFallthrough/unmatched\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365428307Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched"}
+{"Time":"2026-10-09T11:16:16.365432353Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched"}
+{"Time":"2026-10-09T11:16:16.365435247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched","Output":"=== CONT  TestStage3EnumFallthrough/matched\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.365439734Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched"}
+{"Time":"2026-10-09T11:16:16.365443579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched","Output":"=== CONT  TestStage3EnumFallthrough/unmatched\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.85844046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched","Output":"--- PASS: TestStage3EnumFallthrough/unmatched (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.893045505Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/unmatched","Elapsed":0.49}
+{"Time":"2026-10-09T11:16:16.893109148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched","Output":"--- PASS: TestStage3EnumFallthrough/matched (0.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.893125062Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough/matched","Elapsed":0.53}
+{"Time":"2026-10-09T11:16:16.893127545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough","Output":"--- PASS: TestStage3EnumFallthrough (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.893133114Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumFallthrough","Elapsed":0}
+{"Time":"2026-10-09T11:16:16.893134946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:16.893141005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=5\n"}
+{"Time":"2026-10-09T11:16:16.893142908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=4\n"}
+{"Time":"2026-10-09T11:16:16.893146944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:16.896134638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.540s\n"}
+{"Time":"2026-10-09T11:16:16.896167997Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.54}

@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T11:16:28.544360046Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:28.55251787Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings"}
+{"Time":"2026-10-09T11:16:28.552576796Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings","Output":"=== RUN   TestStatementsSmallRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.552595143Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings","Output":"=== PAUSE TestStatementsSmallRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.552597417Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings"}
+{"Time":"2026-10-09T11:16:28.55259988Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings"}
+{"Time":"2026-10-09T11:16:28.552601793Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings","Output":"=== CONT  TestStatementsSmallRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.552604217Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/template"}
+{"Time":"2026-10-09T11:16:28.552606069Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/template","Output":"=== RUN   TestStatementsSmallRulings/template\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.72792772Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/template","Output":"--- PASS: TestStatementsSmallRulings/template (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.727985185Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/template","Elapsed":0.18}
+{"Time":"2026-10-09T11:16:28.728011503Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/nonnull"}
+{"Time":"2026-10-09T11:16:28.728014418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/nonnull","Output":"=== RUN   TestStatementsSmallRulings/nonnull\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.859190137Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/nonnull","Output":"--- PASS: TestStatementsSmallRulings/nonnull (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.859262403Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/nonnull","Elapsed":0.13}
+{"Time":"2026-10-09T11:16:28.859270395Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/structural_error"}
+{"Time":"2026-10-09T11:16:28.859272488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/structural_error","Output":"=== RUN   TestStatementsSmallRulings/structural_error\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.984686844Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/structural_error","Output":"--- PASS: TestStatementsSmallRulings/structural_error (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:28.984740313Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/structural_error","Elapsed":0.13}
+{"Time":"2026-10-09T11:16:28.984751028Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/capture"}
+{"Time":"2026-10-09T11:16:28.984757488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/capture","Output":"=== RUN   TestStatementsSmallRulings/capture\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:29.102718581Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/capture","Output":"--- PASS: TestStatementsSmallRulings/capture (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:29.102779861Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings/capture","Elapsed":0.12}
+{"Time":"2026-10-09T11:16:29.102788254Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings","Output":"--- PASS: TestStatementsSmallRulings (0.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:29.102791158Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallRulings","Elapsed":0.55}
+{"Time":"2026-10-09T11:16:29.10279294Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:29.102795554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:29.102797617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=4\n"}
+{"Time":"2026-10-09T11:16:29.1027995Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:29.104622451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.560s\n"}
+{"Time":"2026-10-09T11:16:29.104653336Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.56}

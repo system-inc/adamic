@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T11:16:36.374096269Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:36.38359669Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement"}
+{"Time":"2026-10-09T11:16:36.383656168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement","Output":"=== RUN   TestStatementsSmallTypeScriptIncrement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:36.383673493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement","Output":"=== PAUSE TestStatementsSmallTypeScriptIncrement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:36.383675777Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement"}
+{"Time":"2026-10-09T11:16:36.383679132Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement"}
+{"Time":"2026-10-09T11:16:36.383680844Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement","Output":"=== CONT  TestStatementsSmallTypeScriptIncrement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:36.383683218Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/nonnull.a"}
+{"Time":"2026-10-09T11:16:36.38368509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/nonnull.a","Output":"=== RUN   TestStatementsSmallTypeScriptIncrement/nonnull.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:36.767791321Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/nonnull.a","Output":"--- PASS: TestStatementsSmallTypeScriptIncrement/nonnull.a (0.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:36.767857118Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/nonnull.a","Elapsed":0.38}
+{"Time":"2026-10-09T11:16:36.767886712Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/missing.a"}
+{"Time":"2026-10-09T11:16:36.767890347Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/missing.a","Output":"=== RUN   TestStatementsSmallTypeScriptIncrement/missing.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:37.060797258Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/missing.a","Output":"--- PASS: TestStatementsSmallTypeScriptIncrement/missing.a (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:37.060856715Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/missing.a","Elapsed":0.29}
+{"Time":"2026-10-09T11:16:37.060863996Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/absent.a"}
+{"Time":"2026-10-09T11:16:37.06086679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/absent.a","Output":"=== RUN   TestStatementsSmallTypeScriptIncrement/absent.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:37.35447771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/absent.a","Output":"--- PASS: TestStatementsSmallTypeScriptIncrement/absent.a (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:37.354528064Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement/absent.a","Elapsed":0.29}
+{"Time":"2026-10-09T11:16:37.354535414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement","Output":"--- PASS: TestStatementsSmallTypeScriptIncrement (0.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:37.354546391Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStatementsSmallTypeScriptIncrement","Elapsed":0.97}
+{"Time":"2026-10-09T11:16:37.354548544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:37.354557437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:37.35455972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=6\n"}
+{"Time":"2026-10-09T11:16:37.354561583Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:37.35644931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.982s\n"}
+{"Time":"2026-10-09T11:16:37.356484272Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.982}

@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T11:30:30.082449297Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:30:30.089872362Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned"}
+{"Time":"2026-10-09T11:30:30.089970316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Output":"=== RUN   TestTypedArrayWriteStopIsPinned\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:30.089995323Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Output":"=== PAUSE TestTypedArrayWriteStopIsPinned\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:30.089997707Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned"}
+{"Time":"2026-10-09T11:30:30.090003776Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned"}
+{"Time":"2026-10-09T11:30:30.090005428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Output":"=== CONT  TestTypedArrayWriteStopIsPinned\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:44.364483711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Output":"    typed_arrays_test.go:37: native: exit codes differ: exit 0 stdout \"before 2 7 undefined\\nafter 2 7 undefined\\n\" stderr \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:30:44.364535677Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Output":"    typed_arrays_test.go:37: release: exit codes differ: exit 0 stdout \"before 2 7 undefined\\nafter 2 7 undefined\\n\" stderr \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:30:44.432213292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Output":"--- FAIL: TestTypedArrayWriteStopIsPinned (14.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:44.432379937Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestTypedArrayWriteStopIsPinned","Elapsed":14.34}
+{"Time":"2026-10-09T11:30:44.432406756Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:44.432417082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:30:44.432419365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:30:44.432421538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:30:44.434056212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t14.351s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:44.434089952Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":14.352}

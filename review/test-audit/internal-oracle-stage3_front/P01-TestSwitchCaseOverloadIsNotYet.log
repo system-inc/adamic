@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:25:08.278287239Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:25:08.285703386Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet"}
+{"Time":"2026-10-09T11:25:08.285770575Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet","Output":"=== RUN   TestSwitchCaseOverloadIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:25:08.285789152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet","Output":"=== PAUSE TestSwitchCaseOverloadIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:25:08.285791786Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet"}
+{"Time":"2026-10-09T11:25:08.285794069Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet"}
+{"Time":"2026-10-09T11:25:08.285795882Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet","Output":"=== CONT  TestSwitchCaseOverloadIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:25:08.450114739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet","Output":"    switch_case_declaration_test.go:143: got \u003cnil\u003e; want /workspace/adamic/internal/oracle/testdata/switch_case_declarations/overload.a:3:1: stage 0 can't lower a function without a body yet\n","OutputType":"error"}
+{"Time":"2026-10-09T11:25:08.450205453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet","Output":"--- FAIL: TestSwitchCaseOverloadIsNotYet (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:25:08.450210059Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSwitchCaseOverloadIsNotYet","Elapsed":0.16}
+{"Time":"2026-10-09T11:25:08.450229658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:25:08.450232683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:25:08.450254855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:25:08.450258681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:25:08.45248038Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.174s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:25:08.452511145Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.174}
