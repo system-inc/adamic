@@ -16,6 +16,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -111,7 +112,7 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
+	command := compilationCommand(t, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
 	command.Dir = root
 	output, err := command.Output()
 	if err != nil {
@@ -224,7 +225,7 @@ func compilationProducts(t *testing.T) string {
 				flags := append(native.Flags(options), "-g", "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
-				command := exec.Command("clang", flags...)
+				command := compilationCommand(t, "clang", flags...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("profile clang: %w\n%s", err, output)
 				}
@@ -260,13 +261,11 @@ func TestProfileCompilationPlantedFailure(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 75*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=75s")
+	command := compilationCommand(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=75s")
 	command.Env = append(os.Environ(), "ADAMIC_PROFILE_COMPILATION_PLANT=1")
 	output, err := command.CombinedOutput()
-	if ctx.Err() != nil {
-		t.Fatal("cooked: planted-failure child reached 75s")
+	if command.ProcessState == nil {
+		t.Fatalf("planted-failure child did not complete: %v", err)
 	}
 	if err == nil || !strings.Contains(string(output), "planted profile disagreement") || strings.Count(string(output), "--- FAIL: TestProfileCompilation_000") != 1 {
 		t.Fatalf("wrong planted-failure attribution: %v\n%s", err, output)
@@ -375,4 +374,23 @@ func TestProfileCompilationBuildNative(t *testing.T) {
 	t.Parallel()
 	defer compilationBudget(t)()
 	compilationProducts(t)
+}
+
+// Bound child commands without requiring an external timeout executable. Kill
+// the entire process group so compiler descendants cannot outlive the deadline.
+func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
 }
