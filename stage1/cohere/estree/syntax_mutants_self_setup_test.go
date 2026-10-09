@@ -223,7 +223,9 @@ func TestProduct_SyntaxMutantNative_002(t *testing.T) {
 }
 
 func runSyntaxMutantShard(t *testing.T, shard int) {
+	setup := time.Now()
 	prepared := syntaxMutantReady(t)[shard]
+	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { t.Logf("shard work: %.3fs", time.Since(started).Seconds()) }()
 	cpu := syntaxMutantCPU()
@@ -278,7 +280,11 @@ var syntaxMutantRunners = [...]func(*testing.T){TestSyntaxMutants_000, TestSynta
 
 func TestSyntaxMutantsUnion(t *testing.T) {
 	t.Parallel()
+	setup := time.Now()
 	syntaxMutantReady(t)
+	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
+	work := time.Now()
+	defer func() { t.Logf("own work: %.3fs", time.Since(work).Seconds()) }()
 	items := syntaxMutantEnumeration()
 	if len(syntaxMutantRunners) != testSyntaxMutantsShards || len(items) != testSyntaxMutantsShards {
 		t.Fatal("shard count mismatch")

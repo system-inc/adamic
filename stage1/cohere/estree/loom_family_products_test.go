@@ -93,7 +93,7 @@ func TestUnattachedDecoratorControl(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	list := manifest(t, []string{"@dec\nawait 1", "@dec\nx"})
-	statuses := string(threePortExecute(t, ctx, oracle, "--audit", list))
+	statuses := string(threePortExecute(t, ctx, oracle, "--audit", list, t.TempDir()))
 	if strings.Count(statuses, `"status":"error"`) != 2 {
 		t.Fatalf("Go decorator refusals changed: %s", statuses)
 	}
