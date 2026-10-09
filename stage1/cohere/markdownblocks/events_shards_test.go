@@ -125,6 +125,7 @@ func tokenizerEventProduct(t *testing.T, inputs tokenizerEventBuildInputs, dir s
 }
 
 func TestTokenizerEventShardUnion(t *testing.T) {
+	t.Parallel()
 	keys := tokenizerEventFixtureKeys()
 	shards := tokenizerEventShards(keys)
 	validateTokenizerEventUnion(t, len(keys), shards)
@@ -142,6 +143,7 @@ func TestTokenizerEventShardUnion(t *testing.T) {
 // Plant a disagreement in one case and use the same comparison as the live
 // oracle. Exactly its owning shard must reject it, and name itself and the id.
 func TestTokenizerEventShardPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	keys := tokenizerEventFixtureKeys()
 	shards := tokenizerEventShards(keys)
 	const planted = 2345
@@ -182,6 +184,7 @@ func tokenizerEventFixtureKeys() []string {
 }
 
 func TestTokenizerEventShardGrowth(t *testing.T) {
+	t.Parallel()
 	names := []string{"a.md", "a.md", "b.md", "generated/units/0"}
 	before := tokenizerEventKeys(names)
 	// Inserting an earlier-sorted file and another file with two modes changes
