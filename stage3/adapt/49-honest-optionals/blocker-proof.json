@@ -1,0 +1,81 @@
+{
+  "blocked_sites": [
+    {
+      "site": "src/compiler/checker.ts:20277:50@1185285-1185292",
+      "blocked_by": "public API bytes",
+      "owner": "Type.symbol: Symbol",
+      "owner_widening_changes_snapshot": true
+    },
+    {
+      "site": "src/compiler/checker.ts:32024:19@1904334-1904347",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "Number(contextFlags)",
+      "byte_check": "rejects coercion edit"
+    },
+    {
+      "site": "src/compiler/checker.ts:32724:37@1947391-1947404",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "Number(contextFlags)",
+      "byte_check": "rejects coercion edit"
+    },
+    {
+      "site": "src/compiler/checker.ts:38571:41@2281039-2281045",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "Number(flags)",
+      "byte_check": "rejects coercion edit"
+    },
+    {
+      "site": "src/compiler/checker.ts:38572:35@2281130-2281136",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "Number(flags)",
+      "byte_check": "rejects coercion edit"
+    },
+    {
+      "site": "src/compiler/checker.ts:5553:61@280183-280190",
+      "blocked_by": "public API bytes",
+      "owner": "Type.symbol: Symbol",
+      "owner_widening_changes_snapshot": true
+    },
+    {
+      "site": "src/compiler/checker.ts:5568:62@280784-280791",
+      "blocked_by": "public API bytes",
+      "owner": "Type.symbol: Symbol",
+      "owner_widening_changes_snapshot": true
+    },
+    {
+      "site": "src/compiler/checker.ts:6191:44@318054-318062",
+      "blocked_by": "numeric optional propagation",
+      "chain": [
+        "nodeBuilder.symbolToNode / symbolToEntityName",
+        "symbolToExpression / symbolToName",
+        "lookupSymbolChain",
+        "lookupSymbolChainWorker/getSymbolChain",
+        "needsQualification"
+      ],
+      "numeric_use": "flags & meaning",
+      "required_public_parameters": [
+        "TypeChecker.symbolToEntityName.meaning",
+        "TypeChecker.symbolToExpression.meaning"
+      ],
+      "note": "Public parameter types can remain narrower than an implementation. The internal chain still reaches SymbolFlags bit operations; this site is retained pending a byte-preserving honest treatment of those operations."
+    },
+    {
+      "site": "src/compiler/emitter.ts:4954:16@208969-208973",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "Number(pos)",
+      "byte_check": "rejects coercion edit"
+    },
+    {
+      "site": "src/compiler/emitter.ts:4954:34@208987-208991",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "Number(pos)",
+      "byte_check": "rejects coercion edit"
+    },
+    {
+      "site": "src/compiler/utilities.ts:11868:13@488376-488396",
+      "blocked_by": "JavaScript bytes",
+      "explicit_handling": "result.isReferenced = Number(result.isReferenced) | meaning",
+      "byte_check": "rejects coercion edit"
+    }
+  ]
+}
