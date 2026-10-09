@@ -1143,6 +1143,13 @@ if staging || { [ -s "${state}/canary-box" ] && [ "$(boxTools "$(cat "${state}/t
   canaryRequired=0
 fi
 while true; do
+  # A watcher whose state directory is gone has nothing to schedule from, so it ends (#f3pnmrh): on Oct 9 one a
+  # watch_test.py run left behind ran 2h47m at 38% of a core after its temp state was deleted, its stub tools gone so it
+  # fell through to real ones, writing 795 MB to an unlinked output file. Under launchd it restarts on a fresh state.
+  if [ ! -d "${state}" ]; then
+    echo "$(/bin/date -u +%H:%M:%S) state directory ${state} is gone; exiting"
+    exit 1
+  fi
   now=$(date -u +%s)
   if { [ -z "${firstStepRefresh:-}" ] || [ "$((now - firstStepRefresh))" -ge 300 ]; } &&
      { [ -z "${firstStepPid:-}" ] || ! kill -0 "${firstStepPid}" 2>/dev/null; }; then

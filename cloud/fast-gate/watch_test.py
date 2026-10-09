@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Exercise the real watcher with isolated state and no external side effects."""
+import atexit
 import os
 from pathlib import Path
 import shutil
 import signal
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -14,6 +16,11 @@ MAIN = 'a' * 40
 
 
 class Watcher:
+    # Every watcher started and not yet closed (#f3pnmrh): on Oct 9 one this file started ran on for 2h47m after its test,
+    # its temp state deleted. Each test kills what it left (setUp), and so does exit after an interrupt, which skips cleanups.
+    live = []
+    atExit = False
+
     def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None, mainCanary=100000, mutants=''):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
@@ -152,6 +159,36 @@ fi
         self.output = open(self.root / 'output', 'w')
         self.proc = subprocess.Popen([os.environ.get('WATCH_TEST_BASH', 'bash'), str(cloud / 'fast-gate-watch.sh')], env=env,
                                      stdout=self.output, stderr=self.output, start_new_session=True)
+        if not Watcher.atExit:
+            # Registered after the first temp directory's finalizer, so at exit it runs first: watchers die before their state.
+            atexit.register(Watcher.closeAll)
+            Watcher.atExit = True
+        Watcher.live.append(self)
+
+    def stop(self):
+        """Kills the watcher's whole process group, it and every gate stub, waiter and refresh it started."""
+        # macOS answers a group left with only zombies with EPERM, not ESRCH: either way nothing is left to kill.
+        try:
+            os.killpg(self.proc.pid, signal.SIGTERM)
+        except (ProcessLookupError, PermissionError):
+            pass
+        try:
+            self.proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            pass
+        # Whatever outlived the leader, or ignored the signal, goes too.
+        try:
+            os.killpg(self.proc.pid, signal.SIGKILL)
+        except (ProcessLookupError, PermissionError):
+            pass
+        self.proc.wait(timeout=5)
+
+    @classmethod
+    def closeAll(cls):
+        for w in list(cls.live):
+            w.stop()
+        for w in list(cls.live):
+            w.close()
 
     def put(self, name, text):
         path = self.root / name
@@ -179,8 +216,10 @@ fi
         raise AssertionError(self.read('output'))
 
     def close(self):
-        os.killpg(self.proc.pid, signal.SIGTERM)
-        self.proc.wait(timeout=5)
+        if self not in Watcher.live:
+            return
+        Watcher.live.remove(self)
+        self.stop()
         self.output.close()
         # A gate child the signal reached mid-write can add a file while the tree is removed; retry briefly.
         for attempt in range(20):
@@ -192,7 +231,17 @@ fi
         self.tmp.cleanup()
 
 
+def interruptOnTermination():
+    """A runner killed by its caller (a timeout, a closed terminal) unwinds as an interrupt, so the exit hook kills every watcher."""
+    signal.signal(signal.SIGTERM, signal.default_int_handler)
+    signal.signal(signal.SIGHUP, signal.default_int_handler)
+
+
 class WatchTests(unittest.TestCase):
+    def setUp(self):
+        # Added first, so it runs last: any watcher the test didn't close, failed or not, is killed with the test.
+        self.addCleanup(Watcher.closeAll)
+
     def start(self, count=6):
         w = Watcher(count)
         self.addCleanup(w.close)
@@ -397,6 +446,45 @@ class WatchTests(unittest.TestCase):
         self.addCleanup(w.close)
         w.wait(lambda: 'canary/main' in w.read('starts'))
         self.assertIn('cleared a slot-table lock', w.read('output'))
+
+    def test_a_watcher_whose_state_directory_is_gone_exits_within_a_few_passes(self):
+        # #f3pnmrh (Oct 9): a watcher this file left behind ran 2h47m after its temp state was deleted, writing 795 MB.
+        w = self.start(0)
+        # Each pass ends in one sleep: counted, they number the passes.
+        w.script(w.bin / 'sleep', 'echo >> "$TEST_ROOT/passes-slept"\n/bin/sleep 0.03\n')
+        w.wait(lambda: len(w.read('passes-slept').splitlines()) >= 2)
+        before = len(w.read('passes-slept').splitlines())
+        # A gate stub still running can add a log while the tree is removed; retry briefly.
+        for attempt in range(20):
+            try:
+                shutil.rmtree(w.state)
+                break
+            except OSError:
+                time.sleep(.05)
+        w.proc.wait(timeout=10)
+        self.assertLessEqual(len(w.read('passes-slept').splitlines()) - before, 2, w.read('output'))
+        self.assertEqual(w.proc.returncode, 1)
+        self.assertIn('state directory %s is gone; exiting' % w.state, w.read('output'))
+
+    def test_a_runner_killed_mid_test_leaves_no_watcher_running(self):
+        # #f3pnmrh: an interrupt skips every cleanup, so the exit hook is what kills the watcher's group. The runner's temp
+        # state outlives it here (its finalizer detached), so a watcher left running couldn't end on its own state check.
+        script = ('import sys, time\nsys.path.insert(0, %r)\nimport watch_test\nwatch_test.interruptOnTermination()\n'
+                  'w = watch_test.Watcher(0)\nw.tmp._finalizer.detach()\nprint(w.proc.pid, w.root, flush=True)\ntime.sleep(60)\n'
+                  ) % str(Path(__file__).resolve().parent)
+        runner = subprocess.Popen([sys.executable, '-I', '-c', script], stdout=subprocess.PIPE, text=True)
+        self.addCleanup(runner.kill)
+        pid, root = runner.stdout.readline().split()
+        self.addCleanup(shutil.rmtree, root, True)
+        self.addCleanup(subprocess.run, ['pkill', '-KILL', '-g', pid])
+        time.sleep(.3)
+        os.killpg(int(pid), 0)
+        runner.send_signal(signal.SIGTERM)
+        runner.wait(timeout=20)
+        runner.stdout.close()
+        # Gone, or only zombies left (macOS answers those with EPERM).
+        with self.assertRaises((ProcessLookupError, PermissionError)):
+            os.killpg(int(pid), 0)
 
     def test_a_dead_holder_s_lock_is_taken_over_and_a_live_one_is_not(self):
         dead = subprocess.Popen(['true'])
@@ -1648,4 +1736,5 @@ class WatchTests(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    interruptOnTermination()
     unittest.main()
