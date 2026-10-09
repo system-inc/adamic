@@ -2,12 +2,9 @@ package tsprinter
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
-	"sync"
 	"testing"
 )
 
@@ -100,36 +97,4 @@ func mutantCorpus(t *testing.T, change mutation, path, want string) (string, str
 	}
 	t.Logf("%s: %d Go-oracle witnesses from %v", change.name, len(selected), families)
 	return subset, expected.String()
-}
-
-// Preparation belongs to the parent, not to timed shard subtests. Limit heavy
-// compiler work to four workers and report all errors from the test goroutine.
-func buildMutants(t *testing.T, paths, directories []string) []string {
-	t.Helper()
-	binaries := make([]string, len(paths))
-	errors := make([]error, len(paths))
-	workers := make(chan struct{}, min(runtime.GOMAXPROCS(0), 4))
-	var group sync.WaitGroup
-	for i := range paths {
-		workers <- struct{}{}
-		group.Add(1)
-		go func(i int) {
-			defer group.Done()
-			defer func() { <-workers }()
-			program, err := lowerProgram(paths[i])
-			if err == nil {
-				binaries[i], err = buildNative(program, directories[i])
-			}
-			if err != nil {
-				errors[i] = fmt.Errorf("mutant %d (%s): %w", i, mutations[i].name, err)
-			}
-		}(i)
-	}
-	group.Wait()
-	for _, err := range errors {
-		if err != nil {
-			t.Error(err)
-		}
-	}
-	return binaries
 }

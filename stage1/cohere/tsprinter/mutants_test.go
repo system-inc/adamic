@@ -1,7 +1,6 @@
 package tsprinter
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -80,77 +79,57 @@ func mutatedPort(t *testing.T, change mutation) string {
 
 const testMutantsShards = 29
 
-func TestMutants(t *testing.T) {
-	t.Parallel()
-	if len(mutations) != testMutantsShards {
-		t.Fatalf("%d mutants, want %d declared shards", len(mutations), testMutantsShards)
+func testMutant(t *testing.T, i int) {
+	t.Helper()
+	change := mutations[i]
+	// Setup belongs to this leaf so its measured cost includes the build.
+	// Selecting one shard never prepares any other mutant or corpus.
+	var cases, want string
+	switch change.entry {
+	case "docMain.ts":
+		cases, want, _ = documentCorpus(t)
+	default:
+		cases, want = mutantOracle(t, change)
 	}
-	documents, documentWant, _ := documentCorpus(t)
-	expressions, expressionWant, _ := expressionCorpus(t)
-	statementCases, statementWant := "", ""
-	for _, change := range mutations {
-		if change.entry == "statementsMain.ts" {
-			statementCases, statementWant, _ = statementCorpus(t)
-			break
+	path := mutatedPort(t, change)
+	binary := nativeBinary(t, lowered(t, path), t.TempDir())
+	arguments := []string{cases}
+	if change.entry == "main.ts" {
+		arguments = []string{"--cases", cases, "80"}
+	}
+	if change.entry == "statementsMain.ts" {
+		arguments = []string{"--cases", cases, "80"}
+	}
+	if change.name == "hashbang loses its refusal" {
+		cases = filepath.Join(filepath.Dir(cases), "gaps.txt")
+		gapWant, err := os.ReadFile(filepath.Join(filepath.Dir(cases), "gap-answers.txt"))
+		if err != nil {
+			t.Fatal(err)
 		}
+		want = string(gapWant)
+		arguments = []string{"--cases", cases, "80"}
 	}
-	// Build once before the timed run units. Directories belong to this test,
-	// so binaries survive until every shard finishes.
-	paths := make([]string, testMutantsShards)
-	directories := make([]string, testMutantsShards)
-	for i, change := range mutations {
-		paths[i] = mutatedPort(t, change)
-		directories[i] = t.TempDir()
+	if change.entry != "docMain.ts" && change.name != "hashbang loses its refusal" {
+		cases, want = mutantCorpus(t, change, cases, want)
+		arguments = []string{"--cases", cases, "80"}
 	}
-	binaries := buildMutants(t, paths, directories)
-	if t.Failed() {
-		return
-	}
-	for i, change := range mutations {
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
-			t.Parallel()
-			cases, want := documents, documentWant
-			arguments := []string{cases}
-			if change.entry == "main.ts" {
-				cases, want = expressions, expressionWant
-				arguments = []string{"--cases", cases, "80"}
-			}
-			if change.entry == "statementsMain.ts" {
-				cases, want = statementCases, statementWant
-				arguments = []string{"--cases", cases, "80"}
-			}
-			if change.name == "hashbang loses its refusal" {
-				cases = filepath.Join(filepath.Dir(expressions), "gaps.txt")
-				gapWant, err := os.ReadFile(filepath.Join(filepath.Dir(expressions), "gap-answers.txt"))
-				if err != nil {
-					t.Fatal(err)
-				}
-				want = string(gapWant)
-				arguments = []string{"--cases", cases, "80"}
-			}
-			if change.entry != "docMain.ts" && change.name != "hashbang loses its refusal" {
-				cases, want = mutantCorpus(t, change, cases, want)
-				arguments = []string{"--cases", cases, "80"}
-			}
-			t.Logf("mutant %d/%d: %s", i+1, testMutantsShards, change.name)
-			node := onNode(t, paths[i], arguments...)
-			native := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binaries[i], arguments...)
-			for _, side := range []struct {
-				name   string
-				result run
-			}{{"Node", node}, {"native", native}} {
-				if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-					t.Fatalf("%s mutant must finish normally: exit %d stderr %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				if string(side.result.stdout) == want {
-					t.Fatalf("%s mutant escaped the byte comparison", side.name)
-				}
-				difference := firstDifference(string(side.result.stdout), want)
-				if filepath.Base(cases) != "gaps.txt" && filepath.Base(cases) != "witnesses.txt" {
-					difference = corpusDifference(t, cases, string(side.result.stdout), want)
-				}
-				t.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
-			}
-		})
+	t.Logf("mutant %d/%d: %s", i+1, testMutantsShards, change.name)
+	node := onNode(t, path, arguments...)
+	native := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{{"Node", node}, {"native", native}} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+			t.Fatalf("%s mutant must finish normally: exit %d stderr %s", side.name, side.result.exitCode, side.result.stderr)
+		}
+		if string(side.result.stdout) == want {
+			t.Fatalf("%s mutant escaped the byte comparison", side.name)
+		}
+		difference := firstDifference(string(side.result.stdout), want)
+		if filepath.Base(cases) != "gaps.txt" && filepath.Base(cases) != "witnesses.txt" {
+			difference = corpusDifference(t, cases, string(side.result.stdout), want)
+		}
+		t.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
 	}
 }
