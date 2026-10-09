@@ -1,17 +1,16 @@
 package estree
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 )
@@ -34,26 +33,6 @@ func recoveryMutantCases() []recoveryCase {
 	}
 	return cases
 }
-
-// ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
-// Each mutant retains the entire grammar corpus on both Node and sanitized native.
-func TestRecoveryMutants(t *testing.T) {
-	t.Parallel()
-	// Compatibility enumeration only; execution lives in the top-level shards.
-	checkRecoveryMutantUnion(t)
-}
-
-func TestRecoveryMutantsShardSurvivor(t *testing.T) {
-	t.Parallel()
-	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
-}
-
-// ADAMIC_TEST_SHARD=i/n selects top-level shards whose index modulo n is i.
-// The fixed shard count has headroom: growing the live grammar does not move a
-// mutant. Each mutant checks the complete grammar on Node and sanitized native.
-func TestRecoveryMutants_000(t *testing.T) { t.Parallel(); runRecoveryMutantTop(t, 0) }
-func TestRecoveryMutants_001(t *testing.T) { t.Parallel(); runRecoveryMutantTop(t, 1) }
-func TestRecoveryMutants_002(t *testing.T) { t.Parallel(); runRecoveryMutantTop(t, 2) }
 
 func recoveryMutantOwner(name string) int {
 	key := "stage1/cohere/estree/recovery_test.go/TestRecoveryMutants/" + name
@@ -137,16 +116,25 @@ func checkRecoveryMutantUnion(t *testing.T) {
 		}
 	}
 }
-func TestRecoveryMutantsUnion(t *testing.T) { t.Parallel(); checkRecoveryMutantUnion(t) }
 
 func runRecoveryMutantTop(t *testing.T, shard int) {
-	beginRecoverySetup(t)
 	selected, n := recoveryShardSelection(t)
 	if shard%n != selected {
 		t.Skip("ADAMIC_TEST_SHARD selects another shard")
 	}
 	sources := recoveredGrammar()
 	cases := recoveryMutantLiveSlices(t, sources)[shard]
+	products := map[string]string{}
+	for _, m := range recoveryMutations {
+		if recoveryMutantOwner(m.name) == shard {
+			products[m.name] = recoveryMutantPrepared(t, m.name)
+		}
+	}
+	// Preparation is outside the shard work budget; Loom bounds the whole unit.
+	started := time.Now()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	defer func() { t.Logf("shard work wall=%.6fs", time.Since(started).Seconds()) }()
 	planted := os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR")
 	if planted != "" {
 		for _, c := range cases {
@@ -179,13 +167,13 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 			t.Fatalf("%s lost grammar cases: %d/%d", m.name, count, len(sources))
 		}
 		main := mutantPort(t, m.file, m.from, m.to)
-		product := recoveryMutantPrepared(t, m.name, nil)
+		product := products[m.name]
 		binary := filepath.Join(product, "port")
 		want, err := os.ReadFile(filepath.Join(product, "answer"))
 		if err != nil {
 			t.Fatal(err)
 		}
-		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		for name, got := range map[string][]byte{"Node": recoveryMutantExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list), "native": recoveryMutantExecute(t, ctx, binary, "--manifest", list)} {
 			if failure := recoveryComparison(want, got, true); failure != "" {
 				t.Fatal(m.name + " " + name + ": " + failure)
 			}
@@ -193,99 +181,36 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 		}
 	}
 }
-func TestRecoveryMutantsTopSurvivor(t *testing.T) {
-	t.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	planted := recoveryMutantLiveSlices(t, recoveredGrammar())[recoveryMutantOwner(recoveryMutations[0].name)][0].id
-	var output []byte
-	err = nil
-	for shard := 0; shard < testRecoveryMutantsShards; shard++ {
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
-		command := exec.CommandContext(ctx, executable, "-test.v", "-test.timeout=75s", fmt.Sprintf("-test.run=^TestRecoveryMutants_%03d$", shard))
-		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
-				return os.ErrProcessDone
-			}
-			return err
-		}
-		command.WaitDelay = time.Second
-		for _, entry := range os.Environ() {
-			if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_RECOVERY_MUTANT_SURVIVOR=") {
-				command.Env = append(command.Env, entry)
-			}
-		}
-		command.Env = append(command.Env, "ADAMIC_RECOVERY_MUTANT_SURVIVOR="+planted)
-		part, childErr := command.CombinedOutput()
-		output = append(output, part...)
-		if childErr != nil {
-			err = childErr
-		}
-		if ctx.Err() != nil {
-			t.Fatalf("planted survivor subprocess cooked: %v", ctx.Err())
-		}
 
-	}
-	owner := fmt.Sprintf("TestRecoveryMutants_%03d", recoveryMutantOwner(strings.SplitN(planted, "/", 2)[0]))
-	prefix := "--- FAIL: TestRecoveryMutants_"
-	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), "--- FAIL: "+owner+" ") || !strings.Contains(string(output), "mutant survived") {
-		t.Fatalf("planted survivor must fail only %s: %v\n%s", owner, err, output)
-	}
-	t.Logf("planted surviving mutant %s caught only by %s", planted, owner)
+type recoveryMutantProduct struct {
+	once      sync.Once
+	directory string
 }
 
-// Not parallel: prepare shared products before the parallel execution shards resume.
-func TestRecoveryMutants_Setup(t *testing.T) {
-	started := time.Now()
-	cpu := recoveryCPU(t)
-	t.Cleanup(func() {
-		t.Logf("TestRecoveryMutants (setup): wall=%.6fs totalCPU=%.6fs", time.Since(started).Seconds(), (recoveryCPU(t) - cpu).Seconds())
-	})
-	setup := beginRecoverySetup(t)
-	list := manifest(t, recoveredGrammar())
-	want := recoveryAnswer(t, recoveryOracle(t, setup), list, "--manifest")
-	for _, mutation := range recoveryMutations {
-		t.Run(mutation.name, func(t *testing.T) {
-			t.Parallel()
-			recoveryMutantPrepared(t, mutation.name, func(directory string) error {
-				main := mutantPort(t, mutation.file, mutation.from, mutation.to)
-				binary, _ := recoveryPort(t, beginRecoverySetup(t), main)
-				data, err := os.ReadFile(binary)
-				if err != nil {
-					return err
-				}
-				if err = os.WriteFile(filepath.Join(directory, "port"), data, 0755); err != nil {
-					return err
-				}
-				return os.WriteFile(filepath.Join(directory, "answer"), want, 0644)
-			})
-		})
-	}
-}
-
-// These are setup's Product handles, including uncached products when the gate
-// sets ADAMIC_BUILD_CACHE=off. No execution shard invokes a builder.
 var recoveryMutantProducts sync.Map
 
-func recoveryMutantPrepared(t *testing.T, name string, build func(string) error) string {
+func recoveryMutantPrepared(t *testing.T, name string) string {
 	t.Helper()
-	if build == nil {
-		if product, ok := recoveryMutantProducts.Load(name); ok {
-			return product.(string)
-		}
+	value, _ := recoveryMutantProducts.LoadOrStore(name, &recoveryMutantProduct{})
+	product := value.(*recoveryMutantProduct)
+	product.once.Do(func() {
+		product.directory = buildRecoveryMutantProduct(t, name)
+	})
+	if product.directory == "" {
+		t.Fatalf("preparation failed for mutant %s", name)
 	}
+	return product.directory
+}
+
+func buildRecoveryMutantProduct(t *testing.T, name string) string {
+	t.Helper()
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs := recoveryCacheInputs(t, main)
 	inputs.Name = "estree-recovery-mutant-prepared-" + name
-	inputs.Files = append(inputs.Files, "stage1/cohere/estree/recovery_mutants_split_test.go", "stage1/cohere/estree/recovery_test.go", "stage1/cohere/estree/testdata/oracle.go", "cohere/internal/format", "oracle")
+	inputs.Files = append(inputs.Files, "stage1/cohere/estree/recovery_mutants_preparation_test.go", "stage1/cohere/estree/recovery_mutants_split_test.go", "stage1/cohere/estree/recovery_test.go", "stage1/cohere/estree/testdata/oracle.go", "cohere/internal/format", "oracle")
 	inputs.Flags = append(inputs.Flags, "sanitized", "full-recovered-grammar")
 	for _, m := range recoveryMutations {
 		if m.name == name {
@@ -295,10 +220,37 @@ func recoveryMutantPrepared(t *testing.T, name string, build func(string) error)
 	inputs.Flags = append(inputs.Flags, recoveredGrammar()...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION"))
 
-	if build == nil {
-		build = func(string) error { return fmt.Errorf("run TestRecoveryMutants_Setup first; shards never build") }
+	return buildcache.Product(t, inputs, func(directory string) error {
+		setup := beginRecoverySetup(t)
+		list := manifest(t, recoveredGrammar())
+		want := recoveryAnswer(t, recoveryOracle(t, setup), list, "--manifest")
+		for _, mutation := range recoveryMutations {
+			if mutation.name != name {
+				continue
+			}
+			main := mutantPort(t, mutation.file, mutation.from, mutation.to)
+			binary, _ := recoveryPort(t, setup, main)
+			data, err := os.ReadFile(binary)
+			if err != nil {
+				return err
+			}
+			if err = os.WriteFile(filepath.Join(directory, "port"), data, 0755); err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(directory, "answer"), want, 0644)
+		}
+		return fmt.Errorf("unknown recovery mutant %q", name)
+	})
+}
+
+func recoveryMutantExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
+	t.Helper()
+	command := estreeScopedCommand(ctx, name, args...)
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	output, err := command.Output()
+	if err != nil || stderr.Len() != 0 {
+		t.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, err, ctx.Err(), &stderr)
 	}
-	product := buildcache.Product(t, inputs, build)
-	recoveryMutantProducts.Store(name, product)
-	return product
+	return output
 }
