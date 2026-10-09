@@ -1,0 +1,144 @@
+01 shared-slice-append wall=143.693s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/00-tf1hllmc/adamic-catalog-logs-20xwoav0
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+01 shared-slice-append: applies-and-fails-as-recorded
+01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+01 wall=143.462s setup=84.874s check=41.962s cleanup=13.810s load=13.88 20.37 27.60 75/941 1846617 -> 79.63 45.55 36.00 70/1229 1931936
+total wall=143.523s load=13.88 20.37 27.60 55/925 1846514 -> 79.63 45.55 36.00 70/1227 1931937
+02 liveness-throw wall=139.227s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/01-zdw6_l0m/adamic-catalog-logs-_l7rp0fu
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+02 liveness-throw: applies-and-fails-as-recorded
+02 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+02 wall=139.009s setup=81.894s check=39.085s cleanup=15.896s load=13.88 20.37 27.60 79/944 1846621 -> 80.55 45.16 35.83 95/1298 1928905
+total wall=139.070s load=13.88 20.37 27.60 60/945 1846534 -> 80.55 45.16 35.83 97/1296 1928905
+03 defined-lent wall=141.524s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/02-7gv9qng7/adamic-catalog-logs-ld6365xg
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+03 defined-lent: applies-and-fails-as-recorded
+03 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+03 wall=141.323s setup=82.808s check=41.067s cleanup=15.450s load=13.88 20.37 27.60 64/939 1846604 -> 80.55 45.16 35.83 82/1289 1930599
+total wall=141.381s load=13.88 20.37 27.60 46/914 1846497 -> 80.55 45.16 35.83 89/1290 1930602
+04 borrowed-array-move wall=140.523s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/03-nvn15wr_/adamic-catalog-logs-93modtt9
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+04 borrowed-array-move: applies-and-fails-as-recorded
+04 made against=d772b5c990de4304de990e723835f19ebb613641
+04 wall=139.646s setup=82.320s check=41.538s cleanup=14.202s load=13.88 20.37 27.60 59/948 1846627 -> 80.55 45.16 35.83 103/1310 1929608
+total wall=139.704s load=13.88 20.37 27.60 64/948 1846540 -> 80.55 45.16 35.83 92/1307 1929610
+05 spread-method-reuse wall=137.500s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/04-awxa6sfy/adamic-catalog-logs-rqf33a62
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+05 spread-method-reuse: applies-and-fails-as-recorded
+05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+05 wall=137.308s setup=81.853s check=39.932s cleanup=13.971s load=13.88 20.37 27.60 76/943 1846620 -> 81.30 44.70 35.63 99/1247 1927829
+total wall=137.370s load=13.88 20.37 27.60 52/925 1846514 -> 81.30 44.70 35.63 105/1247 1927831
+06 constructor-capture-region wall=140.562s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/05-52kej36v/adamic-catalog-logs-a32gzjii
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+06 constructor-capture-region: applies-and-fails-as-recorded
+06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+06 wall=140.380s setup=81.858s check=41.871s cleanup=14.669s load=13.88 20.37 27.60 65/954 1846646 -> 80.55 45.16 35.83 91/1245 1929809
+total wall=140.437s load=13.88 20.37 27.60 57/936 1846555 -> 80.55 45.16 35.83 91/1239 1929813
+07 borrowed-element-reads wall=141.070s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/06-2my13xul/adamic-catalog-logs-6rkludgt
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+07 borrowed-element-reads: applies-and-fails-as-recorded
+07 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+07 wall=140.758s setup=82.826s check=41.142s cleanup=15.182s load=13.88 20.37 27.60 67/961 1846670 -> 80.55 45.16 35.83 95/1245 1930221
+total wall=140.819s load=13.88 20.37 27.60 77/936 1846574 -> 80.55 45.16 35.83 89/1271 1930248
+08 narrowed-number-field wall=137.460s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/07-4hwha5hg/adamic-catalog-logs-n0wlb0wp
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+08 narrowed-number-field: applies-and-fails-as-recorded
+08 made against=9272c54ea9c122cd49f6890066552953a949b4cd
+08 wall=137.195s setup=81.431s check=38.708s cleanup=15.228s load=13.88 20.37 27.60 60/958 1846653 -> 81.30 44.70 35.63 98/1254 1927719
+total wall=137.295s load=13.88 20.37 27.60 60/932 1846551 -> 81.30 44.70 35.63 94/1258 1927746
+09 literal-undefined-field wall=133.156s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/08-gjhtv5jh/adamic-catalog-logs-jngixf7s
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+09 literal-undefined-field: applies-and-fails-as-recorded
+09 made against=d772b5c990de4304de990e723835f19ebb613641
+09 wall=132.921s setup=79.752s check=33.703s cleanup=17.406s load=13.88 20.37 27.60 64/954 1846646 -> 81.30 44.70 35.63 90/1224 1925044
+total wall=132.978s load=13.88 20.37 27.60 62/939 1846558 -> 81.30 44.70 35.63 91/1225 1925048
+10 override-representation wall=0.206s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/09-8enaj6sp/adamic-catalog-logs-fbi63q17
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)
+10 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+10 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=13.88 20.37 27.60 60/966 1846744 -> 13.88 20.37 27.60 66/969 1846750
+total wall=0.061s load=13.88 20.37 27.60 58/941 1846608 -> 13.88 20.37 27.60 63/971 1846754
+11 refuse-definite-assignment wall=138.877s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/10-9hak0tyk/adamic-catalog-logs-eef7fdrd
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+11 refuse-definite-assignment: applies-and-fails-as-recorded
+11 made against=d772b5c990de4304de990e723835f19ebb613641
+11 wall=138.610s setup=83.024s check=33.063s cleanup=20.561s load=13.88 20.37 27.60 73/969 1846775 -> 80.55 45.16 35.83 107/1247 1928510
+total wall=138.669s load=13.88 20.37 27.60 81/960 1846655 -> 80.55 45.16 35.83 104/1250 1928516
+12 refuse-suppression-directives wall=144.779s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/11-33_4cs02/adamic-catalog-logs-duqpqukg
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+12 refuse-suppression-directives: applies-and-fails-as-recorded
+12 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+12 wall=144.545s setup=85.751s check=38.248s cleanup=11.583s load=13.88 20.37 27.60 64/967 1846773 -> 79.63 45.55 36.00 83/1228 1932705
+total wall=144.618s load=13.88 20.37 27.60 65/943 1846622 -> 79.63 45.55 36.00 83/1224 1932718
+13 typeof-null wall=0.203s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/12-exi3t4_j/adamic-catalog-logs-lwr0ahll
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)
+13 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+13 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=13.88 20.37 27.60 82/972 1846755 -> 13.88 20.37 27.60 70/971 1846756
+total wall=0.060s load=13.88 20.37 27.60 75/943 1846620 -> 13.88 20.37 27.60 64/967 1846758
+14 constructor-arrow-this wall=0.210s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/13-v343i9m2/adamic-catalog-logs-ndb2z824
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)
+14 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+14 wall=0.001s setup=0.000s check=0.000s cleanup=0.000s load=13.88 20.37 27.60 56/968 1846776 -> 13.88 20.37 27.60 55/967 1846777
+total wall=0.064s load=13.88 20.37 27.60 58/951 1846641 -> 13.88 20.37 27.60 69/967 1846778
+15 class-instance-key wall=0.205s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/14-wleem5dn/adamic-catalog-logs-z3o5fjqx
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)
+15 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+15 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=13.88 20.37 27.60 64/968 1846773 -> 13.88 20.37 27.60 57/970 1846776
+total wall=0.067s load=13.88 20.37 27.60 64/944 1846622 -> 13.88 20.37 27.60 54/968 1846777
+16 proven-guards-relations wall=0.207s
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/15-pgfpf6qe/adamic-catalog-logs-4cn012ta
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)
+16 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+16 wall=0.001s setup=0.000s check=0.000s cleanup=0.000s load=13.88 20.37 27.60 61/970 1846776 -> 13.88 20.37 27.60 56/967 1846776
+total wall=0.060s load=13.88 20.37 27.60 66/955 1846650 -> 13.88 20.37 27.60 56/967 1846777

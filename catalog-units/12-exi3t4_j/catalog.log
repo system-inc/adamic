@@ -1,0 +1,8 @@
+target 7b9d4272c28f59530ab13daa5c49067e47933b06
+logs /home/ahra/full-gate/out/7b9d4272c28f-20261009T174514Z/catalog-units/12-exi3t4_j/adamic-catalog-logs-lwr0ahll
+build flags: commit=7b9d4272c28f59530ab13daa5c49067e47933b06; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)
+13 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+13 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=13.88 20.37 27.60 82/972 1846755 -> 13.88 20.37 27.60 70/971 1846756
+total wall=0.060s load=13.88 20.37 27.60 75/943 1846620 -> 13.88 20.37 27.60 64/967 1846758
