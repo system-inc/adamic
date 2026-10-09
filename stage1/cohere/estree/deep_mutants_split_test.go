@@ -101,7 +101,7 @@ func deepMutantsProducts(t *testing.T, mutation deepMutantsMutation) (string, st
 	snapshot := map[string][]byte{}
 	inputs := buildcache.Inputs{
 		Name:      "deep-mutants-lowered-v1",
-		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.sum", "go.work", "stage1/cohere/estree/deep_mutants_split_test.go", "stage1/cohere/estree/estree_test.go"},
+		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.work", "stage1/cohere/estree/deep_mutants_split_test.go", "stage1/cohere/estree/estree_test.go"},
 		Flags:     []string{"root=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
@@ -157,7 +157,7 @@ func deepMutantsProducts(t *testing.T, mutation deepMutantsMutation) (string, st
 func deepMutantsOracle(t *testing.T) string {
 	t.Helper()
 	// GoBuild is not on this base. Preserve the existing overlay build command.
-	inputs := buildcache.Inputs{Name: "deep-mutants-go-oracle-v1", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go", "go.mod", "go.sum"}, Flags: []string{"overlay", "root=" + root(t)}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
+	inputs := buildcache.Inputs{Name: "deep-mutants-go-oracle-v1", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go", "go.mod"}, Flags: []string{"overlay", "root=" + root(t)}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(goOracle(t))
 		if err != nil {
