@@ -1,0 +1,19 @@
+FIRST FAILURE (products, at 222.5 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_assignable_types_native
+=== RUN   TestProduct_volume_agreement_assignable_types_native
+=== PAUSE TestProduct_volume_agreement_assignable_types_native
+=== CONT  TestProduct_volume_agreement_assignable_types_native
+    volume_agreement_shards_test.go:266: build volume-guard-agreement-archive-assignable-types 1e739a2b8dda hit 7.30
+    volume_agreement_shards_test.go:192: build volume-guard-agreement-volume-source 2ba7315c057e hit 33.32
+    volume_agreement_shards_test.go:220: build volume-guard-agreement-assignable-types-native: native: compiling unit functions_0012.c: exit status 1
+        In file included from functions_0012.c:1:
+        ./units.h:1410:14: error: inline function 'adamic_unit_adamic_same_number' is not defined [-Werror,-Wundefined-inline]
+         1410 | inline _Bool adamic_unit_adamic_same_number(double left, double right);
+              |              ^
+        functions_0012.c:77:95: note: used here
+           77 |      if (((adamic_local_71_code >= (0x1p+05)) && (adamic_local_71_code <= (0x1.f8p+06))) && (!adamic_unit_adamic_same_number(adamic_local_71_code, (0x1.7p+06)))) {
+              |                                                                                               ^
+        1 error generated.
+--- FAIL: TestProduct_volume_agreement_assignable_types_native (48.46s)
+
+(box load 17.0 on 64 cores at first failure)
