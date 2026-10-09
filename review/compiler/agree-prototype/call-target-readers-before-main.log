@@ -1,0 +1,5 @@
+--- FAIL: TestCallTargetReaders (17.96s)
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /workspace/adamic/internal/lower/class_static_guard_test.go:42:13; use CallTargets or ClosureTargets
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	17.970s
+FAIL
