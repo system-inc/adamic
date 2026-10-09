@@ -1188,12 +1188,14 @@ class Gate:
         """Each changed file's package: its own directory's, one that embeds it, or the nearest package
         directory above it (its testdata, a lint rule's directory, a fixture subdirectory: what lives in
         a package's tree is that package's to test). Reverse imports and compiler declarations then
-        expand those owners to every affected package. Anything unowned goes to cover()."""
+        expand production owners transitively; test imports are followed only once at the end.
+        Test source and data edits select their owners only. Anything unowned goes to cover()."""
         listing = self.command(["go", "list", "-deps", "-test", "-json", "./..."],
                                cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
-        directories, embedded, reverse = {}, {}, {}
+        directories, embedded, reverse, testReverse = {}, {}, {}, {}
+        testEmbedded, realEmbedded = set(), set()
         self.packageDirectories = {}
         tree = os.path.realpath(self.arguments.tree)
         decoder = json.JSONDecoder()
@@ -1202,12 +1204,16 @@ class Gate:
             package, end = decoder.raw_decode(remaining)
             remaining = remaining[end:].lstrip()
             # go list -test emits synthetic test binaries and annotated package variants.
-            # Their imports contribute edges, but only real packages can be passed to go test.
+            # A variant's Imports are test edges, never production edges.
             importPath = package.get("ForTest") or package["ImportPath"].split(" [", 1)[0]
             if package.get("Name") == "main" and importPath.endswith(".test"):
                 continue
-            for dependency in set(package.get("Imports", []) + package.get("TestImports", []) + package.get("XTestImports", [])):
-                reverse.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+            variant = bool(package.get("ForTest")) or " [" in package["ImportPath"]
+            for dependency in package.get("Imports", []):
+                edges = testReverse if variant else reverse
+                edges.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+            for dependency in set(package.get("TestImports", []) + package.get("XTestImports", [])):
+                testReverse.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
             directory = package.get("Dir")
             if not directory or not (importPath == module or importPath.startswith(module + "/")):
                 continue
@@ -1216,12 +1222,17 @@ class Gate:
             self.packageDirectories[importPath] = directory
             for field in ("EmbedFiles", "TestEmbedFiles", "XTestEmbedFiles"):
                 for name in package.get(field, []):
-                    embedded[os.path.normpath(os.path.join(relative, name))] = importPath
+                    path = os.path.normpath(os.path.join(relative, name))
+                    embedded[path] = importPath
+                    if field == "EmbedFiles" and not variant:
+                        realEmbedded.add(path)
+                    else:
+                        testEmbedded.add(path)
         dependencies = self.compilerDependencies(directories, changed)
         for package, inputs in dependencies.items():
             for dependency in inputs:
                 reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
-        packages, unowned = set(), []
+        packages, testsOnly, unowned = set(), set(), []
         for path in changed:
             directory = os.path.dirname(path) or "."
             owner = directories.get(directory) or embedded.get(path)
@@ -1232,17 +1243,35 @@ class Gate:
             if owner is None:
                 unowned.append(path)
             else:
-                packages.add(owner)
+                if path.endswith("_test.go") or "testdata" in path.split("/") or (path in testEmbedded and path not in realEmbedded):
+                    testsOnly.add(owner)
+                else:
+                    packages.add(owner)
+        # Optional explicit test-input readers; these name tests, not closure seeds.
+        for root in dict.fromkeys((self.arguments.tools, self.arguments.tree)):
+            name = os.path.join(root, "cloud/fast-gate/test-reads.json")
+            if not os.path.exists(name):
+                continue
+            with open(name) as handle:
+                readers = json.load(handle)
+            for reader, inputs in readers.items():
+                if any(path == prefix or path.startswith(prefix.rstrip("/") + "/") or prefix == "."
+                       for path in changed for prefix in inputs):
+                    testsOnly.add(module + "/" + reader)
         if "cloud/fast-gate/compiler-dependencies.json" in changed:
             packages.update(module + "/" + package for package in dependencies if package in directories)
             unowned = [path for path in unowned if path != "cloud/fast-gate/compiler-dependencies.json"]
-        changedPackages = set(packages)
+        changedPackages = packages | testsOnly
         pending = list(packages)
         while pending:
             for dependent in reverse.get(pending.pop(), ()):
                 if dependent not in packages:
                     packages.add(dependent)
                     pending.append(dependent)
+        realClosure = set(packages)
+        packages.update(testsOnly)
+        for dependency in realClosure:
+            packages.update(testReverse.get(dependency, ()))
         self.result["selected_compiler_drivers"] = sorted(
             driver for driver, declaration in getattr(self, "compilerDrivers", {}).items()
             if any(module + "/" + dependency in packages for dependency in declaration["dependencies"])
