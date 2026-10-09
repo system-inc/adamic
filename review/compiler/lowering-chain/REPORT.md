@@ -38,3 +38,7 @@ The final evidence-only commit preserves this report, raw test events, the faile
 
 Member 10: compiler/assignment-proofs-main a6f05066, a plain merge with the source's six fixture count rows.
 Member 11: no branch merge. Apply only 4e973695's internal/native/tsgo.go diff using git show 4e973695 -- internal/native/tsgo.go | git apply -3, then compare against the current main build path and focused typeaware tests and measure seconds before/after. Skip if that reuse no longer applies. These members follow member 9 and are not attempted because the chain stopped at member 2. No typeaware patch, applicability finding or timing improvement is claimed.
+
+## Member 3 resumed: compiler/generic-body-relations 2cc109e5
+
+No textual conflicts. The enum refusal stays Refused and only its diagnostic changes, preserving all Node observations. Both new fixtures agree with Node in both backends, uncached with native sanitizers. All three production overlay mutants are caught by semantic assertions. Counts regenerated once: two additions, no existing row changed, 56.758 seconds. The opt-in census is skipped without its config; added t.Parallel because its explicit output path is supplied by its caller, not shared test state. Historical evidence moved to review and document links updated.

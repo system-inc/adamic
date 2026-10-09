@@ -42,7 +42,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 			}
 		}
 	}
-	if mapper := genericSignatureMapper(resolved); mapper != nil {
+	if mapper := genericSignatureMapper(nil); mapper != nil {
 		for _, parameter := range declaration.TypeParameters() {
 			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
 			if _, known := concreteTypes[declaredType]; known {

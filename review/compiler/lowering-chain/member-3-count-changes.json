@@ -1,0 +1,29 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/generic_body_read.a",
+      "after": [
+        "10",
+        "10",
+        "0",
+        "10",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generic_body_indexed.a",
+      "after": [
+        "2",
+        "2",
+        "0",
+        "2",
+        "2",
+        "0"
+      ]
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "rows": 984
+}
