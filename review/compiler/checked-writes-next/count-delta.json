@@ -1,5 +1,5 @@
 {
-  "base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "base": "3a391aff13465375512469aa74f32ea3e7dca8ec",
   "added": {
     "stage3/checked-writes/boolean-fit.ts": {
       "row": "| stage3/checked-writes/boolean-fit.ts | 1 | 1 | 1 | 3 | 1 | 0 |",
@@ -2520,5 +2520,6 @@
       "attribution": "Array.push pins its receiver before evaluating the value; the additional retain and release are balanced. Allocations, frees, peak and regions are unchanged."
     }
   },
-  "removed": {}
+  "removed": {},
+  "initial_base": "946a8f095a7fa419a92117406314b7b3d44630f0"
 }

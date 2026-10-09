@@ -1,35 +1,63 @@
 [
   {
-    "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
-    "seconds": 0.15
-  },
-  {
-    "test": "TestCheckedViewsNextAdamicRefusals",
-    "seconds": 0.55
-  },
-  {
     "test": "TestCheckedNeverContractMutant",
-    "seconds": 0.79
+    "seconds": 0.4
   },
   {
     "test": "TestCheckedWiderWritesAdamicRefuses",
-    "seconds": 0.87
-  },
-  {
-    "test": "TestCheckedWiderWritesProvenContainers",
-    "seconds": 2.09
+    "seconds": 0.45
   },
   {
     "test": "TestCheckedEmitProvenAdamic",
-    "seconds": 2.43
-  },
-  {
-    "test": "TestCheckedWiderWritesProvenAdamic",
-    "seconds": 2.33
+    "seconds": 0.51
   },
   {
     "test": "TestCheckedViewsNextProvenAdamic",
-    "seconds": 1.72
+    "seconds": 0.51
+  },
+  {
+    "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestCheckedWiderWritesProvenAdamic",
+    "seconds": 0.57
+  },
+  {
+    "test": "TestCheckedViewsNextAdamicRefusals",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCheckedWiderWritesProvenContainers",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants/emit-comment-misfit",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants/emit-resolution-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants/emit-drop-check",
+    "seconds": 0.45
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants/emit-auto-misfit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants/emit-callback-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants/emit-node-misfit",
+    "seconds": 0.33
   },
   {
     "test": "TestCheckedViewsNextMutants",
@@ -37,147 +65,47 @@
   },
   {
     "test": "TestCheckedViewsNextMutants/optional-boolean-misfit",
-    "seconds": 1.26
-  },
-  {
-    "test": "TestCheckedViewsNextMutants/branch-bottom-number-misfit",
-    "seconds": 1.04
-  },
-  {
-    "test": "TestCheckedViewsNextMutants/branch-file-misfit",
-    "seconds": 1.23
-  },
-  {
-    "test": "TestCheckedViewsNextMutants/branch-start-misfit",
-    "seconds": 1.18
-  },
-  {
-    "test": "TestCheckedViewsNextMutants/optional-false-misfit",
-    "seconds": 1.08
-  },
-  {
-    "test": "TestCheckedViewsNextMutants/branch-length-misfit",
-    "seconds": 1.36
-  },
-  {
-    "test": "TestCheckedViewsNextMutants/required-boolean-misfit",
-    "seconds": 1.39
+    "seconds": 0.42
   },
   {
     "test": "TestCheckedViewsNextMutants/overload-callback-misfit",
-    "seconds": 1.28
+    "seconds": 0.54
   },
   {
     "test": "TestCheckedViewsNextMutants/overload-result-misfit",
-    "seconds": 1.56
+    "seconds": 0.48
   },
   {
     "test": "TestCheckedViewsNextMutants/branch-bottom-string-misfit",
-    "seconds": 1.45
+    "seconds": 0.38
   },
   {
     "test": "TestCheckedViewsNextMutants/generic-site-misfit",
-    "seconds": 1.74
+    "seconds": 0.48
   },
   {
-    "test": "TestCheckedFlowContainerContractMutants",
-    "seconds": 0.01
+    "test": "TestCheckedViewsNextMutants/branch-bottom-number-misfit",
+    "seconds": 0.39
   },
   {
-    "test": "TestCheckedFlowContainerContractMutants/flow-node-misfit",
-    "seconds": 1.17
+    "test": "TestCheckedViewsNextMutants/branch-length-misfit",
+    "seconds": 0.43
   },
   {
-    "test": "TestCheckedFlowContainerContractMutants/container-alias-misfit",
-    "seconds": 1.0
+    "test": "TestCheckedViewsNextMutants/branch-start-misfit",
+    "seconds": 0.43
   },
   {
-    "test": "TestCheckedFlowContainerContractMutants/container-fill-misfit",
-    "seconds": 0.88
+    "test": "TestCheckedViewsNextMutants/branch-file-misfit",
+    "seconds": 0.47
   },
   {
-    "test": "TestCheckedFlowContainerContractMutants/container-boolean-misfit",
-    "seconds": 1.06
+    "test": "TestCheckedViewsNextMutants/required-boolean-misfit",
+    "seconds": 0.41
   },
   {
-    "test": "TestCheckedFlowContainerContractMutants/container-map-object-misfit",
-    "seconds": 1.29
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/container-nested-misfit",
-    "seconds": 1.49
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/container-object-misfit",
-    "seconds": 1.35
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/container-splice-misfit",
-    "seconds": 1.44
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/container-map-misfit",
-    "seconds": 1.55
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/container-string-misfit",
-    "seconds": 1.73
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/container-number-misfit",
-    "seconds": 1.33
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/flow-array-misfit",
-    "seconds": 1.41
-  },
-  {
-    "test": "TestCheckedFlowContainerContractMutants/flow-undefined-misfit",
-    "seconds": 1.25
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants",
-    "seconds": 0.01
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants/emit-drop-check",
-    "seconds": 0.9
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants/emit-resolution-misfit",
-    "seconds": 1.12
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants/emit-comment-misfit",
-    "seconds": 1.12
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants/emit-callback-misfit",
-    "seconds": 1.15
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants/emit-auto-misfit",
-    "seconds": 1.09
-  },
-  {
-    "test": "TestCheckedEmitContractsMutants/emit-node-misfit",
-    "seconds": 1.01
-  },
-  {
-    "test": "TestCheckedDiagnosticReferenceMutants",
-    "seconds": 0.0
-  },
-  {
-    "test": "TestCheckedDiagnosticReferenceMutants/drop_alias_check",
-    "seconds": 1.03
-  },
-  {
-    "test": "TestCheckedDiagnosticReferenceMutants/drop_nested_contract",
-    "seconds": 1.2
-  },
-  {
-    "test": "TestCheckedDiagnosticReferenceMutants/drop_allocation_proof",
-    "seconds": 1.2
+    "test": "TestCheckedViewsNextMutants/optional-false-misfit",
+    "seconds": 0.45
   },
   {
     "test": "TestCheckedWiderWriteMutants",
@@ -185,434 +113,506 @@
   },
   {
     "test": "TestCheckedWiderWriteMutants/drop_check",
-    "seconds": 0.89
+    "seconds": 0.38
   },
   {
     "test": "TestCheckedWiderWriteMutants/drop_literal_set",
-    "seconds": 1.09
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/flow-node-misfit",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-alias-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-fill-misfit",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-boolean-misfit",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-map-object-misfit",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-nested-misfit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-object-misfit",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-splice-misfit",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-map-misfit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-string-misfit",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/container-number-misfit",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/flow-array-misfit",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants/flow-undefined-misfit",
+    "seconds": 0.38
   },
   {
     "test": "TestCheckedWiderWrites",
-    "seconds": 0.02
-  },
-  {
-    "test": "TestCheckedWiderWrites/overload-callback-fit",
-    "seconds": 1.34
+    "seconds": 0.0
   },
   {
     "test": "TestCheckedWiderWrites/container-object-misfit",
-    "seconds": 1.3
+    "seconds": 0.4
   },
   {
-    "test": "TestCheckedWiderWrites/parent-fit",
-    "seconds": 1.41
-  },
-  {
-    "test": "TestCheckedWiderWrites/receiver-fit",
-    "seconds": 1.25
-  },
-  {
-    "test": "TestCheckedWiderWrites/parent-misfit",
-    "seconds": 1.77
-  },
-  {
-    "test": "TestCheckedWiderWrites/range-misfit",
-    "seconds": 1.46
-  },
-  {
-    "test": "TestCheckedWiderWrites/range-fit",
-    "seconds": 1.28
-  },
-  {
-    "test": "TestCheckedWiderWrites/nullable-number-fit",
-    "seconds": 1.36
-  },
-  {
-    "test": "TestCheckedWiderWrites/compound-misfit",
-    "seconds": 1.13
-  },
-  {
-    "test": "TestCheckedWiderWrites/nullable-number-misfit",
-    "seconds": 1.42
-  },
-  {
-    "test": "TestCheckedWiderWrites/number-misfit",
-    "seconds": 0.92
-  },
-  {
-    "test": "TestCheckedWiderWrites/compound-fit",
-    "seconds": 1.29
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-fit",
-    "seconds": 0.94
-  },
-  {
-    "test": "TestCheckedWiderWrites/number-fit",
-    "seconds": 1.04
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-misfit",
-    "seconds": 1.16
-  },
-  {
-    "test": "TestCheckedWiderWrites/boolean-misfit",
-    "seconds": 0.99
-  },
-  {
-    "test": "TestCheckedWiderWrites/boolean-fit",
-    "seconds": 1.16
-  },
-  {
-    "test": "TestCheckedWiderWrites/string-misfit",
-    "seconds": 0.95
-  },
-  {
-    "test": "TestCheckedWiderWrites/string-fit",
-    "seconds": 1.28
-  },
-  {
-    "test": "TestCheckedWiderWrites/flags-misfit",
-    "seconds": 1.24
-  },
-  {
-    "test": "TestCheckedWiderWrites/flags-fit",
-    "seconds": 1.19
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-inner-misfit",
-    "seconds": 0.9
-  },
-  {
-    "test": "TestCheckedWiderWrites/reference-structure",
-    "seconds": 1.05
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-nested-misfit",
-    "seconds": 0.98
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-inner-fit",
-    "seconds": 1.2
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-nested-fit",
-    "seconds": 1.11
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-related-misfit",
-    "seconds": 1.16
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-related-fit",
-    "seconds": 1.35
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-rich-misfit",
-    "seconds": 1.22
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-rich-fit",
-    "seconds": 1.52
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-proof-misfit",
-    "seconds": 1.24
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-alias-misfit",
-    "seconds": 0.98
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-proof-fit",
-    "seconds": 1.43
-  },
-  {
-    "test": "TestCheckedWiderWrites/diagnostic-alias-fit",
-    "seconds": 1.19
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-object-misfit",
-    "seconds": 1.06
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-object-fit",
-    "seconds": 1.01
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-string-misfit",
-    "seconds": 1.07
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-string-fit",
-    "seconds": 1.12
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-number-misfit",
-    "seconds": 0.83
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-splice-misfit",
-    "seconds": 0.8
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-wide-fit",
-    "seconds": 1.1
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-number-fit",
-    "seconds": 1.26
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-nullable-misfit",
-    "seconds": 0.86
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-index-misfit",
-    "seconds": 1.17
-  },
-  {
-    "test": "TestCheckedWiderWrites/never-nullable-fit",
-    "seconds": 0.91
-  },
-  {
-    "test": "TestCheckedWiderWrites/flow-array-misfit",
-    "seconds": 1.23
-  },
-  {
-    "test": "TestCheckedWiderWrites/flow-undefined-misfit",
-    "seconds": 1.01
-  },
-  {
-    "test": "TestCheckedWiderWrites/flow-array-fit",
-    "seconds": 1.16
-  },
-  {
-    "test": "TestCheckedWiderWrites/flow-undefined-fit",
-    "seconds": 1.19
-  },
-  {
-    "test": "TestCheckedWiderWrites/flow-node-misfit",
-    "seconds": 1.35
-  },
-  {
-    "test": "TestCheckedWiderWrites/flow-node-fit",
-    "seconds": 1.13
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-nested-fit",
-    "seconds": 1.11
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-nested-misfit",
-    "seconds": 1.15
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-callback-misfit",
-    "seconds": 1.19
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-object-fit",
-    "seconds": 1.02
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-splice-misfit",
-    "seconds": 0.89
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-map-misfit",
-    "seconds": 0.94
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-splice-fit",
-    "seconds": 1.03
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-map-fit",
-    "seconds": 0.92
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-string-misfit",
-    "seconds": 0.9
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-string-fit",
-    "seconds": 0.8
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-number-fit",
-    "seconds": 0.96
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-number-misfit",
-    "seconds": 1.34
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-alias-misfit",
-    "seconds": 1.07
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-alias-fit",
-    "seconds": 1.03
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-map-object-misfit",
-    "seconds": 1.2
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-fill-misfit",
-    "seconds": 0.82
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-map-object-fit",
-    "seconds": 1.31
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-boolean-misfit",
-    "seconds": 0.7
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-fill-fit",
-    "seconds": 1.16
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-boolean-fit",
-    "seconds": 1.24
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-slice-misfit",
-    "seconds": 1.05
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-map-values-fit",
-    "seconds": 1.09
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-map-values-misfit",
-    "seconds": 1.34
-  },
-  {
-    "test": "TestCheckedWiderWrites/container-slice-fit",
-    "seconds": 1.04
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-node-fit",
-    "seconds": 0.95
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-auto-misfit",
-    "seconds": 1.46
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-node-misfit",
-    "seconds": 1.19
-  },
-  {
-    "test": "TestCheckedWiderWrites/branch-bottom-number-fit",
-    "seconds": 1.12
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-auto-fit",
-    "seconds": 1.69
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-resolution-misfit",
-    "seconds": 1.21
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-resolution-fit",
-    "seconds": 1.23
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-callback-fit",
-    "seconds": 1.5
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-comment-fit",
-    "seconds": 1.13
-  },
-  {
-    "test": "TestCheckedWiderWrites/emit-comment-misfit",
-    "seconds": 1.58
-  },
-  {
-    "test": "TestCheckedWiderWrites/generic-site-misfit",
-    "seconds": 0.78
-  },
-  {
-    "test": "TestCheckedWiderWrites/overload-result-fit",
-    "seconds": 0.9
-  },
-  {
-    "test": "TestCheckedWiderWrites/overload-result-misfit",
-    "seconds": 1.03
-  },
-  {
-    "test": "TestCheckedWiderWrites/generic-site-fit",
-    "seconds": 0.62
-  },
-  {
-    "test": "TestCheckedWiderWrites/branch-bottom-string-misfit",
-    "seconds": 0.53
-  },
-  {
-    "test": "TestCheckedWiderWrites/branch-bottom-string-fit",
-    "seconds": 0.37
-  },
-  {
-    "test": "TestCheckedWiderWrites/branch-bottom-number-misfit",
-    "seconds": 0.39
-  },
-  {
-    "test": "TestCheckedWiderWrites/optional-false-misfit",
+    "test": "TestCheckedWiderWrites/overload-callback-fit",
     "seconds": 0.41
   },
   {
+    "test": "TestCheckedWiderWrites/parent-fit",
+    "seconds": 0.45
+  },
+  {
+    "test": "TestCheckedWiderWrites/parent-misfit",
+    "seconds": 0.58
+  },
+  {
+    "test": "TestCheckedWiderWrites/receiver-fit",
+    "seconds": 0.51
+  },
+  {
+    "test": "TestCheckedWiderWrites/range-misfit",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCheckedWiderWrites/range-fit",
+    "seconds": 0.44
+  },
+  {
+    "test": "TestCheckedWiderWrites/nullable-number-misfit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/nullable-number-fit",
+    "seconds": 0.42
+  },
+  {
+    "test": "TestCheckedWiderWrites/compound-misfit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/number-misfit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/compound-fit",
+    "seconds": 0.48
+  },
+  {
+    "test": "TestCheckedWiderWrites/number-fit",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-misfit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/boolean-misfit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-fit",
+    "seconds": 0.5
+  },
+  {
+    "test": "TestCheckedWiderWrites/boolean-fit",
+    "seconds": 0.42
+  },
+  {
+    "test": "TestCheckedWiderWrites/string-misfit",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCheckedWiderWrites/string-fit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/reference-structure",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/flags-misfit",
+    "seconds": 0.49
+  },
+  {
+    "test": "TestCheckedWiderWrites/flags-fit",
+    "seconds": 0.48
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-inner-misfit",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-inner-fit",
+    "seconds": 0.44
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-nested-misfit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-nested-fit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-related-misfit",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-related-fit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-rich-misfit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-rich-fit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-proof-fit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-proof-misfit",
+    "seconds": 0.42
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-alias-fit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/diagnostic-alias-misfit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-object-misfit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-string-misfit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-object-fit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-string-fit",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-number-misfit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-number-fit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-wide-fit",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-index-misfit",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-splice-misfit",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-nullable-misfit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/never-nullable-fit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/flow-undefined-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/flow-array-misfit",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCheckedWiderWrites/flow-array-fit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedWiderWrites/flow-undefined-fit",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCheckedWiderWrites/flow-node-misfit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-nested-fit",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCheckedWiderWrites/flow-node-fit",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-nested-misfit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-object-fit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-map-misfit",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-splice-misfit",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-splice-fit",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-map-fit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-string-misfit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-string-fit",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-number-misfit",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-number-fit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-alias-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-alias-fit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-map-object-misfit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-fill-misfit",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-map-object-fit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-fill-fit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-boolean-misfit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-map-values-misfit",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-boolean-fit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-map-values-fit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-slice-fit",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCheckedWiderWrites/container-slice-misfit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-auto-fit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-auto-misfit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-node-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-node-fit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-callback-misfit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-resolution-misfit",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-resolution-fit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-callback-fit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-comment-misfit",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedWiderWrites/emit-comment-fit",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCheckedWiderWrites/overload-result-misfit",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCheckedWiderWrites/generic-site-fit",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCheckedWiderWrites/generic-site-misfit",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCheckedWiderWrites/overload-result-fit",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCheckedWiderWrites/branch-bottom-string-misfit",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCheckedWiderWrites/branch-bottom-number-fit",
+    "seconds": 0.42
+  },
+  {
+    "test": "TestCheckedWiderWrites/branch-bottom-number-misfit",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCheckedWiderWrites/branch-bottom-string-fit",
+    "seconds": 0.55
+  },
+  {
     "test": "TestCheckedWiderWrites/branch-length-misfit",
-    "seconds": 0.46
+    "seconds": 0.54
   },
   {
     "test": "TestCheckedWiderWrites/branch-length-fit",
     "seconds": 0.49
   },
   {
-    "test": "TestCheckedWiderWrites/branch-start-misfit",
-    "seconds": 0.47
-  },
-  {
-    "test": "TestCheckedWiderWrites/branch-file-misfit",
-    "seconds": 0.51
-  },
-  {
     "test": "TestCheckedWiderWrites/branch-start-fit",
-    "seconds": 0.57
+    "seconds": 0.61
   },
   {
     "test": "TestCheckedWiderWrites/branch-file-fit",
-    "seconds": 0.52
+    "seconds": 0.58
   },
   {
-    "test": "TestCheckedWiderWrites/required-boolean-fit",
-    "seconds": 0.54
+    "test": "TestCheckedWiderWrites/branch-start-misfit",
+    "seconds": 0.75
+  },
+  {
+    "test": "TestCheckedWiderWrites/branch-file-misfit",
+    "seconds": 0.71
+  },
+  {
+    "test": "TestCheckedWiderWrites/optional-false-misfit",
+    "seconds": 0.63
   },
   {
     "test": "TestCheckedWiderWrites/optional-false-fit",
-    "seconds": 0.56
-  },
-  {
-    "test": "TestCheckedWiderWrites/optional-boolean-fit",
-    "seconds": 0.43
+    "seconds": 0.5
   },
   {
     "test": "TestCheckedWiderWrites/required-boolean-misfit",
-    "seconds": 0.44
+    "seconds": 0.48
+  },
+  {
+    "test": "TestCheckedWiderWrites/optional-boolean-fit",
+    "seconds": 0.41
   },
   {
     "test": "TestCheckedWiderWrites/optional-boolean-misfit",
-    "seconds": 0.39
+    "seconds": 0.57
+  },
+  {
+    "test": "TestCheckedWiderWrites/required-boolean-fit",
+    "seconds": 0.6
   },
   {
     "test": "TestCheckedWiderWrites/overload-callback-misfit",
-    "seconds": 0.42
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants/drop_nested_contract",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants/drop_alias_check",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants/drop_allocation_proof",
+    "seconds": 0.24
   }
 ]
