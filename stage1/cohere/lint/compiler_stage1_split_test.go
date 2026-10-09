@@ -3,6 +3,7 @@ package lint
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"hash/fnv"
 	"os"
@@ -13,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -101,6 +103,26 @@ func compilerAgreementOwner(c compilerAgreementCase) int {
 	return compilerAgreementBucket(c.key, compilerAgreementFileBuckets)*(compilerAgreementRuleGroups+1) + group
 }
 
+// Bound the whole child process group, including any compilers the child starts.
+// The caller defers cancel to release the context after a successful command.
+func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command, cancel
+}
+
 var compilerAgreementInputMu sync.Mutex
 var compilerAgreementFiles []string
 
@@ -109,7 +131,8 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 	defer compilerAgreementInputMu.Unlock()
 	t.Helper()
 	if compilerAgreementFiles == nil {
-		command := exec.Command("git", "ls-files", "--recurse-submodules", "-z")
+		command, cancel := compilerAgreementCommand("git", "ls-files", "--recurse-submodules", "-z")
+		defer cancel()
 		command.Dir = repository
 		output, err := command.Output()
 		if err != nil {
@@ -11195,9 +11218,10 @@ func TestCompilerAndStage1AgreePlantedDisagreement(t *testing.T) {
 	failures := 0
 	for _, shard := range []int{target - 1, target, target + 1} {
 		name := fmt.Sprintf("TestCompilerAndStage1Agree_%03d", shard)
-		command := exec.Command(os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
 		output, err := command.CombinedOutput()
+		cancel()
 		if shard == target {
 			if err == nil || bytes.Count(output, []byte("--- FAIL:")) != 1 || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
 				t.Fatalf("planted disagreement not caught exactly once: %s", output)
