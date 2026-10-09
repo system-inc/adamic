@@ -1,0 +1,18 @@
+run adamic-verify-20261009T070503-8f08ffe2: void, 10717 tests in 12 units, 3 failed, 2 units broken, 0 killed over budget
+BROKEN tests-03: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-07: no results (exited false, last output "loom-runner: still running after 1110 s")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/base-shapes (tests-04)
+    volume_test.go:143: phase command base-shapes-checker 90.031264s
+    volume_test.go:143: base-shapes-checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/call-count (tests-04)
+    volume_test.go:143: phase command call-count-checker 90.088264s
+    volume_test.go:143: call-count-checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfilePartition (tests-04)
+    volume_profile_partition_test.go:127: unexpected check adamic-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker-asan.a owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker-asan.a-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check adamic owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker.a-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker.a owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check volume-oracle owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check volume-oracle-asan owned by [TestVolumeProfileCorpora]
