@@ -1,0 +1,8 @@
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== CONT  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:33: want located tuple object refusal, got <nil>
+--- FAIL: TestTupleObjectViewRefused (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.121s
+FAIL
