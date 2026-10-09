@@ -151,8 +151,10 @@ func TestNegativeValidProgramCannotBeListed(t *testing.T) {
 	t.Parallel()
 	_, witness, list := negativeFixture(t)
 	source := []byte("let value: string = \"ready\";\nconsole.log('42');\n")
-	if err := validateWitnessSource(source, witness); err == nil {
-		t.Fatal("valid source accepted as literal type lie")
+	for _, valid := range [][]byte{source, []byte("// let value: string = undefined!;\nconsole.log('42');\n")} {
+		if err := validateWitnessSource(valid, witness); err == nil {
+			t.Fatal("valid source accepted as literal type lie")
+		}
 	}
 	list.Witnesses[witness.TypeCorrectSHA256] = witness
 	path := filepath.Join(t.TempDir(), "negatives.json")

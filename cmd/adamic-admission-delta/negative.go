@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -109,10 +110,11 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	}
 	declaration := lines[line-1]
 	if witness.DeclaredType == "string" {
-		if !strings.Contains(declaration, ": string") || !strings.Contains(declaration, witness.RepairFrom) {
+		pattern := `^(let [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `;|class [A-Za-z_$][A-Za-z0-9_$]* \{ [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `; \})$`
+		if !regexp.MustCompile(pattern).MatchString(declaration) {
 			return fmt.Errorf("declared string does not contain its ruled literal type lie")
 		}
-	} else if !strings.Contains(declaration, "as number") || !strings.Contains(string(source), "lookAhead(misfit)") || !strings.Contains(string(source), "function misfit():unknown {return 'wrong';}") || !strings.Contains(string(source), "function lookAhead(callback:()=>unknown):unknown {return callback();}") {
+	} else if string(source) != "function lookAhead(callback:()=>unknown):unknown {return callback();}\nfunction misfit():unknown {return 'wrong';}\nconst result=lookAhead(misfit) as number;\nconsole.log(String(result));\n" || line != 3 {
 		return fmt.Errorf("declared number does not contain its ruled literal callback type lie")
 	}
 	repaired := bytes.ReplaceAll(source, []byte(witness.RepairFrom), []byte(witness.RepairTo))
