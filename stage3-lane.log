@@ -1,0 +1,6 @@
+/home/ahra/fast-gate/tree-stage3-lane
+test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0}
+reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0}
+failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['unittests:: tsserver:: pasteEdits:', 'unittests:: tsserver:: compileOnSave:: CompileOnSaveAffectedFileListRequest with and without projectFileName in request CompileOnSaveAffectedFileListRequest when projectFile is not specified', 'unittests:: tsc:: libraryResolution:: library file resolution tsc -p project1 --explainFiles libraryResolution:: with config baseline for the tsc compiles', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']
+number of reported failure titles: expected 1, observed 4
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0}
