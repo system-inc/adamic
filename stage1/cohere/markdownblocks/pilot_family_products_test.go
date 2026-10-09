@@ -133,7 +133,11 @@ func pilotLoweredProduct(t *testing.T, family string) string {
 
 func pilotNativeProduct(t *testing.T, family string, sanitize bool) string {
 	t.Helper()
-	lowered := pilotLoweredProduct(t, family)
+	return pilotNativeProductFromLowered(t, family, pilotLoweredProduct(t, family), sanitize)
+}
+
+func pilotNativeProductFromLowered(t *testing.T, family, lowered string, sanitize bool) string {
+	t.Helper()
 	source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
 	if err != nil {
 		t.Fatal(err)
@@ -154,7 +158,8 @@ func pilotNativeProduct(t *testing.T, family string, sanitize bool) string {
 type pilotProducts struct{ main, goBinary, backend, sanitized, release string }
 
 func pilotProductsReady(t *testing.T, family string) pilotProducts {
-	return pilotProducts{main: filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"), goBinary: pilotGoProduct(t, family), backend: filepath.Join(pilotLoweredProduct(t, family), "program.mjs"), sanitized: pilotNativeProduct(t, family, true), release: pilotNativeProduct(t, family, false)}
+	lowered := pilotLoweredProduct(t, family)
+	return pilotProducts{main: filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"), goBinary: pilotGoProduct(t, family), backend: filepath.Join(lowered, "program.mjs"), sanitized: pilotNativeProductFromLowered(t, family, lowered, true), release: pilotNativeProductFromLowered(t, family, lowered, false)}
 }
 
 var identifierProductsOnce sync.Once
