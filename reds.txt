@@ -1,0 +1,24 @@
+run adamic-verify-20261009T055509-0b4c77c3: void, 6299 tests in 12 units, 3 failed, 4 units broken, 0 killed over budget
+BROKEN tests-02: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-03: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-07: no results (exited false, last output "loom-runner: still running after 1140 s")
+BROKEN tests-11: no results (exited true, last output "5.4G\t/tmp/loom-home")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-04)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.008s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	233.411s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	188.211s
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-05)
+    panic: cooked: TestMarkdownTableLayout_Setup exceeded 90s: context deadline exceeded
+    table_layout_shards_test.go:63: build markdown_table_lowered d1fa2f1c64a2 miss 51.71
+    table_layout_shards_test.go:63: build markdown_table_Go_list e978b667ceeb miss 5.11
+    table_layout_shards_test.go:63: build markdown_table_Go_document bd25ebafd328 miss 3.62
+    table_layout_shards_test.go:200: build markdown_table_native_false 09ff6bed9183 miss 19.29
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/stage1/cohere/markdownblocks.init.0()
+    /tmp/adamic/stage1/cohere/markdownblocks/table_layout_setup_test.go:60 +0x40e
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-08)
+    rules_agree_shards_test.go:154: build lint-rules-agree-lowered a962f78650b7 miss 71.55
+    lint_test.go:327: TestRulesAgree (setup lowered): 71.599s
+    lint_test.go:329: cooked: setup over 60s budget
