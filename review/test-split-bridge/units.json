@@ -1,0 +1,254 @@
+[
+  {
+    "name": "TestBridgeABI",
+    "piece": "abi",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeABI"
+  },
+  {
+    "name": "TestBridgeInputLength",
+    "piece": "input-length",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeInputLength"
+  },
+  {
+    "name": "TestBridgeUnlinkedBuild",
+    "piece": "unlinked-build",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeUnlinkedBuild"
+  },
+  {
+    "name": "TestBridgeUnlinkedC",
+    "piece": "unlinked-c",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeUnlinkedC"
+  },
+  {
+    "name": "TestBridgeUnlinkedJavaScript",
+    "piece": "unlinked-js",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeUnlinkedJavaScript"
+  },
+  {
+    "name": "TestBridgeOutputLength",
+    "piece": "output-length",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeOutputLength"
+  },
+  {
+    "name": "TestBridgeStaleHandle",
+    "piece": "stale-handle",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeStale"
+  },
+  {
+    "name": "TestBridgeLinkage",
+    "piece": "linkage",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeLinkage"
+  },
+  {
+    "name": "TestBridgeOutputFree",
+    "piece": "output-free",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeOutputFree"
+  },
+  {
+    "name": "TestBridgeRegion",
+    "piece": "region",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeRegion"
+  },
+  {
+    "name": "TestBridgeRegionOwnership",
+    "piece": "region-ownership",
+    "file": "",
+    "round": 0,
+    "helper": "bridgeRegionOwnership"
+  },
+  {
+    "name": "TestBridgeOracleSample",
+    "piece": "oracle",
+    "file": "sample.ts",
+    "round": 0,
+    "helper": "bridgeOracle"
+  },
+  {
+    "name": "TestBridgeTimingRound1Sample",
+    "piece": "timing-1",
+    "file": "sample.ts",
+    "round": 1,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound2Sample",
+    "piece": "timing-2",
+    "file": "sample.ts",
+    "round": 2,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound3Sample",
+    "piece": "timing-3",
+    "file": "sample.ts",
+    "round": 3,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeWrongPositionSample",
+    "piece": "wrong-position",
+    "file": "sample.ts",
+    "round": 0,
+    "helper": "bridgeWrongPosition"
+  },
+  {
+    "name": "TestBridgeOracleChecker",
+    "piece": "oracle",
+    "file": "checker.ts",
+    "round": 0,
+    "helper": "bridgeOracle"
+  },
+  {
+    "name": "TestBridgeTimingRound1Checker",
+    "piece": "timing-1",
+    "file": "checker.ts",
+    "round": 1,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound2Checker",
+    "piece": "timing-2",
+    "file": "checker.ts",
+    "round": 2,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound3Checker",
+    "piece": "timing-3",
+    "file": "checker.ts",
+    "round": 3,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeWrongPositionChecker",
+    "piece": "wrong-position",
+    "file": "checker.ts",
+    "round": 0,
+    "helper": "bridgeWrongPosition"
+  },
+  {
+    "name": "TestBridgeOracleParser",
+    "piece": "oracle",
+    "file": "parser.ts",
+    "round": 0,
+    "helper": "bridgeOracle"
+  },
+  {
+    "name": "TestBridgeTimingRound1Parser",
+    "piece": "timing-1",
+    "file": "parser.ts",
+    "round": 1,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound2Parser",
+    "piece": "timing-2",
+    "file": "parser.ts",
+    "round": 2,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound3Parser",
+    "piece": "timing-3",
+    "file": "parser.ts",
+    "round": 3,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeWrongPositionParser",
+    "piece": "wrong-position",
+    "file": "parser.ts",
+    "round": 0,
+    "helper": "bridgeWrongPosition"
+  },
+  {
+    "name": "TestBridgeOracleTypes",
+    "piece": "oracle",
+    "file": "types.ts",
+    "round": 0,
+    "helper": "bridgeOracle"
+  },
+  {
+    "name": "TestBridgeTimingRound1Types",
+    "piece": "timing-1",
+    "file": "types.ts",
+    "round": 1,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound2Types",
+    "piece": "timing-2",
+    "file": "types.ts",
+    "round": 2,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound3Types",
+    "piece": "timing-3",
+    "file": "types.ts",
+    "round": 3,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeWrongPositionTypes",
+    "piece": "wrong-position",
+    "file": "types.ts",
+    "round": 0,
+    "helper": "bridgeWrongPosition"
+  },
+  {
+    "name": "TestBridgeOracleUtilities",
+    "piece": "oracle",
+    "file": "utilities.ts",
+    "round": 0,
+    "helper": "bridgeOracle"
+  },
+  {
+    "name": "TestBridgeTimingRound1Utilities",
+    "piece": "timing-1",
+    "file": "utilities.ts",
+    "round": 1,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound2Utilities",
+    "piece": "timing-2",
+    "file": "utilities.ts",
+    "round": 2,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeTimingRound3Utilities",
+    "piece": "timing-3",
+    "file": "utilities.ts",
+    "round": 3,
+    "helper": "bridgeTiming"
+  },
+  {
+    "name": "TestBridgeWrongPositionUtilities",
+    "piece": "wrong-position",
+    "file": "utilities.ts",
+    "round": 0,
+    "helper": "bridgeWrongPosition"
+  }
+]

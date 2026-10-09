@@ -10,7 +10,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/01_readFile_utf8.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/01_readFile_utf8.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/01_readFile_utf8.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
   },
   {
     "file": "02_readFile_utf16le.a",
@@ -23,7 +26,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/02_readFile_utf16le.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
   },
   {
     "file": "03_readFile_utf16be.a",
@@ -36,7 +42,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/03_readFile_utf16be.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
   },
   {
     "file": "04_readFile_missing.a",
@@ -49,13 +58,17 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/04_readFile_missing.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/04_readFile_missing.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/04_readFile_missing.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
   },
   {
     "file": "05_writeFile.a",
     "tsc": [
+      "src/compiler/sys.ts:1466",
       "src/compiler/sys.ts:1819",
-      "src/compiler/sys.ts:1466"
+      "src/compiler/hostErrors.ts:None"
     ],
     "reason": "TS2591",
     "node": {
@@ -63,16 +76,19 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "06_fileExists.a",
     "tsc": [
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
       "src/compiler/sys.ts:1886",
       "src/compiler/sys.ts:1901",
-      "src/compiler/sys.ts:901",
-      "src/compiler/sys.ts:1487"
+      "src/compiler/sys.ts:901"
     ],
     "reason": "TS2591",
     "node": {
@@ -80,16 +96,19 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/06_fileExists.a:49:5: stage 0 can't lower node:fs.symlinkSync yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/06_fileExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
+    }
   },
   {
     "file": "07_directoryExists.a",
     "tsc": [
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
       "src/compiler/sys.ts:1886",
       "src/compiler/sys.ts:1905",
-      "src/compiler/sys.ts:901",
-      "src/compiler/sys.ts:1487"
+      "src/compiler/sys.ts:901"
     ],
     "reason": "TS2591",
     "node": {
@@ -97,12 +116,20 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/07_directoryExists.a:49:5: stage 0 can't lower node:fs.symlinkSync yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/07_directoryExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
+    }
   },
   {
     "file": "08_getDirectories.a",
     "tsc": [
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
+      "src/compiler/path.ts:28",
+      "src/compiler/path.ts:30",
+      "src/compiler/path.ts:31",
+      "src/compiler/path.ts:32",
       "src/compiler/path.ts:526",
       "src/compiler/path.ts:146",
       "src/compiler/path.ts:151",
@@ -114,9 +141,8 @@
       "src/compiler/path.ts:579",
       "src/compiler/sys.ts:1838",
       "src/compiler/sys.ts:1909",
-      "src/compiler/sys.ts:1487",
-      "src/compiler/path.ts:28",
-      "src/compiler/utilities.ts:10312"
+      "src/compiler/utilities.ts:10312",
+      "src/compiler/types.ts:23"
     ],
     "reason": "TS2591",
     "node": {
@@ -124,15 +150,19 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/08_getDirectories.a:160:25: stage 0 can't lower node:fs.readdirSync yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/08_getDirectories.a:187:25: stage 0 can't lower node:fs.readdirSync yet"
+    }
   },
   {
     "file": "09_realpath.a",
     "platform": "linux",
     "tsc": [
+      "src/compiler/sys.ts:1484",
+      "src/compiler/sys.ts:1491",
       "src/compiler/sys.ts:1913",
-      "src/compiler/sys.ts:1917",
-      "src/compiler/sys.ts:1491"
+      "src/compiler/sys.ts:1917"
     ],
     "reason": "TS2591",
     "node": {
@@ -140,14 +170,17 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/09_realpath.a:12:17: stage 0 can't lower node:process.Process.platform yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet"
+    }
   },
   {
     "file": "10_getModifiedTime.a",
     "tsc": [
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
-      "src/compiler/sys.ts:1926",
-      "src/compiler/sys.ts:1487"
+      "src/compiler/sys.ts:1926"
     ],
     "reason": "TS2591",
     "node": {
@@ -155,7 +188,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/10_getModifiedTime.a:34:5: stage 0 can't lower node:fs.symlinkSync yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:37:5: stage 0 can't lower node:fs.symlinkSync yet"
+    }
   },
   {
     "file": "11_setModifiedTime.a",
@@ -168,7 +204,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "12_deleteFile.a",
@@ -181,17 +220,21 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/12_deleteFile.a:22:5: stage 0 can't lower node:fs.symlinkSync yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/12_deleteFile.a:23:5: stage 0 can't lower node:fs.symlinkSync yet"
+    }
   },
   {
     "file": "13_createDirectory.a",
     "tsc": [
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
       "src/compiler/sys.ts:1886",
       "src/compiler/sys.ts:1905",
       "src/compiler/sys.ts:1545",
-      "src/compiler/sys.ts:901",
-      "src/compiler/sys.ts:1487"
+      "src/compiler/hostErrors.ts:None",
+      "src/compiler/sys.ts:901"
     ],
     "reason": "TS2591",
     "node": {
@@ -199,7 +242,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/13_createDirectory.a:55:17: error TS18046: 'e' is of type 'unknown'."}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "14_getCurrentDirectory.a",
@@ -214,13 +260,16 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/host/14_getCurrentDirectory.a:11:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/14_getCurrentDirectory.a:13:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"
+    }
   },
   {
     "file": "15_getExecutingFilePath.a",
     "tsc": [
-      "src/compiler/sys.ts:1498",
-      "src/compiler/sys.ts:1560"
+      "src/compiler/sys.ts:1560",
+      "src/compiler/sys.ts:1498"
     ],
     "reason": "TS2591",
     "node": {
@@ -228,7 +277,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/15_getExecutingFilePath.a:20:52: stage 0 can't lower node:path.dirname yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:22:52: stage 0 can't lower node:path.dirname yet"
+    }
   },
   {
     "file": "16_getEnvironmentVariable.a",
@@ -241,7 +293,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower node:process.Process.env yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:13:12: stage 0 can't lower node:process.Process.env yet"
+    }
   },
   {
     "file": "17_write.a",
@@ -254,13 +309,16 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/17_write.a:12:5: stage 0 can't lower node:net.Socket.write yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"
+    }
   },
   {
     "file": "18_exit_0.a",
     "tsc": [
-      "src/compiler/sys.ts:1587",
-      "src/compiler/sys.ts:1715"
+      "src/compiler/sys.ts:1693",
+      "src/compiler/sys.ts:1587"
     ],
     "reason": "TS2591",
     "node": {
@@ -268,13 +326,16 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/18_exit_0.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/18_exit_0.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+    }
   },
   {
     "file": "19_exit_1.a",
     "tsc": [
-      "src/compiler/sys.ts:1587",
-      "src/compiler/sys.ts:1715"
+      "src/compiler/sys.ts:1693",
+      "src/compiler/sys.ts:1587"
     ],
     "reason": "TS2591",
     "node": {
@@ -282,13 +343,16 @@
       "stderr": "",
       "exit": 1
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/19_exit_1.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/19_exit_1.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+    }
   },
   {
     "file": "20_exit_2.a",
     "tsc": [
-      "src/compiler/sys.ts:1587",
-      "src/compiler/sys.ts:1715"
+      "src/compiler/sys.ts:1693",
+      "src/compiler/sys.ts:1587"
     ],
     "reason": "TS2591",
     "node": {
@@ -296,7 +360,10 @@
       "stderr": "",
       "exit": 2
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/20_exit_2.a:23:30: stage 0 can't lower node:process.Process.exit yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/20_exit_2.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+    }
   },
   {
     "file": "21_createHash.a",
@@ -311,7 +378,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/21_createHash.a:18:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/21_createHash.a:21:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet"
+    }
   },
   {
     "file": "22_createHash_fallback.a",
@@ -325,7 +395,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/22_createHash_fallback.a:21:1: stage 0 can't lower a function without a body yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet"
+    }
   },
   {
     "file": "23_newLine.a",
@@ -338,19 +411,22 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower node:os.EOL yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/23_newLine.a:12:31: stage 0 can't lower node:os.EOL yet"
+    }
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
     "platform": "linux",
     "tsc": [
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
       "src/compiler/sys.ts:1886",
       "src/compiler/sys.ts:1901",
       "src/compiler/sys.ts:1732",
       "src/compiler/sys.ts:1722",
       "src/compiler/sys.ts:901",
-      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1489"
     ],
     "reason": "TS2591",
@@ -359,13 +435,14 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "25_readDirectory.a",
     "tsc": [
-      "src/compiler/types.ts:7841",
-      "src/compiler/corePublic.ts:43",
       "src/compiler/utilities.ts:9781",
       "src/compiler/utilities.ts:9787",
       "src/compiler/utilities.ts:9612",
@@ -456,14 +533,18 @@
       "src/compiler/path.ts:125",
       "src/compiler/core.ts:198",
       "src/compiler/utilities.ts:9826",
+      "src/compiler/sys.ts:1487",
       "src/compiler/sys.ts:1629",
       "src/compiler/sys.ts:1838",
-      "src/compiler/sys.ts:1882",
+      "src/compiler/sys.ts:1491",
       "src/compiler/sys.ts:1913",
       "src/compiler/sys.ts:1917",
-      "src/compiler/sys.ts:1487",
-      "src/compiler/sys.ts:1491",
-      "src/compiler/utilities.ts:10312"
+      "src/compiler/sys.ts:1882",
+      "src/compiler/utilities.ts:10312",
+      "src/compiler/types.ts:7841",
+      "src/compiler/corePublic.ts:43",
+      "src/compiler/types.ts:23",
+      "src/compiler/path.ts:457"
     ],
     "reason": "TS2591",
     "node": {
@@ -471,6 +552,9 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Checker","what":"stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/25_readDirectory.a:523:27: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
   }
 ]

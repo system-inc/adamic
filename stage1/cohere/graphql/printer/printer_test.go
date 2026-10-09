@@ -10,7 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
-func printerCases(t *testing.T, mode string) (string, string) {
+func printerCases(t *testing.T, mode string, oracle ...string) (string, string) {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -39,6 +39,9 @@ func printerCases(t *testing.T, mode string) (string, string) {
 		t.Fatal(err)
 	}
 	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinter$", "./internal/format/graphql")
+	if len(oracle) != 0 {
+		command = bounded(t, oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
+	}
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
 	if output, err := combinedOutput(command); err != nil {
@@ -165,35 +168,6 @@ func printerDirectory(t *testing.T, file, from, to string) string {
 		}
 	}
 	return filepath.Join(directory, "graphql/printer/main.ts")
-}
-
-// Not parallel: all option sweeps can write ADAMIC_GRAPHQL_PRINTER_KEEP.
-func TestPrinterAsGoCohere(t *testing.T) {
-	path := printerDirectory(t, "", "", "")
-	program := lowered(t, path)
-	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		t.Run(mode, func(t *testing.T) {
-			cases, want := printerCases(t, mode)
-			nodeRun := onNode(t, path, "--cases", cases, mode)
-			nativeRun, binary := natively(t, program, "--cases", cases, mode)
-			backendRun := onJavaScriptBackend(t, program, "--cases", cases, mode)
-			for _, side := range []struct {
-				name   string
-				result run
-			}{{"native", nativeRun}, {"Node", nodeRun}, {"JS backend", backendRun}} {
-				if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
-					t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				if difference := firstDifference(string(side.result.stdout), want); difference != "" {
-					t.Errorf("%s: %s", side.name, difference)
-				}
-			}
-			if report := leaks(t, program, binary, "--cases", cases, mode); report != "" {
-				t.Errorf("leaks: %s", report)
-			}
-			t.Logf("%d texts: %d formatted, %d refused", strings.Count(want, "\n"), strings.Count(want, "ok\t"), strings.Count(want, "error\t"))
-		})
-	}
 }
 
 // Not parallel: the corpus keep path is shared with the option sweeps.

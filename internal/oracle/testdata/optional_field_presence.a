@@ -1,0 +1,26 @@
+interface RecordFields {
+	first?: number;
+	second?: number;
+	text?: string;
+	child?: { readonly label: string };
+}
+const record: RecordFields = {};
+console.log(String(record.first));
+console.log(`${Object.keys(record).join(',')}|${'first' in record}`);
+record.second = 2;
+record.first = 0;
+console.log(`${Object.keys(record).join(',')}|${'first' in record}|${record.first}`);
+console.log(String(delete record.second));
+console.log(`${Object.keys(record).join(',')}|${'second' in record}|${String(record.second)}`);
+record.second = 3;
+console.log(`${Object.keys(record).join(',')}|${'second' in record}|${record.second}`);
+console.log(`${record.text ?? 'absent'}|${record.child?.label ?? 'absent'}`);
+record.text = ['made', 'here'].join('-');
+record.child = { label: ['child', 'value'].join('-') };
+console.log(`${record.text}|${record.child.label}|${Object.keys(record).join(',')}`);
+console.log(String(delete record.text));
+console.log(String(delete record.child));
+console.log(record.text ?? 'deleted');
+record.text = ['new', 'text'].join('-');
+record.child = { label: ['new', 'child'].join('-') };
+console.log(`${record.text}|${record.child.label}|${Object.keys(record).join(',')}`);

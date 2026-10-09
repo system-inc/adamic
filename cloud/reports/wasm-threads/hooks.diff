@@ -1,0 +1,90 @@
+diff --git a/internal/native/runtime/adamic.c b/internal/native/runtime/adamic.c
+index 889baa2..f8a4c27 100644
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -197,10 +197,14 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
+ }
+ 
+ _Noreturn void adamic_panic(const char *message, size_t length) {
++#ifndef ADAMIC_TARGET_WASI
+ 	// Losing panics must not terminate the process before the winner finishes its one message.
+ 	if (atomic_flag_test_and_set_explicit(&panicking, memory_order_relaxed)) {
+ 		for (;;) { pause(); }
+ 	}
++#else
++	(void)panicking;
++#endif
+ 	pthread_mutex_lock(&output_lock);
+ 	static const char prefix[] = "adamic: panic: ";
+ 	// Everything the program printed comes first, as on Node.
+diff --git a/internal/native/runtime/parallel.c b/internal/native/runtime/parallel.c
+index 77c793b..e2afb19 100644
+--- a/internal/native/runtime/parallel.c
++++ b/internal/native/runtime/parallel.c
+@@ -6,7 +6,9 @@
+ #include "parallel.h"
+ #include <errno.h>
+ #include <pthread.h>
++#ifndef ADAMIC_TARGET_WASI
+ #include <signal.h>
++#endif
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -52,6 +54,10 @@ static _Thread_local size_t worker_index;
+ // Linux affinity and cgroup v2/v1 quotas cap online CPUs; macOS uses online CPUs.
+ // An explicit override always wins.
+ static size_t available_threads(void) {
++#ifdef ADAMIC_TARGET_WASI
++	// Plain WASI has no shared memory or worker threads, including with an override.
++	return 1;
++#else
+ 	long online = sysconf(_SC_NPROCESSORS_ONLN);
+ 	size_t count = online > 0 ? (size_t)online : 1;
+ #ifdef __linux__
+@@ -98,6 +104,7 @@ static size_t available_threads(void) {
+ 		count = (size_t)requested;
+ 	}
+ 	return count;
++#endif
+ }
+ 
+ static range *new_range(scope *scope, size_t from, size_t end) {
+@@ -215,6 +222,12 @@ void adamic_parallel_shutdown(void) {
+ }
+ 
+ static void start(void) {
++#ifdef ADAMIC_TARGET_WASI
++	thread_count = available_threads();
++	// Keep the native worker entry referenced for strict unused-function checks.
++	(void)worker_main;
++	return;
++#else
+ 	thread_count = available_threads();
+ 	// This path creates no threads, not even an idle worker.
+ 	if (thread_count == 1) { return; }
+@@ -236,6 +249,7 @@ static void start(void) {
+ 	pthread_sigmask(SIG_SETMASK, &saved, NULL);
+ 	pthread_attr_destroy(&attributes);
+ 	atexit(adamic_parallel_shutdown);
++#endif
+ }
+ 
+ size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
+diff --git a/internal/native/runtime/stack.c b/internal/native/runtime/stack.c
+index 91f3ead..4996ab9 100644
+--- a/internal/native/runtime/stack.c
++++ b/internal/native/runtime/stack.c
+@@ -68,7 +68,12 @@ _Noreturn void adamic_stack_overflow(void) {
+ }
+ 
+ void adamic_stack_thread_start(void) {
++#ifdef ADAMIC_TARGET_WASI
++	// The only executor already has the linear-stack limit from its constructor.
++	return;
++#else
+ 	// Pool workers are created with an explicit 8 MiB stack; keep the same panic margin.
+ 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
+ 	adamic_stack_limit = base - ASSUMED_STACK + MARGIN;
++#endif
+ }

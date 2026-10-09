@@ -1,0 +1,8 @@
+=== RUN   TestOverloadStructuralRefuses
+=== RUN   TestOverloadStructuralRefuses/factory_literal_covariance
+    overload_structural_test.go:53: wanted refusal naming readonly covariance requires string | number | undefined to fit, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.15s)
+    --- FAIL: TestOverloadStructuralRefuses/factory_literal_covariance (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.163s
+FAIL
