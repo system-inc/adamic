@@ -23,3 +23,5 @@ Name/assertion findings: TypeOnlyImportCycleCompiles does compile the actual cyc
 Production sources restored. Logs, per-test profiles, exclusions, current test list, prior audit report, standalone diffs, commands and observed pass/fail/skip events are included. No repo-wide replay, complete D2/D4 caller matrix, third attempt per unresolved row, or performance opt-in coverage was completed.
 
 Final isolated D4 ExpressionsAgree result: {"command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestExpressionsAgree$", "status": 0, "wall": 15.870285177999904}
+
+Push initially encountered preexisting remote work. A non-force merge preserved that history. Files belonging only to that earlier remote evidence are archived in previous-remote-evidence/ and are not claims produced in this session. Current rows.json, matrix.json and D1..D4.diff are this session’s authoritative deliverable. No production file differs from the starting commit. The final isolated D4 ExpressionsAgree rerun passed (15.870 seconds wall).
