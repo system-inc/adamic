@@ -1,17 +1,11 @@
-# Worker started 2026-10-09 10:34 UTC; base origin/main 83f3940ec77b8ba779da05ded113e9d9e7e710b6.
-# Instance CPU quota: 400000/100000 (4 CPUs); measurement GOMAXPROCS=4.
-# No test fixes yet. Alone baselines pending product prebuild and warm Go cache.
-# Bootstrap: SSH submodule clone refused; HTTPS retry downloads TypeScript.
-# Initial TestProduct_profile_missing_binding invocation could not load missing cohere/TypeScript/tsc/go.mod; no leaf timing.
-# Leaves use -count=1 -timeout 90s -test.skip ^TestProduct_; products use -timeout 10m.
-kind	unit	loom_s	alone_before_s	setup_s	own_work_s	status
-bootstrap-product	TestProduct_profile_missing_binding	-	175.09	135.789954-checker	36.24-native	PASS; cold Go cache, excludes about 176s package compilation; warm repetition pending
-product	TestProduct_stage0	-	9.64	-	-	pass; command_wall_s=17.344
-product	TestProduct_checker	-	9.07	-	-	pass; command_wall_s=11.055
-product	TestProduct_profile_missing_binding	-	3.81	-	-	pass; command_wall_s=5.934
-leaf	TestShadowIndexMissingBindingUnion	-	0.00	-	-	pass; command_wall_s=2.462
-leaf	TestShadowIndexMissingBinding_000	113	10.87	10.326	-	pass; command_wall_s=13.548
-product	TestProduct_volume_guard_stage0	-	4.16	-	-	pass; command_wall_s=6.313
+# base origin/main 83f3940ec77b8ba779da05ded113e9d9e7e710b6; 4-CPU cgroup quota; GOMAXPROCS=4; Go 1.27.1.
+# Test-only evidence; no test fixes. Bootstrap: SSH refused, HTTPS submodules took about 6 minutes, cold package compilation about 176s.
+# Product bootstrap: missing_binding 175.09s, checker command 135.789954s, native miss 36.24s; warm product 2.48s.
+# Commands: go test ./stage1/cohere/typeaware -run ^UNIT$ -count=1 -timeout 90s -v -test.skip ^TestProduct_; products use -timeout 600s and no test-side budget.
+# Products prebuilt sequentially; live reports kept in scratch. Evidence checkpoints change broad cache and VCS keys; type-symbol baseline consequently rebuilt (49.21s). Stable second pass pending.
+# Optional ADAMIC_TYPESCRIPT_SOURCE, ADAMIC_TYPEAWARE_BENCH, ADAMIC_VOLUME_REPOSITORY_MANIFEST unset; corpus/benchmark SKIPs are not coverage claims.
+# Loom supplied family maxima, not individual slow leaf names; no load reproduction performed. Before/after means repeated baseline, no fix.
+kind	unit	loom_family_s	alone_before_s	setup_s	own_work_s	status
 product	TestProduct_stage0	-	5.38	-	-	pass; command_wall_s=8.344
 product	TestProduct_checker	-	5.77	-	-	pass; command_wall_s=8.125
 product	TestProduct_profile_missing_binding	-	2.48	-	-	pass; command_wall_s=4.988
@@ -44,7 +38,38 @@ leaf	TestVolumeConfigGuardAndMutant_014	90-kill/106-family	6.01	-	0.078984	pass;
 leaf	TestVolumeConfigGuardAndMutant_015	90-kill/106-family	5.83	-	0.000096	pass; command_wall_s=8.056
 leaf	TestVolumeConfigGuardAndMutantPlantedFailure	-	6.14	-	0.070082	pass; command_wall_s=8.684
 product	TestProduct_type_symbol_archive	-	12.87	-	-	pass; command_wall_s=14.976
-# Stable-input batch: live timings written outside repository to avoid broad recipe invalidation.
-# #pgw1y41: _000 passed twice (10.87s, 5.09s); setup 10.326s, 4.092s; no fix needed.
-# #ctmvfdy/#xtesg75: all 16 current guard shards passed 5.83–15.51s; own work 0.000096–0.212176s; union and planted failure passed.
-# Product finding (not leaf failure): volume_guard_volume_asan 77.84s with warm Go cache, under 10-minute product ceiling.
+product	TestProduct_type_symbol_native	-	37.73	-	-	pass; command_wall_s=39.751
+product	TestProduct_type_symbol_oracle	-	6.96	-	-	pass; command_wall_s=9.036
+product	TestProduct_type_symbol_fixtures	-	0.00	-	-	pass; command_wall_s=2.006
+product	TestProduct_type_symbol_truth	-	1.02	-	-	pass; command_wall_s=3.315
+leaf	TestVolumeTypeSymbolUnion	-	0.00	-	-	pass; command_wall_s=2.799
+leaf	TestVolumeTypeSymbolPlantedSurvivor	-	0.00	-	-	pass; command_wall_s=2.062
+leaf	TestVolumeTypeSymbol_000	178	49.21	-	-	pass; command_wall_s=51.073
+product	TestProduct_checker_asan	-	7.60	-	-	pass; command_wall_s=10.031
+product	TestProduct_typeaware_lowered	-	9.10	-	-	pass; command_wall_s=11.019
+product	TestProduct_typeaware_native	-	16.31	-	-	pass; command_wall_s=18.235
+product	TestProduct_typeaware_native_asan	-	22.71	-	-	pass; command_wall_s=24.598
+product	TestProduct_typeaware_oracle	-	6.71	-	-	pass; command_wall_s=8.576
+leaf	TestTypeAwareAgreementAndMutantsUnion	-	14.65	14.646448	-	pass; command_wall_s=16.543
+leaf	TestTypeAwareAgreementAndMutants_000	385-family	10.63	10.551078	0.079010	pass; command_wall_s=13.182
+leaf	TestTypeAwareAgreementAndMutants_001	385-family	10.81	10.506102	0.303186	pass; command_wall_s=12.844
+leaf	TestTypeAwareAgreementAndMutants_002	385-family	10.55	10.503414	0.051232	pass; command_wall_s=12.589
+leaf	TestTypeAwareAgreementAndMutants_003	385-family	38.68	10.303209	28.372641	pass; command_wall_s=40.711
+leaf	TestTypeAwareAgreementAndMutants_004	385-family	18.80	11.841089	6.960091	pass; command_wall_s=20.795
+leaf	TestTypeAwareAgreementAndMutants_005	385-family	28.39	10.864318	17.525028	pass; command_wall_s=30.583
+leaf	TestTypeAwareAgreementAndMutants_006	385-family	28.78	11.173771	17.610353	pass; command_wall_s=30.995
+leaf	TestTypeAwareAgreementAndMutants_007	385-family	30.09	11.847465	18.241281	pass; command_wall_s=32.359
+leaf	TestTypeAwareAgreementAndMutants_008	385-family	31.92	11.903370	20.014891	pass; command_wall_s=35.104
+leaf	TestTypeAwareAgreementAndMutants_009	385-family	15.29	10.991781	4.298317	pass; command_wall_s=18.696
+leaf	TestTypeAwareAgreementAndMutants_010	385-family	38.50	10.699034	27.796776	pass; command_wall_s=41.260
+leaf	TestTypeAwareAgreementAndMutants_011	385-family	11.26	11.128627	0.128423	pass; command_wall_s=13.985
+leaf	TestTypeAwareAgreementAndMutants_012	385-family	10.79	10.788936	0.000047	SKIP; command_wall_s=12.830
+leaf	TestTypeAwareAgreementAndMutants_013	385-family	10.90	10.898894	0.000029	SKIP; command_wall_s=12.899
+leaf	TestTypeAwareAgreementAndMutants_014	385-family	11.22	11.220278	0.000025	SKIP; command_wall_s=13.233
+leaf	TestTypeAwareAgreementAndMutants_015	385-family	11.17	11.173833	0.000100	SKIP; command_wall_s=13.278
+leaf	TestTypeAwareAgreementAndMutants_016	385-family	11.72	11.719686	0.000065	SKIP; command_wall_s=13.636
+leaf	TestTypeAwareAgreementAndMutants_017	385-family	11.01	11.006579	0.000023	SKIP; command_wall_s=13.447
+leaf	TestTypeAwareAgreementAndMutants_018	385-family	10.77	10.766338	0.000034	SKIP; command_wall_s=12.722
+leaf	TestTypeAwareAgreementAndMutants_019	385-family	11.55	11.550777	0.000036	SKIP; command_wall_s=13.486
+leaf	TestTypeAwareAgreementAndMutants_020	385-family	10.44	10.440666	0.000016	SKIP; command_wall_s=12.458
+leaf	TestTypeAwareTopShardPlantedFailure	-	0.02	-	-	pass; command_wall_s=1.949
