@@ -27,6 +27,7 @@ func recoveredGrammar() []string {
 		"class C { static { await(x); class D { x=await(x); } } }",
 	}
 }
+
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredGrammar(t *testing.T) {
 	list := manifest(t, recoveredGrammar())
@@ -72,6 +73,7 @@ func TestRecoveryMutantsShardSurvivor(t *testing.T) {
 	t.Parallel()
 	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
+
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveryLibraryGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")

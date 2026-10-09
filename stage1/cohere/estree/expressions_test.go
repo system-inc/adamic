@@ -10,6 +10,7 @@ import (
 func recoveredExpressions() []string {
 	return []string{"const C = @d class {};", "const C = @d @e(1) class Named extends Base { static x=1; };", "(@d class { m(){return 1;} });", "function f(){ await 'x'; await 1; await true; await this; }", "function f(){ yield 'x'; yield 1; yield true; }", "await\nx; yield\nx;", "await(x); yield(x);"}
 }
+
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredExpressions(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
@@ -23,6 +24,7 @@ func TestRecoveredExpressions(t *testing.T) {
 	}
 	t.Logf("%d decorated class / await / yield cases, %d bytes match Go", len(recoveredExpressions()), len(want))
 }
+
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredExpressionMutant(t *testing.T) {
 	list := manifest(t, recoveredExpressions())

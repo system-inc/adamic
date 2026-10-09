@@ -19,6 +19,7 @@ func scalarCases() []string {
 		"0n; 0x000000000000000000n; 1_000_000_000_000_000_000_000n;",
 	}
 }
+
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestScalarEdges(t *testing.T) {
 	main, err := filepath.Abs("main.ts")

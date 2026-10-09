@@ -172,6 +172,7 @@ func firstDifference(want, got []byte) string {
 	}
 	return fmt.Sprintf("length: Go %d, port %d", len(want), len(got))
 }
+
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestGeneratedAgreement(t *testing.T) {
 	path, err := filepath.Abs("main.ts")

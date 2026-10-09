@@ -20,6 +20,7 @@ func syntaxGrammar() []string {
 		"/* /// <reference path='broken.ts /> */ x; const s=\"/// <reference path='broken.ts />\";",
 	}
 }
+
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestSyntaxGrammar(t *testing.T) {
 	list := manifest(t, syntaxGrammar())
@@ -33,6 +34,7 @@ func TestSyntaxGrammar(t *testing.T) {
 	}
 	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
 }
+
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestSyntaxMutants(t *testing.T) {
 	t.Run("mapped-constraint", func(t *testing.T) {
@@ -69,6 +71,7 @@ func TestSyntaxMutants(t *testing.T) {
 		})
 	}
 }
+
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestSyntaxRefusals(t *testing.T) {
 	sources := []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
