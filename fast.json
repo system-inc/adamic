@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "unit",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "e7b53ad584ca55b4207c5c3bd48f9e821dd09996",
+  "branch": "devtools/oracle-cache-signals",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "e7b53ad584ca55b4207c5c3bd48f9e821dd09996",
+  "gated": "c5d48e2e6c6ab5f0ea242a7d32158ac1f9deac42",
+  "unplanned_packages_not_run": 59
+}
