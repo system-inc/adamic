@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go
++++ b/stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go
+@@ -326,7 +326,7 @@
+ 
+ func buildVolumeConfigGuardProducts(t *testing.T) volumeGuardProducts {
+ 	h := volumeGuardPreparationHarness(t)
+-	return volumeGuardProducts{repository: h.repository, oracle: volumeGuardProduct(h, "oracle"), asan: volumeGuardProduct(h, "volume-asan")}
++	return volumeGuardProducts{repository: "", oracle: volumeGuardProduct(h, "oracle"), asan: volumeGuardProduct(h, "volume-asan")}
+ }
+ 
+ // Only the strict-this shard needs the unsanitized runner and its mutant.

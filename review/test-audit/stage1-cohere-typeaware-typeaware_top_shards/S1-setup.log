@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/typeaware.test","Action":"build-output","Output":"# github.com/system-inc/adamic/stage1/cohere/typeaware.test\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/typeaware.test","Action":"build-output","Output":"/workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/typeaware.test","Action":"build-fail"}
+{"Time":"2026-10-09T13:33:41.867077003Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:33:41.867142667Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/typeaware [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:33:41.867157995Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/stage1/cohere/typeaware.test"}

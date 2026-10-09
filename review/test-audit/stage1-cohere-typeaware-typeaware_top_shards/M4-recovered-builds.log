@@ -1,0 +1,14 @@
+build volume-guard-oracle 4d05ea95f232 miss 2.97
+build volume-guard-stage0 ad02d56a23b7 miss 3.23
+build volume-guard-archive-checker-asan 4789f265a5eb miss 3.00
+build volume-guard-volume-asan f3356b738b40 miss 49.04
+build volume-guard-oracle 4d05ea95f232 hit 1.26
+build volume-guard-stage0 ad02d56a23b7 hit 1.25
+build volume-guard-archive-checker-asan 4789f265a5eb hit 1.26
+build volume-guard-volume-asan f3356b738b40 hit 1.24
+build volume-guard-stage0 ad02d56a23b7 hit 1.24
+build volume-guard-archive-checker efb549cb6f60 miss 2.93
+build volume-guard-volume 1911bfa4f50d miss 32.43
+build volume-guard-stage0 ad02d56a23b7 hit 1.28
+build volume-guard-archive-strict-this-checker a0a7ca750751 miss 2.97
+build volume-guard-strict-this-native 6dda13ec349c miss 31.90

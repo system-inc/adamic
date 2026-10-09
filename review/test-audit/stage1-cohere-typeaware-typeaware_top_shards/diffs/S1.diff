@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/typeaware_top_shards_test.go
++++ b/stage1/cohere/typeaware/typeaware_top_shards_test.go
+@@ -94,7 +94,7 @@
+ 		shards = append(shards, sixShard{name: fmt.Sprintf("planted-%d", i), ids: []string{id}, run: func(h *harness) {
+ 			want := []byte("file\t" + id + "\n")
+ 			got := append([]byte(nil), want...)
+-			if i == 1 && os.Getenv("ADAMIC_TYPEAWARE_TOP_PLANTED") == "1" {
++			if i == 1 {
+ 				got[0] = 'X'
+ 			}
+ 			if err := sixOutputError(h.t.Name(), want, got, nil); err != nil {

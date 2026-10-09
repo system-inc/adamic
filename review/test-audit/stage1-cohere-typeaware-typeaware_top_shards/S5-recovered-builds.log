@@ -1,0 +1,11 @@
+build volume-guard-oracle 6e37ec03ddb8 miss 5.41
+build volume-guard-archive-strict-this-checker 382a3aa3aa8c miss 5.71
+build volume-guard-archive-checker 552b757dfdd5 miss 5.72
+build volume-guard-stage0 8a8c00cbc128 miss 5.79
+build volume-guard-stage0 8a8c00cbc128 hit 5.80
+build volume-guard-stage0 8a8c00cbc128 hit 2.15
+build volume-guard-archive-checker 552b757dfdd5 hit 2.17
+build volume-guard-stage0 8a8c00cbc128 hit 2.31
+build volume-guard-archive-checker-asan 9bfa6d7b34b3 miss 4.16
+build volume-guard-archive-checker-asan 9bfa6d7b34b3 hit 2.00
+build volume-guard-archive-strict-this-checker 382a3aa3aa8c hit 1.87

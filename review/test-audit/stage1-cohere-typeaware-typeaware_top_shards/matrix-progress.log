@@ -1,0 +1,31 @@
+M1 typeaware 1 92.039
+M1 volume 1 91.606
+M1 volume-generated-only 0 53.911
+M2 typeaware 1 92.374
+M2 typeaware-generated-only 1 40.653
+M2 typeaware-alone-TestTypeAwareTopPlanted-family 0 1.753
+M2 typeaware-alone-TestTypeAwareTopShardPlantedFailure 0 1.619
+M2 typeaware-alone-TestTypeAwareAgreementAndMutants-family 1 47.237
+M2 typeaware-alone-TestTypeAwareAgreementAndMutants_Setup 0 11.172
+Traceback (most recent call last):
+  File "/tmp/u146/matrix.py", line 22, in <module>
+    assert v.returncode==0,(m['id'],'vet')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/u146/matrix.py", line 11, in run
+    with log.open('w') as f:r=subprocess.run(cmd,cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1201, in communicate
+    self.wait()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

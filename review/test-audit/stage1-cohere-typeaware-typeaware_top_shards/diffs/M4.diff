@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_suite.ts
++++ b/stage1/cohere/typeaware/volume_suite.ts
+@@ -38,7 +38,7 @@
+         header(options, 'strict-this');
+         const strictThis = options.yes();
+         options.end();
+-        if(!strictThis) {
++        if(strictThis) {
+             panic('volume suite requires noImplicitThis; implicit-this messages are not yet ported');
+         }
+         optionsChecked = true;

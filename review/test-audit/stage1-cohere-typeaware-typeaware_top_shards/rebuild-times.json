@@ -1,0 +1,688 @@
+[
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native-asan 16.469554s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native 6.327184s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang query-cost 3.443687s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_008",
+    "line": "typeaware_test.go:225: phase clang bad-length-native 10.561013s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_005",
+    "line": "typeaware_test.go:225: phase clang stale-native 4.788419s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_007",
+    "line": "typeaware_test.go:225: phase clang missing-header-native 9.372211s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_004",
+    "line": "typeaware_test.go:225: phase clang released 5.542613s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_006",
+    "line": "typeaware_test.go:225: phase clang empty-frame-native 10.484896s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_009",
+    "line": "typeaware_test.go:225: phase clang bad-kind 4.350287s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_010",
+    "line": "typeaware_test.go:225: phase clang ignored-kind-native 3.704305s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_003",
+    "line": "typeaware_test.go:225: phase clang wrong-node 15.950893s",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle c32df97b7e98 miss 3.97",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestProduct_volume_guard_strict_this_native",
+    "line": "volume_config_guard_products_test.go:42: build volume-guard-stage0 33c0407f776c miss 4.05",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestProduct_volume_guard_strict_this_native",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-strict-this-checker 40550d5c3975 miss 3.42",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 6926889febc0 miss 3.43",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestProduct_volume_guard_strict_this_native",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-strict-this-native e1ecaf1fa71c miss 32.18",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan 61ba35284b54 miss 48.01",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "test": "TestProduct_volume_guard_archive_checker",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker f6a49bbcaa45 miss 5.15",
+    "invalid": false
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume-generated-only.log",
+    "test": "TestProduct_volume_guard_volume",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume f2f3794a3e8a miss 34.82",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native-asan 17.490801s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native 6.176507s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang query-cost 3.340074s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_009",
+    "line": "typeaware_test.go:225: phase clang bad-kind 5.916061s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_010",
+    "line": "typeaware_test.go:225: phase clang ignored-kind-native 6.166911s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_008",
+    "line": "typeaware_test.go:225: phase clang bad-length-native 9.634060s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_005",
+    "line": "typeaware_test.go:225: phase clang stale-native 5.270056s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_004",
+    "line": "typeaware_test.go:225: phase clang released 4.284933s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_007",
+    "line": "typeaware_test.go:225: phase clang missing-header-native 9.626913s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "test": "TestTypeAwareAgreementAndMutants_006",
+    "line": "typeaware_test.go:225: phase clang empty-frame-native 9.534783s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-generated-only.log",
+    "test": "TestTypeAwareAgreementAndMutants_009",
+    "line": "typeaware_test.go:225: phase clang bad-kind 4.044571s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-generated-only.log",
+    "test": "TestTypeAwareAgreementAndMutants_010",
+    "line": "typeaware_test.go:225: phase clang ignored-kind-native 3.906383s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-generated-only.log",
+    "test": "TestTypeAwareAgreementAndMutants_007",
+    "line": "typeaware_test.go:225: phase clang missing-header-native 6.961973s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-generated-only.log",
+    "test": "TestTypeAwareAgreementAndMutants_003",
+    "line": "typeaware_test.go:225: phase clang wrong-node 16.533811s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "test": "TestTypeAwareAgreementAndMutants_009",
+    "line": "typeaware_test.go:225: phase clang bad-kind 5.233097s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "test": "TestTypeAwareAgreementAndMutants_010",
+    "line": "typeaware_test.go:225: phase clang ignored-kind-native 5.952521s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "test": "TestTypeAwareAgreementAndMutants_005",
+    "line": "typeaware_test.go:225: phase clang stale-native 6.167506s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "test": "TestTypeAwareAgreementAndMutants_008",
+    "line": "typeaware_test.go:225: phase clang bad-length-native 10.649483s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "test": "TestTypeAwareAgreementAndMutants_007",
+    "line": "typeaware_test.go:225: phase clang missing-header-native 10.843402s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "test": "TestTypeAwareAgreementAndMutants_003",
+    "line": "typeaware_test.go:225: phase clang wrong-node 16.434594s",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle 589fcd633f43 miss 3.97",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "test": "TestProduct_volume_guard_stage0",
+    "line": "volume_config_guard_products_test.go:7: build volume-guard-stage0 ad734362a811 miss 4.03",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 8809817ea694 miss 2.95",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan 0ba6eec753cc miss 48.06",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "test": "TestProduct_volume_guard_archive_strict_this_checker",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-strict-this-checker c89a525e8da4 miss 5.07",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "test": "TestProduct_volume_guard_volume",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker 5a94112b02a4 miss 5.25",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume-generated-resume.log",
+    "test": "TestProduct_volume_guard_strict_this_native",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-strict-this-native b4b292751358 miss 34.42",
+    "invalid": false
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume-generated-resume.log",
+    "test": "TestProduct_volume_guard_volume",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume 5d8173d46c0b miss 34.17",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_008",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle 0a9ece7c39d8 miss 3.09",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_008",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-stage0 399efc561ce4 miss 3.17",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_008",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 441996136bd4 miss 3.01",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_008",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan 8a0d76368727 miss 48.77",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker bec8e5f5b207 miss 2.94",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume 70470bf9c838 miss 32.20",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-strict-this-checker 0cb6aac9ddf0 miss 3.04",
+    "invalid": false
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-strict-this-native 6948281373f4 miss 31.99",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_015",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle 4d05ea95f232 miss 2.97",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_015",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-stage0 ad02d56a23b7 miss 3.23",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_015",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 4789f265a5eb miss 3.00",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-agreement-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_015",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan f3356b738b40 miss 49.04",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker efb549cb6f60 miss 2.93",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume 1911bfa4f50d miss 32.43",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-strict-this-checker a0a7ca750751 miss 2.97",
+    "invalid": false
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-guard-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-strict-this-native 6dda13ec349c miss 31.90",
+    "invalid": false
+  },
+  {
+    "id": "W2",
+    "log": "W2-witness-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle c61e82332c28 miss 3.18",
+    "invalid": false
+  },
+  {
+    "id": "W2",
+    "log": "W2-witness-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-stage0 31c649e29bf5 miss 3.22",
+    "invalid": false
+  },
+  {
+    "id": "W2",
+    "log": "W2-witness-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 0e71960caa21 miss 2.96",
+    "invalid": false
+  },
+  {
+    "id": "W2",
+    "log": "W2-witness-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan e91dd3eb3016 miss 48.01",
+    "invalid": false
+  },
+  {
+    "id": "S2",
+    "log": "S2-setup-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native-asan 16.436924s",
+    "invalid": false
+  },
+  {
+    "id": "S2",
+    "log": "S2-setup-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native 6.220682s",
+    "invalid": false
+  },
+  {
+    "id": "S2",
+    "log": "S2-setup-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang query-cost 3.357449s",
+    "invalid": false
+  },
+  {
+    "id": "S4",
+    "log": "S4-setup-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_Setup",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle 851af9fa6266 miss 3.00",
+    "invalid": false
+  },
+  {
+    "id": "S4",
+    "log": "S4-setup-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_Setup",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-stage0 7fd39edfe863 miss 3.17",
+    "invalid": false
+  },
+  {
+    "id": "S4",
+    "log": "S4-setup-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_Setup",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 4615089548bc miss 2.91",
+    "invalid": false
+  },
+  {
+    "id": "S4",
+    "log": "S4-setup-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_Setup",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan a6f678d60132 miss 48.03",
+    "invalid": false
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup-recovered.log",
+    "test": "TestProduct_volume_guard_oracle",
+    "line": "volume_config_guard_products_test.go:12: build volume-guard-oracle 6e37ec03ddb8 miss 5.41",
+    "invalid": false
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup-recovered.log",
+    "test": "TestProduct_volume_guard_archive_strict_this_checker",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-strict-this-checker 382a3aa3aa8c miss 5.71",
+    "invalid": false
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup-recovered.log",
+    "test": "TestProduct_volume_guard_archive_checker",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker 552b757dfdd5 miss 5.72",
+    "invalid": false
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup-recovered.log",
+    "test": "TestProduct_volume_guard_stage0",
+    "line": "volume_config_guard_products_test.go:7: build volume-guard-stage0 8a8c00cbc128 miss 5.79",
+    "invalid": false
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup-recovered.log",
+    "test": "TestProduct_volume_guard_archive_checker_asan",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan 9bfa6d7b34b3 miss 4.16",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native-asan 6.363152s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang native 3.716816s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_Setup",
+    "line": "typeaware_test.go:225: phase clang query-cost 3.379989s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_007",
+    "line": "typeaware_test.go:225: phase clang missing-header-native 4.729319s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_008",
+    "line": "typeaware_test.go:225: phase clang bad-length-native 6.777226s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_006",
+    "line": "typeaware_test.go:225: phase clang empty-frame-native 6.862050s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_005",
+    "line": "typeaware_test.go:225: phase clang stale-native 6.402743s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_004",
+    "line": "typeaware_test.go:225: phase clang released 6.337464s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_009",
+    "line": "typeaware_test.go:225: phase clang bad-kind 4.169435s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_010",
+    "line": "typeaware_test.go:225: phase clang ignored-kind-native 3.875941s",
+    "invalid": false
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "test": "TestTypeAwareAgreementAndMutants_003",
+    "line": "typeaware_test.go:225: phase clang wrong-node 7.873154s",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:329: build volume-guard-oracle f8d71707b49f miss 3.57",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestProduct_volume_guard_stage0",
+    "line": "volume_config_guard_products_test.go:7: build volume-guard-stage0 ec484678450e miss 4.06",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestProduct_volume_guard_strict_this_native",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-strict-this-checker 1c1f213cd7b6 miss 3.64",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker-asan c149b85e976c miss 3.68",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestProduct_volume_guard_strict_this_native",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-strict-this-native 44aab679006c miss 3.61",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_004",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume-asan 24946e10cd31 miss 3.58",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestProduct_volume_guard_archive_checker",
+    "line": "volume_config_guard_self_prepare_test.go:84: build volume-guard-archive-checker 422b1c4fa8c5 miss 5.17",
+    "invalid": false
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "test": "TestVolumeConfigGuardAndMutant_000",
+    "line": "volume_config_guard_self_prepare_test.go:113: build volume-guard-volume 48b5319c96aa miss 3.83",
+    "invalid": false
+  }
+]

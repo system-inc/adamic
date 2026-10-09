@@ -1,0 +1,2805 @@
+[
+  {
+    "id": "M1",
+    "log": "M1-typeaware.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_000"
+    ],
+    "passed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_003"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_018",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_019",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_020",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_017",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_015",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_016",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_014",
+        "line": "typeaware_test.go:585: compiler mismatch byte 584: native \"mp/u146/pinned-typescript/src/compiler/checker.ts\\n361292\\t361298\\t@typescript-eslint/no-unsafe-unary-minus\\tunaryMinus\\tArgument of unary negation should be assignable to number | bigint but is number instead.\\t0\\t0\\n503384\\t503389\\t@typescript-eslint/no-unsafe-unary-minus\\tunaryMinus\\tArgument of unary negati\" Go \"mp/u146/pinned-typescript/src/compiler/checker.ts\\n503384\\t503389\\t@typescript-eslint/no-unsafe-unary-minus\\tunaryMinus\\tArgument of unary negation should be assignable to number | bigint but is string instead.\\t0\\t0\\n2364455\\t2364493\\t@typescript-eslint/no-unsafe-unary-minus\\tunaryMinus\\tArgument of unary nega\""
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_000",
+        "line": "typeaware_test.go:391: generated mismatch byte 395: native \"re-products-2801498783/typeaware-plan/case-004.ts\\n24\\t26\\t@typescript-eslint/no-unsafe-unary-minus\\tunaryMinus\\tArgument of unary negation should be assignable to number | bigint but is number instead.\\t0\\t0\\nfile\\t/tmp/adamic-gate/typeaware-products-2801498783/typeaware-plan/case-005.ts\\n33\\t35\\t@typescript-e\" Go \"re-products-2801498783/typeaware-plan/case-004.ts\\nfile\\t/tmp/adamic-gate/typeaware-products-2801498783/typeaware-plan/case-005.ts\\n33\\t35\\t@typescript-eslint/no-unsafe-unary-minus\\tunaryMinus\\tArgument of unary negation should be assignable to number | bigint but is string instead.\\t0\\t0\\nfile\\t/tmp/adamic-ga\""
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure|TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_010|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup)$"
+    ]
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_005"
+    ],
+    "passed_tests": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestProduct_volume_guard_archive_checker",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_oracle"
+    ],
+    "unknown_tests": [
+      "TestProduct_volume_guard_volume",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_012"
+    ],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan mismatch byte 126850"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan mismatch byte 1091"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan mismatch byte 322084"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native|TestVolumeConfigGuardAndMutant_Setup|TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutant_000|TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "M1",
+    "log": "M1-volume-generated-only.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [],
+    "passed_tests": [
+      "TestProduct_volume_guard_stage0",
+      "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_volume",
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "unknown_tests": [],
+    "errors": [],
+    "corpus": null,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native|TestVolumeConfigGuardAndMutant_Setup|TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutant_000|TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_006"
+    ],
+    "passed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_004"
+    ],
+    "unknown_tests": [
+      "TestTypeAwareAgreementAndMutants_003"
+    ],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_015",
+        "line": "typeaware_test.go:617: bench-compiler-1-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_018",
+        "line": "typeaware_test.go:617: bench-generated-1-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_020",
+        "line": "typeaware_test.go:617: bench-generated-3-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_019",
+        "line": "typeaware_test.go:617: bench-generated-2-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_014",
+        "line": "typeaware_test.go:585: compiler-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_000",
+        "line": "typeaware_test.go:391: generated-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_016",
+        "line": "typeaware_test.go:617: bench-compiler-2-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_017",
+        "line": "typeaware_test.go:617: bench-compiler-3-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_008",
+        "line": "typeaware_test.go:503: bad-length escaped: exit status 70 adamic: panic: invalid node range"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_007",
+        "line": "typeaware_test.go:503: missing-header escaped: exit status 70 adamic: panic: invalid node range"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_006",
+        "line": "typeaware_test.go:503: empty-frame escaped: exit status 70 adamic: panic: invalid node range"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure|TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_010|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-generated-only.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_003"
+    ],
+    "passed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010"
+    ],
+    "unknown_tests": [
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020"
+    ],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_008",
+        "line": "typeaware_budget_test.go:54: bad-length-checker: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_005",
+        "line": "typeaware_budget_test.go:54: stale-checker: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_006",
+        "line": "typeaware_budget_test.go:54: empty-frame-checker: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_000",
+        "line": "typeaware_test.go:391: generated-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_007",
+        "line": "typeaware_test.go:503: missing-header escaped: exit status 70 adamic: panic: invalid node range"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_003",
+        "line": "typeaware_test.go:456: wrong-node-run: exit status 70"
+      }
+    ],
+    "corpus": null,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure|TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_010|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareTopPlanted-family.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "failed_tests": [],
+    "passed_tests": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "unknown_tests": [],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareTopShardPlantedFailure.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "failed_tests": [],
+    "passed_tests": [
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "unknown_tests": [],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopShardPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants-family.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_003"
+    ],
+    "passed_tests": [
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_011"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_006",
+        "line": "typeaware_budget_test.go:54: empty-frame-checker: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_010",
+        "line": "typeaware_budget_test.go:57: native build: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_020",
+        "line": "typeaware_test.go:617: bench-generated-3-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_019",
+        "line": "typeaware_test.go:617: bench-generated-2-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_018",
+        "line": "typeaware_test.go:617: bench-generated-1-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_016",
+        "line": "typeaware_test.go:617: bench-compiler-2-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_017",
+        "line": "typeaware_test.go:617: bench-compiler-3-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_000",
+        "line": "typeaware_test.go:391: generated-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_005",
+        "line": "typeaware_budget_test.go:57: native build: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_015",
+        "line": "typeaware_test.go:617: bench-compiler-1-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_008",
+        "line": "typeaware_budget_test.go:57: native build: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_014",
+        "line": "typeaware_test.go:585: compiler-native: exit status 70"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_007",
+        "line": "typeaware_budget_test.go:57: native build: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_003",
+        "line": "typeaware_budget_test.go:57: native build: exit status 1"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_010|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-typeaware-alone-TestTypeAwareAgreementAndMutants_Setup.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "failed_tests": [],
+    "passed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "unknown_tests": [],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_Setup)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_005"
+    ],
+    "passed_tests": [
+      "TestProduct_volume_guard_stage0",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_oracle"
+    ],
+    "unknown_tests": [
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+        "line": "volume_config_guard_self_prepare_test.go:546: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: edge-controls-asan-native: exit status 70"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native|TestVolumeConfigGuardAndMutant_Setup|TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutant_000|TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "log": "M2-volume-generated-resume.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "passed_tests": [
+      "TestProduct_volume_guard_stage0",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestProduct_volume_guard_volume"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+        "line": "volume_config_guard_self_prepare_test.go:546: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:370: unsupported this mode escaped: exit status 70 adamic: panic: invalid node range"
+      }
+    ],
+    "corpus": null,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native|TestVolumeConfigGuardAndMutant_Setup|TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutant_000|TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-agreement.log",
+    "kind": "production",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_011"
+    ],
+    "passed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:298: volume-oracle-build: exit status 1"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: shared product preparation failed"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantUnion)$"
+    ]
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-guard.log",
+    "kind": "production",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:298: volume-oracle-build: exit status 1"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_000)$"
+    ]
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-agreement.log",
+    "kind": "production",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_004"
+    ],
+    "passed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:298: volume-oracle-build: exit status 1"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:430: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: shared product preparation failed"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantUnion)$"
+    ]
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-guard.log",
+    "kind": "production",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:298: volume-oracle-build: exit status 1"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_000)$"
+    ]
+  },
+  {
+    "id": "W1",
+    "log": "W1-witness.log",
+    "kind": "witness",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "W2",
+    "log": "W2-witness.log",
+    "kind": "witness",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "S1",
+    "log": "S1-setup.log",
+    "kind": "setup",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001)$"
+    ]
+  },
+  {
+    "id": "S2",
+    "log": "S2-setup.log",
+    "kind": "setup",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutantsUnion"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutantsUnion"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_Setup|TestTypeAwareAgreementAndMutantsUnion)$"
+    ]
+  },
+  {
+    "id": "S3",
+    "log": "S3-setup.log",
+    "kind": "setup",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutantUnion)$"
+    ]
+  },
+  {
+    "id": "S4",
+    "log": "S4-setup.log",
+    "kind": "setup",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_Setup"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestVolumeConfigGuardAndMutant_Setup"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_Setup)$"
+    ]
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup.log",
+    "kind": "setup",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native"
+    ],
+    "failed_tests": [],
+    "passed_tests": [],
+    "unknown_tests": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native"
+    ],
+    "errors": [],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native)$"
+    ]
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe.log",
+    "kind": "probe",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_018"
+    ],
+    "passed_tests": [
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_Setup",
+        "line": "typeaware_budget_test.go:51: stage0: exit status 1"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_017",
+        "line": "typeaware_top_shards_test.go:201: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_016",
+        "line": "typeaware_top_shards_test.go:197: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_008",
+        "line": "typeaware_top_shards_test.go:165: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_015",
+        "line": "typeaware_top_shards_test.go:193: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_020",
+        "line": "typeaware_top_shards_test.go:213: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_014",
+        "line": "typeaware_top_shards_test.go:189: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_012",
+        "line": "typeaware_top_shards_test.go:181: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_019",
+        "line": "typeaware_top_shards_test.go:209: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_010",
+        "line": "typeaware_top_shards_test.go:173: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_009",
+        "line": "typeaware_top_shards_test.go:169: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_002",
+        "line": "typeaware_top_shards_test.go:141: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_006",
+        "line": "typeaware_top_shards_test.go:157: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_005",
+        "line": "typeaware_top_shards_test.go:153: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_004",
+        "line": "typeaware_top_shards_test.go:149: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_003",
+        "line": "typeaware_top_shards_test.go:145: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutantsUnion",
+        "line": "typeaware_top_shards_test.go:129: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_001",
+        "line": "typeaware_top_shards_test.go:137: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_000",
+        "line": "typeaware_top_shards_test.go:133: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_007",
+        "line": "typeaware_top_shards_test.go:161: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_011",
+        "line": "typeaware_top_shards_test.go:177: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_018",
+        "line": "typeaware_top_shards_test.go:205: shared shard setup did not complete"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_013",
+        "line": "typeaware_top_shards_test.go:185: shared shard setup did not complete"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure|TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_010|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup)$"
+    ]
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe.log",
+    "kind": "probe",
+    "invalid_reason": "Temporary filesystem exhausted; no test-quality verdict rests on this run.",
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestProduct_volume_guard_stage0",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_volume_asan"
+    ],
+    "passed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:298: volume-oracle-build: exit status 1"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+        "line": "volume_config_guard_self_prepare_test.go:546: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:430: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:370: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_Setup",
+        "line": "volume_config_guard_self_prepare_test.go:140: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: shared product preparation failed"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: shared product preparation failed"
+      },
+      {
+        "test": "TestProduct_volume_guard_stage0",
+        "line": "volume_config_guard_products_test.go:7: build volume-guard-stage0: stage0: exit status 1: # github.com/system-inc/adamic/cmd/adamic"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: shared product preparation failed"
+      },
+      {
+        "test": "TestProduct_volume_guard_archive_strict_this_checker",
+        "line": "volume_config_guard_self_prepare_test.go:95: checker: exit status 1"
+      },
+      {
+        "test": "TestProduct_volume_guard_archive_checker",
+        "line": "volume_config_guard_self_prepare_test.go:95: checker: exit status 1"
+      },
+      {
+        "test": "TestProduct_volume_guard_volume",
+        "line": "volume_config_guard_products_test.go:32: build volume-guard-stage0: stage0: exit status 1: # github.com/system-inc/adamic/cmd/adamic"
+      },
+      {
+        "test": "TestProduct_volume_guard_strict_this_native",
+        "line": "volume_config_guard_products_test.go:42: build volume-guard-stage0: stage0: exit status 1: # github.com/system-inc/adamic/cmd/adamic"
+      },
+      {
+        "test": "TestProduct_volume_guard_archive_checker_asan",
+        "line": "volume_config_guard_self_prepare_test.go:95: checker: exit status 1"
+      },
+      {
+        "test": "TestProduct_volume_guard_oracle",
+        "line": "volume_config_guard_self_prepare_test.go:298: volume-oracle-build: exit status 1"
+      },
+      {
+        "test": "TestProduct_volume_guard_volume_asan",
+        "line": "volume_config_guard_products_test.go:37: build volume-guard-stage0: stage0: exit status 1: # github.com/system-inc/adamic/cmd/adamic"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native|TestVolumeConfigGuardAndMutant_Setup|TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutant_000|TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-agreement-recovered.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_015"
+    ],
+    "passed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan-native: exit status 70"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantUnion)$"
+    ]
+  },
+  {
+    "id": "M3",
+    "log": "M3-volume-guard-recovered.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:370: unsupported this mode escaped: exit status 70 adamic: panic: unsupported checker facts schema"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_000)$"
+    ]
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-agreement-recovered.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_015"
+    ],
+    "passed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: edge-controls-asan-native: exit status 70"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan-native: exit status 70"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantUnion)$"
+    ]
+  },
+  {
+    "id": "M4",
+    "log": "M4-volume-guard-recovered.log",
+    "kind": "production",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:370: unsupported this mode escaped: <nil>"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_000)$"
+    ]
+  },
+  {
+    "id": "W1",
+    "log": "W1-witness-recovered.log",
+    "kind": "witness",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestTypeAwareTopShardPlantedFailure"
+    ],
+    "passed_tests": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareTopShardPlantedFailure",
+        "line": "typeaware_top_shards_test.go:122: holding leaf did not catch planted failure: <nil> === RUN   TestTypeAwareTopPlanted_001"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "W2",
+    "log": "W2-witness-recovered.log",
+    "kind": "witness",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutantUnion",
+        "line": "volume_config_guard_self_prepare_test.go:182: planted disagreement caught 0 times"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+        "line": "volume_config_guard_self_prepare_test.go:546: planted failure survived"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  },
+  {
+    "id": "S1",
+    "log": "S1-setup-recovered.log",
+    "kind": "setup",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "failed_tests": [
+      "TestTypeAwareTopPlanted_001"
+    ],
+    "passed_tests": [
+      "TestTypeAwareTopPlanted_000"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareTopPlanted_001",
+        "line": "typeaware_top_shards_test.go:101: shard TestTypeAwareTopPlanted_001 mismatch byte 0: native \"Xile\\tfile.ts/1\\n\" Go \"file\\tfile.ts/1\\n\""
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001)$"
+    ]
+  },
+  {
+    "id": "S2",
+    "log": "S2-setup-recovered.log",
+    "kind": "setup",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutantsUnion"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutantsUnion"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_Setup",
+        "line": "typeaware_test.go:336: enumerated shard count 21 differs from declared 22"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutantsUnion",
+        "line": "typeaware_top_shards_test.go:129: shared shard setup did not complete"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_Setup|TestTypeAwareAgreementAndMutantsUnion)$"
+    ]
+  },
+  {
+    "id": "S3",
+    "log": "S3-setup-recovered.log",
+    "kind": "setup",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutantUnion"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutantUnion",
+        "line": "volume_config_guard_self_prepare_test.go:171: union differs from live enumeration [origin line; log line 170]"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutantUnion)$"
+    ]
+  },
+  {
+    "id": "S4",
+    "log": "S4-setup-recovered.log",
+    "kind": "setup",
+    "invalid_reason": null,
+    "rows": [
+      "TestVolumeConfigGuardAndMutant_Setup"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_Setup"
+    ],
+    "passed_tests": [],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_Setup",
+        "line": "volume_config_guard_self_prepare_test.go:140: shared product preparation failed"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestVolumeConfigGuardAndMutant_Setup)$"
+    ]
+  },
+  {
+    "id": "S5",
+    "log": "S5-setup-recovered.log",
+    "kind": "setup",
+    "invalid_reason": null,
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native"
+    ],
+    "failed_tests": [
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native"
+    ],
+    "passed_tests": [
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_archive_checker_asan"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestProduct_volume_guard_volume",
+        "line": "volume_config_guard_self_prepare_test.go:109: open /workspace/scratch/u146/cache/S5/552b757dfdd524bc029293adcf354f371d7f4a01f753ec133bc8dbbe158d3283/missing.a: no such file or directory"
+      },
+      {
+        "test": "TestProduct_volume_guard_volume_asan",
+        "line": "volume_config_guard_self_prepare_test.go:109: open /workspace/scratch/u146/cache/S5/9bfa6d7b34b302fde47f34fec02fab5b33f5c395bb752db11de5b489bc535439/missing.a: no such file or directory"
+      },
+      {
+        "test": "TestProduct_volume_guard_strict_this_native",
+        "line": "volume_config_guard_self_prepare_test.go:109: open /workspace/scratch/u146/cache/S5/382a3aa3aa8cf1af0e6d57fec7a83fa3850644ac6cc6c3e832d13cbb73a2268e/missing.a: no such file or directory"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native)$"
+    ]
+  },
+  {
+    "id": "P1",
+    "log": "P1-probe-recovered.log",
+    "kind": "probe",
+    "invalid_reason": null,
+    "rows": [
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "failed_tests": [
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001"
+    ],
+    "passed_tests": [
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareTopPlanted_001",
+      "TestTypeAwareTopShardPlantedFailure",
+      "TestTypeAwareTopPlanted_000",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_010",
+      "TestTypeAwareAgreementAndMutants_003"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestTypeAwareAgreementAndMutants_019",
+        "line": "typeaware_test.go:624: unexpected EOF"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_018",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_016",
+        "line": "typeaware_test.go:624: unexpected EOF"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_020",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_014",
+        "line": "typeaware_test.go:585: compiler mismatch byte 0: native \"\" Go \"file\\t/tmp/u146/pinned-typescript/src/compiler/_namespaces/ts.moduleSpecifiers.ts\\nfile\\t/tmp/u146/pinned-typescript/src/compiler/_namespaces/ts.performance.ts\\nfile\\t/tmp/u146/pinned-typescript/src/compiler/_namespaces/ts.ts\\nfile\\t/tmp/u146/pinned-typescr\""
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_017",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_015",
+        "line": "typeaware_test.go:619: timed finding counts differ"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_007",
+        "line": "typeaware_test.go:503: missing-header escaped: <nil>"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_008",
+        "line": "typeaware_test.go:503: bad-length escaped: <nil>"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_006",
+        "line": "typeaware_test.go:503: empty-frame escaped: <nil>"
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_000",
+        "line": "typeaware_test.go:391: generated mismatch byte 0: native \"\" Go \"file\\t/workspace/scratch/u146/tmp/typeaware-products-1357564303/typeaware-plan/case-000.ts\\nfile\\t/workspace/scratch/u146/tmp/typeaware-products-1357564303/typeaware-plan/case-001.ts\\nfile\\t/workspace/scratch/u146/tmp/typeaware-products-1357564303/typeawa\""
+      },
+      {
+        "test": "TestTypeAwareAgreementAndMutants_001",
+        "line": "typeaware_test.go:413: unlinked type-parts call was accepted"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareTopPlanted_000|TestTypeAwareTopPlanted_001|TestTypeAwareTopShardPlantedFailure|TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_010|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup)$"
+    ]
+  },
+  {
+    "id": "P2",
+    "log": "P2-probe-recovered.log",
+    "kind": "probe",
+    "invalid_reason": null,
+    "rows": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_checker",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestVolumeConfigGuardAndMutant_000",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutantPlantedFailure"
+    ],
+    "failed_tests": [
+      "TestVolumeConfigGuardAndMutant_004",
+      "TestVolumeConfigGuardAndMutantPlantedFailure",
+      "TestVolumeConfigGuardAndMutant_013",
+      "TestVolumeConfigGuardAndMutant_014",
+      "TestVolumeConfigGuardAndMutant_011",
+      "TestVolumeConfigGuardAndMutant_009",
+      "TestVolumeConfigGuardAndMutant_010",
+      "TestVolumeConfigGuardAndMutant_012",
+      "TestVolumeConfigGuardAndMutant_008",
+      "TestVolumeConfigGuardAndMutant_007",
+      "TestVolumeConfigGuardAndMutant_006",
+      "TestVolumeConfigGuardAndMutant_005",
+      "TestVolumeConfigGuardAndMutant_001",
+      "TestVolumeConfigGuardAndMutant_002",
+      "TestVolumeConfigGuardAndMutant_003",
+      "TestVolumeConfigGuardAndMutant_015",
+      "TestVolumeConfigGuardAndMutant_000"
+    ],
+    "passed_tests": [
+      "TestProduct_volume_guard_stage0",
+      "TestProduct_volume_guard_strict_this_native",
+      "TestVolumeConfigGuardAndMutantUnion",
+      "TestProduct_volume_guard_archive_checker_asan",
+      "TestProduct_volume_guard_archive_checker",
+      "TestVolumeConfigGuardAndMutant_Setup",
+      "TestProduct_volume_guard_oracle",
+      "TestProduct_volume_guard_archive_strict_this_checker",
+      "TestProduct_volume_guard_volume_asan",
+      "TestProduct_volume_guard_volume"
+    ],
+    "unknown_tests": [],
+    "errors": [
+      {
+        "test": "TestVolumeConfigGuardAndMutant_004",
+        "line": "volume_config_guard_self_prepare_test.go:386: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutantPlantedFailure",
+        "line": "volume_config_guard_self_prepare_test.go:546: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_013",
+        "line": "volume_config_guard_self_prepare_test.go:422: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_014",
+        "line": "volume_config_guard_self_prepare_test.go:426: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_011",
+        "line": "volume_config_guard_self_prepare_test.go:414: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_009",
+        "line": "volume_config_guard_self_prepare_test.go:406: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_010",
+        "line": "volume_config_guard_self_prepare_test.go:410: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_012",
+        "line": "volume_config_guard_self_prepare_test.go:418: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_008",
+        "line": "volume_config_guard_self_prepare_test.go:402: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_007",
+        "line": "volume_config_guard_self_prepare_test.go:398: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_006",
+        "line": "volume_config_guard_self_prepare_test.go:394: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_005",
+        "line": "volume_config_guard_self_prepare_test.go:390: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_001",
+        "line": "volume_config_guard_self_prepare_test.go:374: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_002",
+        "line": "volume_config_guard_self_prepare_test.go:378: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_003",
+        "line": "volume_config_guard_self_prepare_test.go:382: edge-controls-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_015",
+        "line": "volume_config_guard_self_prepare_test.go:75: compiler-final-asan mismatch byte 0"
+      },
+      {
+        "test": "TestVolumeConfigGuardAndMutant_000",
+        "line": "volume_config_guard_self_prepare_test.go:370: unsupported this mode escaped: <nil>"
+      }
+    ],
+    "corpus": "/tmp/u146/pinned-typescript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_volume_guard_stage0|TestProduct_volume_guard_oracle|TestProduct_volume_guard_archive_checker|TestProduct_volume_guard_archive_checker_asan|TestProduct_volume_guard_archive_strict_this_checker|TestProduct_volume_guard_volume|TestProduct_volume_guard_volume_asan|TestProduct_volume_guard_strict_this_native|TestVolumeConfigGuardAndMutant_Setup|TestVolumeConfigGuardAndMutantUnion|TestVolumeConfigGuardAndMutant_000|TestVolumeConfigGuardAndMutant_001|TestVolumeConfigGuardAndMutant_002|TestVolumeConfigGuardAndMutant_003|TestVolumeConfigGuardAndMutant_004|TestVolumeConfigGuardAndMutant_005|TestVolumeConfigGuardAndMutant_006|TestVolumeConfigGuardAndMutant_007|TestVolumeConfigGuardAndMutant_008|TestVolumeConfigGuardAndMutant_009|TestVolumeConfigGuardAndMutant_010|TestVolumeConfigGuardAndMutant_011|TestVolumeConfigGuardAndMutant_012|TestVolumeConfigGuardAndMutant_013|TestVolumeConfigGuardAndMutant_014|TestVolumeConfigGuardAndMutant_015|TestVolumeConfigGuardAndMutantPlantedFailure)$"
+    ]
+  }
+]

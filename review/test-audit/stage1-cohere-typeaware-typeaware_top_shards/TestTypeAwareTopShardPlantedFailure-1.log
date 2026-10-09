@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:13:46.623273593Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:13:46.631182489Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T13:13:46.631249742Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== RUN   TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:46.631269537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== PAUSE TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:46.631271821Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T13:13:46.631277452Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure"}
+{"Time":"2026-10-09T13:13:46.631279143Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"=== CONT  TestTypeAwareTopShardPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:46.647063149Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Output":"--- PASS: TestTypeAwareTopShardPlantedFailure (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:46.64709142Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareTopShardPlantedFailure","Elapsed":0.02}
+{"Time":"2026-10-09T13:13:46.647113506Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:46.647146271Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.023s\n"}
+{"Time":"2026-10-09T13:13:46.647165404Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.024}

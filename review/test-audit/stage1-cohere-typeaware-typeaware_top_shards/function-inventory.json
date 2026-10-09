@@ -1,0 +1,1340 @@
+{
+  "status": "Static import-closure inventory of named source functions reachable in principle from the two entries, includes type-only dependencies. Exact dynamic reach per row was not measured; this is a conservative superset, not a coverage claim.",
+  "entries": [
+    "stage1/cohere/typeaware/main.ts",
+    "stage1/cohere/typeaware/volume_suite.ts"
+  ],
+  "files": [
+    "stage1/cohere/typeaware/main.ts",
+    "stage1/typescript/parser/nodes.ts",
+    "stage1/typescript/parser/parser.ts",
+    "stage1/typescript/scanner/scanner.ts",
+    "stage1/typescript/scanner/characters.ts",
+    "stage1/typescript/scanner/tokens.ts",
+    "stage1/typescript/parser/statements.ts",
+    "stage1/typescript/parser/jsx.ts",
+    "stage1/typescript/parser/grammar.ts",
+    "stage1/typescript/parser/lookahead.ts",
+    "stage1/cohere/typeaware/unary_minus.ts",
+    "stage1/cohere/lint/finding.ts",
+    "stage1/cohere/lint/suggestions.a",
+    "stage1/cohere/typeaware/volume_suite.ts",
+    "stage1/cohere/typeaware/frames.ts",
+    "stage1/cohere/typeaware/rules.ts",
+    "stage1/cohere/typeaware/diagnostic.ts",
+    "stage1/cohere/typeaware/repair.ts",
+    "stage1/cohere/typeaware/suggestion.ts",
+    "stage1/cohere/typeaware/facts.ts",
+    "stage1/cohere/typeaware/type_fact.ts",
+    "stage1/cohere/typeaware/types.ts",
+    "stage1/cohere/typeaware/flags.ts",
+    "stage1/cohere/typeaware/parameters.ts",
+    "stage1/cohere/typeaware/returns.ts",
+    "stage1/cohere/typeaware/shadow.ts",
+    "stage1/cohere/typeaware/binding.ts",
+    "stage1/cohere/typeaware/scope.ts",
+    "stage1/cohere/typeaware/completion.ts",
+    "stage1/cohere/typeaware/unbound.ts",
+    "stage1/cohere/typeaware/bound.ts",
+    "stage1/cohere/typeaware/void.ts",
+    "stage1/cohere/typeaware/volume.ts",
+    "stage1/cohere/typeaware/assignment.ts"
+  ],
+  "functions": [
+    {
+      "file": "stage1/typescript/parser/nodes.ts",
+      "line": 18,
+      "name": "ParseNode.constructor"
+    },
+    {
+      "file": "stage1/typescript/parser/nodes.ts",
+      "line": 26,
+      "name": "written"
+    },
+    {
+      "file": "stage1/typescript/parser/nodes.ts",
+      "line": 38,
+      "name": "printTree"
+    },
+    {
+      "file": "stage1/typescript/parser/nodes.ts",
+      "line": 56,
+      "name": "countTree"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 19,
+      "name": "Parser.constructor"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 27,
+      "name": "Parser.kind"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 30,
+      "name": "Parser.next"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 33,
+      "name": "Parser.node"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 36,
+      "name": "Parser.make"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 40,
+      "name": "Parser.token"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 46,
+      "name": "Parser.expect"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 52,
+      "name": "Parser.literal"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 72,
+      "name": "Parser.identifier"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 80,
+      "name": "Parser.primary"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 179,
+      "name": "Parser.jsxParser"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 204,
+      "name": "Parser.bindingIdentifier"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 209,
+      "name": "Parser.nextIdentifierSameLine"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 218,
+      "name": "Parser.yieldOperandAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 229,
+      "name": "Parser.mark"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 241,
+      "name": "Parser.rewind"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 251,
+      "name": "Parser.docTypes"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 280,
+      "name": "Parser.tupleNameAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 294,
+      "name": "Parser.typeArguments"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 310,
+      "name": "Parser.typeParameters"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 340,
+      "name": "Parser.entityName"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 350,
+      "name": "Parser.importType"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 387,
+      "name": "Parser.type"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 667,
+      "name": "Parser.mappedAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 685,
+      "name": "Parser.mappedType"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 724,
+      "name": "Parser.indexSignatureAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 732,
+      "name": "Parser.typeLiteral"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 812,
+      "name": "Parser.parameters"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 857,
+      "name": "Parser.bindingName"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 897,
+      "name": "Parser.decorator"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 909,
+      "name": "Parser.rootAssignment"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 918,
+      "name": "Parser.rootExpression"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 927,
+      "name": "Parser.arrow"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 964,
+      "name": "Parser.returnType"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 988,
+      "name": "Parser.functionExpression"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1027,
+      "name": "Parser.statements"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1075,
+      "name": "Parser.block"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1078,
+      "name": "Parser.statement"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1081,
+      "name": "Parser.semicolon"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1084,
+      "name": "Parser.classDeclaration"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1088,
+      "name": "Parser.peek"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1107,
+      "name": "Parser.optionalChain"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1122,
+      "name": "Parser.spread"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1128,
+      "name": "Parser.arguments"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1147,
+      "name": "Parser.suffix"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1276,
+      "name": "Parser.templatePart"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1289,
+      "name": "Parser.templateType"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1305,
+      "name": "Parser.template"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1324,
+      "name": "Parser.array"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1351,
+      "name": "Parser.propertyName"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1367,
+      "name": "Parser.methodBody"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1396,
+      "name": "Parser.object"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1478,
+      "name": "Parser.unary"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1548,
+      "name": "Parser.binary"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1576,
+      "name": "Parser.assignment"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1612,
+      "name": "Parser.allowInAssignment"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1622,
+      "name": "Parser.allowInExpression"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1632,
+      "name": "Parser.expression"
+    },
+    {
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 1642,
+      "name": "Parser.file"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 14,
+      "name": "decimalDigits"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 37,
+      "name": "numberValue"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 62,
+      "name": "Scanner.constructor"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 65,
+      "name": "Scanner.code"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 73,
+      "name": "Scanner.advance"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 76,
+      "name": "Scanner.error"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 81,
+      "name": "Scanner.fragment"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 122,
+      "name": "Scanner.unicode"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 173,
+      "name": "Scanner.escape"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 251,
+      "name": "Scanner.identifier"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 289,
+      "name": "Scanner.string"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 324,
+      "name": "Scanner.template"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 370,
+      "name": "Scanner.bigint"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 385,
+      "name": "Scanner.number"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 492,
+      "name": "Scanner.scan"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 676,
+      "name": "Scanner.punctuation"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 817,
+      "name": "Scanner.rescanGreater"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 834,
+      "name": "Scanner.rescanTemplate"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 840,
+      "name": "Scanner.rescanSlash"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 936,
+      "name": "Scanner.scanJsxIdentifier"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 948,
+      "name": "Scanner.scanJsxAttributeValue"
+    },
+    {
+      "file": "stage1/typescript/scanner/scanner.ts",
+      "line": 978,
+      "name": "Scanner.scanJsx"
+    },
+    {
+      "file": "stage1/typescript/scanner/characters.ts",
+      "line": 240,
+      "name": "contains"
+    },
+    {
+      "file": "stage1/typescript/scanner/characters.ts",
+      "line": 259,
+      "name": "isIdentifierStart"
+    },
+    {
+      "file": "stage1/typescript/scanner/characters.ts",
+      "line": 268,
+      "name": "isIdentifierPart"
+    },
+    {
+      "file": "stage1/typescript/scanner/characters.ts",
+      "line": 271,
+      "name": "isLineBreak"
+    },
+    {
+      "file": "stage1/typescript/scanner/characters.ts",
+      "line": 274,
+      "name": "isSpace"
+    },
+    {
+      "file": "stage1/typescript/scanner/characters.ts",
+      "line": 290,
+      "name": "digit"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 51,
+      "name": "Statements.constructor"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 54,
+      "name": "Statements.block"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 64,
+      "name": "Statements.semicolon"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 76,
+      "name": "Statements.variableList"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 117,
+      "name": "Statements.lookahead"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 140,
+      "name": "Statements.decorator"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 143,
+      "name": "Statements.canExportName"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 150,
+      "name": "Statements.specifiers"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 212,
+      "name": "Statements.attributes"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 218,
+      "name": "Statements.attributeBody"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 244,
+      "name": "Statements.importDeclaration"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 335,
+      "name": "Statements.exportDeclaration"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 389,
+      "name": "Statements.moduleDeclaration"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 420,
+      "name": "Statements.exportedClauseAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 442,
+      "name": "Statements.functionDeclaration"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 479,
+      "name": "Statements.classDeclaration"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 640,
+      "name": "Statements.forStatement"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 682,
+      "name": "Statements.switchStatement"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 713,
+      "name": "Statements.tryStatement"
+    },
+    {
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 741,
+      "name": "Statements.statement"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 26,
+      "name": "Jsx.constructor"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 29,
+      "name": "Jsx.make"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 32,
+      "name": "Jsx.identifier"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 41,
+      "name": "Jsx.name"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 64,
+      "name": "Jsx.text"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 74,
+      "name": "Jsx.finishGreater"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 87,
+      "name": "Jsx.expression"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 108,
+      "name": "Jsx.attributes"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 143,
+      "name": "Jsx.tagKey"
+    },
+    {
+      "file": "stage1/typescript/parser/jsx.ts",
+      "line": 151,
+      "name": "Jsx.element"
+    },
+    {
+      "file": "stage1/typescript/parser/grammar.ts",
+      "line": 2,
+      "name": "precedence"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 16,
+      "name": "kind"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 31,
+      "name": "Speculation.constructor"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 41,
+      "name": "Speculation.prepare"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 74,
+      "name": "Speculation.next"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 79,
+      "name": "Speculation.restore"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 90,
+      "name": "optionalParameterAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 98,
+      "name": "arrowAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 188,
+      "name": "jsxArrowAhead"
+    },
+    {
+      "file": "stage1/typescript/parser/lookahead.ts",
+      "line": 212,
+      "name": "typeArgumentsAhead"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unary_minus.ts",
+      "line": 10,
+      "name": "byteOffsets"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unary_minus.ts",
+      "line": 33,
+      "name": "UnaryMinus.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unary_minus.ts",
+      "line": 40,
+      "name": "UnaryMinus.visit"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unary_minus.ts",
+      "line": 100,
+      "name": "UnaryMinus.walk"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unary_minus.ts",
+      "line": 106,
+      "name": "UnaryMinus.run"
+    },
+    {
+      "file": "stage1/cohere/lint/finding.ts",
+      "line": 18,
+      "name": "Finding.constructor"
+    },
+    {
+      "file": "stage1/cohere/lint/suggestions.a",
+      "line": 6,
+      "name": "SuggestionEdit.constructor"
+    },
+    {
+      "file": "stage1/cohere/lint/suggestions.a",
+      "line": 16,
+      "name": "Suggestion.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 3,
+      "name": "decimal"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 26,
+      "name": "Frames.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 29,
+      "name": "Frames.next"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 41,
+      "name": "Frames.field"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 45,
+      "name": "Frames.number"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 49,
+      "name": "Frames.natural"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 56,
+      "name": "Frames.yes"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 63,
+      "name": "Frames.ids"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 71,
+      "name": "Frames.end"
+    },
+    {
+      "file": "stage1/cohere/typeaware/frames.ts",
+      "line": 77,
+      "name": "header"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 22,
+      "name": "unsafeAssignment"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 75,
+      "name": "Rules.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 90,
+      "name": "Rules.byte"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 93,
+      "name": "Rules.start"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 98,
+      "name": "Rules.text"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 101,
+      "name": "Rules.ask"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 106,
+      "name": "Rules.name"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 113,
+      "name": "Rules.describe"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 116,
+      "name": "Rules.add"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 122,
+      "name": "Rules.skip"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 129,
+      "name": "Rules.links"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 135,
+      "name": "Rules.key"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 158,
+      "name": "Rules.getterPairs"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 222,
+      "name": "Rules.annotation"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 240,
+      "name": "Rules.merging"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 281,
+      "name": "Rules.plus"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 331,
+      "name": "Rules.plusInvalid"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 339,
+      "name": "Rules.arguments"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 458,
+      "name": "Rules.booleanCompare"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 526,
+      "name": "Rules.strong"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 549,
+      "name": "Rules.weakParent"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 576,
+      "name": "Rules.walk"
+    },
+    {
+      "file": "stage1/cohere/typeaware/rules.ts",
+      "line": 608,
+      "name": "Rules.run"
+    },
+    {
+      "file": "stage1/cohere/typeaware/diagnostic.ts",
+      "line": 16,
+      "name": "Diagnostic.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/diagnostic.ts",
+      "line": 23,
+      "name": "Diagnostic.written"
+    },
+    {
+      "file": "stage1/cohere/typeaware/repair.ts",
+      "line": 5,
+      "name": "Repair.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/suggestion.ts",
+      "line": 7,
+      "name": "Suggestion.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/facts.ts",
+      "line": 7,
+      "name": "contains"
+    },
+    {
+      "file": "stage1/cohere/typeaware/facts.ts",
+      "line": 16,
+      "name": "types"
+    },
+    {
+      "file": "stage1/cohere/typeaware/type_fact.ts",
+      "line": 14,
+      "name": "TypeFact.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/types.ts",
+      "line": 11,
+      "name": "Types.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/types.ts",
+      "line": 24,
+      "name": "Types.type"
+    },
+    {
+      "file": "stage1/cohere/typeaware/types.ts",
+      "line": 32,
+      "name": "Types.root"
+    },
+    {
+      "file": "stage1/cohere/typeaware/types.ts",
+      "line": 35,
+      "name": "Types.parts"
+    },
+    {
+      "file": "stage1/cohere/typeaware/types.ts",
+      "line": 38,
+      "name": "Types.has"
+    },
+    {
+      "file": "stage1/cohere/typeaware/parameters.ts",
+      "line": 10,
+      "name": "Parameters.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/parameters.ts",
+      "line": 16,
+      "name": "Parameters.next"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 14,
+      "name": "Returns.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 18,
+      "name": "Returns.scope"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 29,
+      "name": "Returns.count"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 36,
+      "name": "Returns.thenable"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 56,
+      "name": "Returns.promiseVoid"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 69,
+      "name": "Returns.suppress"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 81,
+      "name": "Returns.collect"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 92,
+      "name": "Returns.key"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 120,
+      "name": "Returns.name"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 182,
+      "name": "Returns.truthy"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 207,
+      "name": "Returns.throwable"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 278,
+      "name": "Returns.sequence"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 289,
+      "name": "Returns.jump"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 326,
+      "name": "Returns.flow"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 476,
+      "name": "Returns.judge"
+    },
+    {
+      "file": "stage1/cohere/typeaware/returns.ts",
+      "line": 533,
+      "name": "Returns.run"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 14,
+      "name": "Shadow.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 17,
+      "name": "Shadow.lookup"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 42,
+      "name": "Shadow.name"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 62,
+      "name": "Shadow.value"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 85,
+      "name": "Shadow.body"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 88,
+      "name": "Shadow.initializer"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 105,
+      "name": "Shadow.report"
+    },
+    {
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "line": 297,
+      "name": "Shadow.run"
+    },
+    {
+      "file": "stage1/cohere/typeaware/binding.ts",
+      "line": 6,
+      "name": "Binding.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/scope.ts",
+      "line": 5,
+      "name": "Scope.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/completion.ts",
+      "line": 7,
+      "name": "Completion.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/completion.ts",
+      "line": 10,
+      "name": "Completion.merge"
+    },
+    {
+      "file": "stage1/cohere/typeaware/completion.ts",
+      "line": 28,
+      "name": "Completion.outward"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 12,
+      "name": "Unbound.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 16,
+      "name": "Unbound.safe"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 90,
+      "name": "Unbound.builtin"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 147,
+      "name": "Unbound.native"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 189,
+      "name": "Unbound.report"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 232,
+      "name": "Unbound.constituent"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 242,
+      "name": "Unbound.member"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 281,
+      "name": "Unbound.insideType"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 300,
+      "name": "Unbound.pattern"
+    },
+    {
+      "file": "stage1/cohere/typeaware/unbound.ts",
+      "line": 347,
+      "name": "Unbound.run"
+    },
+    {
+      "file": "stage1/cohere/typeaware/void.ts",
+      "line": 9,
+      "name": "VoidRule.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/void.ts",
+      "line": 13,
+      "name": "VoidRule.ancestor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/void.ts",
+      "line": 58,
+      "name": "VoidRule.gap"
+    },
+    {
+      "file": "stage1/cohere/typeaware/void.ts",
+      "line": 67,
+      "name": "VoidRule.visit"
+    },
+    {
+      "file": "stage1/cohere/typeaware/void.ts",
+      "line": 167,
+      "name": "VoidRule.run"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 15,
+      "name": "Volume.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 19,
+      "name": "Volume.facts"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 22,
+      "name": "Volume.assignable"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 29,
+      "name": "Volume.assertion"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 106,
+      "name": "Volume.member"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 139,
+      "name": "Volume.computed"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 172,
+      "name": "Volume.enumTypes"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 179,
+      "name": "Volume.primitive"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 186,
+      "name": "Volume.enumPair"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 220,
+      "name": "Volume.literalParts"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 233,
+      "name": "Volume.exhaustive"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 283,
+      "name": "Volume.unionFlags"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 291,
+      "name": "Volume.conditional"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 331,
+      "name": "Volume.similar"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 359,
+      "name": "Volume.memberLike"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 364,
+      "name": "Volume.wrappedText"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 373,
+      "name": "Volume.suggest"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 391,
+      "name": "Volume.comments"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 413,
+      "name": "Volume.nullish"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 650,
+      "name": "Volume.walk"
+    },
+    {
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "line": 686,
+      "name": "Volume.run"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 13,
+      "name": "Assignment.constructor"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 18,
+      "name": "Assignment.property"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 21,
+      "name": "Assignment.anyArray"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 25,
+      "name": "Assignment.destructure"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 138,
+      "name": "Assignment.check"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 196,
+      "name": "Assignment.target"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 221,
+      "name": "Assignment.visit"
+    },
+    {
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "line": 264,
+      "name": "Assignment.run"
+    }
+  ]
+}

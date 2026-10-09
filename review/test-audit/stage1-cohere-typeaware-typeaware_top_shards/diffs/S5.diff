@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go
++++ b/stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go
+@@ -95,7 +95,7 @@
+ 		volumeGuardMust(builder, "checker", cmd)
+ 		return nil
+ 	})
+-	return filepath.Join(directory, "checker.a")
++	return filepath.Join(directory, "missing.a")
+ }
+ func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
+ 	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: []string{fmt.Sprint(sanitize), os.Getenv("CC"), os.Getenv("CGO_CFLAGS"), os.Getenv("CGO_LDFLAGS"), os.Getenv("GOFLAGS"), os.Getenv("ADAMIC_TOOLS")}, Toolchain: []string{volumeGuardTool(ctx, "clang", "--version"), volumeGuardTool(ctx, "go", "version")}}

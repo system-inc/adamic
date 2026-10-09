@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/unary_minus.ts
++++ b/stage1/cohere/typeaware/unary_minus.ts
+@@ -16,7 +16,7 @@
+             offsets.push(bytes);
+             index++;
+         }
+-        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
++        bytes += code < 128 ? 2 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+         offsets.push(bytes);
+     }
+     return offsets;

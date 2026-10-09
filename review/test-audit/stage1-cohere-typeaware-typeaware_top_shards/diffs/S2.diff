@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/typeaware_test.go
++++ b/stage1/cohere/typeaware/typeaware_test.go
+@@ -282,7 +282,7 @@
+ // The optional external corpus is never fetched by a test.
+ // Products are prepared once. ADAMIC_TEST_SHARD=i/n selects zero-based parallel
+ // check shards; unset runs every complete corpus and mutant check.
+-const testTypeAwareAgreementAndMutantsShards = 21
++const testTypeAwareAgreementAndMutantsShards = 22
+ 
+ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
+ 	started := time.Now()
