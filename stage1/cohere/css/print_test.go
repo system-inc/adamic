@@ -52,7 +52,7 @@ func printerAnswers(t *testing.T, cases, mode string) string {
 	return string(data)
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime cache.
 func TestClosedPrinterRegexGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/6_printer_regex_tree.ts")
 	program := lowered(t, path)
@@ -292,7 +292,7 @@ func printerLeaks(t *testing.T, binary string, arguments ...string) string {
 }
 
 // This corpus isolates boolean flags and namespace choices without the full printer corpus.
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime cache.
 func TestOptionalBooleanPrinterMatchesGo(t *testing.T) {
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	inputs := ">Ca{b:c}\n>Ca{b:c!important}\n>C*|a{b:c}\n>C|a{b:c}\n>Csvg|a{b:c}\n>S$x:1!default;a{b:$x!important}\n"

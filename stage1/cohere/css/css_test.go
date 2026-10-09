@@ -368,7 +368,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 }
 
 // Hold the complete composed implementation against the external Go tree.
-// Not parallel: compositionOnce/compositionBuilt and the shared buildcache directory.
+// Not parallel: compositionSetup publishes shared build products and native runtime cache entries.
 func TestCompositionMatchesGo(t *testing.T) {
 	compositionSetup(t)
 }

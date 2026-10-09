@@ -126,6 +126,7 @@ func compilerExpressionsEnumeration(t *testing.T) ([][]string, string, int) {
 }
 
 func TestCompilerExpressionsAgreeUnion(t *testing.T) {
+	t.Parallel()
 	functions := []func(*testing.T){TestCompilerExpressionsAgree_000, TestCompilerExpressionsAgree_001, TestCompilerExpressionsAgree_002, TestCompilerExpressionsAgree_003, TestCompilerExpressionsAgree_004, TestCompilerExpressionsAgree_005, TestCompilerExpressionsAgree_006, TestCompilerExpressionsAgree_007, TestCompilerExpressionsAgree_008, TestCompilerExpressionsAgree_009, TestCompilerExpressionsAgree_010, TestCompilerExpressionsAgree_011, TestCompilerExpressionsAgree_012, TestCompilerExpressionsAgree_013, TestCompilerExpressionsAgree_014, TestCompilerExpressionsAgree_015}
 	if len(functions) != testCompilerExpressionsAgreeShards {
 		t.Fatal("top-level shard enumeration differs")
@@ -154,7 +155,6 @@ func TestCompilerExpressionsAgreeUnion(t *testing.T) {
 
 func compilerExpressionsShard(t *testing.T, index int) {
 	t.Helper()
-	t.Parallel()
 	started := time.Now()
 	timer := time.AfterFunc(75*time.Second, func() { panic(fmt.Sprintf("cooked: shard-%03d exceeded 75s", index)) })
 	defer timer.Stop()
@@ -193,34 +193,82 @@ func compilerExpressionsShard(t *testing.T, index int) {
 	t.Logf("shard-%03d: %d whole compiler files, %d identical expression tree bytes; %.3fs cooked=false", index, len(paths), len(want.output), time.Since(started).Seconds())
 }
 
-func TestCompilerExpressionsAgree_000(t *testing.T) { compilerExpressionsShard(t, 0) }
+func TestCompilerExpressionsAgree_000(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 0)
+}
 
-func TestCompilerExpressionsAgree_001(t *testing.T) { compilerExpressionsShard(t, 1) }
+func TestCompilerExpressionsAgree_001(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 1)
+}
 
-func TestCompilerExpressionsAgree_002(t *testing.T) { compilerExpressionsShard(t, 2) }
+func TestCompilerExpressionsAgree_002(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 2)
+}
 
-func TestCompilerExpressionsAgree_003(t *testing.T) { compilerExpressionsShard(t, 3) }
+func TestCompilerExpressionsAgree_003(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 3)
+}
 
-func TestCompilerExpressionsAgree_004(t *testing.T) { compilerExpressionsShard(t, 4) }
+func TestCompilerExpressionsAgree_004(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 4)
+}
 
-func TestCompilerExpressionsAgree_005(t *testing.T) { compilerExpressionsShard(t, 5) }
+func TestCompilerExpressionsAgree_005(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 5)
+}
 
-func TestCompilerExpressionsAgree_006(t *testing.T) { compilerExpressionsShard(t, 6) }
+func TestCompilerExpressionsAgree_006(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 6)
+}
 
-func TestCompilerExpressionsAgree_007(t *testing.T) { compilerExpressionsShard(t, 7) }
+func TestCompilerExpressionsAgree_007(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 7)
+}
 
-func TestCompilerExpressionsAgree_008(t *testing.T) { compilerExpressionsShard(t, 8) }
+func TestCompilerExpressionsAgree_008(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 8)
+}
 
-func TestCompilerExpressionsAgree_009(t *testing.T) { compilerExpressionsShard(t, 9) }
+func TestCompilerExpressionsAgree_009(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 9)
+}
 
-func TestCompilerExpressionsAgree_010(t *testing.T) { compilerExpressionsShard(t, 10) }
+func TestCompilerExpressionsAgree_010(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 10)
+}
 
-func TestCompilerExpressionsAgree_011(t *testing.T) { compilerExpressionsShard(t, 11) }
+func TestCompilerExpressionsAgree_011(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 11)
+}
 
-func TestCompilerExpressionsAgree_012(t *testing.T) { compilerExpressionsShard(t, 12) }
+func TestCompilerExpressionsAgree_012(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 12)
+}
 
-func TestCompilerExpressionsAgree_013(t *testing.T) { compilerExpressionsShard(t, 13) }
+func TestCompilerExpressionsAgree_013(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 13)
+}
 
-func TestCompilerExpressionsAgree_014(t *testing.T) { compilerExpressionsShard(t, 14) }
+func TestCompilerExpressionsAgree_014(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 14)
+}
 
-func TestCompilerExpressionsAgree_015(t *testing.T) { compilerExpressionsShard(t, 15) }
+func TestCompilerExpressionsAgree_015(t *testing.T) {
+	t.Parallel()
+	compilerExpressionsShard(t, 15)
+}
