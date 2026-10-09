@@ -91,22 +91,45 @@ func completeSuggestionPrepare(t *testing.T) {
 		t.Logf("complete suggestion preparation: %.3fs", elapsed.Seconds())
 	}()
 	p := &completeSuggestionProductsValue
-	files := []string{"internal", "oracle", "bridge", "go.mod", "cohere", "stage1/cohere/lint/registry"}
-	for _, file := range portFiles(t) {
-		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
+	directory := completeSuggestionFixture(t, false)
+	p.directory = directory
+	source := filepath.Join(directory, "suggestions.ts")
+	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+		t.Fatal(err)
 	}
-	files = append(files, "stage1/cohere/lint/testdata/serialization", "stage1/cohere/lint/testdata/oracle.go")
-	toolchain := []string{runtime.Version(), buildcache.Tool("clang", "--version")}
+	p.path = filepath.Join(directory, "manifest.txt")
+	if err := os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	p.oracle = filepath.Join(completeSuggestionOracleProduct(ctx, t, directory), "oracle")
+	p.want = completeSuggestionExecute(ctx, t, "", p.oracle, "--manifest", p.path).output
+	p.mutant = completeSuggestionFixture(t, true)
+	product := completeSuggestionLoweredProduct(ctx, t, directory, false)
+	p.module = filepath.Join(product, "lint.mjs")
+	p.binary = filepath.Join(completeSuggestionNativeProduct(ctx, t, directory), "scanner")
+	p.mutantModule = filepath.Join(completeSuggestionLoweredProduct(ctx, t, p.mutant, true), "lint.mjs")
+	completeSuggestionProductsReady = true
+}
 
+// Fixtures live until TestMain exits, independent of the calling test's lifetime.
+func completeSuggestionFixture(t *testing.T, mutant bool) string {
+	t.Helper()
 	directory, err := os.MkdirTemp(sharedDirectory, "complete-suggestion-")
 	if err != nil {
 		t.Fatal(err)
 	}
-	p.directory = copyPort(t, directory, "", "")
+	copyPort(t, directory, "", "")
 	for _, name := range []string{"rule.a", "oracle.go"} {
 		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
 		if err != nil {
 			t.Fatal(err)
+		}
+		if mutant && name == "rule.a" {
+			from := []byte("start + 1, start + 2, ''")
+			if bytes.Count(data, from) != 1 {
+				t.Fatal("suggestion mutant anchor changed")
+			}
+			data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
 		}
 		if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
 			t.Fatal(err)
@@ -116,76 +139,66 @@ func completeSuggestionPrepare(t *testing.T) {
 		t.Fatal(err)
 	}
 	completeSuggestionOnlyRule(t, directory)
-	source := filepath.Join(directory, "suggestions.ts")
-	if err = os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
+	return directory
+}
+
+func completeSuggestionProductFiles(t *testing.T) []string {
+	t.Helper()
+	files := []string{"internal", "oracle", "bridge", "go.mod", "cohere", "stage1/cohere/lint/registry"}
+	for _, file := range portFiles(t) {
+		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
-	p.path = filepath.Join(directory, "manifest.txt")
-	if err = os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	oracleProduct := buildcache.Product(t, buildcache.Inputs{Name: "complete-suggestion-go-oracle", Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1"}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
-	p.oracle = filepath.Join(oracleProduct, "oracle")
-	p.want = completeSuggestionExecute(ctx, t, "", p.oracle, "--manifest", p.path).output
-	mutantDirectory, err := os.MkdirTemp(sharedDirectory, "complete-mutant-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	p.mutant = copyPort(t, mutantDirectory, "", "")
-	for _, name := range []string{"rule.a", "oracle.go"} {
-		data, err := os.ReadFile(filepath.Join(directory, "rules/no-debugger", name))
+	files = append(files, "stage1/cohere/lint/testdata/serialization", "stage1/cohere/lint/testdata/oracle.go")
+	return files
+}
+
+// The build phase and shard preparation call these same recipes and keys.
+func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, directory string) string {
+	t.Helper()
+	return buildcache.Product(t, buildcache.Inputs{
+		Name: "complete-suggestion-go-oracle", Files: completeSuggestionProductFiles(t),
+		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1"},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
+	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
+}
+
+func completeSuggestionLoweredProduct(ctx context.Context, t *testing.T, directory string, mutant bool) string {
+	t.Helper()
+	return buildcache.Product(t, buildcache.Inputs{
+		Name: fmt.Sprintf("complete-suggestion-lowered-%t", mutant), Files: completeSuggestionProductFiles(t),
+		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1", "second-edit-end+3=" + fmt.Sprint(mutant)},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+	}, func(out string) error {
+		prepareRegistry(t, directory)
+		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
-			t.Fatal(err)
+			return err
 		}
-		if name == "rule.a" {
-			from := []byte("start + 1, start + 2, ''")
-			if bytes.Count(data, from) != 1 {
-				t.Fatal("suggestion mutant anchor changed")
-			}
-			data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
+		lowered, err := lower.Lower(ctx, program)
+		if err != nil {
+			return err
 		}
-		if err = os.WriteFile(filepath.Join(mutantDirectory, "rules/no-debugger", name), data, 0644); err != nil {
-			t.Fatal(err)
+		if err = os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			return err
 		}
-	}
-	if err = os.Remove(filepath.Join(mutantDirectory, "rules/no-debugger/rule.ts")); err != nil {
-		t.Fatal(err)
-	}
-	completeSuggestionOnlyRule(t, mutantDirectory)
-	for _, side := range []struct {
-		dir    string
-		mutant bool
-	}{{directory, false}, {mutantDirectory, true}} {
-		product := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("complete-suggestion-lowered-%t", side.mutant), Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1", "second-edit-end+3=" + fmt.Sprint(side.mutant)}, Toolchain: toolchain}, func(out string) error {
-			prepareRegistry(t, side.dir)
-			program, err := load.Load([]string{filepath.Join(side.dir, "main.ts")})
-			if err != nil {
-				return err
-			}
-			lowered, err := lower.Lower(ctx, program)
-			if err != nil {
-				return err
-			}
-			if err = os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
-		})
-		if side.mutant {
-			p.mutantModule = filepath.Join(product, "lint.mjs")
-		} else {
-			p.module = filepath.Join(product, "lint.mjs")
-			nativeProduct := buildcache.Product(t, buildcache.Inputs{Name: "complete-suggestion-native", Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1", "sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: toolchain}, func(out string) error {
-				data, err := os.ReadFile(filepath.Join(product, "lint.c"))
-				if err != nil {
-					return err
-				}
-				return native.Build(string(data), filepath.Join(out, "scanner"), native.Options{Sanitize: true})
-			})
-			p.binary = filepath.Join(nativeProduct, "scanner")
+		return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
+	})
+}
+
+func completeSuggestionNativeProduct(ctx context.Context, t *testing.T, directory string) string {
+	t.Helper()
+	return buildcache.Product(t, buildcache.Inputs{
+		Name: "complete-suggestion-native", Files: completeSuggestionProductFiles(t),
+		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1", "sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+	}, func(out string) error {
+		product := completeSuggestionLoweredProduct(ctx, t, directory, false)
+		data, err := os.ReadFile(filepath.Join(product, "lint.c"))
+		if err != nil {
+			return err
 		}
-	}
-	completeSuggestionProductsReady = true
+		return native.Build(string(data), filepath.Join(out, "scanner"), native.Options{Sanitize: true})
+	})
 }
 
 func completeSuggestionShard(t *testing.T, shard int) {
