@@ -1,0 +1,29 @@
+{
+  "fail_events": [
+    {
+      "Time": "2026-10-09T12:58:57.338366522Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "Test": "TestExpressionsAgainstGoAndPrettier_057",
+      "Elapsed": 0.01
+    },
+    {
+      "Time": "2026-10-09T13:00:00.967774133Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "Elapsed": 90.114
+    }
+  ],
+  "skipped_tests": [],
+  "pin_failures": [
+    {
+      "Time": "2026-10-09T12:58:57.336142603Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "Test": "TestExpressionsAgainstGoAndPrettier_057",
+      "Output": "    expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128\n",
+      "OutputType": "error"
+    }
+  ],
+  "status": "red baseline; audit stopped before mutation"
+}

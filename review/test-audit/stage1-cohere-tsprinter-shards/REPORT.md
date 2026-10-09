@@ -1,0 +1,391 @@
+Unit u141 stopped on a red baseline.
+Starting commit: 60f24a6ef736a6016edeca63df075678186bba8d.
+Scope: 38 requested names, 37 present, 14 grouped rows including one absent row.
+No mutants or probes planted; no quality verdicts established.
+Evidence: review/test-audit/stage1-cohere-tsprinter-shards/ on the requested branch.
+
+```json
+[
+  {
+    "test": "TestCorpusShardAssignment",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/shards_test.go:256"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestCorpusShardCoverage",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/shards_test.go:265"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestCorpusShardTransport",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/shards_test.go:287"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestStatementsAgainstGoAndPrettier_Setup",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:98"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestStatementsSetupSelection",
+    "package": "stage1/cohere/tsprinter",
+    "file": null,
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Name absent at starting commit",
+    "members": []
+  },
+  {
+    "test": "TestStatementsShardAssignmentStable",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/statements_shards_test.go:191"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestStatementsShardSelection",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/statements_shards_test.go:390"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestStatementsShardDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/statements_shards_test.go:456"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/statements_shards_test.go:526"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestStatementsAgainstGoAndPrettier family",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:16",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:20",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:24",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:28",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:32",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:36",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:40",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:44",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:48",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:52",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:56",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:60",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:64",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:68",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:72",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:76",
+      "stage1/cohere/tsprinter/statements_printer_units_test.go:82"
+    ],
+    "seconds": null,
+    "oracle": "Go cohere and npm/embedded Prettier comparisons; own accepted-difference/refusal expectations",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": [
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsAgainstGoAndPrettier_001",
+      "TestStatementsAgainstGoAndPrettier_002",
+      "TestStatementsAgainstGoAndPrettier_003",
+      "TestStatementsAgainstGoAndPrettier_004",
+      "TestStatementsAgainstGoAndPrettier_005",
+      "TestStatementsAgainstGoAndPrettier_006",
+      "TestStatementsAgainstGoAndPrettier_007",
+      "TestStatementsAgainstGoAndPrettier_008",
+      "TestStatementsAgainstGoAndPrettier_009",
+      "TestStatementsAgainstGoAndPrettier_010",
+      "TestStatementsAgainstGoAndPrettier_011",
+      "TestStatementsAgainstGoAndPrettier_012",
+      "TestStatementsAgainstGoAndPrettier_013",
+      "TestStatementsAgainstGoAndPrettier_014",
+      "TestStatementsAgainstGoAndPrettier_015",
+      "TestStatementsAgainstGoAndPrettierUnion"
+    ]
+  },
+  {
+    "test": "TestTSCCorpusAgreement family",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/tsc_corpus_split_test.go:288",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:5",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:10",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:15",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:20",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:25",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:30",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:35",
+      "stage1/cohere/tsprinter/tsc_printer_units_test.go:40"
+    ],
+    "seconds": null,
+    "oracle": "Go cohere-produced corpus answers compared with TypeScript port outputs",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": [
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCCorpusAgreement_Union"
+    ]
+  },
+  {
+    "test": "TestTSCCorpusAgreement_PlantedDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/tsc_corpus_split_test.go:293"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestTSCShardPlantedDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/tsc_units_test.go:49"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  },
+  {
+    "test": "TestTSCShardUnionRejectsMissingAndRepeated",
+    "package": "stage1/cohere/tsprinter",
+    "file": [
+      "stage1/cohere/tsprinter/tsc_units_test.go:81"
+    ],
+    "seconds": null,
+    "oracle": "Not classified: baseline stopped before verification",
+    "oracle_kind": null,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u141/TypeScript-050880ce59e30b356b686bd3144efe24f875ebc8 ADAMIC_TS_PRETTIER=/tmp/u141/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run . > baseline.log 2>&1; expression_top_level_test.go:62: TypeScript pin: \"\" exit status 128",
+    "reason": "Red baseline stop rule; no mutation, probe or three-run timing attempted",
+    "members": []
+  }
+]
+```
+
+Mutant table: empty. Survivors: none tested.
+
+Brief and execution costs: The header says 15 rows but strict family grouping gives 14, including absent TestStatementsSetupSelection. Statement wrappers and coverage union moved to statements_printer_units_test.go; TSC leaves moved to tsc_printer_units_test.go. statements_top_level_test.go is absent. The starting origin/main advanced beyond the historical 8de93800f4 file list. The mandatory package-wide baseline starts many unrelated native product builds. It both asserted a pin failure and timed out, so it cannot be treated as timeout-only. I installed the exact pinned TypeScript archive but missed the requirement for Git metadata, producing the setup-related pin failure; this does not establish a production defect. The red-baseline rule requires stopping, so no corrective baseline or audit was run afterward.
+
+Timing: warm toolchain setup 0 s; nproc 5; stage3/api npm ci 0.988 s; TypeScript archive download/extraction 19.357 s; Prettier installation 1.959 s; whole package binary 90.114 s, timeout. Individual build timings are in baseline.log; no separate completed build measurement. Three-run row timings, mutants, probes, witnesses, setup weakening, survivors and uniqueness were not covered. Skip events are recorded in baseline-summary.json.
