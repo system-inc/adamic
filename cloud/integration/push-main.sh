@@ -191,7 +191,7 @@ if kind == "full" and fast.get("runner") == "pool":
                 boxRecord = json.loads(record)
             except ValueError:
                 continue
-            if boxRecord.get("runner", "box") != "pool" and boxRecord.get("finished") is True and line.startswith("green"):
+            if boxRecord.get("sha") == sha and boxRecord.get("runner", "box") != "pool" and boxRecord.get("finished") is True and line.startswith("green"):
                 boxGreen = True
                 break
         if not boxGreen:
