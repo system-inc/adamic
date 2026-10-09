@@ -22,17 +22,16 @@ func syntaxGrammar() []string {
 		"/* /// <reference path='broken.ts /> */ x; const s=\"/// <reference path='broken.ts />\";",
 	}
 }
+
+const testSyntaxGrammarShards = 9
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestSyntaxGrammar(t *testing.T) {
-	list := manifest(t, syntaxGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
-		}
-	}
-	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
+	estreeAgreementShards(t, testSyntaxGrammarShards, syntaxGrammar())
+}
+func TestSyntaxGrammarShardFailure(t *testing.T) {
+	sources := syntaxGrammar()
+	estreeShardFailure(t, testSyntaxGrammarShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
 }
 
 const testSyntaxMutantsShards = 3
