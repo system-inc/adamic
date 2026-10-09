@@ -1,0 +1,803 @@
+run adamic-gate-pilot-20261009T053823-21599ff8: red, 20656 tests in 826 units, 199 failed, 0 units broken, 187 killed over budget
+KILLED tests-01: over budget, P0
+KILLED tests-12 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/property-shape: over budget, P0
+KILLED tests-13 github.com/system-inc/adamic/stage1/cohere/tsprinter TestStatementsAgainstGoAndPrettier_Setup: over budget, P0
+KILLED tests-13 github.com/system-inc/adamic/stage1/cohere/tsprinter TestStatementsAgainstGoAndPrettier_000: over budget, P0
+KILLED tests-14: over budget, P0
+KILLED tests-20: over budget, P0
+KILLED tests-22: over budget, P0
+KILLED tests-25: over budget, P0
+KILLED tests-27: over budget, P0
+KILLED tests-54 github.com/system-inc/adamic/stage1/cohere/yaml TestScalarsMatchGo: over budget, P0
+KILLED tests-58: over budget, P0
+KILLED tests-67: over budget, P0
+KILLED tests-71: over budget, P0
+KILLED tests-87: over budget, P0
+KILLED tests-96: over budget, P0
+KILLED tests-105: over budget, P0
+KILLED tests-111: over budget, P0
+KILLED tests-112: over budget, P0
+KILLED tests-133: over budget, P0
+KILLED tests-135: over budget, P0
+KILLED tests-153: over budget, P0
+KILLED tests-159: over budget, P0
+KILLED tests-163: over budget, P0
+KILLED tests-167 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_448: over budget, P0
+KILLED tests-167 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4576: over budget, P0
+KILLED tests-167 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4579: over budget, P0
+KILLED tests-167 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4524: over budget, P0
+KILLED tests-167 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4578: over budget, P0
+KILLED tests-168: over budget, P0
+KILLED tests-170 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1008: over budget, P0
+KILLED tests-170 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1004: over budget, P0
+KILLED tests-170 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1003: over budget, P0
+KILLED tests-170 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1009: over budget, P0
+KILLED tests-170 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1006: over budget, P0
+KILLED tests-171: over budget, P0
+KILLED tests-172: over budget, P0
+KILLED tests-173 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_089: over budget, P0
+KILLED tests-173 github.com/system-inc/adamic/stage1/cohere/lint TestClosedComparatorGaps: over budget, P0
+KILLED tests-173 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_083: over budget, P0
+KILLED tests-173 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_088: over budget, P0
+KILLED tests-173 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_081: over budget, P0
+KILLED tests-173 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_084: over budget, P0
+KILLED tests-180 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-183 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-184 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-186: over budget, P0
+KILLED tests-188: over budget, P0
+KILLED tests-189 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1176: over budget, P0
+KILLED tests-189 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1173: over budget, P0
+KILLED tests-189 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1174: over budget, P0
+KILLED tests-189 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1178: over budget, P0
+KILLED tests-189 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_114: over budget, P0
+KILLED tests-190 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_053: over budget, P0
+KILLED tests-190 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_054: over budget, P0
+KILLED tests-190 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_044: over budget, P0
+KILLED tests-190 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_059: over budget, P0
+KILLED tests-190 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_056: over budget, P0
+KILLED tests-191 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-192 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_034: over budget, P0
+KILLED tests-192 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_021: over budget, P0
+KILLED tests-192 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_033: over budget, P0
+KILLED tests-192 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_031: over budget, P0
+KILLED tests-192 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_036: over budget, P0
+KILLED tests-196 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1336: over budget, P0
+KILLED tests-196 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1338: over budget, P0
+KILLED tests-196 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_124: over budget, P0
+KILLED tests-196 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1283: over budget, P0
+KILLED tests-196 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1339: over budget, P0
+KILLED tests-196 github.com/system-inc/adamic/stage1/cohere/lint TestMutants/empty_placeholder_reported: over budget, P0
+KILLED tests-197 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1388: over budget, P0
+KILLED tests-197 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1444: over budget, P0
+KILLED tests-197 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1443: over budget, P0
+KILLED tests-197 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1439: over budget, P0
+KILLED tests-197 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1441: over budget, P0
+KILLED tests-198 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1493: over budget, P0
+KILLED tests-198 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1516: over budget, P0
+KILLED tests-198 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1521: over budget, P0
+KILLED tests-198 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1518: over budget, P0
+KILLED tests-198 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1519: over budget, P0
+KILLED tests-199: over budget, P0
+KILLED tests-200 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1736: over budget, P0
+KILLED tests-200 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1732: over budget, P0
+KILLED tests-200 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1737: over budget, P0
+KILLED tests-200 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1739: over budget, P0
+KILLED tests-200 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1734: over budget, P0
+KILLED tests-201 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_012: over budget, P0
+KILLED tests-201 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_003: over budget, P0
+KILLED tests-201 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_004: over budget, P0
+KILLED tests-201 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_010: over budget, P0
+KILLED tests-201 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_011: over budget, P0
+KILLED tests-202 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0445: over budget, P0
+KILLED tests-202 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0403: over budget, P0
+KILLED tests-202 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0405: over budget, P0
+KILLED tests-202 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0389: over budget, P0
+KILLED tests-202 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0446: over budget, P0
+KILLED tests-203 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1202: over budget, P0
+KILLED tests-203 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1197: over budget, P0
+KILLED tests-203 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1246: over budget, P0
+KILLED tests-203 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1226: over budget, P0
+KILLED tests-203 github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1195: over budget, P0
+KILLED tests-204: over budget, P0
+KILLED tests-214: over budget, P0
+KILLED tests-219 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1844: over budget, P0
+KILLED tests-219 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_176: over budget, P0
+KILLED tests-219 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1806: over budget, P0
+KILLED tests-219 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1848: over budget, P0
+KILLED tests-219 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1846: over budget, P0
+KILLED tests-220 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1961: over budget, P0
+KILLED tests-220 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1958: over budget, P0
+KILLED tests-220 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1959: over budget, P0
+KILLED tests-220 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1963: over budget, P0
+KILLED tests-220 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1964: over budget, P0
+KILLED tests-221 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2011: over budget, P0
+KILLED tests-221 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2013: over budget, P0
+KILLED tests-221 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1986: over budget, P0
+KILLED tests-221 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2071: over budget, P0
+KILLED tests-221 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2014: over budget, P0
+KILLED tests-222 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2174: over budget, P0
+KILLED tests-222 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2173: over budget, P0
+KILLED tests-222 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_208: over budget, P0
+KILLED tests-222 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2171: over budget, P0
+KILLED tests-222 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2176: over budget, P0
+KILLED tests-223 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2223: over budget, P0
+KILLED tests-223 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2253: over budget, P0
+KILLED tests-223 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_218: over budget, P0
+KILLED tests-223 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2279: over budget, P0
+KILLED tests-223 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2224: over budget, P0
+KILLED tests-224 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2326: over budget, P0
+KILLED tests-224 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2328: over budget, P0
+KILLED tests-224 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_229: over budget, P0
+KILLED tests-224 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2329: over budget, P0
+KILLED tests-224 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2384: over budget, P0
+KILLED tests-225 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2475: over budget, P0
+KILLED tests-225 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2436: over budget, P0
+KILLED tests-225 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2488: over budget, P0
+KILLED tests-225 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2437: over budget, P0
+KILLED tests-225 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2434: over budget, P0
+KILLED tests-227 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_013: over budget, P0
+KILLED tests-227 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_008: over budget, P0
+KILLED tests-227 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_014: over budget, P0
+KILLED tests-227 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_011: over budget, P0
+KILLED tests-227 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_009: over budget, P0
+KILLED tests-228 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_073: over budget, P0
+KILLED tests-228 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_074: over budget, P0
+KILLED tests-228 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_071: over budget, P0
+KILLED tests-228 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_076: over budget, P0
+KILLED tests-228 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_061: over budget, P0
+KILLED tests-230 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownStructureLayout_Setup: over budget, P0
+KILLED tests-231 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-232 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-234 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2643: over budget, P0
+KILLED tests-234 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2697: over budget, P0
+KILLED tests-234 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2698: over budget, P0
+KILLED tests-234 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_260: over budget, P0
+KILLED tests-234 github.com/system-inc/adamic/stage1/cohere/lint TestMutants: over budget, P0
+KILLED tests-234 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2699: over budget, P0
+KILLED tests-235: over budget, P0
+KILLED tests-236 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2908: over budget, P0
+KILLED tests-236 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2904: over budget, P0
+KILLED tests-236 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2903: over budget, P0
+KILLED tests-236 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_281: over budget, P0
+KILLED tests-236 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2906: over budget, P0
+KILLED tests-237: over budget, P0
+KILLED tests-238 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3099: over budget, P0
+KILLED tests-238 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3088: over budget, P0
+KILLED tests-238 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3092: over budget, P0
+KILLED tests-238 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3091: over budget, P0
+KILLED tests-238 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3089: over budget, P0
+KILLED tests-239 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3194: over budget, P0
+KILLED tests-239 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3189: over budget, P0
+KILLED tests-239 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3191: over budget, P0
+KILLED tests-239 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3188: over budget, P0
+KILLED tests-239 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3193: over budget, P0
+KILLED tests-240 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3229: over budget, P0
+KILLED tests-240 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3272: over budget, P0
+KILLED tests-241 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_333: over budget, P0
+KILLED tests-241 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3428: over budget, P0
+KILLED tests-241 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3429: over budget, P0
+KILLED tests-241 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3426: over budget, P0
+KILLED tests-241 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3374: over budget, P0
+KILLED tests-243 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3583: over budget, P0
+KILLED tests-243 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_354: over budget, P0
+KILLED tests-243 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3639: over budget, P0
+KILLED tests-243 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3636: over budget, P0
+KILLED tests-243 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3638: over budget, P0
+KILLED tests-244: over budget, P0
+KILLED tests-246 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3944: over budget, P0
+KILLED tests-246 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3946: over budget, P0
+KILLED tests-246 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3949: over budget, P0
+KILLED tests-246 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3948: over budget, P0
+KILLED tests-246 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3953: over budget, P0
+KILLED tests-247 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_396: over budget, P0
+KILLED tests-247 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3984: over budget, P0
+KILLED tests-247 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3973: over budget, P0
+KILLED tests-247 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4058: over budget, P0
+KILLED tests-247 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3986: over budget, P0
+KILLED tests-248: over budget, P0
+KILLED tests-249: over budget, P0
+KILLED tests-250 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4281: over budget, P0
+KILLED tests-250 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4334: over budget, P0
+KILLED tests-250 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4279: over budget, P0
+KILLED tests-250 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4289: over budget, P0
+KILLED tests-250 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4284: over budget, P0
+KILLED tests-255: over budget, P0
+KILLED tests-256 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-257 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4784: over budget, P0
+KILLED tests-257 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4783: over budget, P0
+KILLED tests-257 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4789: over budget, P0
+KILLED tests-257 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_469: over budget, P0
+KILLED tests-257 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4788: over budget, P0
+KILLED tests-258 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4809: over budget, P0
+KILLED tests-258 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4893: over budget, P0
+KILLED tests-258 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4838: over budget, P0
+KILLED tests-258 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4894: over budget, P0
+KILLED tests-258 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4891: over budget, P0
+KILLED tests-260: over budget, P0
+KILLED tests-262: over budget, P0
+KILLED tests-264: over budget, P0
+KILLED tests-266 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_863: over budget, P0
+KILLED tests-266 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_864: over budget, P0
+KILLED tests-266 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_861: over budget, P0
+KILLED tests-266 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_808: over budget, P0
+KILLED tests-266 github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_859: over budget, P0
+KILLED tests-267: over budget, P0
+KILLED tests-268 github.com/system-inc/adamic/stage1/cohere/lint TestDotARename_Setup: over budget, P0
+KILLED tests-270: over budget, P0
+KILLED tests-272 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-273 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-274 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-275 github.com/system-inc/adamic/stage1/cohere/tsprinter TestTSCCorpusAgreement_000: over budget, P0
+KILLED tests-275 github.com/system-inc/adamic/stage1/cohere/tsprinter TestMutants_026: over budget, P0
+KILLED tests-275 github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier: over budget, P0
+KILLED tests-279 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-281 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-282 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-283 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-284 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-286 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-287 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-288: over budget, P0
+KILLED tests-291 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-293 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants: over budget, P0
+KILLED tests-294 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-295 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-296 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-297 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-298 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-299 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-300 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-301 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-302 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-303 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-305 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-307: over budget, P0
+KILLED tests-310: over budget, P0
+KILLED tests-313 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownListLayout_Setup: over budget, P0
+KILLED tests-314 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-315 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-316 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownTextSplitting_Setup: over budget, P0
+KILLED tests-317 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownWhitespaceLayout_Setup: over budget, P0
+KILLED tests-318 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_015: over budget, P0
+KILLED tests-318 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_014: over budget, P0
+KILLED tests-318 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_013: over budget, P0
+KILLED tests-318 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_023: over budget, P0
+KILLED tests-318 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_009: over budget, P0
+KILLED tests-319 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_035: over budget, P0
+KILLED tests-319 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_040: over budget, P0
+KILLED tests-319 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_038: over budget, P0
+KILLED tests-319 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_044: over budget, P0
+KILLED tests-319 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_041: over budget, P0
+KILLED tests-320 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_085: over budget, P0
+KILLED tests-320 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_091: over budget, P0
+KILLED tests-320 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_064: over budget, P0
+KILLED tests-320 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_084: over budget, P0
+KILLED tests-320 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_094: over budget, P0
+KILLED tests-321 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_106: over budget, P0
+KILLED tests-321 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_118: over budget, P0
+KILLED tests-321 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_105: over budget, P0
+KILLED tests-321 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_104: over budget, P0
+KILLED tests-321 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_115: over budget, P0
+KILLED tests-322 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_141: over budget, P0
+KILLED tests-322 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_140: over budget, P0
+KILLED tests-322 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_142: over budget, P0
+KILLED tests-322 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_131: over budget, P0
+KILLED tests-322 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_146: over budget, P0
+KILLED tests-323: over budget, P0
+KILLED tests-324: over budget, P0
+KILLED tests-325 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_244: over budget, P0
+KILLED tests-325 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_229: over budget, P0
+KILLED tests-325 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_245: over budget, P0
+KILLED tests-325 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_246: over budget, P0
+KILLED tests-325 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_247: over budget, P0
+KILLED tests-326 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_286: over budget, P0
+KILLED tests-326 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_282: over budget, P0
+KILLED tests-326 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_287: over budget, P0
+KILLED tests-326 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_284: over budget, P0
+KILLED tests-326 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_285: over budget, P0
+KILLED tests-327 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_316: over budget, P0
+KILLED tests-327 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_313: over budget, P0
+KILLED tests-327 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_317: over budget, P0
+KILLED tests-327 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_314: over budget, P0
+KILLED tests-327 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_315: over budget, P0
+KILLED tests-328 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_340: over budget, P0
+KILLED tests-328 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_349: over budget, P0
+KILLED tests-328 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_343: over budget, P0
+KILLED tests-328 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_348: over budget, P0
+KILLED tests-328 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_351: over budget, P0
+KILLED tests-329 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_373: over budget, P0
+KILLED tests-329 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_374: over budget, P0
+KILLED tests-329 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_375: over budget, P0
+KILLED tests-329 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_378: over budget, P0
+KILLED tests-329 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_376: over budget, P0
+KILLED tests-330 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_404: over budget, P0
+KILLED tests-330 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_406: over budget, P0
+KILLED tests-330 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_409: over budget, P0
+KILLED tests-330 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_412: over budget, P0
+KILLED tests-330 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_407: over budget, P0
+KILLED tests-331 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_419: over budget, P0
+KILLED tests-331 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_417: over budget, P0
+KILLED tests-331 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_418: over budget, P0
+KILLED tests-331 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_436: over budget, P0
+KILLED tests-331 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_428: over budget, P0
+KILLED tests-332 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_461: over budget, P0
+KILLED tests-332 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_462: over budget, P0
+KILLED tests-332 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_453: over budget, P0
+KILLED tests-332 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_463: over budget, P0
+KILLED tests-332 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_460: over budget, P0
+KILLED tests-338: over budget, P0
+KILLED tests-341: over budget, P0
+KILLED tests-349 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants: over budget, P0
+KILLED tests-350 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_493: over budget, P0
+KILLED tests-350 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_499: over budget, P0
+KILLED tests-350 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_496: over budget, P0
+KILLED tests-350 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_498: over budget, P0
+KILLED tests-350 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_500: over budget, P0
+KILLED tests-351 github.com/system-inc/adamic/stage1/cohere/tsprinter TestTSCCorpusAgreement_007: over budget, P0
+KILLED tests-351 github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier: over budget, P0
+KILLED tests-357 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup: over budget, P0
+KILLED tests-359: over budget, P0
+KILLED tests-362 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants: over budget, P0
+KILLED tests-367: over budget, P0
+KILLED tests-376 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-379: over budget, P0
+KILLED tests-380 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_023: over budget, P0
+KILLED tests-380 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_027: over budget, P0
+KILLED tests-380 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_024: over budget, P0
+KILLED tests-380 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_028: over budget, P0
+KILLED tests-380 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_025: over budget, P0
+KILLED tests-381 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-382 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-384 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-385 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-387 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-389: over budget, P0
+KILLED tests-391 github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup: over budget, P0
+KILLED tests-392 github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_003: over budget, P0
+KILLED tests-393 github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_Setup: over budget, P0
+KILLED tests-395 github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_Setup: over budget, P0
+KILLED tests-402: over budget, P0
+KILLED tests-404: over budget, P0
+KILLED tests-414: over budget, P0
+KILLED tests-423: over budget, P0
+KILLED tests-430: over budget, P0
+KILLED tests-431: over budget, P0
+KILLED tests-432: over budget, P0
+KILLED tests-433 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/apparent-shape: over budget, P0
+KILLED tests-441: over budget, P0
+KILLED tests-444 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/type-origin: over budget, P0
+KILLED tests-445 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup: over budget, P0
+KILLED tests-446 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup: over budget, P0
+KILLED tests-452 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_Setup: over budget, P0
+KILLED tests-452 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_000: over budget, P0
+KILLED tests-453 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_001: over budget, P0
+KILLED tests-453 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_Setup: over budget, P0
+KILLED tests-454: over budget, P0
+KILLED tests-455: over budget, P0
+KILLED tests-465: over budget, P0
+KILLED tests-466 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants: over budget, P0
+KILLED tests-467 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants: over budget, P0
+KILLED tests-470 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/scope-locals: over budget, P0
+KILLED tests-471: over budget, P0
+KILLED tests-472: over budget, P0
+KILLED tests-474: over budget, P0
+KILLED tests-485 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-490 github.com/system-inc/adamic/bridge/tsgo TestBridgeOracleSample: over budget, P0
+KILLED tests-492 github.com/system-inc/adamic/bridge/tsgo TestBridgeOutputLength: over budget, P0
+KILLED tests-493 github.com/system-inc/adamic/bridge/tsgo TestBridgeRegion: over budget, P0
+KILLED tests-494: over budget, P0
+KILLED tests-501 github.com/system-inc/adamic/bridge/tsgo TestBridgeTimingRound3Sample: over budget, P0
+KILLED tests-507: over budget, P0
+KILLED tests-513: over budget, P0
+KILLED tests-521 github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup: over budget, P0
+KILLED tests-523: over budget, P0
+FAIL tests-01 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-12 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/property-shape
+FAIL tests-13 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/tsprinter TestStatementsAgainstGoAndPrettier_Setup; github.com/system-inc/adamic/stage1/cohere/tsprinter TestStatementsAgainstGoAndPrettier_000
+FAIL tests-14 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-20 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-22 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-25 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-27 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-54 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/yaml TestScalarsMatchGo
+FAIL tests-58 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-67 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-71 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-87 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-96 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-105 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-111 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-112 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-133 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-135 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-153 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-159 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-163 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-167 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_448; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4576; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4579; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4524; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4578
+FAIL tests-168 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-170 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1008; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1004; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1003; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1009; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1006
+FAIL tests-171 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-172 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-173 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_089; github.com/system-inc/adamic/stage1/cohere/lint TestClosedComparatorGaps; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_083; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_088; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_081; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_084
+FAIL tests-180 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-183 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-184 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-186 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-188 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-189 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1176; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1173; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1174; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1178; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_114
+FAIL tests-190 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_053; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_054; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_044; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_059; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_056
+FAIL tests-191 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-192 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_034; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_021; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_033; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_031; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_036
+FAIL tests-196 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1336; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1338; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_124; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1283; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1339; github.com/system-inc/adamic/stage1/cohere/lint TestMutants/empty_placeholder_reported
+FAIL tests-197 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1388; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1444; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1443; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1439; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1441
+FAIL tests-198 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1493; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1516; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1521; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1518; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1519
+FAIL tests-199 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-200 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1736; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1732; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1737; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1739; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1734
+FAIL tests-201 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_012; github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_003; github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_004; github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_010; github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_011
+FAIL tests-202 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0445; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0403; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0405; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0389; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0446
+FAIL tests-203 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1202; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1197; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1246; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1226; github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_1195
+FAIL tests-204 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-214 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-219 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1844; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_176; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1806; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1848; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1846
+FAIL tests-220 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1961; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1958; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1959; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1963; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1964
+FAIL tests-221 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2011; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2013; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_1986; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2071; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2014
+FAIL tests-222 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2174; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2173; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_208; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2171; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2176
+FAIL tests-223 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2223; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2253; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_218; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2279; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2224
+FAIL tests-224 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2326; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2328; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_229; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2329; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2384
+FAIL tests-225 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2475; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2436; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2488; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2437; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2434
+FAIL tests-227 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_013; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_008; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_014; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_011; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_009
+FAIL tests-228 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_073; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_074; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_071; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_076; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_061
+FAIL tests-230 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownStructureLayout_Setup
+FAIL tests-231 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-232 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-234 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2643; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2697; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2698; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_260; github.com/system-inc/adamic/stage1/cohere/lint TestMutants; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2699
+FAIL tests-235 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-236 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2908; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2904; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2903; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_281; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_2906
+FAIL tests-237 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-238 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3099; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3088; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3092; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3091; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3089
+FAIL tests-239 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3194; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3189; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3191; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3188; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3193
+FAIL tests-240 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3229; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3272
+FAIL tests-241 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_333; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3428; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3429; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3426; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3374
+FAIL tests-243 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3583; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_354; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3639; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3636; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3638
+FAIL tests-244 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-246 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3944; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3946; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3949; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3948; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3953
+FAIL tests-247 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_396; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3984; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3973; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4058; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_3986
+FAIL tests-248 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-249 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-250 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4281; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4334; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4279; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4289; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4284
+FAIL tests-255 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-256 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-257 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4784; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4783; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4789; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_469; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4788
+FAIL tests-258 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4809; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4893; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4838; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4894; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_4891
+FAIL tests-260 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-262 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-264 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-266 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_863; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_864; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_861; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_808; github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree_859
+FAIL tests-267 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-268 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestDotARename_Setup
+FAIL tests-270 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-272 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-273 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-274 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-275 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/tsprinter TestTSCCorpusAgreement_000; github.com/system-inc/adamic/stage1/cohere/tsprinter TestMutants_026; github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+FAIL tests-279 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-281 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-282 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-283 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-284 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-286 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-287 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-288 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-291 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-293 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants
+FAIL tests-294 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-295 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-296 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-297 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-298 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-299 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-300 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-301 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-302 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-303 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-305 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-307 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-310 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-313 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownListLayout_Setup
+FAIL tests-314 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-315 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-316 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownTextSplitting_Setup
+FAIL tests-317 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownWhitespaceLayout_Setup
+FAIL tests-318 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_015; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_014; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_013; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_023; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_009
+FAIL tests-319 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_035; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_040; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_038; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_044; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_041
+FAIL tests-320 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_085; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_091; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_064; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_084; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_094
+FAIL tests-321 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_106; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_118; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_105; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_104; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_115
+FAIL tests-322 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_141; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_140; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_142; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_131; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_146
+FAIL tests-323 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-324 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-325 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_244; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_229; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_245; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_246; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_247
+FAIL tests-326 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_286; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_282; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_287; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_284; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_285
+FAIL tests-327 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_316; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_313; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_317; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_314; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_315
+FAIL tests-328 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_340; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_349; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_343; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_348; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_351
+FAIL tests-329 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_373; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_374; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_375; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_378; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_376
+FAIL tests-330 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_404; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_406; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_409; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_412; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_407
+FAIL tests-331 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_419; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_417; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_418; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_436; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_428
+FAIL tests-332 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_461; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_462; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_453; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_463; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_460
+FAIL tests-338 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL github.com/system-inc/adamic/internal/native TestDecodeASCIIUnit07 (tests-340)
+    decode_ascii_test.go:45: {"prefixes":92014,"expandedCases":95694560,"seed":"0xdec0de"}
+    decode_ascii_test.go:171: /tmp/adamic-gate/TestDecodeASCIIUnit07176418958/001/decode-native [/home/agent/.cache/adamic-build/b98710c147ea88444b400a9bf077b4f74c5322837ed67107ac413e35473c6150/cases_014336_016384.bin]: fork/exec /tmp/adamic-gate/TestDecodeASCIIUnit07176418958/001/decode-native: text file busy
+    split_units_test.go:287: unit elapsed 22.969s
+FAIL github.com/system-inc/adamic/internal/native TestDecodeASCIIUnit24 (tests-340)
+    decode_ascii_test.go:256: /tmp/adamic-gate/TestDecodeASCIIUnit24521826484/001/decode-native [/home/agent/.cache/adamic-build/b98710c147ea88444b400a9bf077b4f74c5322837ed67107ac413e35473c6150/cases_049152_051200.bin]: fork/exec /tmp/adamic-gate/TestDecodeASCIIUnit24521826484/001/decode-native: text file busy
+    split_units_test.go:287: unit elapsed 22.969s
+FAIL tests-341 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-349 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants
+FAIL tests-350 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_493; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_499; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_496; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_498; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_500
+FAIL tests-351 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/tsprinter TestTSCCorpusAgreement_007; github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+FAIL tests-357 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup
+FAIL tests-359 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-362 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants
+FAIL tests-367 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-376 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-379 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-380 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_023; github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_027; github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_024; github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_028; github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_025
+FAIL tests-381 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-382 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-384 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-385 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-387 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-389 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-391 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup
+FAIL tests-392 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_003
+FAIL tests-393 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_Setup
+FAIL tests-395 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_Setup
+FAIL tests-402 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-404 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-414 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-423 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-430 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-431 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-432 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-433 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/apparent-shape
+FAIL tests-441 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-444 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/type-origin
+FAIL tests-445 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup
+FAIL tests-446 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup
+FAIL tests-452 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_Setup; github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_000
+FAIL tests-453 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_001; github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterMutants_Setup
+FAIL tests-454 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-455 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-465 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-466 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants
+FAIL tests-467 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants
+FAIL tests-470 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/scope-locals
+FAIL tests-471 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-472 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-474 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-485 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-490 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/bridge/tsgo TestBridgeOracleSample
+FAIL tests-492 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/bridge/tsgo TestBridgeOutputLength
+FAIL tests-493 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/bridge/tsgo TestBridgeRegion
+FAIL tests-494 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-501 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/bridge/tsgo TestBridgeTimingRound3Sample
+FAIL tests-507 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller (package) (tests-512)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller [setup failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller [setup failed]
+FAIL tests-513 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-521 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeConfigGuardAndMutant_Setup
+FAIL tests-523 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-533)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.014s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-534)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.037s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-536)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.016s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-539)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.051s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-540)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.017s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-546)
+    rules_agree_shards_test.go:154: build lint-rules-agree-lowered e485ad9040ca miss 67.68
+    lint_test.go:327: TestRulesAgree (setup lowered): 67.699s
+    lint_test.go:329: cooked: setup over 60s budget
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-556)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.063s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-579)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.033s
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_Setup (tests-723)
+    three_port_mutants_split_test.go:368: shared setup child:
+    three_port_mutants_split_test.go:330: build three-port-mutants-go-oracle-v1 94cbbc658470 miss 8.10
+    three_port_mutants_split_test.go:322: build three-port-mutant-lowered-member-computed 385b54f0974c miss 45.41
+    three_port_mutants_split_test.go:322: build three-port-mutant-lowered-logical-rebalance d21c4b659c8c miss 46.04
+    three_port_mutants_split_test.go:322: build three-port-mutant-lowered-merged-jsdoc-value acffd03bd3e8 miss 46.31
+    three_port_mutants_split_test.go:370: cooked: TestThreePortMutants_Setup exceeded 90s deadline
