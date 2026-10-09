@@ -56,6 +56,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if err := l.functionAnnotations(module); err != nil {
+		return err
+	}
 	// Validate arguments before visiting their annotations, so a failed contract
 	// names the actual argument and parameter even for an inline arrow.
 	var contractError error
@@ -84,6 +87,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
+		}
+		if err := l.functionCallRefusal(node); err != nil {
+			found = err
+			return true
 		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)

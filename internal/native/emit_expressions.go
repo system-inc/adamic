@@ -294,7 +294,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				if e.program.PackedCountNeeded(expression.Function) {
 					constructor = "adamic_counted_closure_canonical"
 				}
-				return e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+				closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+				e.line("%s->source_length = %d;", closure, target.SourceLength)
+				return closure
 			}
 		}
 		constructor := "adamic_closure_new"
@@ -302,6 +304,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			constructor = "adamic_counted_closure_new"
 		}
 		closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
+		e.line("%s->source_length = %d;", closure, target.SourceLength)
 		if e.program.Functions[expression.Function].Receiver {
 			e.line("%s->receiver = true;", closure)
 		}

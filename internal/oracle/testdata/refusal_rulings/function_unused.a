@@ -1,0 +1,3 @@
+// a-check: refused Function annotation
+function take(value: Function): void {}
+console.log('ok');
