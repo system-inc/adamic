@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -50,7 +50,7 @@
+             return this.make('JsxNamespacedName', pos, [name, right]);
+         }
+         if(isThis) {
+-            name = this.make('ThisKeyword', pos);
++            name = this.make('ThisKeyword', pos + 1);
+         }
+         if(tag) {
+             while(this.parser.kind() === 'DotToken') {

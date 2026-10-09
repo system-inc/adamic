@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -68,7 +68,7 @@
+         this.parser.node(id).text = this.parser.scanner.value;
+         this.parser.node(id).semantic = whitespace ? '1' : '0';
+         this.parser.scanner.scanJsx();
+-        this.parser.node(id).end = this.parser.scanner.fullStart;
++        this.parser.node(id).end = this.parser.scanner.fullStart + 1;
+         return id;
+     }
+     finishGreater(expression: boolean): void {

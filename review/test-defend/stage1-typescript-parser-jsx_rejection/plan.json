@@ -1,0 +1,50 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 34,
+    "old": "JSX expected name at",
+    "new": "JSX invalid name at",
+    "aim": "member diagnostic class, contrasted with private-member boundary"
+  },
+  {
+    "id": "D2",
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 941,
+    "old": "while(this.code() === 45 || isIdentifierPart(this.code()))",
+    "new": "while(this.code() === 46 || isIdentifierPart(this.code()))",
+    "aim": "dash extension used by the permissive member variant versus legal names"
+  },
+  {
+    "id": "D3",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 55,
+    "old": "if(tag) {",
+    "new": "if(!tag) {",
+    "aim": "member descent versus plain tag and attribute names"
+  },
+  {
+    "id": "D4",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 53,
+    "old": "name = this.make('ThisKeyword', pos);",
+    "new": "name = this.make('ThisKeyword', pos + 1);",
+    "aim": "Node/native shared source, this-tag position boundary"
+  },
+  {
+    "id": "D5",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 71,
+    "old": "this.parser.node(id).end = this.parser.scanner.fullStart;",
+    "new": "this.parser.node(id).end = this.parser.scanner.fullStart + 1;",
+    "aim": "Node/native shared text-end byte boundary, including Unicode and CRLF"
+  },
+  {
+    "id": "D6",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 49,
+    "old": "const right = this.identifier();\n            return this.make('JsxNamespacedName', pos, [name, right]);",
+    "new": "const right = this.identifier();\n            return this.make('JsxNamespacedName', pos, [right, name]);",
+    "aim": "Node/native shared namespace input, child order"
+  }
+]

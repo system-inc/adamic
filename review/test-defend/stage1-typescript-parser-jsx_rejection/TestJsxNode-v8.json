@@ -1,0 +1,3391 @@
+{
+  "file:///workspace/adamic/stage1/typescript/parser/main.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 2256,
+      "count": 1
+    },
+    {
+      "startOffset": 1454,
+      "endOffset": 1518,
+      "count": 0
+    },
+    {
+      "startOffset": 1592,
+      "endOffset": 1620,
+      "count": 0
+    },
+    {
+      "startOffset": 1658,
+      "endOffset": 1698,
+      "count": 0
+    },
+    {
+      "startOffset": 1839,
+      "endOffset": 2105,
+      "count": 349
+    },
+    {
+      "startOffset": 1866,
+      "endOffset": 1899,
+      "count": 1
+    },
+    {
+      "startOffset": 1899,
+      "endOffset": 2105,
+      "count": 348
+    },
+    {
+      "startOffset": 2125,
+      "endOffset": 2165,
+      "count": 0
+    },
+    {
+      "startOffset": 2167,
+      "endOffset": 2255,
+      "count": 0
+    },
+    {
+      "startOffset": 165,
+      "endOffset": 1398,
+      "count": 348
+    },
+    {
+      "startOffset": 286,
+      "endOffset": 324,
+      "count": 0
+    },
+    {
+      "startOffset": 402,
+      "endOffset": 421,
+      "count": 0
+    },
+    {
+      "startOffset": 454,
+      "endOffset": 458,
+      "count": 0
+    },
+    {
+      "startOffset": 623,
+      "endOffset": 915,
+      "count": 19461
+    },
+    {
+      "startOffset": 681,
+      "endOffset": 685,
+      "count": 0
+    },
+    {
+      "startOffset": 717,
+      "endOffset": 794,
+      "count": 234
+    },
+    {
+      "startOffset": 827,
+      "endOffset": 830,
+      "count": 19053
+    },
+    {
+      "startOffset": 831,
+      "endOffset": 871,
+      "count": 408
+    },
+    {
+      "startOffset": 845,
+      "endOffset": 848,
+      "count": 174
+    },
+    {
+      "startOffset": 849,
+      "endOffset": 871,
+      "count": 234
+    },
+    {
+      "startOffset": 864,
+      "endOffset": 867,
+      "count": 0
+    },
+    {
+      "startOffset": 963,
+      "endOffset": 1024,
+      "count": 0
+    },
+    {
+      "startOffset": 1082,
+      "endOffset": 1089,
+      "count": 0
+    },
+    {
+      "startOffset": 1121,
+      "endOffset": 1135,
+      "count": 0
+    },
+    {
+      "startOffset": 1197,
+      "endOffset": 1205,
+      "count": 0
+    },
+    {
+      "startOffset": 1223,
+      "endOffset": 1237,
+      "count": 0
+    },
+    {
+      "startOffset": 1277,
+      "endOffset": 1308,
+      "count": 0
+    },
+    {
+      "startOffset": 1359,
+      "endOffset": 1370,
+      "count": 0
+    }
+  ],
+  "file:///workspace/adamic/stage1/typescript/parser/parser.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 63248,
+      "count": 1
+    },
+    {
+      "startOffset": 363,
+      "endOffset": 40755,
+      "count": 348
+    },
+    {
+      "startOffset": 469,
+      "endOffset": 783,
+      "count": 348
+    },
+    {
+      "startOffset": 578,
+      "endOffset": 602,
+      "count": 347
+    },
+    {
+      "startOffset": 603,
+      "endOffset": 627,
+      "count": 346
+    },
+    {
+      "startOffset": 628,
+      "endOffset": 652,
+      "count": 345
+    },
+    {
+      "startOffset": 689,
+      "endOffset": 713,
+      "count": 344
+    },
+    {
+      "startOffset": 788,
+      "endOffset": 836,
+      "count": 28764
+    },
+    {
+      "startOffset": 841,
+      "endOffset": 884,
+      "count": 6536
+    },
+    {
+      "startOffset": 889,
+      "endOffset": 967,
+      "count": 7752
+    },
+    {
+      "startOffset": 936,
+      "endOffset": 960,
+      "count": 0
+    },
+    {
+      "startOffset": 972,
+      "endOffset": 1133,
+      "count": 7124
+    },
+    {
+      "startOffset": 1138,
+      "endOffset": 1312,
+      "count": 82
+    },
+    {
+      "startOffset": 1317,
+      "endOffset": 1517,
+      "count": 1016
+    },
+    {
+      "startOffset": 1366,
+      "endOffset": 1490,
+      "count": 0
+    },
+    {
+      "startOffset": 1522,
+      "endOffset": 2138,
+      "count": 68
+    },
+    {
+      "startOffset": 1738,
+      "endOffset": 1843,
+      "count": 0
+    },
+    {
+      "startOffset": 1926,
+      "endOffset": 1933,
+      "count": 62
+    },
+    {
+      "startOffset": 1934,
+      "endOffset": 2047,
+      "count": 6
+    },
+    {
+      "startOffset": 1979,
+      "endOffset": 1982,
+      "count": 2
+    },
+    {
+      "startOffset": 1983,
+      "endOffset": 2047,
+      "count": 4
+    },
+    {
+      "startOffset": 2033,
+      "endOffset": 2039,
+      "count": 0
+    },
+    {
+      "startOffset": 2143,
+      "endOffset": 2372,
+      "count": 2204
+    },
+    {
+      "startOffset": 2377,
+      "endOffset": 6816,
+      "count": 306
+    },
+    {
+      "startOffset": 2474,
+      "endOffset": 2713,
+      "count": 0
+    },
+    {
+      "startOffset": 2726,
+      "endOffset": 2748,
+      "count": 4
+    },
+    {
+      "startOffset": 2761,
+      "endOffset": 2782,
+      "count": 4
+    },
+    {
+      "startOffset": 2795,
+      "endOffset": 2816,
+      "count": 4
+    },
+    {
+      "startOffset": 2829,
+      "endOffset": 2905,
+      "count": 4
+    },
+    {
+      "startOffset": 2918,
+      "endOffset": 2936,
+      "count": 2
+    },
+    {
+      "startOffset": 2949,
+      "endOffset": 3056,
+      "count": 2
+    },
+    {
+      "startOffset": 3069,
+      "endOffset": 3088,
+      "count": 2
+    },
+    {
+      "startOffset": 3101,
+      "endOffset": 3121,
+      "count": 2
+    },
+    {
+      "startOffset": 3134,
+      "endOffset": 3153,
+      "count": 2
+    },
+    {
+      "startOffset": 3166,
+      "endOffset": 3185,
+      "count": 4
+    },
+    {
+      "startOffset": 3198,
+      "endOffset": 3255,
+      "count": 4
+    },
+    {
+      "startOffset": 3268,
+      "endOffset": 3603,
+      "count": 0
+    },
+    {
+      "startOffset": 3616,
+      "endOffset": 3677,
+      "count": 0
+    },
+    {
+      "startOffset": 3690,
+      "endOffset": 3750,
+      "count": 0
+    },
+    {
+      "startOffset": 3763,
+      "endOffset": 3823,
+      "count": 2
+    },
+    {
+      "startOffset": 3836,
+      "endOffset": 5231,
+      "count": 0
+    },
+    {
+      "startOffset": 5244,
+      "endOffset": 5778,
+      "count": 0
+    },
+    {
+      "startOffset": 5791,
+      "endOffset": 5872,
+      "count": 0
+    },
+    {
+      "startOffset": 5885,
+      "endOffset": 5958,
+      "count": 0
+    },
+    {
+      "startOffset": 5971,
+      "endOffset": 6162,
+      "count": 0
+    },
+    {
+      "startOffset": 6175,
+      "endOffset": 6513,
+      "count": 2
+    },
+    {
+      "startOffset": 6526,
+      "endOffset": 6800,
+      "count": 292
+    },
+    {
+      "startOffset": 6584,
+      "endOffset": 6618,
+      "count": 0
+    },
+    {
+      "startOffset": 6685,
+      "endOffset": 6800,
+      "count": 0
+    },
+    {
+      "startOffset": 6821,
+      "endOffset": 7658,
+      "count": 354
+    },
+    {
+      "startOffset": 6983,
+      "endOffset": 6998,
+      "count": 10634
+    },
+    {
+      "startOffset": 7018,
+      "endOffset": 7066,
+      "count": 1368
+    },
+    {
+      "startOffset": 7088,
+      "endOffset": 7146,
+      "count": 942
+    },
+    {
+      "startOffset": 7166,
+      "endOffset": 7191,
+      "count": 3060
+    },
+    {
+      "startOffset": 7211,
+      "endOffset": 7264,
+      "count": 2890
+    },
+    {
+      "startOffset": 7290,
+      "endOffset": 7311,
+      "count": 1512
+    },
+    {
+      "startOffset": 7332,
+      "endOffset": 7348,
+      "count": 2
+    },
+    {
+      "startOffset": 7371,
+      "endOffset": 7389,
+      "count": 62
+    },
+    {
+      "startOffset": 7415,
+      "endOffset": 7443,
+      "count": 242
+    },
+    {
+      "startOffset": 7472,
+      "endOffset": 7496,
+      "count": 8
+    },
+    {
+      "startOffset": 7526,
+      "endOffset": 7587,
+      "count": 0
+    },
+    {
+      "startOffset": 7615,
+      "endOffset": 7640,
+      "count": 8
+    },
+    {
+      "startOffset": 7663,
+      "endOffset": 7810,
+      "count": 0
+    },
+    {
+      "startOffset": 7815,
+      "endOffset": 8037,
+      "count": 0
+    },
+    {
+      "startOffset": 8042,
+      "endOffset": 8424,
+      "count": 0
+    },
+    {
+      "startOffset": 8429,
+      "endOffset": 8786,
+      "count": 2
+    },
+    {
+      "startOffset": 8791,
+      "endOffset": 9156,
+      "count": 2
+    },
+    {
+      "startOffset": 9161,
+      "endOffset": 10262,
+      "count": 0
+    },
+    {
+      "startOffset": 10267,
+      "endOffset": 10610,
+      "count": 0
+    },
+    {
+      "startOffset": 10645,
+      "endOffset": 11131,
+      "count": 12
+    },
+    {
+      "startOffset": 10807,
+      "endOffset": 11019,
+      "count": 16
+    },
+    {
+      "startOffset": 10946,
+      "endOffset": 11019,
+      "count": 8
+    },
+    {
+      "startOffset": 11136,
+      "endOffset": 12178,
+      "count": 12
+    },
+    {
+      "startOffset": 11227,
+      "endOffset": 11265,
+      "count": 4
+    },
+    {
+      "startOffset": 11265,
+      "endOffset": 11336,
+      "count": 8
+    },
+    {
+      "startOffset": 11336,
+      "endOffset": 12108,
+      "count": 10
+    },
+    {
+      "startOffset": 11531,
+      "endOffset": 11591,
+      "count": 2
+    },
+    {
+      "startOffset": 11688,
+      "endOffset": 11784,
+      "count": 2
+    },
+    {
+      "startOffset": 11832,
+      "endOffset": 11920,
+      "count": 2
+    },
+    {
+      "startOffset": 12035,
+      "endOffset": 12073,
+      "count": 4
+    },
+    {
+      "startOffset": 12073,
+      "endOffset": 12108,
+      "count": 6
+    },
+    {
+      "startOffset": 12108,
+      "endOffset": 12177,
+      "count": 8
+    },
+    {
+      "startOffset": 12183,
+      "endOffset": 12542,
+      "count": 24
+    },
+    {
+      "startOffset": 12321,
+      "endOffset": 12515,
+      "count": 0
+    },
+    {
+      "startOffset": 12547,
+      "endOffset": 13806,
+      "count": 0
+    },
+    {
+      "startOffset": 13811,
+      "endOffset": 25415,
+      "count": 28
+    },
+    {
+      "startOffset": 13989,
+      "endOffset": 14434,
+      "count": 0
+    },
+    {
+      "startOffset": 14548,
+      "endOffset": 14816,
+      "count": 0
+    },
+    {
+      "startOffset": 14859,
+      "endOffset": 14946,
+      "count": 0
+    },
+    {
+      "startOffset": 15027,
+      "endOffset": 15270,
+      "count": 0
+    },
+    {
+      "startOffset": 15310,
+      "endOffset": 15761,
+      "count": 0
+    },
+    {
+      "startOffset": 15803,
+      "endOffset": 16624,
+      "count": 0
+    },
+    {
+      "startOffset": 16701,
+      "endOffset": 16735,
+      "count": 0
+    },
+    {
+      "startOffset": 16737,
+      "endOffset": 16786,
+      "count": 0
+    },
+    {
+      "startOffset": 16829,
+      "endOffset": 17315,
+      "count": 0
+    },
+    {
+      "startOffset": 17391,
+      "endOffset": 17422,
+      "count": 0
+    },
+    {
+      "startOffset": 17424,
+      "endOffset": 17998,
+      "count": 0
+    },
+    {
+      "startOffset": 18077,
+      "endOffset": 18766,
+      "count": 0
+    },
+    {
+      "startOffset": 18808,
+      "endOffset": 18859,
+      "count": 0
+    },
+    {
+      "startOffset": 18903,
+      "endOffset": 18994,
+      "count": 2
+    },
+    {
+      "startOffset": 18943,
+      "endOffset": 18962,
+      "count": 0
+    },
+    {
+      "startOffset": 18994,
+      "endOffset": 23208,
+      "count": 26
+    },
+    {
+      "startOffset": 19040,
+      "endOffset": 20679,
+      "count": 0
+    },
+    {
+      "startOffset": 20944,
+      "endOffset": 21379,
+      "count": 0
+    },
+    {
+      "startOffset": 21524,
+      "endOffset": 21559,
+      "count": 24
+    },
+    {
+      "startOffset": 21560,
+      "endOffset": 21594,
+      "count": 24
+    },
+    {
+      "startOffset": 21595,
+      "endOffset": 21629,
+      "count": 24
+    },
+    {
+      "startOffset": 21630,
+      "endOffset": 21667,
+      "count": 24
+    },
+    {
+      "startOffset": 21668,
+      "endOffset": 21701,
+      "count": 24
+    },
+    {
+      "startOffset": 21702,
+      "endOffset": 21736,
+      "count": 24
+    },
+    {
+      "startOffset": 21737,
+      "endOffset": 21769,
+      "count": 24
+    },
+    {
+      "startOffset": 21771,
+      "endOffset": 22293,
+      "count": 2
+    },
+    {
+      "startOffset": 21850,
+      "endOffset": 22225,
+      "count": 0
+    },
+    {
+      "startOffset": 22293,
+      "endOffset": 23208,
+      "count": 24
+    },
+    {
+      "startOffset": 22336,
+      "endOffset": 22368,
+      "count": 0
+    },
+    {
+      "startOffset": 22370,
+      "endOffset": 22419,
+      "count": 0
+    },
+    {
+      "startOffset": 22460,
+      "endOffset": 22802,
+      "count": 0
+    },
+    {
+      "startOffset": 22969,
+      "endOffset": 23002,
+      "count": 4
+    },
+    {
+      "startOffset": 23004,
+      "endOffset": 23136,
+      "count": 4
+    },
+    {
+      "startOffset": 23332,
+      "endOffset": 23547,
+      "count": 0
+    },
+    {
+      "startOffset": 23549,
+      "endOffset": 23582,
+      "count": 2
+    },
+    {
+      "startOffset": 23583,
+      "endOffset": 24298,
+      "count": 2
+    },
+    {
+      "startOffset": 23637,
+      "endOffset": 23915,
+      "count": 0
+    },
+    {
+      "startOffset": 24095,
+      "endOffset": 24154,
+      "count": 0
+    },
+    {
+      "startOffset": 24250,
+      "endOffset": 24271,
+      "count": 0
+    },
+    {
+      "startOffset": 24376,
+      "endOffset": 24872,
+      "count": 0
+    },
+    {
+      "startOffset": 24897,
+      "endOffset": 24913,
+      "count": 26
+    },
+    {
+      "startOffset": 24914,
+      "endOffset": 24949,
+      "count": 26
+    },
+    {
+      "startOffset": 24950,
+      "endOffset": 24983,
+      "count": 0
+    },
+    {
+      "startOffset": 24985,
+      "endOffset": 25388,
+      "count": 0
+    },
+    {
+      "startOffset": 25420,
+      "endOffset": 25930,
+      "count": 2
+    },
+    {
+      "startOffset": 25565,
+      "endOffset": 25601,
+      "count": 0
+    },
+    {
+      "startOffset": 25649,
+      "endOffset": 25685,
+      "count": 0
+    },
+    {
+      "startOffset": 25762,
+      "endOffset": 25873,
+      "count": 0
+    },
+    {
+      "startOffset": 25935,
+      "endOffset": 27367,
+      "count": 0
+    },
+    {
+      "startOffset": 27372,
+      "endOffset": 27582,
+      "count": 0
+    },
+    {
+      "startOffset": 27587,
+      "endOffset": 30818,
+      "count": 2
+    },
+    {
+      "startOffset": 27762,
+      "endOffset": 30717,
+      "count": 0
+    },
+    {
+      "startOffset": 30823,
+      "endOffset": 32316,
+      "count": 10
+    },
+    {
+      "startOffset": 30952,
+      "endOffset": 32247,
+      "count": 8
+    },
+    {
+      "startOffset": 31079,
+      "endOffset": 31156,
+      "count": 0
+    },
+    {
+      "startOffset": 31355,
+      "endOffset": 31514,
+      "count": 0
+    },
+    {
+      "startOffset": 31565,
+      "endOffset": 31625,
+      "count": 0
+    },
+    {
+      "startOffset": 31722,
+      "endOffset": 31782,
+      "count": 0
+    },
+    {
+      "startOffset": 31965,
+      "endOffset": 32063,
+      "count": 0
+    },
+    {
+      "startOffset": 32212,
+      "endOffset": 32247,
+      "count": 0
+    },
+    {
+      "startOffset": 32321,
+      "endOffset": 33878,
+      "count": 356
+    },
+    {
+      "startOffset": 32470,
+      "endOffset": 32679,
+      "count": 0
+    },
+    {
+      "startOffset": 32680,
+      "endOffset": 32701,
+      "count": 0
+    },
+    {
+      "startOffset": 32703,
+      "endOffset": 33750,
+      "count": 0
+    },
+    {
+      "startOffset": 33751,
+      "endOffset": 33772,
+      "count": 0
+    },
+    {
+      "startOffset": 33807,
+      "endOffset": 33831,
+      "count": 0
+    },
+    {
+      "startOffset": 33832,
+      "endOffset": 33855,
+      "count": 0
+    },
+    {
+      "startOffset": 33913,
+      "endOffset": 34272,
+      "count": 0
+    },
+    {
+      "startOffset": 34354,
+      "endOffset": 34596,
+      "count": 348
+    },
+    {
+      "startOffset": 34601,
+      "endOffset": 34843,
+      "count": 2
+    },
+    {
+      "startOffset": 34848,
+      "endOffset": 36224,
+      "count": 8
+    },
+    {
+      "startOffset": 35013,
+      "endOffset": 35091,
+      "count": 2
+    },
+    {
+      "startOffset": 35386,
+      "endOffset": 35435,
+      "count": 10
+    },
+    {
+      "startOffset": 35605,
+      "endOffset": 35776,
+      "count": 0
+    },
+    {
+      "startOffset": 35819,
+      "endOffset": 35901,
+      "count": 0
+    },
+    {
+      "startOffset": 35994,
+      "endOffset": 36008,
+      "count": 0
+    },
+    {
+      "startOffset": 36229,
+      "endOffset": 37073,
+      "count": 0
+    },
+    {
+      "startOffset": 37078,
+      "endOffset": 38411,
+      "count": 0
+    },
+    {
+      "startOffset": 38440,
+      "endOffset": 40405,
+      "count": 350
+    },
+    {
+      "startOffset": 38600,
+      "endOffset": 38615,
+      "count": 4660
+    },
+    {
+      "startOffset": 38635,
+      "endOffset": 38683,
+      "count": 1048
+    },
+    {
+      "startOffset": 38705,
+      "endOffset": 38763,
+      "count": 10
+    },
+    {
+      "startOffset": 38783,
+      "endOffset": 38808,
+      "count": 348
+    },
+    {
+      "startOffset": 38828,
+      "endOffset": 38886,
+      "count": 1050
+    },
+    {
+      "startOffset": 38912,
+      "endOffset": 38933,
+      "count": 0
+    },
+    {
+      "startOffset": 38959,
+      "endOffset": 38980,
+      "count": 2
+    },
+    {
+      "startOffset": 39001,
+      "endOffset": 39017,
+      "count": 0
+    },
+    {
+      "startOffset": 39037,
+      "endOffset": 39103,
+      "count": 0
+    },
+    {
+      "startOffset": 39132,
+      "endOffset": 39156,
+      "count": 0
+    },
+    {
+      "startOffset": 39186,
+      "endOffset": 39211,
+      "count": 2
+    },
+    {
+      "startOffset": 39237,
+      "endOffset": 39258,
+      "count": 0
+    },
+    {
+      "startOffset": 39284,
+      "endOffset": 39305,
+      "count": 0
+    },
+    {
+      "startOffset": 39332,
+      "endOffset": 39354,
+      "count": 348
+    },
+    {
+      "startOffset": 39384,
+      "endOffset": 39409,
+      "count": 348
+    },
+    {
+      "startOffset": 39439,
+      "endOffset": 39464,
+      "count": 2
+    },
+    {
+      "startOffset": 39484,
+      "endOffset": 39499,
+      "count": 348
+    },
+    {
+      "startOffset": 39537,
+      "endOffset": 39570,
+      "count": 0
+    },
+    {
+      "startOffset": 39598,
+      "endOffset": 39621,
+      "count": 2
+    },
+    {
+      "startOffset": 39647,
+      "endOffset": 39738,
+      "count": 2
+    },
+    {
+      "startOffset": 39761,
+      "endOffset": 39779,
+      "count": 0
+    },
+    {
+      "startOffset": 39801,
+      "endOffset": 39850,
+      "count": 0
+    },
+    {
+      "startOffset": 39877,
+      "endOffset": 39899,
+      "count": 0
+    },
+    {
+      "startOffset": 39924,
+      "endOffset": 39944,
+      "count": 0
+    },
+    {
+      "startOffset": 39968,
+      "endOffset": 39989,
+      "count": 0
+    },
+    {
+      "startOffset": 40013,
+      "endOffset": 40080,
+      "count": 0
+    },
+    {
+      "startOffset": 40104,
+      "endOffset": 40125,
+      "count": 0
+    },
+    {
+      "startOffset": 40149,
+      "endOffset": 40216,
+      "count": 0
+    },
+    {
+      "startOffset": 40237,
+      "endOffset": 40256,
+      "count": 0
+    },
+    {
+      "startOffset": 40277,
+      "endOffset": 40342,
+      "count": 0
+    },
+    {
+      "startOffset": 40363,
+      "endOffset": 40387,
+      "count": 0
+    },
+    {
+      "startOffset": 40410,
+      "endOffset": 40467,
+      "count": 2
+    },
+    {
+      "startOffset": 40472,
+      "endOffset": 40537,
+      "count": 0
+    },
+    {
+      "startOffset": 40542,
+      "endOffset": 40600,
+      "count": 0
+    },
+    {
+      "startOffset": 40605,
+      "endOffset": 40730,
+      "count": 0
+    },
+    {
+      "startOffset": 40761,
+      "endOffset": 41416,
+      "count": 350
+    },
+    {
+      "startOffset": 41421,
+      "endOffset": 41855,
+      "count": 8
+    },
+    {
+      "startOffset": 41510,
+      "endOffset": 41546,
+      "count": 0
+    },
+    {
+      "startOffset": 41631,
+      "endOffset": 41716,
+      "count": 0
+    },
+    {
+      "startOffset": 41757,
+      "endOffset": 41854,
+      "count": 0
+    },
+    {
+      "startOffset": 41860,
+      "endOffset": 42071,
+      "count": 0
+    },
+    {
+      "startOffset": 42076,
+      "endOffset": 42703,
+      "count": 2
+    },
+    {
+      "startOffset": 42365,
+      "endOffset": 42380,
+      "count": 0
+    },
+    {
+      "startOffset": 42528,
+      "endOffset": 42563,
+      "count": 0
+    },
+    {
+      "startOffset": 42708,
+      "endOffset": 48272,
+      "count": 660
+    },
+    {
+      "startOffset": 42831,
+      "endOffset": 48245,
+      "count": 668
+    },
+    {
+      "startOffset": 42881,
+      "endOffset": 42916,
+      "count": 52
+    },
+    {
+      "startOffset": 42918,
+      "endOffset": 43272,
+      "count": 0
+    },
+    {
+      "startOffset": 43356,
+      "endOffset": 43564,
+      "count": 0
+    },
+    {
+      "startOffset": 43633,
+      "endOffset": 43667,
+      "count": 0
+    },
+    {
+      "startOffset": 43669,
+      "endOffset": 43806,
+      "count": 0
+    },
+    {
+      "startOffset": 43850,
+      "endOffset": 43974,
+      "count": 662
+    },
+    {
+      "startOffset": 43867,
+      "endOffset": 43974,
+      "count": 0
+    },
+    {
+      "startOffset": 43976,
+      "endOffset": 44731,
+      "count": 6
+    },
+    {
+      "startOffset": 44179,
+      "endOffset": 44243,
+      "count": 0
+    },
+    {
+      "startOffset": 44301,
+      "endOffset": 44406,
+      "count": 0
+    },
+    {
+      "startOffset": 44731,
+      "endOffset": 44783,
+      "count": 662
+    },
+    {
+      "startOffset": 44783,
+      "endOffset": 44827,
+      "count": 0
+    },
+    {
+      "startOffset": 44829,
+      "endOffset": 45433,
+      "count": 0
+    },
+    {
+      "startOffset": 45433,
+      "endOffset": 45495,
+      "count": 662
+    },
+    {
+      "startOffset": 45497,
+      "endOffset": 46758,
+      "count": 2
+    },
+    {
+      "startOffset": 45729,
+      "endOffset": 45744,
+      "count": 0
+    },
+    {
+      "startOffset": 45745,
+      "endOffset": 45776,
+      "count": 0
+    },
+    {
+      "startOffset": 45860,
+      "endOffset": 45924,
+      "count": 0
+    },
+    {
+      "startOffset": 45993,
+      "endOffset": 46008,
+      "count": 0
+    },
+    {
+      "startOffset": 46010,
+      "endOffset": 46164,
+      "count": 0
+    },
+    {
+      "startOffset": 46214,
+      "endOffset": 46274,
+      "count": 0
+    },
+    {
+      "startOffset": 46465,
+      "endOffset": 46491,
+      "count": 0
+    },
+    {
+      "startOffset": 46758,
+      "endOffset": 46856,
+      "count": 660
+    },
+    {
+      "startOffset": 46858,
+      "endOffset": 47844,
+      "count": 0
+    },
+    {
+      "startOffset": 47844,
+      "endOffset": 47876,
+      "count": 660
+    },
+    {
+      "startOffset": 47876,
+      "endOffset": 47947,
+      "count": 0
+    },
+    {
+      "startOffset": 47947,
+      "endOffset": 47999,
+      "count": 660
+    },
+    {
+      "startOffset": 47999,
+      "endOffset": 48032,
+      "count": 0
+    },
+    {
+      "startOffset": 48034,
+      "endOffset": 48210,
+      "count": 0
+    },
+    {
+      "startOffset": 48210,
+      "endOffset": 48245,
+      "count": 660
+    },
+    {
+      "startOffset": 48245,
+      "endOffset": 48271,
+      "count": 0
+    },
+    {
+      "startOffset": 48277,
+      "endOffset": 48746,
+      "count": 4
+    },
+    {
+      "startOffset": 48610,
+      "endOffset": 48613,
+      "count": 0
+    },
+    {
+      "startOffset": 48647,
+      "endOffset": 48650,
+      "count": 2
+    },
+    {
+      "startOffset": 48651,
+      "endOffset": 48654,
+      "count": 2
+    },
+    {
+      "startOffset": 48751,
+      "endOffset": 49415,
+      "count": 0
+    },
+    {
+      "startOffset": 49420,
+      "endOffset": 50221,
+      "count": 2
+    },
+    {
+      "startOffset": 49728,
+      "endOffset": 49800,
+      "count": 0
+    },
+    {
+      "startOffset": 50226,
+      "endOffset": 51080,
+      "count": 0
+    },
+    {
+      "startOffset": 51085,
+      "endOffset": 51701,
+      "count": 2
+    },
+    {
+      "startOffset": 51151,
+      "endOffset": 51197,
+      "count": 0
+    },
+    {
+      "startOffset": 51279,
+      "endOffset": 51325,
+      "count": 0
+    },
+    {
+      "startOffset": 51374,
+      "endOffset": 51661,
+      "count": 0
+    },
+    {
+      "startOffset": 51706,
+      "endOffset": 52657,
+      "count": 2
+    },
+    {
+      "startOffset": 52080,
+      "endOffset": 52124,
+      "count": 0
+    },
+    {
+      "startOffset": 52175,
+      "endOffset": 52224,
+      "count": 0
+    },
+    {
+      "startOffset": 52267,
+      "endOffset": 52349,
+      "count": 0
+    },
+    {
+      "startOffset": 52448,
+      "endOffset": 52495,
+      "count": 0
+    },
+    {
+      "startOffset": 52662,
+      "endOffset": 55843,
+      "count": 0
+    },
+    {
+      "startOffset": 55848,
+      "endOffset": 58499,
+      "count": 662
+    },
+    {
+      "startOffset": 55981,
+      "endOffset": 55992,
+      "count": 354
+    },
+    {
+      "startOffset": 55994,
+      "endOffset": 56075,
+      "count": 354
+    },
+    {
+      "startOffset": 56075,
+      "endOffset": 56118,
+      "count": 308
+    },
+    {
+      "startOffset": 56118,
+      "endOffset": 56410,
+      "count": 0
+    },
+    {
+      "startOffset": 56410,
+      "endOffset": 56451,
+      "count": 308
+    },
+    {
+      "startOffset": 56451,
+      "endOffset": 56505,
+      "count": 2
+    },
+    {
+      "startOffset": 56473,
+      "endOffset": 56504,
+      "count": 0
+    },
+    {
+      "startOffset": 56507,
+      "endOffset": 56686,
+      "count": 2
+    },
+    {
+      "startOffset": 56686,
+      "endOffset": 56727,
+      "count": 306
+    },
+    {
+      "startOffset": 56727,
+      "endOffset": 56777,
+      "count": 0
+    },
+    {
+      "startOffset": 56779,
+      "endOffset": 57221,
+      "count": 0
+    },
+    {
+      "startOffset": 57221,
+      "endOffset": 57287,
+      "count": 306
+    },
+    {
+      "startOffset": 57288,
+      "endOffset": 57316,
+      "count": 306
+    },
+    {
+      "startOffset": 57317,
+      "endOffset": 57351,
+      "count": 306
+    },
+    {
+      "startOffset": 57352,
+      "endOffset": 57383,
+      "count": 306
+    },
+    {
+      "startOffset": 57384,
+      "endOffset": 57417,
+      "count": 306
+    },
+    {
+      "startOffset": 57419,
+      "endOffset": 57672,
+      "count": 0
+    },
+    {
+      "startOffset": 57672,
+      "endOffset": 57743,
+      "count": 306
+    },
+    {
+      "startOffset": 57744,
+      "endOffset": 57775,
+      "count": 306
+    },
+    {
+      "startOffset": 57777,
+      "endOffset": 58051,
+      "count": 0
+    },
+    {
+      "startOffset": 58051,
+      "endOffset": 58221,
+      "count": 306
+    },
+    {
+      "startOffset": 58223,
+      "endOffset": 58256,
+      "count": 0
+    },
+    {
+      "startOffset": 58258,
+      "endOffset": 58469,
+      "count": 0
+    },
+    {
+      "startOffset": 58469,
+      "endOffset": 58498,
+      "count": 306
+    },
+    {
+      "startOffset": 58504,
+      "endOffset": 59709,
+      "count": 660
+    },
+    {
+      "startOffset": 58618,
+      "endOffset": 59682,
+      "count": 712
+    },
+    {
+      "startOffset": 58792,
+      "endOffset": 58810,
+      "count": 0
+    },
+    {
+      "startOffset": 58812,
+      "endOffset": 58850,
+      "count": 0
+    },
+    {
+      "startOffset": 58882,
+      "endOffset": 58941,
+      "count": 52
+    },
+    {
+      "startOffset": 58902,
+      "endOffset": 58941,
+      "count": 0
+    },
+    {
+      "startOffset": 58943,
+      "endOffset": 58981,
+      "count": 660
+    },
+    {
+      "startOffset": 58981,
+      "endOffset": 59057,
+      "count": 52
+    },
+    {
+      "startOffset": 59059,
+      "endOffset": 59448,
+      "count": 0
+    },
+    {
+      "startOffset": 59448,
+      "endOffset": 59682,
+      "count": 52
+    },
+    {
+      "startOffset": 59714,
+      "endOffset": 61665,
+      "count": 616
+    },
+    {
+      "startOffset": 59802,
+      "endOffset": 59842,
+      "count": 262
+    },
+    {
+      "startOffset": 59844,
+      "endOffset": 59899,
+      "count": 8
+    },
+    {
+      "startOffset": 59899,
+      "endOffset": 60067,
+      "count": 608
+    },
+    {
+      "startOffset": 60067,
+      "endOffset": 60107,
+      "count": 186
+    },
+    {
+      "startOffset": 60109,
+      "endOffset": 60762,
+      "count": 0
+    },
+    {
+      "startOffset": 60762,
+      "endOffset": 60865,
+      "count": 608
+    },
+    {
+      "startOffset": 60838,
+      "endOffset": 60865,
+      "count": 0
+    },
+    {
+      "startOffset": 60867,
+      "endOffset": 61102,
+      "count": 0
+    },
+    {
+      "startOffset": 61102,
+      "endOffset": 61145,
+      "count": 608
+    },
+    {
+      "startOffset": 61145,
+      "endOffset": 61638,
+      "count": 4
+    },
+    {
+      "startOffset": 61291,
+      "endOffset": 61358,
+      "count": 0
+    },
+    {
+      "startOffset": 61638,
+      "endOffset": 61664,
+      "count": 608
+    },
+    {
+      "startOffset": 61670,
+      "endOffset": 62027,
+      "count": 6
+    },
+    {
+      "startOffset": 62032,
+      "endOffset": 62360,
+      "count": 246
+    },
+    {
+      "startOffset": 62365,
+      "endOffset": 62767,
+      "count": 248
+    },
+    {
+      "startOffset": 62505,
+      "endOffset": 62740,
+      "count": 2
+    },
+    {
+      "startOffset": 62772,
+      "endOffset": 63245,
+      "count": 348
+    },
+    {
+      "startOffset": 62894,
+      "endOffset": 62952,
+      "count": 350
+    }
+  ],
+  "file:///workspace/adamic/stage1/typescript/parser/statements.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 37944,
+      "count": 1
+    },
+    {
+      "startOffset": 62,
+      "endOffset": 68,
+      "count": 350
+    },
+    {
+      "startOffset": 74,
+      "endOffset": 130,
+      "count": 350
+    },
+    {
+      "startOffset": 135,
+      "endOffset": 492,
+      "count": 2
+    },
+    {
+      "startOffset": 497,
+      "endOffset": 864,
+      "count": 350
+    },
+    {
+      "startOffset": 607,
+      "endOffset": 858,
+      "count": 0
+    },
+    {
+      "startOffset": 869,
+      "endOffset": 2264,
+      "count": 348
+    },
+    {
+      "startOffset": 1001,
+      "endOffset": 1134,
+      "count": 0
+    },
+    {
+      "startOffset": 1161,
+      "endOffset": 1204,
+      "count": 0
+    },
+    {
+      "startOffset": 1491,
+      "endOffset": 1558,
+      "count": 0
+    },
+    {
+      "startOffset": 1612,
+      "endOffset": 1714,
+      "count": 0
+    },
+    {
+      "startOffset": 2062,
+      "endOffset": 2104,
+      "count": 0
+    },
+    {
+      "startOffset": 2269,
+      "endOffset": 3175,
+      "count": 0
+    },
+    {
+      "startOffset": 3180,
+      "endOffset": 3239,
+      "count": 0
+    },
+    {
+      "startOffset": 3244,
+      "endOffset": 3403,
+      "count": 0
+    },
+    {
+      "startOffset": 3408,
+      "endOffset": 5905,
+      "count": 0
+    },
+    {
+      "startOffset": 5910,
+      "endOffset": 6104,
+      "count": 0
+    },
+    {
+      "startOffset": 6109,
+      "endOffset": 7206,
+      "count": 0
+    },
+    {
+      "startOffset": 7211,
+      "endOffset": 10871,
+      "count": 0
+    },
+    {
+      "startOffset": 10876,
+      "endOffset": 13203,
+      "count": 0
+    },
+    {
+      "startOffset": 13208,
+      "endOffset": 14487,
+      "count": 0
+    },
+    {
+      "startOffset": 14492,
+      "endOffset": 15078,
+      "count": 0
+    },
+    {
+      "startOffset": 15083,
+      "endOffset": 16472,
+      "count": 0
+    },
+    {
+      "startOffset": 16477,
+      "endOffset": 23427,
+      "count": 2
+    },
+    {
+      "startOffset": 16654,
+      "endOffset": 16784,
+      "count": 0
+    },
+    {
+      "startOffset": 16907,
+      "endOffset": 16951,
+      "count": 0
+    },
+    {
+      "startOffset": 17052,
+      "endOffset": 18672,
+      "count": 0
+    },
+    {
+      "startOffset": 18890,
+      "endOffset": 19048,
+      "count": 0
+    },
+    {
+      "startOffset": 19131,
+      "endOffset": 19193,
+      "count": 0
+    },
+    {
+      "startOffset": 19672,
+      "endOffset": 20080,
+      "count": 0
+    },
+    {
+      "startOffset": 20137,
+      "endOffset": 20157,
+      "count": 0
+    },
+    {
+      "startOffset": 20158,
+      "endOffset": 20219,
+      "count": 0
+    },
+    {
+      "startOffset": 20221,
+      "endOffset": 20440,
+      "count": 0
+    },
+    {
+      "startOffset": 20499,
+      "endOffset": 20536,
+      "count": 0
+    },
+    {
+      "startOffset": 20538,
+      "endOffset": 21313,
+      "count": 0
+    },
+    {
+      "startOffset": 21457,
+      "endOffset": 21499,
+      "count": 0
+    },
+    {
+      "startOffset": 21500,
+      "endOffset": 21541,
+      "count": 0
+    },
+    {
+      "startOffset": 21542,
+      "endOffset": 21584,
+      "count": 0
+    },
+    {
+      "startOffset": 21585,
+      "endOffset": 21626,
+      "count": 0
+    },
+    {
+      "startOffset": 21627,
+      "endOffset": 21671,
+      "count": 0
+    },
+    {
+      "startOffset": 21672,
+      "endOffset": 21715,
+      "count": 0
+    },
+    {
+      "startOffset": 21716,
+      "endOffset": 21754,
+      "count": 0
+    },
+    {
+      "startOffset": 21755,
+      "endOffset": 21794,
+      "count": 0
+    },
+    {
+      "startOffset": 21796,
+      "endOffset": 21945,
+      "count": 0
+    },
+    {
+      "startOffset": 22043,
+      "endOffset": 22108,
+      "count": 0
+    },
+    {
+      "startOffset": 22215,
+      "endOffset": 22310,
+      "count": 0
+    },
+    {
+      "startOffset": 22490,
+      "endOffset": 22555,
+      "count": 0
+    },
+    {
+      "startOffset": 22612,
+      "endOffset": 22653,
+      "count": 0
+    },
+    {
+      "startOffset": 22770,
+      "endOffset": 23263,
+      "count": 0
+    },
+    {
+      "startOffset": 23364,
+      "endOffset": 23383,
+      "count": 0
+    },
+    {
+      "startOffset": 23432,
+      "endOffset": 25211,
+      "count": 0
+    },
+    {
+      "startOffset": 25216,
+      "endOffset": 26551,
+      "count": 0
+    },
+    {
+      "startOffset": 26556,
+      "endOffset": 27812,
+      "count": 0
+    },
+    {
+      "startOffset": 27817,
+      "endOffset": 37941,
+      "count": 352
+    },
+    {
+      "startOffset": 27932,
+      "endOffset": 28274,
+      "count": 0
+    },
+    {
+      "startOffset": 28326,
+      "endOffset": 28355,
+      "count": 0
+    },
+    {
+      "startOffset": 28357,
+      "endOffset": 28420,
+      "count": 0
+    },
+    {
+      "startOffset": 28474,
+      "endOffset": 28518,
+      "count": 0
+    },
+    {
+      "startOffset": 28572,
+      "endOffset": 28675,
+      "count": 0
+    },
+    {
+      "startOffset": 28727,
+      "endOffset": 28767,
+      "count": 350
+    },
+    {
+      "startOffset": 28769,
+      "endOffset": 29304,
+      "count": 2
+    },
+    {
+      "startOffset": 29259,
+      "endOffset": 29277,
+      "count": 0
+    },
+    {
+      "startOffset": 29304,
+      "endOffset": 29355,
+      "count": 350
+    },
+    {
+      "startOffset": 29355,
+      "endOffset": 29394,
+      "count": 348
+    },
+    {
+      "startOffset": 29395,
+      "endOffset": 29433,
+      "count": 2
+    },
+    {
+      "startOffset": 29434,
+      "endOffset": 29472,
+      "count": 2
+    },
+    {
+      "startOffset": 29473,
+      "endOffset": 29553,
+      "count": 2
+    },
+    {
+      "startOffset": 29514,
+      "endOffset": 29553,
+      "count": 0
+    },
+    {
+      "startOffset": 29554,
+      "endOffset": 29635,
+      "count": 2
+    },
+    {
+      "startOffset": 29595,
+      "endOffset": 29635,
+      "count": 0
+    },
+    {
+      "startOffset": 29637,
+      "endOffset": 29825,
+      "count": 348
+    },
+    {
+      "startOffset": 29825,
+      "endOffset": 29913,
+      "count": 2
+    },
+    {
+      "startOffset": 29915,
+      "endOffset": 30594,
+      "count": 0
+    },
+    {
+      "startOffset": 30594,
+      "endOffset": 30644,
+      "count": 2
+    },
+    {
+      "startOffset": 30644,
+      "endOffset": 30695,
+      "count": 0
+    },
+    {
+      "startOffset": 30695,
+      "endOffset": 30748,
+      "count": 2
+    },
+    {
+      "startOffset": 30748,
+      "endOffset": 30802,
+      "count": 0
+    },
+    {
+      "startOffset": 30802,
+      "endOffset": 30852,
+      "count": 2
+    },
+    {
+      "startOffset": 30852,
+      "endOffset": 30903,
+      "count": 0
+    },
+    {
+      "startOffset": 30903,
+      "endOffset": 30952,
+      "count": 2
+    },
+    {
+      "startOffset": 30952,
+      "endOffset": 31478,
+      "count": 0
+    },
+    {
+      "startOffset": 31478,
+      "endOffset": 31572,
+      "count": 2
+    },
+    {
+      "startOffset": 31573,
+      "endOffset": 31616,
+      "count": 2
+    },
+    {
+      "startOffset": 31618,
+      "endOffset": 32151,
+      "count": 0
+    },
+    {
+      "startOffset": 32151,
+      "endOffset": 32200,
+      "count": 2
+    },
+    {
+      "startOffset": 32200,
+      "endOffset": 32238,
+      "count": 0
+    },
+    {
+      "startOffset": 32240,
+      "endOffset": 32499,
+      "count": 0
+    },
+    {
+      "startOffset": 32499,
+      "endOffset": 32645,
+      "count": 2
+    },
+    {
+      "startOffset": 32646,
+      "endOffset": 32688,
+      "count": 2
+    },
+    {
+      "startOffset": 32689,
+      "endOffset": 32731,
+      "count": 2
+    },
+    {
+      "startOffset": 32732,
+      "endOffset": 32775,
+      "count": 2
+    },
+    {
+      "startOffset": 32776,
+      "endOffset": 32860,
+      "count": 2
+    },
+    {
+      "startOffset": 32817,
+      "endOffset": 32860,
+      "count": 0
+    },
+    {
+      "startOffset": 32861,
+      "endOffset": 32941,
+      "count": 2
+    },
+    {
+      "startOffset": 32902,
+      "endOffset": 32941,
+      "count": 0
+    },
+    {
+      "startOffset": 32942,
+      "endOffset": 33157,
+      "count": 0
+    },
+    {
+      "startOffset": 33157,
+      "endOffset": 33212,
+      "count": 2
+    },
+    {
+      "startOffset": 33212,
+      "endOffset": 33291,
+      "count": 0
+    },
+    {
+      "startOffset": 33291,
+      "endOffset": 33419,
+      "count": 2
+    },
+    {
+      "startOffset": 33419,
+      "endOffset": 33508,
+      "count": 0
+    },
+    {
+      "startOffset": 33509,
+      "endOffset": 33547,
+      "count": 0
+    },
+    {
+      "startOffset": 33548,
+      "endOffset": 33628,
+      "count": 0
+    },
+    {
+      "startOffset": 33629,
+      "endOffset": 33710,
+      "count": 0
+    },
+    {
+      "startOffset": 33712,
+      "endOffset": 33971,
+      "count": 0
+    },
+    {
+      "startOffset": 33973,
+      "endOffset": 34012,
+      "count": 0
+    },
+    {
+      "startOffset": 34014,
+      "endOffset": 37156,
+      "count": 0
+    },
+    {
+      "startOffset": 37158,
+      "endOffset": 37241,
+      "count": 0
+    },
+    {
+      "startOffset": 37242,
+      "endOffset": 37326,
+      "count": 0
+    },
+    {
+      "startOffset": 37328,
+      "endOffset": 37646,
+      "count": 0
+    },
+    {
+      "startOffset": 37647,
+      "endOffset": 37683,
+      "count": 0
+    },
+    {
+      "startOffset": 37685,
+      "endOffset": 37940,
+      "count": 0
+    }
+  ],
+  "file:///workspace/adamic/stage1/typescript/parser/jsx.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 7899,
+      "count": 1
+    },
+    {
+      "startOffset": 55,
+      "endOffset": 61,
+      "count": 354
+    },
+    {
+      "startOffset": 67,
+      "endOffset": 123,
+      "count": 354
+    },
+    {
+      "startOffset": 128,
+      "endOffset": 220,
+      "count": 2890
+    },
+    {
+      "startOffset": 225,
+      "endOffset": 659,
+      "count": 1512
+    },
+    {
+      "startOffset": 288,
+      "endOffset": 330,
+      "count": 126
+    },
+    {
+      "startOffset": 332,
+      "endOffset": 438,
+      "count": 0
+    },
+    {
+      "startOffset": 493,
+      "endOffset": 612,
+      "count": 0
+    },
+    {
+      "startOffset": 664,
+      "endOffset": 1620,
+      "count": 1082
+    },
+    {
+      "startOffset": 803,
+      "endOffset": 842,
+      "count": 802
+    },
+    {
+      "startOffset": 931,
+      "endOffset": 1189,
+      "count": 182
+    },
+    {
+      "startOffset": 1189,
+      "endOffset": 1210,
+      "count": 900
+    },
+    {
+      "startOffset": 1210,
+      "endOffset": 1271,
+      "count": 126
+    },
+    {
+      "startOffset": 1271,
+      "endOffset": 1289,
+      "count": 900
+    },
+    {
+      "startOffset": 1289,
+      "endOffset": 1593,
+      "count": 676
+    },
+    {
+      "startOffset": 1343,
+      "endOffset": 1583,
+      "count": 248
+    },
+    {
+      "startOffset": 1593,
+      "endOffset": 1619,
+      "count": 900
+    },
+    {
+      "startOffset": 1625,
+      "endOffset": 2062,
+      "count": 128
+    },
+    {
+      "startOffset": 1920,
+      "endOffset": 1925,
+      "count": 62
+    },
+    {
+      "startOffset": 1926,
+      "endOffset": 1931,
+      "count": 66
+    },
+    {
+      "startOffset": 2067,
+      "endOffset": 2357,
+      "count": 814
+    },
+    {
+      "startOffset": 2150,
+      "endOffset": 2223,
+      "count": 0
+    },
+    {
+      "startOffset": 2248,
+      "endOffset": 2291,
+      "count": 408
+    },
+    {
+      "startOffset": 2291,
+      "endOffset": 2351,
+      "count": 406
+    },
+    {
+      "startOffset": 2362,
+      "endOffset": 3149,
+      "count": 252
+    },
+    {
+      "startOffset": 2566,
+      "endOffset": 2769,
+      "count": 190
+    },
+    {
+      "startOffset": 2595,
+      "endOffset": 2637,
+      "count": 82
+    },
+    {
+      "startOffset": 2639,
+      "endOffset": 2706,
+      "count": 2
+    },
+    {
+      "startOffset": 2793,
+      "endOffset": 2855,
+      "count": 108
+    },
+    {
+      "startOffset": 2855,
+      "endOffset": 3085,
+      "count": 144
+    },
+    {
+      "startOffset": 2921,
+      "endOffset": 3032,
+      "count": 0
+    },
+    {
+      "startOffset": 3154,
+      "endOffset": 4800,
+      "count": 472
+    },
+    {
+      "startOffset": 3307,
+      "endOffset": 3345,
+      "count": 474
+    },
+    {
+      "startOffset": 3346,
+      "endOffset": 4656,
+      "count": 332
+    },
+    {
+      "startOffset": 3462,
+      "endOffset": 3834,
+      "count": 52
+    },
+    {
+      "startOffset": 3834,
+      "endOffset": 3968,
+      "count": 280
+    },
+    {
+      "startOffset": 3968,
+      "endOffset": 4573,
+      "count": 224
+    },
+    {
+      "startOffset": 4091,
+      "endOffset": 4168,
+      "count": 62
+    },
+    {
+      "startOffset": 4168,
+      "endOffset": 4559,
+      "count": 162
+    },
+    {
+      "startOffset": 4219,
+      "endOffset": 4296,
+      "count": 108
+    },
+    {
+      "startOffset": 4296,
+      "endOffset": 4559,
+      "count": 54
+    },
+    {
+      "startOffset": 4420,
+      "endOffset": 4559,
+      "count": 0
+    },
+    {
+      "startOffset": 4573,
+      "endOffset": 4656,
+      "count": 280
+    },
+    {
+      "startOffset": 4805,
+      "endOffset": 5038,
+      "count": 1396
+    },
+    {
+      "startOffset": 4956,
+      "endOffset": 5012,
+      "count": 736
+    },
+    {
+      "startOffset": 5043,
+      "endOffset": 7896,
+      "count": 478
+    },
+    {
+      "startOffset": 5343,
+      "endOffset": 5799,
+      "count": 472
+    },
+    {
+      "startOffset": 5427,
+      "endOffset": 5468,
+      "count": 468
+    },
+    {
+      "startOffset": 5470,
+      "endOffset": 5745,
+      "count": 8
+    },
+    {
+      "startOffset": 5673,
+      "endOffset": 5731,
+      "count": 12
+    },
+    {
+      "startOffset": 5822,
+      "endOffset": 5860,
+      "count": 472
+    },
+    {
+      "startOffset": 5862,
+      "endOffset": 6130,
+      "count": 142
+    },
+    {
+      "startOffset": 6087,
+      "endOffset": 6090,
+      "count": 2
+    },
+    {
+      "startOffset": 6091,
+      "endOffset": 6094,
+      "count": 140
+    },
+    {
+      "startOffset": 6130,
+      "endOffset": 6209,
+      "count": 336
+    },
+    {
+      "startOffset": 6209,
+      "endOffset": 6231,
+      "count": 6
+    },
+    {
+      "startOffset": 6232,
+      "endOffset": 6253,
+      "count": 330
+    },
+    {
+      "startOffset": 6292,
+      "endOffset": 6392,
+      "count": 330
+    },
+    {
+      "startOffset": 6372,
+      "endOffset": 6375,
+      "count": 2
+    },
+    {
+      "startOffset": 6376,
+      "endOffset": 6379,
+      "count": 328
+    },
+    {
+      "startOffset": 6392,
+      "endOffset": 6532,
+      "count": 336
+    },
+    {
+      "startOffset": 6532,
+      "endOffset": 7151,
+      "count": 342
+    },
+    {
+      "startOffset": 6590,
+      "endOffset": 6605,
+      "count": 66
+    },
+    {
+      "startOffset": 6622,
+      "endOffset": 6726,
+      "count": 128
+    },
+    {
+      "startOffset": 6743,
+      "endOffset": 6851,
+      "count": 144
+    },
+    {
+      "startOffset": 6868,
+      "endOffset": 6972,
+      "count": 70
+    },
+    {
+      "startOffset": 6989,
+      "endOffset": 7106,
+      "count": 0
+    },
+    {
+      "startOffset": 7151,
+      "endOffset": 7293,
+      "count": 336
+    },
+    {
+      "startOffset": 7293,
+      "endOffset": 7586,
+      "count": 330
+    },
+    {
+      "startOffset": 7397,
+      "endOffset": 7429,
+      "count": 0
+    },
+    {
+      "startOffset": 7432,
+      "endOffset": 7538,
+      "count": 0
+    },
+    {
+      "startOffset": 7586,
+      "endOffset": 7670,
+      "count": 336
+    },
+    {
+      "startOffset": 7670,
+      "endOffset": 7692,
+      "count": 6
+    },
+    {
+      "startOffset": 7693,
+      "endOffset": 7714,
+      "count": 330
+    },
+    {
+      "startOffset": 7781,
+      "endOffset": 7796,
+      "count": 6
+    },
+    {
+      "startOffset": 7797,
+      "endOffset": 7811,
+      "count": 330
+    }
+  ],
+  "file:///workspace/adamic/stage1/typescript/parser/nodes.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 1632,
+      "count": 1
+    },
+    {
+      "startOffset": 61,
+      "endOffset": 268,
+      "count": 7124
+    },
+    {
+      "startOffset": 274,
+      "endOffset": 426,
+      "count": 7124
+    },
+    {
+      "startOffset": 436,
+      "endOffset": 743,
+      "count": 13996
+    },
+    {
+      "startOffset": 534,
+      "endOffset": 722,
+      "count": 8557
+    },
+    {
+      "startOffset": 610,
+      "endOffset": 624,
+      "count": 8362
+    },
+    {
+      "startOffset": 625,
+      "endOffset": 639,
+      "count": 8236
+    },
+    {
+      "startOffset": 640,
+      "endOffset": 670,
+      "count": 8178
+    },
+    {
+      "startOffset": 671,
+      "endOffset": 715,
+      "count": 379
+    },
+    {
+      "startOffset": 751,
+      "endOffset": 1402,
+      "count": 6998
+    },
+    {
+      "startOffset": 849,
+      "endOffset": 879,
+      "count": 0
+    },
+    {
+      "startOffset": 940,
+      "endOffset": 977,
+      "count": 0
+    },
+    {
+      "startOffset": 999,
+      "endOffset": 1034,
+      "count": 0
+    },
+    {
+      "startOffset": 1052,
+      "endOffset": 1056,
+      "count": 0
+    },
+    {
+      "startOffset": 1112,
+      "endOffset": 1115,
+      "count": 0
+    },
+    {
+      "startOffset": 1138,
+      "endOffset": 1141,
+      "count": 0
+    },
+    {
+      "startOffset": 1240,
+      "endOffset": 1244,
+      "count": 0
+    },
+    {
+      "startOffset": 1306,
+      "endOffset": 1382,
+      "count": 6650
+    },
+    {
+      "startOffset": 1410,
+      "endOffset": 1631,
+      "count": 0
+    }
+  ],
+  "file:///workspace/adamic/stage1/typescript/parser/grammar.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 2043,
+      "count": 1
+    },
+    {
+      "startOffset": 7,
+      "endOffset": 1288,
+      "count": 726
+    },
+    {
+      "startOffset": 61,
+      "endOffset": 112,
+      "count": 0
+    },
+    {
+      "startOffset": 121,
+      "endOffset": 162,
+      "count": 0
+    },
+    {
+      "startOffset": 171,
+      "endOffset": 224,
+      "count": 0
+    },
+    {
+      "startOffset": 233,
+      "endOffset": 271,
+      "count": 0
+    },
+    {
+      "startOffset": 280,
+      "endOffset": 320,
+      "count": 0
+    },
+    {
+      "startOffset": 329,
+      "endOffset": 373,
+      "count": 0
+    },
+    {
+      "startOffset": 382,
+      "endOffset": 407,
+      "count": 0
+    },
+    {
+      "startOffset": 416,
+      "endOffset": 446,
+      "count": 0
+    },
+    {
+      "startOffset": 455,
+      "endOffset": 486,
+      "count": 0
+    },
+    {
+      "startOffset": 495,
+      "endOffset": 554,
+      "count": 0
+    },
+    {
+      "startOffset": 563,
+      "endOffset": 584,
+      "count": 52
+    },
+    {
+      "startOffset": 593,
+      "endOffset": 617,
+      "count": 52
+    },
+    {
+      "startOffset": 626,
+      "endOffset": 653,
+      "count": 52
+    },
+    {
+      "startOffset": 662,
+      "endOffset": 692,
+      "count": 52
+    },
+    {
+      "startOffset": 701,
+      "endOffset": 726,
+      "count": 52
+    },
+    {
+      "startOffset": 735,
+      "endOffset": 752,
+      "count": 52
+    },
+    {
+      "startOffset": 761,
+      "endOffset": 778,
+      "count": 52
+    },
+    {
+      "startOffset": 787,
+      "endOffset": 834,
+      "count": 52
+    },
+    {
+      "startOffset": 843,
+      "endOffset": 872,
+      "count": 0
+    },
+    {
+      "startOffset": 881,
+      "endOffset": 916,
+      "count": 0
+    },
+    {
+      "startOffset": 925,
+      "endOffset": 994,
+      "count": 0
+    },
+    {
+      "startOffset": 1003,
+      "endOffset": 1020,
+      "count": 0
+    },
+    {
+      "startOffset": 1029,
+      "endOffset": 1070,
+      "count": 0
+    },
+    {
+      "startOffset": 1079,
+      "endOffset": 1100,
+      "count": 0
+    },
+    {
+      "startOffset": 1109,
+      "endOffset": 1127,
+      "count": 0
+    },
+    {
+      "startOffset": 1136,
+      "endOffset": 1179,
+      "count": 0
+    },
+    {
+      "startOffset": 1188,
+      "endOffset": 1240,
+      "count": 0
+    },
+    {
+      "startOffset": 1249,
+      "endOffset": 1280,
+      "count": 674
+    }
+  ],
+  "file:///workspace/adamic/stage1/typescript/parser/lookahead.ts": [
+    {
+      "startOffset": 0,
+      "endOffset": 8494,
+      "count": 1
+    },
+    {
+      "startOffset": 58,
+      "endOffset": 109,
+      "count": 11720
+    },
+    {
+      "startOffset": 134,
+      "endOffset": 275,
+      "count": 930
+    },
+    {
+      "startOffset": 281,
+      "endOffset": 603,
+      "count": 930
+    },
+    {
+      "startOffset": 608,
+      "endOffset": 1611,
+      "count": 932
+    },
+    {
+      "startOffset": 702,
+      "endOffset": 735,
+      "count": 918
+    },
+    {
+      "startOffset": 737,
+      "endOffset": 950,
+      "count": 14
+    },
+    {
+      "startOffset": 952,
+      "endOffset": 1003,
+      "count": 0
+    },
+    {
+      "startOffset": 1057,
+      "endOffset": 1085,
+      "count": 52
+    },
+    {
+      "startOffset": 1086,
+      "endOffset": 1146,
+      "count": 0
+    },
+    {
+      "startOffset": 1148,
+      "endOffset": 1311,
+      "count": 0
+    },
+    {
+      "startOffset": 1363,
+      "endOffset": 1420,
+      "count": 0
+    },
+    {
+      "startOffset": 1474,
+      "endOffset": 1512,
+      "count": 14
+    },
+    {
+      "startOffset": 1567,
+      "endOffset": 1605,
+      "count": 52
+    },
+    {
+      "startOffset": 1616,
+      "endOffset": 1727,
+      "count": 932
+    },
+    {
+      "startOffset": 1732,
+      "endOffset": 2046,
+      "count": 930
+    },
+    {
+      "startOffset": 2049,
+      "endOffset": 2328,
+      "count": 0
+    },
+    {
+      "startOffset": 2336,
+      "endOffset": 5090,
+      "count": 262
+    },
+    {
+      "startOffset": 2490,
+      "endOffset": 2936,
+      "count": 2
+    },
+    {
+      "startOffset": 2553,
+      "endOffset": 2619,
+      "count": 0
+    },
+    {
+      "startOffset": 2700,
+      "endOffset": 2741,
+      "count": 0
+    },
+    {
+      "startOffset": 2743,
+      "endOffset": 2930,
+      "count": 0
+    },
+    {
+      "startOffset": 2980,
+      "endOffset": 3347,
+      "count": 8
+    },
+    {
+      "startOffset": 3049,
+      "endOffset": 3341,
+      "count": 44
+    },
+    {
+      "startOffset": 3102,
+      "endOffset": 3142,
+      "count": 8
+    },
+    {
+      "startOffset": 3197,
+      "endOffset": 3237,
+      "count": 8
+    },
+    {
+      "startOffset": 3293,
+      "endOffset": 3331,
+      "count": 8
+    },
+    {
+      "startOffset": 3392,
+      "endOffset": 5048,
+      "count": 10
+    },
+    {
+      "startOffset": 3510,
+      "endOffset": 4155,
+      "count": 52
+    },
+    {
+      "startOffset": 3564,
+      "endOffset": 3604,
+      "count": 10
+    },
+    {
+      "startOffset": 3658,
+      "endOffset": 3698,
+      "count": 10
+    },
+    {
+      "startOffset": 3727,
+      "endOffset": 3764,
+      "count": 42
+    },
+    {
+      "startOffset": 3766,
+      "endOffset": 4051,
+      "count": 32
+    },
+    {
+      "startOffset": 3823,
+      "endOffset": 3930,
+      "count": 10
+    },
+    {
+      "startOffset": 3858,
+      "endOffset": 3929,
+      "count": 2
+    },
+    {
+      "startOffset": 3895,
+      "endOffset": 3929,
+      "count": 0
+    },
+    {
+      "startOffset": 3931,
+      "endOffset": 3982,
+      "count": 24
+    },
+    {
+      "startOffset": 3945,
+      "endOffset": 3982,
+      "count": 10
+    },
+    {
+      "startOffset": 3984,
+      "endOffset": 4037,
+      "count": 8
+    },
+    {
+      "startOffset": 4107,
+      "endOffset": 4145,
+      "count": 10
+    },
+    {
+      "startOffset": 4211,
+      "endOffset": 4239,
+      "count": 8
+    },
+    {
+      "startOffset": 4241,
+      "endOffset": 4279,
+      "count": 8
+    },
+    {
+      "startOffset": 4279,
+      "endOffset": 5042,
+      "count": 2
+    },
+    {
+      "startOffset": 4320,
+      "endOffset": 4345,
+      "count": 0
+    },
+    {
+      "startOffset": 4347,
+      "endOffset": 5042,
+      "count": 0
+    },
+    {
+      "startOffset": 5098,
+      "endOffset": 5776,
+      "count": 616
+    },
+    {
+      "startOffset": 5218,
+      "endOffset": 5247,
+      "count": 2
+    },
+    {
+      "startOffset": 5291,
+      "endOffset": 5344,
+      "count": 254
+    },
+    {
+      "startOffset": 5344,
+      "endOffset": 5405,
+      "count": 362
+    },
+    {
+      "startOffset": 5405,
+      "endOffset": 5434,
+      "count": 2
+    },
+    {
+      "startOffset": 5434,
+      "endOffset": 5501,
+      "count": 362
+    },
+    {
+      "startOffset": 5501,
+      "endOffset": 5535,
+      "count": 356
+    },
+    {
+      "startOffset": 5581,
+      "endOffset": 5734,
+      "count": 2
+    },
+    {
+      "startOffset": 5734,
+      "endOffset": 5775,
+      "count": 362
+    },
+    {
+      "startOffset": 5784,
+      "endOffset": 8493,
+      "count": 52
+    },
+    {
+      "startOffset": 6045,
+      "endOffset": 7803,
+      "count": 156
+    },
+    {
+      "startOffset": 6095,
+      "endOffset": 6110,
+      "count": 0
+    },
+    {
+      "startOffset": 6150,
+      "endOffset": 6165,
+      "count": 50
+    },
+    {
+      "startOffset": 6166,
+      "endOffset": 6224,
+      "count": 106
+    },
+    {
+      "startOffset": 6207,
+      "endOffset": 6224,
+      "count": 0
+    },
+    {
+      "startOffset": 6226,
+      "endOffset": 6256,
+      "count": 50
+    },
+    {
+      "startOffset": 6256,
+      "endOffset": 6305,
+      "count": 106
+    },
+    {
+      "startOffset": 6305,
+      "endOffset": 6352,
+      "count": 0
+    },
+    {
+      "startOffset": 6352,
+      "endOffset": 6399,
+      "count": 106
+    },
+    {
+      "startOffset": 6399,
+      "endOffset": 6418,
+      "count": 2
+    },
+    {
+      "startOffset": 6419,
+      "endOffset": 6434,
+      "count": 2
+    },
+    {
+      "startOffset": 6435,
+      "endOffset": 6450,
+      "count": 2
+    },
+    {
+      "startOffset": 6451,
+      "endOffset": 6468,
+      "count": 2
+    },
+    {
+      "startOffset": 6470,
+      "endOffset": 6500,
+      "count": 2
+    },
+    {
+      "startOffset": 6500,
+      "endOffset": 6551,
+      "count": 104
+    },
+    {
+      "startOffset": 6551,
+      "endOffset": 6586,
+      "count": 0
+    },
+    {
+      "startOffset": 6586,
+      "endOffset": 6638,
+      "count": 104
+    },
+    {
+      "startOffset": 6638,
+      "endOffset": 6673,
+      "count": 0
+    },
+    {
+      "startOffset": 6673,
+      "endOffset": 6721,
+      "count": 104
+    },
+    {
+      "startOffset": 6721,
+      "endOffset": 6736,
+      "count": 0
+    },
+    {
+      "startOffset": 6737,
+      "endOffset": 6752,
+      "count": 0
+    },
+    {
+      "startOffset": 6754,
+      "endOffset": 6784,
+      "count": 0
+    },
+    {
+      "startOffset": 6784,
+      "endOffset": 6833,
+      "count": 104
+    },
+    {
+      "startOffset": 6833,
+      "endOffset": 6866,
+      "count": 0
+    },
+    {
+      "startOffset": 6866,
+      "endOffset": 6916,
+      "count": 104
+    },
+    {
+      "startOffset": 6916,
+      "endOffset": 6949,
+      "count": 0
+    },
+    {
+      "startOffset": 6949,
+      "endOffset": 6998,
+      "count": 104
+    },
+    {
+      "startOffset": 6998,
+      "endOffset": 7031,
+      "count": 0
+    },
+    {
+      "startOffset": 7031,
+      "endOffset": 7081,
+      "count": 104
+    },
+    {
+      "startOffset": 7081,
+      "endOffset": 7114,
+      "count": 0
+    },
+    {
+      "startOffset": 7114,
+      "endOffset": 7162,
+      "count": 104
+    },
+    {
+      "startOffset": 7162,
+      "endOffset": 7194,
+      "count": 52
+    },
+    {
+      "startOffset": 7194,
+      "endOffset": 7245,
+      "count": 104
+    },
+    {
+      "startOffset": 7245,
+      "endOffset": 7468,
+      "count": 0
+    },
+    {
+      "startOffset": 7468,
+      "endOffset": 7544,
+      "count": 104
+    },
+    {
+      "startOffset": 7545,
+      "endOffset": 7578,
+      "count": 104
+    },
+    {
+      "startOffset": 7579,
+      "endOffset": 7613,
+      "count": 104
+    },
+    {
+      "startOffset": 7614,
+      "endOffset": 7660,
+      "count": 104
+    },
+    {
+      "startOffset": 7662,
+      "endOffset": 7692,
+      "count": 0
+    },
+    {
+      "startOffset": 7692,
+      "endOffset": 7740,
+      "count": 104
+    },
+    {
+      "startOffset": 7740,
+      "endOffset": 7797,
+      "count": 0
+    },
+    {
+      "startOffset": 7863,
+      "endOffset": 8450,
+      "count": 0
+    }
+  ]
+}

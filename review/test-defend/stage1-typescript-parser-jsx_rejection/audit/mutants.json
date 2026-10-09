@@ -1,0 +1,61 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 33,
+    "old": "kind() !== 'Identifier'",
+    "new": "kind() === 'Identifier'"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 36,
+    "old": "flags & 1032",
+    "new": "flags & 0"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 69,
+    "old": "whitespace ? '1' : '0'",
+    "new": "whitespace ? '0' : '1'"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 56,
+    "old": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;",
+    "new": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 2;"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/typescript/parser/main.ts",
+    "line": 6,
+    "old": "    const source = readTextFile(path);",
+    "new": "    if(path.length >= 0) { return 0; }\n    const source = readTextFile(path);"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/typescript/parser/parser_test.go",
+    "line": 142,
+    "old": "if bytes.Equal(got, want) {",
+    "new": "if len(got) >= 0 {",
+    "harness": true
+  },
+  {
+    "id": "W2",
+    "file": "stage1/typescript/parser/performance_test.go",
+    "line": 180,
+    "old": "if bytes.Equal(runner.count.output, wantCount) {",
+    "new": "if len(runner.count.output) >= 0 {",
+    "harness": true
+  },
+  {
+    "id": "S1",
+    "file": "stage1/typescript/parser/compiler_expressions_shards_test.go",
+    "line": 106,
+    "old": "compilerExpressionsProducts.binary = compilerExpressionsNative(t, absolute)",
+    "new": "compilerExpressionsProducts.binary = \"\"",
+    "harness": true
+  }
+]

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T14:20:52.848371835Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:20:52.85640924Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative"}
+{"Time":"2026-10-09T14:20:52.856468647Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"=== RUN   TestJsxNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:21:06.949194039Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"    jsx_test.go:109: sanitize=true: 348 JSX inputs, 277842 identical whole-tree bytes\n"}
+{"Time":"2026-10-09T14:21:14.655802987Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"    jsx_test.go:109: sanitize=false: 348 JSX inputs, 277842 identical whole-tree bytes\n"}
+{"Time":"2026-10-09T14:21:14.660899441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"--- PASS: TestJsxNative (21.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:21:14.660934992Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Elapsed":21.8}
+{"Time":"2026-10-09T14:21:14.660966167Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:21:14.668944952Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: 27.9% of statements in github.com/system-inc/adamic/internal/load, github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T14:21:14.688180661Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t21.839s\tcoverage: 27.9% of statements in github.com/system-inc/adamic/internal/load, github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T14:21:14.688222161Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":21.84}
