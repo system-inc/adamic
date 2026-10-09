@@ -14,6 +14,11 @@ For pool work, --phase <name> runs one non-test stage, and --phases build,vet,sm
 writes one record of those stages. Pass --census <pool test.jsonl> to include the pool's tests in
 that census. --list-units --tree <tree> lists the unconditional fast units; supply --base, --sha
 and --tools (as for --select) to include this change's conditional executors.
+Add --with-inputs for JSON lines with the exact unit line and its package/path inputs.
+Package roots include test imports for commands that compile tests; paths are content inputs.
+Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
+Merged logs, Git history/branch state, toolchain and external spool identity still belong
+in the pool's verdict key: repository content alone cannot identify those inputs.
 
 With --full it is the whole uncached gate of main instead, run after landing: every package, the
 oracle whole, TestWASI with the WASI SDK's clang first. The first failure turns status.txt red at
@@ -31,6 +36,7 @@ import base64
 import fnmatch
 import glob
 import hashlib
+import shlex
 import json
 import re
 import os
@@ -174,18 +180,145 @@ class TestQueue:
             self.condition.notify_all()
 
 
+# Input providers live with their stage implementations. Command inventories below are
+# shared by execution and enumeration; an unaudited runtime reader fails closed.
+phaseInputProviders = {}
+
+
+def declaresInputs(phase, provider):
+    def decorate(method):
+        phaseInputProviders[phase] = provider
+        return method
+    return decorate
+
+
+def treeInputs(note):
+    return {"packages": [], "paths": ["."], "note": note}
+
+
+def goPhaseCommand(phase):
+    return ["go", phase, "./..."]
+
+
+def goCommandInputs(tree, command):
+    # Import paths, never patterns: the consumer computes each go list -deps closure.
+    patterns = [arg for arg in command[2:] if arg.startswith(("./", module))]
+    result = subprocess.run(["go", "list", "-json"] + patterns, cwd=tree,
+                            capture_output=True, text=True, check=True, timeout=90)
+    decoder, remaining, packages = json.JSONDecoder(), result.stdout.strip(), set()
+    while remaining:
+        package, end = decoder.raw_decode(remaining)
+        remaining = remaining[end:].lstrip()
+        packages.add(package["ImportPath"])
+        if command[1] in ("test", "vet"):
+            # go list -deps on a root alone omits the test imports vet/go test compile.
+            packages.update(package.get("TestImports", []) + package.get("XTestImports", []))
+    return {"packages": sorted(packages), "paths": []}
+
+
+def productListingCommand():
+    return ["go", "list", "-f", "{{.ImportPath}}\t{{.Dir}}", "./..."]
+
+
+def productInputSources(tree):
+    listing = subprocess.run(productListingCommand(), cwd=tree, capture_output=True,
+                             text=True, check=True, timeout=90).stdout.splitlines()
+    directories = dict(line.split("\t", 1) for line in listing)
+    sources = [os.path.relpath(path, tree) for directory in directories.values()
+               for path in glob.glob(os.path.join(directory, "*_test.go"))]
+    return sources, any(productDeclarations(directories).values())
+
+
+def catalogEntries(tree):
+    with open(os.path.join(tree, "verify/catalog/catalog.json")) as handle:
+        return json.load(handle)
+
+
+def wasiCommands(names):
+    return [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
+             "-p", "1", "-parallel", "1", "-skip", "^TestProduct_", "-run",
+             "^%s$" % name if wasiUnit.fullmatch(name) else fixturePattern(["TestWASI"], [name]),
+             "./internal/native"] for name in names]
+
+
+def wasiInputs(tree, unit, full):
+    names = wasiFixtures(tree)
+    if unit and unit not in names:
+        raise ValueError("unknown WASI unit " + unit)
+    chosen = [unit] if unit else names
+    inputs = goCommandInputs(tree, wasiCommands(chosen)[0])
+    inputs["packages"].append(module + "/cmd/adamic")  # wasm_test.go builds the stage 0 executable.
+    # The fixture may import siblings; the Node oracle reads its runtime and hooks,
+    # and read_files.a runs from the oracle testdata directory. Include entire fixture
+    # directories, not only their entry points. requests reads the wasm ABI and hosts.
+    inputs["paths"] += ["oracle", "internal/native/wasm", "internal/oracle/testdata"]
+    for name in chosen:
+        if wasiUnit.fullmatch(name):
+            return treeInputs("top-level WASI unit's fixture slice is not yet bounded")
+        if "/" in name:
+            inputs["paths"].append(os.path.dirname(name))
+    return inputs
+
+
+def catalogInputs(tree, unit, full):
+    if not full:
+        return {"packages": [], "paths": ["verify/catalog/check.sh"]}
+    entries = [entry for entry in catalogEntries(tree) if not unit or str(entry["number"]) == unit]
+    if not entries:
+        raise ValueError("unknown catalog entry " + str(unit))
+    inputs = treeInputs("catalog runs arbitrary named Go tests in a root working directory; their runtime reads are not yet bounded")
+    for entry in entries:
+        if entry.get("command"):
+            inputs["packages"] += goCommandInputs(tree, shlex.split(entry["command"]))["packages"]
+        if entry.get("patch"):
+            inputs["paths"].append("verify/catalog/" + entry["patch"])
+        if entry.get("fixture"):
+            inputs["paths"].append(entry["fixture"])
+    inputs["paths"].append("verify/catalog")
+    return inputs
+
+
+def phaseInputs(tree, line, full=False, products=None):
+    phase, _, unit = line.partition(" ")
+    provider = phaseInputProviders.get(phase)
+    inputs = (provider(tree, unit, full) if provider else
+              treeInputs("phase has no bounded input provider"))
+    if "." not in inputs["paths"]:
+        # Every phase enters runPhase's npm setup, and runs this runner/config.
+        inputs["paths"] += ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json",
+                            "stage3/api/package.json", "stage3/api/package-lock.json", "go.mod", "go.sum"]
+        if full and phase in ("wasi", "stage3", "catalog", "products"):
+            # Same source discovery as wholeProducts. A newly added declaration is
+            # visible on the next enumeration. Existing products need a runtime-read audit.
+            sources, declared = products if products is not None else productInputSources(tree)
+            inputs["paths"] += sources
+            if declared:
+                inputs["paths"].append(".")
+                inputs["note"] = "whole phase runs declared products first; product runtime reads are not yet bounded"
+    inputs["packages"] = sorted(set(inputs["packages"]))
+    inputs["paths"] = sorted(set(inputs["paths"]))
+    return {"unit": line, "inputs": inputs}
+
+
 def main():
     if "--list-units" in sys.argv:
         # The pool's planner reads the units from here, from a plain checkout, so it never parses what run.py owns.
         lister = argparse.ArgumentParser()
         lister.add_argument("--full", action="store_true")
         lister.add_argument("--list-units", action="store_true")
+        lister.add_argument("--with-inputs", action="store_true")
         lister.add_argument("--tree", required=True)
         lister.add_argument("--base", help="include conditional fast phases selected by this base diff")
         lister.add_argument("--sha")
         lister.add_argument("--tools")
         arguments = lister.parse_args()
-        print("\n".join(wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)))
+        units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
+        if arguments.with_inputs:
+            products = productInputSources(arguments.tree) if arguments.full else None
+            for unit in units:
+                print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products)))
+        else:
+            print("\n".join(units))
         return
     parser = argparse.ArgumentParser()
     parser.add_argument("--tree", required=True)
@@ -593,11 +726,12 @@ class Gate:
         self.result["unit"] = unit
         return chosen
 
+    @declaresInputs("products", lambda tree, unit, full: treeInputs("products run arbitrary declared tests; runtime reads are not yet bounded"))
     def wholeProducts(self, log):
         if getattr(self, "wholeProductsDone", False):
             return self.exits.get("products", 0) == 0
         self.wholeProductsDone = True
-        listing = self.command(["go", "list", "-f", "{{.ImportPath}}\t{{.Dir}}", "./..."],
+        listing = self.command(productListingCommand(),
                                cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.splitlines()
         directories = {}
         for line in listing:
@@ -626,7 +760,7 @@ class Gate:
         _, unowned = self.touched([path for path in changed if path])
         self.cover(unowned, [path for path in changed if path])
         try:
-            self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+            self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
         except BaseException:
             self.fail("build", traceback.format_exc())
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
@@ -687,6 +821,7 @@ class Gate:
             self.fail("census", "cloud/fast-gate/deferred.txt names tests the whole gate doesn't run to a verdict; take each off the list or give the gate its input:\n" +
                       "\n".join(["%s: census class %s, refused" % row for row in refused] + unrun))
 
+    @declaresInputs("coverage", lambda tree, unit, full: treeInputs("coverage uses the base diff, package/source census and executor map across the tree"))
     def cover(self, unowned, changed=(), pathSetChanged=None, record=True):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
         tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
@@ -777,6 +912,7 @@ class Gate:
         listing = self.command(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
         return listing.stdout.split() if listing.returncode == 0 else []
 
+    @declaresInputs("stage3", lambda tree, unit, full: treeInputs("stage3 runs Python/shell lane and adaptation programs; their runtime reads are not yet bounded"))
     def stage3(self):
         """Stage 3's tier-1 lane: apply's tests, the lane's own tests, and stage3/lane/run.sh, which
         applies the adaptations to the pinned TypeScript and runs the upstream suite and the sanctioned
@@ -853,6 +989,7 @@ class Gate:
                 detail += ["%s, last lines:" % name] + [line[:300] for line in lines[-6:]]
             self.fail("stage3", "\n".join(detail))
 
+    @declaresInputs("workers", lambda tree, unit, full: treeInputs("conditional scripts and their runtime reads are not yet bounded"))
     def workers(self, executors):
         """Platforms' executors for Cloudflare Workers (their inventory, Oct 7 20:59), each from the
         repository root on Node 24, and node --check for the workerd-only measurement harnesses."""
@@ -884,6 +1021,7 @@ class Gate:
         if failed:
             self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
 
+    @declaresInputs("a-check", lambda tree, unit, full: treeInputs("conditional source programs may import outside their directories"))
     def aCheck(self, paths):
         """Each changed .a outside a package through stage 0's front end (adamic c: the checker's proven
         types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
@@ -944,6 +1082,7 @@ class Gate:
                     touched.append(name)
         return touched
 
+    @declaresInputs("catalog-apply", lambda tree, unit, full: treeInputs("patch application reads candidate and base trees"))
     def catalogApply(self, patches):
         """Staling moves to where it's cheap to fix (@system_adamic, Oct 7 21:28): an entry's undo patch
         that applied to main and no longer applies with this change makes the change red, naming the
@@ -967,14 +1106,14 @@ class Gate:
         if staled:
             self.fail("catalog-apply", "this change stops the bug catalog's undo patch from applying: %s. Refresh it in this landing (verify/catalog/check.sh --entry NN <sha> must say applies-and-fails-as-recorded)" % ", ".join(staled))
 
+    @declaresInputs("catalog", catalogInputs)
     def catalogFull(self):
         if not os.path.exists(os.path.join(self.arguments.tree, "verify/catalog/check.sh")):
             self.exits["catalog"] = 0
             self.steps["catalog"] = 0.0
             self.result["catalog"] = "not in this tree"
             return
-        with open(os.path.join(self.arguments.tree, "verify/catalog/catalog.json")) as handle:
-            entries = json.load(handle)
+        entries = catalogEntries(self.arguments.tree)
         names = ["%02d %s" % (entry["number"], entry["name"]) for entry in entries]
         if not names or len(set(names)) != len(names) or len({entry["number"] for entry in entries}) != len(entries):
             raise ValueError("empty or duplicate catalog entries")
@@ -1016,11 +1155,10 @@ class Gate:
                     with open(row["log"]) as handle:
                         shutil.copyfileobj(handle, output)
 
+    @declaresInputs("wasi", wasiInputs)
     def wasiSplit(self, log, environment=None):
         names = self.selectedUnits("wasi", wasiFixtures(self.arguments.tree))
-        commands = [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
-                     "-p", "1", "-parallel", "1", "-skip", "^TestProduct_", "-run", "^%s$" % name if wasiUnit.fullmatch(name) else fixturePattern(["TestWASI"], [name]),
-                     "./internal/native"] for name in names]
+        commands = wasiCommands(names)
         def execute(name, command, scratch):
             events = []
             class UnitLog:
@@ -1470,6 +1608,7 @@ class Gate:
                 self.fail(name, handle.read()[-4000:])
         return code == 0
 
+    @declaresInputs("tools", lambda tree, unit, full: treeInputs("tool declaration census reads tracked Go sources across the repository"))
     def toolsDeclared(self):
         """Every command the repository's Go code runs by literal name is declared in the tools checkout's
         cloud/fast-gate/tools.txt, which the box checks before the gate (cloud/fast-gate/tools-check.sh).
@@ -1494,11 +1633,13 @@ class Gate:
         if undeclared:
             self.fail("tools", "\n".join(undeclared) + "\nDeclare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.")
 
+    @declaresInputs("build", lambda tree, unit, full: goCommandInputs(tree, goPhaseCommand("build")))
     def build(self):
-        self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+        self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
 
+    @declaresInputs("vet", lambda tree, unit, full: goCommandInputs(tree, goPhaseCommand("vet")))
     def vet(self):
-        self.result["vet_ok"] = self.step("vet", ["go", "vet", "./..."])
+        self.result["vet_ok"] = self.step("vet", goPhaseCommand("vet"))
 
     def testSplit(self, packages, log, productsOnly=False):
         """Compile and list selected packages, build their products, then run ordinary test units.
@@ -1772,6 +1913,7 @@ class Gate:
         output, _ = process.communicate()
         return process.returncode, output
 
+    @declaresInputs("determinism", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
     def determinism(self, smoke):
         """Emission is deterministic (@system_adamic, Oct 9: a 43,250-line main.c on the Threadripper against 5,470 lines
         on a Codex box for the same tree). Stage 0 emits each smoke fixture's C twice, each in its own process, so Go's
@@ -1810,6 +1952,7 @@ class Gate:
             return
         self.exits["determinism"] = 0
 
+    @declaresInputs("smoke", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
     def smoke(self, smoke, log):
         """The pinned smoke set in one process, then a check that every entry passed: an entry whose
         lane exists but whose fixture didn't run is red, never a silent pass. An entry whose lane the
@@ -1858,6 +2001,8 @@ class Gate:
         if self.failure is None:
             self.cacheDrain("upload")
 
+    @declaresInputs("upload", lambda tree, unit, full: treeInputs("publisher reads externally generated spool records; repository inputs alone do not identify the verdict"))
+    @declaresInputs("audit", lambda tree, unit, full: treeInputs("publisher reads externally generated audit/spool records; repository inputs alone do not identify the verdict"))
     def cacheDrain(self, name):
         required = name == "audit"
         command = ["go", "run", "./internal/buildcache/cmd/buildcache-publish"]
@@ -1976,6 +2121,7 @@ class Gate:
                 self.fail(name, "%s exited %d\n%s" % (identity, code, handle.read()[-4000:]))
         return None if fatal and self.failure is not None and not self.arguments.full and not self.complete else code
 
+    @declaresInputs("census", lambda tree, unit, full: treeInputs("skip census walks the whole repository and reads the supplied merged log and Git branch state"))
     def checkCensus(self):
         started = time.monotonic()
         tools = self.arguments.tools
@@ -2431,8 +2577,7 @@ def wholeUnits(tree):
         elif phase == "stage3":
             units += ["stage3 " + name for name in stage3Units]
         elif phase == "catalog" and os.path.exists(os.path.join(tree, "verify/catalog/check.sh")):
-            with open(os.path.join(tree, "verify/catalog/catalog.json")) as handle:
-                units += ["catalog %d" % entry["number"] for entry in json.load(handle)]
+            units += ["catalog %d" % entry["number"] for entry in catalogEntries(tree)]
         elif phase != "catalog":
             units.append(phase)
     return units

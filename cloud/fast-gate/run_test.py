@@ -2251,3 +2251,88 @@ class WASIUnits(unittest.TestCase):
             gate.stream = stream
             with self.subTest(extra=extra):
                 self.assertEqual(executes["execute"]("TestWASIUnit03", [], "/tmp")["ok"], ok)
+
+
+class PhaseInputs(unittest.TestCase):
+    tree = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+
+    def listing(self, full=False, inputs=False):
+        command = [sys.executable, run.__file__, "--list-units", "--tree", self.tree]
+        if full:
+            command.append("--full")
+        if inputs:
+            command.append("--with-inputs")
+        return realRun(command, capture_output=True, text=True, check=True, timeout=90).stdout
+
+    def test_plain_listing_is_byte_for_byte_the_base(self):
+        base = realRun(["git", "-C", self.tree, "show", "eef6f75d:cloud/fast-gate/run.py"],
+                       capture_output=True, text=True, check=True, timeout=10).stdout
+        for full in (False, True):
+            command = [sys.executable, "-", "--list-units", "--tree", self.tree]
+            if full:
+                command.append("--full")
+            expected = realRun(command, input=base, capture_output=True, text=True, check=True, timeout=90).stdout
+            self.assertEqual(self.listing(full), expected)
+
+    def test_every_listed_unit_has_nonempty_inputs(self):
+        for full in (False, True):
+            rows = [json.loads(line) for line in self.listing(full, True).splitlines()]
+            self.assertEqual([row["unit"] for row in rows], self.listing(full).splitlines())
+            for row in rows:
+                inputs = row["inputs"]
+                self.assertTrue(inputs["packages"] or inputs["paths"], row)
+                if "." in inputs["paths"]:
+                    self.assertTrue(inputs.get("note"), row)
+                self.assertTrue(all(not os.path.isabs(path) and ".." not in path.split("/")
+                                    for path in inputs["paths"]), row)
+
+    def covered(self, inputs, path):
+        return any(root == "." or path == root or path.startswith(root + "/")
+                   for root in inputs["paths"])
+
+    def test_wasi_inputs_cover_inventory_and_command_working_directories(self):
+        # Independently check the compiler's fixture inventory, not the provider's path list.
+        with open(os.path.join(self.tree, "internal/native/wasm_test.go")) as handle:
+            source = handle.read()
+        fixture = re.search(r'fixtures := \[\]string\{\s*"([^"]+)"', source)[1]
+        self.assertIn(fixture, run.wasiFixtures(self.tree))
+        commands = []
+        gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=self.tree),
+            selectedUnits=lambda phase, names: [fixture],
+            phaseUnits=lambda phase, names, planned, execute: commands.extend(planned))
+        run.Gate.wasiSplit(gate, io.StringIO())
+        self.assertEqual(commands[0][-1], "./internal/native")
+        inputs = run.phaseInputs(self.tree, "wasi " + fixture, True)["inputs"]
+        self.assertIn(run.module + "/internal/native", inputs["packages"])
+        self.assertIn(run.module + "/cmd/adamic", inputs["packages"])
+        # go test's working directory is internal/native, whose test resolves ../..
+        # to the repository for compiler/Node commands. Node reads hooks and fixture siblings.
+        for path in (fixture, os.path.dirname(fixture) + "/sibling.ts",
+                     "oracle/node.mjs", "oracle/adamic.mjs", "internal/native/wasm/run.mjs",
+                     "internal/native/wasm/request-abi.c", "internal/oracle/testdata/files/input.txt"):
+            self.assertTrue(self.covered(inputs, path), (path, inputs))
+
+    def test_catalog_inputs_cover_inventory_patch_and_root_working_directory(self):
+        import shlex
+        entry = next(entry for entry in run.catalogEntries(self.tree) if entry.get("command"))
+        inputs = run.phaseInputs(self.tree, "catalog %d" % entry["number"], True)["inputs"]
+        # check.py runs the inventory's command in a disposable repository-root worktree.
+        command = shlex.split(entry["command"])
+        package = next(arg for arg in command if arg.startswith("./"))
+        self.assertIn(run.module + package[1:], inputs["packages"])
+        for path in ("verify/catalog/check.sh", "verify/catalog/check.py", "verify/catalog/catalog.json",
+                     "verify/catalog/" + entry["patch"], entry["fixture"], package[2:] + "/testdata/input.a"):
+            self.assertTrue(self.covered(inputs, path), (path, inputs))
+
+    def test_wasi_fixture_path_mutant_is_caught(self):
+        original = run.phaseInputProviders["wasi"]
+        fixture = run.wasiFixtures(self.tree)[0]
+        def mutant(tree, unit, full):
+            inputs = original(tree, unit, full)
+            inputs["paths"].remove(os.path.dirname(fixture))
+            return inputs
+        with mock.patch.dict(run.phaseInputProviders, wasi=mutant):
+            result = unittest.TestResult()
+            PhaseInputs("test_wasi_inputs_cover_inventory_and_command_working_directories").run(result)
+        self.assertEqual(len(result.failures), 1, result.errors)
+        self.assertEqual(result.errors, [])
