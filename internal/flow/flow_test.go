@@ -112,6 +112,10 @@ func checkSingleAssignmentProgram(t *testing.T, path string) {
 	var totals SSAStats
 	var functions int
 	program := lowered(t, path)
+	if program.Async != nil {
+		t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+		return
+	}
 	for function := -1; function < len(program.Functions); function++ {
 		name := "main"
 		if function >= 0 {

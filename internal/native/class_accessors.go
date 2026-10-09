@@ -30,7 +30,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				if e.program.PackedCountNeeded(accessor.Getter) {
 					count = ", 1"
 				}
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, %s%s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), packed, count)
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, %s%s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), packed, count)
 			} else {
 				count := ""
 				if function.ArgumentsCount != 0 {
@@ -74,7 +74,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				if e.program.PackedCountNeeded(accessor.Setter) {
 					count = ", 2"
 				}
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, %s%s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), packed, count)
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, %s%s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), packed, count)
 			} else {
 				count := ""
 				if function.ArgumentsCount != 0 {
