@@ -1,0 +1,14 @@
+{
+  "TestNativeAgreesWithNode": {
+    "rows": "oracle_test.go",
+    "variable": "fixtures"
+  },
+  "TestInputAgreesWithNode": {
+    "rows": "input_test.go",
+    "variable": "inputFixtures"
+  },
+  "TestFreshWriteProbesStayRefused": {
+    "glob": "testdata/fresh_refused/*.a",
+    "minimum": 20
+  }
+}
