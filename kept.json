@@ -1,0 +1,67 @@
+{
+ "github.com/system-inc/adamic/stage1/cohere/cssstrings": [
+  "TestProduct_CSSStringsFastNative",
+  "TestProduct_CSSStringsGoAnswers",
+  "TestProduct_CSSStringsGoOracle",
+  "TestProduct_CSSStringsMutant0Lowered",
+  "TestProduct_CSSStringsMutant0Native",
+  "TestProduct_CSSStringsMutant1Lowered",
+  "TestProduct_CSSStringsMutant1Native",
+  "TestProduct_CSSStringsMutant2Lowered",
+  "TestProduct_CSSStringsMutant2Native",
+  "TestProduct_CSSStringsPortLowered",
+  "TestProduct_CSSStringsPortNative"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/estree": [
+  "TestProduct_DeepMutantsFixture",
+  "TestProduct_DeepMutantsIR1",
+  "TestProduct_DeepMutantsIR2",
+  "TestProduct_SyntaxMutantIR_000",
+  "TestProduct_SyntaxMutantIR_001",
+  "TestProduct_SyntaxMutantIR_002",
+  "TestProduct_SyntaxMutantLowered_000",
+  "TestProduct_SyntaxMutantLowered_002",
+  "TestProduct_SyntaxMutantsGoOracle",
+  "TestProduct_UnattachedDecoratorIR",
+  "TestProduct_UnattachedDecoratorLowered",
+  "TestProduct_scalar_edges_lowered"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/lint": [
+  "TestProduct_CompleteSuggestionLowered",
+  "TestProduct_LintMutant_no_empty",
+  "TestProduct_LintMutant_no_new",
+  "TestProduct_LintMutant_typescript_init_declarations",
+  "TestProduct_ProfileCompilationCounted",
+  "TestProduct_ProfileCompilationProfiled",
+  "TestProduct_ShardsAgreeNative"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/markdownblocks": [
+  "TestProduct_GrainMarkdown_decode_lowered",
+  "TestProduct_MarkdownLeafLowered",
+  "TestProduct_MarkdownLeafNativeRelease",
+  "TestProduct_MarkdownMalformedEventsGo",
+  "TestProduct_MarkdownQuote_lowered",
+  "TestProduct_MarkdownTextNativeSanitized"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/tsprinter": [
+  "TestProduct_TSPrinterExpressionsCorpus",
+  "TestProduct_TSPrinterMutantNative_001",
+  "TestProduct_TSPrinterMutantNative_016",
+  "TestProduct_TSPrinterMutantNative_018",
+  "TestProduct_TSPrinterMutantNative_019",
+  "TestProduct_TSPrinterStatementsEmbedded_003"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/typeaware": [
+  "TestProduct_corpus_record",
+  "TestProduct_profile_controls_lowered",
+  "TestProduct_type_symbol_archive",
+  "TestProduct_volume_agreement_call_parameters",
+  "TestProduct_volume_agreement_enum_types",
+  "TestProduct_volume_agreement_released_handle_native",
+  "TestProduct_volume_agreement_type_origin",
+  "TestProduct_volume_agreement_volume_asan",
+  "TestProduct_volume_agreement_widened_shape",
+  "TestProduct_volume_guard_archive_strict_this_checker",
+  "TestProduct_volume_lowered"
+ ]
+}
