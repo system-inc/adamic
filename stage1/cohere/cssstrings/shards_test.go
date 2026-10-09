@@ -222,7 +222,7 @@ func stringsGoProduct(t *testing.T, name string, build func(dir string) error) s
 	inputs := buildcache.Inputs{
 		Name:      "cssstrings " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssstrings/testdata", "stage1/cohere/cssstrings/port_test.go"},
-		Flags:     []string{name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
+		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
 		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
 	}
 	return buildcache.Product(t, inputs, build)
