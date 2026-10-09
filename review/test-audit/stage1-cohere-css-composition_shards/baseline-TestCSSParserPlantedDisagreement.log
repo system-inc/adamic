@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T11:36:22.635031409Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:36:22.643779201Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement"}
+{"Time":"2026-10-09T11:36:22.643850789Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"=== RUN   TestCSSParserPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:22.643867274Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"=== PAUSE TestCSSParserPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:22.643869537Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement"}
+{"Time":"2026-10-09T11:36:22.643871851Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement"}
+{"Time":"2026-10-09T11:36:22.643873473Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"=== CONT  TestCSSParserPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:23.806542594Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"    top_level_shards_test.go:1625: build css_Go_parser_oracle 31dc2d7ac3df hit 1.16\n"}
+{"Time":"2026-10-09T11:36:23.941391153Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"    top_level_shards_test.go:1626: build css_Go_parser_oracle_answers 27f219cb5717 hit 0.01\n"}
+{"Time":"2026-10-09T11:36:42.254830892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"    parser_shards_test.go:509: planted disagreement pinned/cohere@7945d102a6c18dd36adf9114a758ce646e8b2359/0:C caught by exactly TestThePortParsesAsGoCohereDoes_120\n"}
+{"Time":"2026-10-09T11:36:42.254907557Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Output":"--- PASS: TestCSSParserPlantedDisagreement (19.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:42.254911964Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSParserPlantedDisagreement","Elapsed":19.61}
+{"Time":"2026-10-09T11:36:42.254945465Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:36:42.257399179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t19.622s\n"}
+{"Time":"2026-10-09T11:36:42.257428434Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":19.623}

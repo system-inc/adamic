@@ -1,0 +1,23 @@
+{
+  "base": "60397548dd8a9494a7d2aaa874b7648b8e625607",
+  "nproc": 5,
+  "setup": "warm env.sh, cloud/setup.sh skipped",
+  "dependency_install": {
+    "npm_ci_api_reported_seconds": 0.421,
+    "fixture_clone_wall": 1.951,
+    "postcss_install_wall": 0.715,
+    "prettier_install_wall": 0.693
+  },
+  "clean_controller_wall_sum": 489.9258430469981,
+  "timing_controller_wall_sum": 890.9040042909983,
+  "audit_and_followup_wall_sum": 744.3220777019988,
+  "native_mutant_build_wall": {
+    "M1": 14.449862155999654,
+    "M2": 14.665385534999587,
+    "M3": 14.959863443999893,
+    "M4": 25.56399897799929
+  },
+  "compiler_build_wall": 5.576399978999689,
+  "conditions": "Go test -count=1 per invocation. Setup/composition timing families sequential; remaining singleton timing rows used two concurrent processes on 5 CPUs. Durations are each test binary package line, not command wall time. The third composition timing log completed while its controller was paused; its binary elapsed is valid, controller wall unavailable. Successful build validations were resumed rather than repeated after two invalid special edits. Total wall sums count the failed validation attempts.",
+  "overall_elapsed": "Approximately 45 minutes before publishing; exceeded the suggested 30-minute port budget."
+}

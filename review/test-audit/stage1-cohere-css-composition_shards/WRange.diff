@@ -1,0 +1,20 @@
+--- a/stage1/cohere/css/nodes.ts
++++ b/stage1/cohere/css/nodes.ts
+@@ -99,7 +99,6 @@
+         }
+     }
+     if(node.start !== undefined && node.end !== undefined && (node.range[0] !== node.start.offset || node.range[1] !== node.end.offset)) {
+-        fields.set('range', quote(`Range [${node.range[0]} ${node.range[1]}] is not source's [${node.start.offset} ${node.end.offset}]`));
+     }
+     fields.set('keys', `[${keys.join(',')}]`);
+     return objectJSON(fields);
+--- a/stage1/cohere/css/tree.ts
++++ b/stage1/cohere/css/tree.ts
+@@ -176,7 +176,6 @@
+     if(node.ast && sourceIndex >= 0) {
+         const source = tree.at(sourceIndex);
+         if(node.range[0] !== source.number('startOffset') || node.range[1] !== source.number('endOffset')) {
+-            parts.splice(0, 0, `${quote('<range>')}:${quote(`Range [${node.range[0]} ${node.range[1]}] disagrees with the source offsets`)}`);
+         }
+     }
+     return `{${parts.join(',')}}`;

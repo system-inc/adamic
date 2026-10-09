@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/compose.ts
++++ b/stage1/cohere/css/compose.ts
+@@ -249,7 +249,7 @@
+         }
+     }
+     else if(name.toLowerCase() === 'import' || name.toLowerCase() === 'use' || name.toLowerCase() === 'forward') {
+-        node.setBoolean('import', true);
++        node.setBoolean('import', false);
+         node.remove('filename');
+         node.setObject('params', parseValue(tree, params, scss));
+     }

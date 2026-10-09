@@ -1,0 +1,7 @@
+import { readTextFile } from 'adamic';
+function selectAudit(): string {
+ const read = readTextFile('/tmp/u078-mutant');
+ if(read.kind === 'Error') return '';
+ return read.text.trim();
+}
+export const auditSelection = selectAudit();

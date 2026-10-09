@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/composition_shards_test.go
++++ b/stage1/cohere/css/composition_shards_test.go
+@@ -91,7 +91,7 @@
+ 	sanitized := compositionNativeProduct(t)
+ 
+ 	t.Logf("TestCompositionMatchesGo (setup): %.3fs", time.Since(started).Seconds())
+-	return compositionProducts{lines: lines, shards: shards, source: source, product: product, sanitized: sanitized, oracle: oracle}
++	return compositionProducts{lines: lines, shards: shards, source: source, product: product, sanitized: sanitized, oracle: oracle[:0]}
+ }
+ 
+ func compositionRunShard(t *testing.T, index int) {

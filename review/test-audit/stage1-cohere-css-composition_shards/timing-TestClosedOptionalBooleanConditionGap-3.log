@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T11:42:49.823118693Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:42:49.834514908Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedOptionalBooleanConditionGap"}
+{"Time":"2026-10-09T11:42:49.834605344Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedOptionalBooleanConditionGap","Output":"=== RUN   TestClosedOptionalBooleanConditionGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:50.184587673Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedOptionalBooleanConditionGap","Output":"--- PASS: TestClosedOptionalBooleanConditionGap (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:50.184681705Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestClosedOptionalBooleanConditionGap","Elapsed":0.35}
+{"Time":"2026-10-09T11:42:50.184817651Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:50.186536555Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t0.363s\n"}
+{"Time":"2026-10-09T11:42:50.186593431Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":0.363}

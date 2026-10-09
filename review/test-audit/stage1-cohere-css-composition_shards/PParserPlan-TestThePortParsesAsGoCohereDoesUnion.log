@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T12:05:57.432255234Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T12:05:57.440999692Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion"}
+{"Time":"2026-10-09T12:05:57.441101185Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"=== RUN   TestThePortParsesAsGoCohereDoesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:57.441453016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"=== PAUSE TestThePortParsesAsGoCohereDoesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:57.44146198Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion"}
+{"Time":"2026-10-09T12:05:57.441464864Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion"}
+{"Time":"2026-10-09T12:05:57.441466657Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"=== CONT  TestThePortParsesAsGoCohereDoesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:58.613678196Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"    top_level_shards_test.go:1625: build css_Go_parser_oracle f84b76caf4ba hit 1.17\n"}
+{"Time":"2026-10-09T12:05:58.759284622Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"    top_level_shards_test.go:1626: build css_Go_parser_oracle_answers 4ef933509621 hit 0.01\n"}
+{"Time":"2026-10-09T12:05:58.77487429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"    parser_shards_test.go:431: shard count 0\n","OutputType":"error"}
+{"Time":"2026-10-09T12:05:58.774938327Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Output":"--- FAIL: TestThePortParsesAsGoCohereDoesUnion (1.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:58.774942313Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoesUnion","Elapsed":1.33}
+{"Time":"2026-10-09T12:05:58.774966119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:58.776699766Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/css\t1.344s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:58.776739326Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":1.345}

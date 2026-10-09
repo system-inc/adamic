@@ -1,0 +1,67 @@
+[
+  {
+    "id": "W1",
+    "file": "stage1/cohere/css/css_test.go",
+    "signature": "func firstDifference(got string, want string) string {",
+    "change": "disable byte disagreement",
+    "rows": [
+      "TestCompositionMatchesGoUnion",
+      "TestCSSPrinterAgreesWithGo family",
+      "TestCSSParserPlantedDisagreement"
+    ],
+    "line": 277
+  },
+  {
+    "id": "WMemory",
+    "file": "internal/native/native.go",
+    "old": "if options.Sanitize {",
+    "new": "if options.Sanitize && false {",
+    "change": "disable sanitizer instrumentation flags",
+    "rows": [
+      "TestComposedMemoryChecksCanFail"
+    ],
+    "line": 103
+  },
+  {
+    "id": "SSetup",
+    "file": "stage1/cohere/css/composition_shards_test.go",
+    "old": "oracle: oracle}",
+    "new": "oracle: oracle[:0]}",
+    "change": "erase constructed oracle product identity",
+    "rows": [
+      "TestCompositionMatchesGo setup family"
+    ],
+    "line": 94
+  },
+  {
+    "id": "SMode",
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "old": "parts := cssPartition(lines, count/8)",
+    "new": "parts := cssPartition(lines, count/4)",
+    "change": "double mode partition count",
+    "rows": [
+      "TestCSSPrinterAgreesWithGoUnion"
+    ],
+    "line": 293
+  },
+  {
+    "id": "SParser",
+    "file": "stage1/cohere/css/parser_shards_test.go",
+    "old": "for variant := -1; variant < len(mutants); variant++ {",
+    "new": "for variant := 0; variant < len(mutants); variant++ {",
+    "change": "omit agreement variant in shard construction",
+    "rows": [
+      "TestThePortParsesAsGoCohereDoesUnion"
+    ],
+    "line": 77
+  },
+  {
+    "id": "WRange",
+    "file": "stage1/cohere/css/nodes.ts + tree.ts",
+    "line": 102,
+    "change": "drop both canonical range mismatch reporting statements",
+    "rows": [
+      "TestTheCanonicalRangeChecksCanFail"
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+--- a/stage1/cohere/css/parser.ts
++++ b/stage1/cohere/css/parser.ts
+@@ -700,7 +700,6 @@
+ export function parse(text: string, scss: boolean = false): Parsed | Refused {
+     try {
+         const parser = new Parser(new Input(text), scss);
+-        parser.parse();
+         return new Parsed(parser);
+     }
+     catch(error) {

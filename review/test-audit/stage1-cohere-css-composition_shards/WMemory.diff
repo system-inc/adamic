@@ -1,0 +1,11 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -100,7 +100,7 @@
+ 	if options.cpu != "" {
+ 		flags = append(flags, "-march="+options.cpu)
+ 	}
+-	if options.Sanitize {
++	if options.Sanitize && false {
+ 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+ 	}
+ 	return append(flags, "-O2")

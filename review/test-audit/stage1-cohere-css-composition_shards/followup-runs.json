@@ -1,0 +1,40 @@
+[
+  {
+    "selector": "clean",
+    "log": "bounded-printer-063-clean.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterAgreesWithGo_063$"
+    ],
+    "exit": 0,
+    "wall": 12.961854681999284
+  },
+  {
+    "selector": "W1",
+    "log": "bounded-printer-063-W1.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterAgreesWithGo_063$"
+    ],
+    "exit": 1,
+    "wall": 39.423457869999766
+  }
+]

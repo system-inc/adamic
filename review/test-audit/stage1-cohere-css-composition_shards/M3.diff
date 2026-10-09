@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/tree.ts
++++ b/stage1/cohere/css/tree.ts
+@@ -143,7 +143,7 @@
+ export function renderTree(tree: Tree, index: number): string {
+     const node = tree.at(index);
+     if(node.literal) {
+-        return quote(node.literalValue);
++        return quote('');
+     }
+     const keys = node.keys.slice();
+     keys.sort((left, right) => left < right ? -1 : left > right ? 1 : 0);

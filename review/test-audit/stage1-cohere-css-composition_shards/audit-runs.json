@@ -1,0 +1,1346 @@
+[
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-o",
+      "/tmp/u078-adamic",
+      "./cmd/adamic"
+    ],
+    "log": "compiler-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 5.576399978999689,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/compose_main.ts",
+      "-o",
+      "/tmp/u078-M1",
+      "--sanitize"
+    ],
+    "log": "M1-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 14.449862155999654,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/compose_main.ts",
+      "-o",
+      "/tmp/u078-M2",
+      "--sanitize"
+    ],
+    "log": "M2-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 14.665385534999587,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/compose_main.ts",
+      "-o",
+      "/tmp/u078-M3",
+      "--sanitize"
+    ],
+    "log": "M3-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 14.959863443999893,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/print_main.ts",
+      "-o",
+      "/tmp/u078-M4",
+      "--sanitize"
+    ],
+    "log": "M4-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 25.56399897799929,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/compose_main.ts",
+      "-o",
+      "/tmp/u078-PCompose",
+      "--sanitize"
+    ],
+    "log": "PCompose-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.20914114199968026,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/print_main.ts",
+      "-o",
+      "/tmp/u078-PPrint",
+      "--sanitize"
+    ],
+    "log": "PPrint-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.19813351900029375,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/main.ts",
+      "-o",
+      "/tmp/u078-PMain",
+      "--sanitize"
+    ],
+    "log": "PMain-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.19998169700011204,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "PLower-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.6046006819997274,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "PC-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.34721173199977784,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "PSetup-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.23889405599948077,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "PMode-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.24605535299997428,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "PParserPlan-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.19763931000034063,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "W1-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.20928144299978158,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "WMemory-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.31714713600013056,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "SSetup-vet.log",
+    "selector": "clean",
+    "exit": 1,
+    "wall": 0.18532971600052406,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "SSetup-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.22101638399999501,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "SMode-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.21071454800039646,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "SParser-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.21200097600012668,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/testdata/composition_range_guard.ts",
+      "-o",
+      "/tmp/u078-WRange",
+      "--sanitize"
+    ],
+    "log": "WRange-standalone-build.log",
+    "selector": "clean",
+    "exit": 1,
+    "wall": 0.08167663200038078,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u078-adamic",
+      "build",
+      "stage1/cohere/css/testdata/composition_range_guard.ts",
+      "-o",
+      "/tmp/u078-WRange",
+      "--sanitize"
+    ],
+    "log": "WRange-standalone-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 13.540661213000021,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "stage1/cohere/css/composition_shards_test.go",
+      "internal/lower/lower.go",
+      "internal/native/native.go",
+      "stage1/cohere/css/parser_shards_test.go",
+      "internal/native/emit.go",
+      "stage1/cohere/css/printer_shards_test.go",
+      "stage1/cohere/css/css_test.go",
+      "/workspace/adamic/stage1/cohere/css/u078_audit_test.go"
+    ],
+    "log": "switch-gofmt.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.007084657000632433,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u078-test",
+      "./stage1/cohere/css/"
+    ],
+    "log": "switch-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 11.424832025999422,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "log": "switch-baseline-TestCompositionMatchesGo_family.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 52.8268046230005,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "log": "switch-baseline-TestCSSThroughput.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 38.3882364279998,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "switch-baseline-TestCSSPrinterOptimizedMatchesGo.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 35.446541014000104,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserOptimizedMatchesNode)$"
+    ],
+    "log": "switch-baseline-TestCSSParserOptimizedMatchesNode.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 22.471295584000472,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGoUnion)$"
+    ],
+    "log": "W1-TestCompositionMatchesGoUnion.log",
+    "selector": "W1",
+    "exit": 1,
+    "wall": 7.91729542900066,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "W1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGo_016|TestCSSPrinterAgreesWithGo_017|TestCSSPrinterAgreesWithGo_018|TestCSSPrinterAgreesWithGo_019|TestCSSPrinterAgreesWithGo_020|TestCSSPrinterAgreesWithGo_021|TestCSSPrinterAgreesWithGo_022|TestCSSPrinterAgreesWithGo_023|TestCSSPrinterAgreesWithGo_024|TestCSSPrinterAgreesWithGo_025|TestCSSPrinterAgreesWithGo_026|TestCSSPrinterAgreesWithGo_027|TestCSSPrinterAgreesWithGo_028|TestCSSPrinterAgreesWithGo_029|TestCSSPrinterAgreesWithGo_030|TestCSSPrinterAgreesWithGo_031|TestCSSPrinterAgreesWithGo_032|TestCSSPrinterAgreesWithGo_033|TestCSSPrinterAgreesWithGo_034|TestCSSPrinterAgreesWithGo_035|TestCSSPrinterAgreesWithGo_036|TestCSSPrinterAgreesWithGo_037|TestCSSPrinterAgreesWithGo_038|TestCSSPrinterAgreesWithGo_039|TestCSSPrinterAgreesWithGo_040|TestCSSPrinterAgreesWithGo_041|TestCSSPrinterAgreesWithGo_042|TestCSSPrinterAgreesWithGo_043|TestCSSPrinterAgreesWithGo_044|TestCSSPrinterAgreesWithGo_045|TestCSSPrinterAgreesWithGo_046|TestCSSPrinterAgreesWithGo_047|TestCSSPrinterAgreesWithGo_048|TestCSSPrinterAgreesWithGo_049|TestCSSPrinterAgreesWithGo_050|TestCSSPrinterAgreesWithGo_051|TestCSSPrinterAgreesWithGo_052|TestCSSPrinterAgreesWithGo_053|TestCSSPrinterAgreesWithGo_054|TestCSSPrinterAgreesWithGo_055|TestCSSPrinterAgreesWithGo_056|TestCSSPrinterAgreesWithGo_057|TestCSSPrinterAgreesWithGo_058|TestCSSPrinterAgreesWithGo_059|TestCSSPrinterAgreesWithGo_060|TestCSSPrinterAgreesWithGo_061|TestCSSPrinterAgreesWithGo_062|TestCSSPrinterAgreesWithGo_063)$"
+    ],
+    "log": "W1-TestCSSPrinterAgreesWithGo_family.log",
+    "selector": "W1",
+    "exit": 1,
+    "wall": 91.96483542900023,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "W1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserPlantedDisagreement)$"
+    ],
+    "log": "W1-TestCSSParserPlantedDisagreement.log",
+    "selector": "W1",
+    "exit": 1,
+    "wall": 26.15434804599954,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "W1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestComposedMemoryChecksCanFail)$"
+    ],
+    "log": "WMemory-TestComposedMemoryChecksCanFail.log",
+    "selector": "WMemory",
+    "exit": 1,
+    "wall": 35.86494666599992,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "WMemory"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_Setup|TestCompositionMatchesGo)$"
+    ],
+    "log": "SSetup-TestCompositionMatchesGo_setup_family.log",
+    "selector": "SSetup",
+    "exit": 1,
+    "wall": 7.858061584999632,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "SSetup"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "log": "SMode-TestCSSPrinterAgreesWithGoUnion.log",
+    "selector": "SMode",
+    "exit": 1,
+    "wall": 6.655773359000705,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "SMode"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "log": "SParser-TestThePortParsesAsGoCohereDoesUnion.log",
+    "selector": "SParser",
+    "exit": 1,
+    "wall": 3.808487405000051,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "SParser"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestTheCanonicalRangeChecksCanFail)$"
+    ],
+    "log": "WRange-TestTheCanonicalRangeChecksCanFail.log",
+    "selector": "WRange",
+    "exit": 1,
+    "wall": 5.340524587999425,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "WRange"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "log": "M1-TestCompositionMatchesGo_family.log",
+    "selector": "M1",
+    "exit": 1,
+    "wall": 12.602080706000379,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "log": "M1-TestCSSThroughput.log",
+    "selector": "M1",
+    "exit": 1,
+    "wall": 12.040832620000401,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "M1-TestCSSPrinterOptimizedMatchesGo.log",
+    "selector": "M1",
+    "exit": 1,
+    "wall": 24.233413093999843,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "log": "M2-TestCompositionMatchesGo_family.log",
+    "selector": "M2",
+    "exit": 1,
+    "wall": 28.365729373999784,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M2"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "M2-TestCSSPrinterOptimizedMatchesGo.log",
+    "selector": "M2",
+    "exit": 0,
+    "wall": 37.44370856899968,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M2"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "log": "M3-TestCompositionMatchesGo_family.log",
+    "selector": "M3",
+    "exit": 1,
+    "wall": 28.813755930999832,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M3"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "M4-TestCSSPrinterOptimizedMatchesGo.log",
+    "selector": "M4",
+    "exit": 1,
+    "wall": 30.397351094999976,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "M4"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "log": "PCompose-TestCompositionMatchesGo_family.log",
+    "selector": "PCompose",
+    "exit": 1,
+    "wall": 10.544286838000517,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PCompose"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "PPrint-TestCSSPrinterOptimizedMatchesGo.log",
+    "selector": "PPrint",
+    "exit": 1,
+    "wall": 25.361482839999553,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PPrint"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "log": "PMain-TestCSSThroughput.log",
+    "selector": "PMain",
+    "exit": 1,
+    "wall": 11.854127173999586,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PMain"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$"
+    ],
+    "log": "PLower-TestEachGapStandsWhereGapsMdSaysItDoes.log",
+    "selector": "PLower",
+    "exit": 1,
+    "wall": 2.479154135000499,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u078/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedEmptyArrayUnionGap)$"
+    ],
+    "log": "PLower-TestClosedEmptyArrayUnionGap.log",
+    "selector": "PLower",
+    "exit": 1,
+    "wall": 2.1145976160005375,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u078/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedParserRegexGap)$"
+    ],
+    "log": "PLower-TestClosedParserRegexGap.log",
+    "selector": "PLower",
+    "exit": 1,
+    "wall": 2.2272136470000987,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u078/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedOptionalBooleanConditionGap)$"
+    ],
+    "log": "PLower-TestClosedOptionalBooleanConditionGap.log",
+    "selector": "PLower",
+    "exit": 1,
+    "wall": 2.1127465549998306,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u078/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserOptimizedMatchesNode)$"
+    ],
+    "log": "PC-TestCSSParserOptimizedMatchesNode.log",
+    "selector": "PC",
+    "exit": 1,
+    "wall": 8.006498075999843,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u078/cache/PC"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_Setup)$"
+    ],
+    "log": "PSetup-TestCompositionMatchesGo_Setup.log",
+    "selector": "PSetup",
+    "exit": 0,
+    "wall": 2.02171784499933,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PSetup"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo)$"
+    ],
+    "log": "PSetup-TestCompositionMatchesGo.log",
+    "selector": "PSetup",
+    "exit": 0,
+    "wall": 2.0468445699998483,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PSetup"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "log": "PMode-TestCSSPrinterAgreesWithGoUnion.log",
+    "selector": "PMode",
+    "exit": 1,
+    "wall": 6.9689100570003575,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PMode"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "log": "PParserPlan-TestThePortParsesAsGoCohereDoesUnion.log",
+    "selector": "PParserPlan",
+    "exit": 1,
+    "wall": 3.473629561999587,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "PParserPlan"
+    }
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/css/"
+    ],
+    "log": "final-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.18152461200043035,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "log": "source-diff-check.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.08309776399983093,
+    "environment": {
+      "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/adamic-css-printer-library",
+      "ADAMIC_CSS_LIBRARY": "/tmp/adamic-css-library",
+      "ADAMIC_CSS_FIXTURES": "/tmp/adamic-css-prettier",
+      "ADAMIC_CSS_BENCH": "1",
+      "ADAMIC_MUTANT": "clean"
+    }
+  }
+]

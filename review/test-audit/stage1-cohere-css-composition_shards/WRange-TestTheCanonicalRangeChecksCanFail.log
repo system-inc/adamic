@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:01:42.469678327Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T12:01:42.478752362Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail"}
+{"Time":"2026-10-09T12:01:42.478826915Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Output":"=== RUN   TestTheCanonicalRangeChecksCanFail\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:45.645086031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Output":"    css_test.go:490: raw native: exit 0, stdout \"missed\\n\", stderr \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:01:45.645442148Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Output":"--- FAIL: TestTheCanonicalRangeChecksCanFail (3.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:45.645451452Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Elapsed":3.17}
+{"Time":"2026-10-09T12:01:45.64559557Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:45.646980271Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/css\t3.177s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:45.64702624Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":3.177}

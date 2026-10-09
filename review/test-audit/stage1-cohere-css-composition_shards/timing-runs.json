@@ -1,0 +1,722 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGoUnion)$"
+    ],
+    "log": "timing-TestCompositionMatchesGoUnion-1.log",
+    "exit": 0,
+    "wall": 25.56490461299927
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGoUnion)$"
+    ],
+    "log": "timing-TestCompositionMatchesGoUnion-2.log",
+    "exit": 0,
+    "wall": 23.95297488900087
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGoUnion)$"
+    ],
+    "log": "timing-TestCompositionMatchesGoUnion-3.log",
+    "exit": 0,
+    "wall": 25.147410883999328
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "log": "timing-TestCSSPrinterAgreesWithGoUnion-1.log",
+    "exit": 0,
+    "wall": 7.696163453000736
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "log": "timing-TestCSSPrinterAgreesWithGoUnion-2.log",
+    "exit": 0,
+    "wall": 8.553537087999757
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "log": "timing-TestCSSPrinterAgreesWithGoUnion-3.log",
+    "exit": 0,
+    "wall": 7.47623264899994
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "log": "timing-TestCSSThroughput-1.log",
+    "exit": 0,
+    "wall": 44.67158904400003
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "log": "timing-TestCSSThroughput-2.log",
+    "exit": 0,
+    "wall": 42.39265087199965
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "log": "timing-TestCSSThroughput-3.log",
+    "exit": 0,
+    "wall": 43.72922209199987
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestTheCanonicalRangeChecksCanFail)$"
+    ],
+    "log": "timing-TestTheCanonicalRangeChecksCanFail-1.log",
+    "exit": 0,
+    "wall": 19.928550003000055
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestTheCanonicalRangeChecksCanFail)$"
+    ],
+    "log": "timing-TestTheCanonicalRangeChecksCanFail-2.log",
+    "exit": 0,
+    "wall": 20.838302471000134
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestTheCanonicalRangeChecksCanFail)$"
+    ],
+    "log": "timing-TestTheCanonicalRangeChecksCanFail-3.log",
+    "exit": 0,
+    "wall": 21.433666187999734
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$"
+    ],
+    "log": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-1.log",
+    "exit": 0,
+    "wall": 2.407470234000357
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$"
+    ],
+    "log": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-2.log",
+    "exit": 0,
+    "wall": 2.2947127610004827
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$"
+    ],
+    "log": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-3.log",
+    "exit": 0,
+    "wall": 2.366665930000636
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedEmptyArrayUnionGap)$"
+    ],
+    "log": "timing-TestClosedEmptyArrayUnionGap-1.log",
+    "exit": 0,
+    "wall": 2.4261044799995943
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedEmptyArrayUnionGap)$"
+    ],
+    "log": "timing-TestClosedEmptyArrayUnionGap-2.log",
+    "exit": 0,
+    "wall": 2.362806551000176
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedEmptyArrayUnionGap)$"
+    ],
+    "log": "timing-TestClosedEmptyArrayUnionGap-3.log",
+    "exit": 0,
+    "wall": 2.7544991790000495
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedParserRegexGap)$"
+    ],
+    "log": "timing-TestClosedParserRegexGap-1.log",
+    "exit": 0,
+    "wall": 6.747896445999686
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedParserRegexGap)$"
+    ],
+    "log": "timing-TestClosedParserRegexGap-2.log",
+    "exit": 0,
+    "wall": 6.7105495750001865
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedParserRegexGap)$"
+    ],
+    "log": "timing-TestClosedParserRegexGap-3.log",
+    "exit": 0,
+    "wall": 7.021848429999409
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedOptionalBooleanConditionGap)$"
+    ],
+    "log": "timing-TestClosedOptionalBooleanConditionGap-1.log",
+    "exit": 0,
+    "wall": 2.8587319039997965
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedOptionalBooleanConditionGap)$"
+    ],
+    "log": "timing-TestClosedOptionalBooleanConditionGap-2.log",
+    "exit": 0,
+    "wall": 2.696443261999775
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedOptionalBooleanConditionGap)$"
+    ],
+    "log": "timing-TestClosedOptionalBooleanConditionGap-3.log",
+    "exit": 0,
+    "wall": 2.6428156969996053
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestComposedMemoryChecksCanFail)$"
+    ],
+    "log": "timing-TestComposedMemoryChecksCanFail-1.log",
+    "exit": 0,
+    "wall": 67.13403213099991
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestComposedMemoryChecksCanFail)$"
+    ],
+    "log": "timing-TestComposedMemoryChecksCanFail-2.log",
+    "exit": 0,
+    "wall": 70.08189220500026
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestComposedMemoryChecksCanFail)$"
+    ],
+    "log": "timing-TestComposedMemoryChecksCanFail-3.log",
+    "exit": 0,
+    "wall": 66.83604668299995
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "timing-TestCSSPrinterOptimizedMatchesGo-1.log",
+    "exit": 0,
+    "wall": 44.20682246800061
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "timing-TestCSSPrinterOptimizedMatchesGo-2.log",
+    "exit": 0,
+    "wall": 45.98302916400007
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "log": "timing-TestCSSPrinterOptimizedMatchesGo-3.log",
+    "exit": 0,
+    "wall": 46.34464400500019
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserOptimizedMatchesNode)$"
+    ],
+    "log": "timing-TestCSSParserOptimizedMatchesNode-1.log",
+    "exit": 0,
+    "wall": 28.28076873200007
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserOptimizedMatchesNode)$"
+    ],
+    "log": "timing-TestCSSParserOptimizedMatchesNode-2.log",
+    "exit": 0,
+    "wall": 27.137550690999888
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserOptimizedMatchesNode)$"
+    ],
+    "log": "timing-TestCSSParserOptimizedMatchesNode-3.log",
+    "exit": 0,
+    "wall": 26.558244496000043
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "log": "timing-TestThePortParsesAsGoCohereDoesUnion-1.log",
+    "exit": 0,
+    "wall": 5.0950434709993715
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "log": "timing-TestThePortParsesAsGoCohereDoesUnion-2.log",
+    "exit": 0,
+    "wall": 4.480152766000174
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "log": "timing-TestThePortParsesAsGoCohereDoesUnion-3.log",
+    "exit": 0,
+    "wall": 4.8738320229995225
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserPlantedDisagreement)$"
+    ],
+    "log": "timing-TestCSSParserPlantedDisagreement-1.log",
+    "exit": 0,
+    "wall": 9.783342126999742
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserPlantedDisagreement)$"
+    ],
+    "log": "timing-TestCSSParserPlantedDisagreement-2.log",
+    "exit": 0,
+    "wall": 8.44649283599938
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserPlantedDisagreement)$"
+    ],
+    "log": "timing-TestCSSParserPlantedDisagreement-3.log",
+    "exit": 0,
+    "wall": 8.877578311000434
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGo_000|TestCSSPrinterAgreesWithGo_001|TestCSSPrinterAgreesWithGo_002|TestCSSPrinterAgreesWithGo_003|TestCSSPrinterAgreesWithGo_004|TestCSSPrinterAgreesWithGo_005|TestCSSPrinterAgreesWithGo_006|TestCSSPrinterAgreesWithGo_007|TestCSSPrinterAgreesWithGo_008|TestCSSPrinterAgreesWithGo_009|TestCSSPrinterAgreesWithGo_010|TestCSSPrinterAgreesWithGo_011|TestCSSPrinterAgreesWithGo_012|TestCSSPrinterAgreesWithGo_013|TestCSSPrinterAgreesWithGo_014|TestCSSPrinterAgreesWithGo_015|TestCSSPrinterAgreesWithGo_016|TestCSSPrinterAgreesWithGo_017|TestCSSPrinterAgreesWithGo_018|TestCSSPrinterAgreesWithGo_019|TestCSSPrinterAgreesWithGo_020|TestCSSPrinterAgreesWithGo_021|TestCSSPrinterAgreesWithGo_022|TestCSSPrinterAgreesWithGo_023|TestCSSPrinterAgreesWithGo_024|TestCSSPrinterAgreesWithGo_025|TestCSSPrinterAgreesWithGo_026|TestCSSPrinterAgreesWithGo_027|TestCSSPrinterAgreesWithGo_028|TestCSSPrinterAgreesWithGo_029|TestCSSPrinterAgreesWithGo_030|TestCSSPrinterAgreesWithGo_031|TestCSSPrinterAgreesWithGo_032|TestCSSPrinterAgreesWithGo_033|TestCSSPrinterAgreesWithGo_034|TestCSSPrinterAgreesWithGo_035|TestCSSPrinterAgreesWithGo_036|TestCSSPrinterAgreesWithGo_037|TestCSSPrinterAgreesWithGo_038|TestCSSPrinterAgreesWithGo_039|TestCSSPrinterAgreesWithGo_040|TestCSSPrinterAgreesWithGo_041|TestCSSPrinterAgreesWithGo_042|TestCSSPrinterAgreesWithGo_043|TestCSSPrinterAgreesWithGo_044|TestCSSPrinterAgreesWithGo_045|TestCSSPrinterAgreesWithGo_046|TestCSSPrinterAgreesWithGo_047|TestCSSPrinterAgreesWithGo_048|TestCSSPrinterAgreesWithGo_049|TestCSSPrinterAgreesWithGo_050|TestCSSPrinterAgreesWithGo_051|TestCSSPrinterAgreesWithGo_052|TestCSSPrinterAgreesWithGo_053|TestCSSPrinterAgreesWithGo_054|TestCSSPrinterAgreesWithGo_055|TestCSSPrinterAgreesWithGo_056|TestCSSPrinterAgreesWithGo_057|TestCSSPrinterAgreesWithGo_058|TestCSSPrinterAgreesWithGo_059|TestCSSPrinterAgreesWithGo_060|TestCSSPrinterAgreesWithGo_061|TestCSSPrinterAgreesWithGo_062|TestCSSPrinterAgreesWithGo_063)$"
+    ],
+    "log": "timing-TestCSSPrinterAgreesWithGo_family-1.log",
+    "exit": 1,
+    "wall": 92.10878348699953
+  }
+]

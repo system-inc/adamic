@@ -1,0 +1,79 @@
+[
+  {
+    "id": "PCompose",
+    "file": "stage1/cohere/css/compose_main.ts",
+    "rows": [
+      "TestCompositionMatchesGo family"
+    ],
+    "line": 1
+  },
+  {
+    "id": "PPrint",
+    "file": "stage1/cohere/css/print_main.ts",
+    "rows": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "line": 1
+  },
+  {
+    "id": "PMain",
+    "file": "stage1/cohere/css/main.ts",
+    "rows": [
+      "TestCSSThroughput"
+    ],
+    "line": 1
+  },
+  {
+    "id": "PLower",
+    "file": "internal/lower/lower.go",
+    "signature": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "answer": "return nil, nil",
+    "rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestClosedEmptyArrayUnionGap",
+      "TestClosedParserRegexGap",
+      "TestClosedOptionalBooleanConditionGap"
+    ],
+    "line": 20
+  },
+  {
+    "id": "PC",
+    "file": "internal/native/emit.go",
+    "signature": "func C(program *ir.Program) string {",
+    "answer": "return \"\"",
+    "rows": [
+      "TestCSSParserOptimizedMatchesNode"
+    ],
+    "line": 22
+  },
+  {
+    "id": "PSetup",
+    "file": "stage1/cohere/css/composition_shards_test.go",
+    "signature": "func compositionSetup(t *testing.T) compositionProducts {",
+    "answer": "return compositionProducts{}",
+    "rows": [
+      "TestCompositionMatchesGo setup family"
+    ],
+    "line": 71
+  },
+  {
+    "id": "PMode",
+    "file": "stage1/cohere/css/printer_shards_test.go",
+    "signature": "func cssModePlan(lines []string, count int) []cssModeShard {",
+    "answer": "return nil",
+    "rows": [
+      "TestCSSPrinterAgreesWithGoUnion"
+    ],
+    "line": 292
+  },
+  {
+    "id": "PParserPlan",
+    "file": "stage1/cohere/css/parser_shards_test.go",
+    "signature": "func cssParserShards(keys []string) []cssParserShard {",
+    "answer": "return nil",
+    "rows": [
+      "TestThePortParsesAsGoCohereDoesUnion"
+    ],
+    "line": 72
+  }
+]

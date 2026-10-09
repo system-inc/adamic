@@ -1,0 +1,66 @@
+compiler-build.log 0 5.576
+M1-standalone-build.log 0 14.45
+M2-standalone-build.log 0 14.665
+M3-standalone-build.log 0 14.96
+M4-standalone-build.log 0 25.564
+PCompose-standalone-build.log 0 0.209
+PPrint-standalone-build.log 0 0.198
+PMain-standalone-build.log 0 0.2
+PLower-vet.log 0 0.605
+PC-vet.log 0 0.347
+PSetup-vet.log 0 0.239
+PMode-vet.log 0 0.246
+PParserPlan-vet.log 0 0.198
+W1-vet.log 0 0.209
+WMemory-vet.log 0 0.317
+SSetup-vet.log 1 0.185
+Traceback (most recent call last):
+  File "/tmp/u078-audit.py", line 38, in <module>
+    f=s['file'];new=bases[f].replace(s['signature'],s['signature']+'\n acceptEverything := true\n if acceptEverything { return "" }\n',1) if s['id']=='W1' else bases[f].replace(s['old'],s['new'],1);(r/f).write_text(new);assert run(['timeout','90','go','vet','./'+str(pathlib.Path(f).parent)+'/'],s['id']+'-vet.log')==0;(r/f).write_text(bases[f])
+                                                                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+SSetup-vet.log 0 0.221
+SMode-vet.log 0 0.211
+SParser-vet.log 0 0.212
+WRange-standalone-build.log 1 0.082
+Traceback (most recent call last):
+  File "/tmp/u078-audit.py", line 41, in <module>
+    assert run(['timeout','90','/tmp/u078-adamic','build','stage1/cohere/css/testdata/composition_range_guard.ts','-o','/tmp/u078-WRange','--sanitize'],'WRange-standalone-build.log')==0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+WRange-standalone-build.log 0 13.541
+switch-gofmt.log 0 0.007
+switch-build.log 0 11.425
+switch-baseline-TestCompositionMatchesGo_family.log 0 52.827
+switch-baseline-TestCSSThroughput.log 0 38.388
+switch-baseline-TestCSSPrinterOptimizedMatchesGo.log 0 35.447
+switch-baseline-TestCSSParserOptimizedMatchesNode.log 0 22.471
+W1-TestCompositionMatchesGoUnion.log 1 7.917
+W1-TestCSSPrinterAgreesWithGo_family.log 1 91.965
+W1-TestCSSParserPlantedDisagreement.log 1 26.154
+WMemory-TestComposedMemoryChecksCanFail.log 1 35.865
+SSetup-TestCompositionMatchesGo_setup_family.log 1 7.858
+SMode-TestCSSPrinterAgreesWithGoUnion.log 1 6.656
+SParser-TestThePortParsesAsGoCohereDoesUnion.log 1 3.808
+WRange-TestTheCanonicalRangeChecksCanFail.log 1 5.341
+M1-TestCompositionMatchesGo_family.log 1 12.602
+M1-TestCSSThroughput.log 1 12.041
+M1-TestCSSPrinterOptimizedMatchesGo.log 1 24.233
+M2-TestCompositionMatchesGo_family.log 1 28.366
+M2-TestCSSPrinterOptimizedMatchesGo.log 0 37.444
+M3-TestCompositionMatchesGo_family.log 1 28.814
+M4-TestCSSPrinterOptimizedMatchesGo.log 1 30.397
+PCompose-TestCompositionMatchesGo_family.log 1 10.544
+PPrint-TestCSSPrinterOptimizedMatchesGo.log 1 25.361
+PMain-TestCSSThroughput.log 1 11.854
+PLower-TestEachGapStandsWhereGapsMdSaysItDoes.log 1 2.479
+PLower-TestClosedEmptyArrayUnionGap.log 1 2.115
+PLower-TestClosedParserRegexGap.log 1 2.227
+PLower-TestClosedOptionalBooleanConditionGap.log 1 2.113
+PC-TestCSSParserOptimizedMatchesNode.log 1 8.006
+PSetup-TestCompositionMatchesGo_Setup.log 0 2.022
+PSetup-TestCompositionMatchesGo.log 0 2.047
+PMode-TestCSSPrinterAgreesWithGoUnion.log 1 6.969
+PParserPlan-TestThePortParsesAsGoCohereDoesUnion.log 1 3.474
+final-vet.log 0 0.182
+source-diff-check.log 0 0.083

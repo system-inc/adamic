@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:42:05.074661031Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:42:05.082520351Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail"}
+{"Time":"2026-10-09T11:42:05.082595525Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Output":"=== RUN   TestTheCanonicalRangeChecksCanFail\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:24.331522369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Output":"    css_test.go:511: public Range corruption caught on raw and composed backends; leak clean\n"}
+{"Time":"2026-10-09T11:42:24.332097737Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Output":"--- PASS: TestTheCanonicalRangeChecksCanFail (19.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:24.332109936Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestTheCanonicalRangeChecksCanFail","Elapsed":19.25}
+{"Time":"2026-10-09T11:42:24.333535508Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:24.334217397Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t19.259s\n"}
+{"Time":"2026-10-09T11:42:24.334247373Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":19.26}

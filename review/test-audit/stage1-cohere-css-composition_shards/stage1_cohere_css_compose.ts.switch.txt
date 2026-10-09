@@ -1,0 +1,318 @@
+import { auditSelection } from './u078_selection.ts';
+// Cohere's CSS/SCSS composition. Native compilation is blocked by gap 1;
+// compose_main.ts and the Go oracle keep this implementation reviewable on Node.
+import { panic, utf8Length } from 'adamic';
+import { parse as rawParse, Refused } from './parser.ts';
+import { parse as parseMedia } from '../mediaquery/index.ts';
+import { quote } from '../selector/nodes.ts';
+import { Input } from './input.ts';
+import { Tree } from './tree.ts';
+import { fromCSS, fromMedia, byteSlice, repeatText } from './convert.ts';
+import { parseSelector, parseValue } from './parse_value.ts';
+import { calculateLoc, setRanges } from './location.ts';
+
+function blank(text: string): string {
+    let result = '';
+    for(const character of text) {
+        result += character === '\n' ? '\n' : repeatText(' ', utf8Length(character));
+    }
+    return result;
+}
+function frontMatter(tree: Tree, text: string): number {
+    const delimiter = text.slice(0, 3);
+    if(delimiter !== '---' && delimiter !== '+++') {
+        return -1;
+    }
+    const firstBreak = text.slice(3).indexOf('\n') + 3;
+    if(firstBreak === 2) {
+        return -1;
+    }
+    const explicit = text.slice(3, firstBreak).trim();
+    const language = explicit === '' ? delimiter === '---' ? 'yaml' : 'toml' : explicit;
+    let end = text.slice(firstBreak).indexOf(`\n${delimiter}`);
+    if(end < 0 && delimiter === '---' && language === 'yaml') {
+        end = text.slice(firstBreak).indexOf('\n...');
+    }
+    if(end < 0) {
+        return -1;
+    }
+    end += firstBreak;
+    const raw = text.slice(0, end + 4);
+    const index = tree.make('front-matter');
+    const node = tree.at(index);
+    node.setString('language', language);
+    if(explicit === '') {
+        node.setObject('explicitLanguage', -1);
+    }
+    else {
+        node.setString('explicitLanguage', explicit);
+    }
+    node.setString('value', firstBreak + 1 < end ? text.slice(firstBreak + 1, end) : '');
+    node.setString('startDelimiter', delimiter);
+    node.setString('endDelimiter', raw.slice(-3));
+    node.setString('raw', raw);
+    const startIndex = tree.make();
+    const start = tree.at(startIndex);
+    start.setNumber('line', 1);
+    start.setNumber('column', 0);
+    start.setNumber('index', 0);
+    node.setObject('start', startIndex);
+    const endIndex = tree.make();
+    const finish = tree.at(endIndex);
+    const lines = raw.split('\n');
+    finish.setNumber('index', utf8Length(raw));
+    finish.setNumber('line', lines.length);
+    finish.setNumber('column', (lines[lines.length - 1] ?? '').length);
+    node.setObject('end', endIndex);
+    const source = tree.at(tree.ensure(index, 'source'));
+    source.setNumber('startOffset', 0);
+    source.setNumber('endOffset', utf8Length(raw));
+    return index;
+}
+function copyTree(target: Tree, original: Tree, index: number): number {
+    const from = original.at(index);
+    if(from.literal) {
+        return target.literal(from.literalValue);
+    }
+    const result = target.make('', from.ast);
+    const to = target.at(result);
+    for(const key of from.keys) {
+        if(from.strings.has(key)) {
+            to.setString(key, from.string(key));
+        }
+        else if(from.numbers.has(key)) {
+            to.setNumber(key, from.numbers.get(key) ?? 0);
+        }
+        else if(from.booleans.has(key)) {
+            to.setBoolean(key, from.booleans.get(key) === true);
+        }
+        else if(from.objects.has(key)) {
+            to.setObject(key, copyTree(target, original, from.object(key)));
+        }
+        else if(from.lists.has(key)) {
+            const children: number[] = [];
+            for(const child of from.list(key)) {
+                children.push(copyTree(target, original, child));
+            }
+            to.setList(key, children);
+        }
+        else {
+            to.setObject(key, -1);
+        }
+    }
+    return result;
+}
+function rawText(tree: Tree, raws: number, key: string, fallback: string): string {
+    const object = tree.at(raws);
+    const raw = object.object(key);
+    return raw < 0 ? fallback : tree.at(raw).strings.has('scss') ? tree.at(raw).string('scss') : tree.at(raw).string('raw');
+}
+function nestedCSS(tree: Tree, index: number, text: string, scss: boolean): void {
+    const node = tree.at(index);
+    for(const key of node.keys.slice()) {
+        for(const child of tree.children(index, key)) {
+            nestedCSS(tree, child, text, scss);
+        }
+    }
+    const rawsIndex = tree.ensure(index, 'raws');
+    const raws = tree.at(rawsIndex);
+    const prop = node.string('prop');
+    const originalValue = node.string('value');
+    if(node.type() === 'css-decl' && prop.startsWith('--') && originalValue.startsWith('{')) {
+        let rules: number[] | undefined = undefined;
+        if(originalValue.trimEnd().endsWith('}')) {
+            const source = tree.at(node.object('source'));
+            const start = tree.at(source.object('start')).number('offset');
+            const end = tree.at(source.object('end')).number('offset');
+            const fake = blank(byteSlice(text, 0, start)) + repeatText('a', utf8Length(prop)) + byteSlice(text, start + utf8Length(prop), end);
+            const parsed = compose(fake, scss);
+            if(parsed.kind === 'Composed') {
+                const children = parsed.tree.at(parsed.tree.root).list('nodes');
+                if(children.length === 1 && parsed.tree.at(children[0] ?? panic('missing custom property rule')).type() === 'css-rule') {
+                    const collected: number[] = [];
+                    rules = collected;
+                    for(const child of parsed.tree.at(children[0] ?? panic('missing rule')).list('nodes')) {
+                        rules.push(copyTree(tree, parsed.tree, child));
+                    }
+                }
+            }
+        }
+        if(rules !== undefined) {
+            const result = tree.make('css-rule');
+            tree.at(result).setList('nodes', rules);
+            node.setObject('value', result);
+        }
+        else {
+            const raw = raws.object('value');
+            if(raw < 0) {
+                throw new Error("Cannot read properties of undefined (reading 'raw')");
+            }
+            const result = tree.make('value-unknown');
+            tree.at(result).setString('value', tree.at(raw).string('raw'));
+            node.setObject('value', result);
+        }
+        return;
+    }
+    let selector = '';
+    if(node.strings.has('selector')) {
+        selector = rawText(tree, rawsIndex, 'selector', node.string('selector'));
+        if(raws.string('between').trim() !== '') {
+            selector += raws.string('between');
+        }
+        raws.setString('selector', selector);
+    }
+    let value = '';
+    if(node.strings.has('value')) {
+        value = rawText(tree, rawsIndex, 'value', originalValue);
+        raws.setString('value', value.trim());
+    }
+    let params = '';
+    if(node.strings.has('params')) {
+        params = rawText(tree, rawsIndex, 'params', node.string('params'));
+        if(raws.string('afterName').trim() !== '') {
+            params = raws.string('afterName') + params;
+        }
+        if(raws.string('between').trim() !== '') {
+            params += raws.string('between');
+        }
+        params = params.trim();
+        raws.setString('params', params);
+    }
+    if(selector.trim() !== '') {
+        if(selector.startsWith('@') && selector.endsWith(':')) {
+            return;
+        }
+        if(scss && selector.replace(/\/\*.*?\*\//, '').replace(/\/\/.*\n/, '').trimEnd().endsWith(':')) {
+            node.setBoolean('isScssNestedProperty', true);
+        }
+        node.setObject('selector', parseSelector(tree, selector));
+        return;
+    }
+    if(value.trim() !== '') {
+        const defaultDirective = /(\s*)(!default).*$/ .exec(value);
+        if(defaultDirective !== null) {
+            const match = defaultDirective[0] ?? '';
+            value = value.slice(0, defaultDirective.index);
+            node.setBoolean('scssDefault', true);
+            if(match.trim() !== '!default') {
+                raws.setString('scssDefault', match);
+            }
+        }
+        const globalDirective = /(\s*)(!global).*$/ .exec(value);
+        if(globalDirective !== null) {
+            const match = globalDirective[0] ?? '';
+            value = value.slice(0, globalDirective.index);
+            node.setBoolean('scssGlobal', true);
+            if(match.trim() !== '!global') {
+                raws.setString('scssGlobal', match);
+            }
+        }
+        // The child recursion ignores replacement returns in cohere and upstream.
+        if(value.startsWith('progid:')) {
+            return;
+        }
+        node.setObject('value', parseValue(tree, value, scss));
+    }
+    if(node.type() !== 'css-atrule') {
+        return;
+    }
+    const name = node.string('name');
+    if(!scss && name === 'custom-selector') {
+        const match = /:--\S+\s+/.exec(node.string('params'));
+        if(match === null) {
+            throw new Error("Cannot read properties of null (reading '0')");
+        }
+        const custom = (match[0] ?? '').trim();
+        node.setString('customSelector', custom);
+        node.setObject('selector', parseSelector(tree, byteSlice(node.string('params'), utf8Length(custom)).trim()));
+        node.remove('params');
+        return;
+    }
+    if(params === '') {
+        return;
+    }
+    if(name === 'warn' || name === 'error') {
+        const result = tree.make('media-unknown');
+        tree.at(result).setString('value', params);
+        node.setObject('params', result);
+    }
+    else if(name === 'extend' || name === 'nest') {
+        node.setObject('selector', parseSelector(tree, params));
+        node.remove('params');
+    }
+    else if(name === 'at-root') {
+        if(/^\(\s*(?:without|with)\s*:[\s\S]+\)$/.test(params)) {
+            node.setObject('params', parseValue(tree, params, scss));
+        }
+        else {
+            node.setObject('selector', parseSelector(tree, params));
+            node.remove('params');
+        }
+    }
+    else if(name.toLowerCase() === 'import' || name.toLowerCase() === 'use' || name.toLowerCase() === 'forward') {
+        node.setBoolean('import', auditSelection !== 'M2');
+        node.remove('filename');
+        node.setObject('params', parseValue(tree, params, scss));
+    }
+    else if(['namespace', 'supports', 'if', 'else', 'for', 'each', 'while', 'debug', 'mixin', 'include', 'function', 'return', 'define-mixin', 'add-mixin'].includes(name)) {
+        params = params.replace(/(\$\S+?)(\s+)?\.{3}/, '$1...$2');
+        if(!params.startsWith('if')) {
+            params = params.replace(/^([^"'\s(]+)(\s+)\(/, '$1($2');
+        }
+        node.setObject('value', parseValue(tree, params, scss));
+        node.remove('params');
+    }
+    else if(name.toLowerCase() === 'media' || name.toLowerCase() === 'custom-media') {
+        if(params.includes('#{')) {
+            return;
+        }
+        const parsed = parseMedia(params);
+        if(parsed.kind === 'Ok') {
+            node.setObject('params', fromMedia(tree, parsed.value, new Input(params, false)));
+        }
+        else {
+            const result = tree.make('selector-unknown');
+            tree.at(result).setString('value', params);
+            node.setObject('params', result);
+        }
+    }
+    else {
+        node.setString('params', params);
+    }
+}
+export class Composed {
+    readonly kind = 'Composed';
+    readonly tree: Tree;
+    constructor(tree: Tree) {
+        this.tree = tree;
+    }
+}
+export function compose(text: string, scss: boolean): Composed | Refused {
+    try {
+        const tree = new Tree();
+        const front = frontMatter(tree, text);
+        const raw = front < 0 ? '' : tree.at(front).string('raw');
+        const content = front < 0 ? text : blank(raw) + text.slice(raw.length);
+        const parsed = rawParse(content, scss);
+        if(parsed.kind === 'Refused') {
+            if(parsed.message.startsWith('{"notCssSyntaxError"')) {
+                return new Refused(quote("TypeError: Cannot read properties of undefined (reading '0')"));
+            }
+            return parsed;
+        }
+        tree.root = fromCSS(tree, parsed.parser.nodes, 0, parsed.parser.input);
+        nestedCSS(tree, tree.root, text, scss);
+        calculateLoc(tree, tree.root, text);
+        if(front >= 0) {
+            tree.at(tree.root).setObject('frontMatter', front);
+        }
+        setRanges(tree, tree.root);
+        return new Composed(tree);
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            return new Refused(quote(error.message));
+        }
+        throw error;
+    }
+}

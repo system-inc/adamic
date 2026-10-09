@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/print_doc.ts
++++ b/stage1/cohere/css/print_doc.ts
+@@ -129,7 +129,7 @@
+         while(stack.length > 0) {
+             const c = stack.pop() ?? panic('print command'); const n = this.at(c.doc);
+             if(n.kind === 'text') { result += n.text; if(stack.length > 0) column += n.width(); }
+-            else if(n.kind === 'indent' || n.kind === 'dedent') stack.push(command(n.parts[0] ?? 0, Math.max(0, c.indent + (n.kind === 'indent' ? 1 : -1)), c.flat));
++            else if(n.kind === 'indent' || n.kind === 'dedent') stack.push(command(n.parts[0] ?? 0, Math.max(0, c.indent + (n.kind === 'indent' ? 0 : -1)), c.flat));
+             else if(n.kind === 'group') {
+                 let flat = c.flat && !remeasure && !n.broken;
+                 if(!c.flat || remeasure) { remeasure = false; flat = !n.broken && this.fits(command(n.parts[0] ?? 0, c.indent, true), stack, width - column, suffix.length > 0, false); }

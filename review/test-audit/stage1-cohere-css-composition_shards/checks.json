@@ -1,0 +1,919 @@
+[
+  {
+    "id": "W1",
+    "log": "W1-TestCompositionMatchesGoUnion.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGoUnion)$"
+    ],
+    "wall": 7.91729542900066,
+    "requested": [
+      "TestCompositionMatchesGoUnion"
+    ],
+    "results": {
+      "TestCompositionMatchesGoUnion": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "W1",
+    "log": "W1-TestCSSPrinterAgreesWithGo_family.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGo_016|TestCSSPrinterAgreesWithGo_017|TestCSSPrinterAgreesWithGo_018|TestCSSPrinterAgreesWithGo_019|TestCSSPrinterAgreesWithGo_020|TestCSSPrinterAgreesWithGo_021|TestCSSPrinterAgreesWithGo_022|TestCSSPrinterAgreesWithGo_023|TestCSSPrinterAgreesWithGo_024|TestCSSPrinterAgreesWithGo_025|TestCSSPrinterAgreesWithGo_026|TestCSSPrinterAgreesWithGo_027|TestCSSPrinterAgreesWithGo_028|TestCSSPrinterAgreesWithGo_029|TestCSSPrinterAgreesWithGo_030|TestCSSPrinterAgreesWithGo_031|TestCSSPrinterAgreesWithGo_032|TestCSSPrinterAgreesWithGo_033|TestCSSPrinterAgreesWithGo_034|TestCSSPrinterAgreesWithGo_035|TestCSSPrinterAgreesWithGo_036|TestCSSPrinterAgreesWithGo_037|TestCSSPrinterAgreesWithGo_038|TestCSSPrinterAgreesWithGo_039|TestCSSPrinterAgreesWithGo_040|TestCSSPrinterAgreesWithGo_041|TestCSSPrinterAgreesWithGo_042|TestCSSPrinterAgreesWithGo_043|TestCSSPrinterAgreesWithGo_044|TestCSSPrinterAgreesWithGo_045|TestCSSPrinterAgreesWithGo_046|TestCSSPrinterAgreesWithGo_047|TestCSSPrinterAgreesWithGo_048|TestCSSPrinterAgreesWithGo_049|TestCSSPrinterAgreesWithGo_050|TestCSSPrinterAgreesWithGo_051|TestCSSPrinterAgreesWithGo_052|TestCSSPrinterAgreesWithGo_053|TestCSSPrinterAgreesWithGo_054|TestCSSPrinterAgreesWithGo_055|TestCSSPrinterAgreesWithGo_056|TestCSSPrinterAgreesWithGo_057|TestCSSPrinterAgreesWithGo_058|TestCSSPrinterAgreesWithGo_059|TestCSSPrinterAgreesWithGo_060|TestCSSPrinterAgreesWithGo_061|TestCSSPrinterAgreesWithGo_062|TestCSSPrinterAgreesWithGo_063)$"
+    ],
+    "wall": 91.96483542900023,
+    "requested": [
+      "TestCSSPrinterAgreesWithGo_016",
+      "TestCSSPrinterAgreesWithGo_017",
+      "TestCSSPrinterAgreesWithGo_018",
+      "TestCSSPrinterAgreesWithGo_019",
+      "TestCSSPrinterAgreesWithGo_020",
+      "TestCSSPrinterAgreesWithGo_021",
+      "TestCSSPrinterAgreesWithGo_022",
+      "TestCSSPrinterAgreesWithGo_023",
+      "TestCSSPrinterAgreesWithGo_024",
+      "TestCSSPrinterAgreesWithGo_025",
+      "TestCSSPrinterAgreesWithGo_026",
+      "TestCSSPrinterAgreesWithGo_027",
+      "TestCSSPrinterAgreesWithGo_028",
+      "TestCSSPrinterAgreesWithGo_029",
+      "TestCSSPrinterAgreesWithGo_030",
+      "TestCSSPrinterAgreesWithGo_031",
+      "TestCSSPrinterAgreesWithGo_032",
+      "TestCSSPrinterAgreesWithGo_033",
+      "TestCSSPrinterAgreesWithGo_034",
+      "TestCSSPrinterAgreesWithGo_035",
+      "TestCSSPrinterAgreesWithGo_036",
+      "TestCSSPrinterAgreesWithGo_037",
+      "TestCSSPrinterAgreesWithGo_038",
+      "TestCSSPrinterAgreesWithGo_039",
+      "TestCSSPrinterAgreesWithGo_040",
+      "TestCSSPrinterAgreesWithGo_041",
+      "TestCSSPrinterAgreesWithGo_042",
+      "TestCSSPrinterAgreesWithGo_043",
+      "TestCSSPrinterAgreesWithGo_044",
+      "TestCSSPrinterAgreesWithGo_045",
+      "TestCSSPrinterAgreesWithGo_046",
+      "TestCSSPrinterAgreesWithGo_047",
+      "TestCSSPrinterAgreesWithGo_048",
+      "TestCSSPrinterAgreesWithGo_049",
+      "TestCSSPrinterAgreesWithGo_050",
+      "TestCSSPrinterAgreesWithGo_051",
+      "TestCSSPrinterAgreesWithGo_052",
+      "TestCSSPrinterAgreesWithGo_053",
+      "TestCSSPrinterAgreesWithGo_054",
+      "TestCSSPrinterAgreesWithGo_055",
+      "TestCSSPrinterAgreesWithGo_056",
+      "TestCSSPrinterAgreesWithGo_057",
+      "TestCSSPrinterAgreesWithGo_058",
+      "TestCSSPrinterAgreesWithGo_059",
+      "TestCSSPrinterAgreesWithGo_060",
+      "TestCSSPrinterAgreesWithGo_061",
+      "TestCSSPrinterAgreesWithGo_062",
+      "TestCSSPrinterAgreesWithGo_063"
+    ],
+    "results": {
+      "TestCSSPrinterAgreesWithGo_052": "pass",
+      "TestCSSPrinterAgreesWithGo_063": "fail",
+      "TestCSSPrinterAgreesWithGo_062": "pass",
+      "TestCSSPrinterAgreesWithGo_016": "pass",
+      "TestCSSPrinterAgreesWithGo_060": "pass",
+      "TestCSSPrinterAgreesWithGo_061": "pass",
+      "TestCSSPrinterAgreesWithGo_040": "pass",
+      "TestCSSPrinterAgreesWithGo_058": "pass",
+      "TestCSSPrinterAgreesWithGo_057": "pass",
+      "TestCSSPrinterAgreesWithGo_059": "pass",
+      "TestCSSPrinterAgreesWithGo_055": "fail",
+      "TestCSSPrinterAgreesWithGo_028": "pass",
+      "TestCSSPrinterAgreesWithGo_054": "pass",
+      "TestCSSPrinterAgreesWithGo_053": "pass",
+      "TestCSSPrinterAgreesWithGo_039": "pass",
+      "TestCSSPrinterAgreesWithGo_056": "pass",
+      "TestCSSPrinterAgreesWithGo_038": "fail",
+      "TestCSSPrinterAgreesWithGo_034": "pass",
+      "TestCSSPrinterAgreesWithGo_036": "pass",
+      "TestCSSPrinterAgreesWithGo_037": "pass",
+      "TestCSSPrinterAgreesWithGo_033": "pass",
+      "TestCSSPrinterAgreesWithGo_035": "pass",
+      "TestCSSPrinterAgreesWithGo_031": "pass",
+      "TestCSSPrinterAgreesWithGo_030": "fail",
+      "TestCSSPrinterAgreesWithGo_032": "pass",
+      "TestCSSPrinterAgreesWithGo_029": "pass",
+      "TestCSSPrinterAgreesWithGo_044": "pass",
+      "TestCSSPrinterAgreesWithGo_045": "pass",
+      "TestCSSPrinterAgreesWithGo_026": "pass",
+      "TestCSSPrinterAgreesWithGo_025": "pass",
+      "TestCSSPrinterAgreesWithGo_043": "pass",
+      "TestCSSPrinterAgreesWithGo_022": "fail"
+    },
+    "unknown": [
+      "TestCSSPrinterAgreesWithGo_017",
+      "TestCSSPrinterAgreesWithGo_018",
+      "TestCSSPrinterAgreesWithGo_019",
+      "TestCSSPrinterAgreesWithGo_020",
+      "TestCSSPrinterAgreesWithGo_021",
+      "TestCSSPrinterAgreesWithGo_023",
+      "TestCSSPrinterAgreesWithGo_024",
+      "TestCSSPrinterAgreesWithGo_027",
+      "TestCSSPrinterAgreesWithGo_041",
+      "TestCSSPrinterAgreesWithGo_042",
+      "TestCSSPrinterAgreesWithGo_046",
+      "TestCSSPrinterAgreesWithGo_047",
+      "TestCSSPrinterAgreesWithGo_048",
+      "TestCSSPrinterAgreesWithGo_049",
+      "TestCSSPrinterAgreesWithGo_050",
+      "TestCSSPrinterAgreesWithGo_051"
+    ]
+  },
+  {
+    "id": "W1",
+    "log": "W1-TestCSSParserPlantedDisagreement.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserPlantedDisagreement)$"
+    ],
+    "wall": 26.15434804599954,
+    "requested": [
+      "TestCSSParserPlantedDisagreement"
+    ],
+    "results": {
+      "TestCSSParserPlantedDisagreement": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "WMemory",
+    "log": "WMemory-TestComposedMemoryChecksCanFail.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestComposedMemoryChecksCanFail)$"
+    ],
+    "wall": 35.86494666599992,
+    "requested": [
+      "TestComposedMemoryChecksCanFail"
+    ],
+    "results": {
+      "TestComposedMemoryChecksCanFail": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "SSetup",
+    "log": "SSetup-TestCompositionMatchesGo_setup_family.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_Setup|TestCompositionMatchesGo)$"
+    ],
+    "wall": 7.858061584999632,
+    "requested": [
+      "TestCompositionMatchesGo_Setup",
+      "TestCompositionMatchesGo"
+    ],
+    "results": {
+      "TestCompositionMatchesGo": "fail",
+      "TestCompositionMatchesGo_Setup": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "SMode",
+    "log": "SMode-TestCSSPrinterAgreesWithGoUnion.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "wall": 6.655773359000705,
+    "requested": [
+      "TestCSSPrinterAgreesWithGoUnion"
+    ],
+    "results": {
+      "TestCSSPrinterAgreesWithGoUnion": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "SParser",
+    "log": "SParser-TestThePortParsesAsGoCohereDoesUnion.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "wall": 3.808487405000051,
+    "requested": [
+      "TestThePortParsesAsGoCohereDoesUnion"
+    ],
+    "results": {
+      "TestThePortParsesAsGoCohereDoesUnion": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "WRange",
+    "log": "WRange-TestTheCanonicalRangeChecksCanFail.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestTheCanonicalRangeChecksCanFail)$"
+    ],
+    "wall": 5.340524587999425,
+    "requested": [
+      "TestTheCanonicalRangeChecksCanFail"
+    ],
+    "results": {
+      "TestTheCanonicalRangeChecksCanFail": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M1",
+    "log": "M1-TestCompositionMatchesGo_family.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "wall": 12.602080706000379,
+    "requested": [
+      "TestCompositionMatchesGo_000",
+      "TestCompositionMatchesGo_001",
+      "TestCompositionMatchesGo_002",
+      "TestCompositionMatchesGo_003",
+      "TestCompositionMatchesGo_004",
+      "TestCompositionMatchesGo_005",
+      "TestCompositionMatchesGo_006",
+      "TestCompositionMatchesGo_007",
+      "TestCompositionMatchesGo_008",
+      "TestCompositionMatchesGo_009",
+      "TestCompositionMatchesGo_010",
+      "TestCompositionMatchesGo_011",
+      "TestCompositionMatchesGo_012",
+      "TestCompositionMatchesGo_013",
+      "TestCompositionMatchesGo_014",
+      "TestCompositionMatchesGo_015"
+    ],
+    "results": {
+      "TestCompositionMatchesGo_008": "fail",
+      "TestCompositionMatchesGo_014": "fail",
+      "TestCompositionMatchesGo_015": "fail",
+      "TestCompositionMatchesGo_012": "fail",
+      "TestCompositionMatchesGo_000": "fail",
+      "TestCompositionMatchesGo_004": "fail",
+      "TestCompositionMatchesGo_005": "fail",
+      "TestCompositionMatchesGo_007": "fail",
+      "TestCompositionMatchesGo_013": "fail",
+      "TestCompositionMatchesGo_006": "fail",
+      "TestCompositionMatchesGo_010": "fail",
+      "TestCompositionMatchesGo_003": "fail",
+      "TestCompositionMatchesGo_009": "fail",
+      "TestCompositionMatchesGo_002": "fail",
+      "TestCompositionMatchesGo_011": "fail",
+      "TestCompositionMatchesGo_001": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M1",
+    "log": "M1-TestCSSThroughput.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "wall": 12.040832620000401,
+    "requested": [
+      "TestCSSThroughput"
+    ],
+    "results": {
+      "TestCSSThroughput": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M1",
+    "log": "M1-TestCSSPrinterOptimizedMatchesGo.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "wall": 24.233413093999843,
+    "requested": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "results": {
+      "TestCSSPrinterOptimizedMatchesGo": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M2",
+    "log": "M2-TestCompositionMatchesGo_family.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "wall": 28.365729373999784,
+    "requested": [
+      "TestCompositionMatchesGo_000",
+      "TestCompositionMatchesGo_001",
+      "TestCompositionMatchesGo_002",
+      "TestCompositionMatchesGo_003",
+      "TestCompositionMatchesGo_004",
+      "TestCompositionMatchesGo_005",
+      "TestCompositionMatchesGo_006",
+      "TestCompositionMatchesGo_007",
+      "TestCompositionMatchesGo_008",
+      "TestCompositionMatchesGo_009",
+      "TestCompositionMatchesGo_010",
+      "TestCompositionMatchesGo_011",
+      "TestCompositionMatchesGo_012",
+      "TestCompositionMatchesGo_013",
+      "TestCompositionMatchesGo_014",
+      "TestCompositionMatchesGo_015"
+    ],
+    "results": {
+      "TestCompositionMatchesGo_008": "fail",
+      "TestCompositionMatchesGo_010": "fail",
+      "TestCompositionMatchesGo_009": "fail",
+      "TestCompositionMatchesGo_011": "fail",
+      "TestCompositionMatchesGo_000": "fail",
+      "TestCompositionMatchesGo_004": "fail",
+      "TestCompositionMatchesGo_007": "fail",
+      "TestCompositionMatchesGo_003": "fail",
+      "TestCompositionMatchesGo_006": "fail",
+      "TestCompositionMatchesGo_005": "fail",
+      "TestCompositionMatchesGo_002": "fail",
+      "TestCompositionMatchesGo_001": "fail",
+      "TestCompositionMatchesGo_014": "fail",
+      "TestCompositionMatchesGo_015": "fail",
+      "TestCompositionMatchesGo_012": "fail",
+      "TestCompositionMatchesGo_013": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M2",
+    "log": "M2-TestCSSPrinterOptimizedMatchesGo.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "wall": 37.44370856899968,
+    "requested": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "results": {
+      "TestCSSPrinterOptimizedMatchesGo": "pass"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M3",
+    "log": "M3-TestCompositionMatchesGo_family.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "wall": 28.813755930999832,
+    "requested": [
+      "TestCompositionMatchesGo_000",
+      "TestCompositionMatchesGo_001",
+      "TestCompositionMatchesGo_002",
+      "TestCompositionMatchesGo_003",
+      "TestCompositionMatchesGo_004",
+      "TestCompositionMatchesGo_005",
+      "TestCompositionMatchesGo_006",
+      "TestCompositionMatchesGo_007",
+      "TestCompositionMatchesGo_008",
+      "TestCompositionMatchesGo_009",
+      "TestCompositionMatchesGo_010",
+      "TestCompositionMatchesGo_011",
+      "TestCompositionMatchesGo_012",
+      "TestCompositionMatchesGo_013",
+      "TestCompositionMatchesGo_014",
+      "TestCompositionMatchesGo_015"
+    ],
+    "results": {
+      "TestCompositionMatchesGo_008": "fail",
+      "TestCompositionMatchesGo_014": "fail",
+      "TestCompositionMatchesGo_015": "fail",
+      "TestCompositionMatchesGo_013": "fail",
+      "TestCompositionMatchesGo_000": "fail",
+      "TestCompositionMatchesGo_012": "fail",
+      "TestCompositionMatchesGo_010": "fail",
+      "TestCompositionMatchesGo_011": "fail",
+      "TestCompositionMatchesGo_009": "fail",
+      "TestCompositionMatchesGo_003": "fail",
+      "TestCompositionMatchesGo_002": "fail",
+      "TestCompositionMatchesGo_001": "fail",
+      "TestCompositionMatchesGo_007": "fail",
+      "TestCompositionMatchesGo_004": "fail",
+      "TestCompositionMatchesGo_006": "fail",
+      "TestCompositionMatchesGo_005": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "M4",
+    "log": "M4-TestCSSPrinterOptimizedMatchesGo.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "wall": 30.397351094999976,
+    "requested": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "results": {
+      "TestCSSPrinterOptimizedMatchesGo": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PCompose",
+    "log": "PCompose-TestCompositionMatchesGo_family.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
+    ],
+    "wall": 10.544286838000517,
+    "requested": [
+      "TestCompositionMatchesGo_000",
+      "TestCompositionMatchesGo_001",
+      "TestCompositionMatchesGo_002",
+      "TestCompositionMatchesGo_003",
+      "TestCompositionMatchesGo_004",
+      "TestCompositionMatchesGo_005",
+      "TestCompositionMatchesGo_006",
+      "TestCompositionMatchesGo_007",
+      "TestCompositionMatchesGo_008",
+      "TestCompositionMatchesGo_009",
+      "TestCompositionMatchesGo_010",
+      "TestCompositionMatchesGo_011",
+      "TestCompositionMatchesGo_012",
+      "TestCompositionMatchesGo_013",
+      "TestCompositionMatchesGo_014",
+      "TestCompositionMatchesGo_015"
+    ],
+    "results": {
+      "TestCompositionMatchesGo_008": "fail",
+      "TestCompositionMatchesGo_009": "fail",
+      "TestCompositionMatchesGo_010": "fail",
+      "TestCompositionMatchesGo_011": "fail",
+      "TestCompositionMatchesGo_000": "fail",
+      "TestCompositionMatchesGo_007": "fail",
+      "TestCompositionMatchesGo_004": "fail",
+      "TestCompositionMatchesGo_005": "fail",
+      "TestCompositionMatchesGo_014": "fail",
+      "TestCompositionMatchesGo_006": "fail",
+      "TestCompositionMatchesGo_015": "fail",
+      "TestCompositionMatchesGo_002": "fail",
+      "TestCompositionMatchesGo_003": "fail",
+      "TestCompositionMatchesGo_013": "fail",
+      "TestCompositionMatchesGo_001": "fail",
+      "TestCompositionMatchesGo_012": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PPrint",
+    "log": "PPrint-TestCSSPrinterOptimizedMatchesGo.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterOptimizedMatchesGo)$"
+    ],
+    "wall": 25.361482839999553,
+    "requested": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "results": {
+      "TestCSSPrinterOptimizedMatchesGo": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PMain",
+    "log": "PMain-TestCSSThroughput.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSThroughput)$"
+    ],
+    "wall": 11.854127173999586,
+    "requested": [
+      "TestCSSThroughput"
+    ],
+    "results": {
+      "TestCSSThroughput": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PLower",
+    "log": "PLower-TestEachGapStandsWhereGapsMdSaysItDoes.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$"
+    ],
+    "wall": 2.479154135000499,
+    "requested": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "results": {
+      "TestEachGapStandsWhereGapsMdSaysItDoes": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PLower",
+    "log": "PLower-TestClosedEmptyArrayUnionGap.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedEmptyArrayUnionGap)$"
+    ],
+    "wall": 2.1145976160005375,
+    "requested": [
+      "TestClosedEmptyArrayUnionGap"
+    ],
+    "results": {
+      "TestClosedEmptyArrayUnionGap": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PLower",
+    "log": "PLower-TestClosedParserRegexGap.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedParserRegexGap)$"
+    ],
+    "wall": 2.2272136470000987,
+    "requested": [
+      "TestClosedParserRegexGap"
+    ],
+    "results": {
+      "TestClosedParserRegexGap": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PLower",
+    "log": "PLower-TestClosedOptionalBooleanConditionGap.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestClosedOptionalBooleanConditionGap)$"
+    ],
+    "wall": 2.1127465549998306,
+    "requested": [
+      "TestClosedOptionalBooleanConditionGap"
+    ],
+    "results": {
+      "TestClosedOptionalBooleanConditionGap": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PC",
+    "log": "PC-TestCSSParserOptimizedMatchesNode.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSParserOptimizedMatchesNode)$"
+    ],
+    "wall": 8.006498075999843,
+    "requested": [
+      "TestCSSParserOptimizedMatchesNode"
+    ],
+    "results": {
+      "TestCSSParserOptimizedMatchesNode": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PSetup",
+    "log": "PSetup-TestCompositionMatchesGo_Setup.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo_Setup)$"
+    ],
+    "wall": 2.02171784499933,
+    "requested": [
+      "TestCompositionMatchesGo_Setup"
+    ],
+    "results": {
+      "TestCompositionMatchesGo_Setup": "pass"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PSetup",
+    "log": "PSetup-TestCompositionMatchesGo.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCompositionMatchesGo)$"
+    ],
+    "wall": 2.0468445699998483,
+    "requested": [
+      "TestCompositionMatchesGo"
+    ],
+    "results": {
+      "TestCompositionMatchesGo": "pass"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PMode",
+    "log": "PMode-TestCSSPrinterAgreesWithGoUnion.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestCSSPrinterAgreesWithGoUnion)$"
+    ],
+    "wall": 6.9689100570003575,
+    "requested": [
+      "TestCSSPrinterAgreesWithGoUnion"
+    ],
+    "results": {
+      "TestCSSPrinterAgreesWithGoUnion": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "PParserPlan",
+    "log": "PParserPlan-TestThePortParsesAsGoCohereDoesUnion.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoesUnion)$"
+    ],
+    "wall": 3.473629561999587,
+    "requested": [
+      "TestThePortParsesAsGoCohereDoesUnion"
+    ],
+    "results": {
+      "TestThePortParsesAsGoCohereDoesUnion": "fail"
+    },
+    "unknown": []
+  },
+  {
+    "id": "W1",
+    "log": "bounded-printer-063-W1.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterAgreesWithGo_063$"
+    ],
+    "wall": 39.423457869999766,
+    "requested": [
+      "TestCSSPrinterAgreesWithGo_063"
+    ],
+    "results": {
+      "TestCSSPrinterAgreesWithGo_063": "fail"
+    },
+    "unknown": []
+  }
+]
