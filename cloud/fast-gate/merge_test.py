@@ -133,6 +133,7 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
         result, job = self.pool(sha, 'codex/feature')
         self.assertEqual(git(self.here, 'rev-list', '--parents', '-n', '1', job['gate']).split()[1:], [self.main, sha], result.stdout)
         self.assertEqual(job['sha'], sha)
+        self.assertNotIn('complete', job, 'side work runs the fast plan')
         self.assertEqual(git(self.origin, 'rev-parse', 'refs/gate-merges/' + job['gate']), job['gate'])
         # Not started in time, it asks the watcher for a box race and leaves its job queued at Loom (#04gypqe).
         self.assertEqual((self.root / 'watch' / 'race-wanted' / sha).read_text().strip(), 'codex/feature')
@@ -143,6 +144,9 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
         (self.root / 'jobs' / (placed + '.placed')).write_text('13 13\n')
         self.pool(placed, 'codex/placed')
         self.assertFalse((self.root / 'watch' / 'race-wanted' / placed).exists())
+        # Landings and areas run complete on the pool, stage 3 lane included (#vaf0xwc).
+        landing = self.candidate('cloud/land-x', {'feature.go': 'package feature // landing\n'})
+        self.assertIs(self.pool(landing, 'cloud/land-x')[1]['complete'], True)
         conflict = self.candidate('codex/conflict', {'setup.go': 'package setup // budget 120 s\n'})
         result, job = self.pool(conflict, 'codex/conflict')
         self.assertIsNone(job, 'a conflict spent pool time')

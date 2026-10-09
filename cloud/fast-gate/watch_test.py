@@ -715,7 +715,7 @@ class WatchTests(unittest.TestCase):
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side' in w.read('starts'))
 
-    def test_landings_side_tips_and_the_star_go_to_the_pool_areas_to_the_boxes_and_a_pool_void_to_the_boxes(self):
+    def test_landings_areas_side_tips_and_the_star_go_to_the_pool_and_a_second_pool_void_to_the_boxes(self):
         # Loom 77bca09 (Oct 9 05:05Z): a landing's pool job runs the fast gate's whole plan, so landings and the star (at
         # Loom's priority 30) go to the pool; areas run complete, with stage 3, on the boxes.
         w = self.reservation('box0 B\nbox1 S\npool P\npool P\npool P\n',
@@ -723,10 +723,9 @@ class WatchTests(unittest.TestCase):
         (w.state / 'front').write_text('cloud/land-train-* # the star\n')
         (w.state / 'pool-side').touch()
         w.put('initial', 'pass')
-        w.wait(lambda: all(b + ' ' in w.read('pool-starts') for b in ('cloud/land-x', 'codex/side', 'cloud/land-train-9')))
-        w.wait(lambda: 'area/compiler ' in w.read('starts'))
-        self.assertNotIn('area/compiler', w.read('pool-starts'))
-        for branch in ('cloud/land-x', 'codex/side', 'cloud/land-train-9'):
+        # Areas too, since Loom runs them complete with the stage 3 lane (#vaf0xwc).
+        w.wait(lambda: all(b + ' ' in w.read('pool-starts') for b in ('cloud/land-x', 'codex/side', 'cloud/land-train-9', 'area/compiler')))
+        for branch in ('cloud/land-x', 'codex/side', 'cloud/land-train-9', 'area/compiler'):
             self.assertNotIn(branch + ' ', w.read('starts'))
         star = [line for line in w.read('pool-args').splitlines() if 'cloud/land-train-9' in line][0]
         self.assertIn('--priority 30', star)
