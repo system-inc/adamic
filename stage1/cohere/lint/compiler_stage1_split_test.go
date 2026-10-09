@@ -142,10 +142,14 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 		for _, path := range strings.Split(string(output), "\x00") {
 			switch filepath.Ext(path) {
 			case ".go", ".ts", ".a", ".c", ".h", ".json", ".mod", ".sum", ".work":
-				files = append(files, path)
+				// Test edits cannot alter production build products, except the
+				// oracle and registry overlay inputs included explicitly below.
+				if !strings.HasSuffix(path, "_test.go") {
+					files = append(files, path)
+				}
 			}
 		}
-		files = append(files, "stage1/cohere/lint/compiler_stage1_split_test.go", "stage1/cohere/lint/.generated")
+		files = append(files, "stage1/cohere/lint/.generated")
 		compilerAgreementFiles = files
 	}
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
@@ -153,20 +157,27 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS")}}
 }
 
-var compilerAgreementProductMu sync.Mutex
-var compilerAgreementProducts = map[string]string{}
+// Only the serial setup unit may create products. A filtered shard may read
+// products prepared by an earlier setup invocation, but never starts a build.
+var compilerAgreementBuilding bool
 
-// Each product is requested once per process as well as once per content key
-// across shard processes. A failed build publishes no process-local entry.
 func compilerAgreementProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
-	compilerAgreementProductMu.Lock()
-	defer compilerAgreementProductMu.Unlock()
-	if path := compilerAgreementProducts[inputs.Name]; path != "" {
-		return path
-	}
-	path := buildcache.Product(t, inputs, build)
-	compilerAgreementProducts[inputs.Name] = path
-	return path
+	t.Helper()
+	return buildcache.Product(t, inputs, func(directory string) error {
+		if !compilerAgreementBuilding {
+			return fmt.Errorf("missing prepared product %s: run TestCompilerAndStage1Agree_Setup first", inputs.Name)
+		}
+		return build(directory)
+	})
+}
+
+func compilerAgreementGoOracle(t *testing.T) string {
+	t.Helper()
+	product := compilerAgreementProduct(t, compilerAgreementInputs(t, "compiler-agreement-go-oracle", []string{"registered rules", "overlay"}), func(directory string) error {
+		_, err := goOracleIn(packageDirectory, directory)
+		return err
+	})
+	return filepath.Join(product, "oracle")
 }
 
 func compilerAgreementLowered(t *testing.T) string {
@@ -201,10 +212,11 @@ func compilerAgreementNative(t *testing.T, sanitize bool) string {
 	return filepath.Join(product, "lint")
 }
 
-// This parent only measures setup and validates the complete live union. It never
-// runs the corpus; each comparison belongs to one of the enumerated top-level tests.
-func TestCompilerAndStage1Agree(t *testing.T) {
-	t.Parallel()
+// Not parallel: publishes immutable build products before parallel shards run.
+// This unit validates the live union without running the corpus.
+func TestCompilerAndStage1Agree_Setup(t *testing.T) {
+	compilerAgreementBuilding = true
+	defer func() { compilerAgreementBuilding = false }()
 	started := time.Now()
 	cases := compilerAgreementCases(t)
 	pairs, fixes := 0, 0
@@ -240,11 +252,15 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	}
 
 	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix comparisons per side; %d shards", pairs, fixes, testCompilerAndStage1AgreeShards)
-	_ = goOracle(t)
+	_ = compilerAgreementGoOracle(t)
 	_ = compilerAgreementLowered(t)
 	_ = compilerAgreementNative(t, false)
 	_ = compilerAgreementNative(t, true)
-	t.Logf("TestCompilerAndStage1Agree (setup): %s", time.Since(started))
+	elapsed := time.Since(started)
+	t.Logf("TestCompilerAndStage1Agree (setup): %s cooked=%t", elapsed, elapsed >= 60*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("setup exceeds 60 seconds")
+	}
 }
 
 type compilerAgreementOracleAnswer struct {
@@ -267,7 +283,7 @@ func compilerAgreementOracle(t *testing.T, owner int, path string) execution {
 	answer.mu.Lock()
 	defer answer.mu.Unlock()
 	if answer.output == nil {
-		run := execute(t, "", goOracle(t), "--manifest", path)
+		run := execute(t, "", compilerAgreementGoOracle(t), "--manifest", path)
 		answer.output, answer.duration = run.output, run.duration
 	}
 	return execution{output: answer.output, duration: answer.duration}
