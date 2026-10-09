@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -16,9 +15,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
@@ -515,7 +512,7 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 		}
 		return nil
 	})
-	command := formatfilesCommand(t, filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=90s")
+	command := formatfilesCommand(t, filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=0")
 	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {
@@ -523,25 +520,8 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 	}
 }
 
-// Bound child processes without an external timeout executable. Killing the
-// process group also terminates compilers launched by the Go oracle build.
+// Setup children carry no deadline; the gate bounds the whole unit.
 func formatfilesCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	parent := context.Background()
-	if formatfilesSetupContext != nil {
-		parent = formatfilesSetupContext
-	}
-	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = 2 * time.Second
-	return command
+	return formatfilesContextCommand(context.Background(), name, arguments...)
 }
