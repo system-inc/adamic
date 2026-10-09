@@ -147,7 +147,7 @@ func run(directory string, environment []string, name string, args ...string) ([
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil || stderr.Len() != 0 {
+	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
@@ -155,7 +155,7 @@ func run(directory string, environment []string, name string, args ...string) ([
 
 // goOracleIn builds the Go oracle over sourceRoot's rules into directory, through an overlay inside cohere
 // so the upstream rules stay unmodified.
-func goOracleIn(sourceRoot, directory string) (string, error) {
+func goOracleIn(sourceRoot, directory string, environment ...string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return "", err
@@ -199,7 +199,7 @@ func goOracleIn(sourceRoot, directory string) (string, error) {
 	}
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := run(root, nil, "go", args...); err != nil {
+	if _, err := run(root, environment, "go", args...); err != nil {
 		return "", err
 	}
 	return binary, nil

@@ -1,0 +1,245 @@
+{
+  "branch": "stage1-split/lint-package",
+  "base_ref": "origin/area/stage1-lint",
+  "base_sha": "bd5490b6ff36cfc6013d549f78ffa4f9f9a6e075",
+  "machine": {
+    "nproc": 5,
+    "cpu_quota_us": 400000,
+    "cpu_period_us": 100000,
+    "effective_cpus": 4,
+    "GOMAXPROCS": 4,
+    "observed_load_samples": [
+      "0.07 0.02 0.00",
+      "7.56 3.55 1.41",
+      "8.06 3.95 2.83",
+      "6.06 6.91 5.54",
+      "2.88 5.52 5.20"
+    ],
+    "toolchains": [
+      "go1.27.1 linux/amd64",
+      "clang 20.1.8"
+    ]
+  },
+  "test": "TestWitnessScriptKind",
+  "before": {
+    "own_wall_s": 233.09,
+    "build_and_setup_approx_s": 232.23,
+    "comparison_approx_s": 0.86,
+    "initial_cold_download_diagnostic_failure_s": 66.53,
+    "note": "Go oracle build succeeded but shared run rejected module-download stderr; commandDiagnostics now applies to shared run too."
+  },
+  "after": {
+    "gate_filter": "^TestWitnessScriptKind$/^shard-000$",
+    "constant": "const testWitnessScriptKindShards = 1",
+    "shard_count": 1,
+    "longest_shard_s": 1.42,
+    "setup_s": 485.96,
+    "setup_gate_valid": false,
+    "setup_blocker": "internal/buildcache is absent from the pinned base. Products are built once in setup and shared with units; wrap with the developer-tools helper when it lands.",
+    "cold_builds": [
+      {
+        "name": "witness-go-oracle",
+        "cold_seconds": 255.172268248
+      },
+      {
+        "name": "witness-lowered-C-and-JavaScript",
+        "cold_seconds": 8.289102655
+      },
+      {
+        "name": "witness-sanitized-checker-archive",
+        "cold_seconds": 145.072793309
+      },
+      {
+        "name": "witness-sanitized-native",
+        "cold_seconds": 76.71331993
+      }
+    ],
+    "cold_method": "ADAMIC_TEST_COLD_PRODUCTS=1 isolates each Go compiler cache; ADAMIC_GATE_UNCACHED=1 disables native object reuse. Final run overlapped optional descendant validation."
+  },
+  "union": {
+    "unsplit_cases": 1,
+    "sharded_cases": 1,
+    "unique_ids": 1,
+    "case_ids": [
+      "no-debugger-tsx"
+    ],
+    "checked_by_code": true,
+    "enumerated_count_matches_literal": true
+  },
+  "planted_failure": {
+    "mutation": "append console.log of planted witness disagreement to a copy of emitted JavaScript",
+    "caught_by": "TestWitnessScriptKind/shard-000",
+    "owner_seat": "0/2",
+    "non_owner_seat": "1/2 ran no case and passed",
+    "proof_test": "TestWitnessScriptKind/shard-000/planted-disagreement",
+    "proof_elapsed_s": 0.74
+  },
+  "validation": {
+    "whole_touched_package": {
+      "pass": 160,
+      "fail": 0,
+      "skip": 1,
+      "input_sets": {
+        "ADAMIC_TYPESCRIPT_SOURCE": "050880ce59e30b356b686bd3144efe24f875ebc8",
+        "ADAMIC_LINT_BENCH": "1",
+        "ADAMIC_LINT_PROFILE_DIR": "set",
+        "ADAMIC_LINT_PROFILE_SNAPSHOTS": "set",
+        "ADAMIC_LINT_RULES": "unset",
+        "ADAMIC_TEST_SHARD": "unset"
+      },
+      "timeout": "3h",
+      "note": "Whole run completed before final static-count/proof-placement cleanup; exact gate filter and vet passed after cleanup."
+    },
+    "pending_skip": "TestCheckerBridgeRefusalPending awaits codex/tsgo-errors-as-values",
+    "gofmt": "pass",
+    "go_vet": "pass after final protocol cleanup",
+    "optional_descendant_sweep": "stopped after the touched package passed; no descendant failures were recorded",
+    "packages": [
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "pass": 160,
+        "fail": 0,
+        "skip": 1,
+        "status": "pass"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+        "pass": 30,
+        "fail": 0,
+        "skip": 0,
+        "status": "pass"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+        "pass": 10,
+        "fail": 0,
+        "skip": 0,
+        "status": "pass"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/core",
+        "pass": 19,
+        "fail": 0,
+        "skip": 0,
+        "status": "pass"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/ecmascript/regexpattern",
+        "pass": 24,
+        "fail": 0,
+        "skip": 0,
+        "status": "pass"
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/ecmascript/text",
+        "pass": 12,
+        "fail": 0,
+        "skip": 0,
+        "status": "optional sweep stopped; incomplete"
+      }
+    ]
+  },
+  "mutants_observed_in_whole_run": {
+    "subtests": 99,
+    "longest": {
+      "name": "TestMutants/non_Error_throw_suppressed",
+      "elapsed_s": 112.93
+    },
+    "parent_waits_on": "All registered parallel mutant subtests; Go -parallel=4 and nativeBuilds cap of four; each subtest still includes lowering/native builds. No split changes made to TestMutants."
+  },
+  "remaining_requested_tests": [
+    "TestEmittedJavaScriptMismatch",
+    "TestDotARename",
+    "TestCompilerAndStage1Agree",
+    "TestJsxLintTrees",
+    "TestShardsAgree",
+    "TestSuggestionAlongsideAutomaticFix",
+    "TestCompleteSuggestionSerialization",
+    "TestFactoryHooks",
+    "TestProfileCompilation",
+    "TestRulesAgree",
+    "TestMutants"
+  ],
+  "other_over_30s_touched_package_tests_observed": [
+    {
+      "test": "TestJsxLintReleaseAndThroughput",
+      "whole_run_elapsed_s": 279.21
+    },
+    {
+      "test": "TestThroughput",
+      "whole_run_elapsed_s": 141.25
+    },
+    {
+      "test": "TestNonprogressingFixPanicMutant",
+      "whole_run_elapsed_s": 102.81
+    },
+    {
+      "test": "TestNonprogressingFixPlanOrder",
+      "whole_run_elapsed_s": 87.83
+    },
+    {
+      "test": "TestProfileArtifacts",
+      "whole_run_elapsed_s": 66.09
+    },
+    {
+      "test": "TestCommentFoldMutant",
+      "whole_run_elapsed_s": 39.57
+    },
+    {
+      "test": "TestCheckerCacheSourceByte",
+      "whole_run_elapsed_s": 65.53
+    },
+    {
+      "test": "TestOwnedWitnesses",
+      "whole_run_elapsed_s": 30.21
+    },
+    {
+      "test": "TestPositionIndexMutant",
+      "whole_run_elapsed_s": 38.93
+    },
+    {
+      "test": "TestCompilerAndStage1Agree",
+      "whole_run_elapsed_s": 230.61
+    },
+    {
+      "test": "TestFactoryHooks",
+      "whole_run_elapsed_s": 196.57
+    },
+    {
+      "test": "TestSuggestionAlongsideAutomaticFix",
+      "whole_run_elapsed_s": 176.15
+    },
+    {
+      "test": "TestCompleteSuggestionSerialization",
+      "whole_run_elapsed_s": 42.23
+    },
+    {
+      "test": "TestJsxLintTrees",
+      "whole_run_elapsed_s": 120.65
+    },
+    {
+      "test": "TestProfileCompilation",
+      "whole_run_elapsed_s": 72.46
+    },
+    {
+      "test": "TestRulesAgree",
+      "whole_run_elapsed_s": 396.01
+    },
+    {
+      "test": "TestEmittedJavaScriptMismatch",
+      "whole_run_elapsed_s": 49.74
+    },
+    {
+      "test": "TestShardsAgree",
+      "whole_run_elapsed_s": 221.84
+    },
+    {
+      "test": "TestProfileSnapshotsAgree",
+      "whole_run_elapsed_s": 238.28
+    },
+    {
+      "test": "TestLegacyMutants",
+      "whole_run_elapsed_s": 111.83
+    }
+  ]
+}

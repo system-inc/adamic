@@ -2,10 +2,10 @@ package lint
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
@@ -177,20 +177,40 @@ func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	t.Log("automatic fix remains applied while all three suggestions remain unapplied and serialized")
 }
 
+const testWitnessScriptKindShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects deterministic case shards (zero-based); unset runs all.
+// The gate invokes each unit as -run '^TestWitnessScriptKind$/^shard-NNN$'.
+// Until internal/buildcache lands, setup builds its products once and shares them;
+// its measured time includes those builds.
+// Build products are prepared once before parallel units. The original enumeration has one case.
 func TestWitnessScriptKind(t *testing.T) {
 	t.Parallel()
-	directory := mutant(t, "", "")
-	witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
-	if err := os.Rename(witness, strings.TrimSuffix(witness, ".ts.txt")+".tsx.txt"); err != nil {
-		t.Fatal(err)
+	products := witnessProducts(t)
+	ids := []string{"no-debugger-tsx"}
+	shards := checkedCaseShards(t, ids, len(ids))
+	if len(shards) != testWitnessScriptKindShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testWitnessScriptKindShards)
 	}
-	witness = strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
-	if err := os.WriteFile(witness, []byte("const node = 1; debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
+	for i, cases := range shards {
+		if !selectedCaseShard(t, i) {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			t.Logf("case ids: %v", cases)
+			for range cases {
+				if filepath.Ext(products.Source) != ".tsx" {
+					t.Fatal("witness script kind lost")
+				}
+				compareWithJavaScript(t, products.Oracle, products.Native, products.Directory,
+					manifest(t, []string{products.Source + "\tno-debugger"}), products.JavaScript)
+			}
+			if os.Getenv("ADAMIC_LINT_WITNESS_PRODUCTS") == "" {
+				t.Run("planted-disagreement", func(t *testing.T) {
+					checkWitnessPlantedDisagreement(t, products)
+				})
+			}
+		})
 	}
-	sources := ownedWitnesses(t, directory, "no-debugger")
-	if filepath.Ext(sources[0]) != ".tsx" {
-		t.Fatal("witness script kind lost")
-	}
-	compare(t, goOracleFrom(t, directory), buildPort(t, directory, true), directory, manifest(t, []string{sources[0] + "\tno-debugger"}))
 }
