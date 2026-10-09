@@ -56,6 +56,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if err := l.mergedFieldRulings(module); err != nil {
+		return err
+	}
 	if err := l.functionAnnotations(module); err != nil {
 		return err
 	}

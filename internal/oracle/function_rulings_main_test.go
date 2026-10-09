@@ -53,7 +53,15 @@ func rulingRefusal(t *testing.T, file string, typescript bool, diagnostic string
 	if typescript {
 		name = strings.TrimSuffix(file, ".a") + ".ts"
 	}
-	if !strings.Contains(refused.Where, name+":") || refused.What+"; "+refused.Fix != diagnostic {
+
+	positions := map[string]string{
+		"function_unused.a": "2:22", "function_length.a": "2:23", "function_call.a": "3:16",
+		"merge_unused.a": "2:1", "merge_missing.a": "2:1", "merge_missing_computed.a": "2:1",
+	}
+	if file == "function_call.a" && !typescript {
+		positions[file] = "2:10"
+	}
+	if !strings.HasSuffix(refused.Where, name+":"+positions[file]) || refused.What+"; "+refused.Fix != diagnostic {
 		t.Fatalf("un-pinned refusal: %v", err)
 	}
 	result := rulingNode(t, file)
@@ -139,4 +147,9 @@ func rulingNode(t *testing.T, file string) run {
 		t.Fatal(err)
 	}
 	return onNode(t, path)
+}
+
+func TestFunctionAdamicCallAnnotationRefused(t *testing.T) {
+	t.Parallel()
+	rulingRefusal(t, "function_call.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
 }

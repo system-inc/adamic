@@ -6,8 +6,17 @@ from pathlib import Path
 import subprocess
 import tempfile
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 MUTANTS = [
+    ("merged-computed-read", "internal/lower/expression.go",
+     "if value, handled, err := l.mergedComputedRead(node); handled {",
+     "if value, handled, err := l.mergedComputedRead(node); false && handled {",
+     "^TestMergedFieldTypeScriptComputedChecked$"),
+    ("merged-declaration", "internal/lower/merged_fields.go",
+     "if adamic {", "if false && adamic {", "^TestMergedFieldAdamicUnusedRefused$"),
+    ("merged-read", "internal/lower/merged_fields.go",
+     "l.result.CheckedFields[field.Name] = true", "l.result.CheckedFields[field.Name] = false",
+     "^TestMergedFieldTypeScriptMissingChecked$"),
     ("function-annotation", "internal/lower/function_rulings.go",
      'node.Kind == ast.KindTypeReference &&', 'false && node.Kind == ast.KindTypeReference &&',
      '^TestFunctionAdamicUnusedAnnotationRefused$'),
