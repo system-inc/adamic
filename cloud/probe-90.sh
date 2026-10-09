@@ -70,6 +70,21 @@ if glob=$(python3 "${helper}" skipped "${branch}" "${state}/skip-globs"); then
   exit 2
 fi
 
+# Loom's clock first (@system_adamic's honesty ruling, Oct 9 18:20Z): a probe's wall times one change once it runs,
+# while every change the gate saw lives through the queue, the voids and the dead jobs too. clock.py's two lines, submit
+# to verdict p50 and p90 over the last 24 hours with what has no verdict, go on the outcome as one comment before the
+# probe's own line, so the honest number always sits beside the narrow one.
+clock=${LOOM_CLOCK:-${HOME}/.loom/bin/clock.py}
+if [ -f "${clock}" ] && lines=$(python3 "${clock}" --hours 24 2> /dev/null) && [ -n "${lines}" ]; then
+  if [ "${dryRun}" = yes ] || [ "${ADAMIC_PROBE_POST:-1}" = 0 ]; then
+    say "would comment on #${task}: ${lines}"
+  else
+    (cd "${ahraDirectory}" && ahra tasks comment "${task}" "${lines}" --role System > /dev/null) && say "clock on #${task}: ${lines}"
+  fi
+else
+  say "no clock: ${clock} missing or silent"
+fi
+
 main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
 [[ ${main} =~ ^[0-9a-f]{40}$ ]] || { say "not probing: origin's main is unreadable"; exit 1; }
 git -C "${here}" cat-file -e "${main}^{commit}" 2> /dev/null || git -C "${here}" fetch -q --no-write-fetch-head origin "${main}" || exit 1

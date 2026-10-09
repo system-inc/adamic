@@ -307,6 +307,7 @@ class DryRunTests(unittest.TestCase):
         shutil.rmtree(self.root)
 
     def run_probe(self, *arguments, **environment):
+        environment.setdefault('LOOM_CLOCK', str(self.root / 'no-clock.py'))
         env = dict(os.environ, ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), ADAMIC_PROBE_POST='0', **environment)
         return subprocess.run(['bash', str(self.tools / 'cloud' / 'probe-90.sh'), *arguments], env=env, capture_output=True, text=True)
 
@@ -340,6 +341,23 @@ class DryRunTests(unittest.TestCase):
         branch, _, mode, path = self.commitOf(result.stdout)
         self.assertEqual((mode, path), ('all', 'internal/load/load.go'))
         self.assertTrue(branch.endswith('-all'))
+
+    def test_the_clock_posts_first(self):
+        clock = self.root / 'clock.py'
+        clock.write_text("print('submit to verdict over the last 24 hours: p50 339 min, p90 779 min, 462 jobs')\n"
+                         "print('of the 271 with no verdict: 153 are no longer their branch tip')\n")
+        result = self.run_probe('--dry-run', LOOM_CLOCK=str(clock))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        said = result.stdout.index('would comment on #awn479j: submit to verdict over the last 24 hours: p50 339 min')
+        self.assertIn('of the 271 with no verdict', result.stdout)
+        branch, sha, _, _ = self.commitOf(result.stdout)
+        self.assertLess(said, result.stdout.index(sha))
+
+    def test_a_missing_clock_is_said_and_the_probe_goes_on(self):
+        result = self.run_probe('--dry-run')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('no clock:', result.stdout)
+        self.commitOf(result.stdout)
 
     def test_a_skipped_branch_is_never_made(self):
         (self.state / 'skip-globs').write_text('devtools/probe-90-* paused by hand\n')
