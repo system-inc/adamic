@@ -239,6 +239,15 @@ def main():
 class Gate:
     def __init__(self, arguments):
         self.arguments = arguments
+        # Queue ownership follows this run, not the user's shared cache. Keep these
+        # beside the slot tree so publishing gate artifacts never publishes products.
+        queueRoot = tempfile.mkdtemp(prefix="build-store-", dir=os.path.dirname(os.path.abspath(arguments.tree)))
+        self.buildStoreEnvironment = {
+            "ADAMIC_BUILD_STORE_SPOOL": os.path.join(queueRoot, "spool"),
+            "ADAMIC_BUILD_STORE_AUDITS": os.path.join(queueRoot, "audits"),
+        }
+        for directory in self.buildStoreEnvironment.values():
+            os.mkdir(directory)
         self.started = time.monotonic()
         self.failure = None
         self.stopped = None
@@ -1982,6 +1991,7 @@ class Gate:
             # The box has Node but no npm; stage 3's apply runs npm ci, so the gates' pinned npm is on PATH.
             variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
             variables.update(environment or {})
+            variables.update(self.buildStoreEnvironment)
             process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
             self.processes.append(process)
             self.recordTestStart(command)

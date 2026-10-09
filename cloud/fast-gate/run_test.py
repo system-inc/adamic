@@ -967,6 +967,7 @@ class OracleSelection(unittest.TestCase):
     def select(self, base):
         gate = run.Gate.__new__(run.Gate)
         gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit(), full=False)
+        gate.buildStoreEnvironment = {}  # This bare fixture only spawns git for selection.
         gate.lock, gate.processes, gate.failure = threading.Lock(), [], None
         return gate.selectOracle()
 
@@ -2028,6 +2029,49 @@ class CacheDrains(unittest.TestCase):
         self.assertTrue(status.startswith("green:"), status)
         self.assertIn("Too many open files", result["cache_drain_units"][1]["detail"])
 
+    def test_two_runs_keep_test_and_drain_queues_isolated(self):
+        self.publisher()
+        # Two runs of the very same slot must still get fresh queues. Real child
+        # processes consume the environment passed by spawn, just as the publisher does.
+        first, _, _ = self.gate()
+        second, _, _ = self.gate(full=True)
+        shared = os.path.join(self.directory, "shared-default")
+        os.makedirs(shared)
+        key = "poisoned-gate-A-key"
+        script = """import os, pathlib, sys
+spool = pathlib.Path(os.environ.get('ADAMIC_BUILD_STORE_SPOOL', sys.argv[1]))
+audits = pathlib.Path(os.environ.get('ADAMIC_BUILD_STORE_AUDITS', sys.argv[1]))
+if sys.argv[2] == 'test':
+    (audits / 'poison').write_text('poisoned-gate-A-key')
+    (spool / 'product').write_text('gate-A-product')
+elif sys.argv[2] == 'audit' and (audits / 'poison').exists():
+    print('cache poisoning: ' + (audits / 'poison').read_text() + ' differs from a rebuild', file=sys.stderr)
+    sys.exit(1)
+elif sys.argv[2] == 'upload':
+    print('products=' + str(len(list(spool.iterdir()))))
+"""
+        def popen(command, **options):
+            name = stage(command)
+            mode = name if name in ("audit", "upload") else "test"
+            return realPopen([sys.executable, "-c", script, shared, mode], **options)
+        # Explicit inherited defaults simulate the box's shared user cache too.
+        with mock.patch.dict(os.environ, ADAMIC_BUILD_STORE_SPOOL=shared, ADAMIC_BUILD_STORE_AUDITS=shared), \
+                mock.patch.object(run.subprocess, "Popen", side_effect=popen), mock.patch("builtins.print"):
+            process = first.spawn(["go", "test", "./probe"], subprocess.PIPE)
+            process.communicate()
+            self.assertEqual(process.returncode, 0)
+            second.cacheDrains()
+            self.assertIsNone(second.failure, second.failure)
+            self.assertEqual(second.result["cache_drain_units"][-1]["detail"], "products=0\n")
+            first.cacheDrains()
+            self.assertEqual(first.failure["step"], "audit")
+            self.assertIn(key, first.failure["detail"])
+        for gate in (first, second):
+            for directory in gate.buildStoreEnvironment.values():
+                self.assertEqual(os.path.dirname(os.path.dirname(directory)), os.path.dirname(self.tree))
+                self.assertFalse(directory.startswith(gate.arguments.out + os.sep))
+        self.assertNotEqual(first.buildStoreEnvironment, second.buildStoreEnvironment)
+
     def test_drain_wall_deadlines_kill_processes(self):
         self.publisher()
         for name in ("audit", "upload"):
@@ -2049,6 +2093,20 @@ class CacheDrains(unittest.TestCase):
 
 
 class CacheDrainMutants(unittest.TestCase):
+    def test_shared_default_queues_are_caught(self):
+        with open(run.__file__) as handle:
+            source = handle.read()
+        needle = "            variables.update(self.buildStoreEnvironment)"
+        self.assertEqual(source.count(needle), 1)
+        namespace = dict(run.__dict__)
+        exec(compile(source.replace(needle, "            pass # mutant: shared defaults restored"), run.__file__, "exec"), namespace)
+        result = unittest.TestResult()
+        with mock.patch.object(run.Gate, "spawn", namespace["Gate"].spawn):
+            CacheDrains("test_two_runs_keep_test_and_drain_queues_isolated").run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1, result.failures)
+        self.assertIn("cache poisoning", result.failures[0][1])
+
     def test_dropped_audit_stage_is_caught(self):
         with open(run.__file__) as handle:
             source = handle.read()
