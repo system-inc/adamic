@@ -1,6 +1,6 @@
 {
   "measured_initial_base": "fe3852f03ae69a6fce2f1d08b26e69bb759bdd44",
-  "delivery_base": "153db5b1",
+  "delivery_base": "153db5b10aaff38aad65df09ee8cbe2e2badd7fb",
   "corpus_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "nproc": 5,
   "cgroup_cpu_max": "400000 100000",
@@ -21,5 +21,6 @@
     "bridge/tsgo/products_test.go": "501151ffa957975c94bab4c0a12a3739061dd0b1a0af7e3281889f7b7e3b5d3e"
   },
   "measured_base": "7f409c9f321aa9ac33ddcb140a49fb7dc3354cb2",
-  "last_main_update": "Only tests outside bridge/tsgo changed. The ABI check on the delivery base passed in 12.051 test seconds, including new product builds."
+  "last_main_update": "Only tests outside bridge/tsgo changed. The ABI check on the delivery base passed in 12.051 test seconds, including new product builds.",
+  "split_commit": "1af1cf34a114f5f98949eaa5d7ffef198a515e0d"
 }
