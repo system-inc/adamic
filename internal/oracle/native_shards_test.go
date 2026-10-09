@@ -87,6 +87,7 @@ func nativeOracleUnion(shards [][]int) error {
 }
 
 func TestNativeOracleShardUnion(t *testing.T) {
+	t.Parallel()
 	shards := nativeOracleShards()
 	if len(shards) != nativeOracleShardCount {
 		t.Fatalf("declared %d shards, got %d", nativeOracleShardCount, len(shards))
@@ -126,6 +127,7 @@ func TestNativeOracleShardUnion(t *testing.T) {
 // Run the owning shard with a mutated lowered dedication, through precisely the
 // live fixture comparison. The subprocess must fail and identify that fixture.
 func TestNativeOracleShardPlantedFailure(t *testing.T) {
+	t.Parallel()
 	planted, owner := -1, -1
 	shards := nativeOracleShards()
 	for shard, rows := range shards {
