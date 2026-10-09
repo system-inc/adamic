@@ -331,7 +331,7 @@ func compilerAgreementOracle(t *testing.T, owner int, path string) execution {
 func compilerAgreementShard(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_COMPILER_AGREEMENT_PROBE") == "1" {
-		c := compilerAgreementCase{key: "planted/file.ts", rule: "no-debugger"}
+		c := compilerAgreementCase{key: compilerAgreementCheckerKey, rule: "no-debugger"}
 		target := compilerAgreementOwner(c)*compilerAgreementSides + 1
 		want, got := []byte("case 0\nfixed\tunchanged\n"), []byte("case 0\nfixed\tunchanged\n")
 		if shard == target {
@@ -13364,7 +13364,7 @@ func compilerAgreementCompare(t *testing.T, got, want []byte) {
 
 func TestCompilerAndStage1AgreePlantedDisagreement(t *testing.T) {
 	t.Parallel()
-	c := compilerAgreementCase{key: "planted/file.ts", rule: "no-debugger"}
+	c := compilerAgreementCase{key: compilerAgreementCheckerKey, rule: "no-debugger"}
 	target := compilerAgreementOwner(c)*compilerAgreementSides + 1
 	failures := 0
 	for _, shard := range []int{target - 1, target, target + 1} {
