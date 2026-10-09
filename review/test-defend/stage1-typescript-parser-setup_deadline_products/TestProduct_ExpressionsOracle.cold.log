@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T14:37:37.279865486Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:37:37.294841522Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle"}
+{"Time":"2026-10-09T14:37:37.294915165Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle","Output":"=== RUN   TestProduct_ExpressionsOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:37:37.294939113Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle","Output":"=== PAUSE TestProduct_ExpressionsOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:37:37.294941264Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle"}
+{"Time":"2026-10-09T14:37:37.29494394Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle"}
+{"Time":"2026-10-09T14:37:37.294945887Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle","Output":"=== CONT  TestProduct_ExpressionsOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:37:38.404519888Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle","Output":"    expressions_products_test.go:141: build typescript-parser-oracle 609de97f7b6f miss 1.01\n"}
+{"Time":"2026-10-09T14:37:38.404601965Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle","Output":"--- PASS: TestProduct_ExpressionsOracle (1.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:37:38.40460599Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_ExpressionsOracle","Elapsed":1.11}
+{"Time":"2026-10-09T14:37:38.404625138Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:37:38.404949603Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: 63.5% of statements in github.com/system-inc/adamic/internal/buildcache\n"}
+{"Time":"2026-10-09T14:37:38.409009633Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t1.129s\tcoverage: 63.5% of statements in github.com/system-inc/adamic/internal/buildcache\n"}
+{"Time":"2026-10-09T14:37:38.409039625Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":1.129}
