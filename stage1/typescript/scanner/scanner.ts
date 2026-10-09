@@ -833,7 +833,7 @@ export class Scanner {
     }
     rescanTemplate(): void {
         this.pos = this.start;
-        this.template(true);
+        this.template(false);
     }
 
     // Boundary scan with diagnostics disabled, as ReScanSlashToken(false). Unterminated errors remain.
