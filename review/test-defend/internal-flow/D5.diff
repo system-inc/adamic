@@ -1,0 +1,11 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -272,7 +272,7 @@
+ 		b.current.Terminal = &Goto{Block: body.Id}
+ 	} else {
+ 		b.emit(at, 0, statement.Condition, b.uses(statement.Condition), nil)
+-		b.current.Terminal = &If{Consequent: body.Id, Alternate: after.Id}
++		b.current.Terminal = &If{Consequent: body.Id, Alternate: body.Id}
+ 	}
+ 	b.current = after
+ }

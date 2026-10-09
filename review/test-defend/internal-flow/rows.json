@@ -1,0 +1,146 @@
+[
+  {
+    "test": "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95",
+    "package": "internal/flow",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/flow/build.go:268",
+        "change": "Drop loop update statements; timsort repeatedly increments index and shape at loop updates",
+        "rows_failed": [
+          "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family",
+          "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+        ],
+        "subject_failed": true,
+        "subject_passed": false,
+        "all_failed_rows_file": "matrix.json"
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/flow/ssa.go:169",
+        "change": "Off-by-one parameter renaming; timsort comparators and numbers each use two parameters",
+        "rows_failed": [
+          "TestFlowProgram family"
+        ],
+        "subject_failed": false,
+        "subject_passed": true,
+        "all_failed_rows_file": "matrix.json"
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/flow/ssa.go:214",
+        "change": "Off-by-one decrement of unsealed predecessors; nested loops and branch joins need late phis",
+        "rows_failed": [
+          "TestFlowProgram family",
+          "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+        ],
+        "subject_failed": true,
+        "subject_passed": false,
+        "all_failed_rows_file": "matrix.json"
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/D4-whole timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run '.' > D4-whole.log.gz (gzip archived after run); corpus_units_test.go:8555: ../oracle/testdata/timsort.a, function -1 (main): shape$8 in instruction 17 names [{6 0}] (a phi: true), want a phi over what reaches it, [{6 0} {16 0}]"
+  },
+  {
+    "test": "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95",
+    "package": "internal/flow",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/flow/build.go:301",
+        "change": "Change the for-of back-edge target to exit; timsort traverses its length array repeatedly",
+        "rows_failed": [
+          "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family"
+        ],
+        "subject_failed": false,
+        "subject_passed": true,
+        "all_failed_rows_file": "matrix.json"
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/flow/ranges.go:1450",
+        "change": "Off-by-one transitive mutation end; in-place array sort and push need last mutation included",
+        "rows_failed": [
+          "TestFlowProgram family"
+        ],
+        "subject_failed": false,
+        "subject_passed": true,
+        "all_failed_rows_file": "matrix.json"
+      },
+      {
+        "mutant": "D7",
+        "file_line": "internal/flow/ranges.go:1490",
+        "change": "Drop whole deferred loop-phi alias assignment loop; mutations through loop-carried arrays",
+        "rows_failed": [],
+        "subject_failed": false,
+        "subject_passed": true,
+        "all_failed_rows_file": "matrix.json"
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/D7-whole timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run '.' > D7-whole.log.gz (gzip archived after run); corpus_units_test.go:9131: 45098 mutations checked, 0 on a range the pass left unset, 0 invalid ranges"
+  },
+  {
+    "test": "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+    "package": "internal/flow",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/flow/build.go:268",
+        "change": "Drop loop update statements; timsort repeatedly increments index and shape at loop updates",
+        "rows_failed": [
+          "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family",
+          "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+        ],
+        "subject_failed": true,
+        "subject_passed": false,
+        "all_failed_rows_file": "matrix.json"
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/flow/build.go:301",
+        "change": "Change the for-of back-edge target to exit; timsort traverses its length array repeatedly",
+        "rows_failed": [
+          "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family"
+        ],
+        "subject_failed": true,
+        "subject_passed": false,
+        "all_failed_rows_file": "matrix.json"
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/flow/build.go:275",
+        "change": "Change loop exit edge to body; timsort exercises both empty and long counted loops",
+        "rows_failed": [
+          "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family"
+        ],
+        "subject_failed": true,
+        "subject_passed": false,
+        "all_failed_rows_file": "matrix.json"
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/D5-whole timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run '.' > D5-whole.log.gz (gzip archived after run); corpus_units_test.go:9137: function 2 ran a point the graph says can't be reached"
+  }
+]

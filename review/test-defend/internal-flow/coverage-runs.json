@@ -1,0 +1,26 @@
+[
+  {
+    "label": "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95",
+    "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/coverage-TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 timeout 120 go test -count=1 -timeout 90s ./internal/flow/ -run '^TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95$' -coverpkg=./internal/flow -coverprofile=/workspace/adamic/review/test-defend/internal-flow/TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95.cover",
+    "exit": 0,
+    "wall_seconds": 12.725229978001153
+  },
+  {
+    "label": "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95",
+    "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/coverage-TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95 timeout 120 go test -count=1 -timeout 90s ./internal/flow/ -run '^TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95$' -coverpkg=./internal/flow -coverprofile=/workspace/adamic/review/test-defend/internal-flow/TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95.cover",
+    "exit": 0,
+    "wall_seconds": 13.98492474700106
+  },
+  {
+    "label": "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+    "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/coverage-TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95 timeout 120 go test -count=1 -timeout 90s ./internal/flow/ -run '^TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95$' -coverpkg=./internal/flow -coverprofile=/workspace/adamic/review/test-defend/internal-flow/TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95.cover",
+    "exit": 0,
+    "wall_seconds": 14.265856183003052
+  },
+  {
+    "label": "family",
+    "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/coverage-family timeout 120 go test -count=1 -timeout 90s ./internal/flow/ -run '^(TestFlowProgram.*|TestFlowCorpusUnitsCoverEveryProgram|TestFlowCorpusRemainder)$' -coverpkg=./internal/flow -coverprofile=/workspace/adamic/review/test-defend/internal-flow/family.cover",
+    "exit": 0,
+    "wall_seconds": 46.07635405099791
+  }
+]

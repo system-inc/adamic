@@ -1,0 +1,11 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -298,7 +298,7 @@
+ 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: head.Id})
+ 	b.statements(statement.Body)
+ 	b.jumps = b.jumps[:len(b.jumps)-1]
+-	b.enter(head)
++	b.enter(after)
+ 	b.current = after
+ }
+ 

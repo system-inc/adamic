@@ -1,0 +1,11 @@
+--- a/internal/flow/ssa.go
++++ b/internal/flow/ssa.go
+@@ -211,7 +211,7 @@
+ 			if !seen {
+ 				remaining = len(successor.Predecessors)
+ 			}
+-			remaining--
++			remaining -= 2
+ 			b.unsealedPreds[successorId] = remaining
+ 			if remaining == 0 && b.visited[successorId] {
+ 				b.fixIncompletePhis(successorId)

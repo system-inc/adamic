@@ -1,0 +1,65 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/flow/build.go",
+    "line": 88,
+    "old": "return !declared.Global && !declared.Captured && !declared.ExpressionAssigned",
+    "new": "return declared.Global && !declared.Captured && !declared.ExpressionAssigned"
+  },
+  {
+    "id": "M2",
+    "file": "internal/flow/build.go",
+    "line": 178,
+    "old": "case ir.Evaluate:\n\t\tb.emit(at, 0, statement.Value, b.uses(statement.Value), nil)",
+    "new": "case ir.Evaluate:\n\t\treturn"
+  },
+  {
+    "id": "M3",
+    "file": "internal/flow/build.go",
+    "line": 258,
+    "old": "if statement.CheckAfter {",
+    "new": "if !statement.CheckAfter {"
+  },
+  {
+    "id": "M4",
+    "file": "internal/flow/build.go",
+    "line": 450,
+    "old": "func CanThrow(program *ir.Program, instruction *Instruction) bool {\n\tvar node any = instruction.Expression\n\tif instruction.Expression == nil {\n\t\tswitch statement := (*instruction.At).(type) {\n\t\tcase ir.SetIndex, ir.SetProperty:\n\t\t\tnode = statement\n\t\tdefault:\n\t\t\treturn false\n\t\t}\n\t}\n\tif _, isThrow := (*instruction.At).(ir.Throw); isThrow {\n\t\treturn false\n\t}\n\tthrows := false\n\tvar walk func(value reflect.Value)\n\twalk = func(value reflect.Value) {\n\t\tswitch value.Kind() {\n\t\tcase reflect.Interface, reflect.Pointer:\n\t\t\tif !value.IsNil() {\n\t\t\t\twalk(value.Elem())\n\t\t\t}\n\t\tcase reflect.Struct:\n\t\t\tif call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {\n\t\t\t\tthrows = true\n\t\t\t}\n\t\t\tif call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {\n\t\t\t\tthrows = true\n\t\t\t}\n\t\t\tswitch value.Type() {\n\t\t\tcase callType:\n\t\t\t\tif program.CallMayThrow(value.Interface().(ir.Call)) {\n\t\t\t\t\tthrows = true\n\t\t\t\t}\n\t\t\tcase callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:\n\t\t\t\t// A call through a function value, written out or made by the runtime's loop.\n\t\t\t\tif program.ClosuresMayThrow {\n\t\t\t\t\tthrows = true\n\t\t\t\t}\n\t\t\tcase arraySortType:\n\t\t\t\tsort := value.Interface().(ir.ArraySort)\n\t\t\t\tif (sort.Callback != nil && program.ClosuresMayThrow) || (sort.Callback == nil && program.Functions[sort.Comparator].MayThrow) {\n\t\t\t\t\tthrows = true\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor index := 0; index < value.NumField(); index++ {\n\t\t\t\twalk(value.Field(index))\n\t\t\t}\n\t\tcase reflect.Slice, reflect.Array:\n\t\t\tfor index := 0; index < value.Len(); index++ {\n\t\t\t\twalk(value.Index(index))\n\t\t\t}\n\t\t}\n\t}\n\twalk(reflect.ValueOf(node))\n\treturn throws\n}\n",
+    "new": "func CanThrow(program *ir.Program, instruction *Instruction) bool {\n\treturn false\n}\n"
+  },
+  {
+    "id": "M5",
+    "file": "internal/flow/ssa.go",
+    "line": 105,
+    "old": "\tEliminateRedundantPhis(function)",
+    "new": "\t// Elimination dropped."
+  },
+  {
+    "id": "M6",
+    "file": "internal/flow/ssa.go",
+    "line": 184,
+    "old": "if role != PlaceRoleDefine {",
+    "new": "if role == PlaceRoleDefine {"
+  },
+  {
+    "id": "M7",
+    "file": "internal/flow/liveness.go",
+    "line": 44,
+    "old": "\t\t\t\tfor _, use := range instruction.Uses {\n\t\t\t\t\tlive[declaration(use)] = true\n\t\t\t\t}",
+    "new": "\t\t\t\t// Read propagation dropped."
+  },
+  {
+    "id": "M8",
+    "file": "internal/flow/ranges.go",
+    "line": 354,
+    "old": "\twidenRanges(function, effects, result)",
+    "new": "\t// Widening dropped."
+  },
+  {
+    "id": "M9",
+    "file": "internal/flow/ranges.go",
+    "line": 197,
+    "old": "order >= r.Start",
+    "new": "order > r.Start"
+  }
+]

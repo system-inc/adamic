@@ -1,0 +1,12 @@
+--- a/internal/flow/ranges.go
++++ b/internal/flow/ranges.go
+@@ -1487,9 +1487,6 @@
+ 
+ 		// Pending phi operands whose predecessor is this block, now that its values exist.
+ 		// Upstream applies them with the index recorded at deferral rather than a fresh one.
+-		for _, pending := range pendingPhis[block.Id] {
+-			state.assign(pending.index, pending.from, pending.into)
+-		}
+ 		delete(pendingPhis, block.Id)
+ 
+ 		// Adamic: cohere aliases a return's operand into the Returns place here. Adamic's graph has

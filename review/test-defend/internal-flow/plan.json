@@ -1,0 +1,58 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/flow/build.go",
+    "file_line": "internal/flow/build.go:268",
+    "old": "\tb.statements(statement.Update)\n",
+    "new": "",
+    "aim": "Drop loop update statements; timsort repeatedly increments index and shape at loop updates"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/flow/build.go",
+    "file_line": "internal/flow/build.go:301",
+    "old": "\tb.enter(head)\n\tb.current = after",
+    "new": "\tb.enter(after)\n\tb.current = after",
+    "aim": "Change the for-of back-edge target to exit; timsort traverses its length array repeatedly"
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/flow/ssa.go",
+    "file_line": "internal/flow/ssa.go:169",
+    "old": "for index := range b.function.Params {",
+    "new": "for index := 0; index+1 < len(b.function.Params); index++ {",
+    "aim": "Off-by-one parameter renaming; timsort comparators and numbers each use two parameters"
+  },
+  {
+    "mutant": "D4",
+    "file": "internal/flow/ssa.go",
+    "file_line": "internal/flow/ssa.go:214",
+    "old": "\t\t\tremaining--",
+    "new": "\t\t\tremaining -= 2",
+    "aim": "Off-by-one decrement of unsealed predecessors; nested loops and branch joins need late phis"
+  },
+  {
+    "mutant": "D5",
+    "file": "internal/flow/build.go",
+    "file_line": "internal/flow/build.go:275",
+    "old": "b.current.Terminal = &If{Consequent: body.Id, Alternate: after.Id}",
+    "new": "b.current.Terminal = &If{Consequent: body.Id, Alternate: body.Id}",
+    "aim": "Change loop exit edge to body; timsort exercises both empty and long counted loops"
+  },
+  {
+    "mutant": "D6",
+    "file": "internal/flow/ranges.go",
+    "file_line": "internal/flow/ranges.go:1450",
+    "old": "\t\t\t\t\t\tend:        instruction.Order + 1,\n\t\t\t\t\t\ttransitive: true,",
+    "new": "\t\t\t\t\t\tend:        instruction.Order,\n\t\t\t\t\t\ttransitive: true,",
+    "aim": "Off-by-one transitive mutation end; in-place array sort and push need last mutation included"
+  },
+  {
+    "mutant": "D7",
+    "file": "internal/flow/ranges.go",
+    "file_line": "internal/flow/ranges.go:1490",
+    "old": "\t\tfor _, pending := range pendingPhis[block.Id] {\n\t\t\tstate.assign(pending.index, pending.from, pending.into)\n\t\t}\n",
+    "new": "",
+    "aim": "Drop whole deferred loop-phi alias assignment loop; mutations through loop-carried arrays"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/flow/ssa.go
++++ b/internal/flow/ssa.go
+@@ -166,7 +166,7 @@
+ 		return
+ 	}
+ 	b.states[entry.Id] = newSSAState()
+-	for index := range b.function.Params {
++	for index := 0; index+1 < len(b.function.Params); index++ {
+ 		b.defineIn(entry.Id, &b.function.Params[index])
+ 	}
+ 

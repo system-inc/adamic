@@ -1,0 +1,11 @@
+--- a/internal/flow/ranges.go
++++ b/internal/flow/ranges.go
+@@ -1447,7 +1447,7 @@
+ 					}
+ 					mutations = append(mutations, pendingMutation{
+ 						index:      index,
+-						end:        instruction.Order + 1,
++						end:        instruction.Order,
+ 						transitive: true,
+ 						kind:       kind,
+ 						place:      effect.Into,

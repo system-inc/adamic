@@ -1,0 +1,10 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -265,7 +265,6 @@
+ 	b.current = body
+ 	b.statements(statement.Body)
+ 	b.enter(update)
+-	b.statements(statement.Update)
+ 	b.enter(test)
+ 	b.jumps = b.jumps[:len(b.jumps)-1]
+ 	if statement.Condition == nil {
