@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -234,7 +234,7 @@
+ 	}
+ 	formatted := make([]string, 0, len(all))
+ 	for _, diagnostic := range all {
+-		formatted = append(formatted, p.formatDiagnostic(diagnostic))
++		if diagnostic.Code() != 2341 { formatted = append(formatted, p.formatDiagnostic(diagnostic)) }
+ 	}
+ 	sort.Strings(formatted)
+ 	return formatted

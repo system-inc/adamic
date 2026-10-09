@@ -1,0 +1,10 @@
+--- a/internal/lower/parameter_properties.go
++++ b/internal/lower/parameter_properties.go
+@@ -26,6 +26,7 @@
+ }
+ 
+ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {
++	if true { return nil, nil }
+ 	statements := []ir.Statement{}
+ 	for _, parameter := range classMembersWithParameters(declaration) {
+ 		if !parameterProperty(parameter) {

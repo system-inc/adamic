@@ -1,0 +1,41 @@
+[
+  {
+    "test": "TestParameterPropertyCheckerContracts",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestClassFeaturesPrivateChecker",
+    "defense": "defended",
+    "unique_mutant": "D02 internal/lower/class.go:410",
+    "additional_unique_mutant": "D03 internal/load/load.go:237",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/parameter_properties.go:28",
+        "change": "Return early without initialization stores",
+        "rows_failed": [
+          "TestAgreementParameterPropertyWitness",
+          "TestParameterPropertyCheckerContracts",
+          "TestParameterPropertyValueMatchesNode"
+        ]
+      },
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/class.go:410",
+        "change": "Return early on writes to parameter-property fields",
+        "rows_failed": [
+          "TestParameterPropertyCheckerContracts"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "internal/load/load.go:237",
+        "change": "Drop collection of TS2341 private-keyword diagnostics",
+        "rows_failed": [
+          "TestParameterPropertyCheckerContracts"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/parameter-defend/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D02.log 2>&1; parameter_properties_test.go:50: JavaScript backend stdout = \"1\\n1\\n\", source Node = \"1\\n2\\n\"",
+    "limits": "Full package run; two top-level external-workflow skips and one array-contract subcase remain unknown."
+  }
+]

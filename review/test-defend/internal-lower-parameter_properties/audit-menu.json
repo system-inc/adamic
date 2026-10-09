@@ -1,0 +1,122 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/parameter_properties.go",
+    "line": 9,
+    "old": "return node.Kind == ast.KindParameter &&",
+    "new": "return node.Kind != ast.KindParameter &&",
+    "change": "flip parameter-kind condition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/parameter_properties.go",
+    "line": 20,
+    "old": "\t\t\t\t\tmembers = append(members, parameter)\n",
+    "new": "",
+    "change": "drop parameter-member append"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/parameter_properties.go",
+    "line": 28,
+    "old": "func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {",
+    "new": "func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {\n\tif true { return nil, nil }",
+    "change": "return early: nil, nil"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/parameter_properties.go",
+    "line": 50,
+    "old": "func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {",
+    "new": "func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {\n\tif true { return nil }",
+    "change": "return early: nil"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/parameter_properties.go",
+    "line": 76,
+    "old": "\t\tdelete(available, parameter.Name().Text())\n",
+    "new": "",
+    "change": "drop inherited availability reset"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 48,
+    "old": "func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {",
+    "new": "func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {\n\tif true { return nil }",
+    "change": "return early: nil"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/expression.go",
+    "line": 1238,
+    "old": "\tfor _, parameter := range symbol.Declarations[0].Parameters() {\n\t\tif parameter.Name().Text() == \"this\" {\n\t\t\treturn nil, l.notYet(parameter, \"a function with a this parameter used as a value; pass the receiver explicitly or use an arrow\")\n\t\t}\n\t}\n",
+    "new": "",
+    "change": "drop named-function this-parameter guard loop"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 404,
+    "old": "claim.ParameterIndex() != 0",
+    "new": "claim.ParameterIndex() != 1",
+    "change": "off-by-one helper predicate parameter index"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 403,
+    "old": "\t\t\t\t\tclaim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))\n\t\t\t\t\tif claim == nil || claim.ParameterIndex() != 0 {\n\t\t\t\t\t\treturn 0, predicateFailure(v.l, n, \"helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index\")\n\t\t\t\t\t}\n",
+    "new": "",
+    "change": "drop claim declaration and parameter-index guard block"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 39,
+    "old": "\t\twhere = l.program.Where(node)\n",
+    "new": "",
+    "change": "drop predicate diagnostic location assignment"
+  },
+  {
+    "id": "M11",
+    "file": "internal/load/load.go",
+    "line": 233,
+    "old": "\t\tall = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)\n",
+    "new": "",
+    "change": "drop semantic diagnostic collection"
+  },
+  {
+    "id": "M12",
+    "file": "internal/load/load.go",
+    "line": 60,
+    "old": "NoUncheckedIndexedAccess:   core.TSTrue",
+    "new": "NoUncheckedIndexedAccess:   core.TSFalse",
+    "change": "disable unchecked-index option"
+  },
+  {
+    "id": "P1",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif true { return nil, nil }",
+    "change": "return early: nil, nil"
+  },
+  {
+    "id": "P2",
+    "file": "internal/load/load.go",
+    "line": 80,
+    "old": "func Load(paths []string) (*Program, error) {",
+    "new": "func Load(paths []string) (*Program, error) {\n\tif true { return nil, nil }",
+    "change": "return early: nil, nil"
+  },
+  {
+    "id": "P3",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 47,
+    "old": "func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {",
+    "new": "func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {\n\tif true { return predicateProof{}, nil }",
+    "change": "return early: predicateProof{}, nil"
+  }
+]

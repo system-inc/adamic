@@ -1,0 +1,23 @@
+[
+  [
+    "D01",
+    "internal/lower/parameter_properties.go",
+    "func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {",
+    "func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {\n\tif true { return nil, nil }",
+    "Return early without initialization stores"
+  ],
+  [
+    "D02",
+    "internal/lower/class.go",
+    "func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {",
+    "func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {\n\tif field := l.checker.GetSymbolAtLocation(target.Name()); field != nil && field.ValueDeclaration != nil && parameterProperty(field.ValueDeclaration) { return nil, nil }",
+    "Return early on writes to parameter-property fields"
+  ],
+  [
+    "D03",
+    "internal/load/load.go",
+    "formatted = append(formatted, p.formatDiagnostic(diagnostic))",
+    "if diagnostic.Code() != 2341 { formatted = append(formatted, p.formatDiagnostic(diagnostic)) }",
+    "Drop collection of TS2341 private-keyword diagnostics"
+  ]
+]
