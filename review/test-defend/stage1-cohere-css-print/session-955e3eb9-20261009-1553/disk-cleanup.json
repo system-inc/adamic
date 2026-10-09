@@ -1,0 +1,26 @@
+{
+  "before": {
+    "tmp_free": "4.3G",
+    "tmp_capacity": "8.8G",
+    "workspace_free": "16G"
+  },
+  "after_initial_cleanup": {
+    "tmp_free": "8.8G",
+    "workspace_free": "16G"
+  },
+  "removed_earlier_unit_directories": [
+    "/tmp/defend-interface-cast",
+    "/tmp/defend-lint",
+    "/tmp/defend-markdown",
+    "/tmp/defend-yaml",
+    "/tmp/u059",
+    "/tmp/u082",
+    "/tmp/u098",
+    "/tmp/u115",
+    "/tmp/u134",
+    "/tmp/u152",
+    "/tmp/u164"
+  ],
+  "partial_cleanup": "Protected earlier-unit adamic-input directories removed after all test processes ended. Repository, tools and current CSS products untouched.",
+  "limit": "15GB is above the total /tmp capacity."
+}

@@ -1,0 +1,73 @@
+import json,pathlib,re,base64,gzip,difflib
+p=pathlib.Path('/workspace/adamic/review/test-defend/stage1-cohere-css-print');maps=json.loads(pathlib.Path('/tmp/defend-css/maps.json').read_text());groups={}
+for d in pathlib.Path('/tmp/defend-css').glob('v8-*'):
+ name=d.name[3:];masks={}
+ for f in d.glob('*.json'):
+  with gzip.open(p/(name+'-'+f.name+'.gz'),'wb') as z:z.write(f.read_bytes())
+  for s in json.loads(f.read_text()).get('result',[]):
+   match=re.search(r'/(css|selector|values|mediaquery|cssstrings|cssnumbers)/([^/]+\.ts)$',s['url'])
+   if not match:continue
+   key='stage1/cohere/'+match[1]+'/'+match[2];size=max([r['endOffset'] for fn in s['functions'] for r in fn['ranges']]+[0]);mask=bytearray(size)
+   for fn in s['functions']:
+    for r in sorted(fn['ranges'],key=lambda r:-(r['endOffset']-r['startOffset'])):
+     mask[r['startOffset']:r['endOffset']]=bytes([int(r['count']>0)])*(r['endOffset']-r['startOffset'])
+   old=masks.setdefault(key,bytearray(size));old.extend(bytes(max(0,size-len(old))))
+   for i,v in enumerate(mask):old[i]|=v
+ groups[name]=masks
+alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+def decode(s):
+ out=[];n=shift=0
+ for c in s:
+  x=alphabet.index(c);n|=(x&31)<<shift
+  if x&32:shift+=5
+  else:out.append(-(n>>1) if n&1 else n>>1);n=shift=0
+ return out
+mapped={}
+for key,pair in maps.items():
+ js=pair["mapped"]
+ sm=json.loads(base64.b64decode(js.split('base64,')[-1]));body=js.split('//# sourceMappingURL=')[0];lines=body.splitlines(True);off=0;source=ol=oc=0;segments=[]
+ for li,m in enumerate(sm['mappings'].split(';')):
+  col=0;items=[]
+  for seg in m.split(','):
+   if not seg:continue
+   v=decode(seg);col+=v[0]
+   if len(v)>=4:source+=v[1];ol+=v[2];oc+=v[3];items.append((col,ol+1))
+  length=len(lines[li].encode('utf-16-le'))//2 if li<len(lines) else 0
+  for j,(column,line) in enumerate(items):segments.append((off+column,off+(items[j+1][0] if j+1<len(items) else length),line))
+  off+=length
+ mapped[key]=segments
+pairs=[('ClosedPrinterRegexGap','CSSProfileSnapshotsAgree'),('CSSPrinterBoundaryProofs','OptionalBooleanPrinterMatchesGo'),('CSSPrinterThroughput','CSSProfileSnapshotsAgree')]
+results={}
+for a,b in pairs:
+ entries={}
+ for key,mask in groups.get(a,{}).items():
+  other=groups.get(b,{}).get(key,bytearray());exclusive_plain=bytearray(v and (i>=len(other) or not other[i]) for i,v in enumerate(mask));lines=[]
+  pair=maps.get(key)
+  if pair is None:continue
+  body=pair["mapped"].split("//# sourceMappingURL=")[0];plain=pair["plain"]
+  # Source-map mode retains comments. Align identical generated lines in UTF-16 units.
+  plain_lines=plain.splitlines(True);body_lines=body.splitlines(True)
+  def offsets(lines):
+   out=[0]
+   for line in lines:out.append(out[-1]+len(line.encode("utf-16-le"))//2)
+   return out
+  po=offsets(plain_lines);bo=offsets(body_lines);exclusive=bytearray(bo[-1])
+  for block in difflib.SequenceMatcher(None,plain_lines,body_lines,autojunk=False).get_matching_blocks():
+   start=po[block.a];end=po[block.a+block.size];dest=bo[block.b]
+   available=exclusive_plain[start:end];exclusive[dest:dest+len(available)]=available
+  for start,end,line in mapped.get(key,[]):
+   if any(exclusive[start:end]):lines.append(line)
+  if lines:entries[key]=sorted(set(lines))
+ results[a+' versus '+b]={'exclusive_mapped_line_leads':entries,'note':'At least one exclusive covered generated segment maps to this source line. Nested zero ranges removed. Original closed-regex fixture excluded from production port mapping. Throughput coverage includes completed rounds from an interrupted run.'}
+p.joinpath('coverage-exclusive-lines.json').write_text(json.dumps(results,indent=2)+'\n')
+# Supplementary compiler coverage block differences.
+compiler={}
+for a,b in pairs:
+ def blocks(n):
+  f=p/('coverage-'+n+'.out')
+  if not f.exists():return None
+  return {line.split(' ')[0]:int(line.split(' ')[-1]) for line in f.read_text().splitlines()[1:]}
+ aa=blocks(a);bb=blocks(b)
+ compiler[a+' versus '+b]=None if aa is None or bb is None else [k for k,v in aa.items() if v>0 and bb.get(k,0)==0]
+p.joinpath('coverage-compiler-exclusive-blocks.json').write_text(json.dumps(compiler,indent=2)+'\n')
+print({k:sum(map(len,v['exclusive_mapped_line_leads'].values())) for k,v in results.items()})

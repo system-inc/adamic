@@ -1,0 +1,51 @@
+[
+  [
+    "R1",
+    "internal/native/runtime/regexp.c",
+    "\t\tsize_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;",
+    "\t\tsize_t start = stateful ? regex_to_length(regex->slots[1].number) + 1 : 0;",
+    "global fast-test start off by one"
+  ],
+  [
+    "B1",
+    "stage1/cohere/css/input.ts",
+    "stripBOM && (text[0] === '\\ufeff' || text[0] === '\\ufffe')",
+    "stripBOM && (text[0] === '\\uffff' || text[0] === '\\ufffe')",
+    "change BOM constant"
+  ],
+  [
+    "B2",
+    "stage1/cohere/css/parser.ts",
+    "first.start + first.value.length",
+    "first.start + first.value.length + 1",
+    "unknown-word diagnostic end off by one"
+  ],
+  [
+    "B3",
+    "stage1/cohere/css/print.ts",
+    "if(front.string('language') === 'yaml' && front.string('value').trim() !== '')",
+    "if(front.string('language') === 'toml' && front.string('value').trim() !== '')",
+    "change front-matter refusal language"
+  ],
+  [
+    "C1",
+    "stage1/cohere/css/print_doc.ts",
+    "if(this.cachedWidth < 0)",
+    "if(this.cachedWidth >= -1)",
+    "disable width cache while preserving answers"
+  ],
+  [
+    "D2",
+    "stage1/cohere/css/print_doc.ts",
+    "while(remaining >= 0)",
+    "while(remaining > 0)",
+    "exact-width fit bound off by one"
+  ],
+  [
+    "D3",
+    "stage1/cohere/css/print.ts",
+    "let ending = d.text(';');\n        if(n.truth('nodes')) ending",
+    "let ending = d.text(':');\n        if(n.truth('nodes')) ending",
+    "same-length declaration semicolon substitution"
+  ]
+]

@@ -1,0 +1,24 @@
+import json,os,pathlib,subprocess,time
+root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/stage1-cohere-css-print';plans=json.loads((p/'plans.json').read_text());results=[]
+env=os.environ.copy();env['ADAMIC_CSS_PRINTER_LIBRARY']='/tmp/defend-css/oracle';env['ADAMIC_CSS_PRINTER_BENCH']='1';env['ADAMIC_CSS_PRINTER_BENCH_ONCE']='1'
+fast='^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$'
+def run(mid,group,pattern,extra=None):
+ e=env.copy();e['ADAMIC_BUILD_CACHE_DIR']='/tmp/defend-css/cache/'+mid
+ if extra:e.update(extra)
+ cmd=['timeout','120','go','test','-json','-count=1','-timeout','90s','./stage1/cohere/css/','-run',pattern]
+ st=time.monotonic()
+ with (p/(mid+'-'+group+'.log')).open('w') as f:r=subprocess.run(cmd,cwd=root,env=e,stdout=f,stderr=subprocess.STDOUT)
+ results.append({'mutant':mid,'group':group,'command':cmd,'cache':e['ADAMIC_BUILD_CACHE_DIR'],'exit':r.returncode,'wall':time.monotonic()-st,'extra_env':extra})
+ (p/'matrix-runs.json').write_text(json.dumps(results,indent=2)+'\n');print(mid,group,r.returncode,round(results[-1]['wall'],2),flush=True)
+ return r.returncode
+for mid,file,old,new,note in plans:
+ target=root/file;orig=target.read_text();assert orig.count(old)==1,(mid,orig.count(old))
+ target.write_text(orig.replace(old,new))
+ try:
+  (p/(mid+'.diff')).write_text(subprocess.check_output(['git','diff','--',file],cwd=root,text=True))
+  run(mid,'fast',fast)
+  profile='/tmp/defend-css/profile-'+mid
+  if run(mid,'artifacts','^TestCSSProfileArtifacts$',{'ADAMIC_CSS_PROFILE_DIR':profile})==0:
+   run(mid,'snapshots','^TestCSSProfileSnapshotsAgree$',{'ADAMIC_CSS_PROFILE_SNAPSHOTS':profile})
+  if mid in ['C1','D2','D3']:run(mid,'throughput','^TestCSSPrinterThroughput$')
+ finally:target.write_text(orig)

@@ -1,0 +1,32 @@
+import pathlib,json,subprocess,shlex,gzip
+p=pathlib.Path('/workspace/adamic/review/test-defend/stage1-cohere-css-print');root=p.parents[2];runs=json.loads((p/'matrix-runs.json').read_text());scope=[s for s in (p/'scope.log').read_text().splitlines() if s.startswith('Test')];plans=json.loads((p/'plans.json').read_text());matrix={}
+for mid,file,old,new,note in plans:
+ events=[];observed={};fail=[];over=[]
+ for r in [r for r in runs if r['mutant']==mid]:
+  for l in (p/(mid+'-'+r['group']+'.log')).read_text().splitlines():
+   try:e=json.loads(l)
+   except:continue
+   t=e.get('Test','');out=e.get('Output','')
+   if e['Action'] in ['pass','fail','skip'] and t and '/' not in t:observed[t]=e['Action']
+   if '.go:' in out and e.get('OutputType')=='error':fail.append({'test':t,'line':out.strip(),'log':mid+'-'+r['group']+'.log'})
+   if 'test timed out after' in out:over.append(r['group'])
+ subprocess.run(['git','apply','--check',str(p/(mid+'.diff'))],cwd=root,check=True)
+ matrix[mid]={'results':{s:observed.get(s,'unknown') for s in scope},'observed_failures':[s for s,v in observed.items() if v=='fail'],'observed_passes':[s for s,v in observed.items() if v=='pass'],'failing_lines':fail,'over_budget_groups':sorted(set(over)),'diff_applies':True,'bounded':True}
+(p/'matrix.json').write_text(json.dumps(matrix,indent=2)+'\n')
+rows=[]
+for name,sub,ids,defense in [('TestClosedPrinterRegexGap','TestCSSProfileSnapshotsAgree',['R1'],'cannot-judge'),('TestCSSPrinterThroughput','TestCSSProfileSnapshotsAgree',['C1','D2','D3'],'not defended'),('TestCSSPrinterBoundaryProofs','TestOptionalBooleanPrinterMatchesGo',['B1','B2','B3'],'not defended')]:
+ attempts=[]
+ for mid in ids:
+  plan=next(x for x in plans if x[0]==mid);source=subprocess.check_output(['git','show','HEAD:'+plan[1]],cwd=root,text=True);line=source[:source.index(plan[2])].count('\n')+1
+  attempts.append({'mutant':mid,'file_line':plan[1]+':'+str(line),'change':plan[4],'rows_failed':matrix[mid]['observed_failures'],'over_budget_groups':matrix[mid]['over_budget_groups']})
+ key='D2' if name=='TestCSSPrinterThroughput' else ids[0];group='throughput' if key=='D2' else 'fast';r=next(r for r in runs if r['mutant']==key and r['group']==group);f=next((f['line'] for f in matrix[key]['failing_lines'] if f['test']==name),'No assertion failure recorded.')
+ command='ADAMIC_CSS_PRINTER_LIBRARY=/tmp/defend-css/oracle ADAMIC_CSS_PRINTER_BENCH=1 ADAMIC_CSS_PRINTER_BENCH_ONCE=1 ADAMIC_BUILD_CACHE_DIR='+r['cache']+' '+shlex.join(r['command'])+' > '+key+'-'+group+'.log 2>&1'
+ reason=('The cache-disable mutant preserves output and passes; the exact-width mutant also fails snapshots; the same-length semicolon mutant passes throughput while snapshots catch it.' if name=='TestCSSPrinterThroughput' else 'All three aimed boundary mutants also fail TestCSSProfileSnapshotsAgree.') if defense=='not defended' else 'Exclusive catch in the completed bounded matrix; omitted current package rows remain unknown. Full package and broader printer baseline exceed 90 seconds.'
+ rows.append({'test':name,'package':'stage1/cohere/css','prior_verdict':'subsumed','subsumed_by':sub,'defense':defense,'unique_mutant':None,'attempts':attempts,'evidence':command+'; '+f,'reason':reason,'bounded':True})
+(p/'rows.json').write_text(json.dumps(rows,indent=2)+'\n')
+for src,dest in [('/tmp/defend-css/run.py','runner.py.txt'),('/tmp/defend-css/finalize.py','finalize.py.txt')]:p.joinpath(dest).write_bytes(pathlib.Path(src).read_bytes())
+for tag in ['clean','C1']:
+ for f in pathlib.Path('/tmp/defend-css/cost-v8-'+tag).glob('*.json'):
+  with gzip.open(p/('cost-'+tag+'-'+f.name+'.gz'),'wb') as z:z.write(f.read_bytes())
+(p/'costs.json').write_text(json.dumps({'mutant_command_wall_seconds':sum(r['wall'] for r in runs),'commands':len(runs),'warm_setup_seconds':0,'nproc':5,'scope_top_level_tests':len(scope)},indent=2)+'\n')
+print(json.dumps(rows,indent=2))

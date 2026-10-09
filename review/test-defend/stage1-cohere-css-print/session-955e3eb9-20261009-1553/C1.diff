@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/css/print_doc.ts b/stage1/cohere/css/print_doc.ts
+index b5616bec..2df46cdb 100644
+--- a/stage1/cohere/css/print_doc.ts
++++ b/stage1/cohere/css/print_doc.ts
+@@ -52,7 +52,7 @@ export class DocNode {
+         this.kind = kind; this.parts = parts; this.text = text; this.broken = broken;
+     }
+     width(): number {
+-        if(this.cachedWidth < 0) this.cachedWidth = stringWidth(this.text);
++        if(this.cachedWidth >= -1) this.cachedWidth = stringWidth(this.text);
+         return this.cachedWidth;
+     }
+ }

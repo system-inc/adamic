@@ -1,0 +1,108 @@
+[
+  {
+    "test": "TestClosedPrinterRegexGap",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCSSProfileSnapshotsAgree",
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "R1",
+        "file_line": "internal/native/runtime/regexp.c:627",
+        "change": "global fast-test start off by one",
+        "rows_failed": [
+          "TestClosedPrinterRegexGap"
+        ],
+        "over_budget_groups": []
+      }
+    ],
+    "evidence": "ADAMIC_CSS_PRINTER_LIBRARY=/tmp/defend-css/oracle ADAMIC_CSS_PRINTER_BENCH=1 ADAMIC_CSS_PRINTER_BENCH_ONCE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-css/cache/R1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$' > R1-fast.log 2>&1; print_test.go:67: native: 0 \"0\\nOk\\n\"",
+    "reason": "Exclusive catch in the completed bounded matrix; omitted current package rows remain unknown. Full package and broader printer baseline exceed 90 seconds.",
+    "bounded": true
+  },
+  {
+    "test": "TestCSSPrinterThroughput",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCSSProfileSnapshotsAgree",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "C1",
+        "file_line": "stage1/cohere/css/print_doc.ts:55",
+        "change": "disable width cache while preserving answers",
+        "rows_failed": [],
+        "over_budget_groups": []
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/css/print_doc.ts:103",
+        "change": "exact-width fit bound off by one",
+        "rows_failed": [
+          "TestCSSProfileSnapshotsAgree",
+          "TestCSSPrinterThroughput"
+        ],
+        "over_budget_groups": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/css/print.ts:143",
+        "change": "same-length declaration semicolon substitution",
+        "rows_failed": [
+          "TestOptionalBooleanPrinterMatchesGo",
+          "TestCSSPrinterBoundaryProofs",
+          "TestCSSProfileSnapshotsAgree"
+        ],
+        "over_budget_groups": []
+      }
+    ],
+    "evidence": "ADAMIC_CSS_PRINTER_LIBRARY=/tmp/defend-css/oracle ADAMIC_CSS_PRINTER_BENCH=1 ADAMIC_CSS_PRINTER_BENCH_ONCE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-css/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^TestCSSPrinterThroughput$' > D2-throughput.log 2>&1; print_test.go:211: native: 0 \"4921 of 4921 stylesheets formatted, 605017 units\\n\" , want \"4921 of 4921 stylesheets formatted, 604921 units\\n\"",
+    "reason": "The cache-disable mutant preserves output and passes; the exact-width mutant also fails snapshots; the same-length semicolon mutant passes throughput while snapshots catch it.",
+    "bounded": true
+  },
+  {
+    "test": "TestCSSPrinterBoundaryProofs",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestOptionalBooleanPrinterMatchesGo",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "B1",
+        "file_line": "stage1/cohere/css/input.ts:20",
+        "change": "change BOM constant",
+        "rows_failed": [
+          "TestCSSPrinterBoundaryProofs",
+          "TestCSSProfileSnapshotsAgree"
+        ],
+        "over_budget_groups": []
+      },
+      {
+        "mutant": "B2",
+        "file_line": "stage1/cohere/css/parser.ts:88",
+        "change": "unknown-word diagnostic end off by one",
+        "rows_failed": [
+          "TestCSSPrinterBoundaryProofs",
+          "TestCSSProfileSnapshotsAgree"
+        ],
+        "over_budget_groups": []
+      },
+      {
+        "mutant": "B3",
+        "file_line": "stage1/cohere/css/print.ts:269",
+        "change": "change front-matter refusal language",
+        "rows_failed": [
+          "TestCSSPrinterBoundaryProofs",
+          "TestCSSProfileSnapshotsAgree"
+        ],
+        "over_budget_groups": []
+      }
+    ],
+    "evidence": "ADAMIC_CSS_PRINTER_LIBRARY=/tmp/defend-css/oracle ADAMIC_CSS_PRINTER_BENCH=1 ADAMIC_CSS_PRINTER_BENCH_ONCE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-css/cache/B1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$' > B1-fast.log 2>&1; print_test.go:258: boundary proof: 0 \"\\\"\\ufeffa {\\\\n  b: c;\\\\n}\\\\n\\\"\\n\\\"// x\\\\ra {\\\\n}\\\\n\\\"\\nerror {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word \\u00a0\\\"}\\nerror \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\\n\" ; Go \"\\\"a {\\\\n  b: c;\\\\n}\\\\n\\\"\\n\\\"// x\\\\ra {\\\\n}\\\\n\\\"\\nerror {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word \\u00a0\\\"}\\nerror \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\\n\"",
+    "reason": "All three aimed boundary mutants also fail TestCSSProfileSnapshotsAgree.",
+    "bounded": true
+  }
+]

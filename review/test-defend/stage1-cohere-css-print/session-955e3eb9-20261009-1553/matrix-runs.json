@@ -1,0 +1,648 @@
+[
+  {
+    "mutant": "R1",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/R1",
+    "exit": 1,
+    "wall": 51.99662618599905,
+    "extra_env": null
+  },
+  {
+    "mutant": "R1",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/R1",
+    "exit": 0,
+    "wall": 62.16182965700136,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-R1"
+    }
+  },
+  {
+    "mutant": "R1",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/R1",
+    "exit": 0,
+    "wall": 42.46315256199887,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-R1"
+    }
+  },
+  {
+    "mutant": "B1",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/B1",
+    "exit": 1,
+    "wall": 38.94556912000189,
+    "extra_env": null
+  },
+  {
+    "mutant": "B1",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/B1",
+    "exit": 0,
+    "wall": 61.75138316700031,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-B1"
+    }
+  },
+  {
+    "mutant": "B1",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/B1",
+    "exit": 1,
+    "wall": 13.642190861999552,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-B1"
+    }
+  },
+  {
+    "mutant": "B2",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/B2",
+    "exit": 1,
+    "wall": 43.63811489799991,
+    "extra_env": null
+  },
+  {
+    "mutant": "B2",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/B2",
+    "exit": 0,
+    "wall": 55.01417175700044,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-B2"
+    }
+  },
+  {
+    "mutant": "B2",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/B2",
+    "exit": 1,
+    "wall": 11.690411327999755,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-B2"
+    }
+  },
+  {
+    "mutant": "B3",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/B3",
+    "exit": 1,
+    "wall": 37.791108181998425,
+    "extra_env": null
+  },
+  {
+    "mutant": "B3",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/B3",
+    "exit": 0,
+    "wall": 54.66799447899757,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-B3"
+    }
+  },
+  {
+    "mutant": "B3",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/B3",
+    "exit": 1,
+    "wall": 13.656301830000302,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-B3"
+    }
+  },
+  {
+    "mutant": "C1",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/C1",
+    "exit": 0,
+    "wall": 37.74071631299739,
+    "extra_env": null
+  },
+  {
+    "mutant": "C1",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/C1",
+    "exit": 0,
+    "wall": 52.07462385300096,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-C1"
+    }
+  },
+  {
+    "mutant": "C1",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/C1",
+    "exit": 0,
+    "wall": 41.80556781699852,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-C1"
+    }
+  },
+  {
+    "mutant": "C1",
+    "group": "throughput",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterThroughput$"
+    ],
+    "cache": "/tmp/defend-css/cache/C1",
+    "exit": 0,
+    "wall": 78.97594781999942,
+    "extra_env": null
+  },
+  {
+    "mutant": "H1",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/C2",
+    "exit": 0,
+    "wall": 37.47686376300044,
+    "extra_env": null,
+    "excluded": "comparison-driver edit, no production defense verdict"
+  },
+  {
+    "mutant": "H1",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/C2",
+    "exit": 0,
+    "wall": 51.82491609099816,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-C2"
+    },
+    "excluded": "comparison-driver edit, no production defense verdict"
+  },
+  {
+    "mutant": "H1",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/C2",
+    "exit": 0,
+    "wall": 41.53562549199705,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-C2"
+    },
+    "excluded": "comparison-driver edit, no production defense verdict"
+  },
+  {
+    "mutant": "H1",
+    "group": "throughput",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterThroughput$"
+    ],
+    "cache": "/tmp/defend-css/cache/C2",
+    "exit": 1,
+    "wall": 42.81614270600039,
+    "extra_env": null,
+    "excluded": "comparison-driver edit, no production defense verdict"
+  },
+  {
+    "mutant": "H2",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/C3",
+    "exit": 0,
+    "wall": 39.44092153100064,
+    "extra_env": null,
+    "excluded": "comparison-driver edit, no production defense verdict"
+  },
+  {
+    "mutant": "D2",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/D2",
+    "exit": 0,
+    "wall": 39.17512257600174,
+    "extra_env": null
+  },
+  {
+    "mutant": "D2",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/D2",
+    "exit": 0,
+    "wall": 53.58921697099868,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-D2"
+    }
+  },
+  {
+    "mutant": "D2",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/D2",
+    "exit": 1,
+    "wall": 11.24224494200098,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-D2"
+    }
+  },
+  {
+    "mutant": "D2",
+    "group": "throughput",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterThroughput$"
+    ],
+    "cache": "/tmp/defend-css/cache/D2",
+    "exit": 1,
+    "wall": 39.19548408000264,
+    "extra_env": null
+  },
+  {
+    "mutant": "D3",
+    "group": "fast",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+    ],
+    "cache": "/tmp/defend-css/cache/D3",
+    "exit": 1,
+    "wall": 37.34906032000072,
+    "extra_env": null
+  },
+  {
+    "mutant": "D3",
+    "group": "artifacts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileArtifacts$"
+    ],
+    "cache": "/tmp/defend-css/cache/D3",
+    "exit": 0,
+    "wall": 53.71362683099869,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_DIR": "/tmp/defend-css/profile-D3"
+    }
+  },
+  {
+    "mutant": "D3",
+    "group": "snapshots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSProfileSnapshotsAgree$"
+    ],
+    "cache": "/tmp/defend-css/cache/D3",
+    "exit": 1,
+    "wall": 10.951205358000152,
+    "extra_env": {
+      "ADAMIC_CSS_PROFILE_SNAPSHOTS": "/tmp/defend-css/profile-D3"
+    }
+  },
+  {
+    "mutant": "D3",
+    "group": "throughput",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterThroughput$"
+    ],
+    "cache": "/tmp/defend-css/cache/D3",
+    "exit": 0,
+    "wall": 84.09988519500257,
+    "extra_env": null
+  }
+]

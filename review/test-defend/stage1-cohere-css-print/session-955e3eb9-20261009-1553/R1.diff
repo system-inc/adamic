@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index 2b43acf1..9e5ad6e4 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -624,7 +624,7 @@ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
+ 	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&
+ 		input->units == input->length + 1) {
+ 		bool stateful = (p->flags & 24) != 0;
+-		size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
++		size_t start = stateful ? regex_to_length(regex->slots[1].number) + 1 : 0;
+ 		const unsigned char *bytes = (const unsigned char *)input->bytes;
+ 		ptrdiff_t captures[32];
+ 		uint64_t steps = 0;
