@@ -1,0 +1,266 @@
+{
+  "base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "mapper_fix": "already on main: 6b33ec61da399ae79cfba0900c9f753ed38faa1a equivalent generic binder inference; census copier preserves opaque mapper",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "Refused": 3,
+    "NotYet": 16
+  },
+  "stream_inventory": {
+    "inputs": {
+      "binary_sha256": "a4a0f07f5d4d413d0d7e712e7ec3ee958fd26caffb815ada8b2b1b40abb2a564",
+      "root": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/module",
+      "files": [
+        {
+          "file": "esnextAnd2015.ts",
+          "bytes": 18686,
+          "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71"
+        },
+        {
+          "file": "impliedNodeFormatDependent.ts",
+          "bytes": 3750,
+          "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+        },
+        {
+          "file": "module.ts",
+          "bytes": 111793,
+          "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c"
+        },
+        {
+          "file": "system.ts",
+          "bytes": 85481,
+          "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6"
+        }
+      ],
+      "seconds": 30.0,
+      "rss_mib": 6144,
+      "project": "whole compiler; only the census walk is filtered"
+    },
+    "completed": [
+      {
+        "file": "impliedNodeFormatDependent.ts",
+        "bytes": 3750,
+        "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler/transformers/module",
+            "/tmp/b17vtn1/partial-stream/transformers/module/records/impliedNodeFormatDependent.ts.pending"
+          ],
+          "wall_seconds": 3.308814843999926,
+          "peak_rss_kib": 398924,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      }
+    ],
+    "incomplete": [
+      {
+        "file": "esnextAnd2015.ts",
+        "bytes": 18686,
+        "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler/transformers/module",
+            "/tmp/b17vtn1/partial-stream/transformers/module/records/esnextAnd2015.ts.pending"
+          ],
+          "wall_seconds": 30.065241927999978,
+          "peak_rss_kib": 798208,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "module.ts",
+        "bytes": 111793,
+        "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler/transformers/module",
+            "/tmp/b17vtn1/partial-stream/transformers/module/records/module.ts.pending"
+          ],
+          "wall_seconds": 30.130009983000036,
+          "peak_rss_kib": 783052,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "system.ts",
+        "bytes": 85481,
+        "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler/transformers/module",
+            "/tmp/b17vtn1/partial-stream/transformers/module/records/system.ts.pending"
+          ],
+          "wall_seconds": 30.13616505699997,
+          "peak_rss_kib": 942336,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      }
+    ]
+  },
+  "counts": {
+    "NotYet": [
+      15,
+      1,
+      0,
+      0,
+      0
+    ],
+    "Refused": [
+      3,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "an assignment value to a member",
+      "counts": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading ModuleKind",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading SyntaxKind",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isSourceFile",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "an object refinement using an open numeric enum as a literal tag",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a namespace member without a lowered binding",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading Debug",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading map",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 219710,
+  "examined_bytes": 3750,
+  "examined_share": 0.01706795321105093,
+  "typescript_source_bytes": 219710,
+  "typescript_examined_share": 0.01706795321105093,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 19,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "source_bytes": 3750,
+      "total_nodes": 411,
+      "visited_nodes": 411,
+      "attempted_nodes": 255,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": [
+    {
+      "file": "esnextAnd2015.ts",
+      "bytes": 18686,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "module.ts",
+      "bytes": 111793,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "system.ts",
+      "bytes": 85481,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    }
+  ]
+}
