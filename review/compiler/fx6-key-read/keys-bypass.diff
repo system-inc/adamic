@@ -1,0 +1,11 @@
+--- a/internal/lower/class_features.go
++++ b/internal/lower/class_features.go
+@@ -127,7 +127,7 @@
+ 	if value.Type() != ir.Object {
+ 		return nil, true, l.notYet(node, "Object.keys on a non-object")
+ 	}
+-	value, err = l.checkedViewMembers(node, arguments[0], value, "")
++	value, err = value, nil
+ 	if err != nil {
+ 		return nil, true, err
+ 	}

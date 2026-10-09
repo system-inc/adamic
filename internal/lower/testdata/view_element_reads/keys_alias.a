@@ -3,5 +3,5 @@ interface View extends Root { readonly count: number; }
 const raw = { kind: 1 as const, count: 'seven' };
 const base: Root = raw;
 const view = base as View;
-const copy = {...view};
-console.log(`${Object.is(copy, raw)}`);
+const keys = Object.keys;
+console.log(keys(view).join(','));

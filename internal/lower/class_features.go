@@ -127,5 +127,9 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	if value.Type() != ir.Object {
 		return nil, true, l.notYet(node, "Object.keys on a non-object")
 	}
+	value, err = l.checkedViewMembers(node, arguments[0], value, "")
+	if err != nil {
+		return nil, true, err
+	}
 	return ir.ObjectKeys{Object: value}, true, nil
 }

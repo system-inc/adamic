@@ -5,13 +5,13 @@
     view_element_reads_test.go:59: gate cache node miss
     oracle_test.go:596: gate cache native miss
     oracle_test.go:589: gate cache native miss
-    view_element_reads_test.go:59: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: ...view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "kind,count\n" stderr ""
-        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: ...view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "kind,count\n" stderr ""
-        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: ...view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "kind,count\n" stderr ""
---- FAIL: TestCheckedViewSpread (0.53s)
+    view_element_reads_test.go:59: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: ...view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "false\n" stderr ""
+        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: ...view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "false\n" stderr ""
+        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: ...view (field count) is not a number; expected number, found string\n"; got exit 0 stdout "false\n" stderr ""
+--- FAIL: TestCheckedViewSpread (0.35s)
 FAIL
 gate cache: native hits=0 misses=2
 gate cache: node hits=1 misses=1
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.561s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.360s
 FAIL
