@@ -1,0 +1,234 @@
+[
+  {
+    "mutant": "missing-case",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/missing-case.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "reason": "bridge coverage count"
+  },
+  {
+    "mutant": "missing-position",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/missing-position.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "reason": "query coverage count"
+  },
+  {
+    "mutant": "duplicate-owners",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/duplicate-owners.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "reason": "shard coverage"
+  },
+  {
+    "mutant": "ignore-digest",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/ignore-digest.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "reason": "corrupt product was accepted"
+  },
+  {
+    "mutant": "ignore-product-count",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/ignore-product-count.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "reason": "wrong product count was accepted"
+  },
+  {
+    "mutant": "rebuild-product",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/rebuild-product.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "reason": "product was rebuilt"
+  },
+  {
+    "mutant": "budget-enforced",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/budget-enforced.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeABI$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeABI"
+    ],
+    "reason": "bridge unit exceeded 60 seconds"
+  },
+  {
+    "mutant": "budget-log-only",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/budget-log-only.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeABI$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "failed_tests": [],
+    "reason": "over the 60-second budget"
+  },
+  {
+    "mutant": "planted-shard-0",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/planted-shard-0.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridge(OracleSample|TimingRound1Sample)$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "failed_tests": [],
+    "reason": "PASS"
+  },
+  {
+    "mutant": "planted-shard-1",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/planted-shard-1.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridge(OracleSample|TimingRound1Sample)$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "failed_tests": [],
+    "reason": "skip"
+  },
+  {
+    "mutant": "planted-shard-2",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/planted-shard-2.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridge(OracleSample|TimingRound1Sample)$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "failed_tests": [],
+    "reason": "skip"
+  },
+  {
+    "mutant": "planted-shard-3",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/bridge-main-mutants/planted-shard-3.json",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridge(OracleSample|TimingRound1Sample)$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "failed_tests": [
+      "TestBridgeOracleSample"
+    ],
+    "reason": "native oracle mismatch"
+  }
+]

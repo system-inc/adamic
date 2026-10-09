@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./bridge/tsgo",
+    "-run",
+    "^TestBridgeABI$",
+    "-count=1",
+    "-json",
+    "-timeout=90s"
+  ],
+  "mutant_exit": 1,
+  "restored_exit": 0,
+  "reason": "product digest: api"
+}
