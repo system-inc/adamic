@@ -596,16 +596,21 @@ type (
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
-	// element, its index and the array: forEach, filter, some, every, find and findIndex. The length
-	// is read once, before the first call, and an index the array no longer has when its turn comes
-	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
+	// element, its index and the array. The length is read once before the first call.
+	// Searches Get removed indices as undefined; the other visits skip them.
+	// Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		Method   string
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Returns  Type
+		// SearchFirst and SearchUndefined preserve the callback's declared value contract.
+		// SearchElementName names the checker type in a failed search call.
+		SearchFirst       Type
+		SearchUndefined   bool
+		SearchElementName string
+		Method            string
+		Array             Expression
+		Callback          Expression
+		Element           Type
+		Returns           Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
