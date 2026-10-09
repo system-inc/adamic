@@ -11,3 +11,7 @@ type NodeBufferCall struct {
 }
 
 func (c NodeBufferCall) Type() Type { return c.Returns }
+
+func (c NodeBufferCall) MayThrow() bool {
+	return c.Function == "hash_update" || c.Function == "hash_digest"
+}

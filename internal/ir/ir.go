@@ -64,6 +64,9 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+
+	// CheckedLibrary marks a compiler-built validation wrapper, never a source claim.
+	CheckedLibrary bool
 }
 
 // PredicateCheckCounts counts emitted overload-result directions. Unobservable
@@ -96,6 +99,7 @@ type NonNullCheck struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	BuiltinError string // built-in nominal ancestor for the shared name/message prefix
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -164,6 +168,9 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+
+	// CheckedLibrary marks a compiler-built validation wrapper, never a source claim.
+	CheckedLibrary bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -564,7 +571,10 @@ type (
 	}
 
 	// MakeError is an Error with Message and an optional Name (nil means "Error").
-	MakeError struct{ Message, Name Expression }
+	MakeError struct {
+		Message, Name Expression
+		Constructor   string
+	}
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.
@@ -1263,7 +1273,7 @@ type (
 	}
 	Continue struct{ Label string }
 
-	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// Throw throws Value, an owned tagged payload: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
 	Throw struct{ Value Expression }
 
