@@ -92,3 +92,7 @@ Every pending top-level test and its exact skip reason:
 | TestScout22PrototypeCreate | awaits runtime/step22-prototype-links: Object.create and getPrototypeOf need runtime prototype storage |
 
 Logs, mutant source and census result are stored beside this report. Integration lane output is recorded in lane-checks.log after the committed branch is checked. No pull request was opened.
+
+Current main 53498c51 was merged with no conflicts in merge commit 7e2650bf. The scout checks were rerun uncached at that tip: lower 1.679s, native 0.037s, oracle 2.838s, all selected active tests passed. This merged only landed main work, not either runtime branch. The tip run is recorded in tip-focus.log. The successful counts diff adds four active fixture rows and reduces nbody_field_values.a releases from 45 to 44; its allocation/free/retain/peak/region counts are unchanged. Other existing rows are unchanged.
+
+Integration lane checks passed: lane checks 6.0 s: gofmt and tools on 19 Go files, t.Parallel on 3 test packages; vet 3 packages. The final evidence commit is checked again before pushing. Branch publishing is restricted to compiler/scout-22-main.
