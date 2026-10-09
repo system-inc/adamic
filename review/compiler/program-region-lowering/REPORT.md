@@ -105,3 +105,5 @@ Final Program oracle suite passed in 4.588s. Required lane checks passed; the ex
 ```text
 lane checks 12.0 s: gofmt and tools on 251 Go files, t.Parallel on 33 test packages; no t.Parallel analyzer on this tree; vet skipped, over 10 s
 ```
+
+Delivery: push and retry were rejected because origin/compiler/program-region-lowering contains independent commits 257d6f3a and 325aded7 on the same runtime base. No force push or merge of those unlanded commits was performed. A complete format-patch series is saved at /workspace/program-region-lowering-patches/. The local implementation and validation are complete; publishing to the requested branch is blocked by this divergence.
