@@ -1,0 +1,28 @@
+{
+  "base": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "hidden_revision": "f1502d130bc0b4440f29b93b76b7d18bff3f6a60",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript_go": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "binary_sha256": "0610a377be587eac607e666d85f235b30649b29108cac9cd99bc2aa8b64a5ef6",
+  "overlay_hashes": {
+    "internal_load_latent_hook.go": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+    "internal_load_load.go": "f89e73e5ec5dfbd4201d2c5458ecea4ec284d94ea8c934416471a53dde2e5148",
+    "internal_lower_expression.go": "5a3beb4be17bda5328ed4cf0756fbc34a8bf0827f93869337326bfbeeca1b0fc",
+    "internal_lower_functions.go": "ff78cbca3980a55404ae028cd6aa61abbb82add76228255f187ca4f91bdc1a27",
+    "internal_lower_latent_full.go": "97f18de6cb6d6fead00801dfd78ffc678ebd7b1a5916080b02ab4425afcfff14",
+    "internal_lower_latent_hook.go": "07d149dbfecab96a179ce944cf269d3330965571fd5c37d0721834a88ed03e5a",
+    "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+    "internal_lower_latent_state.go": "574806cc58a85b149d2d7503140728576b8b4df6d017aead0fe7a8672f9ccce2",
+    "internal_lower_latent_units.go": "193d96eaad2b4a81d6b7d50eb6016e83d664a1a97a6109027eff956e8ef30ef9",
+    "internal_lower_locals.go": "481e5b2014cbd28e547598be0d1ab608e892b39ba7ee0e0ad39d1edea7be126e",
+    "internal_lower_lower.go": "f20406c8e5b202b0ad44feaa7cadebc7bfca285b4070bac9cd6764bfb25346d1",
+    "internal_lower_refusals.go": "1fb833392def0f76229993fd514bdd63391ce3241461b54f37f3d11a8216adfe",
+    "internal_lower_statements.go": "20181acf192c851adff752f94cb5529441e3e25f6c913e2b3aaa564fe9894ae3",
+    "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+    "stage3_census_latent_tool_main.go": "f375ae815b2c4af1b49a0d6db1992ca493c4e03fd6b0297de7b87330aba7c4e8"
+  },
+  "compiler_changes": "",
+  "topic_only": "",
+  "driver_change": "LATENT_ROOT_MANIFEST replaces directory roots and records root_files; full lowering and hidden arithmetic use f1502d13 unchanged."
+}
