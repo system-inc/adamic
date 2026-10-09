@@ -58,25 +58,15 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		}
 		if l.uninitializedDeclaration(declaration) {
 			l.result.Locals[local].Uninitialized = true
-			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
+			initializer := declaration.AsVariableDeclaration().Initializer
+			declaration := ir.Declare{Local: local, Uninitialized: true}
+			if l.result.Locals[local].Placeholder != "" {
+				declaration.Value = l.placeholderInitialValue(initializer, l.result.Locals[local].Type)
+			}
+			statements = append(statements, declaration)
 			continue
 		}
 
-		if initializer := declaration.AsVariableDeclaration().Initializer; l.lazyAssertionInitializer(initializer) {
-			prefix, present, value, err := l.lazyAssertion(initializer, l.result.Locals[local].Type)
-			if err != nil {
-				return nil, err
-			}
-			if known, ok := present.(ir.BooleanConstant); ok && known.Value && len(prefix) == 0 {
-				statements = append(statements, ir.Declare{Local: local, Value: value})
-				continue
-			}
-			l.result.Locals[local].Uninitialized = true
-			l.result.Locals[local].InitializerExpression = sourceExpression(initializer)
-			statements = append(statements, prefix...)
-			statements = append(statements, ir.Declare{Local: local, Uninitialized: true}, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: local, Value: value}}})
-			continue
-		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
 			if l.initializing == nil {
@@ -131,6 +121,9 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 			valueType = ir.Object
 		}
 	}
+	if origin := l.placeholderOrigin(name); origin != "" {
+		valueType = placeholderStorage(valueType)
+	}
 	if l.locals == nil {
 		l.locals = map[*ast.Symbol]int{}
 	}
@@ -139,7 +132,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return local, nil
 	}
 	l.locals[symbol] = len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex, Placeholder: l.placeholderOrigin(name), Uninitialized: l.placeholderOrigin(name) != "" && (name.Parent.Kind != ast.KindParameter || l.uninitializedInitializer(name.Parent.AsParameterDeclaration().Initializer))})
 	proven := l.checker.GetTypeAtLocation(name)
 	if inferred != nil {
 		proven = inferred
@@ -187,8 +180,12 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && l.unlowerable == nil {
-			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
+		if declared := l.result.Locals[local]; declared.Placeholder != "" && declared.Captured && declared.Preallocated && declared.Ready == 0 && l.unlowerable == nil {
+			l.unlowerable = l.notYet(identifier, "an unset-capable capture before its declaration without a separate declaration-readiness cell")
+		}
+		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && !(declared.Placeholder != "" && declared.Type == ir.Union) && l.unlowerable == nil {
+			// A placeholder union is one counted heap reference, which a cell already holds.
+			// Other slotless shapes retain their existing capture refusal. Lower says so once
 			// it's done, since the capture is found here, where nothing can return an error.
 			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
 		}
@@ -247,7 +244,13 @@ func (l *lowering) constant(value string) int {
 // localRead preserves checker narrowing for both private and qualified singleton reads.
 func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 	if value, handled, err := l.namespaceExportRead(node); handled {
+		if err == nil {
+			value = l.placeholderRead(node, value, l.placeholderReadOrigin(node))
+		}
 		return value, err
+	}
+	if origin := l.result.Locals[local].Placeholder; origin != "" {
+		return l.placeholderRead(node, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Unset: true}, origin), nil
 	}
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
 	if l.result.Locals[local].Type == ir.Union {

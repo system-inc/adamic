@@ -21,6 +21,11 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
     if (!Object.hasOwn(object, name) || adamicFieldReadiness.get(object)?.has(name)) panic(fieldView ? "field read failed: " + expression + " is not initialized; expected " + fieldView + ", found " + (!Object.hasOwn(object, name) ? "missing" : "uninitialized") : "read before assignment: field '" + name + "' in " + expression);
     return object[name];
 };
+const adamicPlaceholderNarrow = (value, type, message) => {
+    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) && !ArrayBuffer.isView(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? typeof value === "function" : false;
+    if (!valid) panic(message);
+    return value;
+};
 const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
 const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
     const value = adamicReadField(object, name, expression, false, false, expected);
@@ -28,6 +33,15 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
     if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
+};
+const adamicPlaceholderViewField = (object, name, expression, type, expected, allowed, optional, absent) => {
+    if (optional && (object === undefined || object === null)) return undefined;
+    if (object !== undefined && object !== null) {
+        if (!Object.hasOwn(object, name) && typeof object === 'function' && adamicClassIdentities.has(Object.getPrototypeOf(object))) return adamicPlaceholderViewField(Object.getPrototypeOf(object), name, expression, type, expected, allowed, false, absent);
+        if (absent && !Object.hasOwn(object, name)) return undefined;
+        if (Object.hasOwn(object, name) && (object[name] === undefined || object[name] === null)) return object[name];
+    }
+    return adamicViewField(object, name, expression, type, expected, allowed);
 };
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };

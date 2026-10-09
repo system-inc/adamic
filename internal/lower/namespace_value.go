@@ -97,7 +97,7 @@ func (l *lowering) namespaceExportRead(node *ast.Node) (ir.Expression, bool, err
 			return nil, true, err
 		}
 	}
-	if comparedWithUndefined(node) || node.Parent != nil && (node.Parent.Kind == ast.KindTypeOfExpression || node.Parent.Kind == ast.KindCallExpression && l.isLibraryGlobal(node.Parent.Expression(), "String") || node.Parent.Kind == ast.KindTemplateSpan) {
+	if l.placeholderReadOrigin(node) != "" || comparedWithUndefined(node) || node.Parent != nil && (node.Parent.Kind == ast.KindTypeOfExpression || node.Parent.Kind == ast.KindCallExpression && l.isLibraryGlobal(node.Parent.Expression(), "String") || node.Parent.Kind == ast.KindTemplateSpan) {
 		of = ir.Union
 	}
 	return ir.Property{Object: object, Name: name, Of: of, Namespace: true, View: sourceExpression(node)}, true, nil
@@ -108,7 +108,11 @@ func (l *lowering) namespaceObjectExpression(node *ast.Node) (ir.Expression, boo
 		return ir.Read{Local: l.namespaceObjectLocal(d), Of: ir.Object}, true, nil
 	}
 	if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
-		return l.namespaceExportRead(node)
+		value, handled, err := l.namespaceExportRead(node)
+		if handled && err == nil {
+			value = l.placeholderRead(node, value, l.placeholderReadOrigin(node))
+		}
+		return value, handled, err
 	}
 	return nil, false, nil
 }
@@ -124,6 +128,9 @@ func (l *lowering) namespaceObjectVariable(d *ast.Node) ([]ir.Statement, bool, e
 	if d.Initializer() == nil {
 		return nil, true, nil
 	} // tsc emits no assignment for an uninitialized export.
+	if l.uninitializedDeclaration(d) && l.placeholderOrigin(d.Name()) != "" {
+		return []ir.Statement{l.namespaceInstall(owner, name, l.placeholderInitialValue(d.Initializer(), ir.Union), d.Parent.Flags&ast.NodeFlagsConst != 0)}, true, nil
+	}
 	value, err := l.expression(d.Initializer())
 	if err != nil {
 		return nil, true, err
@@ -196,6 +203,10 @@ func (l *lowering) namespaceObjectAssignment(node, target *ast.Node, operator as
 	if err != nil {
 		return nil, true, err
 	}
+	if !compound && l.uninitializedInitializer(node.AsBinaryExpression().Right) && l.placeholderReadOrigin(target) != "" {
+		value := l.placeholderInitialValue(node.AsBinaryExpression().Right, ir.Union)
+		return append(prefix, ir.SetProperty{Object: object, Name: name, Value: value, Record: true, Unset: true}), true, nil
+	}
 	value, err := l.expression(node.AsBinaryExpression().Right)
 	if err != nil {
 		return nil, true, err
@@ -207,7 +218,7 @@ func (l *lowering) namespaceObjectAssignment(node, target *ast.Node, operator as
 		}
 		property := current.(ir.Property)
 		property.Object = object
-		value, err = l.combine(node, operator, property, value)
+		value, err = l.combine(node, operator, l.placeholderRead(target, property, l.placeholderReadOrigin(target)), value)
 		if err != nil {
 			return nil, true, err
 		}
@@ -234,7 +245,7 @@ func (l *lowering) namespaceObjectIncrement(node, operand *ast.Node, operator as
 	if operator == ast.KindMinusMinusToken {
 		step = ir.Subtract
 	}
-	value := ir.Binary{Operator: step, Left: property, Right: ir.NumberConstant{Value: 1}}
+	value := ir.Binary{Operator: step, Left: l.placeholderRead(operand, property, l.placeholderReadOrigin(operand)), Right: ir.NumberConstant{Value: 1}}
 	return append(prefix, ir.SetProperty{Object: object, Name: name, Value: fit(value, ir.Union), Record: true}), true, nil
 }
 

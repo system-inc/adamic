@@ -13,6 +13,18 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if ast.IsDeclarationName(node) && l.placeholderOrigin(node) != "" {
+		if declared, _ := l.representation(l.checker.GetTypeOfSymbol(l.symbol(node))); declared == ir.Weak {
+			return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")
+		}
+		if stored, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(l.symbol(node)))); known {
+			if stored == ir.Weak {
+				return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")
+			}
+			return placeholderStorage(stored), nil
+		}
+	}
+
 	if ast.IsIdentifier(node) && l.evolvingObject(node) != nil {
 		return ir.Object, nil
 	}
@@ -891,6 +903,27 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	if err != nil {
 		return nil, err
 	}
+	if (operator == ast.KindEqualsEqualsToken || operator == ast.KindExclamationEqualsToken) && l.placeholderNullishTest(node) {
+		value := left
+		if _, isNull := left.(ir.Null); isNull {
+			value = right
+		}
+		test := ir.Expression(ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: value}, Right: ir.IsUndefined{Value: value}})
+		if _, simple := value.(ir.Read); !simple {
+			// Hold effectful receivers once before testing both nullish tags.
+			b := l.libraryArrayBuilder([]ir.Expression{value})
+			held := b.read(b.parameters[0])
+			test = ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
+			if operator == ast.KindExclamationEqualsToken {
+				test = ir.Unary{Operator: ir.Not, Operand: test}
+			}
+			return b.finish("placeholder_nullish_test", test), nil
+		}
+		if operator == ast.KindExclamationEqualsToken {
+			test = ir.Unary{Operator: ir.Not, Operand: test}
+		}
+		return test, nil
+	}
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		spell := func(value ir.Expression) ir.Expression {
@@ -1075,7 +1108,7 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if whenTrue.Type() != whenNot.Type() && l.acceptsUndefined(node) {
+	if whenTrue.Type() != whenNot.Type() && (l.acceptsUndefined(node) || l.placeholderAllowsUnset(node)) {
 		// A stale narrowing in either branch may still hold undefined. Keep that representation
 		// when the whole conditional is observed or written into a slot that accepts it.
 		if pair := whenTrue.Type(); pair.IsMaybe() && whenNot.Type() == pair.Present() {
@@ -1254,6 +1287,16 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 	// What ?? makes is the checker's: the left side's present members and the right side's, which
 	// may be held differently (text ?? count is string | number, a Union).
 	of, err := l.typeOf(node)
+	if err != nil && l.placeholderReadOrigin(ast.SkipParentheses(binary.Left)) != "" {
+		declared, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(l.symbol(ast.SkipParentheses(binary.Left)))))
+		fallback, fallbackKnown := l.representation(l.checker.GetTypeAtLocation(binary.Right))
+		if known && fallbackKnown {
+			of, err = declared, nil
+			if declared != fallback {
+				of = ir.Union
+			}
+		}
+	}
 	if err != nil {
 		return nil, err
 	}

@@ -1,0 +1,5 @@
+namespace Slot { export let value: number = undefined!; }
+const escaped = Slot;
+console.log(String(escaped === Slot));
+function show(value: number): void { console.log(String(value)); }
+show(Slot.value);
