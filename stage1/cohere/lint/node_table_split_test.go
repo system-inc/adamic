@@ -3,6 +3,7 @@ package lint
 import (
 	"bytes"
 	"context"
+	"encoding/gob"
 	"encoding/json"
 	"fmt"
 	"hash/fnv"
@@ -17,6 +18,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -25,10 +27,12 @@ import (
 
 const testNodeTableIsLinkOnlyShards = 8
 
+var nodeTableLowerOnce, nodeTableEmitOnce, nodeTableNativeOnce sync.Once
+var nodeTableLowerDirectory, nodeTableEmitDirectory, nodeTableNativePath string
+
 var nodeTableOnce sync.Once
 var nodeTableRows []string
 var nodeTableAssignments [][]int
-var nodeTableBinary string
 
 func nodeTableSourceInputs(t *testing.T) []string {
 	t.Helper()
@@ -71,6 +75,105 @@ func nodeTableSourceInputsAt(t *testing.T, root string) []string {
 	return files
 }
 
+// Not parallel: prepares the shared lowering product before parallel comparison shards.
+func TestNodeTableIsLinkOnlySetupLowered(t *testing.T) { nodeTableSetupUnit(t, nodeTableLowered) }
+
+// Not parallel: prepares the shared C emission product before parallel comparison shards.
+func TestNodeTableIsLinkOnlySetupEmission(t *testing.T) { nodeTableSetupUnit(t, nodeTableEmitted) }
+
+// Not parallel: prepares the shared native product before parallel comparison shards.
+func TestNodeTableIsLinkOnlySetupNative(t *testing.T) { nodeTableSetupUnit(t, nodeTableNative) }
+
+func nodeTableSetupUnit(t *testing.T, build func(*testing.T) string) {
+	t.Helper()
+	started := time.Now()
+	build(t)
+	elapsed := time.Since(started)
+	t.Logf("%s: %.3fs cooked=%t", t.Name(), elapsed.Seconds(), elapsed >= 60*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("cooked: split this setup unit smaller")
+	}
+}
+
+func nodeTableInputs(t *testing.T) buildcache.Inputs {
+	return buildcache.Inputs{Name: "lint-node-table-lowered-ir", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "gob IR"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+}
+func nodeTableLowered(t *testing.T) string {
+	t.Helper()
+	nodeTableLowerOnce.Do(func() {
+		inputs := buildcache.Inputs{Name: "lint-node-table-lowered-ir", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "gob IR"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+		lowered := buildcache.Product(t, inputs, func(out string) error {
+			program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+			if err != nil {
+				return err
+			}
+			result, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				return err
+			}
+			file, err := os.Create(filepath.Join(out, "program.gob"))
+			if err != nil {
+				return err
+			}
+			defer file.Close()
+			return gob.NewEncoder(file).Encode(result)
+		})
+		nodeTableLowerDirectory = lowered
+	})
+	if nodeTableLowerDirectory == "" {
+		t.Fatal("nodeTableLowered setup incomplete")
+	}
+	return nodeTableLowerDirectory
+}
+func nodeTableEmitted(t *testing.T) string {
+	t.Helper()
+	nodeTableEmitOnce.Do(func() {
+		lowered := nodeTableLowered(t)
+		inputs := nodeTableInputs(t)
+		inputs.Name = "lint-node-table-emitted-c-serial-v2"
+		inputs.Flags = append(inputs.Flags, "native.C")
+		emitted := buildcache.Product(t, inputs, func(out string) error {
+			file, err := os.Open(filepath.Join(lowered, "program.gob"))
+			if err != nil {
+				return err
+			}
+			defer file.Close()
+			var program ir.Program
+			if err := gob.NewDecoder(file).Decode(&program); err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(&program)), 0644)
+		})
+		nodeTableEmitDirectory = emitted
+	})
+	if nodeTableEmitDirectory == "" {
+		t.Fatal("nodeTableEmitted setup incomplete")
+	}
+	return nodeTableEmitDirectory
+}
+func nodeTableNative(t *testing.T) string {
+	t.Helper()
+	nodeTableNativeOnce.Do(func() {
+		emitted := nodeTableEmitted(t)
+		inputs := nodeTableInputs(t)
+		inputs.Name = "lint-node-table-native"
+		inputs.Flags = append(native.Flags(native.Options{Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+		binary := buildcache.Product(t, inputs, func(out string) error {
+			source, err := os.ReadFile(filepath.Join(emitted, "lint.c"))
+			if err != nil {
+				return err
+			}
+			return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Split: true, Jobs: 4})
+		})
+		nodeTableNativePath = filepath.Join(binary, "scanner")
+	})
+	if nodeTableNativePath == "" {
+		t.Fatal("nodeTableNative setup incomplete")
+	}
+	return nodeTableNativePath
+}
+
 // TestNodeTableIsLinkOnly requires identical output with every node-table row
 // copied and attached to nothing. The live corpus and all original options and
 // recovery classifications are retained; only manifest batching changes.
@@ -85,35 +188,6 @@ func nodeTableSetup(t *testing.T) {
 			t.Logf("TestNodeTableIsLinkOnly (setup): %.3fs cooked=%t", time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
 		}()
 		prepareRegistry(t, packageDirectory)
-		var nativeReady sync.WaitGroup
-		nativeReady.Add(1)
-		defer nativeReady.Wait()
-		go func() {
-			defer nativeReady.Done()
-			inputs := buildcache.Inputs{Name: "lint-node-table-lowered", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "native.C"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
-			lowered := buildcache.Product(t, inputs, func(out string) error {
-				program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
-				if err != nil {
-					return err
-				}
-				result, err := lower.Lower(context.Background(), program)
-				if err != nil {
-					return err
-				}
-				return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(result)), 0644)
-			})
-			inputs.Name = "lint-node-table-native"
-			inputs.Flags = append(native.Flags(native.Options{Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
-			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-			binary := buildcache.Product(t, inputs, func(out string) error {
-				source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-				if err != nil {
-					return err
-				}
-				return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Split: true, Jobs: 4})
-			})
-			nodeTableBinary = filepath.Join(binary, "scanner")
-		}()
 		// GoBuild is absent on this main: retain the original overlay builder.
 		oracleInputs := buildcache.Inputs{Name: "lint-node-table-oracle", Files: append(nodeTableSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"), Flags: []string{"go build overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")}, Toolchain: []string{runtime.Version()}}
 		oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error { _, err := goOracleIn(packageDirectory, out); return err })
@@ -202,12 +276,11 @@ func nodeTableSetup(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Logf("union: %d live cases, each exactly once across %d shards", len(nodeTableRows), testNodeTableIsLinkOnlyShards)
-		nativeReady.Wait()
 		if time.Since(started) >= 60*time.Second {
 			t.Fatal("TestNodeTableIsLinkOnly (setup) cooked: split setup smaller")
 		}
 	})
-	if nodeTableBinary == "" || nodeTableAssignments == nil {
+	if nodeTableAssignments == nil {
 		t.Fatal("node table setup incomplete")
 	}
 }
@@ -257,14 +330,15 @@ func nodeTableRunShard(t *testing.T, shard int) {
 		return
 	}
 	nodeTableSetup(t)
+	binary := nodeTableNative(t)
 	started := time.Now()
 	rows := make([]string, 0, len(nodeTableAssignments[shard]))
 	for _, index := range nodeTableAssignments[shard] {
 		rows = append(rows, nodeTableRows[index])
 	}
 	path := manifest(t, rows)
-	plain := execute(t, "", nodeTableBinary, "--manifest", path)
-	junk := execute(t, "", nodeTableBinary, "--manifest", path, "--junk-rows")
+	plain := execute(t, "", binary, "--manifest", path)
+	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
 	if err := nodeTableEqual(junk.output, plain.output); err != nil {
 		t.Fatal(err)
 	}
