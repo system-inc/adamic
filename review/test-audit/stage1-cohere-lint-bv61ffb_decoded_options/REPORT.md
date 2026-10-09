@@ -22,7 +22,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
       "M1",
       "M2"
     ],
-    "last_proven_fail": "M4 bv61ffb_decoded_options_test.go:54: ignored decoded-option mutant caught on mutant emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/lint-shared-588547747/catch.ts:1:26\", Go \"fixed\\ttry { work(); } catch(e) {}\\\\u000a\"",
+    "last_proven_fail": "M4 None",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 4,
@@ -45,7 +45,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
       "TestCompilerAndStage1Agree_007",
       "TestCompilerAndStage1Agree_012"
     ],
-    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; bv61ffb_decoded_options_test.go:54: ignored decoded-option mutant caught on mutant emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/lint-shared-588547747/catch.ts:1:26\", Go \"fixed\\ttry { work(); } catch(e) {}\\\\u000a\"",
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
     "members": [
       "TestDecodedOptionsAndMutant_000",
       "TestDecodedOptionsAndMutant_001",
@@ -147,7 +147,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
       "M4"
     ],
     "unique_kills": [],
-    "last_proven_fail": "M4 None",
+    "last_proven_fail": "M4 closed_gaps_test.go:50: native prints \"3\\n\", Node \"1\\n\"",
     "verdict": "subsumed",
     "subsumed_by": [
       "TestDecodedOptionsAndMutant family"
@@ -172,7 +172,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
       "TestCompilerAndStage1Agree_007",
       "TestCompilerAndStage1Agree_012"
     ],
-    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; closed_gaps_test.go:50: native prints \"3\\n\", Node \"1\\n\"",
     "members": [
       "TestClosedComparatorGaps"
     ],
@@ -466,148 +466,6 @@ The 13-row count appears to omit family grouping of the three product declaratio
 No repo-wide uniqueness, full-package per-mutant run, exhaustive native compiler corpus matrix or exact coverage profile was completed. Empty-answer probes are excluded from all production kills.
 Setup: warm Go 1.27.1, nproc 5, no cloud setup. npm and corpus installation logs are saved. Timing driver wall costs are in commands.jsonl. Audit elapsed time is recorded in completion.txt.
 
-Rebuild measurements, from actual build-cache miss lines:
+Rebuild measurements are in rebuild-times.json. Native build-only durations: M1 1.83s, M2 1.76s, M3 2.89s, M4 7.85s; these exclude lowering (about 11s per original and built-in-mutant product), oracle builds and execution. P1 native rebuild 8.69s.
 
-```json
-{
-  "M1": [
-    {
-      "product": "compiler-agreement-go-oracle",
-      "seconds": 3.06,
-      "log": "M1.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2",
-      "seconds": 10.9,
-      "log": "M1.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch",
-      "seconds": 10.8,
-      "log": "M1.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-native-setup-v2",
-      "seconds": 1.83,
-      "log": "M1.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-go-oracle-setup-v2",
-      "seconds": 3.88,
-      "log": "M1.initial.log"
-    }
-  ],
-  "M2": [
-    {
-      "product": "compiler-agreement-go-oracle",
-      "seconds": 2.97,
-      "log": "M2.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2",
-      "seconds": 10.74,
-      "log": "M2.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch",
-      "seconds": 10.65,
-      "log": "M2.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-native-setup-v2",
-      "seconds": 1.76,
-      "log": "M2.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-go-oracle-setup-v2",
-      "seconds": 3.18,
-      "log": "M2.initial.log"
-    }
-  ],
-  "M3": [
-    {
-      "product": "compiler-agreement-go-oracle",
-      "seconds": 3.05,
-      "log": "M3.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2",
-      "seconds": 10.88,
-      "log": "M3.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch",
-      "seconds": 10.98,
-      "log": "M3.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-native-setup-v2",
-      "seconds": 2.89,
-      "log": "M3.initial.log"
-    },
-    {
-      "product": "lint-decoded-options-go-oracle-setup-v2",
-      "seconds": 4.77,
-      "log": "M3.initial.log"
-    }
-  ],
-  "M4": [
-    {
-      "product": "compiler-agreement-go-oracle",
-      "seconds": 3.46,
-      "log": "M4.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2",
-      "seconds": 11.28,
-      "log": "M4.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch",
-      "seconds": 10.72,
-      "log": "M4.log"
-    },
-    {
-      "product": "lint-decoded-options-native-setup-v2",
-      "seconds": 7.85,
-      "log": "M4.log"
-    },
-    {
-      "product": "lint-decoded-options-go-oracle-setup-v2",
-      "seconds": 4.38,
-      "log": "M4.log"
-    }
-  ],
-  "P1": [
-    {
-      "product": "compiler-agreement-go-oracle",
-      "seconds": 3.59,
-      "log": "P1.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2",
-      "seconds": 11.62,
-      "log": "P1.log"
-    },
-    {
-      "product": "lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch",
-      "seconds": 10.9,
-      "log": "P1.log"
-    },
-    {
-      "product": "lint-decoded-options-native-setup-v2",
-      "seconds": 8.69,
-      "log": "P1.log"
-    },
-    {
-      "product": "lint-decoded-options-go-oracle-setup-v2",
-      "seconds": 4.09,
-      "log": "P1.log"
-    }
-  ]
-}
-```
-
-Total elapsed setup and audit: approximately 27 minutes. Warm setup skipped. Exact timing costs and process wall times are saved; installation stages lack independent wall measurements.
-
-Large raw logs are preserved losslessly as .log.gz. Use gzip -dc to read them; commands retain their original output filenames. No source mutations remain in the pushed tree.
+Large logs are preserved losslessly as .log.gz. Use gzip -dc to read them. Completion was approximately 12:27 UTC, about 27 minutes after starting. No source mutations remain.

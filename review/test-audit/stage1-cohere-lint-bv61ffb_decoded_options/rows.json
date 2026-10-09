@@ -15,7 +15,7 @@
       "M1",
       "M2"
     ],
-    "last_proven_fail": "M4 bv61ffb_decoded_options_test.go:54: ignored decoded-option mutant caught on mutant emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/lint-shared-588547747/catch.ts:1:26\", Go \"fixed\\ttry { work(); } catch(e) {}\\\\u000a\"",
+    "last_proven_fail": "M4 None",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 4,
@@ -38,7 +38,7 @@
       "TestCompilerAndStage1Agree_007",
       "TestCompilerAndStage1Agree_012"
     ],
-    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; bv61ffb_decoded_options_test.go:54: ignored decoded-option mutant caught on mutant emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/lint-shared-588547747/catch.ts:1:26\", Go \"fixed\\ttry { work(); } catch(e) {}\\\\u000a\"",
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
     "members": [
       "TestDecodedOptionsAndMutant_000",
       "TestDecodedOptionsAndMutant_001",
@@ -140,7 +140,7 @@
       "M4"
     ],
     "unique_kills": [],
-    "last_proven_fail": "M4 None",
+    "last_proven_fail": "M4 closed_gaps_test.go:50: native prints \"3\\n\", Node \"1\\n\"",
     "verdict": "subsumed",
     "subsumed_by": [
       "TestDecodedOptionsAndMutant family"
@@ -165,7 +165,7 @@
       "TestCompilerAndStage1Agree_007",
       "TestCompilerAndStage1Agree_012"
     ],
-    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; closed_gaps_test.go:50: native prints \"3\\n\", Node \"1\\n\"",
     "members": [
       "TestClosedComparatorGaps"
     ],
