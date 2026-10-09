@@ -105,8 +105,14 @@ typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *ar
 typedef adamic_code_function *adamic_code;
 typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 typedef adamic_counted_code_function *adamic_counted_code;
+#define ADAMIC_CLOSURE_VIEW_ADAPTER ((uint8_t)1)
 struct adamic_closure {
 	adamic_heap heap;
+	uint8_t flags;
+	// An adapter owns its underlying; the cache link is hidden and non-owning.
+	adamic_closure *view_underlying;
+	const void *view_key;
+	uintptr_t view_next;
 #ifdef ADAMIC_CLOSURE_CONVENTION
  union { adamic_code code; adamic_counted_code counted_code; };
  bool counted;
@@ -125,6 +131,16 @@ struct adamic_closure {
 #endif
 	adamic_cell *cells[];
 };
+
+// make borrows the normalized underlying and key and returns a fresh owned,
+// noncanonical counted closure. Intern adds the underlying reference itself.
+// view_key is an address-only token whose lifetime includes every adapter using it.
+// The returned adapter is owned, including on a hit. Lookup never revives count zero.
+adamic_closure *adamic_view_adapter_intern(adamic_closure *underlying, const void *view_key, adamic_closure *(*make)(adamic_closure *underlying, const void *view_key));
+// Returns a borrowed root callable; intern guarantees adapters never stack.
+adamic_closure *adamic_view_adapter_underlying(adamic_closure *value);
+// Heap destruction removes a weak entry before dropping the underlying reference.
+void adamic_view_adapter_forget(adamic_closure *adapter);
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);

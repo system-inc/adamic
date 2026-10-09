@@ -324,9 +324,15 @@ static void free_one(void *value) {
 #endif
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+		if ((closure->flags & ADAMIC_CLOSURE_VIEW_ADAPTER) != 0) {
+			// Remove under the table lock before its underlying can be freed/reused.
+			adamic_view_adapter_forget(closure);
+			let_go(closure->view_underlying);
+		} else {
 #ifdef ADAMIC_CANONICAL_CLOSURES
-		adamic_closure_uncache(closure);
+			adamic_closure_uncache(closure);
 #endif
+		}
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}

@@ -1,0 +1,190 @@
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceReceiverStaysLoud
+=== PAUSE TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestViewCallableAggregateReturnedDemand
+=== PAUSE TestViewCallableAggregateReturnedDemand
+=== RUN   TestViewCallableShapeContract
+=== PAUSE TestViewCallableShapeContract
+=== RUN   TestPrepareViewCallableRead
+=== PAUSE TestPrepareViewCallableRead
+=== RUN   TestViewCallableSignature
+=== PAUSE TestViewCallableSignature
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== CONT  TestViewCallableShapeContract
+=== CONT  TestViewCallableSignature
+--- PASS: TestViewCallableSignature (0.00s)
+=== CONT  TestPrepareViewCallableRead
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== CONT  TestCallableNamespaceReceiverStaysLoud
+=== CONT  TestViewCallableAggregateReturnedDemand
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number;
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestViewCallableAggregateReturnedDemand/ordinary-disjoint
+=== RUN   TestViewCallableAggregateReturnedDemand/unknown-callable-owner
+--- PASS: TestViewCallableAggregateReturnedDemand (0.00s)
+    --- PASS: TestViewCallableAggregateReturnedDemand/ordinary-disjoint (0.00s)
+    --- PASS: TestViewCallableAggregateReturnedDemand/unknown-callable-owner (0.00s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestViewCallableShapeContract/type_Target_=_()_=>_string;
+--- PASS: TestCallableNamespaceReceiverStaysLoud (0.31s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined;
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestPrepareViewCallableRead/type_Target_=_()_=>_string;
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number;
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.01s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.19s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.18s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.15s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.23s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.17s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.17s)
+=== RUN   TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result;
+=== RUN   TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_};
+--- PASS: TestPrepareViewCallableRead (0.90s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number; (0.32s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined; (0.15s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_()_=>_string; (0.11s)
+    --- PASS: TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result; (0.10s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T; (0.11s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number; (0.10s)
+--- PASS: TestViewCallableShapeContract (0.90s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number; (0.21s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_()_=>_string; (0.26s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number; (0.12s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T; (0.12s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number; (0.07s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}; (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.917s
+=== RUN   TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== PAUSE TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== RUN   TestViewCallableBoxingUnknownProducer
+=== PAUSE TestViewCallableBoxingUnknownProducer
+=== RUN   TestViewCallableShapeNative
+=== PAUSE TestViewCallableShapeNative
+=== RUN   TestViewCallableProducerCertificateNative
+=== PAUSE TestViewCallableProducerCertificateNative
+=== CONT  TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== CONT  TestViewCallableShapeNative
+=== RUN   TestViewCallableShapeNative/valid
+=== CONT  TestViewCallableBoxingUnknownProducer
+=== CONT  TestRuntimeReleasePaths
+=== CONT  TestViewCallableProducerCertificateNative
+=== RUN   TestViewCallableProducerCertificateNative/valid
+--- PASS: TestClosureConventionRuntimeFeaturesIgnoreLiterals (0.02s)
+=== RUN   TestViewCallableShapeNative/wrong-arity
+--- PASS: TestViewCallableBoxingUnknownProducer (0.78s)
+=== RUN   TestViewCallableProducerCertificateNative/wrong-arity
+=== RUN   TestViewCallableShapeNative/wrong-parameter
+=== RUN   TestViewCallableProducerCertificateNative/wrong-result
+=== RUN   TestViewCallableShapeNative/wrong-result
+=== RUN   TestViewCallableProducerCertificateNative/optional-absent
+=== RUN   TestViewCallableShapeNative/unknown-result
+=== RUN   TestViewCallableProducerCertificateNative/unrecorded
+--- PASS: TestViewCallableProducerCertificateNative (2.06s)
+    --- PASS: TestViewCallableProducerCertificateNative/valid (0.81s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-arity (0.33s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-result (0.36s)
+    --- PASS: TestViewCallableProducerCertificateNative/optional-absent (0.28s)
+    --- PASS: TestViewCallableProducerCertificateNative/unrecorded (0.29s)
+=== RUN   TestViewCallableShapeNative/unknown-parameter
+=== RUN   TestViewCallableShapeNative/unknown-signature
+=== RUN   TestViewCallableShapeNative/number
+=== RUN   TestViewCallableShapeNative/optional-absent
+=== RUN   TestViewCallableShapeNative/required-absent
+--- PASS: TestViewCallableShapeNative (3.56s)
+    --- PASS: TestViewCallableShapeNative/valid (0.72s)
+    --- PASS: TestViewCallableShapeNative/wrong-arity (0.42s)
+    --- PASS: TestViewCallableShapeNative/wrong-parameter (0.29s)
+    --- PASS: TestViewCallableShapeNative/wrong-result (0.32s)
+    --- PASS: TestViewCallableShapeNative/unknown-result (0.32s)
+    --- PASS: TestViewCallableShapeNative/unknown-parameter (0.34s)
+    --- PASS: TestViewCallableShapeNative/unknown-signature (0.28s)
+    --- PASS: TestViewCallableShapeNative/number (0.30s)
+    --- PASS: TestViewCallableShapeNative/optional-absent (0.30s)
+    --- PASS: TestViewCallableShapeNative/required-absent (0.26s)
+--- PASS: TestRuntimeReleasePaths (7.16s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	7.178s
+=== RUN   TestViewCallableBoxingUnknownProducer
+=== PAUSE TestViewCallableBoxingUnknownProducer
+=== RUN   TestViewCallableShapeNode
+=== PAUSE TestViewCallableShapeNode
+=== RUN   TestViewCallableProducerCertificateNode
+=== PAUSE TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallablesNode
+=== PAUSE TestViewCallablesNode
+=== CONT  TestViewCallableBoxingUnknownProducer
+=== CONT  TestViewCallablesNode
+=== CONT  TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallablesNode/field
+=== CONT  TestViewCallableShapeNode
+=== RUN   TestViewCallableShapeNode/valid
+=== RUN   TestViewCallableProducerCertificateNode/valid
+=== RUN   TestViewCallablesNode/method
+=== RUN   TestViewCallableProducerCertificateNode/wrong-arity
+=== RUN   TestViewCallableShapeNode/wrong-arity
+--- PASS: TestViewCallableBoxingUnknownProducer (0.14s)
+=== RUN   TestViewCallableProducerCertificateNode/wrong-result
+=== RUN   TestViewCallableShapeNode/wrong-parameter
+=== RUN   TestViewCallableProducerCertificateNode/optional-absent
+=== RUN   TestViewCallablesNode/missing
+=== RUN   TestViewCallableShapeNode/wrong-result
+=== RUN   TestViewCallablesNode/uninitialized
+=== RUN   TestViewCallableProducerCertificateNode/unrecorded
+=== RUN   TestViewCallableShapeNode/unknown-result
+=== RUN   TestViewCallablesNode/kind
+--- PASS: TestViewCallableProducerCertificateNode (0.44s)
+    --- PASS: TestViewCallableProducerCertificateNode/valid (0.07s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-arity (0.07s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-result (0.09s)
+    --- PASS: TestViewCallableProducerCertificateNode/optional-absent (0.11s)
+    --- PASS: TestViewCallableProducerCertificateNode/unrecorded (0.10s)
+=== RUN   TestViewCallablesNode/once
+=== RUN   TestViewCallableShapeNode/unknown-parameter
+=== RUN   TestViewCallableShapeNode/unknown-signature
+=== RUN   TestViewCallableShapeNode/number
+--- PASS: TestViewCallablesNode (0.78s)
+    --- PASS: TestViewCallablesNode/field (0.07s)
+    --- PASS: TestViewCallablesNode/method (0.16s)
+    --- PASS: TestViewCallablesNode/missing (0.10s)
+    --- PASS: TestViewCallablesNode/uninitialized (0.10s)
+    --- PASS: TestViewCallablesNode/kind (0.08s)
+    --- PASS: TestViewCallablesNode/once (0.03s)
+=== RUN   TestViewCallableShapeNode/optional-absent
+=== RUN   TestViewCallableShapeNode/required-absent
+--- PASS: TestViewCallableShapeNode (1.01s)
+    --- PASS: TestViewCallableShapeNode/valid (0.09s)
+    --- PASS: TestViewCallableShapeNode/wrong-arity (0.12s)
+    --- PASS: TestViewCallableShapeNode/wrong-parameter (0.09s)
+    --- PASS: TestViewCallableShapeNode/wrong-result (0.12s)
+    --- PASS: TestViewCallableShapeNode/unknown-result (0.10s)
+    --- PASS: TestViewCallableShapeNode/unknown-parameter (0.11s)
+    --- PASS: TestViewCallableShapeNode/unknown-signature (0.10s)
+    --- PASS: TestViewCallableShapeNode/number (0.12s)
+    --- PASS: TestViewCallableShapeNode/optional-absent (0.06s)
+    --- PASS: TestViewCallableShapeNode/required-absent (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	1.011s
