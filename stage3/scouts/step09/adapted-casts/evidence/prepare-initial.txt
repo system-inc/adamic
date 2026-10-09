@@ -1,0 +1,19 @@
+Cloning into '/tmp/adapted-casts-snapshots/stock'...
+HEAD is now at 050880ce5 Bump version to 6.0.3 and LKG
+Reading diagnostics from src/compiler/diagnosticMessages.json
+fatal: ambiguous argument '643639ea': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+Traceback (most recent call last):
+  File "/tmp/adapted-casts-ledger/stage3/step09-ledger/prepare.py", line 119, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/tmp/adapted-casts-ledger/stage3/step09-ledger/prepare.py", line 43, in main
+    sha=subprocess.check_output(['git','rev-parse',ref],cwd=ROOT,text=True).strip()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'rev-parse', '643639ea']' returned non-zero exit status 128.

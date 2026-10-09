@@ -1,0 +1,16 @@
+// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+// From TypeScript 6.0.3, adapted src/compiler/factory/nodeFactory.ts:5496
+// Adaptation: 61-temporary-factory-type-expression; reduced write witness.
+interface JSDocTypeExpression { text: string; }
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+function writeTypeExpression<T extends { typeExpression?: JSDocTypeExpression }>(node: Mutable<T>, typeExpression: JSDocTypeExpression | undefined): Mutable<T> {
+    (node as { typeExpression: JSDocTypeExpression | undefined }).typeExpression = typeExpression;
+    return node;
+}
+const node: { typeExpression?: JSDocTypeExpression } = {};
+const alias = node;
+console.log(`${writeTypeExpression(node, { text: "string" }) === alias}`);
+console.log(`${alias.typeExpression?.text}`);
+writeTypeExpression(node, undefined);
+console.log(`${Object.prototype.hasOwnProperty.call(alias, "typeExpression")}`);
+console.log(`${alias.typeExpression === undefined}`);
