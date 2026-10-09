@@ -1,0 +1,5 @@
+run adamic-verify-20261009T110819-02860ad6: red, 4727 tests in 19 units, 1 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-07)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/json	16.271s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	485.718s

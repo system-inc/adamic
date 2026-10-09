@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T110819-02860ad6",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "4942b6ec1323a152fe24111d29a31de9ab903faf",
+  "branch": "codex/step24-region",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "4942b6ec1323a152fe24111d29a31de9ab903faf",
+  "gated": "6d2e8d00d3e5d1bfafed9c18792f92a96f32c4ae",
+  "unplanned_packages_not_run": 53
+}
