@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.adamic.probe-90</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/kirkouimet/Projects/system/adamic-gate-watch/cloud/probe-90.sh</string>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/kirkouimet/Projects/system/adamic-gate-watch</string>
+	<key>StartInterval</key>
+	<integer>1800</integer>
+	<key>RunAtLoad</key>
+	<false/>
+	<key>AbandonProcessGroup</key>
+	<true/>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/Users/kirkouimet/Projects/ahra/node_modules/.bin:/Users/kirkouimet/.nvm/versions/node/v24.14.1/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/kirkouimet/Projects/system/adamic-gate-logs/probe-90.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/kirkouimet/Projects/system/adamic-gate-logs/probe-90.log</string>
+</dict>
+</plist>
