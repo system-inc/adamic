@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -234,7 +234,7 @@
+ 		// [...map.keys()] and the rest what they give (collections.go).
+ 		spread, given, err := l.iterated(items[0].AsSpreadElement().Expression)
+ 		if err == nil && given != element {
+-			return nil, l.notYet(node, "a spread whose element representation differs from its destination")
++
+ 		}
+ 		return spread, err
+ 	}

@@ -1,0 +1,180 @@
+[
+  {
+    "id": "G03-vet",
+    "exit": 0,
+    "seconds": 1.4714901190018281,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "F01-vet",
+    "exit": 0,
+    "seconds": 0.758973183001217,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "F02-vet",
+    "exit": 0,
+    "seconds": 1.4026896659997874,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "F03-vet",
+    "exit": 0,
+    "seconds": 1.0131975229960517,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "G01-vet",
+    "exit": 0,
+    "seconds": 0.7384692010018625,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "G02-vet",
+    "exit": 0,
+    "seconds": 0.8909578539969516,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "switch-vet",
+    "exit": 0,
+    "seconds": 0.8114056269987486,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "G03",
+    "exit": 1,
+    "seconds": 82.84600252200471,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "selector": "G03",
+    "build_cache": "/workspace/defend-lower-round2-cache/G03"
+  },
+  {
+    "id": "F01",
+    "exit": 1,
+    "seconds": 75.36875198200141,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "selector": "F01",
+    "build_cache": "/workspace/defend-lower-round2-cache/F01"
+  },
+  {
+    "id": "F02",
+    "exit": 1,
+    "seconds": 68.55077876600262,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "selector": "F02",
+    "build_cache": "/workspace/defend-lower-round2-cache/F02"
+  },
+  {
+    "id": "F03",
+    "exit": 1,
+    "seconds": 69.26025121100247,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "selector": "F03",
+    "build_cache": "/workspace/defend-lower-round2-cache/F03"
+  }
+]

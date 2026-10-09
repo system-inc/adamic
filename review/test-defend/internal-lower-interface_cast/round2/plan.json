@@ -1,0 +1,62 @@
+[
+  {
+    "id": "G03",
+    "test": "TestIteratorGapsAreExplicit",
+    "file": "internal/lower/object.go",
+    "old": "\t\t\treturn nil, l.notYet(node, \"a spread whose element representation differs from its destination\")",
+    "new": "",
+    "kind": "drop statement",
+    "difference": "last input: sole custom spread into number|undefined array, absent from receiver-view subsumer",
+    "line": 237
+  },
+  {
+    "id": "F01",
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "file": "internal/lower/interface_cast.go",
+    "old": "(field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field))",
+    "new": "(field.Flags&ast.SymbolFlagsOptional == 0 || access.QuestionDotToken != nil || accessorSymbol(field))",
+    "kind": "flip condition",
+    "difference": "direct inline checked-interface cast followed by payload read; no exclusive line or independent behavior found versus admission table",
+    "line": 69
+  },
+  {
+    "id": "F02",
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "file": "internal/lower/interface_cast.go",
+    "old": "Allowed: []ir.Expression{allowed}",
+    "new": "Allowed: []ir.Expression{allowed}[:0]",
+    "kind": "off-by-one implicit bound",
+    "difference": "direct inline cast tag-membership boundary; remove its sole allowed tag without changing source Node oracle",
+    "line": 30
+  },
+  {
+    "id": "F03",
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "file": "internal/lower/interface_cast.go",
+    "old": "Field: field, FieldType:",
+    "new": "Field: \"pos\", FieldType:",
+    "kind": "change constant",
+    "difference": "direct inline cast must check the kind tag rather than the numeric position payload",
+    "line": 30
+  },
+  {
+    "id": "G01",
+    "test": "TestIteratorGapsAreExplicit",
+    "file": "internal/lower/iteration.go",
+    "old": "\t\t\t\t\t\thazard = l.notYet(where, \"an iterator built by object spread (own method presence is not proved)\")",
+    "new": "",
+    "kind": "drop statement",
+    "difference": "literal protocol-copy/object-spread path absent from receiver-view subsumer",
+    "line": 284
+  },
+  {
+    "id": "G02",
+    "test": "TestIteratorGapsAreExplicit",
+    "file": "internal/lower/iteration.go",
+    "old": "done.Flags&ast.SymbolFlagsOptional != 0",
+    "new": "done.Flags&ast.SymbolFlagsOptional == 0",
+    "kind": "flip condition",
+    "difference": "optional done input versus required boolean done in subsumer",
+    "line": 192
+  }
+]

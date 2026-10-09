@@ -1,0 +1,15 @@
+G03-vet 0 1.47
+F01-vet 0 0.76
+F02-vet 0 1.4
+F03-vet 0 1.01
+G01-vet 0 0.74
+G02-vet 0 0.89
+switch-vet 0 0.81
+G03 1 82.85
+FAILS G03 ['TestIteratorGapsAreExplicit']
+F01 1 75.37
+FAILS F01 ['TestViewObjectContractsAreAvailableToEraser', 'TestDefaultTaggedInterfaceNeedsNoFlag', 'TestPredicateOverloadRuntime', 'TestPredicateBodyProof', 'TestDefaultTaggedInterfaceAdmission']
+F02 1 68.55
+FAILS F02 ['TestDefaultTaggedInterfaceNeedsNoFlag', 'TestDefaultTaggedInterfaceAdmission']
+F03 1 69.26
+FAILS F03 ['TestDefaultTaggedInterfaceNeedsNoFlag', 'TestDefaultTaggedInterfaceAdmission']

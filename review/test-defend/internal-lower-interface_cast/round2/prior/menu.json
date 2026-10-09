@@ -1,0 +1,142 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/interface_cast.go",
+    "line": 69,
+    "old": "field.Flags&ast.SymbolFlagsOptional != 0",
+    "new": "field.Flags&ast.SymbolFlagsOptional == 0",
+    "kind": "flip condition",
+    "function": "view",
+    "pos": 2753
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/iteration.go",
+    "line": 54,
+    "old": "Receiver: true",
+    "new": "Receiver: false",
+    "kind": "change option",
+    "function": "objectMethod",
+    "pos": 2056
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/iteration.go",
+    "line": 192,
+    "old": "done == nil",
+    "new": "done != nil",
+    "kind": "flip condition",
+    "function": "planIteration",
+    "pos": 7507
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/iteration.go",
+    "line": 308,
+    "old": "for _, module := range modules {\n\t\tmodule.AsNode().ForEachChild(visit)\n\t}",
+    "new": "",
+    "kind": "drop whole loop",
+    "function": "planIteration",
+    "pos": 13138
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/refusals.go",
+    "line": 150,
+    "old": "if generator {",
+    "new": "if generator && false {",
+    "kind": "change condition constant",
+    "function": "refuse",
+    "pos": 5792
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/cycles.go",
+    "line": 63,
+    "old": "func (l *lowering) findCycles(modules []*ast.SourceFile) error {",
+    "new": "func (l *lowering) findCycles(modules []*ast.SourceFile) error {\n if true { return nil }",
+    "kind": "return early",
+    "function": "findCycles",
+    "pos": 2754
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 690,
+    "old": "func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {",
+    "new": "func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {\n if true { return nil }",
+    "kind": "return early",
+    "function": "nominalMismatch",
+    "pos": 30676
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/class.go",
+    "line": 417,
+    "old": "member.Flags&ast.SymbolFlagsMethod != 0",
+    "new": "member.Flags&ast.SymbolFlagsMethod == 0",
+    "kind": "flip condition",
+    "function": "setProperty",
+    "pos": 16445
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/iteration_consume.go",
+    "line": 42,
+    "old": "parameter != ir.Number",
+    "new": "parameter == ir.Number",
+    "kind": "flip condition",
+    "function": "collectIteration",
+    "pos": 1758
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/class_features.go",
+    "line": 77,
+    "old": "!isClassInstance(proven)",
+    "new": "isClassInstance(proven)",
+    "kind": "flip condition",
+    "function": "objectKeys",
+    "pos": 3135
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/iteration_origin.go",
+    "line": 80,
+    "old": "if isCallee(where) {",
+    "new": "if !isCallee(where) {",
+    "kind": "flip condition",
+    "function": "erasedMethodField",
+    "pos": 2795
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/iteration_consume.go",
+    "line": 167,
+    "old": "!l.includesUndefined(valueType)",
+    "new": "l.includesUndefined(valueType)",
+    "kind": "flip condition",
+    "function": "destructureIterator",
+    "pos": 8519
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n if true { return nil, nil }",
+    "kind": "empty-answer probe",
+    "function": "Lower",
+    "pos": 694
+  },
+  {
+    "id": "P02",
+    "file": "internal/lower/class.go",
+    "line": 410,
+    "old": "func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {",
+    "new": "func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {\n if true { return nil, nil }",
+    "kind": "empty-answer probe",
+    "function": "setProperty",
+    "pos": 16108
+  }
+]
