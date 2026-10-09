@@ -1,0 +1,88 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// programAllocation marks the allocation when its IR value is constructed. The
+// discovery build records concrete generic identities alongside contextual views.
+func (l *lowering) programAllocation(value ir.Expression, node *ast.Node) ir.Expression {
+	if !l.result.ProgramRegion {
+		return value
+	}
+	switch value.(type) {
+	case ir.ObjectLiteral, ir.ArrayLiteral, ir.MapNew, ir.SetNew, ir.ArrayMap, ir.ArrayFrom, ir.ArrayFill, ir.ArraySplice, ir.ArrayConcat, ir.MapEntries, ir.ArraySlice, ir.MapKeys, ir.MapValues, ir.SetValues, ir.ArrayVisit:
+	default:
+		return value
+	}
+	proven := []*checker.Type{l.concrete(l.checker.GetTypeAtLocation(node))}
+	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
+		proven = append(proven, l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name())))
+	}
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+		proven = append(proven, l.concrete(contextual))
+	}
+	if l.programAllocationTypes == nil {
+		l.programAllocationTypes = map[*checker.Type]*ast.Node{}
+	}
+	member := false
+	for _, identity := range proven {
+		l.programAllocationTypes[identity] = node
+		member = member || l.programMembers[int(identity.Id())]
+	}
+	switch value := value.(type) {
+	case ir.ObjectLiteral:
+		value.ProgramRegion = member
+		return value
+	case ir.ArrayLiteral:
+		value.ProgramRegion = member
+		return value
+	case ir.MapNew:
+		value.ProgramRegion = member
+		return value
+	case ir.SetNew:
+		value.ProgramRegion = member
+		return value
+	case ir.ArrayMap:
+		value.ProgramRegion = member
+		return value
+	case ir.ArrayFrom:
+		value.ProgramRegion = member
+		return value
+	case ir.ArrayFill:
+		value.ProgramRegion = member
+		return value
+	case ir.ArraySplice:
+		value.ProgramRegion = member
+		return value
+	case ir.ArrayConcat:
+		value.ProgramRegion = member
+		return value
+	case ir.MapEntries:
+		value.ProgramRegion = member
+		return value
+	case ir.ArraySlice:
+		value.ProgramRegion = member
+		return value
+	case ir.MapKeys:
+		value.ProgramRegion = member
+		return value
+	case ir.MapValues:
+		value.ProgramRegion = member
+		return value
+	case ir.SetValues:
+		value.ProgramRegion = member
+		return value
+	case ir.ArrayVisit:
+		value.ProgramRegion = member
+		return value
+	}
+	return value
+}
+
+func (l *lowering) programTypeMember(proven *checker.Type) bool {
+	proven = l.concrete(proven)
+	return proven != nil && l.programMembers[int(proven.Id())]
+}

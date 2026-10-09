@@ -107,8 +107,16 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
+	if l.result.ProgramRegion {
+		if err := finder.programRegionTypes(modules); err != nil {
+			return err
+		}
+	}
 	for _, proven := range finder.seen {
 		if err := finder.slotsOf(proven); err != nil {
+			if l.result.ProgramRegion && l.result.ProgramTypes[int(proven.Id())] {
+				continue
+			}
 			return err
 		}
 	}
@@ -120,7 +128,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		if proven == nil || node == nil || finder.weak(proven) {
 			continue
 		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
+		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) && !l.result.Locals[local].ProgramRegion {
 			return &Refused{
 				Where: l.program.Where(node),
 				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",

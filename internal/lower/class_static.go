@@ -252,7 +252,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		fields[slot].Value = ir.Read{Local: l.locals[l.symbol(parent.Name())], Of: ir.Object, Checked: checked}
 	}
 	object := ir.Read{Local: l.staticGlobals[l.symbol(declaration.Name())], Of: ir.Object}
-	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Class: lowered.class, Methods: lowered.methodList()}}}
+	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{ProgramRegion: l.programTypeMember(l.checker.GetTypeOfSymbol(l.symbol(declaration.Name()))), Fields: fields, Class: lowered.class, Methods: lowered.methodList()}}}
 	outerInstance, outerType, outerNode := l.instance, l.classType, l.classNode
 	l.instance, l.classType, l.classNode = lowered, l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), declaration.Name()
 	defer func() { l.instance, l.classType, l.classNode = outerInstance, outerType, outerNode }()

@@ -339,7 +339,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		wrapper.ArgumentsCount = body.ArgumentsCount
 		wrapper.ForwardsArguments = body.ForwardsArguments
 		wrapper.RestElement = body.RestElement
-		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)
+		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{ProgramRegion: l.programTypeMember(l.classType), Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)
 		wrapper.Body = append(wrapper.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
 		l.result.Functions[index] = wrapper
 		l.result.Functions[initializer] = ir.Function{Name: body.Name}
@@ -363,7 +363,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		arguments = append(arguments, ir.Read{Local: local, Of: incoming.Type})
 	}
 	wrapper.Body = []ir.Statement{
-		ir.Declare{Local: object, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}},
+		ir.Declare{Local: object, Value: ir.ObjectLiteral{ProgramRegion: l.programTypeMember(l.classType), Fields: fields, Class: instance.class, Methods: instance.methodList()}},
 		ir.Evaluate{Value: ir.Call{Function: initializer, Arguments: arguments, ForwardCount: true, RestPacked: true}},
 		ir.Return{Value: ir.Read{Local: object, Of: ir.Object}},
 	}

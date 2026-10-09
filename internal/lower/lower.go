@@ -13,11 +13,20 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"os"
 	"path/filepath"
 )
 
+// Options selects opt-in allocation ownership for a one-shot native CLI.
+type Options struct{ ProgramRegion bool }
+
 // Lower lowers a checked program from one entry, in ESM evaluation order.
+
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1"})
+}
+
+func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
@@ -27,7 +36,17 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	first, err := lowerChecked(ctx, program, typeChecker, entry, options, nil)
+	if err != nil || !options.ProgramRegion {
+		return first, err
+	}
+	return lowerChecked(ctx, program, typeChecker, entry, options, first.ProgramTypes)
+}
+
+// The discovery build supplies concrete monomorphized identities and capture edges.
+// The final build sets allocation marks as expressions are constructed, without rewriting IR.
+func lowerChecked(ctx context.Context, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, options Options, members map[int]bool) (*ir.Program, error) {
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{ProgramRegion: options.ProgramRegion}, programMembers: members, this: -1, functionIndex: -1}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)
@@ -49,6 +68,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		}
 	}
 	if lowering.hasAsync(modules) {
+		if options.ProgramRegion {
+			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "async Program region", Fix: "use a synchronous one-shot native CLI"}
+		}
 		return lowering.lowerAsync(modules)
 	}
 	// Link every declaration before lowering any function body, including across back edges.
@@ -90,9 +112,11 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
-	program *load.Program
-	checker *checker.Checker
-	result  *ir.Program
+	programMembers         map[int]bool
+	programAllocationTypes map[*checker.Type]*ast.Node
+	program                *load.Program
+	checker                *checker.Checker
+	result                 *ir.Program
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
