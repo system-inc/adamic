@@ -1,6 +1,9 @@
 package lint
 
 import (
+	"github.com/system-inc/adamic/internal/buildcache"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -11,6 +14,16 @@ import (
 func TestProduct_RulesAgreeOracle(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	rulesAgreeOracle(t)
+	requireLintOracleArtifacts(t, rulesAgreeOracle(t))
 	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
+}
+
+// Probe the shared Go oracle with no cases, independently of shard preparation.
+func requireLintOracleArtifacts(t *testing.T, directory string) {
+	t.Helper()
+	manifest := filepath.Join(t.TempDir(), "empty-manifest")
+	if err := os.WriteFile(manifest, nil, 0600); err != nil {
+		t.Fatal(err)
+	}
+	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "oracle", Executable: true, Arguments: []string{"--manifest", manifest}})
 }

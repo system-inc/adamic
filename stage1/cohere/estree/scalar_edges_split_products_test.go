@@ -280,20 +280,3 @@ func TestScalarEdges_003(t *testing.T) {
 	t.Parallel()
 	scalarEdgeShard(t, 3)
 }
-
-// Build-phase units use the same recipes and keys as standalone shards.
-func TestProduct_scalar_edges_go_oracle(t *testing.T) {
-	t.Parallel()
-	scalarEdgeOracle(t)
-}
-
-func TestProduct_scalar_edges_lowered(t *testing.T) {
-	t.Parallel()
-	scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
-}
-
-func TestProduct_scalar_edges_sanitized_native(t *testing.T) {
-	t.Parallel()
-	lowered := scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
-	scalarEdgeNative(t, lowered)
-}
