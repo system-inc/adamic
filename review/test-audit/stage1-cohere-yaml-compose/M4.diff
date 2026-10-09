@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/layout.ts
++++ b/stage1/cohere/yaml/layout.ts
+@@ -199,7 +199,7 @@
+                         !this.fits(
+                             new LayoutCommand(content, current.indentation, 2),
+                             stack,
+-                            80 - this.column,
++                            40 - this.column,
+                             suffixes.length > 0,
+                             false,
+                         )

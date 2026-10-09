@@ -1,0 +1,18 @@
+{
+  "probe": "P3",
+  "subcase": "empty file",
+  "oracle_command": [
+    "/tmp/u150/artifacts/M0-6/go-format",
+    "--cases",
+    "/tmp/u150/empty-cases.txt"
+  ],
+  "oracle_exit": 0,
+  "oracle_stdout": "ok\t\n",
+  "probe_command": [
+    "/tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format",
+    "/tmp/u150/empty.yaml"
+  ],
+  "probe_exit": 0,
+  "probe_stdout": "",
+  "probe_stderr": ""
+}

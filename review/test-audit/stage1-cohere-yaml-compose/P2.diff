@@ -1,0 +1,32 @@
+--- a/stage1/cohere/yaml/cst_main.ts
++++ b/stage1/cohere/yaml/cst_main.ts
+@@ -68,29 +68,3 @@
+         this.parts.push(']');
+     }
+ }
+-const path = programArguments()[0] ?? panic('usage: cst_main.ts <cases>');
+-const read = readTextFile(path);
+-if(read.kind === 'Error') panic(read.message);
+-let number = 0;
+-for(const line of read.text.split('\n')) {
+-    if(line === '') continue;
+-    const tab = line.indexOf('\t');
+-    const size = Number(line.slice(0, tab));
+-    const text = unescaped(line.slice(tab + 1));
+-    const parser = new CSTParser();
+-    console.log(`case ${number}`);
+-    number++;
+-    if(size === 0) parser.parse(text);
+-    else {
+-        for(let start = 0; start < text.length; start += size) parser.parse(text.slice(start, start + size), true);
+-        parser.parse('', false);
+-    }
+-    for(const root of parser.roots) {
+-        const writer = new Outline(parser);
+-        writer.outline(root);
+-        console.log(writer.parts.join(''));
+-    }
+-    const lines: string[] = [];
+-    for(const start of parser.lineStarts) lines.push(String(start));
+-    console.log(`lines ${lines.join(',')}`);
+-}

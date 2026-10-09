@@ -1,0 +1,90 @@
+{"Time":"2026-10-09T13:32:56.038287398Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:32:56.050480357Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup"}
+{"Time":"2026-10-09T13:32:56.050545363Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"=== RUN   TestFileDriver_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.061865101Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    compose_test.go:78: corpus-files: upstream /workspace/adamic/cohere root .github/workflows pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1\n"}
+{"Time":"2026-10-09T13:32:56.243993996Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    compose_test.go:78: corpus-files: upstream /workspace/adamic/cohere/TypeScript root .custom-gcl.yml pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1\n"}
+{"Time":"2026-10-09T13:32:56.244037891Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    compose_test.go:78: corpus-files: upstream /workspace/adamic/cohere/TypeScript root .github pin d92d9bfee114c80be2c375d72edae966176e3a4f count 23\n"}
+{"Time":"2026-10-09T13:32:56.244044881Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    compose_test.go:78: corpus-files: upstream /workspace/adamic/cohere/TypeScript root .golangci.yml pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1\n"}
+{"Time":"2026-10-09T13:32:56.244048997Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    compose_test.go:78: corpus-files: upstream /workspace/adamic/cohere/TypeScript root tools/pipelines pin d92d9bfee114c80be2c375d72edae966176e3a4f count 10\n"}
+{"Time":"2026-10-09T13:32:56.341414462Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    file_driver_shards_test.go:107: build yaml-file-driver-go-format 08224a321a68 hit 0.06\n"}
+{"Time":"2026-10-09T13:32:56.47023715Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    file_driver_shards_test.go:121: build yaml-file-driver-lowered 2b644a6a5e77 hit 0.07\n"}
+{"Time":"2026-10-09T13:32:56.540066304Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    file_driver_shards_test.go:138: build yaml-file-driver-native 38130a7a0315 hit 0.06\n"}
+{"Time":"2026-10-09T13:32:56.540101636Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"    file_driver_shards_test.go:151: TestFileDriver (setup): 0.490s\n"}
+{"Time":"2026-10-09T13:32:56.541656757Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Output":"--- PASS: TestFileDriver_Setup (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.541669976Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_Setup","Elapsed":0.49}
+{"Time":"2026-10-09T13:32:56.541697297Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545942137Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000"}
+{"Time":"2026-10-09T13:32:56.545953314Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000","Output":"=== RUN   TestFileDriver_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545958441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000","Output":"=== PAUSE TestFileDriver_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545963689Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000"}
+{"Time":"2026-10-09T13:32:56.545967835Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001"}
+{"Time":"2026-10-09T13:32:56.54597091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001","Output":"=== RUN   TestFileDriver_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545973013Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001","Output":"=== PAUSE TestFileDriver_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545974385Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001"}
+{"Time":"2026-10-09T13:32:56.545977039Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002"}
+{"Time":"2026-10-09T13:32:56.545978571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002","Output":"=== RUN   TestFileDriver_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545981485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002","Output":"=== PAUSE TestFileDriver_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545982927Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002"}
+{"Time":"2026-10-09T13:32:56.54598462Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003"}
+{"Time":"2026-10-09T13:32:56.545986212Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003","Output":"=== RUN   TestFileDriver_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545988436Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003","Output":"=== PAUSE TestFileDriver_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545989858Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003"}
+{"Time":"2026-10-09T13:32:56.54599136Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004"}
+{"Time":"2026-10-09T13:32:56.545994014Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004","Output":"=== RUN   TestFileDriver_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545996728Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004","Output":"=== PAUSE TestFileDriver_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.545998Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004"}
+{"Time":"2026-10-09T13:32:56.546000373Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005"}
+{"Time":"2026-10-09T13:32:56.546002006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005","Output":"=== RUN   TestFileDriver_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546003959Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005","Output":"=== PAUSE TestFileDriver_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546005331Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005"}
+{"Time":"2026-10-09T13:32:56.546007474Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006"}
+{"Time":"2026-10-09T13:32:56.546009046Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006","Output":"=== RUN   TestFileDriver_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.54601173Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006","Output":"=== PAUSE TestFileDriver_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546013262Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006"}
+{"Time":"2026-10-09T13:32:56.546014835Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007"}
+{"Time":"2026-10-09T13:32:56.546016347Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007","Output":"=== RUN   TestFileDriver_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.54601828Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007","Output":"=== PAUSE TestFileDriver_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546019862Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007"}
+{"Time":"2026-10-09T13:32:56.546021765Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000"}
+{"Time":"2026-10-09T13:32:56.546023247Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000","Output":"=== CONT  TestFileDriver_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546109795Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006"}
+{"Time":"2026-10-09T13:32:56.546115143Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006","Output":"=== CONT  TestFileDriver_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546185417Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004"}
+{"Time":"2026-10-09T13:32:56.546187831Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004","Output":"=== CONT  TestFileDriver_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546315269Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005"}
+{"Time":"2026-10-09T13:32:56.546317923Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005","Output":"=== CONT  TestFileDriver_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.546893304Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002"}
+{"Time":"2026-10-09T13:32:56.54690352Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002","Output":"=== CONT  TestFileDriver_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.944160282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000","Output":"    file_driver_shards_test.go:240: native file 20: lengths 0 and 2236\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:56.944197718Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000","Output":"--- FAIL: TestFileDriver_000 (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.944201283Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_000","Elapsed":0.4}
+{"Time":"2026-10-09T13:32:56.94420635Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003"}
+{"Time":"2026-10-09T13:32:56.944209315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003","Output":"=== CONT  TestFileDriver_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.959267153Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005","Output":"    file_driver_shards_test.go:260: native file 10: lengths 0 and 209\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:56.95931902Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005","Output":"--- FAIL: TestFileDriver_005 (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.959322696Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_005","Elapsed":0.41}
+{"Time":"2026-10-09T13:32:56.959328094Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001"}
+{"Time":"2026-10-09T13:32:56.959329706Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001","Output":"=== CONT  TestFileDriver_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.978528641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002","Output":"    file_driver_shards_test.go:248: native file 9: lengths 0 and 198\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:56.978562411Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002","Output":"--- FAIL: TestFileDriver_002 (0.43s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.978565616Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_002","Elapsed":0.43}
+{"Time":"2026-10-09T13:32:56.978570994Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007"}
+{"Time":"2026-10-09T13:32:56.978572446Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007","Output":"=== CONT  TestFileDriver_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.978702348Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004","Output":"    file_driver_shards_test.go:256: native file 3: lengths 0 and 630\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:56.978708818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004","Output":"--- FAIL: TestFileDriver_004 (0.43s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:56.98598283Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_004","Elapsed":0.43}
+{"Time":"2026-10-09T13:32:56.986003Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006","Output":"    file_driver_shards_test.go:264: native file 16: lengths 0 and 981\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:56.986011813Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006","Output":"--- FAIL: TestFileDriver_006 (0.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:57.223283533Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_006","Elapsed":0.44}
+{"Time":"2026-10-09T13:32:57.223316632Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003","Output":"    file_driver_shards_test.go:252: native file 0: lengths 0 and 27703\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:57.223328419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003","Output":"--- FAIL: TestFileDriver_003 (0.28s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:57.245097397Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_003","Elapsed":0.28}
+{"Time":"2026-10-09T13:32:57.245120892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007","Output":"    file_driver_shards_test.go:268: native file 2: lengths 0 and 4412\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:57.245157496Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007","Output":"--- FAIL: TestFileDriver_007 (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:57.26086117Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_007","Elapsed":0.27}
+{"Time":"2026-10-09T13:32:57.260873899Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001","Output":"    file_driver_shards_test.go:244: native file 4: lengths 0 and 3414\n","OutputType":"error"}
+{"Time":"2026-10-09T13:32:57.260879027Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001","Output":"--- FAIL: TestFileDriver_001 (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:57.26088104Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestFileDriver_001","Elapsed":0.3}
+{"Time":"2026-10-09T13:32:57.260882642Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:57.262943952Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/yaml\t1.224s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:32:57.262980836Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":1.225}

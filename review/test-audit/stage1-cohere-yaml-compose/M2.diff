@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/directives.ts
++++ b/stage1/cohere/yaml/directives.ts
+@@ -76,7 +76,7 @@
+     docStart = false;
+     docEnd = false;
+     explicit = false;
+-    version = '1.2';
++    version = '1.1';
+     tags = new Map<string, string>();
+     atNextDocument = false;
+     errors: ComposeError[] = [];

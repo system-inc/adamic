@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/format.ts
++++ b/stage1/cohere/yaml/format.ts
+@@ -33,7 +33,7 @@
+         return result;
+     }
+     const printer = new YAMLPrinter(context);
+-    result.text = (bom ? '\ufeff' : '') + printer.format(root);
++    result.text = (bom ? '' : '') + printer.format(root);
+     if(context.errorName !== '') {
+         result.kind = 'Error';
+         result.message = context.errorMessage;

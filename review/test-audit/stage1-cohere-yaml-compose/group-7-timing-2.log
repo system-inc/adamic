@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T13:21:13.227273171Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:21:13.233953176Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference"}
+{"Time":"2026-10-09T13:21:13.234007466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"=== RUN   TestBundledParserDifference\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:21:13.234179451Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"=== PAUSE TestBundledParserDifference\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:21:13.234185089Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference"}
+{"Time":"2026-10-09T13:21:13.234187402Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference"}
+{"Time":"2026-10-09T13:21:13.234188985Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"=== CONT  TestBundledParserDifference\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:21:13.328135572Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"    format_test.go:208: yaml: accepted\n"}
+{"Time":"2026-10-09T13:21:13.328196352Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"        prettier: Invalid character\n"}
+{"Time":"2026-10-09T13:21:13.328199006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"        yaml: accepted\n"}
+{"Time":"2026-10-09T13:21:13.328204995Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"        prettier: Invalid character\n"}
+{"Time":"2026-10-09T13:21:13.328206868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"        yaml: tag.resolve is not a function\n"}
+{"Time":"2026-10-09T13:21:13.328209542Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"        prettier: c.resolve is not a function\n"}
+{"Time":"2026-10-09T13:21:13.32822201Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Output":"--- PASS: TestBundledParserDifference (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:21:13.328227919Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestBundledParserDifference","Elapsed":0.09}
+{"Time":"2026-10-09T13:21:13.328246647Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:21:13.329060611Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.101s\n"}
+{"Time":"2026-10-09T13:21:13.329097105Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.102}

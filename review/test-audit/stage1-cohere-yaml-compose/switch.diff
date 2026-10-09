@@ -1,0 +1,241 @@
+diff --git a/stage1/cohere/yaml/compose_main.ts b/stage1/cohere/yaml/compose_main.ts
+index fae48f2d..a416041a 100644
+--- a/stage1/cohere/yaml/compose_main.ts
++++ b/stage1/cohere/yaml/compose_main.ts
+@@ -2,6 +2,8 @@
+ import { panic, programArguments, readTextFile } from 'adamic';
+ import { CSTParser } from './cstParser.ts';
+ import { Composer } from './composer.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ function unescaped(text: string): string {
+     const parts: string[] = [];
+     let start = 0;
+@@ -51,6 +53,7 @@ class ComposedOutline {
+         this.outline(node.value);
+     }
+ }
++if(auditChoice !== 'P1') {
+ const path = programArguments()[0] ?? panic('usage: compose_main.ts <cases>');
+ const read = readTextFile(path);
+ if(read.kind === 'Error') panic(read.message);
+@@ -87,3 +90,5 @@ for(const line of read.text.split('\n')) {
+         );
+     }
+ }
++
++}
+diff --git a/stage1/cohere/yaml/compose_test.go b/stage1/cohere/yaml/compose_test.go
+index b0b06bf3..f48a780b 100644
+--- a/stage1/cohere/yaml/compose_test.go
++++ b/stage1/cohere/yaml/compose_test.go
+@@ -205,7 +205,7 @@ func TestComposeMutants(t *testing.T) {
+ 				name string
+ 				out  []byte
+ 			}{{"native", nativeOut}, {"Node", node}} {
+-				if bytes.Equal(side.out, expected) {
++				if (os.Getenv("ADAMIC_MUTANT") == "W1" || bytes.Equal(side.out, expected)) {
+ 					t.Fatalf("%s missed mutant", side.name)
+ 				}
+ 				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))
+diff --git a/stage1/cohere/yaml/cstParser.ts b/stage1/cohere/yaml/cstParser.ts
+index 9e23908d..233f29ac 100644
+--- a/stage1/cohere/yaml/cstParser.ts
++++ b/stage1/cohere/yaml/cstParser.ts
+@@ -1,8 +1,10 @@
+ // Port of cohere/internal/format/yaml/cst/parser.go and yaml 2.9.0's parser.
+-import { panic } from 'adamic';
++import { panic, readTextFile } from 'adamic';
+ import { Token, tokenType } from './cst.ts';
+ import { CollectionItem } from './collectionItem.ts';
+ import { Lexer } from './lexer.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ function pair(start: number[], key: number, sep: number[]): CollectionItem {
+     const item = new CollectionItem(start);
+     item.key = key;
+@@ -796,7 +798,7 @@ export class CSTParser {
+     }
+     parse(source: string, incomplete = false): number[] {
+         const start = this.roots.length;
+-        if(this.offset === 0) this.lineStarts.push(0);
++        if(this.offset === 0) this.lineStarts.push(auditChoice === 'M1' ? 1 : 0);
+         for(const lexeme of this.lexer.lex(source, incomplete)) this.next(lexeme);
+         if(!incomplete) while(this.stack.length > 0) this.pop(-1);
+         return this.roots.slice(start);
+diff --git a/stage1/cohere/yaml/cst_main.ts b/stage1/cohere/yaml/cst_main.ts
+index 3fa5070e..c5c014bb 100644
+--- a/stage1/cohere/yaml/cst_main.ts
++++ b/stage1/cohere/yaml/cst_main.ts
+@@ -1,6 +1,8 @@
+ // CST comparison protocol includes absent fields, null keys, UTF-16 offsets and line starts.
+ import { panic, programArguments, readTextFile } from 'adamic';
+ import { CSTParser } from './cstParser.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ function unescaped(text: string): string {
+     const parts: string[] = [];
+     let start = 0;
+@@ -68,6 +70,7 @@ class Outline {
+         this.parts.push(']');
+     }
+ }
++if(auditChoice !== 'P2') {
+ const path = programArguments()[0] ?? panic('usage: cst_main.ts <cases>');
+ const read = readTextFile(path);
+ if(read.kind === 'Error') panic(read.message);
+@@ -94,3 +97,5 @@ for(const line of read.text.split('\n')) {
+     for(const start of parser.lineStarts) lines.push(String(start));
+     console.log(`lines ${lines.join(',')}`);
+ }
++
++}
+diff --git a/stage1/cohere/yaml/cst_test.go b/stage1/cohere/yaml/cst_test.go
+index 2a1342ea..fc2b96e5 100644
+--- a/stage1/cohere/yaml/cst_test.go
++++ b/stage1/cohere/yaml/cst_test.go
+@@ -139,7 +139,7 @@ func TestCSTMutants(t *testing.T) {
+ 				name string
+ 				out  []byte
+ 			}{{"native", nativeOut}, {"Node", node}} {
+-				if bytes.Equal(side.out, expected) {
++				if (os.Getenv("ADAMIC_MUTANT") == "W2" || bytes.Equal(side.out, expected)) {
+ 					t.Fatalf("%s missed mutant", side.name)
+ 				}
+ 				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))
+diff --git a/stage1/cohere/yaml/directives.ts b/stage1/cohere/yaml/directives.ts
+index 6b58aa95..419c708c 100644
+--- a/stage1/cohere/yaml/directives.ts
++++ b/stage1/cohere/yaml/directives.ts
+@@ -1,5 +1,8 @@
++import { readTextFile } from 'adamic';
+ import type { Token } from './cst.ts';
+ import { ComposeError } from './composeError.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ function parts(text: string): string[] {
+     const result: string[] = [];
+     const source = text.trim();
+@@ -76,7 +79,7 @@ export class Directives {
+     docStart = false;
+     docEnd = false;
+     explicit = false;
+-    version = '1.2';
++    version = auditChoice === 'M2' ? '1.1' : '1.2';
+     tags = new Map<string, string>();
+     atNextDocument = false;
+     errors: ComposeError[] = [];
+diff --git a/stage1/cohere/yaml/file_driver_shards_test.go b/stage1/cohere/yaml/file_driver_shards_test.go
+index fb7d4ba0..e990536d 100644
+--- a/stage1/cohere/yaml/file_driver_shards_test.go
++++ b/stage1/cohere/yaml/file_driver_shards_test.go
+@@ -88,7 +88,7 @@ func fileDriverBuildFiles(t *testing.T) []string {
+ 	return files
+ }
+ 
+-func fileDriverSetup(t *testing.T) *fileDriverState {
++func fileDriverSetup(t *testing.T) *fileDriverState { if os.Getenv("ADAMIC_MUTANT") == "P4" { return nil };
+ 	started := time.Now()
+ 	cases, files, _ := formatCases(t)
+ 	data, err := os.ReadFile(cases)
+@@ -127,7 +127,7 @@ func fileDriverSetup(t *testing.T) *fileDriverState {
+ 		if err != nil {
+ 			return err
+ 		}
+-		if err := os.WriteFile(filepath.Join(directory, "format.c"), []byte(native.C(lowered)), 0644); err != nil {
++		if err := os.WriteFile(filepath.Join(directory, yamlAuditProductName("format.c")), []byte(native.C(lowered)), 0644); err != nil {
+ 			return err
+ 		}
+ 		return os.WriteFile(filepath.Join(directory, "format.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+@@ -192,7 +192,7 @@ func TestFileDriverUnion(t *testing.T) {
+ 			if index == 0 {
+ 				output = planted
+ 			}
+-			if !bytes.Equal(output, wanted) {
++			if !(os.Getenv("ADAMIC_MUTANT") == "W3" || bytes.Equal(output, wanted)) {
+ 				caught = append(caught, shard)
+ 			}
+ 		}
+@@ -343,3 +343,5 @@ func fileDriverGoFormat(t *testing.T, cases string) []byte {
+ 	}
+ 	return expected
+ }
++
++func yamlAuditProductName(name string) string { if os.Getenv("ADAMIC_MUTANT") == "S1" { return "missing.c" }; return name }
+diff --git a/stage1/cohere/yaml/format.ts b/stage1/cohere/yaml/format.ts
+index 222ddc8f..365c3ee1 100644
+--- a/stage1/cohere/yaml/format.ts
++++ b/stage1/cohere/yaml/format.ts
+@@ -1,8 +1,11 @@
++import { readTextFile } from 'adamic';
+ import { CSTParser } from './cstParser.ts';
+ import { Composer } from './composer.ts';
+ import { UnistContext } from './unistContext.ts';
+ import { YAMLPrinter } from './printer.ts';
+ import { FormatResult } from './formatResult.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ 
+ // File-format defaults are Go cohere's formatoptions.PrettierDefaults: width 80, indentation 2, double quotes.
+ export function format(source: string): FormatResult {
+@@ -33,7 +36,7 @@ export function format(source: string): FormatResult {
+         return result;
+     }
+     const printer = new YAMLPrinter(context);
+-    result.text = (bom ? '\ufeff' : '') + printer.format(root);
++    result.text = (bom ? (auditChoice === 'M3' ? '' : '\ufeff') : '') + printer.format(root);
+     if(context.errorName !== '') {
+         result.kind = 'Error';
+         result.message = context.errorMessage;
+diff --git a/stage1/cohere/yaml/layout.ts b/stage1/cohere/yaml/layout.ts
+index f30ef8de..c54eeccb 100644
+--- a/stage1/cohere/yaml/layout.ts
++++ b/stage1/cohere/yaml/layout.ts
+@@ -1,9 +1,11 @@
+ // Go cohere's reachable YAML document layout, with identity preserved by arena indices.
+-import { panic } from 'adamic';
++import { panic, readTextFile } from 'adamic';
+ import { LayoutNode } from './layoutNode.ts';
+ import { LayoutCommand } from './layoutCommand.ts';
+ import { LayoutIndent } from './layoutIndent.ts';
+ import { stringWidth } from './width.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ export class Layout {
+     nodes: LayoutNode[] = [];
+     indents: LayoutIndent[] = [new LayoutIndent()];
+@@ -199,7 +201,7 @@ export class Layout {
+                         !this.fits(
+                             new LayoutCommand(content, current.indentation, 2),
+                             stack,
+-                            80 - this.column,
++                            (auditChoice === 'M4' ? 40 : 80) - this.column,
+                             suffixes.length > 0,
+                             false,
+                         )
+diff --git a/stage1/cohere/yaml/main.ts b/stage1/cohere/yaml/main.ts
+index 5f12b5ec..88a05626 100644
+--- a/stage1/cohere/yaml/main.ts
++++ b/stage1/cohere/yaml/main.ts
+@@ -1,5 +1,7 @@
+ import { panic, programArguments, readTextFile, writeTextFile } from 'adamic';
+ import { format } from './format.ts';
++const auditRead = readTextFile('/tmp/u150/selector');
++const auditChoice = auditRead.kind === 'Error' ? '' : auditRead.text.trim();
+ function escaped(text: string): string {
+     return text.split('\\').join('\\\\').split('\n').join('\\n').split('\r').join('\\r').split('\t').join('\\t');
+ }
+@@ -17,6 +19,7 @@ function unescaped(text: string): string {
+     parts.push(text.slice(start));
+     return parts.join('');
+ }
++if(auditChoice !== 'P3') {
+ const args = programArguments();
+ const batch = args[0] === '--cases';
+ const path = args[batch ? 1 : 0] ?? panic('usage: main.ts <file> | --cases <cases>');
+@@ -38,3 +41,5 @@ else {
+     const written = writeTextFile('/dev/stdout', result.text);
+     if(written.kind === 'Error') panic(written.message);
+ }
++
++}

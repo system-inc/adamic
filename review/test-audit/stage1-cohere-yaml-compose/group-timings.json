@@ -1,0 +1,542 @@
+[
+  {
+    "group": "TestFormatterMatchesGo",
+    "index": 0,
+    "run": 1,
+    "exit": 0,
+    "seconds": 48.2349990979983,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo)$"
+    ]
+  },
+  {
+    "group": "TestComposeMatchGo",
+    "index": 1,
+    "run": 1,
+    "exit": 0,
+    "seconds": 25.7389790670004,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMatchGo)$"
+    ]
+  },
+  {
+    "group": "TestCSTMatchesGo",
+    "index": 2,
+    "run": 1,
+    "exit": 0,
+    "seconds": 10.691554573000758,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMatchesGo)$"
+    ]
+  },
+  {
+    "group": "TestComposeMutants",
+    "index": 3,
+    "run": 1,
+    "exit": 0,
+    "seconds": 32.41282270899865,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMutants)$"
+    ]
+  },
+  {
+    "group": "TestCSTMutants",
+    "index": 4,
+    "run": 1,
+    "exit": 0,
+    "seconds": 10.291551196998626,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMutants)$"
+    ]
+  },
+  {
+    "group": "TestFileDriverUnion",
+    "index": 5,
+    "run": 1,
+    "exit": 0,
+    "seconds": 2.3700703929989686,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ]
+  },
+  {
+    "group": "TestFileDriver family",
+    "index": 6,
+    "run": 1,
+    "exit": 0,
+    "seconds": 8.092471527999805,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$"
+    ]
+  },
+  {
+    "group": "TestBundledParserDifference",
+    "index": 7,
+    "run": 1,
+    "exit": 0,
+    "seconds": 1.8519696940002177,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestBundledParserDifference)$"
+    ]
+  },
+  {
+    "group": "TestFileDriver_Setup",
+    "index": 8,
+    "run": 1,
+    "exit": 0,
+    "seconds": 2.3200647900011973,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_Setup)$"
+    ]
+  },
+  {
+    "group": "TestFormatterMatchesGo",
+    "index": 0,
+    "run": 2,
+    "exit": 0,
+    "seconds": 47.7870943300004,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo)$"
+    ]
+  },
+  {
+    "group": "TestComposeMatchGo",
+    "index": 1,
+    "run": 2,
+    "exit": 0,
+    "seconds": 25.81274297299933,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMatchGo)$"
+    ]
+  },
+  {
+    "group": "TestCSTMatchesGo",
+    "index": 2,
+    "run": 2,
+    "exit": 0,
+    "seconds": 11.093824667001172,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMatchesGo)$"
+    ]
+  },
+  {
+    "group": "TestComposeMutants",
+    "index": 3,
+    "run": 2,
+    "exit": 0,
+    "seconds": 32.334237303999544,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMutants)$"
+    ]
+  },
+  {
+    "group": "TestCSTMutants",
+    "index": 4,
+    "run": 2,
+    "exit": 0,
+    "seconds": 10.388327245000255,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMutants)$"
+    ]
+  },
+  {
+    "group": "TestFileDriverUnion",
+    "index": 5,
+    "run": 2,
+    "exit": 0,
+    "seconds": 2.1887970170009794,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ]
+  },
+  {
+    "group": "TestFileDriver family",
+    "index": 6,
+    "run": 2,
+    "exit": 0,
+    "seconds": 8.290332780001336,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$"
+    ]
+  },
+  {
+    "group": "TestBundledParserDifference",
+    "index": 7,
+    "run": 2,
+    "exit": 0,
+    "seconds": 1.8181394349994662,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestBundledParserDifference)$"
+    ]
+  },
+  {
+    "group": "TestFileDriver_Setup",
+    "index": 8,
+    "run": 2,
+    "exit": 0,
+    "seconds": 2.1950409620003484,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_Setup)$"
+    ]
+  },
+  {
+    "group": "TestFormatterMatchesGo",
+    "index": 0,
+    "run": 3,
+    "exit": 0,
+    "seconds": 48.03683216900026,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo)$"
+    ]
+  },
+  {
+    "group": "TestComposeMatchGo",
+    "index": 1,
+    "run": 3,
+    "exit": 0,
+    "seconds": 25.565964608000286,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMatchGo)$"
+    ]
+  },
+  {
+    "group": "TestCSTMatchesGo",
+    "index": 2,
+    "run": 3,
+    "exit": 0,
+    "seconds": 11.044805232999352,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMatchesGo)$"
+    ]
+  },
+  {
+    "group": "TestComposeMutants",
+    "index": 3,
+    "run": 3,
+    "exit": 0,
+    "seconds": 32.76836327699857,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMutants)$"
+    ]
+  },
+  {
+    "group": "TestCSTMutants",
+    "index": 4,
+    "run": 3,
+    "exit": 0,
+    "seconds": 10.330093984999621,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMutants)$"
+    ]
+  },
+  {
+    "group": "TestFileDriverUnion",
+    "index": 5,
+    "run": 3,
+    "exit": 0,
+    "seconds": 2.2410064929990767,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ]
+  },
+  {
+    "group": "TestFileDriver family",
+    "index": 6,
+    "run": 3,
+    "exit": 0,
+    "seconds": 7.873570702000507,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$"
+    ]
+  },
+  {
+    "group": "TestBundledParserDifference",
+    "index": 7,
+    "run": 3,
+    "exit": 0,
+    "seconds": 1.8315396239995607,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestBundledParserDifference)$"
+    ]
+  },
+  {
+    "group": "TestFileDriver_Setup",
+    "index": 8,
+    "run": 3,
+    "exit": 0,
+    "seconds": 2.290516930999729,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_Setup)$"
+    ]
+  }
+]

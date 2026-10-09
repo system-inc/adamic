@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/cstParser.ts
++++ b/stage1/cohere/yaml/cstParser.ts
+@@ -796,7 +796,7 @@
+     }
+     parse(source: string, incomplete = false): number[] {
+         const start = this.roots.length;
+-        if(this.offset === 0) this.lineStarts.push(0);
++        if(this.offset === 0) this.lineStarts.push(1);
+         for(const lexeme of this.lexer.lex(source, incomplete)) this.next(lexeme);
+         if(!incomplete) while(this.stack.length > 0) this.pop(-1);
+         return this.roots.slice(start);

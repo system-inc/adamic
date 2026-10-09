@@ -1,0 +1,42 @@
+--- a/stage1/cohere/yaml/compose_main.ts
++++ b/stage1/cohere/yaml/compose_main.ts
+@@ -51,39 +51,3 @@
+         this.outline(node.value);
+     }
+ }
+-const path = programArguments()[0] ?? panic('usage: compose_main.ts <cases>');
+-const read = readTextFile(path);
+-if(read.kind === 'Error') panic(read.message);
+-let number = 0;
+-for(const line of read.text.split('\n')) {
+-    if(line === '') continue;
+-    const tab = line.indexOf('\t');
+-    const size = Number(line.slice(0, tab));
+-    const text = unescaped(line.slice(tab + 1));
+-    const parser = new CSTParser();
+-    console.log(`case ${number}`);
+-    number++;
+-    if(size === 0) parser.parse(text);
+-    else {
+-        for(let start = 0; start < text.length; start += size) parser.parse(text.slice(start, start + size), true);
+-        parser.parse('', false);
+-    }
+-    const composer = new Composer(parser);
+-    composer.compose(text.length);
+-    for(const document of composer.documents) {
+-        const writer = new ComposedOutline(composer);
+-        writer.outline(document.contents);
+-        const tags: string[] = [];
+-        for(const [handle, prefix] of document.directives.tags) tags.push(`${hex(handle)}=${hex(prefix)}`);
+-        tags.sort((first, second) => (first < second ? -1 : first > second ? 1 : 0));
+-        const errors: string[] = [];
+-        for(const error of document.diagnostics.errors)
+-            errors.push(`${error.start},${error.end},${error.code},${hex(error.message)}`);
+-        const warnings: string[] = [];
+-        for(const warning of document.warnings)
+-            warnings.push(`${warning.start},${warning.end},${warning.code},${hex(warning.message)}`);
+-        console.log(
+-            `${document.directives.version}|${document.directives.explicit ? 1 : 0}|${document.directives.docStart ? 1 : 0}|${document.directives.docEnd ? 1 : 0}|${tags.join(';')}|${document.range.join(',')}|${hex(document.commentBefore)}|${hex(document.comment)}|${writer.parts.join('')}|errors:${errors.join(';')}|warnings:${warnings.join(';')}`,
+-        );
+-    }
+-}

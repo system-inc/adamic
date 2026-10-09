@@ -1,0 +1,172 @@
+[
+  {
+    "id": "M1",
+    "exit": 0,
+    "seconds": 3.1620526810002048,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/cst_main.ts",
+      "-o",
+      "/tmp/u150/validate-M1",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "M2",
+    "exit": 0,
+    "seconds": 14.149169686001187,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/compose_main.ts",
+      "-o",
+      "/tmp/u150/validate-M2",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "M3",
+    "exit": 0,
+    "seconds": 35.23157834099948,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/main.ts",
+      "-o",
+      "/tmp/u150/validate-M3",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "M4",
+    "exit": 0,
+    "seconds": 35.76093650599978,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/main.ts",
+      "-o",
+      "/tmp/u150/validate-M4",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "S1",
+    "exit": 0,
+    "seconds": 0.1715869389990985,
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/yaml/"
+    ]
+  },
+  {
+    "id": "P1",
+    "exit": 1,
+    "seconds": 0.06610097900011169,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/compose_main.ts",
+      "-o",
+      "/tmp/u150/validate-P1",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "P1",
+    "exit": 0,
+    "seconds": 0.7392189249985677,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/compose_main.ts",
+      "-o",
+      "/tmp/u150/validate-P1",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "P2",
+    "exit": 0,
+    "seconds": 0.22993122399930144,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/cst_main.ts",
+      "-o",
+      "/tmp/u150/validate-P2",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "P3",
+    "exit": 0,
+    "seconds": 23.391513000000486,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u150/adamic",
+      "build",
+      "stage1/cohere/yaml/main.ts",
+      "-o",
+      "/tmp/u150/validate-P3",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "P4",
+    "exit": 0,
+    "seconds": 0.1858830119999766,
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/yaml/"
+    ]
+  },
+  {
+    "id": "W1",
+    "exit": 0,
+    "seconds": 0.1660104409984342,
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/yaml/"
+    ]
+  },
+  {
+    "id": "W2",
+    "exit": 0,
+    "seconds": 0.17259876999924018,
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/yaml/"
+    ]
+  },
+  {
+    "id": "W3",
+    "exit": 0,
+    "seconds": 0.16589008899973123,
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/yaml/"
+    ]
+  }
+]
