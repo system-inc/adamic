@@ -1,0 +1,326 @@
+// Scratch-only probes of production proof and check construction. No executable IR output.
+package lower
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"strconv"
+	"strings"
+)
+
+var HatchMatchedCalls int
+var HatchViewFailures []string
+
+type HatchCall struct {
+	Ordinal    int                          `json:"ordinal"`
+	ViewTarget bool                         `json:"viewTarget"`
+	Where      string                       `json:"where"`
+	Status     string                       `json:"status"`
+	Diagnostic string                       `json:"diagnostic"`
+	Directions []ir.PredicateDirectionCheck `json:"directions"`
+}
+type HatchPredicateResult struct {
+	Location         string      `json:"location"`
+	BodyProof        bool        `json:"bodyProof"`
+	ProofDiagnostic  string      `json:"proofDiagnostic"`
+	Admission        string      `json:"admission"`
+	AdamicDiagnostic string      `json:"adamicDiagnostic"`
+	Calls            []HatchCall `json:"calls"`
+ ViewRoot ir.ViewContract `json:"viewRoot"`
+ ViewRoots []ir.ViewContract `json:"viewRoots"`
+ ViewFailures []string `json:"viewFailures"`
+ ProbeAdmission string `json:"probeAdmission"`
+ CheckedOriginal bool `json:"checkedOriginal"`
+}
+
+func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPredicateResult {
+	shards, shard := 1, 0
+	if value := os.Getenv("HATCH_SHARDS"); value != "" {
+		var err error
+		shards, err = strconv.Atoi(value)
+		if err != nil || shards < 1 {
+			panic("invalid shard count")
+		}
+	}
+	if value := os.Getenv("HATCH_SHARD"); value != "" {
+		var err error
+		shard, err = strconv.Atoi(value)
+		if err != nil || shard < 0 || shard >= shards {
+			panic("invalid shard")
+		}
+	}
+	HatchMatchedCalls = 0
+	files := program.Files()
+	ck, release := program.Checker(ctx, files[0])
+	defer release()
+	inheritance := &lowering{program: program, checker: ck}
+	inheritance.noteInheritance(files)
+	fresh := func() *lowering {
+		l := &lowering{program: program, checker: ck, result: &ir.Program{}, this: -1, functionIndex: -1}
+		l.derivedAncestors = inheritance.derivedAncestors
+		return l
+	}
+	run := func(f func() error) (err error) {
+		defer func() {
+			if p := recover(); p != nil {
+				err = fmt.Errorf("ProbeError: %v", p)
+			}
+		}()
+		return f()
+	}
+	selection := map[string]bool{}
+	if path := os.Getenv("HATCH_SELECTION"); path != "" {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+		if err = json.Unmarshal(data, &selection); err != nil {
+			panic(err)
+		}
+	}
+	rows := []HatchPredicateResult{}
+	indexes := map[*ast.Node]int{}
+	for _, file := range files {
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if n.Kind == ast.KindTypePredicate && n.Parent != nil && ast.IsFunctionLike(n.Parent) && n.Parent.Body() != nil {
+				if os.Getenv("HATCH_CONDITION_ONLY") == "1" && (n.AsTypePredicateNode().Type != nil || n.AsTypePredicateNode().AssertsModifier == nil) {
+					n.ForEachChild(visit)
+					return false
+				}
+				if len(selection) > 0 && !selection["src/compiler/"+strings.Split(program.Where(n), "/src/compiler/")[1]] {
+					n.ForEachChild(visit)
+					return false
+				}
+				r := HatchPredicateResult{Location: program.Where(n), Admission: "Proven", Calls: []HatchCall{}}
+				l := fresh()
+				err := run(func() error {
+					if e := l.proveFlowPredicate(n); e == nil {
+						r.BodyProof = true
+						return nil
+					}
+					_, e := l.provePredicate(n)
+					if e != nil {
+						return e
+					}
+					r.BodyProof = true
+					return nil
+				})
+				if err != nil {
+					r.ProofDiagnostic = err.Error()
+					r.Admission = "Refused"
+					if r.BodyProof {
+						r.Admission = "PendingView"
+					}
+				}
+				program.HatchAdamic(true)
+				HatchViewFailures=nil
+ admissionLower := fresh()
+ err = run(func() error { return admissionLower.predicateRefusal(n) })
+ if targetNode := n.AsTypePredicateNode().Type; targetNode != nil {
+ target := ck.GetTypeAtLocation(targetNode)
+ if id := admissionLower.result.ViewContractTypes[int(target.Id())]; id > 0 {r.ViewRoot=admissionLower.result.ViewContracts[id-1]}
+ r.CheckedOriginal=admissionLower.result.CheckedFields["original"]
+ members:=[]*checker.Type{target};if target.Flags()&checker.TypeFlagsUnion!=0 {members=target.Types()}
+ unavailable:=false
+ for _,member:=range members {if member.Flags()&checker.TypeFlagsObject==0 {continue};id:=admissionLower.result.ViewContractTypes[int(member.Id())];if id>0 {root:=admissionLower.result.ViewContracts[id-1];r.ViewRoots=append(r.ViewRoots,root);unavailable=unavailable || root.Kind==ir.ViewUnknown || root.Unsupported!=""} else {unavailable=true}}
+ r.ViewFailures=append([]string{},HatchViewFailures...)
+ r.ProbeAdmission=r.Admission
+ if err!=nil {if r.BodyProof {r.ProbeAdmission="PendingView"} else {r.ProbeAdmission="Refused"}}
+ if r.BodyProof && (unavailable || !r.CheckedOriginal) {r.Admission="PendingView";r.AdamicDiagnostic="measurement: unavailable complete target view; optional original check not constructed"}
+ }
+				program.HatchAdamic(false)
+				if err != nil {
+					r.AdamicDiagnostic = err.Error()
+					if r.BodyProof {
+						r.Admission = "PendingView"
+					} else {
+						r.Admission = "Refused"
+					}
+				}
+				indexes[n.Parent] = len(rows)
+				rows = append(rows, r)
+				if len(rows)%25 == 0 {
+					fmt.Fprintf(os.Stderr, "bodies: %d\n", len(rows))
+				}
+			}
+			n.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	if os.Getenv("HATCH_BODY_ONLY") == "1" {
+		return rows
+	}
+	callsMeasured := 0
+	for _, file := range files {
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if n.Kind == ast.KindCallExpression {
+				call := n.AsCallExpression()
+				sig := ck.GetResolvedSignature(n)
+				if sig != nil {
+					decl := sig.Declaration()
+					i, ok := indexes[decl]
+					if ok {
+						HatchMatchedCalls++
+						if (HatchMatchedCalls-1)%shards != shard {
+							n.ForEachChild(visit)
+							return false
+						}
+						r := HatchCall{Ordinal: HatchMatchedCalls - 1, Where: program.Where(n), Status: "CheckedSeam"}
+						l := fresh()
+						err := run(func() error {
+							claim := predicateOfSignature(ck, sig)
+							if claim == nil {
+								return l.notYet(n, "a checked predicate without a reifiable target")
+							}
+							if rows[i].Admission == "Proven" {
+								_, err := l.checkedPredicateResult(call, ir.BooleanConstant{Value: false}, decl, decl)
+								if err != nil {
+									return err
+								}
+								r.Status = "ProvenSeam"
+								if len(l.result.PredicateChecks.Sites) > 0 {
+									r.Directions = l.result.PredicateChecks.Sites[0].Directions
+								}
+								return nil
+							}
+							// Signature admission only. The placeholder reads expose the original
+							// parameter representations to the real check constructor, not body code.
+							var needsView func(*checker.Type) bool
+							needsView = func(t *checker.Type) bool {
+								if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+									for _, m := range t.Types() {
+										if needsView(m) {
+											return true
+										}
+									}
+									return false
+								}
+								return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t)
+							}
+							if claim.Type() != nil {
+								r.ViewTarget = needsView(claim.Type())
+							}
+							args := []ir.Expression{}
+							fn := ir.Function{Name: "measurement_target", Returns: ir.Boolean}
+							if decl.Type().AsTypePredicateNode().AssertsModifier != nil {
+								fn.Returns = 0
+							}
+							for _, param := range sig.Parameters() {
+								typ := ck.GetTypeOfSymbol(param)
+								of, known := l.kept(typ)
+								if !known {
+									return l.notYet(n, "predicate parameter representation "+ck.TypeToString(typ))
+								}
+								index := len(l.result.Locals)
+								l.result.Locals = append(l.result.Locals, ir.Local{Name: param.Name, Type: of, Function: 0})
+								fn.Parameters = append(fn.Parameters, index)
+								args = append(args, ir.Read{Local: index, Of: of})
+							}
+							l.result.Functions = append(l.result.Functions, fn)
+							if decl.Name() == nil || decl.Kind != ast.KindFunctionDeclaration {
+								return l.notYet(n, "a checked predicate without a named implementation")
+							}
+							if rows[i].Admission != "Proven" && (!ast.IsIdentifier(ast.SkipParentheses(call.Expression)) || l.symbol(ast.SkipParentheses(call.Expression)) != l.symbol(decl.Name())) {
+								return l.notYet(n, "an indirect call of a checked predicate")
+							}
+							_, err := l.checkedPredicateResult(call, ir.Call{Function: 0, Arguments: args, Returns: fn.Returns}, decl, decl)
+							if err != nil {
+								return err
+							}
+							if len(l.result.PredicateChecks.Sites) > 0 {
+								r.Directions = l.result.PredicateChecks.Sites[0].Directions
+							}
+							if l.result.PredicateChecks.Checked == 0 {
+								r.Status = "ProvenSeam"
+							}
+							return nil
+						})
+						if err != nil {
+							r.Status = "Pending"
+							r.Diagnostic = err.Error()
+						}
+						rows[i].Calls = append(rows[i].Calls, r)
+						callsMeasured++
+						if callsMeasured%100 == 0 {
+							fmt.Fprintf(os.Stderr, "calls: %d\n", callsMeasured)
+						}
+					}
+				}
+			}
+			n.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	return rows
+}
+
+// Metadata uses resolved checker types, including object intersections. It does
+// not rerun or change any proof or check construction result.
+type HatchTargetMetadata struct {
+	Where      string `json:"where"`
+	ViewTarget bool   `json:"viewTarget"`
+}
+
+func HatchPredicateTargetMetadata(ctx context.Context, program *load.Program) []HatchTargetMetadata {
+	files := program.Files()
+	typeChecker, release := program.Checker(ctx, files[0])
+	defer release()
+	bodies := map[*ast.Node]bool{}
+	for _, file := range files {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindTypePredicate && node.Parent != nil && ast.IsFunctionLike(node.Parent) && node.Parent.Body() != nil {
+				bodies[node.Parent] = true
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	var needsView func(*checker.Type) bool
+	needsView = func(target *checker.Type) bool {
+		if target == nil {
+			return false
+		}
+		if target.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+			for _, member := range target.Types() {
+				if needsView(member) {
+					return true
+				}
+			}
+			return false
+		}
+		return target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target)
+	}
+	rows := []HatchTargetMetadata{}
+	for _, file := range files {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindCallExpression {
+				signature := typeChecker.GetResolvedSignature(node)
+				if signature != nil && bodies[signature.Declaration()] {
+					claim := predicateOfSignature(typeChecker, signature)
+					targetView := false
+					if claim != nil {
+						targetView = needsView(claim.Type())
+					}
+					rows = append(rows, HatchTargetMetadata{Where: program.Where(node), ViewTarget: targetView})
+				}
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	return rows
+}
