@@ -38,7 +38,7 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		case "optional_object":
 			observation += "console.log(`${flags({flags:E.A})}/${flags({flags:E.A,other:{flags:E.B}})}`);"
 		}
-		enumLowersAndAgreesWithNode(t, probe.source+observation)
+		lowersAndAgreesWithNode(t, probe.source+observation)
 	}
 
 }
