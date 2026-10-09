@@ -1,0 +1,20 @@
+=== RUN   TestCompare
+=== PAUSE TestCompare
+=== RUN   Test509014RowsAndMutants
+=== PAUSE Test509014RowsAndMutants
+=== RUN   TestReadError
+=== PAUSE TestReadError
+=== CONT  TestCompare
+--- PASS: TestCompare (0.00s)
+=== CONT  TestReadError
+--- PASS: TestReadError (0.00s)
+=== CONT  Test509014RowsAndMutants
+    main_test.go:59: byte mutant 0 caught
+    main_test.go:59: byte mutant 65535 caught
+    main_test.go:59: byte mutant 65536 caught
+    main_test.go:59: byte mutant 11707320 caught
+    main_test.go:66: EOF mutant caught at 11707321
+    main_test.go:66: EOF mutant caught at 11707322
+--- PASS: Test509014RowsAndMutants (0.47s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/scouts/step12/compare	0.480s

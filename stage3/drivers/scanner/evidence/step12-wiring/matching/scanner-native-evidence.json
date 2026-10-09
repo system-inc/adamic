@@ -1,0 +1,29 @@
+{
+  "evidence": {
+    "scanner_native": {
+      "adamic_sha": "45487a809f89885a3fc651cd590e7dabf31362dc",
+      "source_sha": "45487a809f89885a3fc651cd590e7dabf31362dc",
+      "run_directory": "stage3/drivers/scanner/evidence/step12-wiring/matching",
+      "node_sha256": "afb54cc9413294af6edf94c87c69f50e2b90eead07fcb79b3a4de7451ca48b2e",
+      "native_sha256": "afb54cc9413294af6edf94c87c69f50e2b90eead07fcb79b3a4de7451ca48b2e",
+      "comparison": "comparison.stdout",
+      "mutant": {
+        "output": "native-byte-mutant.stdout",
+        "offset": 0,
+        "original_byte": 73,
+        "changed_byte": 72,
+        "comparison": "mutant-comparison.stdout",
+        "comparison_exit": 1,
+        "first_difference": {
+          "offset": 0,
+          "line": 1,
+          "column": 1,
+          "left": 73,
+          "right": 72
+        }
+      }
+    }
+  },
+  "stand_in": true,
+  "milestone_eligible": false
+}
