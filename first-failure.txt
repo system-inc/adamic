@@ -1,0 +1,27 @@
+FIRST FAILURE (tests, at 488.0 s):
+github.com/system-inc/adamic/stage1/cohere/markdowninline TestMarkdownInline
+=== RUN   TestMarkdownInline
+=== PAUSE TestMarkdownInline
+=== CONT  TestMarkdownInline
+    port_test.go:164: corpus-files: repository /home/ahra/fast-gate/tree-4 root . pin 5a2ea95d36e19a526b5422fedf185252de94f8af count 629
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root CHANGELOG.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root CONTRIBUTING.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root README.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root THIRD_PARTY_NOTICES.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root TypeScript-shim pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root editors pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root internal pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 778
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root schema pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere root swift pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root .github pin d92d9bfee114c80be2c375d72edae966176e3a4f count 8
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root CODE_OF_CONDUCT.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root CONTRIBUTING.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root README.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root SECURITY.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root SUPPORT.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root packages pin d92d9bfee114c80be2c375d72edae966176e3a4f count 5
+    port_test.go:166: corpus-files: upstream /home/ahra/fast-gate/tree-4/cohere/TypeScript root tsc pin d92d9bfee114c80be2c375d72edae966176e3a4f count 49
+    port_test.go:182: gate-sample: TestMarkdownInline 138/1482 files, stride 32, offset 23
+    shards_test.go:331: full enumeration: 117496 cases, want 115995
+--- FAIL: TestMarkdownInline (4.29s)
+
