@@ -1,0 +1,12 @@
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== CONT  TestFX7ViewCycleAndStackGuard
+--- PASS: TestFX7ViewCycleAndStackGuard (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.285s
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (0.66s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.679s
