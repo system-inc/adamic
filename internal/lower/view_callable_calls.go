@@ -13,6 +13,7 @@ func (l *lowering) viewCallableValueContract(node *ast.Node, target *checker.Typ
 }
 
 func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type, active map[*checker.Type]bool) ir.ViewContractID {
+	target = l.concrete(target)
 	if active[target] {
 		return 0
 	}
@@ -79,6 +80,15 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 func (l *lowering) viewCallableCallContract(node *ast.Node, signatures []*checker.Signature) ir.ViewContractID {
 	if len(signatures) == 0 {
 		signatures = l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)), checker.SignatureKindCall)
+	}
+	// A generic view supplies its witness at this reached call, never at the
+	// read. Require the checker resolution to belong to the declared signature.
+	if len(signatures) == 1 && len(signatures[0].TypeParameters()) != 0 {
+		resolved := l.checker.GetResolvedSignature(node)
+		if resolved == nil || resolved.Declaration() == nil || resolved.Declaration() != signatures[0].Declaration() {
+			return 0
+		}
+		signatures = []*checker.Signature{resolved}
 	}
 	return l.viewCallableInvocationContract(node, l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), signatures)
 }

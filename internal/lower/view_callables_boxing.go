@@ -8,6 +8,7 @@ import (
 
 // Bit zero is undefined. A zero mask is an unknown signature, never all members.
 func (l *lowering) viewCallableRepresentationMask(proven *checker.Type) uint16 {
+	proven = l.concrete(proven)
 	if isClassInstance(proven) || proven.Flags()&checker.TypeFlagsIntersection != 0 || proven.Flags()&checker.TypeFlagsObject != 0 && l.unsupportedViewFamily(proven) != "" {
 		return 0
 	}
@@ -60,7 +61,7 @@ func (l *lowering) recordViewCallableRepresentations(index int, function *ir.Fun
 	for _, parameter := range signature.Parameters() {
 		function.CallableParameters = append(function.CallableParameters, l.viewCallableValueContract(declaration, l.censusCallableParameterType(parameter)))
 	}
-	resultType := l.checker.GetReturnTypeOfSignature(signature)
+	resultType := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
 	function.CallableResult = l.viewCallableValueContract(declaration, resultType)
 	function.CallableResultName = l.checker.TypeToString(resultType)
 	function.CallableResultNull = l.includesNull(resultType) && !l.includesUndefined(resultType)

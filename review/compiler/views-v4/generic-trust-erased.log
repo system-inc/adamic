@@ -1,0 +1,16 @@
+=== RUN   TestV4GenericErasedReadRefusal
+=== PAUSE TestV4GenericErasedReadRefusal
+=== CONT  TestV4GenericErasedReadRefusal
+    checked_views_v4_generics_test.go:57: gate cache node miss
+    checked_views_v4_generics_test.go:63: gate cache node miss
+    checked_views_v4_generics_test.go:63: guard mutant admitted in native: exit 0 output "read\n"
+    checked_views_v4_generics_test.go:63: guard mutant admitted in sanitized: exit 0 output "read\n"
+    checked_views_v4_generics_test.go:63: guard mutant admitted in javascript: exit 0 output "read\n"
+    checked_views_v4_generics_test.go:67: erased generic read requires path and fix: <nil>
+--- FAIL: TestV4GenericErasedReadRefusal (0.54s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.553s
+FAIL
