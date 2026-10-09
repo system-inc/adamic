@@ -253,6 +253,13 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(len(self.calls(['ai', 'start'])), 2)
         self.assertEqual(len([c for c in self.calls(['os', 'send']) if 'start again' in c[3]]), 1)
 
+    def test_a_brief_marked_dispatched_is_never_dispatched_again(self):
+        # compiler, Oct 9 10:06Z: parked 11-...dispatched-main briefs ran a second time as duplicates.
+        self.briefs(1)
+        (self.queue / '11-optional-chain.dispatched-main').write_text('Do work.\n')
+        self.step()
+        self.assertEqual(len(self.calls(['ai', 'start'])), 1)
+
     def test_box_races_of_tips_already_on_the_pool_are_not_backlog(self):
         # Oct 9 10:05Z: all 53 queued tips were box races of pool jobs Loom hadn't placed, and the floor held new units.
         self.briefs(2)

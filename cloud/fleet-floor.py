@@ -308,7 +308,8 @@ def is_critical(brief, critical):
 
 def queue(state, lane):
     path = state / 'queues' / lane['lane']
-    return sorted((p for p in path.iterdir() if p.is_file() and not p.is_symlink()),
+    # A brief marked *.dispatched* already ran (compiler, Oct 9 10:06Z: three parked ones re-dispatched as duplicates).
+    return sorted((p for p in path.iterdir() if p.is_file() and not p.is_symlink() and '.dispatched' not in p.name),
                   key=lambda p: p.name) if path.exists() else []
 
 
