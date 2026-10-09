@@ -144,6 +144,7 @@ func TestLoweringSourceEdit(t *testing.T) {
 }
 
 func TestRunnerLocationHelper(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_TEST262_CONTEXT_HELPER") != "1" {
 		return
 	}

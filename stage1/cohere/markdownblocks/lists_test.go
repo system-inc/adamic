@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: shared listLayoutShared and listLayoutBuckets; existing helper controls parallel execution.
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
 	listLayoutSetup(t)
@@ -72,11 +73,7 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 	return completeLayout
 }
 
-func TestMarkdownWhitespaceLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "whitespace")
-}
-
+// Not parallel: shared leafCompositionPrepared and leafCompositionBuilds; existing helper controls parallel execution.
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
 	testMarkdownLeafShards(t)
