@@ -1,0 +1,224 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/regexp/matcher.go",
+    "line": 426,
+    "old": "b.steps >= b.limit",
+    "new": "b.steps > b.limit",
+    "menu": "off-by-one bound",
+    "failed_rows": [
+      "TestMatcherStepLimitBoundary"
+    ]
+  },
+  {
+    "id": "M02",
+    "file": "internal/regexp/matcher.go",
+    "line": 327,
+    "old": "stateful := p.flags.Global || p.flags.Sticky",
+    "new": "stateful := p.flags.Global && p.flags.Sticky",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode"
+    ]
+  },
+  {
+    "id": "M03",
+    "file": "internal/regexp/matcher.go",
+    "line": 385,
+    "old": "r.LastIndex = uint64(state.pos)",
+    "new": "r.LastIndex = uint64(state.pos + 1)",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode"
+    ]
+  },
+  {
+    "id": "M04",
+    "file": "internal/regexp/matcher.go",
+    "line": 399,
+    "old": "\t\tr.LastIndex = 0",
+    "new": "\t\tr.LastIndex = 1",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode"
+    ]
+  },
+  {
+    "id": "M05",
+    "file": "internal/regexp/matcher.go",
+    "line": 450,
+    "old": "alternative.pc = i.y\n\t\t\tstack = append(stack, alternative)\n\t\t\ts.pc = i.x",
+    "new": "alternative.pc = i.x\n\t\t\tstack = append(stack, alternative)\n\t\t\ts.pc = i.y",
+    "menu": "swap arguments",
+    "failed_rows": [
+      "TestMatcherExecution family"
+    ]
+  },
+  {
+    "id": "M06",
+    "file": "internal/regexp/matcher.go",
+    "line": 537,
+    "old": "\t\t\t\tfor _, id := range i.clear {\n\t\t\t\t\tstate.caps[2*id] = -1\n\t\t\t\t\tstate.caps[2*id+1] = -1\n\t\t\t\t}",
+    "new": "",
+    "menu": "drop whole loop",
+    "failed_rows": [
+      "TestMatcherExecution family"
+    ]
+  },
+  {
+    "id": "M07",
+    "file": "internal/regexp/matcher.go",
+    "line": 497,
+    "old": "failed = ok == i.negative",
+    "new": "failed = ok != i.negative",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherPropertyProviderStrings"
+    ]
+  },
+  {
+    "id": "M08",
+    "file": "internal/regexp/matcher.go",
+    "line": 218,
+    "old": "if !f.DotAll {",
+    "new": "if f.DotAll {",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family"
+    ]
+  },
+  {
+    "id": "M09",
+    "file": "internal/regexp/matcher.go",
+    "line": 544,
+    "old": "if i.greedy {",
+    "new": "if !i.greedy {",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode"
+    ]
+  },
+  {
+    "id": "M10",
+    "file": "internal/regexp/matcher.go",
+    "line": 589,
+    "old": "return rune(c), pos + 1, true",
+    "new": "return rune(c), pos + 2, true",
+    "menu": "off-by-one bound",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary"
+    ]
+  },
+  {
+    "id": "M11",
+    "file": "internal/regexp/canonicalize.go",
+    "line": 13,
+    "old": "if !f.IgnoreCase {",
+    "new": "if f.IgnoreCase {",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherStepLimit",
+      "TestMatcherStepLimitBoundary"
+    ]
+  },
+  {
+    "id": "M12",
+    "file": "internal/regexp/sets.go",
+    "line": 175,
+    "old": "set.strings[index] = slices.Clone(text)",
+    "new": "set.strings[index] = text",
+    "menu": "change option",
+    "failed_rows": [
+      "TestMatcherProviderSnapshot"
+    ]
+  },
+  {
+    "id": "M13",
+    "file": "internal/regexp/sets.go",
+    "line": 285,
+    "old": "contains == intersection",
+    "new": "contains != intersection",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherPropertyProviderStrings"
+    ]
+  },
+  {
+    "id": "M14",
+    "file": "internal/regexp/sets.go",
+    "line": 293,
+    "old": "return i < len(s.ranges) && s.ranges[i].From <= c",
+    "new": "return i < len(s.ranges) && s.ranges[i].From < c",
+    "menu": "off-by-one bound",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherStepLimit",
+      "TestMatcherStepLimitBoundary"
+    ]
+  },
+  {
+    "id": "M15",
+    "file": "internal/regexp/parser.go",
+    "line": 110,
+    "old": "if f.Unicode && f.UnicodeSets {",
+    "new": "if f.Unicode && !f.UnicodeSets {",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestFlags",
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherPropertyProviderStrings",
+      "TestNodeAgreement",
+      "TestParse"
+    ]
+  },
+  {
+    "id": "M16",
+    "file": "internal/regexp/parser.go",
+    "line": 752,
+    "old": "limit = 2",
+    "new": "limit = 3",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestMatcherExecution family"
+    ]
+  },
+  {
+    "id": "M17",
+    "file": "internal/regexp/sets.go",
+    "line": 71,
+    "old": "b[k].From - 1",
+    "new": "b[k].From",
+    "menu": "off-by-one bound",
+    "failed_rows": [
+      "TestMatcherExecution family"
+    ]
+  },
+  {
+    "id": "M18",
+    "file": "internal/regexp/matcher.go",
+    "line": 389,
+    "old": "if p.anchored || p.flags.Sticky {",
+    "new": "if p.anchored && p.flags.Sticky {",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMatcherExecution family",
+      "TestMatcherOct6LoopsNode"
+    ]
+  }
+]

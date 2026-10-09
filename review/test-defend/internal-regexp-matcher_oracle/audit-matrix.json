@@ -1,0 +1,1874 @@
+{
+  "M01": {
+    "TestMatcherNodeControls": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherRandomNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "fail",
+      "line": "matcher_step_limit_test.go:31: limit 2: matched=true error=<nil>; want ErrStepLimit before accept",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M01"
+    }
+  },
+  "M02": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=lastIndex pattern=\".\" flags=\"g\" input=[55356 57101 97] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherRandomNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.10_A5.1_T1.js pattern=\"\\\\~\" flags=\"g\" input=[126 96 33 64 35 36 37 94 38 42 40 41 45 43 61 123 91 125 93 124 92 58 59 39 60 44 62 46 47 63 34] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"(a)|(b)\" flags=\"g\": matcher={Captures:[[0 1] [0 1] []] LastIndex:0 Groups:map[]} Node={Captures:[[0 1] [0 1] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M02"
+    }
+  },
+  "M03": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=lastIndex pattern=\".\" flags=\"g\" input=[55356 57101 97] lastIndex=0 got={Captures:[[0 1]] LastIndex:2 Groups:map[]} node={Captures:[[0 1]] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"[a-z]?[a-z]*?\" flags=\"gimsy\" input=[32 13 97 99 383] lastIndex=4 got={Captures:[[4 4]] LastIndex:5 Groups:map[]} node={Captures:[[4 4]] LastIndex:4 Groups:map[]}",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.10_A5.1_T1.js pattern=\"\\\\~\" flags=\"g\" input=[126 96 33 64 35 36 37 94 38 42 40 41 45 43 61 123 91 125 93 124 92 58 59 39 60 44 62 46 47 63 34] lastIndex=0 got={Captures:[[0 1]] LastIndex:2 Groups:map[]} node={Captures:[[0 1]] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"(a)|(b)\" flags=\"g\": matcher={Captures:[[0 1] [0 1] []] LastIndex:2 Groups:map[]} Node={Captures:[[0 1] [0 1] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M03"
+    }
+  },
+  "M04": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=lastIndex pattern=\".\" flags=\"g\" input=[55356 57101 97] lastIndex=3 got={Captures:[] LastIndex:1 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"(?:a)*?b+\" flags=\"gimsy\" input=[8490] lastIndex=4 got={Captures:[] LastIndex:1 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.12_A3_T5.js pattern=\"\\\\w\" flags=\"g\" input=[95 48 49 50 51 52 53 54 55 56 57 95 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90] lastIndex=64 got={Captures:[] LastIndex:1 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 4 pattern=\"(a)|(b)\" flags=\"g\": matcher={Captures:[] LastIndex:1 Groups:map[]} Node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M04"
+    }
+  },
+  "M05": {
+    "TestMatcherNodeControls": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"(?!b)*|[^]+\" flags=\"\" input=[233 8490 55356 57101 50 49] lastIndex=0 got={Captures:[[0 6]] LastIndex:0 Groups:map[]} node={Captures:[[0 0]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.3_A1_T1.js pattern=\"a|ab\" flags=\"\" input=[97 98 99] lastIndex=0 got={Captures:[[0 2]] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "oct6_mutant_test.go:59: control: <nil> {Captures:[[2 3] [0 2] [] [0 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: DISAGREEMENT source=oct6 combinations pattern=\"^((a|ab)+?)(b?)$\" flags=\"\" input=[97 97 98] lastIndex=0 got={Captures:[[0 3] [0 3] [1 3] [3 3]] LastIndex:0 Groups:map[]} node={Captures:[[0 3] [0 2] [1 2] [2 3]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M05"
+    }
+  },
+  "M06": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"(a|(b))+\" flags=\"\" input=[97 98 97] lastIndex=0 got={Captures:[[0 3] [2 3] [1 2]] LastIndex:0 Groups:map[]} node={Captures:[[0 3] [2 3] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"(a|(b)){1,}a?\" flags=\"i\" input=[99 98 97] lastIndex=0 got={Captures:[[1 3] [2 3] [1 2]] LastIndex:0 Groups:map[]} node={Captures:[[1 3] [2 3] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.5_A1_T4.js pattern=\"(z)((a+)?(b+)?(c))*\" flags=\"\" input=[122 97 97 99 98 98 98 99 97 99] lastIndex=0 got={Captures:[[0 10] [0 1] [8 10] [8 9] [4 7] [9 10]] LastIndex:0 Groups:map[]} node={Captures:[[0 10] [0 1] [8 10] [8 9] [] [9 10]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "oct6_mutant_test.go:59: control: <nil> {Captures:[[0 3] [0 3] [2 3] [1 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: DISAGREEMENT source=oct6 combinations pattern=\"^((a(b)?)+)+$\" flags=\"\" input=[97 98 97] lastIndex=0 got={Captures:[[0 3] [0 3] [2 3] [1 2]] LastIndex:0 Groups:map[]} node={Captures:[[0 3] [0 3] [2 3] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M06"
+    }
+  },
+  "M07": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"(?<=([ab]+)([bc]+))$\" flags=\"\" input=[97 98 99] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[3 3] [0 1] [1 3]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"(a?b)+?(?:a)+|(?=a)+?\" flags=\"i\" input=[97 8490 8490] lastIndex=1 got={Captures:[[1 1] []] LastIndex:1 Groups:map[]} node={Captures:[[0 0] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.13_A1_T3.js pattern=\"q[ax-zb](?=\\\\s+)\" flags=\"\" input=[113 89 113 121 32] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 4]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:308: property strings \"(?<=[\\\\p{RGI_Emoji}])a\" got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[5 6]] LastIndex:0 Groups:map[]} error=<nil>",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "oct6_mutant_test.go:59: control: <nil> {Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: DISAGREEMENT source=oct6 combinations pattern=\"(?<=((a)|(ba)))c\" flags=\"\" input=[98 97 99] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 3] [1 2] [1 2] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"(?=(a))\" flags=\"g\": matcher={Captures:[[1 1] []] LastIndex:1 Groups:map[]} Node={Captures:[[0 0] [0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M07"
+    }
+  },
+  "M08": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"^b.$\" flags=\"ms\" input=[97 10 98 10] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 4]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\".*\" flags=\"i\" input=[10 8490 55356 57101] lastIndex=0 got={Captures:[[0 4]] LastIndex:0 Groups:map[]} node={Captures:[[0 0]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.8_A3_T17.js pattern=\"<body.*>((.*\\\\n?)*?)<\\\\/body>\" flags=\"i\" input=[60 104 116 109 108 62 10 60 98 111 100 121 32 111 110 88 88 88 61 34 97 108 101 114 116 40 101 118 101 110 116 46 116 121 112 101 41 59 34 62 10 60 112 62 75 105 98 111 108 111 103 121 32 102 111 114 32 97 108 108 60 47 112 62 10 60 112 62 65 108 108 32 102 111 114 32 75 105 98 111 108 111 103 121 60 47 112 62 10 60 47 98 111 100 121 62 10 60 47 104 116 109 108 62] lastIndex=0 got={Captures:[[7 96] [88 89] [88 89]] LastIndex:0 Groups:map[]} node={Captures:[[7 96] [40 89] [65 89]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M08"
+    }
+  },
+  "M09": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"\\\\c+\" flags=\"\" input=[92 99 99 99] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 4]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherNodeControls"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"[a-z]?[a-z]*?\" flags=\"gimsy\" input=[32 13 97 99 383] lastIndex=4 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[4 4]] LastIndex:4 Groups:map[]}",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherRandomNode"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "unknown",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js pattern=\"^\\\\d+$\" flags=\"\" input=[48 49 50 51 52 53 54 55 56 57] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 10]] LastIndex:0 Groups:map[]}",
+      "timeout": true,
+      "log": "M09-alone-TestMatcherTest262Executions"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherStepLimit"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherCanonicalizeNode"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherPropertyProviderStrings"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:335: DISAGREEMENT source=astral legacy identity quantifier pattern=\"\" flags=\"\" input=[55356 57101 57101] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 3]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherUTF16PatternsNode"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherProviderSnapshot"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherStepLimitBoundary"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "oct6_mutant_test.go:59: control: <nil> {Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherOct6Mutants"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: DISAGREEMENT source=oct6 combinations pattern=\"^((a(b)?)+)+$\" flags=\"\" input=[97 98 97] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 3] [0 3] [2 3] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherOct6Node"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"a+\" flags=\"g\": matcher={Captures:[] LastIndex:0 Groups:map[]} Node={Captures:[[1 2]] LastIndex:2 Groups:map[]}",
+      "timeout": false,
+      "log": "M09-alone-TestMatcherOct6LoopsNode"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestNodeAgreement"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestParse"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestFlags"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestQuantifierBounds"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M09-alone-TestSharedCanonicalize"
+    }
+  },
+  "M10": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"[^[\\\\q{ab|a}]&&[a]]\" flags=\"v\" input=[97 98 99] lastIndex=0 got={Captures:[[2 4]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherNodeControls"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"b*?\\\\d\" flags=\"iv\" input=[49 233 383 49] lastIndex=2 got={Captures:[[0 2]] LastIndex:2 Groups:map[]} node={Captures:[[0 1]] LastIndex:2 Groups:map[]}",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherRandomNode"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "panic: runtime error: index out of range [25] with length 25 [recovered, repanicked]",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherTest262Executions"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherStepLimit"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:282: DISAGREEMENT source=Unicode 17 simple fold pattern=\"\\\\u0041\" flags=\"i\" input=[97] lastIndex=0 got={Captures:[[0 2]] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherCanonicalizeNode"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:308: property strings \"[[\\\\p{RGI_Emoji}]--[\\\\q{\ud83c\udf0d}]]\" got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 7]] LastIndex:0 Groups:map[]} error=<nil>",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherPropertyProviderStrings"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:335: DISAGREEMENT source=UTF16 pattern [55296] pattern=\"\" flags=\"\" input=[55296] lastIndex=0 got={Captures:[[0 2]] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherUTF16PatternsNode"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:355: property provider snapshot got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 5]] LastIndex:0 Groups:map[]} error=<nil>",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherProviderSnapshot"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "fail",
+      "line": "matcher_step_limit_test.go:34: limit 3: matched=false error=<nil>; want a match at exactly the limit",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherStepLimitBoundary"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "panic: runtime error: index out of range [3] with length 3 [recovered, repanicked]",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherOct6Mutants"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "panic: runtime error: index out of range [3] with length 3 [recovered, repanicked]",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherOct6Node"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"(a)|(b)\" flags=\"g\": matcher={Captures:[[0 2] [0 2] []] LastIndex:2 Groups:map[]} Node={Captures:[[0 1] [0 1] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M10-alone-TestMatcherOct6LoopsNode"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M10-alone-TestNodeAgreement"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M10-alone-TestParse"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M10-alone-TestFlags"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M10-alone-TestQuantifierBounds"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M10-alone-TestSharedCanonicalize"
+    }
+  },
+  "M11": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"\\\\c\" flags=\"\" input=[92 99] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"(a?b)+?(?:a)+|(?=a)+?\" flags=\"i\" input=[97 8490 8490] lastIndex=1 got={Captures:[] LastIndex:1 Groups:map[]} node={Captures:[[0 0] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/S15.10.2.10_A3.1_T1.js pattern=\"\\\\xFF\" flags=\"\" input=[255] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherStepLimit": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:252: catastrophic backtracking returned <nil>",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:282: DISAGREEMENT source=Unicode 17 simple fold pattern=\"\\\\u0041\" flags=\"i\" input=[97] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:335: DISAGREEMENT source=non-ASCII legacy identity pattern=\"\" flags=\"\" input=[233] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "fail",
+      "line": "matcher_step_limit_test.go:34: limit 3: matched=false error=<nil>; want a match at exactly the limit",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "oct6_mutant_test.go:59: control: <nil> {Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: DISAGREEMENT source=oct6 combinations pattern=\"^((a(b)?)+)+$\" flags=\"\" input=[97 98 97] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 3] [0 3] [2 3] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"(a)|(b)\" flags=\"g\": matcher={Captures:[] LastIndex:0 Groups:map[]} Node={Captures:[[0 1] [0 1] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M11"
+    }
+  },
+  "M12": {
+    "TestMatcherNodeControls": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherRandomNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:355: property provider snapshot got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 5]] LastIndex:0 Groups:map[]} error=<nil>",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M12"
+    }
+  },
+  "M13": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"[[\\\\q{ab|cd}]--[\\\\q{ab}]]\" flags=\"v\" input=[97 98 99 100] lastIndex=0 got={Captures:[[0 2]] LastIndex:0 Groups:map[]} node={Captures:[[2 4]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherRandomNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/unicodeSets/generated/property-of-strings-escape-difference-character-class-escape.js pattern=\"^[\\\\p{Emoji_Keycap_Sequence}--\\\\d]+$\" flags=\"v\" input=[35 65039 8419 42 65039 8419 48 65039 8419 49 65039 8419 50 65039 8419 51 65039 8419 52 65039 8419 53 65039 8419 54 65039 8419 55 65039 8419 56 65039 8419 57 65039 8419] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 36]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:308: property strings \"[[\\\\p{RGI_Emoji}]--[\\\\q{\ud83c\udf0d}]]\" got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[2 7]] LastIndex:0 Groups:map[]} error=<nil>",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M13"
+    }
+  },
+  "M14": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"[^[\\\\q{ab|a}]&&[a]]\" flags=\"v\" input=[97 98 99] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"(a?b)+?(?:a)+|(?=a)+?\" flags=\"i\" input=[97 8490 8490] lastIndex=1 got={Captures:[] LastIndex:1 Groups:map[]} node={Captures:[[0 0] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js pattern=\"^\\\\d+$\" flags=\"\" input=[48 49 50 51 52 53 54 55 56 57] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 10]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherStepLimit": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:252: catastrophic backtracking returned <nil>",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:282: DISAGREEMENT source=Unicode 17 simple fold pattern=\"\\\\u0041\" flags=\"i\" input=[97] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:308: property strings \"[[\\\\p{RGI_Emoji}]&&[\\\\q{\ud83c\udf0d|aa}]]\" got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 2]] LastIndex:0 Groups:map[]} error=<nil>",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:335: DISAGREEMENT source=UTF16 pattern [55296] pattern=\"\" flags=\"\" input=[55296] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 1]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "fail",
+      "line": "matcher_step_limit_test.go:34: limit 3: matched=false error=<nil>; want a match at exactly the limit",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "fail",
+      "line": "oct6_mutant_test.go:59: control: <nil> {Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: DISAGREEMENT source=oct6 combinations pattern=\"^((a(b)?)+)+$\" flags=\"\" input=[97 98 97] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 3] [0 3] [2 3] []] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 0 pattern=\"(a)|(b)\" flags=\"g\": matcher={Captures:[] LastIndex:0 Groups:map[]} Node={Captures:[[0 1] [0 1] []] LastIndex:1 Groups:map[]}",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M14"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M14"
+    }
+  },
+  "M15": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: compile source=control pattern=\"\\\\u{D83C}\\\\u{DF0D}\" flags=\"u\": regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherRandomNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: compile source=test/built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js pattern=\"^\\\\d+$\" flags=\"u\": regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:282: compile source=Unicode 17 simple fold pattern=\"\\\\u{41}\" flags=\"iu\": regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:314: missing property silently compiled: regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:335: compile source=UTF16 pattern [55296] pattern=\"\" flags=\"u\": regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherOct6Node": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:57: compile source=oct6 combinations pattern=\"(?<=((a)|(\ud83c\udf0d)))b\" flags=\"u\": regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:144: regexp: u and v flags are mutually exclusive at byte 0",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestNodeAgreement": {
+      "status": "fail",
+      "line": "oracle_test.go:79: 3794 disagreements among 5746 test262 and 630 generated cases:",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestParse": {
+      "status": "fail",
+      "line": "parser_test.go:27: Parse(\"[\ud83c\udf0d-\ud83c\udf0e]\",\"u\") error=regexp: u and v flags are mutually exclusive at byte 0, want valid=true",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestFlags": {
+      "status": "fail",
+      "line": "parser_test.go:36: flags \"uv\" accepted",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M15"
+    }
+  },
+  "M16": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"\\\\400\" flags=\"\" input=[32 48] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherRandomNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M16"
+    }
+  },
+  "M17": {
+    "TestMatcherNodeControls": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"[^[\\\\q{ab|a}]&&[a]]\" flags=\"v\" input=[97 98 99] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"[^]{0}[[a-z]&&[^aeiou]]\" flags=\"v\" input=[13 8490 97 55356 57101 32 8490] lastIndex=0 got={Captures:[[2 3]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/CharacterClassEscapes/character-class-non-digit-class-escape-negative-cases.js pattern=\"\\\\D\" flags=\"\" input=[48 49 50 51 52 53 54 55 56 57] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M17"
+    }
+  },
+  "M18": {
+    "TestMatcherNodeControls": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherRandomNode": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:219: DISAGREEMENT source=seed 0x875 pattern=\"[ab]*?\\\\d{1,}\\\\d*\" flags=\"gimsy\" input=[55356 57101 55356 57101 97 383 233 50] lastIndex=2 got={Captures:[[7 8]] LastIndex:8 Groups:map[]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherTest262Executions": {
+      "status": "fail",
+      "line": "matcher_oracle_test.go:240: DISAGREEMENT source=test/built-ins/RegExp/named-groups/duplicate-names-split.js pattern=\"(?<x>a)|(?<x>b)\" flags=\"y\" input=[120 97 98] lastIndex=0 got={Captures:[[1 2] [1 2] []] LastIndex:2 Groups:map[x:[1 2]]} node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherStepLimit": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherCanonicalizeNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherPropertyProviderStrings": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherUTF16PatternsNode": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherProviderSnapshot": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherStepLimitBoundary": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherOct6Mutants": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherOct6Node": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestMatcherOct6LoopsNode": {
+      "status": "fail",
+      "line": "oct6_oracle_test.go:159: step 2 pattern=\"(a)|(b)\" flags=\"y\": matcher={Captures:[[3 4] [3 4] []] LastIndex:4 Groups:map[]} Node={Captures:[] LastIndex:0 Groups:map[]}",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestNodeAgreement": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestParse": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestFlags": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestQuantifierBounds": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    },
+    "TestSharedCanonicalize": {
+      "status": "pass",
+      "line": "",
+      "timeout": false,
+      "log": "M18"
+    }
+  }
+}
