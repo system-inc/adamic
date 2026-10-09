@@ -1,0 +1,8 @@
+=== RUN   TestConstEnumErasesRuntimeObject
+=== PAUSE TestConstEnumErasesRuntimeObject
+=== CONT  TestConstEnumErasesRuntimeObject
+    enums_test.go:143: JavaScript backend stdout = "5\n", source Node = "4\n"
+--- FAIL: TestConstEnumErasesRuntimeObject (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.149s
+FAIL

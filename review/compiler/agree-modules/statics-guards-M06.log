@@ -1,0 +1,8 @@
+=== RUN   TestPrivateAndPublicStaticsAgreeWithNode
+=== PAUSE TestPrivateAndPublicStaticsAgreeWithNode
+=== CONT  TestPrivateAndPublicStaticsAgreeWithNode
+    statics_guards_test.go:40: JavaScript backend stdout = "", source Node = "29 11 11\n"
+--- FAIL: TestPrivateAndPublicStaticsAgreeWithNode (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.139s
+FAIL

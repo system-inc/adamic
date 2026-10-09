@@ -1,0 +1,8 @@
+=== RUN   TestReadinessErrorIncludesReceiverExpression
+=== PAUSE TestReadinessErrorIncludesReceiverExpression
+=== CONT  TestReadinessErrorIncludesReceiverExpression
+    statics_guards_test.go:63: read-before-assignment: exit=70 stdout="" stderr="adamic: panic: read before assignment: field 'n' in n\n", want panic naming new Box().n
+--- FAIL: TestReadinessErrorIncludesReceiverExpression (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.074s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestEnumMemberValuesAndReverseNameMatchNode
+=== PAUSE TestEnumMemberValuesAndReverseNameMatchNode
+=== CONT  TestEnumMemberValuesAndReverseNameMatchNode
+    enum_guards_test.go:70: JavaScript backend stdout = "1 2 1 \n", source Node = "1 2 1 Alias\n"
+--- FAIL: TestEnumMemberValuesAndReverseNameMatchNode (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.220s
+FAIL

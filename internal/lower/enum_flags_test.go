@@ -126,7 +126,7 @@ func TestFlagEnumInlineIteration(t *testing.T) {
 func TestFlagEnumAliasBoundaries(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias;",
+		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias; console.log(`${flags}`);",
 		flagDeclaration + "for (const flags of [Flags.A, 99]) { const value: Flags = flags; console.log(`${value}`); }",
 		flagDeclaration + "const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; console.log(`${value}`); }",
 		flagDeclaration + "for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; console.log(`${value}`); }",

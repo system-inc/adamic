@@ -1,0 +1,435 @@
+=== RUN   TestFlagEnumsOpen
+=== PAUSE TestFlagEnumsOpen
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestFlagEnumAliasBoundaries
+=== PAUSE TestFlagEnumAliasBoundaries
+=== RUN   TestEnumMemberValuesAndReverseNameMatchNode
+=== PAUSE TestEnumMemberValuesAndReverseNameMatchNode
+=== RUN   TestEnumFlagProofsWithoutObservableLoweringEffect
+=== PAUSE TestEnumFlagProofsWithoutObservableLoweringEffect
+=== RUN   TestEnumReverseMappingUsesSingleSlot
+=== PAUSE TestEnumReverseMappingUsesSingleSlot
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestEnumSwitchExhaustiveness
+=== PAUSE TestEnumSwitchExhaustiveness
+=== RUN   TestEnumLimitsStayLoud
+=== PAUSE TestEnumLimitsStayLoud
+=== RUN   TestConstEnumErasesRuntimeObject
+=== PAUSE TestConstEnumErasesRuntimeObject
+=== RUN   TestEnumIdentityAcrossModules
+=== PAUSE TestEnumIdentityAcrossModules
+=== RUN   TestNamespaceLimitsStayLoud
+=== PAUSE TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceReceiverRefusal
+=== PAUSE TestNamespaceReceiverRefusal
+=== RUN   TestNamespaceTypesErase
+=== PAUSE TestNamespaceTypesErase
+=== RUN   TestTracingNamespaceEscapeStaysNotYet
+=== PAUSE TestTracingNamespaceEscapeStaysNotYet
+=== RUN   TestDebugNamespaceMergedCapabilities
+=== PAUSE TestDebugNamespaceMergedCapabilities
+=== RUN   TestNamespaceReturnedAssignmentLimits
+=== PAUSE TestNamespaceReturnedAssignmentLimits
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== RUN   TestNamespaceClosedCallGraphEdges
+=== PAUSE TestNamespaceClosedCallGraphEdges
+=== RUN   TestEmptyNeverMapCannotGainWritableInhabitants
+=== PAUSE TestEmptyNeverMapCannotGainWritableInhabitants
+=== RUN   TestNestedFunctionGapsAreLoud
+=== PAUSE TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionCycleIsRefused
+=== PAUSE TestNestedFunctionCycleIsRefused
+=== RUN   TestNestedEnvironmentHasOneAllocationSite
+=== PAUSE TestNestedEnvironmentHasOneAllocationSite
+=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots
+=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots
+=== RUN   TestNestedCapturedParametersAreOwned
+=== PAUSE TestNestedCapturedParametersAreOwned
+=== RUN   TestClosedFrameInputRejectsMutation
+=== PAUSE TestClosedFrameInputRejectsMutation
+=== RUN   TestNestedRebindingNotYet
+=== PAUSE TestNestedRebindingNotYet
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== RUN   TestNestedBodylessDeclarationsAreLoud
+=== PAUSE TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestNestedRestIsSupported
+=== PAUSE TestNestedRestIsSupported
+=== RUN   TestPrivateAndPublicStaticsAgreeWithNode
+=== PAUSE TestPrivateAndPublicStaticsAgreeWithNode
+=== RUN   TestNamespaceFactoryBindingsAgreeWithNode
+=== PAUSE TestNamespaceFactoryBindingsAgreeWithNode
+=== RUN   TestReadinessErrorIncludesReceiverExpression
+=== PAUSE TestReadinessErrorIncludesReceiverExpression
+=== CONT  TestFlagEnumsOpen
+=== RUN   TestFlagEnumsOpen/complement
+=== PAUSE TestFlagEnumsOpen/complement
+=== RUN   TestFlagEnumsOpen/arithmetic
+=== PAUSE TestFlagEnumsOpen/arithmetic
+=== RUN   TestFlagEnumsOpen/increment
+=== PAUSE TestFlagEnumsOpen/increment
+=== RUN   TestFlagEnumsOpen/shift_update
+=== PAUSE TestFlagEnumsOpen/shift_update
+=== RUN   TestFlagEnumsOpen/shift_result
+=== PAUSE TestFlagEnumsOpen/shift_result
+=== RUN   TestFlagEnumsOpen/sign_bit
+=== PAUSE TestFlagEnumsOpen/sign_bit
+=== RUN   TestFlagEnumsOpen/implicit
+=== PAUSE TestFlagEnumsOpen/implicit
+=== RUN   TestFlagEnumsOpen/numeric_shape
+=== PAUSE TestFlagEnumsOpen/numeric_shape
+=== RUN   TestFlagEnumsOpen/arithmetic_shape
+=== PAUSE TestFlagEnumsOpen/arithmetic_shape
+=== RUN   TestFlagEnumsOpen/switch_default
+=== PAUSE TestFlagEnumsOpen/switch_default
+=== RUN   TestFlagEnumsOpen/cross_enum_left
+=== PAUSE TestFlagEnumsOpen/cross_enum_left
+=== RUN   TestFlagEnumsOpen/cross_enum_right
+=== PAUSE TestFlagEnumsOpen/cross_enum_right
+=== RUN   TestFlagEnumsOpen/or_number
+=== PAUSE TestFlagEnumsOpen/or_number
+=== CONT  TestTracingNamespaceEscapeStaysNotYet
+=== RUN   TestFlagEnumsOpen/xor_number
+=== PAUSE TestFlagEnumsOpen/xor_number
+=== RUN   TestFlagEnumsOpen/and_numbers
+=== PAUSE TestFlagEnumsOpen/and_numbers
+=== RUN   TestFlagEnumsOpen/narrowed_member
+=== PAUSE TestFlagEnumsOpen/narrowed_member
+=== RUN   TestFlagEnumsOpen/compound_or_number
+=== PAUSE TestFlagEnumsOpen/compound_or_number
+=== RUN   TestFlagEnumsOpen/compound_xor_number
+=== PAUSE TestFlagEnumsOpen/compound_xor_number
+=== RUN   TestFlagEnumsOpen/mutable_alias
+=== PAUSE TestFlagEnumsOpen/mutable_alias
+=== RUN   TestFlagEnumsOpen/bare_number
+=== PAUSE TestFlagEnumsOpen/bare_number
+=== RUN   TestFlagEnumsOpen/member_slot
+=== PAUSE TestFlagEnumsOpen/member_slot
+=== RUN   TestFlagEnumsOpen/array_view
+=== PAUSE TestFlagEnumsOpen/array_view
+=== CONT  TestNamespaceTypesErase
+=== CONT  TestEnumIdentityAcrossModules
+=== CONT  TestNamespaceReceiverRefusal
+=== CONT  TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/computed_enum
+--- PASS: TestTracingNamespaceEscapeStaysNotYet (0.07s)
+=== CONT  TestConstEnumErasesRuntimeObject
+--- PASS: TestEnumIdentityAcrossModules (0.07s)
+=== CONT  TestEnumLimitsStayLoud
+--- PASS: TestNamespaceReceiverRefusal (0.07s)
+=== CONT  TestEnumSwitchExhaustiveness
+=== RUN   TestNamespaceLimitsStayLoud/reopened_enum
+=== RUN   TestNamespaceLimitsStayLoud/early_enum
+=== RUN   TestNamespaceLimitsStayLoud/mutable_object_escape
+=== RUN   TestNamespaceLimitsStayLoud/object_value
+--- PASS: TestConstEnumErasesRuntimeObject (0.21s)
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumReverseMappingUsesSingleSlot
+--- PASS: TestNamespaceTypesErase (0.28s)
+=== CONT  TestEnumFlagProofsWithoutObservableLoweringEffect
+=== RUN   TestNamespaceLimitsStayLoud/reflection
+=== RUN   TestNamespaceLimitsStayLoud/reopening
+--- PASS: TestEnumFlagProofsWithoutObservableLoweringEffect (0.12s)
+=== CONT  TestEnumMemberValuesAndReverseNameMatchNode
+=== RUN   TestNamespaceLimitsStayLoud/function_merge_escape
+--- PASS: TestEnumReverseMappingUsesSingleSlot (0.20s)
+=== CONT  TestFlagEnumAliasBoundaries
+=== RUN   TestNamespaceLimitsStayLoud/class_merge
+=== RUN   TestNamespaceLimitsStayLoud/destructured_state
+=== RUN   TestNamespaceLimitsStayLoud/nested_object_var
+=== RUN   TestNamespaceLimitsStayLoud/rest_object_var
+=== RUN   TestNamespaceLimitsStayLoud/default_object_var
+=== RUN   TestNamespaceLimitsStayLoud/computed_member
+--- PASS: TestEnumMemberValuesAndReverseNameMatchNode (0.43s)
+=== CONT  TestFlagEnumInlineIteration
+=== RUN   TestNamespaceLimitsStayLoud/replace_function
+=== RUN   TestNamespaceLimitsStayLoud/early_call
+--- PASS: TestEnumLimitsStayLoud (0.87s)
+=== CONT  TestEnumNameEnumeration
+=== RUN   TestNamespaceLimitsStayLoud/early_read
+=== RUN   TestNamespaceLimitsStayLoud/block_var
+--- PASS: TestEnumSwitchExhaustiveness (0.96s)
+=== CONT  TestFlagEnumMemberAliases
+=== RUN   TestNamespaceLimitsStayLoud/nested_early_read
+--- PASS: TestFlagEnumInlineIteration (0.27s)
+=== CONT  TestFlagEnumLiteralSpellings
+=== RUN   TestNamespaceLimitsStayLoud/explicit_receiver
+--- PASS: TestEnumNameEnumeration (0.23s)
+=== CONT  TestEnumNeverDefault
+=== RUN   TestNamespaceLimitsStayLoud/ambient
+--- PASS: TestFlagEnumMemberAliases (0.24s)
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:96: bitwise_updates
+--- PASS: TestNamespaceLimitsStayLoud (1.29s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_enum (0.11s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopened_enum (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_enum (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/mutable_object_escape (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/object_value (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/reflection (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopening (0.08s)
+    --- PASS: TestNamespaceLimitsStayLoud/function_merge_escape (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/class_merge (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/destructured_state (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_object_var (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/rest_object_var (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/default_object_var (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_member (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/replace_function (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_call (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_read (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/block_var (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_early_read (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/explicit_receiver (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/ambient (0.08s)
+=== CONT  TestNestedCapturedParametersAreOwned
+--- PASS: TestFlagEnumLiteralSpellings (0.25s)
+=== CONT  TestReadinessErrorIncludesReceiverExpression
+--- PASS: TestEnumNeverDefault (0.21s)
+=== CONT  TestNamespaceFactoryBindingsAgreeWithNode
+--- PASS: TestReadinessErrorIncludesReceiverExpression (0.10s)
+=== CONT  TestPrivateAndPublicStaticsAgreeWithNode
+--- PASS: TestNestedCapturedParametersAreOwned (0.19s)
+=== CONT  TestNestedRestIsSupported
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: alias
+--- PASS: TestFlagEnumAliasBoundaries (1.03s)
+=== CONT  TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== RUN   TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== CONT  TestNestedCallbackCycleIsRefused
+--- PASS: TestNestedCallbackCycleIsRefused (0.06s)
+=== CONT  TestNestedRebindingNotYet
+--- PASS: TestNestedRebindingNotYet (0.05s)
+=== CONT  TestClosedFrameInputRejectsMutation
+--- PASS: TestNamespaceFactoryBindingsAgreeWithNode (0.32s)
+=== CONT  TestEmptyNeverMapCannotGainWritableInhabitants
+--- PASS: TestPrivateAndPublicStaticsAgreeWithNode (0.24s)
+=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots
+--- PASS: TestNestedRestIsSupported (0.22s)
+=== CONT  TestNestedEnvironmentHasOneAllocationSite
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: or
+--- PASS: TestEmptyNeverMapCannotGainWritableInhabitants (0.07s)
+=== CONT  TestNestedFunctionCycleIsRefused
+--- PASS: TestNestedEnvironmentCycleIncludesDisjointSlots (0.08s)
+=== CONT  TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionGapsAreLoud/block
+=== RUN   TestNestedFunctionGapsAreLoud/generic
+--- PASS: TestNestedFunctionCycleIsRefused (0.07s)
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+--- PASS: TestClosedFrameInputRejectsMutation (0.21s)
+=== CONT  TestNamespaceClosedCallGraphEdges
+=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this
+=== RUN   TestNamespaceInitializationReachability/helper
+=== RUN   TestNamespaceInitializationReachability/cycle
+--- PASS: TestNestedEnvironmentHasOneAllocationSite (0.26s)
+=== CONT  TestNamespaceReturnedAssignmentLimits
+--- PASS: TestNestedFunctionGapsAreLoud (0.20s)
+    --- PASS: TestNestedFunctionGapsAreLoud/block (0.05s)
+    --- PASS: TestNestedFunctionGapsAreLoud/generic (0.07s)
+    --- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.08s)
+=== CONT  TestDebugNamespaceMergedCapabilities
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_log.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_log.a
+=== RUN   TestDebugNamespaceMergedCapabilities/class_merge.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/class_merge.a
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_class.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestFlagEnumsOpen/complement
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: xor
+--- PASS: TestNamespaceInitializationReachability (0.16s)
+    --- PASS: TestNamespaceInitializationReachability/direct (0.07s)
+    --- PASS: TestNamespaceInitializationReachability/helper (0.05s)
+    --- PASS: TestNamespaceInitializationReachability/cycle (0.04s)
+=== CONT  TestFlagEnumsOpen/or_number
+--- PASS: TestNamespaceReturnedAssignmentLimits (0.09s)
+=== CONT  TestFlagEnumsOpen/implicit
+--- PASS: TestNamespaceClosedCallGraphEdges (0.29s)
+=== CONT  TestFlagEnumsOpen/cross_enum_right
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: and_left
+=== CONT  TestFlagEnumsOpen/cross_enum_left
+=== CONT  TestFlagEnumsOpen/switch_default
+=== CONT  TestFlagEnumsOpen/arithmetic_shape
+=== CONT  TestFlagEnumsOpen/numeric_shape
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: and_right
+=== CONT  TestFlagEnumsOpen/compound_xor_number
+=== CONT  TestFlagEnumsOpen/array_view
+=== CONT  TestFlagEnumsOpen/member_slot
+=== CONT  TestFlagEnumsOpen/bare_number
+=== CONT  TestFlagEnumsOpen/mutable_alias
+=== CONT  TestFlagEnumsOpen/narrowed_member
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: and_complement
+=== CONT  TestFlagEnumsOpen/compound_or_number
+=== CONT  TestFlagEnumsOpen/shift_update
+=== CONT  TestFlagEnumsOpen/sign_bit
+=== CONT  TestFlagEnumsOpen/shift_result
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: nested
+=== CONT  TestFlagEnumsOpen/increment
+=== CONT  TestFlagEnumsOpen/arithmetic
+=== CONT  TestFlagEnumsOpen/and_numbers
+=== CONT  TestFlagEnumsOpen/xor_number
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: field
+=== CONT  TestEnumSlotViews/variable
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+--- PASS: TestFlagEnumsOpen (0.00s)
+    --- PASS: TestFlagEnumsOpen/complement (0.24s)
+    --- PASS: TestFlagEnumsOpen/or_number (0.23s)
+    --- PASS: TestFlagEnumsOpen/implicit (0.22s)
+    --- PASS: TestFlagEnumsOpen/cross_enum_right (0.23s)
+    --- PASS: TestFlagEnumsOpen/switch_default (0.20s)
+    --- PASS: TestFlagEnumsOpen/arithmetic_shape (0.18s)
+    --- PASS: TestFlagEnumsOpen/cross_enum_left (0.24s)
+    --- PASS: TestFlagEnumsOpen/member_slot (0.05s)
+    --- PASS: TestFlagEnumsOpen/numeric_shape (0.20s)
+    --- PASS: TestFlagEnumsOpen/compound_xor_number (0.23s)
+    --- PASS: TestFlagEnumsOpen/array_view (0.29s)
+    --- PASS: TestFlagEnumsOpen/narrowed_member (0.07s)
+    --- PASS: TestFlagEnumsOpen/bare_number (0.24s)
+    --- PASS: TestFlagEnumsOpen/mutable_alias (0.26s)
+    --- PASS: TestFlagEnumsOpen/shift_update (0.21s)
+    --- PASS: TestFlagEnumsOpen/compound_or_number (0.21s)
+    --- PASS: TestFlagEnumsOpen/sign_bit (0.26s)
+    --- PASS: TestFlagEnumsOpen/shift_result (0.25s)
+    --- PASS: TestFlagEnumsOpen/increment (0.21s)
+    --- PASS: TestFlagEnumsOpen/arithmetic (0.21s)
+    --- PASS: TestFlagEnumsOpen/xor_number (0.21s)
+    --- PASS: TestFlagEnumsOpen/and_numbers (0.30s)
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: array
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== CONT  TestEnumSlotViews/array_literal
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: map
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: parameter
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/argument
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: optional
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+=== CONT  TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: switch
+=== CONT  TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_log.a
+--- PASS: TestNestedBodylessDeclarationsAreLoud (0.00s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/body_lowering (0.05s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/missing_implementation (0.08s)
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestDebugNamespaceMergedCapabilities/class_merge.a
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/object_assign (0.07s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.04s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.06s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.08s)
+    --- PASS: TestEnumSlotViews/variable (0.22s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.06s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.10s)
+    --- PASS: TestEnumSlotViews/map_alias (0.17s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.20s)
+    --- PASS: TestEnumSlotViews/optional_union (0.25s)
+    --- PASS: TestEnumSlotViews/class_field (0.25s)
+    --- PASS: TestEnumSlotViews/array_literal (0.22s)
+    --- PASS: TestEnumSlotViews/override (0.23s)
+    --- PASS: TestEnumSlotViews/function_view (0.22s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.25s)
+    --- PASS: TestEnumSlotViews/array_alias (0.22s)
+    --- PASS: TestEnumSlotViews/compound (0.23s)
+    --- PASS: TestEnumSlotViews/increment (0.28s)
+    --- PASS: TestEnumSlotViews/argument (0.26s)
+    --- PASS: TestEnumSlotViews/literal_property (0.24s)
+    --- PASS: TestEnumSlotViews/assignment (0.25s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.22s)
+    --- PASS: TestEnumSlotViews/initializer (0.25s)
+--- PASS: TestFlagEnumsDomain (3.21s)
+--- PASS: TestDebugNamespaceMergedCapabilities (0.00s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/class_merge.a (0.07s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_log.a (0.20s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_class.a (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	4.552s

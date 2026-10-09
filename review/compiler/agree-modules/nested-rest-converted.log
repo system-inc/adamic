@@ -1,0 +1,8 @@
+=== RUN   TestNestedRestIsSupported
+=== PAUSE TestNestedRestIsSupported
+=== CONT  TestNestedRestIsSupported
+    nested_functions_test.go:234: JavaScript backend stdout = "undefined\n", source Node = "1\n"
+--- FAIL: TestNestedRestIsSupported (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.166s
+FAIL

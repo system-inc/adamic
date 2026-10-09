@@ -1,0 +1,13 @@
+=== RUN   TestParserFactoryBindingHoisting
+=== PAUSE TestParserFactoryBindingHoisting
+=== RUN   TestNamespaceFactoryBindingsAgreeWithNode
+=== PAUSE TestNamespaceFactoryBindingsAgreeWithNode
+=== CONT  TestParserFactoryBindingHoisting
+=== CONT  TestNamespaceFactoryBindingsAgreeWithNode
+=== NAME  TestParserFactoryBindingHoisting
+    namespaces_factory_test.go:42: NamespaceVar bindings = map[], want factoryCreateNodeArray and factoryCreateNumericLiteral once each
+--- FAIL: TestParserFactoryBindingHoisting (0.04s)
+--- PASS: TestNamespaceFactoryBindingsAgreeWithNode (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.157s
+FAIL
