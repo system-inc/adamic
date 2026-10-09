@@ -38,3 +38,6 @@ Mutant kills (exact diffs retained as .diff):
 - M12: TestFSExistsOperation, exit 1.
 - M13: TestFSStatThrowsByDefault, exit 1.
 - unrelated-refusal: TestLibraryMethodValueSafety/unsupported_callback, exit 1; expected primitive adapter reason, got unrelated refusal.
+
+Current main 0942c516 merged without conflicts. Post-merge focused lowering tests and both uncached oracle split runs passed (merged-lower.json and merged-oracle-{0,1}.json).
+Lane output: lane checks 1.6 s: gofmt and tools on 3 Go files, t.Parallel on 2 test packages; vet 2 packages.
