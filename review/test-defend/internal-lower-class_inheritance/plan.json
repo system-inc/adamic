@@ -1,0 +1,20 @@
+[
+  [
+    "D1",
+    "internal/lower/class.go",
+    "keep recursive type arguments unchanged, or write a class per type",
+    "write a class per type"
+  ],
+  [
+    "D2",
+    "internal/lower/class_super.go",
+    "\tfor _, parameter := range constructor.Parameters() {\n\t\tif err := flow.reads(parameter, superUninitialized); err != nil {\n\t\t\treturn 0, err\n\t\t}\n\t}\n",
+    ""
+  ],
+  [
+    "D3",
+    "internal/lower/class_inheritance.go",
+    "\t\tfor index := range from {\n\t\t\tif !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n",
+    ""
+  ]
+]

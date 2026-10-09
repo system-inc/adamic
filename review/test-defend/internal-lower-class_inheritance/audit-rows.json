@@ -1,0 +1,476 @@
+[
+  {
+    "test": "TestInheritanceRefusesUnsoundOverrides",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.145,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M04",
+      "M05",
+      "M09",
+      "M15",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:52: want refusal naming cycle-capable with fix \"Weak\", got /tmp/adamic-gate/TestInheritanceRefusesUnsoundOverridesinherited_private_cycle725595212/001/main.a:2:13: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritance family",
+      "TestInheritanceGenericSoundness"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M16.log 2>&1; class_inheritance_test.go:52: want refusal naming cycle-capable with fix \"Weak\", got <nil>",
+    "row_id": "R1"
+  },
+  {
+    "test": "TestInheritanceKeepsCheckerConstructorRules",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.085,
+    "oracle": "Handwritten *load.CheckError and abstract/super substring checks; upstream checker is not independently run or compared",
+    "oracle_kind": "self",
+    "kills": [
+      "M20"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M20: class_inheritance_test.go:82: want abstract, got",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesPrivateChecker"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOAD"
+    ],
+    "subsumer_seconds": 0.104,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M20.log 2>&1; class_inheritance_test.go:82: want abstract, got",
+    "row_id": "R2"
+  },
+  {
+    "test": "TestInheritance family",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.301,
+    "oracle": "Handwritten success-only err == nil checks; no IR or execution result checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M05",
+      "M08",
+      "M09",
+      "M15",
+      "M17"
+    ],
+    "unique_kills": [
+      "M08"
+    ],
+    "last_proven_fail": "M17: class_inheritance_test.go:97: /tmp/adamic-gate/TestInheritanceAllowsSoundOverrides1518375611/001/main.a:4:9: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M08.log 2>&1; class_inheritance_test.go:97: /tmp/adamic-gate/TestInheritanceAllowsSoundOverrides302435907/001/main.a:4:87: Adamic 0.1 refuses an override that widens its return type; return the base method's result type or a subtype",
+    "members": [
+      "TestInheritanceAllowsSoundOverrides",
+      "TestInheritanceKeepsNominalTupleDestructuring",
+      "TestInheritanceNativeSignatureNeighbors"
+    ],
+    "row_id": "R3"
+  },
+  {
+    "test": "TestInheritanceHasClassIdentity",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.042,
+    "oracle": "Handwritten IR class identity or field-layout assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M15",
+      "M17"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M17: class_inheritance_test.go:106: /tmp/adamic-gate/TestInheritanceHasClassIdentity1510642595/001/main.a:1:20: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M01.log 2>&1; class_inheritance_test.go:109: missing ancestry: [{Definition:1 Name:A Base:0 Constructor:0 Fields:[] OwnStart:0 Methods:[] Accessors:[] Literal:false PublicFields:[] Static:false StaticParent:0 StaticFlags:[]} {Definition:2 Name:B Base:0 Constructor:2 Fields:[] OwnStart:0 Methods:[] Accessors:[] Literal:false PublicFields:[] Static:false StaticParent:0 StaticFlags:[]}]",
+    "row_id": "R4"
+  },
+  {
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.054,
+    "oracle": "Handwritten inherited property-symbol membership assertion",
+    "oracle_kind": "self",
+    "kills": [
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: class_inheritance_test.go:135: cycle traversal lost Base.parent when visiting Child",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceGenericSoundness"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_FIELDS"
+    ],
+    "subsumer_seconds": 0.078,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M16.log 2>&1; class_inheritance_test.go:135: cycle traversal lost Base.parent when visiting Child",
+    "row_id": "R5"
+  },
+  {
+    "test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.096,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M17",
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18: class_inheritance_test.go:151: want explicit unsupported construct \"declare or abstract\", got <nil>",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritanceGenericFactoryLayouts",
+      "TestConstructorCacheOneArgumentRemainsNotYet"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M18.log 2>&1; class_inheritance_test.go:151: want explicit unsupported construct \"declare or abstract\", got <nil>",
+    "row_id": "R6"
+  },
+  {
+    "test": "TestInheritanceRefusesFalseNominalViews",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.169,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M05",
+      "M09",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: class_inheritance_test.go:173: want nominal class refusal, got <nil>",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritanceGenericViewsKeepNominalArguments",
+      "TestInheritanceRefusesUnsoundOverrides"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M14.log 2>&1; class_inheritance_test.go:173: want nominal class refusal, got <nil>",
+    "row_id": "R7"
+  },
+  {
+    "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.049,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:187: want pre-super this refusal with fix, got /tmp/adamic-gate/TestInheritanceRefusesThisBeforeSuperReturns3675340471/001/main.a:1:20: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceConditionalThisRules"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.098,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M10.log 2>&1; class_inheritance_test.go:187: want pre-super this refusal with fix, got <nil>",
+    "row_id": "R8"
+  },
+  {
+    "test": "TestInheritanceGenericMonomorphizations",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.049,
+    "oracle": "Handwritten IR class identity or field-layout assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M12",
+      "M13",
+      "M17"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M17: class_inheritance_test.go:211: /tmp/adamic-gate/TestInheritanceGenericMonomorphizations2523021764/001/main.a:3:15: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M12.log 2>&1; class_inheritance_test.go:223: monomorphizations lost their shared erased identity",
+    "row_id": "R9"
+  },
+  {
+    "test": "TestInheritanceRefusesGrowingGenericClasses",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.044,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions; only caught M17, an earlier computed-base rejection, not a mutation of the recursion bound",
+    "oracle_kind": "self",
+    "kills": [
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:241: want bounded monomorphization refusal with fix, got /tmp/adamic-gate/TestInheritanceRefusesGrowingGenericClasses497919312/001/main.a:2:15: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceHasClassIdentity"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.042,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M17.log 2>&1; class_inheritance_test.go:241: want bounded monomorphization refusal with fix, got /tmp/adamic-gate/TestInheritanceRefusesGrowingGenericClasses497919312/001/main.a:2:15: stage 0 can't lower a computed class base; name the base class directly yet",
+    "row_id": "R10"
+  },
+  {
+    "test": "TestInheritanceGenericSoundness",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.078,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M05",
+      "M13",
+      "M15",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:260: want cycle-capable refusal, got /tmp/adamic-gate/TestInheritanceGenericSoundnessgeneric_inherited_cycle3570834409/001/main.a:3:16: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritanceGenericFactoryLayouts",
+      "TestInheritanceRefusesUnsoundOverrides"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M16.log 2>&1; class_inheritance_test.go:260: want cycle-capable refusal, got <nil>",
+    "row_id": "R11"
+  },
+  {
+    "test": "TestInheritanceConditionalThisRules",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.098,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:276: want pre-super binding refusal with fix, got /tmp/adamic-gate/TestInheritanceConditionalThisRules1489028306/001/main.a:1:20: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceRefusesThisBeforeSuperReturns"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.049,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M10.log 2>&1; class_inheritance_test.go:276: want pre-super binding refusal with fix, got <nil>",
+    "row_id": "R12"
+  },
+  {
+    "test": "TestInheritanceGenericViewsKeepNominalArguments",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.043,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: class_inheritance_test.go:290: want nominal generic argument refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceGenericNominalConstraints"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.074,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M14.log 2>&1; class_inheritance_test.go:290: want nominal generic argument refusal, got <nil>",
+    "row_id": "R13"
+  },
+  {
+    "test": "TestInheritanceGenericNominalConstraints",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.074,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: class_inheritance_test.go:303: want nominal constraint refusal with structural repair, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceGenericViewsKeepNominalArguments"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.043,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M14.log 2>&1; class_inheritance_test.go:303: want nominal constraint refusal with structural repair, got <nil>",
+    "row_id": "R14"
+  },
+  {
+    "test": "TestInheritanceGenericFactoryLayouts",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.042,
+    "oracle": "Handwritten IR class identity or field-layout assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:318: /tmp/adamic-gate/TestInheritanceGenericFactoryLayouts3368409751/001/main.a:3:65: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceGenericMonomorphizations"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.049,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M13.log 2>&1; class_inheritance_test.go:318: /tmp/adamic-gate/TestInheritanceGenericFactoryLayouts503510385/001/main.a:3:65: stage 0 can't lower a class instantiated with T[\"native\"] yet",
+    "row_id": "R15"
+  },
+  {
+    "test": "TestInheritanceNativeSignatureLimits",
+    "package": "internal/lower",
+    "file": "internal/lower/class_inheritance_test.go",
+    "seconds": 0.162,
+    "oracle": "Handwritten acceptance/refusal and diagnostic substring assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M05",
+      "M06",
+      "M09",
+      "M13",
+      "M15",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: class_inheritance_test.go:383: want NotYet naming parameter \"factor\" and its repair, got /tmp/adamic-gate/TestInheritanceNativeSignatureLimitsgeneric_default_added1415935946/001/main.a:2:16: stage 0 can't lower a computed class base; name the base class directly yet",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritanceGenericSoundness",
+      "TestOverride family"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u029/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M15.log 2>&1; class_inheritance_test.go:383: want NotYet naming parameter \"factor\" and its repair, got /tmp/adamic-gate/TestInheritanceNativeSignatureLimitsgeneric_default_added561452470/001/main.a:3:29: Adamic 0.1 refuses a value without nominal ancestry seen as Base<number>; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)",
+    "row_id": "R16"
+  }
+]

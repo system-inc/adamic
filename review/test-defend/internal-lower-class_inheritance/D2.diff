@@ -1,0 +1,14 @@
+--- a/internal/lower/class_super.go
++++ b/internal/lower/class_super.go
+@@ -153,11 +153,6 @@
+ 	instance.unreadyThis = map[*ast.Node]bool{}
+ 	instance.superStates = map[*ast.Node]uint8{}
+ 	flow := constructorSuperFlow{l: l, instance: instance}
+-	for _, parameter := range constructor.Parameters() {
+-		if err := flow.reads(parameter, superUninitialized); err != nil {
+-			return 0, err
+-		}
+-	}
+ 	state, err := flow.statement(constructor.Body(), superUninitialized)
+ 	if err != nil {
+ 		return 0, err

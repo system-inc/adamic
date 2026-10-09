@@ -1,0 +1,56 @@
+[
+  {
+    "test": "TestInheritanceGenericNominalConstraints",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceGenericViewsKeepNominalArguments",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/class_generic_calls.go:52",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/class_generic_calls.go:52",
+        "change": "Drop generic-function nominal type-argument validation.",
+        "rows_failed": [
+          "TestInheritanceGenericNominalConstraints"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/inheritance-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; class_inheritance_test.go:290: want nominal constraint refusal with structural repair, got <nil>"
+  },
+  {
+    "test": "TestInheritanceGenericFactoryLayouts",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceGenericMonomorphizations",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class_generic_calls.go:67",
+        "change": "Drop the generic-factory mapper and cache assignment.",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/class_generic_calls.go:51",
+        "change": "Swap source and target arguments to newTypeMapper.",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/class_inheritance.go:933",
+        "change": "Drop generic base substitution, using the unsubstituted base type.",
+        "rows_failed": [
+          "TestCheckedCastProofAndElision",
+          "TestInheritanceGenericFactoryLayouts",
+          "TestInheritanceGenericMonomorphizations",
+          "TestInheritanceGenericSoundness",
+          "TestInheritanceNativeSignatureLimits"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/inheritance-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; class_inheritance_test.go:297: Lower refused acceptance row: /tmp/adamic-gate/TestInheritanceGenericFactoryLayouts1982115739/001/main.a:3:65: stage 0 can't lower a class instantiated with T[\"native\"] yet"
+  }
+]

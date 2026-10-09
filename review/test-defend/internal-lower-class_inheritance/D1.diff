@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -117,7 +117,7 @@
+ 
+ 	if len(parameters) > 0 {
+ 		if l.genericDepth >= maximumGenericDepth {
+-			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "keep recursive type arguments unchanged, or write a class per type"}
++			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "write a class per type"}
+ 		}
+ 		l.genericDepth++
+ 		defer func() { l.genericDepth-- }()

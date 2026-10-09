@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T17:44:16.067952384Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:44:16.077019129Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations"}
+{"Time":"2026-10-09T17:44:16.077110066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"=== RUN   TestInheritanceGenericMonomorphizations\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:44:16.07713735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"=== PAUSE TestInheritanceGenericMonomorphizations\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:44:16.07713978Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations"}
+{"Time":"2026-10-09T17:44:16.077142304Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations"}
+{"Time":"2026-10-09T17:44:16.077144035Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"=== CONT  TestInheritanceGenericMonomorphizations\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:44:16.240008067Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"--- PASS: TestInheritanceGenericMonomorphizations (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:44:16.240050754Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Elapsed":0.16}
+{"Time":"2026-10-09T17:44:16.24007393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:44:16.245721289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 16.5% of statements in ./internal/lower\n"}
+{"Time":"2026-10-09T17:44:16.260692843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.191s\tcoverage: 16.5% of statements in ./internal/lower\n"}
+{"Time":"2026-10-09T17:44:16.260724258Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.193}
