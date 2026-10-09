@@ -87,7 +87,13 @@ for pullRequest in [json.loads(line) for line in listed.stdout.splitlines() if l
         continue
     output = pushed.stdout + pushed.stderr
     if pushed.returncode == 3:
-        print(f"held #{number} {sha[:8]}: {output.strip().splitlines()[-1]}")
+        reason = output.strip().splitlines()[-1]
+        print(f"held #{number} {sha[:8]}: {reason}")
+        # Said once per head, so the owner never has to guess why it waits (@system_adamic, Oct 9 04:56Z).
+        told = os.path.join(state, f"held-{number}-{sha[:12]}")
+        if not os.path.exists(told):
+            comment(number, f"Waiting, not refused: {reason}. It lands within a minute of that gate finishing, green or red; nothing to do.")
+            open(told, "w").close()
         continue
     # Main moved between the check and the push (another landing won the race): the next minute tries again.
     if "cannot lock ref" in output or "[rejected]" in output or "failed to push" in output:

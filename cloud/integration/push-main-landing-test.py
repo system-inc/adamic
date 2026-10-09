@@ -71,7 +71,7 @@ class LandingTests(unittest.TestCase):
         # The star's train and the fast gate's watcher keep their state in scratch directories here.
         root = Path(self.tmp.name)
         return subprocess.run(['bash', str(self.scripts / 'push-main.sh')] + list(arguments), cwd=self.repository,
-                              capture_output=True, text=True, env=dict(os.environ, ADAMIC_STAR_TRAIN_STATE=str(root / 'train'),
+                              capture_output=True, text=True, env=dict(os.environ, ADAMIC_STAR_FILE=str(root / 'star'),
                                                                        ADAMIC_FAST_GATE_STATE=str(root / 'watch'),
                                                                        ADAMIC_LANE_TREE=str(root / 'lane'), **identity))
 
@@ -136,8 +136,7 @@ class LandingTests(unittest.TestCase):
         root = Path(self.tmp.name)
         star = self.change(self.main, 'code/a.go', 'package code\n\n// the star\n', 'the star')
         git(self.repository, 'push', '-q', 'origin', star + ':refs/heads/cloud/land-train-9-slice-' + star[:8])
-        (root / 'train').mkdir()
-        (root / 'train' / 'train.log').write_text('03:00:00Z built cloud/land-train-9-slice-%s %s\n' % (star[:8], star[:12]))
+        (root / 'star').write_text('cloud/land-train-9-slice-%s\n' % star[:8])
         (root / 'watch' / 'running').mkdir(parents=True)
         (root / 'watch' / 'running' / '123').write_text('cloud/land-train-9-slice-%s %s S box B x:1 log\n' % (star[:8], star))
         beside = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test beside the star')

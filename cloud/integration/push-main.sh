@@ -121,13 +121,15 @@ countingPaths() {
 }
 directory=$(cd "$(dirname "$0")" && pwd)
 # Prints why a test-only change (its paths on stdin's argument, one per line) waits for the star, or
-# nothing: the train's newest candidate not on main, while a gate of it is running (a fast gate in the
-# watcher's running set, or a whole gate on origin still reading running, stamped within 90 minutes),
-# and the change touches a package where that candidate changes code.
+# nothing: the board's star (@system_adamic, Oct 9 04:56Z: the hold protects only the star, never a train
+# below it), named by its landing branch in ~/.adamic-integration/star, while a gate of it is running (a
+# fast gate in the watcher's running set, or a whole gate on origin still reading running, under 90
+# minutes old) and not on main, and the change touches a package where it changes code.
 starHolds() {
 	local candidate name running= package
-	read -r name candidate <<<"$(grep ' built cloud/land-train-' "${ADAMIC_STAR_TRAIN_STATE:-$HOME/.adamic-star-train}/train.log" 2>/dev/null | tail -n 1 | awk '{print $3, $4}')"
-	[ -n "$candidate" ] || return 0
+	name=$(head -n 1 "${ADAMIC_STAR_FILE:-$HOME/.adamic-integration/star}" 2>/dev/null)
+	[ -n "$name" ] || return 0
+	candidate=$(git rev-parse -q --verify "origin/${name}" 2>/dev/null) || return 0
 	candidate=$(git rev-parse -q --verify "${candidate}^{commit}" 2>/dev/null) || return 0
 	git merge-base --is-ancestor "$candidate" origin/main && return 0
 	if grep -qs -- " ${candidate} " "${ADAMIC_FAST_GATE_STATE:-$HOME/.adamic-fast-gate-watch}"/running/*; then
