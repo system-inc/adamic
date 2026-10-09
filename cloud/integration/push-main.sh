@@ -106,6 +106,9 @@ else
 	skip=$5
 	branches=$6
 fi
+# A candidate that doesn't hold main's tip is gated as a merge commit onto it (developer tools #11ymb02, tools
+# a79ee19), kept at refs/gate-merges/<merge sha> rather than on a branch; that merge is what lands, so fetch it.
+git cat-file -e "${sha}^{commit}" 2>/dev/null || git fetch -q origin "refs/gate-merges/${sha}" 2>/dev/null || true
 # The paths the test-only lane takes with no gate (Kirk, Oct 8). Main moving by them doesn't spend a
 # candidate's gate either: the lane already lands them ungated, and Loom's whole run of main is their
 # check (@system_adamic, Oct 9). star-train.py's testOnlyPaths is the same pattern.
