@@ -1,0 +1,43 @@
+{
+  "sha": "3657477018d569110dfcd87f2339dabcf0c8654a",
+  "base": "2b1be38362046455e0e5454d8b0e674a8630e95d",
+  "tools_sha": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "deferred_run_by_request": [
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees",
+    "github.com/system-inc/adamic/internal/native TestWASI",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree"
+  ],
+  "deferred_run_results": {
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262": "missing",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees": "missing",
+    "github.com/system-inc/adamic/internal/native TestWASI": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree": "missing"
+  },
+  "failure": {
+    "step": "deferred",
+    "detail": "requested deferred tests that didn't run to a verdict:\ngithub.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode: missing\ngithub.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants: missing\ngithub.com/system-inc/adamic/internal/native TestNormalizeMatchesNode: missing\ngithub.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode: missing\ngithub.com/system-inc/adamic/internal/native TestRecordMutants: missing\ngithub.com/system-inc/adamic/internal/native TestRecordReadMutants: missing\ngithub.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode: missing\ngithub.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262: missing\ngithub.com/system-inc/adamic/internal/native TestSplitTSGoAgrees: missing\ngithub.com/system-inc/adamic/internal/native TestWASI: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree: missing",
+    "after_seconds": 82.7,
+    "under_load": true
+  }
+}
