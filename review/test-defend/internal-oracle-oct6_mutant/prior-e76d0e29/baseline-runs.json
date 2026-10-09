@@ -1,0 +1,12 @@
+[
+  {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$",
+    "exit": 0,
+    "wall_seconds": 16.5614611710007
+  },
+  {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(census_append_overload\\.a|census_overload_binders\\.a|census_overload_contracts\\.a|census_overload_lie\\.a|census_small_overload\\.a|input_spread_local\\.a|interleaved\\.a|library_fnexpr_store\\.a|library_function_expressions\\.a|node_buffer_input\\.a|omitted_reader\\.a|omitted_scanner\\.a|overload_ancestor_directory\\.a|overload_array_to_map\\.a|overload_array_to_multimap\\.a|overload_array_to_numeric_map\\.a|overload_leading_comment_range\\.a|overload_mutate_map\\.a|overload_mutate_map_skipping_new\\.a|overload_original_node\\.a|overload_resolve_type_names\\.a|overload_sort_deduplicate\\.a|overload_trailing_comment_range\\.a|prompt_then_read\\.a|read_arguments\\.a|read_files\\.a|scanner_nested_overload\\.a|overload\\.a|utf8_sweep\\.a|write_files\\.a|write_stderr_order\\.a|write_stdout_order\\.a)$",
+    "exit": 0,
+    "wall_seconds": 10.24936954900113
+  }
+]

@@ -38,3 +38,5 @@ Seven mutants were planned and saved before execution, within the whole-menu cho
 * Optional WASI rows are not exercised; no SDK was configured. Their skips are not passes, and the native defense is conditional on the observed scope.
 
 Timing: nproc 5, warm setup skipped. Full baseline 90.199 binary seconds; coverage runs wall total 17.28 seconds; mutant group runs wall total 237.61 seconds. Controls and compile commands/timings are retained separately. Session approximately 18 minutes. No test was deleted, rewritten or weakened; no main push or PR.
+
+Push collision: the remote branch already held defense evidence for TestAPromptComesBeforeTheRead and TestOverloadContractRulings. That entire evidence directory is preserved in prior-e76d0e29/, with its history merged and all nonconflicting files retained. This session reports the three assigned rows above. No force push.

@@ -1,0 +1,26 @@
+[
+  {
+    "test": "TestAPromptComesBeforeTheRead",
+    "exit": 0,
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestAPromptComesBeforeTheRead$ -coverpkg=./internal/lower,./internal/native -coverprofile=/tmp/def-oct6/TestAPromptComesBeforeTheRead.cover ./internal/oracle/",
+    "wall_seconds": 39.75728604500182
+  },
+  {
+    "test": "TestOverloadContractRulings",
+    "exit": 0,
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestOverloadContractRulings$ -coverpkg=./internal/lower,./internal/native -coverprofile=/tmp/def-oct6/TestOverloadContractRulings.cover ./internal/oracle/",
+    "wall_seconds": 5.116289025998412
+  },
+  {
+    "test": "TestOmittedOriginalProbePolicy",
+    "exit": 0,
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestOmittedOriginalProbePolicy$ -coverpkg=./internal/lower,./internal/native -coverprofile=/tmp/def-oct6/TestOmittedOriginalProbePolicy.cover ./internal/oracle/",
+    "wall_seconds": 5.717633659998683
+  },
+  {
+    "test": "TestFileWritesLandInNodesOrder",
+    "exit": 0,
+    "command": "timeout 120 go test -count=1 -timeout 90s -run ^TestFileWritesLandInNodesOrder$ -coverpkg=./internal/lower,./internal/native -coverprofile=/tmp/def-oct6/TestFileWritesLandInNodesOrder.cover ./internal/oracle/",
+    "wall_seconds": 4.126086452000891
+  }
+]

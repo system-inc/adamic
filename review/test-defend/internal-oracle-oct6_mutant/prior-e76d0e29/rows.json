@@ -1,0 +1,182 @@
+[
+  {
+    "test": "TestAPromptComesBeforeTheRead",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestOverloadContractRulings"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/native/runtime/input.c:293",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/native/runtime/input.c:293",
+        "change": "drop flush before blocking read",
+        "rows_failed": [
+          "TestAPromptComesBeforeTheRead"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$ > D01-0.log 2>&1; output_test.go:286: program: prompted before the read false, said \"ready\\ngot yes\\n\"; Node said \"ready\\ngot yes\\n\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestOct6InheritanceMutants",
+      "TestOct6ReleaseMutant",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestTheOracleCatchesOneByte",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestOverloadContractRulings",
+      "TestParameterPropertyMutants",
+      "TestParameterPropertyOwnershipMutant",
+      "TestInputAgreesWithNode",
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestNativeAgreesWithNode",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest"
+    ],
+    "passed_rows": [
+      "TestParameterPropertyMutants",
+      "TestCensusAppendResultProof",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestTheOracleCatchesOneByte",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestParameterPropertyOwnershipMutant",
+      "TestOct6InheritanceMutants",
+      "TestOct6ReleaseMutant",
+      "TestFileWritesLandInNodesOrder",
+      "TestCensusOverloadResultStop",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOverloadContractRulings",
+      "TestOneFileHoldsNodesOrder",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestInputAgreesWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ]
+  },
+  {
+    "test": "TestOverloadContractRulings",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 internal/lower/census_small.go:242",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/census_small.go:242",
+        "change": "drop incompatible overload-result refusal",
+        "rows_failed": [
+          "TestOverloadContractRulings"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "internal/lower/census_small.go:150",
+        "change": "change overload ordinal increment from 1 to 2",
+        "rows_failed": [
+          "TestOverloadContractRulings"
+        ]
+      },
+      {
+        "mutant": "D04",
+        "file_line": "internal/lower/census_small.go:203",
+        "change": "drop whole overload parameter-check loop and its local declaration",
+        "rows_failed": [
+          "TestOverloadContractRulings"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$ > D02-0.log 2>&1; overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got <nil>",
+    "bounded": true,
+    "matrix_rows": [
+      "TestOct6InheritanceMutants",
+      "TestOct6ReleaseMutant",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestTheOracleCatchesOneByte",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestOverloadContractRulings",
+      "TestParameterPropertyMutants",
+      "TestParameterPropertyOwnershipMutant",
+      "TestInputAgreesWithNode",
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestNativeAgreesWithNode",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest"
+    ],
+    "passed_rows": [
+      "TestParameterPropertyMutants",
+      "TestCensusAppendResultProof",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestAPromptComesBeforeTheRead",
+      "TestTheOracleCatchesOneByte",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestOct6ReleaseMutant",
+      "TestOct6InheritanceMutants",
+      "TestCensusOverloadResultStop",
+      "TestParameterPropertyOwnershipMutant",
+      "TestFileWritesLandInNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestInputAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -200,39 +200,7 @@
+ 			}
+ 		}
+ 	}
+-	declared, served := overload.Parameters(), implementation.Parameters()
+-	for index := 0; index <= max(len(declared), len(served)); index++ {
+-		given, parameter, givenRest, err := l.censusOverloadParameter(declared, index)
+-		if err != nil {
+-			return l.notYet(overload, label+" with a non-array rest parameter")
+-		}
+-		takes, actual, takesRest, err := l.censusOverloadParameter(served, index)
+-		if err != nil {
+-			return l.notYet(overload, label+" with a non-array implementation rest parameter")
+-		}
+-		if actual == nil {
+-			continue
+-		} // JavaScript evaluates and ignores extra arguments.
+-		if parameter == nil && takesRest {
+-			continue
+-		} // Missing rest items make an empty array.
+-		if parameter == nil {
+-			given = l.checker.GetUndefinedType()
+-			parameter = actual
+-		}
+-		if givenRest && !takesRest {
+-			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
+-		}
+-		if !l.censusRelated(given, takes) {
+-			name := func(node *ast.Node) string {
+-				if ast.IsIdentifier(node.Name()) {
+-					return node.Name().Text()
+-				}
+-				return fmt.Sprintf("%d", index+1)
+-			}
+-			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+-		}
+-	}
++
+ 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
+ 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
+ 	if !l.censusRelated(produced, promised) {

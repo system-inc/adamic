@@ -1,0 +1,152 @@
+[
+  {
+    "mutant": "clean",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/clean timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > clean-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.778071253000235
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/clean timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > clean-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.5857423480010766
+      }
+    ],
+    "failed": [],
+    "passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ]
+  },
+  {
+    "mutant": "D01",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D01-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.707330148001347
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D01-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.424067625001044
+      }
+    ],
+    "failed": [],
+    "passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ]
+  },
+  {
+    "mutant": "D02",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D02-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.59931971900005
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D02-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.6358398990014393
+      }
+    ],
+    "failed": [],
+    "passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ]
+  },
+  {
+    "mutant": "D03",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D03-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.7292230450002535
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D03-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.929541748999327
+      }
+    ],
+    "failed": [],
+    "passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ]
+  },
+  {
+    "mutant": "D04",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D04-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.517341162001685
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D04-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.6588293140011956
+      }
+    ],
+    "failed": [],
+    "passed": [
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ]
+  }
+]

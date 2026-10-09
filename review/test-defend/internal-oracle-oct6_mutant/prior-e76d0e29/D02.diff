@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -239,7 +239,7 @@
+ 		if l.censusNullableOverloadResult(produced, promised) {
+ 			return nil // Each resolved call proves the result or checks its presence.
+ 		}
+-		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
++
+ 	}
+ 	return nil
+ }

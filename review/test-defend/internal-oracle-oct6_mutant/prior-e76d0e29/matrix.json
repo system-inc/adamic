@@ -1,0 +1,521 @@
+[
+  {
+    "id": "D01",
+    "target": "TestAPromptComesBeforeTheRead",
+    "file_line": "internal/native/runtime/input.c:293",
+    "change": "drop flush before blocking read",
+    "validate_command": "clang -fsyntax-only -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime internal/native/runtime/input.c",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$ > D01-0.log 2>&1",
+        "exit": 1,
+        "wall_seconds": 54.27657464699951,
+        "top_failures": [
+          "TestAPromptComesBeforeTheRead"
+        ],
+        "top_passes": [
+          "TestParameterPropertyMutants",
+          "TestCensusAppendResultProof",
+          "TestSwitchCaseOverloadIsNotYet",
+          "TestTheOracleCatchesOneByte",
+          "TestOmittedReaderZeroMutantIsCaught",
+          "TestParameterPropertyOwnershipMutant",
+          "TestOct6InheritanceMutants",
+          "TestOct6ReleaseMutant",
+          "TestFileWritesLandInNodesOrder",
+          "TestCensusOverloadResultStop",
+          "TestASignalLeavesWhatWasPrinted",
+          "TestScannerNestedOverloadImplementationMutantIsCaught",
+          "TestOmittedOriginalProbePolicy",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestOmittedArgumentZeroMutantIsCaught",
+          "TestOverloadContractRulings",
+          "TestOneFileHoldsNodesOrder",
+          "TestNodeFSFileAgreesWithNode",
+          "TestNodeFSFileMutants",
+          "TestInputAgreesWithNode"
+        ],
+        "native_subcases": []
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(census_append_overload\\.a|census_overload_binders\\.a|census_overload_contracts\\.a|census_overload_lie\\.a|census_small_overload\\.a|input_spread_local\\.a|interleaved\\.a|library_fnexpr_store\\.a|library_function_expressions\\.a|node_buffer_input\\.a|omitted_reader\\.a|omitted_scanner\\.a|overload_ancestor_directory\\.a|overload_array_to_map\\.a|overload_array_to_multimap\\.a|overload_array_to_numeric_map\\.a|overload_leading_comment_range\\.a|overload_mutate_map\\.a|overload_mutate_map_skipping_new\\.a|overload_original_node\\.a|overload_resolve_type_names\\.a|overload_sort_deduplicate\\.a|overload_trailing_comment_range\\.a|prompt_then_read\\.a|read_arguments\\.a|read_files\\.a|scanner_nested_overload\\.a|overload\\.a|utf8_sweep\\.a|write_files\\.a|write_stderr_order\\.a|write_stdout_order\\.a)$ > D01-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 12.48514506599895,
+        "top_failures": [],
+        "top_passes": [
+          "TestNativeAgreesWithNode"
+        ],
+        "native_subcases": [
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_resolve_type_names.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_sort_deduplicate.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/input_spread_local.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_original_node.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_trailing_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_leading_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_lie.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_small_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_store.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a"
+        ]
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D01-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.707330148001347
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D01-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.424067625001044
+      }
+    ],
+    "failed": [
+      "TestAPromptComesBeforeTheRead"
+    ],
+    "passed": [
+      "TestParameterPropertyMutants",
+      "TestCensusAppendResultProof",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestTheOracleCatchesOneByte",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestParameterPropertyOwnershipMutant",
+      "TestOct6InheritanceMutants",
+      "TestOct6ReleaseMutant",
+      "TestFileWritesLandInNodesOrder",
+      "TestCensusOverloadResultStop",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOverloadContractRulings",
+      "TestOneFileHoldsNodesOrder",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestInputAgreesWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "evidence": [
+      "output_test.go:286: program: prompted before the read false, said \"ready\\ngot yes\\n\"; Node said \"ready\\ngot yes\\n\""
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ],
+    "bounded": true
+  },
+  {
+    "id": "D02",
+    "target": "TestOverloadContractRulings",
+    "file_line": "internal/lower/census_small.go:242",
+    "change": "drop incompatible overload-result refusal",
+    "validate_command": "go vet ./internal/lower/",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$ > D02-0.log 2>&1",
+        "exit": 1,
+        "wall_seconds": 34.636915793998924,
+        "top_failures": [
+          "TestOverloadContractRulings"
+        ],
+        "top_passes": [
+          "TestParameterPropertyMutants",
+          "TestCensusAppendResultProof",
+          "TestOmittedReaderZeroMutantIsCaught",
+          "TestAPromptComesBeforeTheRead",
+          "TestTheOracleCatchesOneByte",
+          "TestOmittedOriginalProbePolicy",
+          "TestOmittedArgumentZeroMutantIsCaught",
+          "TestScannerNestedOverloadImplementationMutantIsCaught",
+          "TestSwitchCaseOverloadIsNotYet",
+          "TestOct6ReleaseMutant",
+          "TestOct6InheritanceMutants",
+          "TestCensusOverloadResultStop",
+          "TestParameterPropertyOwnershipMutant",
+          "TestFileWritesLandInNodesOrder",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestOneFileHoldsNodesOrder",
+          "TestASignalLeavesWhatWasPrinted",
+          "TestInputAgreesWithNode",
+          "TestNodeFSFileMutants",
+          "TestNodeFSFileAgreesWithNode"
+        ],
+        "native_subcases": []
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(census_append_overload\\.a|census_overload_binders\\.a|census_overload_contracts\\.a|census_overload_lie\\.a|census_small_overload\\.a|input_spread_local\\.a|interleaved\\.a|library_fnexpr_store\\.a|library_function_expressions\\.a|node_buffer_input\\.a|omitted_reader\\.a|omitted_scanner\\.a|overload_ancestor_directory\\.a|overload_array_to_map\\.a|overload_array_to_multimap\\.a|overload_array_to_numeric_map\\.a|overload_leading_comment_range\\.a|overload_mutate_map\\.a|overload_mutate_map_skipping_new\\.a|overload_original_node\\.a|overload_resolve_type_names\\.a|overload_sort_deduplicate\\.a|overload_trailing_comment_range\\.a|prompt_then_read\\.a|read_arguments\\.a|read_files\\.a|scanner_nested_overload\\.a|overload\\.a|utf8_sweep\\.a|write_files\\.a|write_stderr_order\\.a|write_stdout_order\\.a)$ > D02-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 10.009836350000114,
+        "top_failures": [],
+        "top_passes": [
+          "TestNativeAgreesWithNode"
+        ],
+        "native_subcases": [
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_leading_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_trailing_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_original_node.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/input_spread_local.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_resolve_type_names.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_sort_deduplicate.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_small_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_lie.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_store.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a"
+        ]
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D02-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.59931971900005
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D02-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.6358398990014393
+      }
+    ],
+    "failed": [
+      "TestOverloadContractRulings"
+    ],
+    "passed": [
+      "TestParameterPropertyMutants",
+      "TestCensusAppendResultProof",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestAPromptComesBeforeTheRead",
+      "TestTheOracleCatchesOneByte",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestOct6ReleaseMutant",
+      "TestOct6InheritanceMutants",
+      "TestCensusOverloadResultStop",
+      "TestParameterPropertyOwnershipMutant",
+      "TestFileWritesLandInNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestInputAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "evidence": [
+      "overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got <nil>",
+      "overload_contract_test.go:34: want refusal \"overload 1 of createBinaryExpressionTrampoline result\", got /workspace/adamic/internal/oracle/testdata/overload_contracts/trampoline.a:3:19: stage 0 can't lower a value of type Outer yet"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ],
+    "bounded": true
+  },
+  {
+    "id": "D03",
+    "target": "TestOverloadContractRulings",
+    "file_line": "internal/lower/census_small.go:150",
+    "change": "change overload ordinal increment from 1 to 2",
+    "validate_command": "go vet ./internal/lower/",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$ > D03-0.log 2>&1",
+        "exit": 1,
+        "wall_seconds": 41.313960965999286,
+        "top_failures": [
+          "TestOverloadContractRulings"
+        ],
+        "top_passes": [
+          "TestParameterPropertyMutants",
+          "TestCensusAppendResultProof",
+          "TestSwitchCaseOverloadIsNotYet",
+          "TestParameterPropertyOwnershipMutant",
+          "TestTheOracleCatchesOneByte",
+          "TestScannerNestedOverloadImplementationMutantIsCaught",
+          "TestAPromptComesBeforeTheRead",
+          "TestOmittedReaderZeroMutantIsCaught",
+          "TestOmittedArgumentZeroMutantIsCaught",
+          "TestOmittedOriginalProbePolicy",
+          "TestOct6ReleaseMutant",
+          "TestCensusOverloadResultStop",
+          "TestOct6InheritanceMutants",
+          "TestFileWritesLandInNodesOrder",
+          "TestASignalLeavesWhatWasPrinted",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestOneFileHoldsNodesOrder",
+          "TestInputAgreesWithNode",
+          "TestNodeFSFileMutants",
+          "TestNodeFSFileAgreesWithNode"
+        ],
+        "native_subcases": []
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(census_append_overload\\.a|census_overload_binders\\.a|census_overload_contracts\\.a|census_overload_lie\\.a|census_small_overload\\.a|input_spread_local\\.a|interleaved\\.a|library_fnexpr_store\\.a|library_function_expressions\\.a|node_buffer_input\\.a|omitted_reader\\.a|omitted_scanner\\.a|overload_ancestor_directory\\.a|overload_array_to_map\\.a|overload_array_to_multimap\\.a|overload_array_to_numeric_map\\.a|overload_leading_comment_range\\.a|overload_mutate_map\\.a|overload_mutate_map_skipping_new\\.a|overload_original_node\\.a|overload_resolve_type_names\\.a|overload_sort_deduplicate\\.a|overload_trailing_comment_range\\.a|prompt_then_read\\.a|read_arguments\\.a|read_files\\.a|scanner_nested_overload\\.a|overload\\.a|utf8_sweep\\.a|write_files\\.a|write_stderr_order\\.a|write_stdout_order\\.a)$ > D03-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 15.163885144000233,
+        "top_failures": [],
+        "top_passes": [
+          "TestNativeAgreesWithNode"
+        ],
+        "native_subcases": [
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/input_spread_local.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_sort_deduplicate.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_resolve_type_names.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_original_node.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_leading_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_trailing_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_store.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_small_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_lie.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a"
+        ]
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D03-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.7292230450002535
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D03-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.929541748999327
+      }
+    ],
+    "failed": [
+      "TestOverloadContractRulings"
+    ],
+    "passed": [
+      "TestParameterPropertyMutants",
+      "TestCensusAppendResultProof",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestParameterPropertyOwnershipMutant",
+      "TestTheOracleCatchesOneByte",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestAPromptComesBeforeTheRead",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOct6ReleaseMutant",
+      "TestCensusOverloadResultStop",
+      "TestOct6InheritanceMutants",
+      "TestFileWritesLandInNodesOrder",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestInputAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "evidence": [
+      "overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got /workspace/adamic/internal/oracle/testdata/overload_contracts/token.a:3:1: Adamic 0.1 refuses overload 2 of createToken result SuperExpression cannot be served by implementation result Token<K>; make the implementation result covariant with every overload result",
+      "overload_contract_test.go:34: want refusal \"overload 2 of setSerializerContextAnd parameter cb\", got /workspace/adamic/internal/oracle/testdata/overload_contracts/serializer.a:2:58: Adamic 0.1 refuses overload 4 of setSerializerContextAnd parameter cb cannot be served by implementation parameter cb; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "overload_contract_test.go:34: want refusal \"overload 1 of createBinaryExpressionTrampoline result\", got /workspace/adamic/internal/oracle/testdata/overload_contracts/trampoline.a:1:1: Adamic 0.1 refuses overload 2 of createBinaryExpressionTrampoline result (node: string) => R cannot be served by implementation result (node: string, outer: Outer) => R; make the implementation result covariant with every overload result"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ],
+    "bounded": true
+  },
+  {
+    "id": "D04",
+    "target": "TestOverloadContractRulings",
+    "file_line": "internal/lower/census_small.go:203",
+    "change": "drop whole overload parameter-check loop and its local declaration",
+    "validate_command": "go vet ./internal/lower/",
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestInputAgreesWithNode|TestCensusAppendResultProof|TestCensusOverloadResultStop|TestNodeFSFileAgreesWithNode|TestNodeFSFileMutants|TestScannerNestedOverloadImplementationMutantIsCaught|TestSwitchCaseOverloadIsNotYet)$ > D04-0.log 2>&1",
+        "exit": 1,
+        "wall_seconds": 37.0420135739987,
+        "top_failures": [
+          "TestOverloadContractRulings"
+        ],
+        "top_passes": [
+          "TestParameterPropertyMutants",
+          "TestCensusAppendResultProof",
+          "TestSwitchCaseOverloadIsNotYet",
+          "TestTheOracleCatchesOneByte",
+          "TestAPromptComesBeforeTheRead",
+          "TestScannerNestedOverloadImplementationMutantIsCaught",
+          "TestParameterPropertyOwnershipMutant",
+          "TestOct6InheritanceMutants",
+          "TestASignalLeavesWhatWasPrinted",
+          "TestOmittedReaderZeroMutantIsCaught",
+          "TestOmittedArgumentZeroMutantIsCaught",
+          "TestOmittedOriginalProbePolicy",
+          "TestOct6ReleaseMutant",
+          "TestFileWritesLandInNodesOrder",
+          "TestCensusOverloadResultStop",
+          "TestOneFileHoldsNodesOrder",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestInputAgreesWithNode",
+          "TestNodeFSFileMutants",
+          "TestNodeFSFileAgreesWithNode"
+        ],
+        "native_subcases": []
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(census_append_overload\\.a|census_overload_binders\\.a|census_overload_contracts\\.a|census_overload_lie\\.a|census_small_overload\\.a|input_spread_local\\.a|interleaved\\.a|library_fnexpr_store\\.a|library_function_expressions\\.a|node_buffer_input\\.a|omitted_reader\\.a|omitted_scanner\\.a|overload_ancestor_directory\\.a|overload_array_to_map\\.a|overload_array_to_multimap\\.a|overload_array_to_numeric_map\\.a|overload_leading_comment_range\\.a|overload_mutate_map\\.a|overload_mutate_map_skipping_new\\.a|overload_original_node\\.a|overload_resolve_type_names\\.a|overload_sort_deduplicate\\.a|overload_trailing_comment_range\\.a|prompt_then_read\\.a|read_arguments\\.a|read_files\\.a|scanner_nested_overload\\.a|overload\\.a|utf8_sweep\\.a|write_files\\.a|write_stderr_order\\.a|write_stdout_order\\.a)$ > D04-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 11.136056022998673,
+        "top_failures": [],
+        "top_passes": [
+          "TestNativeAgreesWithNode"
+        ],
+        "native_subcases": [
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_original_node.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_resolve_type_names.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/input_spread_local.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_small_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_lie.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_sort_deduplicate.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_mutate_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_trailing_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_leading_comment_range.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_numeric_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_multimap.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/overload_array_to_map.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_store.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a",
+          "TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a"
+        ]
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest)$ > D04-new-0.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 5.517341162001685
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-oct6/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReviewProgramsAgreeWithNode$/^(smoke\\.a|fxspptb_oct8_predicates_p14_overload_optional_chain_container\\.a|fxspptb_oct8_predicates_p27_overload_parameter_rebound\\.a|fxspptb_oct9_predicates_q04_optional_call_container\\.a)$ > D04-new-1.log 2>&1",
+        "exit": 0,
+        "wall_seconds": 3.6588293140011956
+      }
+    ],
+    "failed": [
+      "TestOverloadContractRulings"
+    ],
+    "passed": [
+      "TestParameterPropertyMutants",
+      "TestCensusAppendResultProof",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestTheOracleCatchesOneByte",
+      "TestAPromptComesBeforeTheRead",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestParameterPropertyOwnershipMutant",
+      "TestOct6InheritanceMutants",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOct6ReleaseMutant",
+      "TestFileWritesLandInNodesOrder",
+      "TestCensusOverloadResultStop",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestInputAgreesWithNode",
+      "TestNodeFSFileMutants",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "evidence": [
+      "overload_contract_test.go:34: want refusal \"overload 2 of setSerializerContextAnd parameter cb\", got <nil>"
+    ],
+    "skipped": [
+      "TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a",
+      "TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a",
+      "TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a"
+    ],
+    "bounded": true
+  }
+]
