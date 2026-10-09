@@ -26,6 +26,9 @@ func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
 	if !isKnown || !keyable(element) {
 		return 0, l.notYet(node, "a Set of "+l.checker.TypeToString(arguments[0])+" (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)")
 	}
+	if err := l.libraryCollectionKeySlots(node, element); err != nil {
+		return 0, err
+	}
 	return element, nil
 }
 

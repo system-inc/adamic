@@ -1,0 +1,19 @@
+import { readFileSync, readdirSync, statSync, closeSync } from "node:fs";
+function errorCode(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
+}
+function failure(error: Error): void {
+    console.log(errorCode(error) ?? "missing code");
+    console.log(error.message);
+}
+function report(error: unknown): void {
+    console.log(error instanceof Error ? "Error" : "not Error");
+    console.log(error instanceof TypeError ? "TypeError" : error instanceof RangeError ? "RangeError" : "other");
+    if (error instanceof Error) { failure(error); }
+}
+try { readFileSync("", "utf8"); } catch (error) { report(error); }
+try { readdirSync(""); } catch (error) { report(error); }
+try { statSync(""); } catch (error) { report(error); }
+try { readFileSync("a\0b", "utf8"); } catch (error) { report(error); }
+try { readdirSync("a\0b"); } catch (error) { report(error); }
+try { closeSync(-1); } catch (error) { report(error); }

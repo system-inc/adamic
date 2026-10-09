@@ -1,0 +1,18 @@
+// Hold global and sticky lastIndex against the source run on Node.
+function show(value: RegExpMatchArray | null): string {
+ if (value === null) { return 'null'; }
+ return `${value.index}:${value.input}:${value.map((part) => part ?? 'undefined').join('|')}`;
+}
+for (const regex of [/(a)|(z)/, /(a)|(z)/g, /(a)|(z)/y, /(a)|(z)/gy, /(?:)/gu]) {
+ for (const start of [-1, -0, 0, 1.5, 3, 99, NaN, Infinity]) {
+  regex.lastIndex = start;
+  console.log(`${show('aba'.match(regex))}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+  regex.lastIndex = start;
+  console.log(`${show(String.prototype.match.call('aba', regex))}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+ }
+}
+console.log(show('🌍'.match(/(?:)/gu)));
+
+let text = 'aba';
+function pattern(): RegExp { text = 'xxx'; return /a/g; }
+console.log(`order:${show(text.match(pattern()))}:${text}`);

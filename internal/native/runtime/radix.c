@@ -18,13 +18,16 @@
 // That's V8's algorithm, not the exact expansion: (0.1).toString(3) stops after 34 digits.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 #include <stdint.h>
 #include <string.h>
 
 // The math here (a multiply, then a subtraction) is rounded step by step, as V8's is; see ieee754.c.
+#ifndef ADAMIC_FUSED_RUNTIME
 #pragma STDC FP_CONTRACT OFF
+#endif
 
 // V8's kDoubleToRadixMaxChars (src/numbers/conversions.h): 1,074 binary digits after the point for
 // the smallest double, 1,024 before it for the largest, a sign and a point, with room.
@@ -141,8 +144,9 @@ adamic_string *adamic_number_to_radix(double value, double radix) {
 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
 	radix = isnan(radix) ? 0 : trunc(radix);
 	if (radix < 2 || radix > 36) {
-		static const char message[] = "RangeError: toString() radix argument must be between 2 and 36";
-		adamic_panic(message, sizeof message - 1);
+		static const char message[] = "toString() radix argument must be between 2 and 36";
+		adamic_library_throw("RangeError", message, sizeof message - 1);
+		return NULL;
 	}
 	if (radix == 10) {
 		return adamic_string_from_number(value);

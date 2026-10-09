@@ -1,0 +1,35 @@
+function nullable(flag: boolean): string | null { return flag ? `v${2}` : null; }
+function optional(flag: boolean): string | undefined { return flag ? `v${3}` : undefined; }
+function showNull(v: string | null): void {
+ console.log(v);
+ console.log(`${v}`);
+ console.log('prefix:' + v);
+ console.log(typeof v);
+ console.log(`${Number(v)}`);
+ console.log(`${!v}`);
+ console.log(v ?? 'fallback');
+ console.log(`${v?.length ?? -1}`);
+ console.log(`${v === null} ${v !== null}`);
+ if (v !== null) { console.log(`${v.length}`); }
+}
+function showUndefined(v: string | undefined): void {
+ console.log(v);
+ console.log(`${v}`);
+ console.log('prefix:' + v);
+ console.log(typeof v);
+ console.log(`${Number(v)}`);
+ console.log(`${!v}`);
+ console.log(v ?? 'fallback');
+ console.log(`${v?.length ?? -1}`);
+ console.log(`${v === undefined} ${v !== undefined}`);
+ if (v !== undefined) { console.log(`${v.length}`); }
+}
+showNull(nullable(false));
+showNull(nullable(true));
+showNull('');
+showUndefined(optional(false));
+showUndefined(optional(true));
+showUndefined('');
+function captured(v: string | null): () => string | null { return () => v; }
+console.log(captured(null)());
+console.log(captured(`owned${4}`)());
