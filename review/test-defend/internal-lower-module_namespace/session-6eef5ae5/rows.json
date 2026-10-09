@@ -1,0 +1,68 @@
+[
+  {
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCallableNamespaceLimitsStayLoud",
+    "defense": "defended",
+    "unique_mutant": "C1 internal/lower/namespaces_call_graph.go:51",
+    "attempts": [
+      {
+        "mutant": "C1",
+        "file_line": "internal/lower/namespaces_call_graph.go:51",
+        "change": "change condition: return early for constructor expressions: if node == nil || ast.IsTypeNode(node) || node != function && ast.IsFunctionLike(node) { -> if node == nil || ast.IsTypeNode(node) || node.Kind == ast.KindNewExpression || node != function && ast.IsFunctionLike(node) {",
+        "rows_failed": [
+          "TestNamespaceClassEarlyConstructionStaysLoud"
+        ]
+      }
+    ],
+    "evidence": "C1: namespace_class_test.go:14: early constructor read trusted: <nil>",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-module-cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1 (standalone <id>.diff applied)"
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": null,
+    "defense": "defended",
+    "unique_mutant": "A1 internal/lower/namespaces.go:306",
+    "attempts": [
+      {
+        "mutant": "A1",
+        "file_line": "internal/lower/namespaces.go:306",
+        "change": "change diagnostic constant: return l.notYet(node, \"a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration\") -> return l.notYet(node, \"a namespace read before initialization, directly or through a reachable call; move that read or call after the namespace declaration\")",
+        "rows_failed": [
+          "TestNamespaceAmbientHostInitialization"
+        ]
+      }
+    ],
+    "evidence": "A1: namespaces_ambient_test.go:21: runtime namespace initialization guard lost: /workspace/defend-module-tmp/TestNamespaceAmbientHostInitialization3810478846/001/graph.a:1:16: stage 0 can't lower a namespace read before initialization, directly or through a reachable call; move that read or call after the namespace declaration yet",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-module-cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1 (standalone <id>.diff applied)"
+  },
+  {
+    "test": "TestTscNamespaceDeclarationShapes",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": null,
+    "defense": "defended",
+    "unique_mutant": "S2 internal/lower/namespaces.go:148",
+    "attempts": [
+      {
+        "mutant": "S1",
+        "file_line": "internal/lower/namespaces.go:148",
+        "change": "change condition: stop admitting interface/namespace merges: declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration -> declaration == node || declaration.Kind == ast.KindTypeAliasDeclaration",
+        "rows_failed": []
+      },
+      {
+        "mutant": "S2",
+        "file_line": "internal/lower/namespaces.go:148",
+        "change": "change condition: stop admitting type-alias/namespace merges: declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration -> declaration == node || declaration.Kind == ast.KindInterfaceDeclaration",
+        "rows_failed": [
+          "TestTscNamespaceDeclarationShapes"
+        ]
+      }
+    ],
+    "evidence": "S2: namespaces_shapes_test.go:44: /workspace/defend-module-tmp/TestTscNamespaceDeclarationShapesBinaryExpressionState1329070176/001/main.a:4:1: stage 0 can't lower a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module yet",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-module-cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1 (standalone <id>.diff applied)"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -19,7 +19,7 @@
+ func namespaceRuntime(declaration *ast.Node) bool {
+ 	// Ambient declarations describe host values, not executable namespace bodies.
+ 	// The context flag includes nested declarations without their own declare token.
+-	if declaration.Flags&ast.NodeFlagsAmbient != 0 || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) || ast.GetSourceFileOfNode(declaration).IsDeclarationFile {
++	if declaration.Flags&ast.NodeFlagsAmbient != 0 || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) {
+ 		return false
+ 	}
+ 	for _, member := range namespaceStatements(declaration) {

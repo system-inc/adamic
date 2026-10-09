@@ -1,0 +1,18 @@
+[
+  {
+    "mutant": "D01",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "old": "entry.low = min(entry.low, edge.low)",
+    "new": "entry.low = min(entry.low, edge.index)",
+    "change": "use child discovery index instead of transitive low link",
+    "target": "TestNamespaceCallGraphCycleUnion"
+  },
+  {
+    "mutant": "D02",
+    "file": "internal/lower/namespaces.go",
+    "old": "if declaration.Kind == ast.KindEnumDeclaration {\n\t\t\t\t\treturn l.notYet(read,",
+    "new": "if declaration.Kind == ast.KindEnumDeclaration && l.result != nil {\n\t\t\t\t\treturn l.notYet(read,",
+    "change": "gate enum-specific initialization refusal on prepared IR state",
+    "target": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+  }
+]

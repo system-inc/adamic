@@ -1,0 +1,152 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/module_namespace.go",
+    "line": 24,
+    "old": "if l.namespaceValueNode(node) && l.moduleNamespace(node) {",
+    "new": "if false {",
+    "kind": "flip condition",
+    "vet_seconds": 0.12588016800009427,
+    "vet_exit": 0
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/namespace_receiver_scope.go",
+    "line": 13,
+    "old": "node.Kind != ast.KindArrowFunction",
+    "new": "node.Kind == ast.KindArrowFunction",
+    "kind": "flip condition",
+    "vet_seconds": 0.12755849199993463,
+    "vet_exit": 0
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/namespace_receiver_scope.go",
+    "line": 17,
+    "old": "if node.Kind == ast.KindThisKeyword {\n\t\t\treturn true",
+    "new": "if node.Kind == ast.KindThisKeyword {\n\t\t\treturn false",
+    "kind": "change constant",
+    "vet_seconds": 0.12041839699986667,
+    "vet_exit": 0
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/namespaces.go",
+    "line": 22,
+    "old": "ast.GetSourceFileOfNode(declaration).IsDeclarationFile",
+    "new": "!ast.GetSourceFileOfNode(declaration).IsDeclarationFile",
+    "kind": "flip condition",
+    "vet_seconds": 0.12253581999993912,
+    "vet_exit": 0
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/namespaces.go",
+    "line": 250,
+    "old": "if !initialized[declaration] {",
+    "new": "if initialized[declaration] {",
+    "kind": "flip condition",
+    "vet_seconds": 0.12766233599995758,
+    "vet_exit": 0
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/namespaces.go",
+    "line": 309,
+    "old": "if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {",
+    "new": "if node.Kind == ast.KindCallExpression {",
+    "kind": "flip condition",
+    "vet_seconds": 0.11877153299974452,
+    "vet_exit": 0
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 32,
+    "old": "g.walks++",
+    "new": "g.walks += 2",
+    "kind": "change constant",
+    "vet_seconds": 0.12467991899984554,
+    "vet_exit": 0
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 140,
+    "old": "member.reaches = reaches",
+    "new": "member.reaches = member.reads",
+    "kind": "change option (direct versus transitive read set)",
+    "vet_seconds": 0.11988014000007752,
+    "vet_exit": 0
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 103,
+    "old": "entry.reads[declaration] = node\n\t\t\t}\n\t\t}\n\t\tif node.Kind",
+    "new": "\n\t\t\t}\n\t\t}\n\t\tif node.Kind",
+    "kind": "drop statement",
+    "vet_seconds": 0.1338626159999876,
+    "vet_exit": 0
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 149,
+    "old": "declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst)",
+    "new": "declaration == nil || !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst)",
+    "kind": "flip condition",
+    "vet_seconds": 0.13092613000026176,
+    "vet_exit": 0
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/modules.go",
+    "line": 76,
+    "old": "statements = namespaceDeclarations(statements)",
+    "new": "",
+    "kind": "drop statement",
+    "vet_seconds": 0.5360363830000097,
+    "vet_exit": 0
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/modules.go",
+    "line": 100,
+    "old": "l.result.Locals[local].NamespaceVar = true",
+    "new": "l.result.Locals[local].NamespaceVar = false",
+    "kind": "change constant",
+    "vet_seconds": 0.5761778740002228,
+    "vet_exit": 0
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/locals.go",
+    "line": 114,
+    "old": "\"the checker gave a declaration no symbol\"",
+    "new": "\"the checker gave a declaration no binding\"",
+    "kind": "change constant",
+    "vet_seconds": 0.5223964399997385,
+    "vet_exit": 0
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/load_time_reads.go",
+    "line": 102,
+    "old": "return !l.provenModuleReads[node] && l.checked(local)",
+    "new": "return l.checked(local)",
+    "kind": "change option: retain checks for proven reads",
+    "vet_seconds": 0.552770548999888,
+    "vet_exit": 0
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/namespace_callable.go",
+    "line": 67,
+    "old": "case \"name\", \"length\", \"prototype\", \"caller\", \"arguments\", \"call\", \"apply\", \"bind\", \"toString\":\n\t\treturn true",
+    "new": "case \"name\", \"length\", \"prototype\", \"caller\", \"arguments\", \"call\", \"apply\", \"bind\", \"toString\":\n\t\treturn false",
+    "kind": "change constant",
+    "vet_seconds": 0.5870750179997231,
+    "vet_exit": 0
+  }
+]
