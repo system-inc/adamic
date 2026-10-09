@@ -148,6 +148,7 @@ func reviewRefusal(t *testing.T, path string) error {
 }
 
 func TestReviewProgramsAgreeWithNode(t *testing.T) {
+	t.Parallel()
 	reviewPrograms(t, "agree", func(t *testing.T, path string) {
 		if err := reviewAgreement(t, path, reviewPinned(t, path)); err != nil {
 			t.Fatal(err)
@@ -156,6 +157,7 @@ func TestReviewProgramsAgreeWithNode(t *testing.T) {
 }
 
 func TestReviewProgramsRefuse(t *testing.T) {
+	t.Parallel()
 	reviewPrograms(t, "refused", func(t *testing.T, path string) {
 		if err := reviewRefusal(t, path); err != nil {
 			t.Fatal(err)
@@ -184,6 +186,7 @@ func reviewLayout(root string) error {
 }
 
 func TestReviewProgramsNoLooseFiles(t *testing.T) {
+	t.Parallel()
 	if err := reviewLayout(reviewRoot); err != nil {
 		t.Fatal(err)
 	}
@@ -191,6 +194,7 @@ func TestReviewProgramsNoLooseFiles(t *testing.T) {
 
 // Exercise the same checks used by the lane with deliberately wrong inputs.
 func TestReviewProgramsSelfTest(t *testing.T) {
+	t.Parallel()
 	t.Run("wrong_output", func(t *testing.T) {
 		path, err := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
 		if err != nil {
