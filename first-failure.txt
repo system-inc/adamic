@@ -1,0 +1,10 @@
+github.com/system-inc/adamic/bridge/tsgo TestProduct_RegionNative
+=== RUN   TestProduct_RegionNative
+=== PAUSE TestProduct_RegionNative
+=== CONT  TestProduct_RegionNative
+    products_test.go:282: build bridge-test-region-stage0 116c98352fc1 miss 146.73
+    products_test.go:283: build bridge-test-tsgo.a c52e92d7e6ee hit 167.63
+    product_units_test.go:133: build bridge-test-region-native: region-native: context deadline exceeded
+--- FAIL: TestProduct_RegionNative (315.56s)
+
+(box load 68.3 on 64 cores at first failure)
