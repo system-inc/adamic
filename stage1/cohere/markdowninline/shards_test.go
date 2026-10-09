@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -24,7 +25,7 @@ import (
 
 // Census protocol: literal count, uniform zero-padded shard names. Full corpus
 // enumeration must match this constant; sampling keeps the same shard slots.
-const testMarkdownInlineShards = 1322
+const testMarkdownInlineShards = 2048
 const inlineModes = "wefnspctrukvhijlboq"
 
 // Products are shared and read-only. Only the Go overlay bridge is built into
@@ -195,50 +196,27 @@ type inlineShard struct {
 	ids     []int
 }
 
-func inlineRange(name string, first, end, modeFirst, modeEnd int) inlineShard {
-	s := inlineShard{content: fmt.Sprintf("%s texts [%d,%d) modes [%d,%d)", name, first, end, modeFirst, modeEnd)}
-	for i := first; i < end; i++ {
-		for m := modeFirst; m < modeEnd; m++ {
-			s.ids = append(s.ids, i*len(inlineModes)+m)
-		}
-	}
-	return s
+// Keys use repository-relative paths or an index within the fixed generated set.
+// Neither a corpus insertion nor a checkout's absolute path moves existing cases.
+func inlineShardIndex(key string, mode byte) int {
+	sum := sha256.Sum256([]byte(fmt.Sprintf("%s\x00%c", key, mode)))
+	return int(binary.BigEndian.Uint64(sum[:8]) % testMarkdownInlineShards)
 }
-func enumerateInlineShards(texts []string, files, generatedEnd, unicodeEnd int) []inlineShard {
-	var shards []inlineShard
-	// Contiguous corpus runs: at most eight files and 32 KiB of source.
-	// Large singleton texts retain their exact content, split by mode instead.
-	add := func(name string, first, end int) {
-		if end == first+1 && len(texts[first]) > 32*1024 {
-			for m := range len(inlineModes) {
-				shards = append(shards, inlineRange(name, first, end, m, m+1))
-			}
-		} else {
-			shards = append(shards, inlineRange(name, first, end, 0, len(inlineModes)))
+func enumerateInlineShards(names []string, texts []string, files int) []inlineShard {
+	shards := make([]inlineShard, testMarkdownInlineShards)
+	for i := range shards {
+		shards[i].content = fmt.Sprintf("hash bucket %d/%d", i, testMarkdownInlineShards)
+	}
+	for text := range texts {
+		key := fmt.Sprintf("generated:%d", text-files)
+		if text < files {
+			key = "corpus:" + names[text]
+		}
+		for mode := range len(inlineModes) {
+			shard := inlineShardIndex(key, inlineModes[mode])
+			shards[shard].ids = append(shards[shard].ids, text*len(inlineModes)+mode)
 		}
 	}
-	for first := 0; first < files; {
-		end := first + 1
-		size := len(texts[first])
-		for end < files && end-first < 8 && size+len(texts[end]) <= 32*1024 {
-			size += len(texts[end])
-			end++
-		}
-		add("corpus", first, end)
-		first = end
-	}
-	for first := files; first < generatedEnd; {
-		end := first + 1
-		if len(texts[first]) <= 32*1024 {
-			for end < generatedEnd && end-first < 128 && len(texts[end]) <= 32*1024 {
-				end++
-			}
-		}
-		add("generated", first, end)
-		first = end
-	}
-	add("unicode", generatedEnd, unicodeEnd)
-	add("astral", unicodeEnd, len(texts))
 	return shards
 }
 func inlineUnion(shards []inlineShard, expected map[int]bool) error {
@@ -326,11 +304,28 @@ func inlineNativeRun(t *testing.T, sanitized, fast string, args ...string) run {
 		return run{}
 	}
 }
-func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd, unicodeEnd int, selected map[string]bool) {
-	if len(texts)*len(inlineModes) != 115995 {
-		t.Fatalf("full enumeration: %d cases, want 115995", len(texts)*len(inlineModes))
+func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd int, selected map[string]bool) {
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
 	}
-	shards := enumerateInlineShards(texts, files, generatedEnd, unicodeEnd)
+	names := make([]string, files)
+	for i, path := range paths {
+		name, err := filepath.Rel(root, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		names[i] = filepath.ToSlash(name)
+	}
+	shards := enumerateInlineShards(names, texts, files)
+	full := make(map[int]bool, len(texts)*len(inlineModes))
+	for id := range len(texts) * len(inlineModes) {
+		full[id] = true
+	}
+	if err := inlineUnion(shards, full); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("full counted union: %d cases, each id exactly once", len(full))
 	if len(shards) != testMarkdownInlineShards {
 		t.Fatalf("enumerated %d shards; census constant is %d", len(shards), testMarkdownInlineShards)
 	}
@@ -590,5 +585,31 @@ func TestMarkdownInlineProductSourceInputs(t *testing.T) {
 	write(t, filepath.Join(second, "program.c"), []byte("mutated"))
 	if original == key(second) {
 		t.Fatal("changed prerequisite reused a product key")
+	}
+}
+
+func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
+	before := enumerateInlineShards([]string{"a.md", "z.md"}, []string{"a", "z", "generated"}, 2)
+	after := enumerateInlineShards([]string{"a.md", "new.md", "z.md"}, []string{"a", "new", "z", "generated"}, 3)
+	locate := func(shards []inlineShard, id int) int {
+		for i, shard := range shards {
+			for _, found := range shard.ids {
+				if found == id {
+					return i
+				}
+			}
+		}
+		t.Fatalf("missing case %d", id)
+		return -1
+	}
+	if len(before) != testMarkdownInlineShards || len(after) != testMarkdownInlineShards {
+		t.Fatal("unstable shard count")
+	}
+	for mode := range len(inlineModes) {
+		for _, pair := range [][2]int{{0, 0}, {1, 2}, {2, 3}} {
+			if locate(before, pair[0]*len(inlineModes)+mode) != locate(after, pair[1]*len(inlineModes)+mode) {
+				t.Fatalf("insertion moved text %d mode %c", pair[0], inlineModes[mode])
+			}
+		}
 	}
 }

@@ -149,8 +149,8 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	return ""
 }
 
-// Shards are contiguous corpus runs bounded by bytes, generated ranges, and
-// individual modes of large texts. ADAMIC_TEST_SHARD=i/n (zero based) selects
+// Shards hash each repository-relative corpus path or fixed generated index,
+// together with its mode, into a static bucket. ADAMIC_TEST_SHARD=i/n selects
 // ordinal % n == i; unset runs all. The gate uses -run ^TestMarkdownInline$/^shard-NNNN$.
 // Build products use internal/buildcache; the Go overlay bridge builds once.
 func TestMarkdownInline(t *testing.T) {
@@ -162,8 +162,19 @@ func TestMarkdownInline(t *testing.T) {
 	var texts []string
 	patterns := []string{"*.md", "*.markdown", "*.mdown", "*.mkd"}
 	paths := corpusfiles.Repository(t, root, []string{"."}, patterns)
-	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)...)
-	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)...)
+	coherePaths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)
+	typeScriptPaths := corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)
+	if len(paths) == 0 {
+		t.Fatal("repository Markdown corpus is empty")
+	}
+	if len(coherePaths) != 786 {
+		t.Fatalf("cohere Markdown corpus at %s: %d files, want 786", corpusfiles.CohereCommit, len(coherePaths))
+	}
+	if len(typeScriptPaths) != 67 {
+		t.Fatalf("TypeScript-Go Markdown corpus at %s: %d files, want 67", corpusfiles.TypeScriptGoCommit, len(typeScriptPaths))
+	}
+	paths = append(paths, coherePaths...)
+	paths = append(paths, typeScriptPaths...)
 	sort.Strings(paths)
 	names := make([]string, len(paths))
 	for i, path := range paths {
@@ -224,11 +235,10 @@ func TestMarkdownInline(t *testing.T) {
 		}
 	}
 	texts = append(texts, unicode.String())
-	unicodeEnd := len(texts)
 	for _, code := range []rune{0x10100, 0x1039f, 0x1f600, 0x1e95f, 0x10ffff} {
 		texts = append(texts, string(code)+"_a a_"+string(code), string(code)+"*a a*"+string(code))
 	}
-	runInlineShards(t, paths, texts, files, generatedEnd, unicodeEnd, selected)
+	runInlineShards(t, paths, texts, files, generatedEnd, selected)
 }
 func write(t *testing.T, path string, b []byte) {
 	t.Helper()
