@@ -2,7 +2,11 @@ package oracles
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func boundedAnswers(t *testing.T) {
@@ -31,7 +35,16 @@ func TestProduct_EstreeGoOracle(t *testing.T) { t.Parallel(); ParserOracle(t) }
 
 func TestProduct_AcceptanceOracle(t *testing.T) { t.Parallel(); AcceptanceMutantsOracle(t) }
 
-func TestProduct_scalar_edges_go_oracle(t *testing.T) { t.Parallel(); ScalarEdgesOracle(t) }
+func TestProduct_scalar_edges_go_oracle(t *testing.T) {
+	t.Parallel()
+	binary := ScalarEdgesOracle(t)
+	// The product row proves the oracle exists and runs: it answers an empty manifest (#n1g5604).
+	manifest := filepath.Join(t.TempDir(), "empty-manifest")
+	if err := os.WriteFile(manifest, nil, 0600); err != nil {
+		t.Fatal(err)
+	}
+	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"--manifest", manifest}})
+}
 
 func TestProduct_SyntaxMutantsGoOracle(t *testing.T) { t.Parallel(); SyntaxMutantsOracle(t) }
 
