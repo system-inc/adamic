@@ -1,0 +1,21 @@
+Before any mutant: code under test is runtime/normalize.c, adamic_string_normalize and its private normalization helpers. Oracle is Node String.prototype.normalize in four forms, run by normalizeOracle through compareStreams. No harness, oracle, or test was edited.
+Conservative source function inventory, not dynamic coverage:
+internal/native/runtime/normalize.c:52 combining_class
+internal/native/runtime/normalize.c:79 mapping_of
+internal/native/runtime/normalize.c:105 composite
+internal/native/runtime/normalize.c:139 points_add
+internal/native/runtime/normalize.c:154 decompose
+internal/native/runtime/normalize.c:176 reorder
+internal/native/runtime/normalize.c:235 compose
+internal/native/runtime/normalize.c:263 size_at
+internal/native/runtime/normalize.c:267 decode_at
+internal/native/runtime/normalize.c:281 encode
+internal/native/runtime/normalize.c:308 normalized
+internal/native/runtime/normalize.c:363 emit_point
+internal/native/runtime/normalize.c:373 finish_segment
+internal/native/runtime/normalize.c:389 accept_point
+internal/native/runtime/normalize.c:398 emit_blocks
+internal/native/runtime/normalize.c:422 repeated_prefix
+internal/native/runtime/normalize.c:479 stream
+internal/native/runtime/normalize.c:562 form_is
+internal/native/runtime/normalize.c:567 adamic_string_normalize

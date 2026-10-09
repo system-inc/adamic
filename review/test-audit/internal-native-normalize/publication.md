@@ -1,0 +1,3 @@
+The first normal push was rejected because this audit branch already contained evidence at 3f70f2af4b5b9e8d6cb9cd17be8b34199b52c55b. That evidence is preserved byte for byte under previous-3f70f2af/. The merge keeps this run's current-origin/main production tree and current evidence, with the earlier branch as a history parent. No force push was used.
+
+The general git diff --check reports literal unified-diff context lines as space-before-tab or trailing whitespace. These are required patch formatting. All four patches pass git apply --check; excluding the .diff evidence files, git diff origin/main --check passes.
