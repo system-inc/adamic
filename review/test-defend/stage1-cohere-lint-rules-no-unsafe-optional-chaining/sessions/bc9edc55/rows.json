@@ -1,0 +1,26 @@
+[
+  {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/native.go:145 at bc9edc5560379b63d4688a21006efb6032b60434",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/native.go:145",
+        "change": "Drop arguments = append(arguments, \"-lm\") from native.Build.",
+        "rows_failed": [
+          "TestCompileProfiles"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/no-unsafe-optional-chaining/ -run .; build_test.go:34: native: clang failed: exit status 1; main.c: undefined reference to `floor`; --- FAIL: TestCompileProfiles (30.35s)",
+    "rows_passed": [],
+    "matrix_rows": [
+      "TestCompileProfiles"
+    ],
+    "oracle": "self: sanitized and release native compilation must succeed; emitted JavaScript must be writable; products are not executed."
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "D1": {
+    "failed": [
+      "TestCompileProfiles"
+    ],
+    "passed": [],
+    "unknown": [],
+    "skipped": [],
+    "whole_package": true,
+    "binary_seconds": 30.361,
+    "sanitized_build": "succeeded: test reached the release build failure at line 34",
+    "release_build": "failed at link: missing libm"
+  }
+}

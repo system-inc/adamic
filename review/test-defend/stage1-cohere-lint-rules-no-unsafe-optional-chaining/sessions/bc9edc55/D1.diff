@@ -1,0 +1,12 @@
+diff --git a/internal/native/native.go b/internal/native/native.go
+index fd266740..033ce0bf 100644
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -142,7 +142,6 @@ func Build(source string, output string, options Options) error {
+ 		// Runtime constructors precede module initialization at the same default priority.
+ 		arguments = append(arguments, filepath.Join(directory, "main.c"))
+ 	}
+-	arguments = append(arguments, "-lm")
+ 	if options.Target == "wasm32-wasi" {
+ 		arguments = append(arguments, WASILinkFlags(options)...)
+ 	}

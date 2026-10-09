@@ -1,0 +1,17 @@
+{
+  "base": "bc9edc5560379b63d4688a21006efb6032b60434",
+  "code_under_test": "lower.Lower, native.C, native.Build, javascript.JavaScript applied to the owned profile.a; mutation confined to native.Build runtime linking",
+  "oracle": "self: load/lower and sanitized/release builds must succeed; JavaScript string must be writable; no product execution",
+  "mutants": [
+    {
+      "id": "D1",
+      "file": "internal/native/native.go",
+      "line": 145,
+      "menu": "drop a statement",
+      "change": "drop arguments = append(arguments, \"-lm\")",
+      "aim": "Release profile must link libm; sanitized runtime can hide a missing explicit libm link. The previous semantic port mutants never touched profile buildability."
+    }
+  ],
+  "cost_row": false,
+  "cost_reason": "CompileProfiles has no timing, cost or throughput assertion. Profiles are sanitized and release compilation configurations."
+}

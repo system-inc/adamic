@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "cache": "/tmp/defend-unsafe-profile/cache/D1",
+    "exit": 0,
+    "wall_seconds": 0.27336672200181056
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining/",
+      "-run",
+      "."
+    ],
+    "cache": "/tmp/defend-unsafe-profile/cache/D1",
+    "exit": 1,
+    "wall_seconds": 35.57086236000032
+  }
+]
