@@ -1,0 +1,29 @@
+// A concrete overload binds the implementation's sole generic parameter.
+function token(value: string): string;
+function token<T extends string>(value: T): T { return value; }
+
+// The implementation inserts P after R; both must be inferred by their uses.
+function ancestor<R>(directory: string, callback: (directory: string) => R): R;
+function ancestor<R, P extends string>(directory: P, callback: (directory: P) => R): R {
+    return callback(directory);
+}
+
+// An extra binder unused by the signature cannot change execution.
+function extra<R>(value: R): R;
+function extra<R, Unused>(value: R): R { return value; }
+
+// The missing U witness must collapse the implementation's union to T.
+// The body still needs ordinary specialization when called; this pins the
+// universal signature proof independently of that later lowering lesson.
+function collapse<T>(value: T): T;
+function collapse<T, U>(value: T): T | U { return value; }
+
+// Neither binder in this union has evidence; the unused callback can accept
+// bottom without claiming it can receive a fabricated number.
+function erased(callback: (value: number) => void): void;
+function erased<T, U>(callback: (value: T | U) => void): void {}
+
+console.log(token('to' + 'ken'));
+console.log(ancestor('parent', (directory) => directory + '/child'));
+console.log(extra('un' + 'used'));
+console.log(`${extra(42)}`);

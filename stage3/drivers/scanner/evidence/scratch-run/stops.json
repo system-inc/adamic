@@ -1,0 +1,272 @@
+[
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/debug.ts",
+    "file": "debug.ts",
+    "line": 7,
+    "column": 1,
+    "message": "Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports",
+    "order": 1,
+    "build_exit": 1,
+    "scope": "first unchanged stop",
+    "witness": {
+      "file": "discovery/witness-01-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports",
+      "catalogue_origin": "native3/02-namespace"
+    },
+    "placeholder": "namespace replacement with throwing functions; later Debug observations are dependent"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/types.ts",
+    "file": "types.ts",
+    "line": 689,
+    "column": 36,
+    "message": "stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet",
+    "order": 2,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-02-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet",
+      "catalogue_origin": "native3/03-nullable"
+    },
+    "placeholder": "type-only nullable union placeholder with throwing marker"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/diagnosticInformationMap.generated.ts",
+    "file": "diagnosticInformationMap.generated.ts",
+    "line": 13,
+    "column": 34,
+    "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "order": 3,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-03-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "catalogue_origin": "native3/04-cast"
+    },
+    "placeholder": "typed throwing diagnostic factory; later casts are placeholder-dependent"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/utilities.ts",
+    "file": "utilities.ts",
+    "line": 67,
+    "column": 67,
+    "message": "Adamic 0.1 refuses the comma operator; write each expression as its own statement",
+    "order": 4,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-04-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses the comma operator; write each expression as its own statement",
+      "catalogue_origin": "native3/05-comma"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 430,
+    "column": 21,
+    "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "order": 5,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-05-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "catalogue_origin": "native3/06-shebang"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 476,
+    "column": 24,
+    "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "order": 6,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-06-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "catalogue_origin": "native3/06-shebang"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 476,
+    "column": 12,
+    "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "order": 7,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-07-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "catalogue_origin": "native3/06-shebang"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 500,
+    "column": 67,
+    "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "order": 8,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-08-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "catalogue_origin": "native3/04-cast"
+    },
+    "placeholder": "typed throwing UTF16 worker"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 534,
+    "column": 24,
+    "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "order": 9,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-09-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "catalogue_origin": "native3/06-shebang"
+    },
+    "placeholder": "typed throwing initializer"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/core.ts",
+    "file": "core.ts",
+    "line": 107,
+    "column": 20,
+    "message": "stage 0 can't lower new an Identifier yet",
+    "order": 10,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-10-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower new an Identifier yet",
+      "catalogue_origin": "native3/11-array"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/utilities.ts",
+    "file": "utilities.ts",
+    "line": 13,
+    "column": 17,
+    "message": "stage 0 can't lower a function returning U | undefined yet",
+    "order": 11,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-11-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower a function returning U | undefined yet",
+      "catalogue_origin": "native3/12-generic-return"
+    },
+    "placeholder": "throwing function with never return; later return typing is placeholder-dependent"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/utilities.ts",
+    "file": "utilities.ts",
+    "line": 17,
+    "column": 56,
+    "message": "stage 0 can't lower a function value taking string | number yet",
+    "order": 12,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-12-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower a function value taking string | number yet",
+      "catalogue_origin": "native3/13-function-union"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 258,
+    "column": 27,
+    "message": "stage 0 can't lower a void call used as a value yet",
+    "order": 13,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-13-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower a void call used as a value yet",
+      "catalogue_origin": "native3/14-nullish"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 364,
+    "column": 9,
+    "message": "Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0",
+    "order": 14,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-14-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0",
+      "catalogue_origin": "native3/15-condition"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-scratch-command-proof/discovery/adapted/src/compiler/debug.ts",
+    "file": "debug.ts",
+    "line": 9,
+    "column": 9,
+    "message": "stage 0 can't lower a function value with an optional parameter yet",
+    "order": 15,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-15-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower a function value with an optional parameter yet",
+      "catalogue_origin": "combined-records-library/16-new"
+    },
+    "continuation": "fifteen-stop bound reached"
+  }
+]

@@ -1,0 +1,397 @@
+[
+  {
+    "log": "/tmp/element-access-before-1746.log",
+    "findings": [
+      {
+        "where": "src/compiler/binder.ts:1746:21",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1754:84",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1757:28",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1758:18",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      },
+      {
+        "where": "src/compiler/binder.ts:1761:17",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.14132301s",
+      "replay signature did not reproduce: NotYet an ElementAccessExpression at /tmp/element-access-adapted/src/compiler/binder.ts:1746:21 (selected /tmp/element-access-adapted/src/compiler/binder.ts:1739:5)",
+      "exit status 1",
+      "replay total (including overlay and Go build): 15.826855685s",
+      "exit status 1"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-before-1757.log",
+    "findings": [
+      {
+        "where": "src/compiler/binder.ts:1746:21",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1754:84",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1757:28",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1758:18",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      },
+      {
+        "where": "src/compiler/binder.ts:1761:17",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.134406713s",
+      "replay signature did not reproduce: NotYet an ElementAccessExpression at /tmp/element-access-adapted/src/compiler/binder.ts:1757:28 (selected /tmp/element-access-adapted/src/compiler/binder.ts:1739:5)",
+      "exit status 1",
+      "replay total (including overlay and Go build): 2.477552145s",
+      "exit status 1"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-optional-7440.log",
+    "findings": [
+      {
+        "where": "src/compiler/checker.ts:7424:71",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7425:32",
+        "kind": "NotYet",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "where": "src/compiler/checker.ts:7427:62",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7428:39",
+        "kind": "NotYet",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "where": "src/compiler/checker.ts:7429:62",
+        "kind": "NotYet",
+        "reason": "reading arrayType"
+      },
+      {
+        "where": "src/compiler/core.ts:342:1",
+        "kind": "Refused",
+        "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined"
+      },
+      {
+        "where": "src/compiler/checker.ts:7437:68",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "src/compiler/checker.ts:7439:47",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7440:67",
+        "kind": "NotYet",
+        "reason": "reading labeledElementDeclarations"
+      },
+      {
+        "where": "src/compiler/checker.ts:7442:37",
+        "kind": "NotYet",
+        "reason": "reading labeledElementDeclaration"
+      },
+      {
+        "where": "src/compiler/checker.ts:7457:64",
+        "kind": "NotYet",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "where": "src/compiler/checker.ts:7458:37",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "src/compiler/checker.ts:7461:25",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a boolean and a number"
+      },
+      {
+        "where": "src/compiler/checker.ts:7466:28",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7469:21",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a number and a value"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.343485828s",
+      "replay signature did not reproduce: NotYet ?.[] on a value at /tmp/element-access-adapted/src/compiler/checker.ts:7440:67 (selected /tmp/element-access-adapted/src/compiler/checker.ts:7420:13)",
+      "exit status 1",
+      "replay total (including overlay and Go build): 2.698084597s",
+      "exit status 1"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-optional-9101.log",
+    "findings": [
+      {
+        "where": "src/compiler/checker.ts:9099:17",
+        "kind": "NotYet",
+        "reason": "a value of type any"
+      },
+      {
+        "where": "src/compiler/checker.ts:9100:46",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "where": "src/compiler/checker.ts:9101:112",
+        "kind": "NotYet",
+        "reason": "?.[] on a value"
+      },
+      {
+        "where": "src/compiler/checker.ts:9102:58",
+        "kind": "NotYet",
+        "reason": "reading decl"
+      },
+      {
+        "where": "src/compiler/checker.ts:9116:18",
+        "kind": "NotYet",
+        "reason": "reading result"
+      },
+      {
+        "where": "src/compiler/checker.ts:9122:20",
+        "kind": "NotYet",
+        "reason": "reading result"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.145324975s",
+      "reproduced NotYet: ?.[] on a value at /tmp/element-access-adapted/src/compiler/checker.ts:9101:112",
+      "replay total (including overlay and Go build): 2.507580338s"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-after-1746.log",
+    "findings": [
+      {
+        "where": "src/compiler/binder.ts:1746:21",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1754:84",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1757:28",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1758:18",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      },
+      {
+        "where": "src/compiler/binder.ts:1761:17",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.193725951s",
+      "reproduced NotYet: a NonNullExpression at /tmp/element-access-adapted/src/compiler/binder.ts:1746:21",
+      "replay total (including overlay and Go build): 2.547032641s"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-after-1757.log",
+    "findings": [
+      {
+        "where": "src/compiler/binder.ts:1746:21",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1754:84",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1757:28",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/binder.ts:1758:18",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      },
+      {
+        "where": "src/compiler/binder.ts:1761:17",
+        "kind": "NotYet",
+        "reason": "reading clause"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.315221888s",
+      "reproduced NotYet: a NonNullExpression at /tmp/element-access-adapted/src/compiler/binder.ts:1757:28",
+      "replay total (including overlay and Go build): 2.671642801s"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-after-src_compiler_checker.ts-7440.log",
+    "findings": [
+      {
+        "where": "src/compiler/checker.ts:7424:71",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7425:32",
+        "kind": "NotYet",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "where": "src/compiler/checker.ts:7427:62",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7428:39",
+        "kind": "NotYet",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "where": "src/compiler/checker.ts:7429:62",
+        "kind": "NotYet",
+        "reason": "reading arrayType"
+      },
+      {
+        "where": "src/compiler/core.ts:342:1",
+        "kind": "Refused",
+        "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined"
+      },
+      {
+        "where": "src/compiler/checker.ts:7437:68",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "src/compiler/checker.ts:7439:47",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7440:67",
+        "kind": "NotYet",
+        "reason": "reading labeledElementDeclarations"
+      },
+      {
+        "where": "src/compiler/checker.ts:7442:37",
+        "kind": "NotYet",
+        "reason": "reading labeledElementDeclaration"
+      },
+      {
+        "where": "src/compiler/checker.ts:7457:64",
+        "kind": "NotYet",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "where": "src/compiler/checker.ts:7458:37",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "src/compiler/checker.ts:7461:25",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a boolean and a number"
+      },
+      {
+        "where": "src/compiler/checker.ts:7466:28",
+        "kind": "NotYet",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "where": "src/compiler/checker.ts:7469:21",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a number and a value"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.228223389s",
+      "replay signature did not reproduce: NotYet ?.[] on a value at /tmp/element-access-adapted/src/compiler/checker.ts:7440:67 (selected /tmp/element-access-adapted/src/compiler/checker.ts:7420:13)",
+      "exit status 1",
+      "replay total (including overlay and Go build): 2.649095407s",
+      "exit status 1"
+    ]
+  },
+  {
+    "log": "/tmp/element-access-after-src_compiler_checker.ts-9101.log",
+    "findings": [
+      {
+        "where": "src/compiler/checker.ts:9099:17",
+        "kind": "NotYet",
+        "reason": "a value of type any"
+      },
+      {
+        "where": "src/compiler/checker.ts:9100:46",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "where": "src/compiler/checker.ts:9102:17",
+        "kind": "NotYet",
+        "reason": "a BinaryExpression with a boolean and a value"
+      },
+      {
+        "where": "src/compiler/checker.ts:9116:18",
+        "kind": "NotYet",
+        "reason": "reading result"
+      },
+      {
+        "where": "src/compiler/checker.ts:9122:20",
+        "kind": "NotYet",
+        "reason": "reading result"
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.128901165s",
+      "replay signature did not reproduce: NotYet ?.[] on a value at /tmp/element-access-adapted/src/compiler/checker.ts:9101:112 (selected /tmp/element-access-adapted/src/compiler/checker.ts:9098:9)",
+      "exit status 1",
+      "replay total (including overlay and Go build): 2.472988428s",
+      "exit status 1"
+    ]
+  }
+]
