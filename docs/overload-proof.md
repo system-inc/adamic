@@ -56,7 +56,9 @@ that might throw still has its normal continuation.
 
 ## Receivers, closures and calls
 
-**Proposed conservative answers where the ruling is silent:** an explicit this
+**Ruled by @system_adamic, Oct 9 09:16:** the conservative receiver, closure,
+callee and recursion rules below are approved because each only refuses more.
+An explicit this
 parameter narrows to the overload receiver contract separately from positional
 arguments. An implicit method receiver keeps its established class type; an
 unknown or incompatible receiver cannot justify a narrower result.
@@ -118,11 +120,10 @@ at its field path. Mutate the proof to initialize parameters with the full
 implementation types instead of overload types, restore it after testing, and
 require the focused fixture suite to fail.
 
-**Evidence clarification:** full-domain analysis is more conservative than
-narrow-domain analysis. Alone it cannot make a correctly refused negative
-program become accepted; it should wrongly refuse a positive witness. The
-brief's requirement that this mutant makes the refusal fixture fail is interpreted
-as a fixture test containing both admission and refusal controls. Report which
-positive control kills it, separately from the wider-return refusal. If a strictly
-negative-only mutant failure was intended, that needs a different mutant; this
-contract does not claim an impossible acceptance from broadening the proof domain.
+**Ruled by @system_adamic, Oct 9 09:16:** keep paired admission and refusal
+controls. Full-domain analysis is more conservative: the positive controls catch
+that mutant by being wrongly refused. Separately skip input narrowing, accept
+any return whose annotated type matches the overload's declared result, and
+never verify all reachable returns. The evaluate
+variant returning `{ value: 1 }` must kill this unsound mutant by being wrongly
+admitted. Report each catcher independently.
