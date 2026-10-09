@@ -88,6 +88,8 @@ type syntaxMutantPrepared struct {
 	Want         []byte
 }
 
+// Preparation is shared within a process, including independently selected shards.
+var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
 var syntaxMutantsPreparedDirectory string
 
@@ -109,11 +111,8 @@ func syntaxMutantRead(t *testing.T, dir string) []syntaxMutantPrepared {
 	return result
 }
 
-// Not parallel: publishes shared build products before parallel shards are released.
-func TestSyntaxMutants_Setup(t *testing.T) {
-	started := time.Now()
-	cpu := syntaxMutantCPU()
-	defer func() { t.Logf("CPU: %.3fs", (syntaxMutantCPU() - cpu).Seconds()) }()
+func prepareSyntaxMutants(t *testing.T) {
+	t.Helper()
 	dir := buildcache.Product(t, syntaxMutantSetupInputs(t), func(dir string) error {
 		items := syntaxMutantEnumeration()
 		prepared := make([]syntaxMutantPrepared, len(items))
@@ -165,23 +164,30 @@ func TestSyntaxMutants_Setup(t *testing.T) {
 	})
 	syntaxMutantsPrepared = syntaxMutantRead(t, dir)
 	syntaxMutantsPreparedDirectory = dir
-	t.Logf("TestSyntaxMutants (setup): %.3fs; ready: %s", time.Since(started).Seconds(), dir)
 }
 func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
-	if dir := os.Getenv("ADAMIC_SYNTAX_MUTANTS_READY"); dir != "" {
-		return syntaxMutantRead(t, dir)
+	t.Helper()
+	syntaxMutantsPrepareOnce.Do(func() { prepareSyntaxMutants(t) })
+	if len(syntaxMutantsPrepared) != len(syntaxMutantEnumeration()) {
+		t.Fatal("syntax mutant preparation failed")
 	}
-	if syntaxMutantsPrepared != nil {
-		return syntaxMutantsPrepared
-	}
-	dir := buildcache.Product(t, syntaxMutantSetupInputs(t), func(string) error { return fmt.Errorf("run TestSyntaxMutants_Setup first; shards never build") })
-	return syntaxMutantRead(t, dir)
+	return syntaxMutantsPrepared
 }
+
+func TestSyntaxMutants_Setup(t *testing.T) {
+	t.Parallel()
+	started := time.Now()
+	syntaxMutantReady(t)
+	t.Logf("TestSyntaxMutants (setup): %.3fs; ready: %s", time.Since(started).Seconds(), syntaxMutantsPreparedDirectory)
+}
+
 func runSyntaxMutantShard(t *testing.T, shard int) {
+	prepared := syntaxMutantReady(t)[shard]
+	started := time.Now()
+	defer func() { t.Logf("shard work: %.3fs", time.Since(started).Seconds()) }()
 	cpu := syntaxMutantCPU()
 	defer func() { t.Logf("CPU: %.3fs", (syntaxMutantCPU() - cpu).Seconds()) }()
 	item := syntaxMutantEnumeration()[shard]
-	prepared := syntaxMutantReady(t)[shard]
 	list := manifest(t, prepared.Sources)
 	if shard != 0 && !strings.Contains(string(prepared.Want), `"status":"error"`) {
 		t.Fatal(string(prepared.Want))
@@ -231,6 +237,7 @@ var syntaxMutantRunners = [...]func(*testing.T){TestSyntaxMutants_000, TestSynta
 
 func TestSyntaxMutantsUnion(t *testing.T) {
 	t.Parallel()
+	syntaxMutantReady(t)
 	items := syntaxMutantEnumeration()
 	if len(syntaxMutantRunners) != testSyntaxMutantsShards || len(items) != testSyntaxMutantsShards {
 		t.Fatal("shard count mismatch")
@@ -273,9 +280,6 @@ func TestSyntaxMutantsUnion(t *testing.T) {
 		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		command := exec.CommandContext(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1")
-		if syntaxMutantsPreparedDirectory != "" {
-			command.Env = append(command.Env, "ADAMIC_SYNTAX_MUTANTS_READY="+syntaxMutantsPreparedDirectory)
-		}
 		output, err := command.CombinedOutput()
 		contextErr := ctx.Err()
 		cancel()
