@@ -1,0 +1,6 @@
+=== RUN   TestProgramRegionHost14AgreesWithNode
+=== PAUSE TestProgramRegionHost14AgreesWithNode
+=== CONT  TestProgramRegionHost14AgreesWithNode
+    program_region_host_witness_test.go:14: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:16:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case
+--- FAIL: TestProgramRegionHost14AgreesWithNode (1.63s)
+FAIL

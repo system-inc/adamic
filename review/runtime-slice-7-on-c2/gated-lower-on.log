@@ -1,0 +1,29 @@
+=== RUN   TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== PAUSE TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== RUN   TestPromisePayloadCannotHideUserCycles
+=== PAUSE TestPromisePayloadCannotHideUserCycles
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== CONT  TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== CONT  TestNamespaceAmbientHostInitialization
+=== CONT  TestNestedCallbackCycleIsRefused
+=== CONT  TestPromisePayloadCannotHideUserCycles
+=== NAME  TestNestedCallbackCycleIsRefused
+    nested_functions_test.go:215: want callback environment cycle refusal, got main.a: Adamic 0.1 refuses Program canonical closure before canonical-cache adoption; await runtime's 06c canonical closure adoption; use an anonymous closure or a module function
+--- FAIL: TestNestedCallbackCycleIsRefused (0.16s)
+=== NAME  TestPromisePayloadCannotHideUserCycles
+    async_test.go:70: Promise payload hid the user back-reference: <nil>
+--- FAIL: TestPromisePayloadCannotHideUserCycles (0.17s)
+=== NAME  TestAsyncGeneratedIdentityCannotBeClaimedBySource
+    async_test.go:28: user class with exact generated name adamic_generated_frame_0: <nil>
+--- FAIL: TestAsyncGeneratedIdentityCannotBeClaimedBySource (0.20s)
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath3738140180/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:42: expected independent host member NotYet, got <nil>
+--- FAIL: TestNamespaceAmbientHostInitialization (2.15s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (0.65s)
+    --- FAIL: TestNamespaceAmbientHostInitialization/cwd (1.30s)
+FAIL

@@ -49,8 +49,7 @@ packages were installed with npm ci --ignore-scripts.
 
 go build ./... passed under timeout 600 before the final unconditional-check
 repair. go vet ./... passed under timeout 600 both before and after that repair.
-The final build rerun was still running when this report was prepared; no final
-build success is claimed here. The corrected lower/oracle test binaries compiled.
+The final build rerun also passed under timeout 600 after the repair. The corrected lower/oracle test binaries compiled.
 All three initial test binaries compiled in one background go test -c command
 under timeout 900; running jobs were checked at least once a minute.
 Repository tracked Go files passed gofmt -l; git diff --check passed.

@@ -1,0 +1,24 @@
+=== RUN   TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== PAUSE TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== RUN   TestPromisePayloadCannotHideUserCycles
+=== PAUSE TestPromisePayloadCannotHideUserCycles
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== CONT  TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== CONT  TestNamespaceAmbientHostInitialization
+=== CONT  TestNestedCallbackCycleIsRefused
+=== CONT  TestPromisePayloadCannotHideUserCycles
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+--- PASS: TestPromisePayloadCannotHideUserCycles (0.10s)
+--- PASS: TestNestedCallbackCycleIsRefused (0.10s)
+--- PASS: TestAsyncGeneratedIdentityCannotBeClaimedBySource (0.24s)
+=== NAME  TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath2670639735/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:42: expected independent host member NotYet, got <nil>
+--- FAIL: TestNamespaceAmbientHostInitialization (1.88s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (0.64s)
+    --- FAIL: TestNamespaceAmbientHostInitialization/cwd (1.15s)
+FAIL

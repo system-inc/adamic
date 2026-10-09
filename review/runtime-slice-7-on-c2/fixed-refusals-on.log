@@ -1,0 +1,730 @@
+=== RUN   TestClosureMergeRefusals
+=== PAUSE TestClosureMergeRefusals
+=== RUN   TestConcurrencyRefusals
+=== PAUSE TestConcurrencyRefusals
+=== RUN   TestGraphParallelMapRefusesRegions
+    graph_regions_review_test.go:26: /workspace/adamic/internal/oracle/testdata/concurrency/refused/graph_region.a:11:13: Adamic 0.1 refuses parallelMap items are not shareable: Ring.next is a mutable field; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+--- PASS: TestGraphParallelMapRefusesRegions (0.13s)
+=== RUN   TestJSONStringifyRefusals
+=== PAUSE TestJSONStringifyRefusals
+=== RUN   TestLibraryMapSetIteratorCopiesRefused
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused
+=== RUN   TestMovesRefusals
+=== PAUSE TestMovesRefusals
+=== RUN   TestNarrowedUnionObjectTagRefusal
+=== PAUSE TestNarrowedUnionObjectTagRefusal
+=== RUN   TestNestedRebindingCheckerRefusal
+=== PAUSE TestNestedRebindingCheckerRefusal
+=== RUN   TestCheckedNonNullAdamicRefusal
+=== PAUSE TestCheckedNonNullAdamicRefusal
+=== RUN   TestImpossibleNonNullFixturesAreRefused
+=== PAUSE TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused
+=== PAUSE TestPossibleNonNullAdamicAssertionsAreRefused
+=== RUN   TestNonNullAdamicRefusal
+=== PAUSE TestNonNullAdamicRefusal
+=== RUN   TestPredicateMiscompileRefusals
+=== PAUSE TestPredicateMiscompileRefusals
+=== RUN   TestInUnionNarrowingIsRefused
+=== PAUSE TestInUnionNarrowingIsRefused
+=== RUN   TestReviewProgramsRefuse
+=== PAUSE TestReviewProgramsRefuse
+=== CONT  TestClosureMergeRefusals
+=== RUN   TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a
+=== PAUSE TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a
+=== RUN   TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a
+=== PAUSE TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a
+=== CONT  TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a
+=== CONT  TestConcurrencyRefusals
+=== CONT  TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_default.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_default.a
+=== RUN   TestConcurrencyRefusals/async.a
+=== PAUSE TestConcurrencyRefusals/async.a
+=== RUN   TestConcurrencyRefusals/await.a
+=== PAUSE TestConcurrencyRefusals/await.a
+=== RUN   TestConcurrencyRefusals/capture_write.a
+=== PAUSE TestConcurrencyRefusals/capture_write.a
+=== RUN   TestConcurrencyRefusals/captured_let.a
+=== PAUSE TestConcurrencyRefusals/captured_let.a
+=== RUN   TestConcurrencyRefusals/class_mutable.a
+=== PAUSE TestConcurrencyRefusals/class_mutable.a
+=== RUN   TestConcurrencyRefusals/console.a
+=== PAUSE TestConcurrencyRefusals/console.a
+=== RUN   TestConcurrencyRefusals/date.a
+=== PAUSE TestConcurrencyRefusals/date.a
+=== RUN   TestConcurrencyRefusals/directory.a
+=== PAUSE TestConcurrencyRefusals/directory.a
+=== RUN   TestConcurrencyRefusals/dispatch.a
+=== PAUSE TestConcurrencyRefusals/dispatch.a
+=== RUN   TestConcurrencyRefusals/file_read.a
+=== PAUSE TestConcurrencyRefusals/file_read.a
+=== RUN   TestConcurrencyRefusals/file_write.a
+=== PAUSE TestConcurrencyRefusals/file_write.a
+=== RUN   TestConcurrencyRefusals/fresh_alias.a
+=== PAUSE TestConcurrencyRefusals/fresh_alias.a
+=== RUN   TestConcurrencyRefusals/global_write.a
+=== PAUSE TestConcurrencyRefusals/global_write.a
+=== RUN   TestConcurrencyRefusals/graph_region.a
+=== PAUSE TestConcurrencyRefusals/graph_region.a
+=== RUN   TestConcurrencyRefusals/hidden_subclass.a
+=== PAUSE TestConcurrencyRefusals/hidden_subclass.a
+=== RUN   TestConcurrencyRefusals/item_write.a
+=== PAUSE TestConcurrencyRefusals/item_write.a
+=== RUN   TestConcurrencyRefusals/map_field.a
+=== PAUSE TestConcurrencyRefusals/map_field.a
+=== RUN   TestConcurrencyRefusals/mapped_map.a
+=== PAUSE TestConcurrencyRefusals/mapped_map.a
+=== RUN   TestConcurrencyRefusals/mutable_array.a
+=== PAUSE TestConcurrencyRefusals/mutable_array.a
+=== RUN   TestConcurrencyRefusals/mutable_field.a
+=== PAUSE TestConcurrencyRefusals/mutable_field.a
+=== RUN   TestConcurrencyRefusals/mutable_set.a
+=== PAUSE TestConcurrencyRefusals/mutable_set.a
+=== RUN   TestConcurrencyRefusals/nested_array.a
+=== PAUSE TestConcurrencyRefusals/nested_array.a
+=== RUN   TestConcurrencyRefusals/process.a
+=== PAUSE TestConcurrencyRefusals/process.a
+=== RUN   TestConcurrencyRefusals/random.a
+=== PAUSE TestConcurrencyRefusals/random.a
+=== RUN   TestConcurrencyRefusals/reassigned_parameter.a
+=== PAUSE TestConcurrencyRefusals/reassigned_parameter.a
+=== RUN   TestConcurrencyRefusals/union_mutable.a
+=== PAUSE TestConcurrencyRefusals/union_mutable.a
+=== RUN   TestConcurrencyRefusals/unknown_call.a
+=== PAUSE TestConcurrencyRefusals/unknown_call.a
+=== RUN   TestConcurrencyRefusals/unknown_type.a
+=== PAUSE TestConcurrencyRefusals/unknown_type.a
+=== RUN   TestConcurrencyRefusals/weak.a
+=== PAUSE TestConcurrencyRefusals/weak.a
+=== CONT  TestNestedRebindingCheckerRefusal
+=== CONT  TestCheckedNonNullAdamicRefusal
+=== CONT  TestNarrowedUnionObjectTagRefusal
+--- PASS: TestNestedRebindingCheckerRefusal (0.20s)
+=== CONT  TestMovesRefusals
+=== RUN   TestMovesRefusals/after.a
+=== PAUSE TestMovesRefusals/after.a
+=== RUN   TestMovesRefusals/alias.a
+=== PAUSE TestMovesRefusals/alias.a
+=== RUN   TestMovesRefusals/array_capture.a
+=== PAUSE TestMovesRefusals/array_capture.a
+=== RUN   TestMovesRefusals/array_owner.a
+=== PAUSE TestMovesRefusals/array_owner.a
+=== RUN   TestMovesRefusals/async.a
+=== PAUSE TestMovesRefusals/async.a
+=== RUN   TestMovesRefusals/bare_return.a
+=== PAUSE TestMovesRefusals/bare_return.a
+=== RUN   TestMovesRefusals/callback_closure.a
+=== PAUSE TestMovesRefusals/callback_closure.a
+=== RUN   TestMovesRefusals/capture.a
+=== PAUSE TestMovesRefusals/capture.a
+=== RUN   TestMovesRefusals/closure.a
+=== PAUSE TestMovesRefusals/closure.a
+=== RUN   TestMovesRefusals/cross_block.a
+=== PAUSE TestMovesRefusals/cross_block.a
+=== RUN   TestMovesRefusals/default_parameter.a
+=== PAUSE TestMovesRefusals/default_parameter.a
+=== RUN   TestMovesRefusals/escape.a
+=== PAUSE TestMovesRefusals/escape.a
+=== RUN   TestMovesRefusals/expression_work.a
+=== PAUSE TestMovesRefusals/expression_work.a
+=== RUN   TestMovesRefusals/field_store.a
+=== PAUSE TestMovesRefusals/field_store.a
+=== RUN   TestMovesRefusals/global.a
+=== PAUSE TestMovesRefusals/global.a
+=== RUN   TestMovesRefusals/helper.a
+=== PAUSE TestMovesRefusals/helper.a
+=== RUN   TestMovesRefusals/item_destructure.a
+=== PAUSE TestMovesRefusals/item_destructure.a
+=== RUN   TestMovesRefusals/let_owner.a
+=== PAUSE TestMovesRefusals/let_owner.a
+=== RUN   TestMovesRefusals/main_block.a
+=== PAUSE TestMovesRefusals/main_block.a
+=== RUN   TestMovesRefusals/nested.a
+=== PAUSE TestMovesRefusals/nested.a
+=== RUN   TestMovesRefusals/nested_arrays.a
+=== PAUSE TestMovesRefusals/nested_arrays.a
+=== RUN   TestMovesRefusals/nested_call.a
+=== PAUSE TestMovesRefusals/nested_call.a
+=== RUN   TestMovesRefusals/nested_map.a
+=== PAUSE TestMovesRefusals/nested_map.a
+=== RUN   TestMovesRefusals/nested_race.a
+=== PAUSE TestMovesRefusals/nested_race.a
+=== RUN   TestMovesRefusals/overlap.a
+=== PAUSE TestMovesRefusals/overlap.a
+=== RUN   TestMovesRefusals/race_alias.a
+=== PAUSE TestMovesRefusals/race_alias.a
+=== RUN   TestMovesRefusals/rebind.a
+=== PAUSE TestMovesRefusals/rebind.a
+=== RUN   TestMovesRefusals/result.a
+=== PAUSE TestMovesRefusals/result.a
+=== RUN   TestMovesRefusals/spread.a
+=== PAUSE TestMovesRefusals/spread.a
+=== RUN   TestMovesRefusals/unknown.a
+=== PAUSE TestMovesRefusals/unknown.a
+=== CONT  TestLibraryMapSetIteratorCopiesRefused
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_keys_spread
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/map_keys_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_keys_assign
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/map_keys_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_values_spread
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/map_values_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_values_assign
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/map_values_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_entries_spread
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/map_entries_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/map_entries_assign
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/map_entries_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_keys_spread
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/set_keys_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_keys_assign
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/set_keys_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_values_spread
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/set_values_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_values_assign
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/set_values_assign
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_entries_spread
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/set_entries_spread
+=== RUN   TestLibraryMapSetIteratorCopiesRefused/set_entries_assign
+=== PAUSE TestLibraryMapSetIteratorCopiesRefused/set_entries_assign
+=== CONT  TestJSONStringifyRefusals
+=== RUN   TestJSONStringifyRefusals/parse
+--- PASS: TestCheckedNonNullAdamicRefusal (0.27s)
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a
+=== NAME  TestNarrowedUnionObjectTagRefusal
+    narrowed_union_test.go:82: gate cache node hit
+=== NAME  TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a
+    closure_merge_refusals_test.go:34: gate cache node hit
+=== RUN   TestJSONStringifyRefusals/hidden_fields
+=== RUN   TestJSONStringifyRefusals/array_of_objects
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a
+--- PASS: TestNarrowedUnionObjectTagRefusal (0.76s)
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a
+=== RUN   TestJSONStringifyRefusals/toJSON
+=== RUN   TestJSONStringifyRefusals/replacer_function
+=== RUN   TestJSONStringifyRefusals/prototype
+=== RUN   TestJSONStringifyRefusals/duplicate
+--- PASS: TestJSONStringifyRefusals (1.38s)
+    --- PASS: TestJSONStringifyRefusals/parse (0.28s)
+    --- PASS: TestJSONStringifyRefusals/hidden_fields (0.18s)
+    --- PASS: TestJSONStringifyRefusals/array_of_objects (0.19s)
+    --- PASS: TestJSONStringifyRefusals/toJSON (0.20s)
+    --- PASS: TestJSONStringifyRefusals/replacer_function (0.15s)
+    --- PASS: TestJSONStringifyRefusals/prototype (0.10s)
+    --- PASS: TestJSONStringifyRefusals/duplicate (0.27s)
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a
+=== CONT  TestPredicateMiscompileRefusals
+=== RUN   TestPredicateMiscompileRefusals/p05_helper_second_parameter
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="number NaN\nnumber 42\n"
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestPredicateMiscompileRefusals/p06_helper_second_parameter_undefined
+=== CONT  TestReviewProgramsRefuse
+=== RUN   TestReviewProgramsRefuse/fxspptb_4ddd17f_class_cast.a
+=== NAME  TestPredicateMiscompileRefusals/p06_helper_second_parameter_undefined
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="undefined? abc\nno\nundefined? undefined\nyes\n"
+=== RUN   TestReviewProgramsRefuse/fxspptb_4e1649c_raw_named_writer.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_57f2d04_with_frozen.a
+=== NAME  TestPredicateMiscompileRefusals/p06_helper_second_parameter_undefined
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestPredicateMiscompileRefusals/p12_find_undefined_target
+=== RUN   TestReviewProgramsRefuse/fxspptb_8e67677_write_groups_compound_missing.a
+=== NAME  TestPredicateMiscompileRefusals/p12_find_undefined_target
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="found undefined\n"
+=== RUN   TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a
+    review_test.go:86: awaits library/area-on-next-2: refused at compile time by step 20's own-property reflection refusal on area/library; every Adamic mode answers differently from Node on main today
+=== RUN   TestReviewProgramsRefuse/fxspptb_903f25b_try_assign.a
+=== CONT  TestInUnionNarrowingIsRefused
+=== NAME  TestPredicateMiscompileRefusals/p12_find_undefined_target
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p12_find_undefined_target.a:5:15: stage 0 can't lower find predicate result representation conversion from string to undefined; use a loop with an explicit narrowed result yet
+=== RUN   TestPredicateMiscompileRefusals/p13_filter_wrong_parameter_helper
+=== RUN   TestReviewProgramsRefuse/fxspptb_93122fa_s3.a
+=== NAME  TestPredicateMiscompileRefusals/p13_filter_wrong_parameter_helper
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="3\nitem a\nitem undefined\nitem bc\n"
+=== NAME  TestInUnionNarrowingIsRefused
+    presence_refused_test.go:30: gate cache node hit
+=== RUN   TestReviewProgramsRefuse/fxspptb_93122fa_s4.a
+=== NAME  TestPredicateMiscompileRefusals/p13_filter_wrong_parameter_helper
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:8:27: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "g"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
+=== RUN   TestPredicateMiscompileRefusals/p14_overload_optional_chain_container
+--- PASS: TestInUnionNarrowingIsRefused (0.34s)
+=== CONT  TestNonNullAdamicRefusal
+=== RUN   TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== PAUSE TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== RUN   TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+=== PAUSE TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_9984394_lib_dispatch.a
+=== NAME  TestPredicateMiscompileRefusals/p14_overload_optional_chain_container
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="claimed box: box a\ndirect: box\nclaimed box: undefined\ndirect: undefined\n"
+=== RUN   TestReviewProgramsRefuse/fxspptb_a34388d_it_spread.a
+=== NAME  TestPredicateMiscompileRefusals/p14_overload_optional_chain_container
+    predicate_refusals_test.go:63: gate cache node hit
+    predicate_refusals_test.go:64: javascript: exit=70 stdout="claimed box: box a\ndirect: box\n" stderr="adamic: panic: overload 1 of isText result: predicate x is false\n"
+    oracle_test.go:754: gate cache native hit
+    predicate_refusals_test.go:66: release: exit=70 stdout="claimed box: box a\ndirect: box\n" stderr="adamic: panic: overload 1 of isText result: predicate x is false\n"
+    oracle_test.go:773: gate cache native hit
+    predicate_refusals_test.go:68: sanitized: exit=70 stdout="claimed box: box a\ndirect: box\n" stderr="adamic: panic: overload 1 of isText result: predicate x is false\n"
+=== RUN   TestPredicateMiscompileRefusals/p21_find_inferred_number
+=== RUN   TestReviewProgramsRefuse/fxspptb_a34388d_it_spread2.a
+=== NAME  TestPredicateMiscompileRefusals/p21_find_inferred_number
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="found 2\na|bc\n"
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_override_default_added.a
+=== NAME  TestPredicateMiscompileRefusals/p21_find_inferred_number
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p21_find_inferred_number.a:2:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet
+=== RUN   TestPredicateMiscompileRefusals/p22_filter_inferred_narrowing
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_override_optional.a
+=== NAME  TestPredicateMiscompileRefusals/p22_filter_inferred_narrowing
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="a|bc\n1,2\ntotal 6\n"
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_override_optional_number.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_super_early.a
+=== NAME  TestPredicateMiscompileRefusals/p22_filter_inferred_narrowing
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p22_filter_inferred_narrowing.a:2:17: stage 0 can't lower filter predicate element representation conversion from boxed union to string; use a loop with an explicit narrowed copy yet
+=== RUN   TestPredicateMiscompileRefusals/p23_find_declared_predicate
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_super_early_silent.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_super_early_this.a
+=== NAME  TestPredicateMiscompileRefusals/p23_find_declared_predicate
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="found 2\n"
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_fill.a
+=== NAME  TestPredicateMiscompileRefusals/p23_find_declared_predicate
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p23_find_declared_predicate.a:5:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet
+=== RUN   TestPredicateMiscompileRefusals/p24_filter_proven_number
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_alias_fill.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_fill.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_mapset.a
+=== NAME  TestPredicateMiscompileRefusals/p24_filter_proven_number
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="2\n2\n2,4\n"
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_alias_mapset.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_mapset.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_reverse.a
+=== NAME  TestPredicateMiscompileRefusals/p24_filter_proven_number
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p24_filter_proven_number.a:5:17: stage 0 can't lower filter predicate element representation conversion from boxed union to number; use a loop with an explicit narrowed copy yet
+=== RUN   TestPredicateMiscompileRefusals/p26_assert_nested_if_without_else
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="value abc\nvalue undefined\n"
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_alias_reverse.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_reverse.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_setadd.a
+=== NAME  TestPredicateMiscompileRefusals/p26_assert_nested_if_without_else
+    predicate_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p26_assert_nested_if_without_else.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestPredicateMiscompileRefusals/p27_overload_parameter_rebound
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_alias_setadd.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_setadd.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_sort.a
+=== NAME  TestPredicateMiscompileRefusals/p27_overload_parameter_rebound
+    predicate_refusals_test.go:40: gate cache node hit
+    predicate_refusals_test.go:44: Node: exit=0 stdout="text a\ntext 41\n"
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_alias_sort.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_sort.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_clobber_link_loop.a
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a
+=== NAME  TestPredicateMiscompileRefusals/p27_overload_parameter_rebound
+    predicate_refusals_test.go:63: gate cache node hit
+    predicate_refusals_test.go:64: javascript: exit=70 stdout="text a\n" stderr="adamic: panic: overload 1 of isText result: predicate x is false\n"
+    oracle_test.go:754: gate cache native hit
+    predicate_refusals_test.go:66: release: exit=70 stdout="text a\n" stderr="adamic: panic: overload 1 of isText result: predicate x is false\n"
+    oracle_test.go:773: gate cache native hit
+    predicate_refusals_test.go:68: sanitized: exit=70 stdout="text a\n" stderr="adamic: panic: overload 1 of isText result: predicate x is false\n"
+--- PASS: TestPredicateMiscompileRefusals (3.23s)
+    --- PASS: TestPredicateMiscompileRefusals/p05_helper_second_parameter (0.27s)
+    --- PASS: TestPredicateMiscompileRefusals/p06_helper_second_parameter_undefined (0.18s)
+    --- PASS: TestPredicateMiscompileRefusals/p12_find_undefined_target (0.41s)
+    --- PASS: TestPredicateMiscompileRefusals/p13_filter_wrong_parameter_helper (0.23s)
+    --- PASS: TestPredicateMiscompileRefusals/p14_overload_optional_chain_container (0.34s)
+    --- PASS: TestPredicateMiscompileRefusals/p21_find_inferred_number (0.27s)
+    --- PASS: TestPredicateMiscompileRefusals/p22_filter_inferred_narrowing (0.39s)
+    --- PASS: TestPredicateMiscompileRefusals/p23_find_declared_predicate (0.37s)
+    --- PASS: TestPredicateMiscompileRefusals/p24_filter_proven_number (0.19s)
+    --- PASS: TestPredicateMiscompileRefusals/p26_assert_nested_if_without_else (0.14s)
+    --- PASS: TestPredicateMiscompileRefusals/p27_overload_parameter_rebound (0.44s)
+=== CONT  TestPossibleNonNullAdamicAssertionsAreRefused
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused/read
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_clobber_link_loop.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_clobber_link_loop.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_escaped_before.a
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused/typeerror
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a
+--- PASS: TestPossibleNonNullAdamicAssertionsAreRefused (0.14s)
+    --- PASS: TestPossibleNonNullAdamicAssertionsAreRefused/read (0.08s)
+    --- PASS: TestPossibleNonNullAdamicAssertionsAreRefused/typeerror (0.07s)
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a
+=== NAME  TestReviewProgramsRefuse/fxspptb_aee89b2_escaped_before.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_escaped_before.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_map_entries_pattern.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_map_entries_pattern.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_spread_outside.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_spread_outside.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_throw_keeps_old.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_aee89b2_throw_keeps_old.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_bdb950b_generic.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_bdb950b_generic_shared.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_init_super.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_init_super_getter.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_init_super_number.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_static_private_instance.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_static_private_method.a
+=== CONT  TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_devirt_fresh_method_keeps_argument.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== NAME  TestReviewProgramsRefuse/fxspptb_devirt_fresh_method_keeps_argument.a
+    review_test.go:163: accepted refused review program /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_devirt_fresh_method_keeps_argument.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a
+    review_test.go:86: awaits library/area-on-next-2: refused at compile time by the V8-divergence shape refusal on area/library; native answers differently from Node on main today
+=== RUN   TestReviewProgramsRefuse/fxspptb_e4eec87_u02_optional_absent.a
+=== CONT  TestConcurrencyRefusals/async.a
+=== CONT  TestConcurrencyRefusals/process.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_iterators_hidden_return.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_default.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_iterators_override_this.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_iterators_sym_keys_view.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p05_helper_second_parameter.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p12_find_undefined_target.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p13_filter_wrong_parameter_helper.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p21_find_inferred_number.a
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+    non_null_impossible_test.go:51: gate cache node hit
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+    non_null_impossible_test.go:51: gate cache node hit
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p23_find_declared_predicate.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a
+--- PASS: TestClosureMergeRefusals (0.00s)
+    --- PASS: TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a (0.76s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a (2.00s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a (2.25s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a (2.38s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a (1.86s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a (1.70s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a (1.68s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a (1.95s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a (1.76s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a (1.60s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a (1.58s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a (1.70s)
+    --- PASS: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a (1.79s)
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p17_callable_field_element_call.a
+=== CONT  TestConcurrencyRefusals/fresh_alias.a
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+    non_null_impossible_test.go:56: gate cache node hit
+=== CONT  TestConcurrencyRefusals/nested_array.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p48_callable_destructure_wrong.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p64_array_arm_element.a
+=== CONT  TestConcurrencyRefusals/mutable_set.a
+=== CONT  TestConcurrencyRefusals/mutable_field.a
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+    non_null_impossible_test.go:56: gate cache node hit
+--- PASS: TestImpossibleNonNullFixturesAreRefused (0.00s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a (0.19s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_default.a (0.13s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a (0.16s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a (0.26s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a (0.14s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a (0.17s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a (0.09s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a (0.13s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a (0.09s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts (0.76s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts (0.98s)
+=== CONT  TestConcurrencyRefusals/mutable_array.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p75_callable_from_map_value.a
+=== CONT  TestConcurrencyRefusals/mapped_map.a
+=== CONT  TestConcurrencyRefusals/map_field.a
+=== CONT  TestConcurrencyRefusals/item_write.a
+=== CONT  TestConcurrencyRefusals/hidden_subclass.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p76_union_member_class_field.a
+=== CONT  TestConcurrencyRefusals/graph_region.a
+=== CONT  TestConcurrencyRefusals/global_write.a
+=== CONT  TestConcurrencyRefusals/unknown_call.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_p06_helper_second_parameter_undefined.a
+=== CONT  TestConcurrencyRefusals/date.a
+=== CONT  TestConcurrencyRefusals/file_write.a
+=== CONT  TestConcurrencyRefusals/file_read.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_p24_filter_proven_number.a
+=== CONT  TestConcurrencyRefusals/dispatch.a
+=== CONT  TestConcurrencyRefusals/directory.a
+=== RUN   TestReviewProgramsRefuse/non_null.a
+=== CONT  TestConcurrencyRefusals/captured_let.a
+=== CONT  TestConcurrencyRefusals/console.a
+=== CONT  TestConcurrencyRefusals/class_mutable.a
+=== CONT  TestConcurrencyRefusals/capture_write.a
+=== CONT  TestConcurrencyRefusals/await.a
+--- FAIL: TestReviewProgramsRefuse (7.46s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_4ddd17f_class_cast.a (0.07s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_4e1649c_raw_named_writer.a (0.06s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_57f2d04_with_frozen.a (0.14s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_8e67677_write_groups_compound_missing.a (0.17s)
+    --- SKIP: TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a (0.00s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_903f25b_try_assign.a (0.14s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_93122fa_s3.a (0.18s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_93122fa_s4.a (0.13s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_9984394_lib_dispatch.a (0.19s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_a34388d_it_spread.a (0.12s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_a34388d_it_spread2.a (0.17s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_override_default_added.a (0.19s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_override_optional.a (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_override_optional_number.a (0.10s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_super_early.a (0.07s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_super_early_silent.a (0.12s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_super_early_this.a (0.09s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_fill.a (0.16s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_mapset.a (0.10s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_reverse.a (0.10s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_setadd.a (0.17s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_sort.a (0.23s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_clobber_link_loop.a (0.18s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_escaped_before.a (0.16s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_map_entries_pattern.a (0.12s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_spread_outside.a (0.08s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_throw_keeps_old.a (0.17s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_bdb950b_generic.a (0.19s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_bdb950b_generic_shared.a (0.16s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_init_super.a (0.20s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_init_super_getter.a (0.10s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_init_super_number.a (0.08s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_static_private_instance.a (0.08s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_static_private_method.a (0.13s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_devirt_fresh_method_keeps_argument.a (0.30s)
+    --- SKIP: TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a (0.00s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_e4eec87_u02_optional_absent.a (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_iterators_hidden_return.a (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_iterators_override_this.a (0.09s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_iterators_sym_keys_view.a (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p05_helper_second_parameter.a (0.19s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p12_find_undefined_target.a (0.12s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p13_filter_wrong_parameter_helper.a (0.14s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p21_find_inferred_number.a (0.23s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a (0.12s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p23_find_declared_predicate.a (0.10s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a (0.18s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p17_callable_field_element_call.a (0.13s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p48_callable_destructure_wrong.a (0.10s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p64_array_arm_element.a (0.20s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p75_callable_from_map_value.a (0.19s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p76_union_member_class_field.a (0.14s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_p06_helper_second_parameter_undefined.a (0.19s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_p24_filter_proven_number.a (0.10s)
+    --- PASS: TestReviewProgramsRefuse/non_null.a (0.18s)
+=== CONT  TestConcurrencyRefusals/weak.a
+=== CONT  TestConcurrencyRefusals/reassigned_parameter.a
+=== CONT  TestConcurrencyRefusals/union_mutable.a
+=== CONT  TestConcurrencyRefusals/unknown_type.a
+=== CONT  TestConcurrencyRefusals/random.a
+=== CONT  TestMovesRefusals/after.a
+=== CONT  TestMovesRefusals/helper.a
+=== CONT  TestMovesRefusals/unknown.a
+--- PASS: TestConcurrencyRefusals (0.00s)
+    --- PASS: TestConcurrencyRefusals/async.a (0.17s)
+    --- PASS: TestConcurrencyRefusals/process.a (0.16s)
+    --- PASS: TestConcurrencyRefusals/nested_array.a (0.11s)
+    --- PASS: TestConcurrencyRefusals/fresh_alias.a (0.15s)
+    --- PASS: TestConcurrencyRefusals/mutable_field.a (0.21s)
+    --- PASS: TestConcurrencyRefusals/mutable_set.a (0.22s)
+    --- PASS: TestConcurrencyRefusals/mutable_array.a (0.20s)
+    --- PASS: TestConcurrencyRefusals/mapped_map.a (0.12s)
+    --- PASS: TestConcurrencyRefusals/map_field.a (0.18s)
+    --- PASS: TestConcurrencyRefusals/item_write.a (0.19s)
+    --- PASS: TestConcurrencyRefusals/hidden_subclass.a (0.17s)
+    --- PASS: TestConcurrencyRefusals/global_write.a (0.15s)
+    --- PASS: TestConcurrencyRefusals/graph_region.a (0.21s)
+    --- PASS: TestConcurrencyRefusals/unknown_call.a (0.15s)
+    --- PASS: TestConcurrencyRefusals/file_write.a (0.12s)
+    --- PASS: TestConcurrencyRefusals/date.a (0.18s)
+    --- PASS: TestConcurrencyRefusals/file_read.a (0.16s)
+    --- PASS: TestConcurrencyRefusals/dispatch.a (0.13s)
+    --- PASS: TestConcurrencyRefusals/captured_let.a (0.10s)
+    --- PASS: TestConcurrencyRefusals/directory.a (0.19s)
+    --- PASS: TestConcurrencyRefusals/console.a (0.12s)
+    --- PASS: TestConcurrencyRefusals/capture_write.a (0.13s)
+    --- PASS: TestConcurrencyRefusals/class_mutable.a (0.18s)
+    --- PASS: TestConcurrencyRefusals/await.a (0.19s)
+    --- PASS: TestConcurrencyRefusals/weak.a (0.22s)
+    --- PASS: TestConcurrencyRefusals/reassigned_parameter.a (0.19s)
+    --- PASS: TestConcurrencyRefusals/unknown_type.a (0.14s)
+    --- PASS: TestConcurrencyRefusals/union_mutable.a (0.21s)
+    --- PASS: TestConcurrencyRefusals/random.a (0.15s)
+=== CONT  TestMovesRefusals/spread.a
+=== CONT  TestMovesRefusals/result.a
+=== CONT  TestMovesRefusals/rebind.a
+=== CONT  TestMovesRefusals/race_alias.a
+=== CONT  TestMovesRefusals/overlap.a
+=== CONT  TestMovesRefusals/nested_race.a
+=== CONT  TestMovesRefusals/nested_map.a
+=== CONT  TestMovesRefusals/nested_call.a
+=== CONT  TestMovesRefusals/nested_arrays.a
+=== CONT  TestMovesRefusals/nested.a
+=== CONT  TestMovesRefusals/main_block.a
+=== CONT  TestMovesRefusals/let_owner.a
+=== CONT  TestMovesRefusals/item_destructure.a
+=== CONT  TestMovesRefusals/closure.a
+=== CONT  TestMovesRefusals/global.a
+=== CONT  TestMovesRefusals/field_store.a
+=== CONT  TestMovesRefusals/expression_work.a
+=== CONT  TestMovesRefusals/escape.a
+=== CONT  TestMovesRefusals/default_parameter.a
+=== CONT  TestMovesRefusals/cross_block.a
+=== CONT  TestMovesRefusals/async.a
+=== CONT  TestMovesRefusals/capture.a
+=== CONT  TestMovesRefusals/callback_closure.a
+=== CONT  TestMovesRefusals/bare_return.a
+=== CONT  TestMovesRefusals/array_capture.a
+=== CONT  TestMovesRefusals/array_owner.a
+=== CONT  TestMovesRefusals/alias.a
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/map_keys_spread
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/set_keys_spread
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/set_entries_assign
+--- PASS: TestMovesRefusals (0.00s)
+    --- PASS: TestMovesRefusals/after.a (0.14s)
+    --- PASS: TestMovesRefusals/spread.a (0.11s)
+    --- PASS: TestMovesRefusals/helper.a (0.21s)
+    --- PASS: TestMovesRefusals/unknown.a (0.24s)
+    --- PASS: TestMovesRefusals/rebind.a (0.15s)
+    --- PASS: TestMovesRefusals/overlap.a (0.15s)
+    --- PASS: TestMovesRefusals/result.a (0.28s)
+    --- PASS: TestMovesRefusals/race_alias.a (0.19s)
+    --- PASS: TestMovesRefusals/nested_map.a (0.16s)
+    --- PASS: TestMovesRefusals/nested_call.a (0.16s)
+    --- PASS: TestMovesRefusals/nested_arrays.a (0.15s)
+    --- PASS: TestMovesRefusals/nested_race.a (0.34s)
+    --- PASS: TestMovesRefusals/nested.a (0.13s)
+    --- PASS: TestMovesRefusals/let_owner.a (0.13s)
+    --- PASS: TestMovesRefusals/main_block.a (0.15s)
+    --- PASS: TestMovesRefusals/item_destructure.a (0.11s)
+    --- PASS: TestMovesRefusals/closure.a (0.10s)
+    --- PASS: TestMovesRefusals/field_store.a (0.12s)
+    --- PASS: TestMovesRefusals/global.a (0.15s)
+    --- PASS: TestMovesRefusals/expression_work.a (0.14s)
+    --- PASS: TestMovesRefusals/cross_block.a (0.14s)
+    --- PASS: TestMovesRefusals/escape.a (0.21s)
+    --- PASS: TestMovesRefusals/default_parameter.a (0.18s)
+    --- PASS: TestMovesRefusals/async.a (0.15s)
+    --- PASS: TestMovesRefusals/bare_return.a (0.15s)
+    --- PASS: TestMovesRefusals/capture.a (0.23s)
+    --- PASS: TestMovesRefusals/callback_closure.a (0.25s)
+    --- PASS: TestMovesRefusals/array_capture.a (0.23s)
+    --- PASS: TestMovesRefusals/array_owner.a (0.16s)
+    --- PASS: TestMovesRefusals/alias.a (0.11s)
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/set_entries_spread
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/map_keys_spread
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/set_keys_spread
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/set_entries_spread
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/set_values_assign
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/set_entries_assign
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/set_values_spread
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/set_keys_assign
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/set_values_assign
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/map_values_assign
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/set_values_spread
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/set_keys_assign
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/map_entries_assign
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/map_values_assign
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/map_entries_spread
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/map_values_spread
+=== CONT  TestLibraryMapSetIteratorCopiesRefused/map_keys_assign
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/map_entries_assign
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/map_entries_spread
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/map_values_spread
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== NAME  TestLibraryMapSetIteratorCopiesRefused/map_keys_assign
+    library_map_set_iterator_test.go:35: gate cache node hit
+=== CONT  TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== CONT  TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+--- PASS: TestNonNullAdamicRefusal (0.00s)
+    --- PASS: TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a (0.09s)
+    --- PASS: TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a (0.05s)
+--- PASS: TestLibraryMapSetIteratorCopiesRefused (0.00s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_keys_spread (0.27s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_keys_spread (0.33s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_entries_spread (0.33s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_entries_assign (0.37s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_values_assign (0.29s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_values_assign (0.19s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_keys_assign (0.23s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/set_values_spread (0.29s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_entries_spread (0.13s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_entries_assign (0.26s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_values_spread (0.19s)
+    --- PASS: TestLibraryMapSetIteratorCopiesRefused/map_keys_assign (0.21s)
+FAIL
+gate cache: native hits=4 misses=0
+gate cache: node hits=32 misses=0
+gate cache: probe hits=0 misses=0
