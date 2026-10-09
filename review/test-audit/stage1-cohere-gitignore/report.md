@@ -267,3 +267,5 @@ Setup/build/run timings:
 - Standalone native mutant build commands: 31.317 s total, including Go command compilation. Individual timings are in matrix-runs.json.
 - Three-run timing commands: 302.727 s wall total; production matrix commands: 383.417 s wall total; witness/probe commands: 374.171 s wall total. These phases include compilation and execution, so they are not pure compiler times.
 - Not covered: full-package green completion, the timed-out M1 shard, a full enlarged-corpus family timing, all compiler gap behaviors beyond M4, other packages, or repo-wide uniqueness.
+
+The separate W1 shard-017 proof took 9.889 s wall and failed with the disabled comparison. All 11 mutant witness members have observed weakened-check failures. The required Go cohere oracle runs were performed by this package harness; no other package was audited or used for repo-wide replay.
