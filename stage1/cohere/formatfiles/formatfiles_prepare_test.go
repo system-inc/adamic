@@ -35,6 +35,8 @@ var formatfilesCorpusOnce sync.Once
 var formatfilesSharedState *formatfilesShared
 var formatfilesPortOnce sync.Once
 var formatfilesPortState formatfilesPrepared
+var formatfilesUnsanitizedOnce sync.Once
+var formatfilesUnsanitizedState string
 var formatfilesMutantOnce = make([]sync.Once, len(mutants))
 var formatfilesMutantState = make([]formatfilesPrepared, len(mutants))
 var formatfilesSetupRoot string
@@ -61,9 +63,6 @@ func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
 	prepared.program = lowered(t, filepath.Join(prepared.source, "main.ts"))
 	prepared.binary = formatfilesBinary(t, prepared.program, applied)
 	if applied == nil {
-		if runtime.GOOS == "darwin" {
-			prepared.unsanitized = formatfilesBinaryWithOptions(t, prepared.program, nil, false)
-		}
 		prepared.javascript = filepath.Join(formatfilesSetupDirectory(t), "program.mjs")
 		if err := os.WriteFile(prepared.javascript, []byte(javascript.JavaScript(prepared.program)), 0644); err != nil {
 			t.Fatal(err)
@@ -75,25 +74,52 @@ func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
 func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {
 	t.Helper()
 	state := *formatfilesReady(t)
-	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })
-	if formatfilesPortState.binary == "" {
-		t.Fatal("shared port preparation failed")
+	state.port = formatfilesPreparedPort(t)
+	if runtime.GOOS == "darwin" {
+		state.port.unsanitized = formatfilesUnsanitized(t)
 	}
-	state.port = formatfilesPortState
 	state.mutated = make(map[string]formatfilesPrepared)
 	for index, mutant := range mutants {
 		if formatfilesShard("mutant/"+mutant.name) != selected {
 			continue
 		}
-		formatfilesMutantOnce[index].Do(func() {
-			formatfilesMutantState[index] = formatfilesPreparePort(t, &mutant)
-		})
-		if formatfilesMutantState[index].binary == "" {
-			t.Fatalf("mutant %q preparation failed", mutant.name)
-		}
-		state.mutated[mutant.name] = formatfilesMutantState[index]
+		state.mutated[mutant.name] = formatfilesPreparedMutant(t, index)
 	}
 	return &state
+}
+
+// The product units and shards share these once-per-process entry points.
+func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {
+	t.Helper()
+	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })
+	if formatfilesPortState.binary == "" {
+		t.Fatal("shared port preparation failed")
+	}
+	return formatfilesPortState
+}
+
+func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {
+	t.Helper()
+	formatfilesMutantOnce[index].Do(func() {
+		formatfilesMutantState[index] = formatfilesPreparePort(t, &mutants[index])
+	})
+	if formatfilesMutantState[index].binary == "" {
+		t.Fatalf("mutant %q preparation failed", mutants[index].name)
+	}
+	return formatfilesMutantState[index]
+}
+
+func formatfilesUnsanitized(t *testing.T) string {
+	t.Helper()
+	formatfilesUnsanitizedOnce.Do(func() {
+		source := formatfilesSetupPort(t, nil)
+		program := lowered(t, filepath.Join(source, "main.ts"))
+		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)
+	})
+	if formatfilesUnsanitizedState == "" {
+		t.Fatal("unsanitized port preparation failed")
+	}
+	return formatfilesUnsanitizedState
 }
 
 func formatfilesSetupDirectory(t *testing.T) string {
@@ -183,7 +209,7 @@ func formatfilesLeaks(t *testing.T, ctx context.Context, program *ir.Program, bi
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
 	if runtime.GOOS == "darwin" {
-		report := formatfilesExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", formatfilesPortState.unsanitized}, args...)...)
+		report := formatfilesExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
