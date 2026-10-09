@@ -12,7 +12,17 @@ import (
 func (e *emitter) optionalCalleeLookup() string {
 	code := fmt.Sprintf(`#include <string.h>
 static adamic_closure *adamic_optional_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, %s *method, bool *invalid) {
-	const adamic_shape *shape = object->shape;
+	const adamic_accessor *accessor = adamic_accessor_find(object, name);
+    if (accessor != NULL) {
+        adamic_value value = adamic_accessor_get((adamic_object *)object, name);
+        const adamic_heap *heap = value.reference;
+        if (heap == NULL || heap == &adamic_null) return NULL;
+        if (heap->kind == adamic_kind_closure) return value.reference;
+        adamic_release(value.reference);
+        *invalid = true;
+        return NULL;
+    }
+    const adamic_shape *shape = object->shape;
 	for (size_t index = 0; index < shape->count; index++) {
 		if (strcmp(shape->names[index], name) == 0) {
 			cache->shape = shape;
@@ -21,11 +31,11 @@ static adamic_closure *adamic_optional_callee(const adamic_object *object, const
             const adamic_value *slot = &object->slots[index];
             if (type == 8) {
                 const adamic_heap *heap = slot->reference;
-                if (heap == NULL || heap->kind == adamic_kind_closure) return slot->reference;
+                if (heap == NULL || heap->kind == adamic_kind_closure) return adamic_retain(slot->reference);
             } else if (type == 10) {
                 const adamic_heap *heap = slot->reference;
                 if (heap == NULL || heap == &adamic_null) return NULL;
-                if (heap->kind == adamic_kind_closure) return slot->reference;
+                if (heap->kind == adamic_kind_closure) return adamic_retain(slot->reference);
             }
             *invalid = true;
             return NULL;

@@ -416,6 +416,9 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// CallableAccessor keeps getter selection attached to a direct callable
+		// invocation; the receiver is saved before that getter runs.
+		CallableAccessor   bool
 		ViewContract       ViewContractID
 		ViewTypeID         int
 		ViewReceiverTypeID int

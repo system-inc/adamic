@@ -317,7 +317,14 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			if invalid != "" {
 				extra = ", &" + invalid
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s%s))", lookup, receiver, cString(property.Name), e.cache(), method, extra))
+			selected := fmt.Sprintf("%s(%s, %s, &%s, &%s%s)", lookup, receiver, cString(property.Name), e.cache(), method, extra)
+			if invalid == "" {
+				selected = "adamic_retain(" + selected + ")"
+			}
+			closure = e.own(ir.Closure, selected)
+			if property.CallableAccessor {
+				e.closureThrown()
+			}
 		}
 	}
 	if expression.RequiredCallable {

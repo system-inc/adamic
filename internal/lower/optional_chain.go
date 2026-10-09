@@ -278,14 +278,14 @@ func (l *lowering) chainMethodCall(member, node *ast.Node, object ir.Expression,
 		return nil, err
 	}
 	symbol := l.memberSymbol(member)
-	if symbol == nil || accessorSymbol(symbol) || l.accessorNames[member.Name().Text()] {
+	if symbol == nil {
 		return nil, l.notYet(node, "an optional chain callable accessor without represented selection")
 	}
 	name := l.fieldName(member.Name())
 	if l.result.CheckedFields[name] || l.result.UninitializedFields[name] {
 		return nil, l.notYet(node, "an optional method requiring a checked field contract")
 	}
-	property := ir.Property{Object: object, Name: name, Of: ir.Closure, Class: l.classOf(member), Method: true}
+	property := ir.Property{Object: object, Name: name, Of: ir.Closure, Class: l.classOf(member), Method: true, CallableAccessor: accessorSymbol(symbol) || l.accessorNames[member.Name().Text()]}
 	value, err := l.callClosureOn(node, property)
 	if err != nil {
 		return nil, err

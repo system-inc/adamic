@@ -28,6 +28,11 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 		return nil, true, err
 	}
 	call := value.(ir.CallClosure)
+	if property, ok := call.Closure.(ir.Property); ok {
+		symbol := l.memberSymbol(callee)
+		property.CallableAccessor = l.accessorNames[property.Name] || (symbol != nil && accessorSymbol(symbol))
+		call.Closure = property
+	}
 	if call.Closure.Type() != ir.Closure {
 		return nil, true, l.notYet(node, "an optional call through a value without a closure representation")
 	}
@@ -60,8 +65,7 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 		return nil, true, err
 	} else if receiver || callee.Kind == ast.KindPropertyAccessExpression {
 		property, known := call.Closure.(ir.Property)
-		symbol := l.memberSymbol(callee)
-		if !known || l.result.CheckedFields[property.Name] || l.result.UninitializedFields[property.Name] || l.accessorNames[property.Name] || (symbol != nil && accessorSymbol(symbol)) {
+		if !known || l.result.CheckedFields[property.Name] || l.result.UninitializedFields[property.Name] {
 			return nil, true, l.notYet(node, "an optional method requiring a checked field contract")
 		}
 		call.Optional = true

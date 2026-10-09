@@ -85,3 +85,58 @@ arguments through the admitted represented method path. No entry-level success
 is inferred from those reduced witnesses.
 
 | docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 37 | 50 | 6 | 0 |
+
+
+## Shape 2: getter returning a function
+
+Shape 4 is 8f26a917669393c9f17f56e0325889a04eb75a26. Callable
+accessor selection now retains the receiver, invokes the represented getter once,
+then checks its returned callable before arguments. Class, literal and structural
+views share that dispatch; lexical arrows and ordinary function receivers retain
+their different meanings. A throwing getter leaves before arguments or later
+try-body effects. Getter signatures are validated against the closure return ABI.
+
+The JavaScript path uses accessor metadata and the existing static-method table.
+Both were exposed by Node regressions and fixed before this shape was pushed.
+Known data selections are retained; getter results are already owned. A method
+or absent selection no longer adds a redundant retain(NULL) operation.
+
+Dynamic receiver declarations now prove the owner's required members, nominal
+relations and writable-slot relations, without fresh-literal excess-property
+checking. The erased-this receiver-contract mutant admits a missing member and
+is caught by the exact refusal test. Data fixtures declare readonly receiver
+reads explicitly, preserving the readonly relation. Two precise runtime selection
+readers are registered in the call-target audit, which initially rejected their
+unregistered reads; no target analysis was waived.
+
+Controls: getter.a and getter-throw.a agree with Node in both backends with
+ASan/UBSan and leak checks. Existing step-18 and accessor controls and every moved
+count row agree with Node. Lower/IR/flow checks, vet and changed-file a-check pass.
+All ten current overlays are caught: the original seven, getter twice, delaying
+a getter throw, and erasing the receiver contract. The former getter NotYet
+boundary is retired in favor of these positive and failure witnesses.
+No production tsc callable-getter occurrence was established by the source census;
+this implements its ruled storage shape, not a claimed production-stop retirement.
+
+Linux counts add two rows and change only retain counts on the rows below.
+Allocations, frees, releases, peak and regions stay unchanged on existing rows;
+the differences are eliminated retain(NULL) operations during selection.
+
+| Fixture | Before A/F/R/L/P/G | After A/F/R/L/P/G | Reason |
+|---|---|---|---|
+| internal/oracle/testdata/class_as_interface.a | 372/372/324/489/58/0 | 372/372/317/489/58/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| internal/oracle/testdata/optional_class_method.a | 40/40/71/98/9/0 | 40/40/65/98/9/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| internal/oracle/testdata/class_inheritance_interface.a | 37/37/76/102/13/0 | 37/37/68/102/13/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/method.a | 5/5/4/8/4/0 | 5/5/3/8/4/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/two-guards.a | 4/4/9/12/4/0 | 4/4/8/12/4/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-chain-method-continuation.a | 11/11/27/39/6/0 | 11/11/25/39/6/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-chain-callable.a | 14/14/29/39/5/0 | 14/14/27/39/5/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-methods.a | 17/17/11/26/6/0 | 17/17/8/26/6/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-bound-methods.a | 15/15/12/25/5/0 | 15/15/9/25/5/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-bound-method-arguments.a | 21/21/15/32/12/0 | 21/21/11/32/12/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-bound-method-selection.a | 12/12/14/26/6/0 | 12/12/12/26/6/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/fixtures/runtime-discarded-reference.a | 13/13/12/27/5/0 | 13/13/10/27/5/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| docs/step-18/storage-fixtures/getter-throw.a | new | 2/2/5/6/2/0 | Owned getter and call references. |
+| docs/step-18/storage-fixtures/getter.a | new | 26/26/40/64/8/0 | Owned getter and call references. |
+| docs/step-18/storage-fixtures/optional-method.a | 16/16/37/50/6/0 | 16/16/35/50/6/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+| internal/oracle/testdata/structural_statics_optional.a | 7/7/23/31/4/0 | 7/7/21/31/4/0 | Removed redundant retain(NULL) on absent/prototype selection. |

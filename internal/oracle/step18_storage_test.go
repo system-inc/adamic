@@ -16,6 +16,14 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{storageDirectory + "getter-throw.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{storageDirectory + "getter.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{storageDirectory + "optional-method.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string

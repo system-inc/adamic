@@ -54,6 +54,24 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 		if !stored {
 			return nil, l.notYet(node, "a function expression with a this parameter outside represented member storage")
 		}
+		var ownerType *checker.Type
+		for owner := at.Parent; owner != nil; owner = owner.Parent {
+			if owner.Kind == ast.KindObjectLiteralExpression {
+				ownerType = l.checker.GetTypeAtLocation(owner)
+				break
+			}
+			if owner.Kind == ast.KindClassDeclaration && owner.Name() != nil {
+				ownerType = checker.Checker_getDeclaredTypeOfSymbol(l.checker, l.symbol(owner.Name()))
+				break
+			}
+			if ast.IsFunctionLike(owner) && owner.Kind != ast.KindGetAccessor {
+				break
+			}
+		}
+		if ownerType == nil || !l.iterationShapeFits(l.concrete(ownerType), receiverType) || l.nominalMismatch(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil || l.widened(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil {
+			return nil, &Refused{Where: l.program.Where(node), What: "a callable field whose receiver does not satisfy its this contract", Fix: "give the function its declared receiver or use a receiver-independent arrow"}
+		}
+
 		if held, known := l.representation(receiverType); !known || held != ir.Object {
 			return nil, l.notYet(node, "a function expression with an unrepresented dynamic receiver")
 		}

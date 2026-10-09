@@ -148,6 +148,13 @@ func (l *lowering) exceptions() error {
 			dispatched[method.Function] = true
 		}
 	}
+	for _, class := range l.result.Classes {
+		for _, accessor := range class.Accessors {
+			if accessor.Getter >= 0 {
+				dispatched[accessor.Getter] = true
+			}
+		}
+	}
 	// Whether any function value can throw, and so every call through one, grows with what can, so
 	// the two are worked out together until neither changes.
 	for changed := true; changed; {

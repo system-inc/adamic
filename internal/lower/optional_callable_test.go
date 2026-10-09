@@ -18,7 +18,6 @@ func TestStep18OptionalCallableBoundaries(t *testing.T) {
 		{"scalar without optional representation", "const callback = (): number => 1; console.log(`${callback?.()}`);", "an optional call whose result is narrowed to present"},
 		{"reference narrowed to present", "const callback = (): string => `value${1}`; console.log(callback?.());", "an optional call whose result is narrowed to present"},
 		{"overloaded callable", `interface Callable { (n: number): number; (s: string): number } function run(callback: Callable | undefined): void { callback?.(1); }`, "an optional call without one represented callable signature"},
-		{"chain getter selection", `class Host { get run(): () => number { return (): number => 1; } } function probe(host: Host | undefined): number { return host?.run?.() ?? -1; } const host = new Host();`, "an optional chain callable accessor without represented selection"},
 		{"chain weak callable storage", `import type { Weak } from 'adamic'; const callback = (): number => 1; const host: { readonly run: Weak<() => number> } = { run: callback }; function probe(value: typeof host | undefined): number { return value?.run?.() ?? -1; }`, "an optional chain method without closure member storage"},
 		{"erased marker", `function run(callback: ((...items: never[]) => void) | undefined): void { callback?.(); }`, "a call through an erased never-rest callable marker"},
 	} {
@@ -30,5 +29,14 @@ func TestStep18OptionalCallableBoundaries(t *testing.T) {
 				t.Fatalf("got %v, want NotYet %q", err, probe.want)
 			}
 		})
+	}
+}
+
+func TestStep18CallableReceiverContract(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `const host: {callback:()=>string} = {callback: function(this: {missing:string}):string {return this.missing;}}; host.callback?.();`)
+	var refused *Refused
+	if !errors.As(err, &refused) || refused.What != "a callable field whose receiver does not satisfy its this contract" {
+		t.Fatalf("got %v, want receiver-contract refusal", err)
 	}
 }
