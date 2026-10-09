@@ -1,0 +1,1906 @@
+{
+  "sha": "20ebb633c703466bb031331d59be5c0ce01514c1",
+  "branch": "codex/stage3-speculative-census",
+  "branch_source": "given",
+  "session": "01a11c14-71b1-7300-b157-8c5e60a9c012",
+  "session_source": "ai.db reply naming the branch",
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "base_name": "main",
+  "tools_sha": "884ab858c3525915a5a480a7802272e4d2661274",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "compiler_dependency_map": {
+    "root": "/home/ahra/fast-gate/tools",
+    "path": "cloud/fast-gate/compiler-dependencies.json"
+  },
+  "selected_compiler_drivers": [
+    "stage3/drivers/parser",
+    "stage3/drivers/scanner",
+    "stage3/drivers/tsc",
+    "stage3/drivers/tsc-entry"
+  ],
+  "oracle_selection": {
+    "whole": true,
+    "reason": "compiler dependency changed"
+  },
+  "direct_packages": [
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/internal/testguard",
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/cohere/values",
+    "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy"
+  ],
+  "reads": [
+    {
+      "line": 127,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/any_returns_concrete.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 151,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/any_returns_concrete.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 175,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/any_returns_test.go",
+        "internal/lower/functions.go",
+        "internal/lower/generic.go",
+        "internal/lower/instantiate.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "internal/lower/any_returns_test.go",
+        "internal/oracle/any_returns_test.go",
+        "internal/oracle/testdata/any_returns_concrete.a",
+        "internal/testguard/guard.go",
+        "stage1/cohere/lint/corpus_sources_test.go",
+        "stage1/cohere/lint/deadlines_test.go",
+        "stage1/cohere/lint/validation/compiler-agree-balance/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-balance/after-load.json.gz",
+        "stage1/cohere/lint/validation/compiler-agree-balance/after-tests.md",
+        "stage1/cohere/lint/validation/compiler-agree-balance/after-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/after.jsonl.gz",
+        "stage1/cohere/lint/validation/compiler-agree-balance/after.log.gz",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before-load.json.gz",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before-tests.md",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before.jsonl.gz",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before.log.gz",
+        "stage1/cohere/lint/validation/compiler-agree-balance/byte-proof-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/byte-proof.txt",
+        "stage1/cohere/lint/validation/compiler-agree-balance/drop-proof-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/drop-proof.txt",
+        "stage1/cohere/lint/validation/compiler-agree-balance/measurements.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/smoke.txt",
+        "stage1/cohere/lint/validation/compiler-agree-balance/vet.txt",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/excluded-paths.txt",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy-overlay.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy.patch",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy.txt",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak-overlay.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak.patch",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak.txt",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixtures.txt",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/inventory.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/mutants-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion-overlay.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion.patch",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion.txt",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/run-mutants.py",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/tested-code.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/vet.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.py",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/guard-retry.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/helpers-retry.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/helpers.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/jsx-recovery-retry.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-load.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/merge.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/module-cache.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-load.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-load.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-load.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal.jsonl",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/run.py",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/smoke.txt",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/status.py",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/summarize.py",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/vet.txt",
+        "stage1/cohere/lint/validation/compiler-agree-shards/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-shards/gate-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-shards/gate.jsonl.gz",
+        "stage1/cohere/lint/validation/compiler-agree-shards/gate.log.gz",
+        "stage1/cohere/lint/validation/compiler-agree-shards/interrupted-gate.jsonl.gz",
+        "stage1/cohere/lint/validation/compiler-agree-shards/interrupted-load.jsonl.gz",
+        "stage1/cohere/lint/validation/compiler-agree-shards/load.jsonl.gz",
+        "stage1/cohere/lint/validation/compiler-agree-shards/merge.log",
+        "stage1/cohere/lint/validation/compiler-agree-shards/proof-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-shards/proof.log",
+        "stage1/cohere/lint/validation/compiler-agree-shards/setup-wasi.log",
+        "stage1/cohere/lint/validation/compiler-agree-shards/setup.log",
+        "stage1/cohere/lint/validation/compiler-agree-shards/smoke.log",
+        "stage1/cohere/lint/validation/compiler-agree-shards/timings.json",
+        "stage1/cohere/lint/validation/compiler-agree-shards/vet.log",
+        "stage1/cohere/lint/validation/compiler-agree-shards/wasi-version.log",
+        "stage1/typescript/scanner/childguard-validation.md",
+        "stage3/census/any-returns-concrete/REPORT.md",
+        "stage3/census/any-returns-concrete/RESULT.json",
+        "stage3/census/any-returns-concrete/evidence/area-counts.log.txt",
+        "stage3/census/any-returns-concrete/evidence/area-lower.log.txt",
+        "stage3/census/any-returns-concrete/evidence/area-mutants.log.txt",
+        "stage3/census/any-returns-concrete/evidence/area-oracle.log.txt",
+        "stage3/census/any-returns-concrete/evidence/copier-final.log.txt",
+        "stage3/census/any-returns-concrete/evidence/copier-loses-alias.log.txt",
+        "stage3/census/any-returns-concrete/evidence/counts.log.txt",
+        "stage3/census/any-returns-concrete/evidence/delivery-build.log.txt",
+        "stage3/census/any-returns-concrete/evidence/delivery-run.log.txt",
+        "stage3/census/any-returns-concrete/evidence/delivery.jsonl.gz",
+        "stage3/census/any-returns-concrete/evidence/emitter-alone-trace.log.txt",
+        "stage3/census/any-returns-concrete/evidence/final-lower.log.txt",
+        "stage3/census/any-returns-concrete/evidence/final-oracle.log.txt",
+        "stage3/census/any-returns-concrete/evidence/generic-regression.log.txt",
+        "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+        "stage3/census/any-returns-concrete/evidence/mapper-only-run.log.txt",
+        "stage3/census/any-returns-concrete/evidence/mapper-only.jsonl.gz",
+        "stage3/census/any-returns-concrete/evidence/memoize-trace.log.txt",
+        "stage3/census/any-returns-concrete/evidence/mutants.log.txt",
+        "stage3/census/any-returns-concrete/evidence/node-context.log.txt",
+        "stage3/census/any-returns-concrete/evidence/opaque-mapper.log.txt",
+        "stage3/census/any-returns-concrete/evidence/setup.log.txt",
+        "stage3/census/any-returns-concrete/evidence/source-verification.json",
+        "stage3/census/any-returns-concrete/evidence/statecopy.log.txt",
+        "stage3/census/any-returns-concrete/evidence/trust-any.log.txt",
+        "stage3/census/any-returns-concrete/evidence/unsubstituted-return.log.txt",
+        "stage3/census/any-returns-concrete/mutants.py",
+        "stage3/census/any-returns-concrete/statecopy-checker-alias.patch",
+        "stage3/census/any-returns-concrete/summarize.py",
+        "stage3/census/latent/scalar_copy_test.go.txt",
+        "stage3/census/latent/speculative.go.txt",
+        "stage3/census/latent/statecopy/checker_alias_test.go",
+        "stage3/census/speculative/PARTIAL.json",
+        "stage3/census/speculative/README.md",
+        "stage3/census/speculative/audit.py",
+        "stage3/census/speculative/audit_binding.py",
+        "stage3/census/speculative/audit_dependency.py",
+        "stage3/census/speculative/audit_report_controls.py",
+        "stage3/census/speculative/audit_signature.py",
+        "stage3/census/speculative/audit_snapshot.py",
+        "stage3/census/speculative/compare.py",
+        "stage3/census/speculative/control/dependency/main.a",
+        "stage3/census/speculative/control/dependency/target.a",
+        "stage3/census/speculative/control/identity.a",
+        "stage3/census/speculative/control/nested.a",
+        "stage3/census/speculative/control/signature-nested.a",
+        "stage3/census/speculative/counts.md",
+        "stage3/census/speculative/depth-audit-pending.txt",
+        "stage3/census/speculative/evidence/base-full-control/first-error-mutant.jsonl",
+        "stage3/census/speculative/evidence/base-full-control/full.jsonl",
+        "stage3/census/speculative/evidence/base-full-control/rollback-mutant.jsonl",
+        "stage3/census/speculative/evidence/binding-control/baseline/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/binding-control/baseline/full.jsonl",
+        "stage3/census/speculative/evidence/binding-control/baseline/no-stubs-mutant.jsonl",
+        "stage3/census/speculative/evidence/binding-control/baseline/speculative.jsonl",
+        "stage3/census/speculative/evidence/binding-control/bypass-binding-mutant/speculative.jsonl",
+        "stage3/census/speculative/evidence/dependency-control/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/dependency-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/dependency-control/speculative.jsonl",
+        "stage3/census/speculative/evidence/dependency-control/stock.json",
+        "stage3/census/speculative/evidence/final-binding/baseline/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-binding/baseline/full.jsonl",
+        "stage3/census/speculative/evidence/final-binding/baseline/no-stubs-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-binding/baseline/speculative.jsonl",
+        "stage3/census/speculative/evidence/final-binding/bypass-binding-mutant/speculative.jsonl",
+        "stage3/census/speculative/evidence/final-control/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-control/full.jsonl",
+        "stage3/census/speculative/evidence/final-control/no-stubs-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-control/speculative.jsonl",
+        "stage3/census/speculative/evidence/final-dependency/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-dependency/speculative.jsonl",
+        "stage3/census/speculative/evidence/final-identity/speculative.jsonl",
+        "stage3/census/speculative/evidence/final-identity/token-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-signature/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-signature/full.jsonl",
+        "stage3/census/speculative/evidence/final-signature/no-stubs-mutant.jsonl",
+        "stage3/census/speculative/evidence/final-signature/speculative.jsonl",
+        "stage3/census/speculative/evidence/final-snapshot/function-cursor-mutant.json",
+        "stage3/census/speculative/evidence/final-snapshot/mapper-identity-mutant.json",
+        "stage3/census/speculative/evidence/final-snapshot/private-field-mutant.json",
+        "stage3/census/speculative/evidence/final-snapshot/scalar-value-mutant.json",
+        "stage3/census/speculative/evidence/full-control/first-error-mutant.jsonl",
+        "stage3/census/speculative/evidence/full-control/full.jsonl",
+        "stage3/census/speculative/evidence/full-control/rollback-mutant.jsonl",
+        "stage3/census/speculative/evidence/full.jsonl.gz",
+        "stage3/census/speculative/evidence/header-a-check-build.log",
+        "stage3/census/speculative/evidence/header-a-check.json",
+        "stage3/census/speculative/evidence/header-a-check.log",
+        "stage3/census/speculative/evidence/header-check-harness.py",
+        "stage3/census/speculative/evidence/header-nested-control.log",
+        "stage3/census/speculative/evidence/identity-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/identity-control/speculative.jsonl",
+        "stage3/census/speculative/evidence/identity-control/stock.json",
+        "stage3/census/speculative/evidence/identity-control/token-mutant.jsonl",
+        "stage3/census/speculative/evidence/isolation/base.c",
+        "stage3/census/speculative/evidence/isolation/base.c.err",
+        "stage3/census/speculative/evidence/isolation/base.js",
+        "stage3/census/speculative/evidence/isolation/base.js.err",
+        "stage3/census/speculative/evidence/isolation/flag-on-production.c",
+        "stage3/census/speculative/evidence/isolation/flag-on-production.c.err",
+        "stage3/census/speculative/evidence/isolation/flag-on-production.js",
+        "stage3/census/speculative/evidence/isolation/flag-on-production.js.err",
+        "stage3/census/speculative/evidence/isolation/overlay-off.c",
+        "stage3/census/speculative/evidence/isolation/overlay-off.c.err",
+        "stage3/census/speculative/evidence/isolation/overlay-off.js",
+        "stage3/census/speculative/evidence/isolation/overlay-off.js.err",
+        "stage3/census/speculative/evidence/manifest.json",
+        "stage3/census/speculative/evidence/nested-control/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/nested-control/full.jsonl",
+        "stage3/census/speculative/evidence/nested-control/no-stubs-mutant.jsonl",
+        "stage3/census/speculative/evidence/nested-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/nested-control/speculative.jsonl",
+        "stage3/census/speculative/evidence/nested-control/stock.json",
+        "stage3/census/speculative/evidence/no-stubs.jsonl.gz",
+        "stage3/census/speculative/evidence/output-guards/IR/mutant.jsonl",
+        "stage3/census/speculative/evidence/output-guards/loader/mutant.jsonl",
+        "stage3/census/speculative/evidence/report-guards/baseline/RESULT.json",
+        "stage3/census/speculative/evidence/report-guards/checker-diagnostics.json",
+        "stage3/census/speculative/evidence/report-guards/checker-diagnostics.jsonl",
+        "stage3/census/speculative/evidence/report-guards/checker-spans.json",
+        "stage3/census/speculative/evidence/report-guards/checker-spans.jsonl",
+        "stage3/census/speculative/evidence/report-guards/depth-zero.json",
+        "stage3/census/speculative/evidence/report-guards/depth-zero.jsonl",
+        "stage3/census/speculative/evidence/report-guards/source-hash.json",
+        "stage3/census/speculative/evidence/report-guards/source-hash.jsonl",
+        "stage3/census/speculative/evidence/report-guards/stock-version.json",
+        "stage3/census/speculative/evidence/report-guards/stock-version.jsonl",
+        "stage3/census/speculative/evidence/signature-control/depth-zero-mutant.jsonl",
+        "stage3/census/speculative/evidence/signature-control/full.jsonl",
+        "stage3/census/speculative/evidence/signature-control/no-stubs-mutant.jsonl",
+        "stage3/census/speculative/evidence/signature-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/signature-control/speculative.jsonl",
+        "stage3/census/speculative/evidence/signature-control/stock.json",
+        "stage3/census/speculative/evidence/snapshot-control/function-cursor-mutant.json",
+        "stage3/census/speculative/evidence/snapshot-control/mapper-identity-mutant.json",
+        "stage3/census/speculative/evidence/snapshot-control/private-field-mutant.json",
+        "stage3/census/speculative/evidence/snapshot-control/scalar-value-mutant.json",
+        "stage3/census/speculative/evidence/speculative.jsonl.gz",
+        "stage3/census/speculative/evidence/stock.json.gz",
+        "stage3/census/speculative/header-validation.md",
+        "stage3/census/speculative/isolation.py",
+        "stage3/census/speculative/method.md",
+        "stage3/census/speculative/prove_identity.py",
+        "stage3/census/speculative/report.py",
+        "stage3/census/speculative/reproduce.sh",
+        "stage3/census/speculative/stock.cjs",
+        "stage3/census/speculative/validation.md",
+        "stage3/census/speculative/verify.py",
+        "stage3/census/speculative/verify_full_compatibility.py"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage1/cohere/lint/validation/compiler-agree-balance/after-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/byte-proof-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/drop-proof-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-balance/measurements.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy-overlay.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak-overlay.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/inventory.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/mutants-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion-overlay.json",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/tested-code.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-summary.json",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-shards/gate-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-shards/proof-wall.json",
+        "stage1/cohere/lint/validation/compiler-agree-shards/timings.json",
+        "stage3/census/any-returns-concrete/RESULT.json",
+        "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+        "stage3/census/any-returns-concrete/evidence/source-verification.json",
+        "stage3/census/speculative/PARTIAL.json",
+        "stage3/census/speculative/evidence/dependency-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/dependency-control/stock.json",
+        "stage3/census/speculative/evidence/final-snapshot/function-cursor-mutant.json",
+        "stage3/census/speculative/evidence/final-snapshot/mapper-identity-mutant.json",
+        "stage3/census/speculative/evidence/final-snapshot/private-field-mutant.json",
+        "stage3/census/speculative/evidence/final-snapshot/scalar-value-mutant.json",
+        "stage3/census/speculative/evidence/header-a-check.json",
+        "stage3/census/speculative/evidence/identity-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/identity-control/stock.json",
+        "stage3/census/speculative/evidence/manifest.json",
+        "stage3/census/speculative/evidence/nested-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/nested-control/stock.json",
+        "stage3/census/speculative/evidence/report-guards/baseline/RESULT.json",
+        "stage3/census/speculative/evidence/report-guards/checker-diagnostics.json",
+        "stage3/census/speculative/evidence/report-guards/checker-spans.json",
+        "stage3/census/speculative/evidence/report-guards/depth-zero.json",
+        "stage3/census/speculative/evidence/report-guards/source-hash.json",
+        "stage3/census/speculative/evidence/report-guards/stock-version.json",
+        "stage3/census/speculative/evidence/signature-control/report/RESULT.json",
+        "stage3/census/speculative/evidence/signature-control/stock.json",
+        "stage3/census/speculative/evidence/snapshot-control/function-cursor-mutant.json",
+        "stage3/census/speculative/evidence/snapshot-control/mapper-identity-mutant.json",
+        "stage3/census/speculative/evidence/snapshot-control/private-field-mutant.json",
+        "stage3/census/speculative/evidence/snapshot-control/scalar-value-mutant.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "internal/oracle/counts.md",
+        "stage1/cohere/lint/validation/compiler-agree-balance/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-balance/after-tests.md",
+        "stage1/cohere/lint/validation/compiler-agree-balance/before-tests.md",
+        "stage1/cohere/lint/validation/compiler-agree-corpus-sources/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-guard-main/REPORT.md",
+        "stage1/cohere/lint/validation/compiler-agree-shards/REPORT.md",
+        "stage1/typescript/scanner/childguard-validation.md",
+        "stage3/census/any-returns-concrete/REPORT.md",
+        "stage3/census/latent/README.md",
+        "stage3/census/speculative/README.md",
+        "stage3/census/speculative/counts.md",
+        "stage3/census/speculative/header-validation.md",
+        "stage3/census/speculative/method.md",
+        "stage3/census/speculative/validation.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [
+    "stage3/census/speculative/control/dependency/main.a",
+    "stage3/census/speculative/control/dependency/target.a",
+    "stage3/census/speculative/control/identity.a",
+    "stage3/census/speculative/control/nested.a",
+    "stage3/census/speculative/control/signature-nested.a"
+  ],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 125,
+    "stage3": 31
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "documentation/velocity/landings.csv",
+    "internal/lower/any_returns_test.go",
+    "internal/lower/functions.go",
+    "internal/lower/generic.go",
+    "internal/lower/instantiate.go",
+    "internal/oracle/any_returns_test.go",
+    "internal/oracle/counts.md",
+    "internal/oracle/testdata/any_returns_concrete.a",
+    "internal/testguard/guard.go",
+    "stage1/cohere/formatfiles/formatfiles_test.go",
+    "stage1/cohere/gitignore/gitignore_test.go",
+    "stage1/cohere/graphql/graphql_test.go",
+    "stage1/cohere/graphql/printer/helpers_test.go",
+    "stage1/cohere/graphql/printer/performance_test.go",
+    "stage1/cohere/graphql/printer/printer_test.go",
+    "stage1/cohere/json/progress_test.go",
+    "stage1/cohere/lint/corpus_sources_test.go",
+    "stage1/cohere/lint/deadlines_test.go",
+    "stage1/cohere/lint/helpers/comments/comments_test.go",
+    "stage1/cohere/lint/helpers/helpers_test.go",
+    "stage1/cohere/lint/jsx_integration_test.go",
+    "stage1/cohere/lint/lint_test.go",
+    "stage1/cohere/lint/shared_test.go",
+    "stage1/cohere/lint/validation/compiler-agree-balance/REPORT.md",
+    "stage1/cohere/lint/validation/compiler-agree-balance/after-load.json.gz",
+    "stage1/cohere/lint/validation/compiler-agree-balance/after-tests.md",
+    "stage1/cohere/lint/validation/compiler-agree-balance/after-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-balance/after.jsonl.gz",
+    "stage1/cohere/lint/validation/compiler-agree-balance/after.log.gz",
+    "stage1/cohere/lint/validation/compiler-agree-balance/before-load.json.gz",
+    "stage1/cohere/lint/validation/compiler-agree-balance/before-tests.md",
+    "stage1/cohere/lint/validation/compiler-agree-balance/before-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-balance/before.jsonl.gz",
+    "stage1/cohere/lint/validation/compiler-agree-balance/before.log.gz",
+    "stage1/cohere/lint/validation/compiler-agree-balance/byte-proof-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-balance/byte-proof.txt",
+    "stage1/cohere/lint/validation/compiler-agree-balance/drop-proof-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-balance/drop-proof.txt",
+    "stage1/cohere/lint/validation/compiler-agree-balance/measurements.json",
+    "stage1/cohere/lint/validation/compiler-agree-balance/smoke.txt",
+    "stage1/cohere/lint/validation/compiler-agree-balance/vet.txt",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/REPORT.md",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement-summary.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/excluded-paths.txt",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy-overlay.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy.patch",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy.txt",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak-overlay.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak.patch",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak.txt",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixtures.txt",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/inventory.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/mutants-summary.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion-overlay.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion.patch",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion.txt",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/run-mutants.py",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/tested-code.json",
+    "stage1/cohere/lint/validation/compiler-agree-corpus-sources/vet.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/REPORT.md",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.py",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/guard-retry.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/helpers-retry.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/helpers.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/jsx-recovery-retry.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-load.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-summary.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/loaded.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/merge.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/module-cache.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-load.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-load.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-load.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-summary.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/normal.jsonl",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/run.py",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/smoke.txt",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/status.py",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/summarize.py",
+    "stage1/cohere/lint/validation/compiler-agree-guard-main/vet.txt",
+    "stage1/cohere/lint/validation/compiler-agree-shards/REPORT.md",
+    "stage1/cohere/lint/validation/compiler-agree-shards/gate-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-shards/gate.jsonl.gz",
+    "stage1/cohere/lint/validation/compiler-agree-shards/gate.log.gz",
+    "stage1/cohere/lint/validation/compiler-agree-shards/interrupted-gate.jsonl.gz",
+    "stage1/cohere/lint/validation/compiler-agree-shards/interrupted-load.jsonl.gz",
+    "stage1/cohere/lint/validation/compiler-agree-shards/load.jsonl.gz",
+    "stage1/cohere/lint/validation/compiler-agree-shards/merge.log",
+    "stage1/cohere/lint/validation/compiler-agree-shards/proof-wall.json",
+    "stage1/cohere/lint/validation/compiler-agree-shards/proof.log",
+    "stage1/cohere/lint/validation/compiler-agree-shards/setup-wasi.log",
+    "stage1/cohere/lint/validation/compiler-agree-shards/setup.log",
+    "stage1/cohere/lint/validation/compiler-agree-shards/smoke.log",
+    "stage1/cohere/lint/validation/compiler-agree-shards/timings.json",
+    "stage1/cohere/lint/validation/compiler-agree-shards/vet.log",
+    "stage1/cohere/lint/validation/compiler-agree-shards/wasi-version.log",
+    "stage1/cohere/markdownblocks/ast_test.go",
+    "stage1/cohere/markdownblocks/audit_test.go",
+    "stage1/cohere/markdownblocks/chunks_test.go",
+    "stage1/cohere/markdownblocks/decode_test.go",
+    "stage1/cohere/markdownblocks/events_test.go",
+    "stage1/cohere/markdownblocks/frontmatter_test.go",
+    "stage1/cohere/markdownblocks/identifier_test.go",
+    "stage1/cohere/markdownblocks/lists_test.go",
+    "stage1/cohere/markdownblocks/mdast_errors_test.go",
+    "stage1/cohere/markdownblocks/mdast_gap_test.go",
+    "stage1/cohere/markdownblocks/mdast_test.go",
+    "stage1/cohere/markdownblocks/path_test.go",
+    "stage1/cohere/markdownblocks/prefix_test.go",
+    "stage1/cohere/markdownblocks/support_test.go",
+    "stage1/cohere/markdownblocks/text_test.go",
+    "stage1/cohere/markdownblocks/width_test.go",
+    "stage1/cohere/markdowninline/port_test.go",
+    "stage1/cohere/static_single_assignment/static_single_assignment_test.go",
+    "stage1/cohere/suppression/suppression_test.go",
+    "stage1/cohere/tsprinter/corpus_test.go",
+    "stage1/cohere/tsprinter/doc_test.go",
+    "stage1/cohere/tsprinter/expressions_test.go",
+    "stage1/cohere/tsprinter/helpers_test.go",
+    "stage1/cohere/tsprinter/statements_test.go",
+    "stage1/cohere/tsprinter/testdata/run_tsc_mutants.py",
+    "stage1/cohere/tsprinter/tsc_corpus_test.go",
+    "stage1/cohere/tsprinter/upstream_test.go",
+    "stage1/cohere/values/values_test.go",
+    "stage1/cohere/yaml/benchmark_lexer.py",
+    "stage1/cohere/yaml/lexer_test.go",
+    "stage1/typescript/scanner/childguard-validation.md",
+    "stage1/typescript/scanner/scanner_test.go",
+    "stage3/census/any-returns-concrete/REPORT.md",
+    "stage3/census/any-returns-concrete/RESULT.json",
+    "stage3/census/any-returns-concrete/evidence/area-counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-final.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-loses-alias.log.txt",
+    "stage3/census/any-returns-concrete/evidence/counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-build.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/emitter-alone-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/generic-regression.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/memoize-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/node-context.log.txt",
+    "stage3/census/any-returns-concrete/evidence/opaque-mapper.log.txt",
+    "stage3/census/any-returns-concrete/evidence/setup.log.txt",
+    "stage3/census/any-returns-concrete/evidence/source-verification.json",
+    "stage3/census/any-returns-concrete/evidence/statecopy.log.txt",
+    "stage3/census/any-returns-concrete/evidence/trust-any.log.txt",
+    "stage3/census/any-returns-concrete/evidence/unsubstituted-return.log.txt",
+    "stage3/census/any-returns-concrete/mutants.py",
+    "stage3/census/any-returns-concrete/statecopy-checker-alias.patch",
+    "stage3/census/any-returns-concrete/summarize.py",
+    "stage3/census/latent/README.md",
+    "stage3/census/latent/full.go.txt",
+    "stage3/census/latent/lower.go.txt",
+    "stage3/census/latent/main.go.txt",
+    "stage3/census/latent/make_overlay.py",
+    "stage3/census/latent/scalar_copy_test.go.txt",
+    "stage3/census/latent/speculative.go.txt",
+    "stage3/census/latent/statecopy/checker_alias_test.go",
+    "stage3/census/latent/statecopy/main.go",
+    "stage3/census/speculative/PARTIAL.json",
+    "stage3/census/speculative/README.md",
+    "stage3/census/speculative/audit.py",
+    "stage3/census/speculative/audit_binding.py",
+    "stage3/census/speculative/audit_dependency.py",
+    "stage3/census/speculative/audit_report_controls.py",
+    "stage3/census/speculative/audit_signature.py",
+    "stage3/census/speculative/audit_snapshot.py",
+    "stage3/census/speculative/compare.py",
+    "stage3/census/speculative/control/dependency/main.a",
+    "stage3/census/speculative/control/dependency/target.a",
+    "stage3/census/speculative/control/identity.a",
+    "stage3/census/speculative/control/nested.a",
+    "stage3/census/speculative/control/signature-nested.a",
+    "stage3/census/speculative/counts.md",
+    "stage3/census/speculative/depth-audit-pending.txt",
+    "stage3/census/speculative/evidence/base-full-control/first-error-mutant.jsonl",
+    "stage3/census/speculative/evidence/base-full-control/full.jsonl",
+    "stage3/census/speculative/evidence/base-full-control/rollback-mutant.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/full.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/speculative.jsonl",
+    "stage3/census/speculative/evidence/binding-control/bypass-binding-mutant/speculative.jsonl",
+    "stage3/census/speculative/evidence/dependency-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/dependency-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/dependency-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/dependency-control/stock.json",
+    "stage3/census/speculative/evidence/final-binding/baseline/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-binding/baseline/full.jsonl",
+    "stage3/census/speculative/evidence/final-binding/baseline/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-binding/baseline/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-binding/bypass-binding-mutant/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-control/full.jsonl",
+    "stage3/census/speculative/evidence/final-control/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-dependency/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-dependency/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-identity/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-identity/token-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-signature/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-signature/full.jsonl",
+    "stage3/census/speculative/evidence/final-signature/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-signature/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-snapshot/function-cursor-mutant.json",
+    "stage3/census/speculative/evidence/final-snapshot/mapper-identity-mutant.json",
+    "stage3/census/speculative/evidence/final-snapshot/private-field-mutant.json",
+    "stage3/census/speculative/evidence/final-snapshot/scalar-value-mutant.json",
+    "stage3/census/speculative/evidence/full-control/first-error-mutant.jsonl",
+    "stage3/census/speculative/evidence/full-control/full.jsonl",
+    "stage3/census/speculative/evidence/full-control/rollback-mutant.jsonl",
+    "stage3/census/speculative/evidence/full.jsonl.gz",
+    "stage3/census/speculative/evidence/header-a-check-build.log",
+    "stage3/census/speculative/evidence/header-a-check.json",
+    "stage3/census/speculative/evidence/header-a-check.log",
+    "stage3/census/speculative/evidence/header-check-harness.py",
+    "stage3/census/speculative/evidence/header-nested-control.log",
+    "stage3/census/speculative/evidence/identity-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/identity-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/identity-control/stock.json",
+    "stage3/census/speculative/evidence/identity-control/token-mutant.jsonl",
+    "stage3/census/speculative/evidence/isolation/base.c",
+    "stage3/census/speculative/evidence/isolation/base.c.err",
+    "stage3/census/speculative/evidence/isolation/base.js",
+    "stage3/census/speculative/evidence/isolation/base.js.err",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.c",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.c.err",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.js",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.js.err",
+    "stage3/census/speculative/evidence/isolation/overlay-off.c",
+    "stage3/census/speculative/evidence/isolation/overlay-off.c.err",
+    "stage3/census/speculative/evidence/isolation/overlay-off.js",
+    "stage3/census/speculative/evidence/isolation/overlay-off.js.err",
+    "stage3/census/speculative/evidence/manifest.json",
+    "stage3/census/speculative/evidence/nested-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/nested-control/full.jsonl",
+    "stage3/census/speculative/evidence/nested-control/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/nested-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/nested-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/nested-control/stock.json",
+    "stage3/census/speculative/evidence/no-stubs.jsonl.gz",
+    "stage3/census/speculative/evidence/output-guards/IR/mutant.jsonl",
+    "stage3/census/speculative/evidence/output-guards/loader/mutant.jsonl",
+    "stage3/census/speculative/evidence/report-guards/baseline/RESULT.json",
+    "stage3/census/speculative/evidence/report-guards/checker-diagnostics.json",
+    "stage3/census/speculative/evidence/report-guards/checker-diagnostics.jsonl",
+    "stage3/census/speculative/evidence/report-guards/checker-spans.json",
+    "stage3/census/speculative/evidence/report-guards/checker-spans.jsonl",
+    "stage3/census/speculative/evidence/report-guards/depth-zero.json",
+    "stage3/census/speculative/evidence/report-guards/depth-zero.jsonl",
+    "stage3/census/speculative/evidence/report-guards/source-hash.json",
+    "stage3/census/speculative/evidence/report-guards/source-hash.jsonl",
+    "stage3/census/speculative/evidence/report-guards/stock-version.json",
+    "stage3/census/speculative/evidence/report-guards/stock-version.jsonl",
+    "stage3/census/speculative/evidence/signature-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/signature-control/full.jsonl",
+    "stage3/census/speculative/evidence/signature-control/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/signature-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/signature-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/signature-control/stock.json",
+    "stage3/census/speculative/evidence/snapshot-control/function-cursor-mutant.json",
+    "stage3/census/speculative/evidence/snapshot-control/mapper-identity-mutant.json",
+    "stage3/census/speculative/evidence/snapshot-control/private-field-mutant.json",
+    "stage3/census/speculative/evidence/snapshot-control/scalar-value-mutant.json",
+    "stage3/census/speculative/evidence/speculative.jsonl.gz",
+    "stage3/census/speculative/evidence/stock.json.gz",
+    "stage3/census/speculative/header-validation.md",
+    "stage3/census/speculative/isolation.py",
+    "stage3/census/speculative/method.md",
+    "stage3/census/speculative/prove_identity.py",
+    "stage3/census/speculative/report.py",
+    "stage3/census/speculative/reproduce.sh",
+    "stage3/census/speculative/stock.cjs",
+    "stage3/census/speculative/validation.md",
+    "stage3/census/speculative/verify.py",
+    "stage3/census/speculative/verify_full_compatibility.py"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/bench",
+    "github.com/system-inc/adamic/bench/regex",
+    "github.com/system-inc/adamic/bridge/tsgo",
+    "github.com/system-inc/adamic/cloud",
+    "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+    "github.com/system-inc/adamic/cmd/adamic",
+    "github.com/system-inc/adamic/cmd/adamic-fuzz",
+    "github.com/system-inc/adamic/cmd/adamic-gate",
+    "github.com/system-inc/adamic/cmd/adamic-meter",
+    "github.com/system-inc/adamic/cmd/adamic-reduce",
+    "github.com/system-inc/adamic/cmd/adamic-stage1-progress",
+    "github.com/system-inc/adamic/cmd/adamic-test262",
+    "github.com/system-inc/adamic/cmd/lint-shards",
+    "github.com/system-inc/adamic/internal/childguard",
+    "github.com/system-inc/adamic/internal/corpusfiles",
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/javascript",
+    "github.com/system-inc/adamic/internal/load",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/internal/regexp",
+    "github.com/system-inc/adamic/internal/testguard",
+    "github.com/system-inc/adamic/internal/unicodeproperties",
+    "github.com/system-inc/adamic/stage1/cohere/css",
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "github.com/system-inc/adamic/stage1/cohere/estree",
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/lint/inventory",
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "github.com/system-inc/adamic/stage1/cohere/lint/shards",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "github.com/system-inc/adamic/stage1/cohere/selector",
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "github.com/system-inc/adamic/stage1/cohere/values",
+    "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "github.com/system-inc/adamic/stage1/typescript/parser",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "documentation/velocity/landings.csv",
+    "stage3/census/any-returns-concrete/REPORT.md",
+    "stage3/census/any-returns-concrete/RESULT.json",
+    "stage3/census/any-returns-concrete/evidence/area-counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-final.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-loses-alias.log.txt",
+    "stage3/census/any-returns-concrete/evidence/counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-build.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/emitter-alone-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/generic-regression.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/memoize-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/node-context.log.txt",
+    "stage3/census/any-returns-concrete/evidence/opaque-mapper.log.txt",
+    "stage3/census/any-returns-concrete/evidence/setup.log.txt",
+    "stage3/census/any-returns-concrete/evidence/source-verification.json",
+    "stage3/census/any-returns-concrete/evidence/statecopy.log.txt",
+    "stage3/census/any-returns-concrete/evidence/trust-any.log.txt",
+    "stage3/census/any-returns-concrete/evidence/unsubstituted-return.log.txt",
+    "stage3/census/any-returns-concrete/mutants.py",
+    "stage3/census/any-returns-concrete/statecopy-checker-alias.patch",
+    "stage3/census/any-returns-concrete/summarize.py",
+    "stage3/census/latent/README.md",
+    "stage3/census/latent/full.go.txt",
+    "stage3/census/latent/lower.go.txt",
+    "stage3/census/latent/main.go.txt",
+    "stage3/census/latent/make_overlay.py",
+    "stage3/census/latent/scalar_copy_test.go.txt",
+    "stage3/census/latent/speculative.go.txt",
+    "stage3/census/speculative/PARTIAL.json",
+    "stage3/census/speculative/README.md",
+    "stage3/census/speculative/audit.py",
+    "stage3/census/speculative/audit_binding.py",
+    "stage3/census/speculative/audit_dependency.py",
+    "stage3/census/speculative/audit_report_controls.py",
+    "stage3/census/speculative/audit_signature.py",
+    "stage3/census/speculative/audit_snapshot.py",
+    "stage3/census/speculative/compare.py",
+    "stage3/census/speculative/control/dependency/main.a",
+    "stage3/census/speculative/control/dependency/target.a",
+    "stage3/census/speculative/control/identity.a",
+    "stage3/census/speculative/control/nested.a",
+    "stage3/census/speculative/control/signature-nested.a",
+    "stage3/census/speculative/counts.md",
+    "stage3/census/speculative/depth-audit-pending.txt",
+    "stage3/census/speculative/evidence/base-full-control/first-error-mutant.jsonl",
+    "stage3/census/speculative/evidence/base-full-control/full.jsonl",
+    "stage3/census/speculative/evidence/base-full-control/rollback-mutant.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/full.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/binding-control/baseline/speculative.jsonl",
+    "stage3/census/speculative/evidence/binding-control/bypass-binding-mutant/speculative.jsonl",
+    "stage3/census/speculative/evidence/dependency-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/dependency-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/dependency-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/dependency-control/stock.json",
+    "stage3/census/speculative/evidence/final-binding/baseline/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-binding/baseline/full.jsonl",
+    "stage3/census/speculative/evidence/final-binding/baseline/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-binding/baseline/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-binding/bypass-binding-mutant/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-control/full.jsonl",
+    "stage3/census/speculative/evidence/final-control/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-dependency/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-dependency/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-identity/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-identity/token-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-signature/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-signature/full.jsonl",
+    "stage3/census/speculative/evidence/final-signature/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/final-signature/speculative.jsonl",
+    "stage3/census/speculative/evidence/final-snapshot/function-cursor-mutant.json",
+    "stage3/census/speculative/evidence/final-snapshot/mapper-identity-mutant.json",
+    "stage3/census/speculative/evidence/final-snapshot/private-field-mutant.json",
+    "stage3/census/speculative/evidence/final-snapshot/scalar-value-mutant.json",
+    "stage3/census/speculative/evidence/full-control/first-error-mutant.jsonl",
+    "stage3/census/speculative/evidence/full-control/full.jsonl",
+    "stage3/census/speculative/evidence/full-control/rollback-mutant.jsonl",
+    "stage3/census/speculative/evidence/full.jsonl.gz",
+    "stage3/census/speculative/evidence/header-a-check-build.log",
+    "stage3/census/speculative/evidence/header-a-check.json",
+    "stage3/census/speculative/evidence/header-a-check.log",
+    "stage3/census/speculative/evidence/header-check-harness.py",
+    "stage3/census/speculative/evidence/header-nested-control.log",
+    "stage3/census/speculative/evidence/identity-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/identity-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/identity-control/stock.json",
+    "stage3/census/speculative/evidence/identity-control/token-mutant.jsonl",
+    "stage3/census/speculative/evidence/isolation/base.c",
+    "stage3/census/speculative/evidence/isolation/base.c.err",
+    "stage3/census/speculative/evidence/isolation/base.js",
+    "stage3/census/speculative/evidence/isolation/base.js.err",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.c",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.c.err",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.js",
+    "stage3/census/speculative/evidence/isolation/flag-on-production.js.err",
+    "stage3/census/speculative/evidence/isolation/overlay-off.c",
+    "stage3/census/speculative/evidence/isolation/overlay-off.c.err",
+    "stage3/census/speculative/evidence/isolation/overlay-off.js",
+    "stage3/census/speculative/evidence/isolation/overlay-off.js.err",
+    "stage3/census/speculative/evidence/manifest.json",
+    "stage3/census/speculative/evidence/nested-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/nested-control/full.jsonl",
+    "stage3/census/speculative/evidence/nested-control/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/nested-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/nested-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/nested-control/stock.json",
+    "stage3/census/speculative/evidence/no-stubs.jsonl.gz",
+    "stage3/census/speculative/evidence/output-guards/IR/mutant.jsonl",
+    "stage3/census/speculative/evidence/output-guards/loader/mutant.jsonl",
+    "stage3/census/speculative/evidence/report-guards/baseline/RESULT.json",
+    "stage3/census/speculative/evidence/report-guards/checker-diagnostics.json",
+    "stage3/census/speculative/evidence/report-guards/checker-diagnostics.jsonl",
+    "stage3/census/speculative/evidence/report-guards/checker-spans.json",
+    "stage3/census/speculative/evidence/report-guards/checker-spans.jsonl",
+    "stage3/census/speculative/evidence/report-guards/depth-zero.json",
+    "stage3/census/speculative/evidence/report-guards/depth-zero.jsonl",
+    "stage3/census/speculative/evidence/report-guards/source-hash.json",
+    "stage3/census/speculative/evidence/report-guards/source-hash.jsonl",
+    "stage3/census/speculative/evidence/report-guards/stock-version.json",
+    "stage3/census/speculative/evidence/report-guards/stock-version.jsonl",
+    "stage3/census/speculative/evidence/signature-control/depth-zero-mutant.jsonl",
+    "stage3/census/speculative/evidence/signature-control/full.jsonl",
+    "stage3/census/speculative/evidence/signature-control/no-stubs-mutant.jsonl",
+    "stage3/census/speculative/evidence/signature-control/report/RESULT.json",
+    "stage3/census/speculative/evidence/signature-control/speculative.jsonl",
+    "stage3/census/speculative/evidence/signature-control/stock.json",
+    "stage3/census/speculative/evidence/snapshot-control/function-cursor-mutant.json",
+    "stage3/census/speculative/evidence/snapshot-control/mapper-identity-mutant.json",
+    "stage3/census/speculative/evidence/snapshot-control/private-field-mutant.json",
+    "stage3/census/speculative/evidence/snapshot-control/scalar-value-mutant.json",
+    "stage3/census/speculative/evidence/speculative.jsonl.gz",
+    "stage3/census/speculative/evidence/stock.json.gz",
+    "stage3/census/speculative/header-validation.md",
+    "stage3/census/speculative/isolation.py",
+    "stage3/census/speculative/method.md",
+    "stage3/census/speculative/prove_identity.py",
+    "stage3/census/speculative/report.py",
+    "stage3/census/speculative/reproduce.sh",
+    "stage3/census/speculative/stock.cjs",
+    "stage3/census/speculative/validation.md",
+    "stage3/census/speculative/verify.py",
+    "stage3/census/speculative/verify_full_compatibility.py"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestVolumeProfileAgreementAndMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestShadowIndexMissingBinding",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestSixRuleAgreementAndMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestSixPinnedFlags",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestFactsDecoderGuards",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestInspectRequestRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestTypeAwareAgreementAndMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestPinnedTypeFlags",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestVolumeAgreementAndMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestVolumeConfigGuardAndMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArgumentsLengthTypeScriptSource",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArgumentsLengthWrongSlotMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheGeneratedC",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheToolchains",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheNodeInputs",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheAtomicEvidence",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheUncached",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastFlushesOutput",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestUncheckableCastAdmission",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastRunsNoCatchOrFinally",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastFailureContract",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCensusAppendResultProof",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCensusOverloadResultStop",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCensusSmallStoppedSourceOnNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput103",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput107",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput108",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput106",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClosureMergeRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLoopCountersAgreeWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCountsAreRecorded",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNumericEnumNeverPathsPinned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNumericEnumNeverPinned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3EnumBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3EnumSparseArrayBoundary",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestEnumNameEnumerationMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestEnumSemanticMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestEnumCleanupMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFallthroughMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFieldReadinessRepresentation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFreshWriteProbesStayRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestImportCycleRuntimeCalls",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestImportCycleLoadTimeReads",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestImportedNonliteralConstCaseIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInputAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastOracle",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastChecksMalformedRead",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastRuntimeMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastImportedConstruction",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastScalarTags",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArrayFamilyMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArrayWithBoundsMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestJSONStringifyRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestJSONStringifyResultMayBeUndefined",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestJSONStringifyOracleCatchesKeyOrder",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMapSetIteratorCopiesRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMapSetMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestMathNumberOracleCatchesMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryStringMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLiteralOptionalOracleCatchesMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLiteralUndefinedOracleCatchesMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodValueMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodOwnLoadMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodCaptureMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodAliasReadMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNamespaceSemanticMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNarrowedUnionMemberCheck",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNarrowedUnionObjectTagRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedSiblingCycleMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedCycleRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedRebindingCheckerRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedCallbackCarrierMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNodeFSFileAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNodeFSFileMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOct6InheritanceMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOct6ReleaseMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOmittedArgumentZeroMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOmittedOriginalProbePolicy",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOmittedReaderZeroMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTheOracleCatchesOneByte",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOneFileHoldsNodesOrder",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClosedStdoutEndsAsOnNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFileWritesLandInNodesOrder",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestAPromptComesBeforeTheRead",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestASignalLeavesWhatWasPrinted",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestParameterPropertyMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestParameterPropertyOwnershipMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestPredicateDirectionCountsAreRecorded",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestPrivateGenericMethodOwnerMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestReadinessMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestUninitializedIsNotNullishMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNonNullWeakFreedNamesExpression",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLazyInitializerIsNotEagerMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClosedNestedConstituentMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegexCycleFixtureHasItsNativeDependency",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpReplacementNodeMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpReplacementTypeGuardMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRuntimeLastIndexOfMatchesNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedReferenceMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedReferences",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedReferenceIdentityMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSmallStacksStillPanic",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3EnumFallthrough",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3FixtureHook",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchCaseDeadZoneStop",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchCaseDeclarationMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchCaseOverloadIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchTrailingEmptyMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypedArrayWriteStopIsPinned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfConstructorMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfStringLiteralMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfNullMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfNullSlotPresenceMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestUnknownNarrowingMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRequiredViewFieldPrimitive",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRequiredViewFieldOperandOnce",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNarrowedFieldUsesSharedReadiness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestViewFieldInheritedStaticReadiness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestDefaultTaggedSourceViews",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIOracleCatchesMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIRunnerCatchesMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWeakReadsUndefinedOnceFreed",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestHelpersMatchCohere",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestHelperMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestMessageRefusalsMatchGo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestKnownGapsAreExplicit",
+      "status": "not run"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestVolumeAgreementAndMutants",
+      "expected_seconds": 1800.043,
+      "slots": 1,
+      "after_seconds": 2.378
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestSixRuleAgreementAndMutants",
+      "expected_seconds": 1365.08,
+      "slots": 1,
+      "after_seconds": 2.381
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestTypeAwareAgreementAndMutants",
+      "expected_seconds": 800.02,
+      "slots": 1,
+      "after_seconds": 2.382
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestVolumeConfigGuardAndMutant",
+      "expected_seconds": 763.14,
+      "slots": 1,
+      "after_seconds": 2.39
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestVolumeProfileAgreementAndMutants",
+      "expected_seconds": 713.57,
+      "slots": 1,
+      "after_seconds": 2.399
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestInspectRequestRefusals",
+      "expected_seconds": 154.624,
+      "slots": 1,
+      "after_seconds": 2.41
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestShadowIndexMissingBinding",
+      "expected_seconds": 153.97,
+      "slots": 1,
+      "after_seconds": 2.43
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestFactsDecoderGuards",
+      "expected_seconds": 52.424,
+      "slots": 1,
+      "after_seconds": 2.439
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestPinnedTypeFlags",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 2.45
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestSixPinnedFlags",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 2.456
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCountsAreRecorded",
+      "expected_seconds": 179.21,
+      "slots": 1,
+      "after_seconds": 7.24
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLoopCountersAgreeWithNode",
+      "expected_seconds": 145.4,
+      "slots": 1,
+      "after_seconds": 7.242
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedReferences",
+      "expected_seconds": 20.373504,
+      "slots": 1,
+      "after_seconds": 7.243
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedReferenceMutants",
+      "expected_seconds": 17.53088,
+      "slots": 1,
+      "after_seconds": 7.245
+    }
+  ],
+  "undeclared_tools": [],
+  "a_check": {
+    "stage3/census/speculative/control/dependency/main.a": {
+      "outcome": "type error",
+      "expected": "type error TS1101",
+      "first": "stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode."
+    },
+    "stage3/census/speculative/control/dependency/target.a": {
+      "outcome": "type error",
+      "expected": "type error TS1101",
+      "first": "stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode."
+    },
+    "stage3/census/speculative/control/identity.a": {
+      "outcome": "type error",
+      "expected": "type error TS1064",
+      "first": "stage3/census/speculative/control/identity.a:2:48: error TS1064: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<T>'?"
+    },
+    "stage3/census/speculative/control/nested.a": {
+      "outcome": "type error",
+      "expected": "type error TS1101",
+      "first": "stage3/census/speculative/control/nested.a:3:5: error TS1101: 'with' statements are not allowed in strict mode."
+    },
+    "stage3/census/speculative/control/signature-nested.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/typeaware": 10,
+    "github.com/system-inc/adamic/internal/oracle": 119,
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers": 4
+  },
+  "stage3_exits": {
+    "stage3-apply-tests": -9,
+    "stage3-lane": -9,
+    "stage3-lane-tests": -9
+  },
+  "split_tally": {
+    "packages": 3,
+    "planned": 133,
+    "passed": 2,
+    "touched": 75
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Workshop",
+    "cpus": 64,
+    "load": [
+      84.0,
+      48.0,
+      43.0
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 16.1,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "a-check-build": 0.4,
+    "vet": 1.1,
+    "a-check": 1.2,
+    "build": 8.6,
+    "smoke": 14.6,
+    "stage3": 14.6,
+    "tests": 14.8
+  },
+  "pass": 2,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3",
+    "a-check"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "a-check-build": 0,
+    "vet": 0,
+    "a-check": 0,
+    "build": 0,
+    "smoke": 1,
+    "stage3": 1,
+    "tests": 1
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "stopped": {
+    "reason": "preempted: the star takes workshop alone; queued again",
+    "at_seconds": 15.8
+  },
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 2,
+    "failed": 0,
+    "not run": 131
+  }
+}
