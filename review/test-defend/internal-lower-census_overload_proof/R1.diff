@@ -1,0 +1,13 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 877ae171..ff98531a 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -454,7 +454,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
+ 		own, contextual = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression), literal
+ 		found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
+ 	default:
+-		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
++		if node.Kind == ast.KindSpreadElement || !l.isExpression(node) {
+ 			return nil
+ 		}
+ 		if l.genericFunction(node) {
