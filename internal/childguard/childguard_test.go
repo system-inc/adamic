@@ -12,6 +12,7 @@ import (
 )
 
 func TestChild(t *testing.T) {
+	t.Parallel()
 	mode := os.Getenv("CHILDGUARD_TEST")
 	if mode == "" {
 		return
@@ -43,6 +44,8 @@ func child(mode string) *exec.Cmd {
 	cmd.Env = append(os.Environ(), "CHILDGUARD_TEST="+mode, "GORACE=atexit_sleep_ms=0")
 	return cmd
 }
+
+// Not parallel: child-process scheduling on this machine determines the 5s first-output, 2s stall and 12s ceiling windows.
 func TestProgress(t *testing.T) {
 	var out bytes.Buffer
 	cmd := child("progress")
@@ -54,6 +57,8 @@ func TestProgress(t *testing.T) {
 		t.Fatalf("output lost: %q", out.String())
 	}
 }
+
+// Not parallel: child-process scheduling on this machine determines the 200ms stall and 1200ms elapsed-time bound.
 func TestStalled(t *testing.T) {
 	var out bytes.Buffer
 	cmd := child("stall")
@@ -71,6 +76,8 @@ func TestStalled(t *testing.T) {
 		t.Fatalf("stderr lost: %q", out.String())
 	}
 }
+
+// Not parallel: child-process scheduling on this machine determines the 400ms ceiling and 1400ms elapsed-time bound.
 func TestCeiling(t *testing.T) {
 	start := time.Now()
 	err := Run(child("ceiling"), Options{Stall: 200 * time.Millisecond, Ceiling: 400 * time.Millisecond})
@@ -83,6 +90,7 @@ func TestCeiling(t *testing.T) {
 	}
 }
 func TestExitIsNotGuardError(t *testing.T) {
+	t.Parallel()
 	err := Run(child("exit"), Options{})
 	var guard *Error
 	var exit *exec.ExitError
@@ -92,6 +100,7 @@ func TestExitIsNotGuardError(t *testing.T) {
 }
 
 // A surviving descendant would keep the output pipes open and Run would not return.
+// Not parallel: child-process scheduling on this machine determines the 200ms stall and 2s process-group kill deadline.
 func TestKillsProcessGroup(t *testing.T) {
 	cmd := exec.Command("sh", "-c", "sleep 60 & echo started; wait")
 	done := make(chan error, 1)
@@ -107,6 +116,7 @@ func TestKillsProcessGroup(t *testing.T) {
 	}
 }
 
+// Not parallel: child-process scheduling on this machine determines the 300ms first-output and 1300ms elapsed-time bound.
 func TestNoFirstOutput(t *testing.T) {
 	start := time.Now()
 	err := Run(child("silent"), Options{FirstOutput: 300 * time.Millisecond, Stall: 100 * time.Millisecond, Ceiling: 5 * time.Second})

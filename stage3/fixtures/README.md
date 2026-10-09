@@ -11,10 +11,19 @@ Run the parallel fixture gate from the repository root:
 
 ```sh
 source /workspace/adamic-tools/env.sh
-go test ./stage3/fixtures -count=1 -timeout 10m -v > /tmp/stage3-fixtures.log 2>&1
+# Optional prefetch. Tests also prepare missing products themselves.
+python3 stage3/fixtures/build-hook.py --prepare > /tmp/stage3-hook-build.log 2>&1
+# One gate unit; other units set indices 1 through 7.
+ADAMIC_TEST_SHARD=0/8 ADAMIC_GATE_UNCACHED=1 go test ./stage3/fixtures -run '^TestFixtures$' -count=1 -parallel=4 -timeout 30s -v > /tmp/stage3-fixtures-0.log 2>&1
 ```
 
-Every `*/status.json` is read, with buckets and fixtures run in parallel. Each
+Every `*/status.json` is read, with buckets and selected fixtures run in parallel.
+`ADAMIC_TEST_SHARD=i/n` uses zero-based indices. The first eight SHA-256 bytes
+of `bucket/file`, interpreted as an unsigned big-endian integer modulo `n`,
+assign each fixture to one unit. Selection does not change when Go filters a
+bucket or fixture with `-run`. With no selector, all fixtures run.
+`TestFixtureShardManifest` lists every fixture and its shard with `-v`.
+Invalid selectors fail. Each
 fixture has named `node`, `stage0`, and, when it currently compiles, `native`
 checks. Erasable fixtures run afresh from source through the current oracle/node.mjs;
 stdout, stderr, and exit must equal the recorded observation. stage0 checks the
@@ -22,7 +31,21 @@ outcome and complete diagnostic. A change says `gap changed: update status.json
 and check the native output`. Newly compiling gaps run natively even when their
 record still says NotYet or Refused, so a gap closure cannot hide wrong output.
 
-Native checks build the oracle test binary once and invoke its small exported
+TestPrepareFixtureOracleHook prepares a missing oracle test binary before the
+parallel fixture workers; TestFixtures also prepares on demand when run alone.
+Both share sync.Once within one package process. The named preparation unit
+uses `build-hook.py --prepare`.
+The build tier may use that same command to prefetch it.
+Its key covers effective Go dependency file lists and contents, embedded runtime
+inputs, module/workspace manifests, compiler/linker bytes and Go flags. Tests fetch
+the content-addressed binary and verify its SHA-256. The input-key lock ensures
+that concurrent cold units build it once; warm units do not rebuild. A corrupt
+prepared binary fails loudly rather than being executed, and a failed build
+reports its complete build log in the test failure.
+`ADAMIC_STAGE3_BUILD_STORE` selects the product store. The store is local;
+no remote artifact service is configured by this change.
+
+Native checks invoke its small exported
 `TestStage3FixtureHook`. The hook reuses `lowered`, `nativelyUncached` and
 `leaksUncached`: the same ASan/UBSan flags, bounded process execution and platform
 leak checks as internal/oracle. No helper implementation was copied and no
@@ -110,3 +133,31 @@ fails. Normal skip probe exit 0, each mutant exit 1. Audit summary is
 /tmp/stage3-landing-audit.log. Recorded Node and stage0 fields were never refreshed
 or weakened. Counts are also saved in
 ../meter/runs/20261007T025701Z.runner-landing/fixtures.json.
+
+## Thirty-second units
+
+[The measurement report](SHARD-REPORT.md) includes all discovered Stage 3 Go and
+Python test units, including units already under thirty seconds and existing red
+integration probes. The eight fixture units each execute fresh source Node,
+checker/lowering and the inherited uncached native/sanitizer/leak checks. Native
+fixture compilation still happens in the inherited oracle hook and is included
+in each measured unit's time.
+
+After preparing a fixtures test binary in the build tier, the independent audit
+orchestrates the units, checks their exact disjoint union, and changes one
+recorded Node observation on a scratch copy. It requires precisely the owning
+shard to fail. The audit orchestrator is not itself a gate unit.
+
+```sh
+go test -c -o /workspace/stage3-fixtures.test ./stage3/fixtures > /tmp/stage3-fixtures-build.log 2>&1
+python3 stage3/fixtures/audit-shards.py /workspace/stage3-fixtures.test /workspace/fixture-shard-audit > /tmp/fixture-shard-audit.log 2>&1
+```
+
+The output directory must be new. `cases.json` is the independent assignment
+list; `proof.json`, `results.json` and individual logs retain the coverage,
+mutant and timing evidence. No fixture source or recorded status is changed in
+the repository. No fixture was added, so oracle counts.md is unchanged.
+
+The fresh-box automatic preparation fix and its cold/mutant measurements are in
+[SELF-PREPARE-REPORT.md](SELF-PREPARE-REPORT.md). TestPrepareFixtureOracleHook is
+a separate gate unit; ordinary package tests need no manual --prepare step.

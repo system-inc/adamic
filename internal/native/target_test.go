@@ -7,6 +7,7 @@ import (
 	"testing"
 )
 
+// Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
 func TestWASITargetFlags(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
 	flags := strings.Join(Flags(Options{Target: "wasm32-wasi"}), " ")
@@ -20,6 +21,7 @@ func TestWASITargetFlags(t *testing.T) {
 	}
 }
 
+// Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
 func TestWASIRefusesUnsupportedOptions(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
 	for _, options := range []Options{{Request: true}, {Target: "unknown"}, {Target: "wasm32-wasi", Sanitize: true}, {Target: "wasm32-wasi", cpu: "native"}} {

@@ -34,6 +34,7 @@ type regexCase struct {
 
 // One executable runs all the observed test262 calls through the C interpreter,
 // including captures, named groups, indices and lastIndex, under both sanitizers.
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpBytecodeTest262(t *testing.T) {
 	file, err := os.Open("../regexp/testdata/matches.json.gz")
 	if err != nil {
@@ -174,6 +175,7 @@ int main(int argc,char **argv) {
 
 }
 
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpBytecodeRandomNode(t *testing.T) {
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
@@ -235,6 +237,8 @@ process.stdout.write(JSON.stringify(cases));`)
 	}
 	runRegexCases(t, cases)
 }
+
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpNativeStepLimit(t *testing.T) {
 	program, err := regex.Compile("(a+)+$", "")
 	if err != nil {
@@ -269,6 +273,7 @@ int main(int argc,char **argv) {
 
 // Library IteratorYieldResult types can also describe user objects. Read by
 // field name, and preserve a missing optional done instead of assuming slot zero.
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpIteratorResultShape(t *testing.T) {
 	source := `#include "adamic.h"
 #include <stdio.h>
@@ -297,6 +302,7 @@ int main(int argc,char **argv) {
 	}
 }
 
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpBytecodePatternUnits(t *testing.T) {
 	var cases []regexCase
 	for _, unit := range []uint16{0xd800, 0xd801} {

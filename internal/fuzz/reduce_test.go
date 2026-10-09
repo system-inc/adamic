@@ -78,18 +78,26 @@ func TestReduceKeepsTheSignature(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := "Adamic 0.1 refuses the non-null assertion !"
-	if signature.Kind != "refusal" || !signature.matches(signature.Text) || len(signature.Text) < len(want) || signature.Text[:len(want)] != want {
-		t.Fatalf("derived %s, want the non-null refusal", signature)
-	}
-	observe := func(source string, slot int) Observation {
-		return checkout.Observe(source, "program.a", filepath.Join(directory, fmt.Sprintf("slot%d", slot)), signature.Kind)
-	}
-	reduced := Reduce("planted.a", planted, signature, original, observe, 4, 500)
-	if reduced.Source != plantedMinimum {
-		t.Errorf("reduced to\n%s\nwant\n%s", reduced.Source, plantedMinimum)
-	}
-	if again := checkout.Observe(reduced.Source, "program.a", filepath.Join(directory, "again"), ""); !again.Has(signature) {
-		t.Errorf("the reduced program fails as %v, not as %s", again.Lines, signature)
+	for _, name := range []string{"signature", "reduction"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			if name == "signature" {
+				want := "Adamic 0.1 refuses the non-null assertion !"
+				if signature.Kind != "refusal" || !signature.matches(signature.Text) || len(signature.Text) < len(want) || signature.Text[:len(want)] != want {
+					t.Fatalf("derived %s, want the non-null refusal", signature)
+				}
+				return
+			}
+			observe := func(source string, slot int) Observation {
+				return checkout.Observe(source, "program.a", filepath.Join(directory, fmt.Sprintf("slot%d", slot)), signature.Kind)
+			}
+			reduced := Reduce("planted.a", planted, signature, original, observe, 4, 500)
+			if reduced.Source != plantedMinimum {
+				t.Errorf("reduced to\n%s\nwant\n%s", reduced.Source, plantedMinimum)
+			}
+			if again := checkout.Observe(reduced.Source, "program.a", filepath.Join(directory, "again"), ""); !again.Has(signature) {
+				t.Errorf("the reduced program fails as %v, not as %s", again.Lines, signature)
+			}
+		})
 	}
 }

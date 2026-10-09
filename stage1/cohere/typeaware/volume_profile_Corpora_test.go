@@ -16,6 +16,7 @@ import (
 	"slices"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -28,6 +29,25 @@ import (
 // Both assignments have separate plain and sanitized leaves.
 const testVolumeProfileCorporaShards = 2 * (32 + 77)
 
+// Cancel the process group so Go and stage0 cannot leave compiler children
+// running after a deadline. Setpgid and negative-PID Kill work on Linux and macOS.
+func volumeProfileCorporaCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+
 func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize bool) string {
 	h.t.Helper()
 	name := "typeaware volume"
@@ -37,7 +57,9 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 	// Use the compiler source recipe rather than executable metadata: workers
 	// have different Git revisions and Go archives embed different scratch paths.
 	archiveName, archiveFlags := "typeaware checker archive", ""
-	cc, err := exec.Command("go", "env", "CC").Output()
+	toolContext, cancelTool := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancelTool()
+	cc, err := volumeProfileCorporaCommand(toolContext, "go", "env", "CC").Output()
 	if err != nil {
 		h.t.Fatal(err)
 	}
@@ -54,7 +76,7 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 	}
 	listContext, cancelList := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancelList()
-	list := volumeProfileCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
+	list := volumeProfileCorporaCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
 	list.Dir = h.repository
 	data, err := list.Output()
 	if err != nil {
@@ -142,11 +164,11 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 		}
 		buildContext, cancelBuild := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancelBuild()
-		command := volumeProfileCommand(buildContext, stage0, args...)
+		command := volumeProfileCorporaCommand(buildContext, stage0, args...)
 		command.Dir = h.repository
 		if output, err := command.CombinedOutput(); err != nil {
 			if buildContext.Err() != nil {
-				return fmt.Errorf("cooked: %s exceeded 90s hard deadline", name)
+				return fmt.Errorf("cooked: %s exceeded 90s hard deadline (60s budget)", name)
 			}
 			return fmt.Errorf("%s: %w\n%s", name, err, output)
 		}
@@ -293,11 +315,11 @@ func volumeProfileCorporaPrepare(t *testing.T, repository string) {
 		runGo := func(h *harness, name string, command *exec.Cmd) {
 			deadline, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			defer cancel()
-			bounded := volumeProfileCommand(deadline, command.Path, command.Args[1:]...)
+			bounded := volumeProfileCorporaCommand(deadline, command.Path, command.Args[1:]...)
 			bounded.Dir, bounded.Env = command.Dir, command.Env
 			r := h.run(name, bounded)
 			if deadline.Err() != nil {
-				t.Fatalf("cooked: Go build %s exceeded 90s hard deadline", name)
+				t.Fatalf("cooked: Go build %s exceeded 90s hard deadline (60s budget)", name)
 			}
 			if r.err != nil {
 				t.Fatalf("%s: %v\n%s\n%s", name, r.err, r.stdout, r.stderr)
@@ -395,9 +417,9 @@ func volumeProfileCorporaRun(t *testing.T, index int) {
 	deadline, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	run := func(label, binary string) result {
-		r := h.run(label, volumeProfileCommand(deadline, binary, s.config, manifest))
+		r := h.run(label, volumeProfileCorporaCommand(deadline, binary, s.config, manifest))
 		if deadline.Err() != nil {
-			t.Fatalf("cooked: shard exceeded 90s hard deadline")
+			t.Fatalf("cooked: shard exceeded 90s hard deadline (60s budget)")
 		}
 		if r.err != nil {
 			t.Fatalf("%s: %v\n%s\n%s", label, r.err, r.stdout, r.stderr)

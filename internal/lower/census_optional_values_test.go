@@ -7,11 +7,13 @@ import (
 )
 
 func TestOptionalFunctionValueRelation(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`const narrow = { run(x: number): number { return x + 1; } }; const wider: { run(x?: number): number } = narrow; console.log(String(wider.run()));`,
 		`const narrow = { run: (x: number): number => x + 1 }; const wider: { run(x?: number): number } = narrow; console.log(String(wider.run()));`,
 	} {
 		t.Run(source, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, "a function taking number seen as one taking number | undefined") {
@@ -22,6 +24,7 @@ func TestOptionalFunctionValueRelation(t *testing.T) {
 }
 
 func TestOverloadedShorthandFunctionValueStaysNotYet(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `function f(x: number): number; function f(x: number): number { return x; } const o = { f }; console.log(String(o.f(1)));`)
 	var notYet *NotYet
 	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "an overloaded function as a value") {
