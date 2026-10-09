@@ -7,6 +7,7 @@ import (
 )
 
 func TestRegExpGroupCompoundRefusals(t *testing.T) {
+	t.Parallel()
 	// These four operators accept string | undefined in TypeScript. Numeric compound
 	// assignments to this dictionary are rejected by tsc, so they are not stage 0 work.
 	for _, target := range []string{"g.y", "g['y']", "g.x"} {

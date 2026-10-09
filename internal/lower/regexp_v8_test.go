@@ -7,6 +7,7 @@ import (
 )
 
 func TestRegExpV8Refusals(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`console.log( /[\q{a}]/iv.test('A') ? 'yes' : 'no');`,
 		`console.log( /[\q{Ss|x}]/iv.test('sſ') ? 'yes' : 'no');`,

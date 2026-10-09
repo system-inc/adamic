@@ -14,6 +14,7 @@ import (
 // prototype mutation into Adamic's sound .a subset. Gap closure is intentional:
 // a compiler landing must replace the corresponding refusal assertion.
 func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
+	t.Parallel()
 	paths, err := filepath.Glob("../../stage3/scout/22-slice2/gaps/*.a")
 	if err != nil {
 		t.Fatal(err)

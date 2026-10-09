@@ -7,6 +7,7 @@ import (
 )
 
 func TestNodeFSDirectoryStatConstOptions(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`import * as fs from 'node:fs'; const statSyncOptions={throwIfNoEntry:false} as const; function stat(path:string):import('fs').Stats|undefined {return fs.statSync(path,statSyncOptions);}`,
 		`import {statSync} from 'node:fs'; const options=({throwIfNoEntry:true}) as const; statSync('missing',options);`,

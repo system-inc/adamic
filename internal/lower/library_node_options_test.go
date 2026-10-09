@@ -15,6 +15,7 @@ import (
 // Probe the predicate itself as well as the relation hook: a second guard at the
 // hook must not conceal an unsound classification in the library's proof.
 func TestNodeHostConsumesArgument(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		name, source string
 		index        int
@@ -94,6 +95,7 @@ func TestNodeHostConsumesArgument(t *testing.T) {
 }
 
 func TestNodeHostOptionsRefusalBoundaries(t *testing.T) {
+	t.Parallel()
 	hidden, err := os.ReadFile("testdata/node_options_widening/hidden_force.a")
 	if err != nil {
 		t.Fatal(err)
@@ -121,6 +123,7 @@ func TestNodeHostOptionsRefusalBoundaries(t *testing.T) {
 }
 
 func TestNodeHostOptionsConsumptionLowers(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`import {statSync} from 'node:fs'; const options={throwIfNoEntry:false} as const; statSync('.',options); statSync('missing',options);`,
 		`import {statSync,Stats} from 'node:fs'; const options={throwIfNoEntry:false} as const; function first(path:string):Stats|undefined { return statSync(path,options); } function second(path:string):Stats|undefined { return statSync(path,options); }`,
@@ -140,6 +143,7 @@ func TestNodeHostOptionsConsumptionLowers(t *testing.T) {
 // Importing a consuming closure preserves a private literal; exporting the
 // literal itself exposes it to references in another source file and refuses.
 func TestNodeHostOptionsReferencesAcrossFiles(t *testing.T) {
+	t.Parallel()
 	for _, escape := range []bool{false, true} {
 		directory := t.TempDir()
 		files := []string{filepath.Join(directory, "options.a"), filepath.Join(directory, "consumer.a"), filepath.Join(directory, "other.a")}

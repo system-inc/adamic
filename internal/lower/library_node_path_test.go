@@ -7,6 +7,7 @@ import (
 )
 
 func TestNodePathBasenameSignatures(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`import {basename} from 'node:path'; console.log(basename('a/b.txt'));`,
 		`import {basename as base} from 'node:path'; console.log(base('a/b.txt','.txt'));`,

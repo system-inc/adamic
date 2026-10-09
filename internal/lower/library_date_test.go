@@ -6,6 +6,7 @@ import (
 )
 
 func TestDateRuling10Refusals(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`new Date(0).toString();`, `new Date(0).toDateString();`, `new Date(0).toTimeString();`,
 		`new Date(0).toLocaleString();`, `new Date(0).toLocaleDateString();`, `new Date(0).toLocaleTimeString("en-US",{timeZone:"UTC"});`,
@@ -23,6 +24,7 @@ func TestDateRuling10Refusals(t *testing.T) {
 	}
 }
 func TestDateInternalSlotAndValidationBoundaries(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`Date.prototype.getTime.call({});`,
 		`const date=new Date(0); const view:{valueOf:()=>number}=date; view.valueOf();`,
@@ -40,6 +42,8 @@ func TestDateInternalSlotAndValidationBoundaries(t *testing.T) {
 		})
 	}
 }
+
+// Not parallel: changes the process-wide TZ environment variable with t.Setenv.
 func TestDateUTCFormsDoNotRequirePinnedBuildTimezone(t *testing.T) {
 	t.Setenv("TZ", "America/New_York")
 	for _, source := range []string{
