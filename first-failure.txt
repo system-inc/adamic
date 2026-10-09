@@ -1,0 +1,71 @@
+FIRST FAILURE (tests, at 1809.6 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/base-shapes
+=== RUN   TestVolumeAgreementAndMutants/base-shapes
+panic: test timed out after 30m0s
+	running tests:
+		TestVolumeAgreementAndMutants (30m0s)
+		TestVolumeAgreementAndMutants/base-shapes (44s)
+
+goroutine 28 [running]:
+testing.(*M).startAlarm.func1()
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/home/ahra/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 7 minutes]:
+testing.(*T).Run(0x38084b760908, {0x6f21e3?, 0x38084b76daa0?}, 0xca96b0)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+testing.runTests.func1(0x38084b760908)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2742 +0x37
+testing.tRunner(0x38084b760908, 0x38084b76dbc8)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2193 +0xea
+testing.runTests({0x6f12ae, 0x1c}, {0x706f31, 0x34}, 0x38084b730480, {0xcf9c28, 0xa, 0xa}, {0xc2aa2f63aad65aa5, 0x1a31b395c2a, ...})
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x38084b71e280)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+main.main()
+	_testmain.go:64 +0x9b
+
+goroutine 21 [chan receive]:
+testing.(*T).Run(0x38084b760b48, {0x6e643d?, 0x38084b729290?}, 0x38084b7f81c0)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestVolumeAgreementAndMutants(0x38084b760b48)
+	/home/ahra/fast-gate/tree-4/stage1/cohere/typeaware/volume_test.go:149 +0xca5
+testing.tRunner(0x38084b760b48, 0xca96b0)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 27 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x38084b75d7f0, 0x4, 0x38084b79a5a0, 0x0)
+	/home/ahra/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x38084b75d81e?, 0x38084b75d948?, 0x54d10b?, 0x38084b7640a0?, 0x43?)
+	/home/ahra/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/home/ahra/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/home/ahra/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x38084b78c240)
+	/home/ahra/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x5a?)
+	/home/ahra/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/home/ahra/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x38084b6fc820)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x38084b6fc820)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).run(0x38084b729290, {0x38084b7ce300, 0x12}, 0x38084b6fc820)
+	/home/ahra/fast-gate/tree-4/stage1/cohere/typeaware/typeaware_test.go:56 +0x365
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).must(0x38084b729290, {0x38084b7ce300, 0x12}, 0x38084b6fc820)
+	/home/ahra/fast-gate/tree-4/stage1/cohere/typeaware/typeaware_test.go:70 +0x8a
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).build(0x38084b729290, {0x38084b7640a0, 0x43}, {0x38084b7ce300, 0x12}, {0x38084b7645a0, 0x43}, {0x38084b6e9320, 0x52}, 0x0)
+	/home/ahra/fast-gate/tree-4/stage1/cohere/typeaware/typeaware_test.go:123 +0x20f
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestVolumeAgreementAndMutants.func1(0x38084b7fa488)
+	/home/ahra/fast-gate/tree-4/stage1/cohere/typeaware/volume_test.go:156 +0x26c
+testing.tRunner(0x38084b7fa488, 0x38084b7f81c0)
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 21
+	/home/ahra/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+(box load 127.7 on 64 cores at first failure)
