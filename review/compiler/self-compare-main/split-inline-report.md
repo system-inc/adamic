@@ -1,5 +1,5 @@
 Built the #7c6b4pq self-compare fix-forward: static inline helpers stay defined in every split translation unit through the shared header.
-Commits: continued 387c2826, merged current main fc31f9f1 in 510c9f33; fix commit follows this report.
+Commits: continued 387c2826; fix 9679fbe4; main 60397548 merged in 9ebca615 after the earlier main merge 510c9f33.
 Commands: uncached self-compare tests passed in 15.503s; uncached split tests passed in 6.210s; new regression took 0.23s.
 Mutants: restoring ordinary static-function splitting failed the regression with -Wundefined-inline; existing constant self-equality mutant was caught by Node's NaN output.
 Not covered: full gate and whole packages; TSGo split tests skipped because ADAMIC_CLANG_TSGO_ARCHIVE is unset.
@@ -29,3 +29,19 @@ Setup: export GOPROXY='https://proxy.golang.org|direct' then timeout 240 bash cl
 No unlanded worker branch was merged. Only current origin/main was merged into the explicitly requested continuation branch. No numbered roadmap step was supplied in the unit heading; this delivers its named #7c6b4pq self-compare fix-forward and preserves step 79's test grain.
 
 Integration lane-check output is recorded in lane-checks.log after committing. All commands the new test invokes (node and the native clang toolchain) are declared in origin/devtools/fast-gate:cloud/fast-gate/tools.txt.
+
+Final re-green after merging main 60397548:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 timeout 60 go test ./internal/native ./internal/oracle -run '(?i)split|^TestUnitsPreserveSharedState$|^TestSelfCompare' -count=1 -v -timeout 90s
+```
+
+Exit 0: native 0.996s, oracle 0.876s. New regression leaf 0.29s. The same two archive-dependent TSGo tests skipped.
+
+Required lane command, after committing and from the repository root:
+
+```sh
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+```
+
+Final output: lane checks 1.5 s: gofmt and tools on 5 Go files, t.Parallel on 2 test packages; vet 2 packages. Exit 0. The five Go files include the prior self-compare branch changes; this fix changes units.go and adds units_self_compare_test.go.
