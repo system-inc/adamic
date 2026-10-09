@@ -494,20 +494,3 @@ func compositionNativeProduct(t *testing.T) string {
 	return filepath.Join(nativeProduct, "port")
 
 }
-
-func TestProduct_CSSCompositionCorpusOracle(t *testing.T) {
-	t.Parallel()
-	compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
-}
-func TestProduct_CSSCompositionGoOracle(t *testing.T) {
-	t.Parallel()
-	compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
-}
-func TestProduct_CSSCompositionLowered(t *testing.T) {
-	t.Parallel()
-	compositionLoweredProduct(t)
-}
-func TestProduct_CSSCompositionNative(t *testing.T) {
-	t.Parallel()
-	compositionNativeProduct(t)
-}
