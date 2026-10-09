@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T095119-12d36e1a",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "81b322d84733ecc1ed6ef01ce19e49c916c99edf",
+  "branch": "codex/area-cohere-vet",
+  "base": "b3f83786a0ea00c23d47d774d3b6c98f9dd71336",
+  "candidate": "81b322d84733ecc1ed6ef01ce19e49c916c99edf",
+  "gated": "52700591f35fe923971a2ae49ea83d0584a522db",
+  "unplanned_packages_not_run": 5
+}
