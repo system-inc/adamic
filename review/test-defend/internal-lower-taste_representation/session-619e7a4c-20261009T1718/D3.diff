@@ -1,0 +1,10 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -583,7 +583,6 @@
+ 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+ 		declared := l.checker.GetTypeOfSymbol(symbol)
+ 		property.ViewTypeID = int(declared.Id())
+-		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+ 		property.ViewType = l.checker.TypeToString(declared)
+ 		property.ViewAllowed = l.viewLiterals(declared)
+ 	}

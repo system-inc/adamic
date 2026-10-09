@@ -1,0 +1,31 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/object.go:525",
+    "change": "return nil, l.notYet(node, \"a narrowed scalar in a boxed union field\") -> return nil, l.notYet(node, \"a boxed union field\")",
+    "menu": "change constant",
+    "target": "TestTasteRepresentationLimitsStayExplicit"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/lower/typed_arrays.go:49",
+    "change": "made.Arguments != nil && len(made.Arguments.Nodes) > 1 -> made.Arguments != nil && len(made.Arguments.Nodes) > 2",
+    "menu": "off by one a bound",
+    "target": "TestTypedArrayGaps"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/lower/object.go:586",
+    "change": "property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID] -> (drop)",
+    "menu": "drop statement",
+    "target": "TestViewObjectContractsAreAvailableToEraser"
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/lower/readiness.go:293",
+    "change": "expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID] -> expression.ViewContract = 0",
+    "menu": "change constant",
+    "target": "TestViewObjectContractsAreAvailableToEraser",
+    "lead": "D3 was repaired by readinessStatement; mutate the final contract attachment, exclusively reached by the row versus its direct graph-building subsumer."
+  }
+]

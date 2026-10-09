@@ -1,0 +1,11 @@
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -290,7 +290,7 @@
+ 					expression.ViewAllowed = nil
+ 					expression.ViewContract = 0
+ 				} else if expression.ViewTypeID != 0 {
+-					expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
++					expression.ViewContract = 0
+ 				}
+ 				proven := false
+ 				if local, ok := readinessObject(expression.Object); ok {

@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -522,7 +522,7 @@
+ 		optional := access.QuestionDotToken != nil
+ 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+ 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored == ir.Union && of != ir.Union && !of.IsReference() {
+-				return nil, l.notYet(node, "a narrowed scalar in a boxed union field")
++				return nil, l.notYet(node, "a boxed union field")
+ 			}
+ 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
+ 				// Read the declared representation before trusting the narrowing. A call or an

@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -46,7 +46,7 @@
+ 			return l.notYet(node, "sharing typed arrays across parallel tasks")
+ 		}
+ 		if l.isLibraryGlobal(made.Expression, "ArrayBuffer") {
+-			if made.Arguments != nil && len(made.Arguments.Nodes) > 1 {
++			if made.Arguments != nil && len(made.Arguments.Nodes) > 2 {
+ 				return l.notYet(node, "resizable ArrayBuffer buffers")
+ 			}
+ 			return l.notYet(node, "ArrayBuffer")
