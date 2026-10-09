@@ -1,0 +1,7 @@
+import { parallelMap } from 'adamic';
+interface Item { readonly name: string; readonly tags: readonly (readonly string[])[]; }
+const items: readonly Item[] = [{ name: 'first', tags: [['a', 'b']] }, { name: 'last', tags: [['c']] }];
+console.log(parallelMap(items, (item, index) => {
+	const tags = item.tags[0];
+	return `${index}:${item.name}:${tags === undefined ? '' : tags.join(',')}`;
+}).join('|'));

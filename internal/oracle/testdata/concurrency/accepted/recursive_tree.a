@@ -1,0 +1,9 @@
+import { parallelMap } from 'adamic';
+interface Tree { readonly value: number; readonly children: readonly Tree[]; }
+function sum(tree: Tree): number {
+	let total = tree.value;
+	for (const child of tree.children) { total += sum(child); }
+	return total;
+}
+const items: readonly Tree[] = [{ value: 1, children: [{ value: 2, children: [] }] }];
+console.log(parallelMap(items, sum).join(','));

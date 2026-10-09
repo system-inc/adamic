@@ -1,0 +1,5 @@
+import { parallelMap } from 'adamic';
+class Item { readonly value = 1; }
+class MutableItem extends Item { cache = new Map<string, number>(); }
+const items: readonly Item[] = [new MutableItem()];
+parallelMap(items, (item) => item.value);

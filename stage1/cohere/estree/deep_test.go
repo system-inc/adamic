@@ -32,11 +32,6 @@ func TestDeepGrammar(t *testing.T) {
 	list := manifest(t, deepGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
-		}
-	}
+	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("three 4096-operand cases, %d identical bytes in all builds", len(want))
 }

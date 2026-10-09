@@ -59,7 +59,7 @@ func TestDecoratedExportMutant(t *testing.T) {
 	ids := miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", cases)
 	oracle := miscOracle(t)
 	path := miscMutant(t, "convert.ts", "this.arena.node(wrapper).start = this.start(exported);", "this.arena.node(wrapper).start = this.start(id);")
-	binary, _ := miscBuild(t, path)
+	binary, script := miscBuild(t, path)
 	answers := miscTextAnswers(t, oracle, cases, ".ts")
 	finishSetup()
 	miscRunShards(t, testDecoratedExportMutantShards, ids, func(t *testing.T, i int) {
@@ -68,7 +68,7 @@ func TestDecoratedExportMutant(t *testing.T) {
 		// A decorator before export changes the wrapper start; in cases 2 and 3
 		// export precedes the decorator, so the mutated start is already correct.
 		mustDisagree := i != 2 && i != 3
-		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": mutantEmittedOutput(t, path, script, "--manifest", list)} {
 			if err := miscCompare(want, got, mustDisagree); err != nil {
 				t.Fatalf("%s %s: %v", ids[i], name, err)
 			}
