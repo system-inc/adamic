@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -27,7 +27,7 @@
+ 	for owner := node.Parent; owner != nil; owner = owner.Parent {
+ 		if ast.IsFunctionLike(owner) {
+ 			if owner.Kind == ast.KindArrowFunction {
+-				return &Refused{Where: l.program.Where(node), What: "arguments inside an arrow function", Fix: "read arguments.length in the enclosing non-arrow function and capture that number"}
++				return &Refused{Where: l.program.Where(node), What: "arguments inside a closure", Fix: "read arguments.length in the enclosing non-arrow function and capture that number"}
+ 			}
+ 			break
+ 		}

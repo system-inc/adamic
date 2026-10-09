@@ -1,0 +1,11 @@
+--- a/internal/lower/library_array_predicate.go
++++ b/internal/lower/library_array_predicate.go
+@@ -57,7 +57,7 @@
+ 		if member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+ 			return
+ 		}
+-		if l.checker.IsArrayType(member) == array {
++		if l.checker.IsArrayType(member) != array {
+ 			members = append(members, member)
+ 		}
+ 	}

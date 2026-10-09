@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -46,7 +46,7 @@
+ 		}
+ 		return &Refused{Where: l.program.Where(node), What: "writing arguments.length", Fix: "keep the count read-only; write an explicit local number instead"}
+ 	}
+-	return &Refused{Where: l.program.Where(node), What: "arguments other than a read of arguments.length", Fix: "name the parameters, or take a rest parameter; only arguments.length may be read"}
++	return &Refused{Where: l.program.Where(node), What: "arguments object usage", Fix: "name the parameters, or take a rest parameter; only arguments.length may be read"}
+ }
+ 
+ func (l *lowering) readArgumentsCount() ir.Expression {

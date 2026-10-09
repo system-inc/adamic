@@ -1,0 +1,11 @@
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -64,7 +64,7 @@
+ 	if object.Type() != ir.Object && object.Type() != ir.Array && object.Type() != ir.Union {
+ 		return nil, l.notYet(binary.Right, "in on this runtime representation")
+ 	}
+-	return ir.HasProperty{Object: fit(object, ir.Union), Name: key.Text()}, nil
++	return ir.HasProperty{Object: fit(object, ir.Union), Name: ""}, nil
+ }
+ 
+ func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {

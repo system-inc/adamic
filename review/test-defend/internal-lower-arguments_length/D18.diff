@@ -1,0 +1,17 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -348,13 +348,7 @@
+ // Signature symbols describe the body-local type of a defaulted parameter. The
+ // callable contract also accepts undefined, which selects that parameter's default.
+ func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {
+-	of := l.checker.GetTypeOfSymbol(parameter)
+-	for _, declaration := range parameter.Declarations {
+-		if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
+-			return l.checker.GetUnionType([]*checker.Type{of, l.checker.GetUndefinedType()})
+-		}
+-	}
+-	return of
++	return l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(parameter))
+ }
+ 
+ // Only exactly true is truthy in boolean | undefined. Equality evaluates the value once.

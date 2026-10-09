@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -44,7 +44,7 @@
+ 		if !ast.IsAssignmentTarget(length) {
+ 			return nil
+ 		}
+-		return &Refused{Where: l.program.Where(node), What: "writing arguments.length", Fix: "keep the count read-only; write an explicit local number instead"}
++		return &Refused{Where: l.program.Where(node), What: "writing the argument count", Fix: "keep the count read-only; write an explicit local number instead"}
+ 	}
+ 	return &Refused{Where: l.program.Where(node), What: "arguments other than a read of arguments.length", Fix: "name the parameters, or take a rest parameter; only arguments.length may be read"}
+ }

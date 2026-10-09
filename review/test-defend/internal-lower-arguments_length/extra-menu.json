@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D16",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 72,
+    "old": "if proven.Flags()&checker.TypeFlagsUnion != 0 {\n\t\tfor _, member := range proven.Types() {\n\t\t\tif !l.arrayPredicateDomain(member) {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t\treturn true",
+    "new": "if proven.Flags()&checker.TypeFlagsUnion != 0 {\n\t\tfor _, member := range proven.Types() {\n\t\t\tif !l.arrayPredicateDomain(member) {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t\treturn false",
+    "rows": [
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "lead": "Exclusive union-domain success versus unknown-only reflection",
+    "kind": "change constant"
+  },
+  {
+    "id": "D18",
+    "file": "internal/lower/census_small.go",
+    "line": 350,
+    "old": "func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {\n\tof := l.checker.GetTypeOfSymbol(parameter)\n\tfor _, declaration := range parameter.Declarations {\n\t\tif declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {\n\t\t\treturn l.checker.GetUnionType([]*checker.Type{of, l.checker.GetUndefinedType()})\n\t\t}\n\t}\n\treturn of\n}\n",
+    "new": "func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {\n\treturn l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(parameter))\n}\n",
+    "rows": [
+      "TestOptionalFunctionValueRelation"
+    ],
+    "lead": "Erase optional parameter undefined while leaving ordinary Animal/Dog relation unchanged",
+    "kind": "return early"
+  }
+]

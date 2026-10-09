@@ -1,0 +1,474 @@
+Unit u026: internal/lower arguments_length audit
+Starting origin/main: 7b18d0576930caca4e22ce2eef92fcf563af52d0
+Baseline: PASS, test binary 33.494s; all 15 requested names present in their six listed files.
+17 production mutants: 2 sacred, 9 subsumed, 2 overlapping, 2 untrue under this sampled matrix.
+Empty Lower probe: three acceptance-only rows are vacuous. M04 is the sole package survivor.
+
+CODE UNDER TEST: 422 covered Adamic production functions including Lower; see code-under-test.txt and coverage-functions.txt for the actual list. Load is preparation.
+ORACLE: each of the 15 rows uses self-written lowering acceptance, diagnostics or cast-check counts. None runs an external authority; no hand-copied external value was verified.
+Families: no numbered/corpus/per-input-wrapper families in these 15 bodies. lowerSource is preparation plus Lower, not a family-specific agreement checker. Each named top-level row retains its distinct feature assertions. No helpers, witnesses or setup-checks in this unit.
+
+Scope: whole default-configured internal/lower package for every mutant, not a bounded slice. All 15 rows completed in every full run. Repo-wide uniqueness is deferred to central replay.
+Skipped package rows/subcases: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];, TestOptionalWideningCensus, TestOriginalCycleLedger
+The cycle ledger needs a separately pinned pristine TypeScript 6.0.3 tree with generated diagnostics. The optional widening census needs a caller-supplied project config/output destination. Neither input was supplied, neither row belongs to this unit, and neither optional mode was enabled. The mixed-union subcase is explicitly deferred by the repository. Package uniqueness here means the observed default configuration.
+
+Commands:
+source /workspace/adamic-tools/env.sh
+git fetch origin && git checkout -b test-audit/internal-lower-arguments_length origin/main
+npm ci --prefix stage3/api > /tmp/u026-npm.log 2>&1
+For M01 through M17, with id substituted:
+ADAMIC_MUTANT=<id> ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > logs/<id>.log 2>&1
+Each standalone diff applies to the starting origin/main and passed timeout 90 go vet ./internal/lower/. See validation.json and the empty P01-vet.log.
+Timings: timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^<test>$, three invocations with separate logs; medians use the binary ok line, not Go invocation wall time.
+Probe: ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^<test>$, one per row. P01 returns nil, nil at Lower entry. It is excluded from all production kills and verdicts.
+M10 also has individual reruns of all 15 rows. The detector saw Adamic native panic text in an assertion, not a Go test binary abort. Every original full-package row completed; the reruns independently agree.
+Restored-clean.log is the final unmutated 15-row check. Production sources were restored byte for byte; git diff --check passes.
+
+ROW RESULTS (the last failing line is copied from this session):
+[
+  {
+    "row": "R01",
+    "test": "TestArgumentsLengthRefusals",
+    "package": "internal/lower",
+    "file": "internal/lower/arguments_length_test.go:13",
+    "seconds": 0.362,
+    "oracle": "Self-pinned Refused type and exact diagnostic suffix.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M03: arguments_length_test.go:35: got /tmp/adamic-gate/TestArgumentsLengthRefusalswriting_length4271384460/001/main.a:2:23: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read; want pinned refusal \"writing arguments.length; keep the count read-only; write an explicit local number instead\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.177,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; arguments_length_test.go:35: got /tmp/adamic-gate/TestArgumentsLengthRefusalswriting_length4271384460/001/main.a:2:23: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read; want pinned refusal \"writing arguments.length; keep the count read-only; write an explicit local number instead\""
+  },
+  {
+    "row": "R02",
+    "test": "TestArgumentsLengthReadNeighbors",
+    "package": "internal/lower",
+    "file": "internal/lower/arguments_length_test.go:41",
+    "seconds": 0.177,
+    "oracle": "Self: only absence of lowering error; ignores returned IR.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M14",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: arguments_length_test.go:51: /tmp/adamic-gate/TestArgumentsLengthReadNeighbors4263165421/002/main.a:1:93: stage 0 can't lower a call through an erased never-rest callable marker yet",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestPredicateCallbackContracts"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; arguments_length_test.go:51: /tmp/adamic-gate/TestArgumentsLengthReadNeighbors4263165421/002/main.a:1:93: stage 0 can't lower a call through an erased never-rest callable marker yet"
+  },
+  {
+    "row": "R03",
+    "test": "TestArgumentsLengthRefusalFixtures",
+    "package": "internal/lower",
+    "file": "internal/lower/arguments_length_test.go:56",
+    "seconds": 0.308,
+    "oracle": "Self-pinned Refused type and exact diagnostic suffix for .a and .ts.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M03: arguments_length_test.go:85: .a: got /tmp/adamic-gate/TestArgumentsLengthRefusalFixtureswriting1434932261/001/main.a:2:23: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read; want pinned refusal \"writing arguments.length; keep the count read-only; write an explicit local number instead\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.177,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; arguments_length_test.go:85: .a: got /tmp/adamic-gate/TestArgumentsLengthRefusalFixtureswriting1434932261/001/main.a:2:23: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read; want pinned refusal \"writing arguments.length; keep the count read-only; write an explicit local number instead\""
+  },
+  {
+    "row": "R04",
+    "test": "TestArrayPredicatePreservesDeclaredElementContract",
+    "package": "internal/lower",
+    "file": "internal/lower/array_predicate_test.go:9",
+    "seconds": 0.178,
+    "oracle": "Self: only absence of lowering error; ignores returned IR.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: array_predicate_test.go:19: function guard(value: string | number[]): value is number[] { return Array.isArray(value); }: /tmp/adamic-gate/TestArrayPredicatePreservesDeclaredElementContract3758991472/001/main.a:1:63: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [],
+    "subsumer_seconds": 0.152,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; array_predicate_test.go:19: function guard(value: string | number[]): value is number[] { return Array.isArray(value); }: /tmp/adamic-gate/TestArrayPredicatePreservesDeclaredElementContract3758991472/001/main.a:1:63: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+  },
+  {
+    "row": "R05",
+    "test": "TestArrayPredicateCannotInventAnElementContract",
+    "package": "internal/lower",
+    "file": "internal/lower/array_predicate_test.go:24",
+    "seconds": 0.221,
+    "oracle": "Self-pinned Refused type and return-is-not-proven substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M07: array_predicate_test.go:38: function guard(value: unknown): value is unknown[] { return Array.isArray(value); }: want unproven predicate refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.152,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; array_predicate_test.go:38: function guard(value: unknown): value is unknown[] { return Array.isArray(value); }: want unproven predicate refusal, got <nil>"
+  },
+  {
+    "row": "R06",
+    "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+    "package": "internal/lower",
+    "file": "internal/lower/array_predicate_test.go:43",
+    "seconds": 0.07,
+    "oracle": "Self-pinned NotYet type and tuple-or-erased substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: array_predicate_test.go:52: const tuple: [number, string] = [1, 'x']; console.log(String(Array.isArray(tuple)));: want an explicit representation refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.152,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; array_predicate_test.go:52: const tuple: [number, string] = [1, 'x']; console.log(String(Array.isArray(tuple)));: want an explicit representation refusal, got <nil>"
+  },
+  {
+    "row": "R07",
+    "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+    "package": "internal/lower",
+    "file": "internal/lower/array_predicate_test.go:57",
+    "seconds": 0.075,
+    "oracle": "Self: any NotYet suffices; M06 changes the failure reason without failing this row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "No production mutant failed this row in 17 whole-package runs; see kill-matrix.json."
+  },
+  {
+    "row": "R08",
+    "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+    "package": "internal/lower",
+    "file": "internal/lower/array_predicate_test.go:71",
+    "seconds": 0.152,
+    "oracle": "Self: only absence of lowering error; ignores returned IR.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: array_predicate_test.go:81: function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } function length(value: unknown): number { if (isArray(value)) return value.length; return -1; }: /tmp/adamic-gate/TestArrayPredicateCoexistsWithUnknownReflection2779268277/005/main.a:1:65: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [],
+    "subsumer_seconds": 0.178,
+    "vacuous": true,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; array_predicate_test.go:81: function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } function length(value: unknown): number { if (isArray(value)) return value.length; return -1; }: /tmp/adamic-gate/TestArrayPredicateCoexistsWithUnknownReflection2779268277/005/main.a:1:65: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+  },
+  {
+    "row": "R09",
+    "test": "TestUncheckableCastsStayRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/cast_test.go:11",
+    "seconds": 0.322,
+    "oracle": "Self-pinned Refused and repair substrings; does not inspect runtime behavior.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M12"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M12: cast_test.go:39: want unchecked-cast refusal and accepted forms, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; cast_test.go:39: want unchecked-cast refusal and accepted forms, got <nil>"
+  },
+  {
+    "row": "R10",
+    "test": "TestCheckedCastProofAndElision",
+    "package": "internal/lower",
+    "file": "internal/lower/cast_test.go:45",
+    "seconds": 0.163,
+    "oracle": "Self: IR check counts only; accepts M10 wrong numeric tag (0 becomes 1).",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M11"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11: cast_test.go:79: got 0 checks, want 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; cast_test.go:79: got 0 checks, want 1"
+  },
+  {
+    "row": "R11",
+    "test": "TestCensusMarkerResultIsAssignable",
+    "package": "internal/lower",
+    "file": "internal/lower/census_marker_test.go:9",
+    "seconds": 0.042,
+    "oracle": "Self: any Refused suffices; does not pin result-relation reason.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M13: census_marker_test.go:16: expected result relation refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusMarkerZeroCallIsNotAssumedSafe"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.044,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; census_marker_test.go:16: expected result relation refusal, got <nil>"
+  },
+  {
+    "row": "R12",
+    "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "package": "internal/lower",
+    "file": "internal/lower/census_marker_test.go:20",
+    "seconds": 0.044,
+    "oracle": "Self-pinned NotYet and erased-never-rest-call substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: census_marker_test.go:27: expected explicit erased-call boundary, got <nil>",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestArgumentsLengthReadNeighbors",
+      "TestCensusMarkerResultIsAssignable"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; census_marker_test.go:27: expected explicit erased-call boundary, got <nil>"
+  },
+  {
+    "row": "R13",
+    "test": "TestOptionalFunctionValueRelation",
+    "package": "internal/lower",
+    "file": "internal/lower/census_optional_values_test.go:9",
+    "seconds": 0.056,
+    "oracle": "Self-pinned Refused and optional-number parameter relation substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: census_optional_values_test.go:20: got <nil>, want strict optional-parameter refusal",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.177,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; census_optional_values_test.go:20: got <nil>, want strict optional-parameter refusal"
+  },
+  {
+    "row": "R14",
+    "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/census_optional_values_test.go:26",
+    "seconds": 0.04,
+    "oracle": "Self-pinned NotYet and overloaded-function-as-value substring.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "No production mutant failed this row in 17 whole-package runs; see kill-matrix.json."
+  },
+  {
+    "row": "R15",
+    "test": "TestCensusOverloadBinderGuards",
+    "package": "internal/lower",
+    "file": "internal/lower/census_overload_binders_test.go:8",
+    "seconds": 0.1,
+    "oracle": "Self-pinned nonnil error and implementation constraint/parameter/result substrings.",
+    "oracle_kind": "self",
+    "kills": [
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15: census_overload_binders_test.go:25: want \"cannot satisfy implementation parameter\", got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusOverloadRelation"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.116,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u026/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; census_overload_binders_test.go:25: want \"cannot satisfy implementation parameter\", got <nil>"
+  }
+]
+
+MUTANT TABLE: id | origin file:line | exact production change | failed top-level rows
+M01 | internal/lower/arguments_length.go:44 | if !ast.IsAssignmentTarget(length) { -> if ast.IsAssignmentTarget(length) { | TestArgumentsLengthReadNeighbors, TestArgumentsLengthRefusalFixtures, TestArgumentsLengthRefusals
+M02 | internal/lower/arguments_length.go:29 | if owner.Kind == ast.KindArrowFunction { -> if owner.Kind != ast.KindArrowFunction { | TestArgumentsLengthReadNeighbors, TestArgumentsLengthRefusalFixtures, TestArgumentsLengthRefusals
+M03 | internal/lower/arguments_length.go:23 | access.Name().Text() == "length" -> access.Name().Text() == "size" | TestArgumentsLengthReadNeighbors, TestArgumentsLengthRefusalFixtures, TestArgumentsLengthRefusals
+M04 | internal/lower/arguments_length.go:56 | l.function.ReadsArguments = true -> l.function.ReadsArguments = false | 
+M05 | internal/lower/library_array_predicate.go:80 | if proven.Flags()&checker.TypeFlagsUnknown != 0 { 		return true -> if proven.Flags()&checker.TypeFlagsUnknown != 0 { 		return false | TestArrayPredicateCoexistsWithUnknownReflection, TestArrayPredicatePreservesDeclaredElementContract
+M06 | internal/lower/library_array_predicate.go:26 | if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) { -> if l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) || l.exactObject(argument, 0) { | TestArrayPredicateCoexistsWithUnknownReflection, TestArrayPredicateDoesNotMisclassifyNativeTuples, TestArrayPredicatePreservesDeclaredElementContract
+M07 | internal/lower/library_array_predicate.go:51 | predicateReadonlyArray(l.checker, member, true) -> predicateReadonlyArray(l.checker, member, false) | TestArrayPredicateCannotInventAnElementContract, TestArrayPredicateCoexistsWithUnknownReflection, TestArrayPredicatePreservesDeclaredElementContract
+M08 | internal/lower/predicates.go:266 | return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0) -> return false | TestArrayPredicateCoexistsWithUnknownReflection, TestArrayPredicatePreservesDeclaredElementContract
+M09 | internal/lower/cast_proof.go:187 | if !l.castUnionWrites(source) { -> if l.castUnionWrites(source) { | TestCheckedCastProofAndElision, TestUncheckableCastsStayRefused
+M10 | internal/lower/cast.go:90 | ir.NumberConstant{Value: value.Float()} -> ir.NumberConstant{Value: value.Float() + 1} | TestPredicateOverloadRuntime
+M11 | internal/lower/cast.go:60 | return cast, nil -> return value, nil | TestCheckedCastProofAndElision
+M12 | internal/lower/cast_proof.go:254 | if declaration == nil || len(declaration.TypeParameters()) == 0 { -> if declaration == nil || len(declaration.TypeParameters()) != 0 { | TestUncheckableCastsStayRefused
+M13 | internal/lower/invariance.go:120 | if !l.checker.IsTypeAssignableTo(source, target) { -> if l.checker.IsTypeAssignableTo(source, target) { | TestCensusMarkerResultIsAssignable, TestCensusMarkerZeroCallIsNotAssumedSafe
+M14 | internal/lower/invariance.go:128 | if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) { -> if l.enumAssignable(given, takes) || l.checker.IsTypeAssignableTo(given, takes) { | TestAMethodReadAsAValueIsRefused, TestAMutableLocationSeenWiderIsRefused, TestAViewThatCantWriteIsNotRefused, TestArgumentsLengthReadNeighbors, TestCensusOverloadRelation, TestConstructorCacheOneArgumentRemainsNotYet, TestEnumSlotViews, TestFunctionValueUnionViewsStayNotYet, TestInheritanceAllowsSoundOverrides, TestInheritanceNativeSignatureLimits, TestInheritanceNativeSignatureNeighbors, TestIteratorMapperIndexHasNumberRepresentation, TestLibraryMapSetGapsStayRefused, TestLibraryMethodValueBoundaries, TestLibraryMethodValues, TestObjectUnprovenShapesStayNotYet, TestOptionalFunctionValueRelation, TestPredicateCallbackContracts, TestPredicateOverloadCallback, TestPredicateOverloadRuntime, TestProvenRelationsRefuse, TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat, TestWhatZeroOneRefusesIsRefusedWithAFix
+M15 | internal/lower/census_small.go:134 | return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil -> return true | TestCensusOverloadBinderGuards, TestCensusOverloadRelation, TestCensusOverloadReturnProof
+M16 | internal/lower/expression.go:1230 | if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil { -> if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil && l.censusImplementation(declaration) != nil { | TestArgumentsLengthReadNeighbors, TestCensusMarkerZeroCallIsNotAssumedSafe, TestEnumInitializationReach, TestParameterPropertyCallbackReceiver, TestPredicateCallbackContracts, TestPredicateOverloadRuntime
+M17 | internal/lower/expression.go:1302 | if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) { -> if len(signatures) == 1 && !l.censusNeverRestSignature(signatures[0]) { | TestArgumentsLengthReadNeighbors, TestCensusMarkerZeroCallIsNotAssumedSafe, TestCensusOverloadReturnProof, TestCensusPredicateMarkerCallStaysNotYet, TestClosedFrameInputRejectsMutation, TestEnumInitializationReach, TestLibraryMethodValues, TestLiteralMethodViewsDoNotLoseThis, TestNamespaceAmbientHostInitialization, TestNestedCallbackCycleIsRefused, TestNestedCapturedParametersAreOwned, TestNestedEnvironmentCycleIncludesDisjointSlots, TestNestedEnvironmentHasOneAllocationSite, TestNestedFunctionCycleIsRefused, TestNestedRestIsSupported, TestOptionalIndexingMapShapeRefused, TestParameterPropertiesSoundness, TestParameterPropertyCallbackReceiver, TestParserFactoryBindingHoisting, TestPredicateCallbackContracts, TestPredicateOverloadCallback, TestPredicateOverloadRuntime, TestReadinessElisionRequiresDominatingAssignment, TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat, TestWhatZeroOneRefusesIsRefusedWithAFix
+P01 | internal/lower/lower.go:20 | replace Lower body with return nil, nil; remove its now-unused fmt/filepath imports | probe only, see probe-runs.json
+
+SURVIVORS:
+M04: output witness: function read(): number { return arguments.length; } changes Lower IR ReadsArguments=true to false while ArgumentsCount=1 remains. All default package rows pass. Not an equivalent candidate. Probe command/output: ADAMIC_MUTANT=M04 /tmp/u026-probe probe-arguments.ts; witness-arguments-clean.json and witness-arguments-M04.json.
+M10 is a unit survivor, not a package survivor: Allowed[0].Value becomes 0 -> 1 for a numeric enum cast; TestCheckedCastProofAndElision still passes, while TestPredicateOverloadRuntime fails. This exposes the unit count oracle weakness; the outside row guards runtime behavior.
+
+UNCLEAR, WRONG, OR COSTLY PARTS OF THE BRIEF:
+1. The file-location reference is 8de93800f4, while fresh origin/main is 7b18d0576930. All 15 requested names and six file locations remain present. The audit and every line/diff use the actual starting commit.
+2. A working env.sh proved Go/Node availability, but the compiler submodules were absent. The first list attempt failed before a test baseline could exist. Initialized pinned cohere and nested TypeScript, then established a green baseline; did not audit on red.
+3. The cold listing compile exceeded 90s. Stopped that attempt at approximately 98s and retried with its populated build cache. The test-list retry succeeded. No test matrix run exceeded its 90s binary budget.
+4. The broad panic-string detector unnecessarily reran M10 rows because native panic text appeared in an assertion. This cost 29.661s and left additional evidence, not unknown matrix cells.
+5. Around three mutants per row would mean 45 before the 20-mutant cap. Used 17 spread production mutations, not one targeted mutation per row. The at-most-four rebuilding advice was interpreted as applying to stage1 port rebuilding, not overriding the compiler-unit cap.
+6. The family rule can be read broadly enough to merge any tests using lowerSource. Applied it to family-specific shared checks/per-input wrappers, not a general preparation helper, and preserved these 15 separate feature rows.
+7. Optional corpus/project modes lack their needed supplied data. Kept and named their skips; conclusions do not establish uniqueness under every optional configuration.
+8. Some refusals are intentionally broad. R07 accepts any NotYet; M06 can change the reason while the row still passes. R11 accepts any Refused. R10 counts checks and does not validate their tags. Self-pinned text checks can kill diagnostic changes without proving runtime semantics.
+9. Untrue means none of these 17 sampled mutants failed R07 or R14. P01 does fail them. It does not establish that no possible meaningful production mutant can fail them; no deletion follows from this small sample.
+10. The final empty probe for the cast-count row fails with a nil-program panic, not its intended check-count assertion. The independent probe runner isolates that failure from the other rows.
+
+TIMING AND LIMITS:
+nproc=5, Go 1.27.1, Node v24.19.0. Warm env version check 0.021s; cloud/setup.sh skipped. npm command 0.814s (log timestamp span 0.945s). Submodule log writing spans 19.623s; exact entire command wall time was not instrumented. Cold listing stopped around 98s; warmed retry finished around 38s. Environment readiness wait was 27.5s.
+Baseline binary 33.494s (log timestamp wall span 35.641s). Standalone row timing invocations wall 94.887s. Standalone mutant vet validation 11.767s. Full-package matrix wall 497.807s. Extra M10 reruns 29.661s. Empty-answer probes 29.948s.
+Each compiler mutant has a separate native build-cache directory. TestPredicateOverloadRuntime builds native fixtures in the whole package runs. Their individual clang rebuild times were not instrumented; per-mutant total run wall and binary timings are recorded, and include those builds. No per-build duration claim is made.
+Not covered: other Go packages or repo-wide replay; optional census/cycle corpus modes; additional mutations beyond this fixed 17; native execution of these 15 self-oracle rows beyond the already-existing outside package runtime row. Subsumption rests only on the caught mutants listed per row.
+
+Evidence formats: results.json; kill-matrix.json; matrix-runs.json; matrix-rows.json; probe-runs.json; times.json; all-times.json; mutants.json; diffs/M01.diff through M17.diff and P01.diff; coverage.out; code-under-test.txt; switch.diff and switch-helper.go.txt; probe.go and probe inputs; logs.
+Logs are losslessly gzip compressed after analysis. To rerun parsers, decompress logs/*.log.gz first. audit.py recreates the fixed menu, validates standalone diffs, plants one runtime switch, records exact runs, and restores sources in finally. All substantive mutations are from the fixed permitted menu; the switch helper is only selection infrastructure.
+
+R07 wrong-reason witness: ADAMIC_MUTANT=M06 /tmp/u026-probe probe-unknown.ts; baseline and M06 outputs are in witness-unknown-clean.log and witness-unknown-M06.log.
+Final restored clean slice: ok github.com/system-inc/adamic/internal/lower 0.969s.

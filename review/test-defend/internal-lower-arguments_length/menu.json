@@ -1,0 +1,188 @@
+[
+  {
+    "id": "D01",
+    "file": "internal/lower/arguments_length.go",
+    "line": 41,
+    "old": "\t\tfor length.Parent != nil && length.Parent.Kind == ast.KindParenthesizedExpression {\n\t\t\tlength = length.Parent\n\t\t}\n",
+    "new": "",
+    "rows": [
+      "TestArgumentsLengthRefusals"
+    ],
+    "lead": "Exclusive block 42-43: only refusal row tests parenthesized write",
+    "kind": "drop whole loop"
+  },
+  {
+    "id": "D02",
+    "file": "internal/lower/arguments_length.go",
+    "line": 47,
+    "old": "What: \"writing arguments.length\"",
+    "new": "What: \"writing the argument count\"",
+    "rows": [
+      "TestArgumentsLengthRefusals",
+      "TestArgumentsLengthRefusalFixtures"
+    ],
+    "lead": "Writing refusals share line 47, unlike read neighbors",
+    "kind": "change constant"
+  },
+  {
+    "id": "D03",
+    "file": "internal/lower/arguments_length.go",
+    "line": 30,
+    "old": "What: \"arguments inside an arrow function\"",
+    "new": "What: \"arguments inside a closure\"",
+    "rows": [
+      "TestArgumentsLengthRefusals",
+      "TestArgumentsLengthRefusalFixtures"
+    ],
+    "lead": "Arrow refusals share line 30, unlike neighbors capturing count",
+    "kind": "change constant"
+  },
+  {
+    "id": "D04",
+    "file": "internal/lower/arguments_length.go",
+    "line": 49,
+    "old": "What: \"arguments other than a read of arguments.length\"",
+    "new": "What: \"arguments object usage\"",
+    "rows": [
+      "TestArgumentsLengthRefusals",
+      "TestArgumentsLengthRefusalFixtures"
+    ],
+    "lead": "Object usages share line 49; fixture includes both extensions",
+    "kind": "change constant"
+  },
+  {
+    "id": "D05",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 60,
+    "old": "l.checker.IsArrayType(member) == array",
+    "new": "l.checker.IsArrayType(member) != array",
+    "rows": [
+      "TestArrayPredicatePreservesDeclaredElementContract",
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "lead": "Declared union members versus unknown reflection: exclusive block 61-62",
+    "kind": "flip condition"
+  },
+  {
+    "id": "D06",
+    "file": "internal/lower/predicates.go",
+    "line": 182,
+    "old": "p.l.checker.IsTypeAssignableTo(narrowed, p.target)",
+    "new": "p.l.checker.IsTypeAssignableTo(p.target, narrowed)",
+    "rows": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "lead": "Invented element contract reverses target/source relation on shared proof lines",
+    "kind": "swap arguments"
+  },
+  {
+    "id": "D07",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 51,
+    "old": "predicateReadonlyArray(l.checker, member, true)",
+    "new": "predicateReadonlyArray(l.checker, member, false)",
+    "rows": [
+      "TestArrayPredicatePreservesDeclaredElementContract",
+      "TestArrayPredicateCannotInventAnElementContract",
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ],
+    "lead": "Mutable unknown[] refusal versus readonly unknown[] acceptance",
+    "kind": "change option"
+  },
+  {
+    "id": "D08",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 83,
+    "old": "if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {\n\t\treturn false",
+    "new": "if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {\n\t\treturn true",
+    "rows": [
+      "TestArrayPredicateDoesNotMisclassifyNativeTuples"
+    ],
+    "lead": "Tuple branch exclusive versus reflection; admit unrepresented domain",
+    "kind": "change constant"
+  },
+  {
+    "id": "D09",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 27,
+    "old": "\"Array.isArray on a tuple or an erased object/any/unknown view\"",
+    "new": "\"Array.isArray on an unsupported representation\"",
+    "rows": [
+      "TestArrayPredicateDoesNotMisclassifyNativeTuples"
+    ],
+    "lead": "Exclusive refusal block27, exact tuple diagnostic requirement",
+    "kind": "change constant"
+  },
+  {
+    "id": "D10",
+    "file": "internal/lower/object.go",
+    "line": 330,
+    "old": "return 0, l.notYet(node, \"an array of unknown with erased element storage (retain its declared element type before reading elements)\")",
+    "new": "return ir.Union, nil",
+    "rows": [
+      "TestUnknownArrayPredicateRefusesUnrepresentedObservations"
+    ],
+    "lead": "Unknown indexed-read refusal reached by untrue row, audit never mutated elementType",
+    "kind": "return early"
+  },
+  {
+    "id": "D11",
+    "file": "internal/lower/expression.go",
+    "line": 1231,
+    "old": "\"an overloaded function as a value\"",
+    "new": "\"a callable overload value\"",
+    "rows": [
+      "TestOverloadedShorthandFunctionValueStaysNotYet"
+    ],
+    "lead": "Untrue row pins this boundary while ordinary overload users call directly",
+    "kind": "change constant"
+  },
+  {
+    "id": "D12",
+    "file": "internal/lower/invariance.go",
+    "line": 121,
+    "old": "return &widening{source: source, target: target}",
+    "new": "return nil",
+    "rows": [
+      "TestCensusMarkerResultIsAssignable"
+    ],
+    "lead": "Exclusive result-incompatible branch121, zero-call marker has compatible void result",
+    "kind": "return early"
+  },
+  {
+    "id": "D13",
+    "file": "internal/lower/invariance.go",
+    "line": 131,
+    "old": "return &widening{source: takes, target: given, parameter: true}",
+    "new": "return &widening{source: takes, target: given, parameter: false}",
+    "rows": [
+      "TestOptionalFunctionValueRelation"
+    ],
+    "lead": "Exclusive widening failure versus accepted optional neighbors; classification flag",
+    "kind": "change constant"
+  },
+  {
+    "id": "D14",
+    "file": "internal/lower/census_small.go",
+    "line": 199,
+    "old": "\" cannot satisfy implementation parameter \"",
+    "new": "\" cannot satisfy overload parameter \"",
+    "rows": [
+      "TestCensusOverloadBinderGuards"
+    ],
+    "lead": "Binder guard pins relation role whereas subsumer pins overload prefix",
+    "kind": "change constant"
+  },
+  {
+    "id": "D15",
+    "file": "internal/lower/unknown.go",
+    "line": 67,
+    "old": "Name: key.Text()}, nil",
+    "new": "Name: \"\"}, nil",
+    "rows": [
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ],
+    "lead": "Exclusive inProperty return block67: reflection checks presence of code",
+    "kind": "change constant"
+  }
+]

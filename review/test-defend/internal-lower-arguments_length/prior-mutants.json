@@ -1,0 +1,155 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/arguments_length.go",
+    "line": 44,
+    "old": "if !ast.IsAssignmentTarget(length) {",
+    "new": "if ast.IsAssignmentTarget(length) {",
+    "switch": "if auditBool(\"M01\", !ast.IsAssignmentTarget(length)) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/arguments_length.go",
+    "line": 29,
+    "old": "if owner.Kind == ast.KindArrowFunction {",
+    "new": "if owner.Kind != ast.KindArrowFunction {",
+    "switch": "if auditBool(\"M02\", owner.Kind == ast.KindArrowFunction) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/arguments_length.go",
+    "line": 23,
+    "old": "access.Name().Text() == \"length\"",
+    "new": "access.Name().Text() == \"size\"",
+    "switch": "access.Name().Text() == auditString(\"M03\", \"length\", \"size\")",
+    "kind": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/arguments_length.go",
+    "line": 56,
+    "old": "l.function.ReadsArguments = true",
+    "new": "l.function.ReadsArguments = false",
+    "switch": "l.function.ReadsArguments = auditBool(\"M04\", true)",
+    "kind": "change constant"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 80,
+    "old": "if proven.Flags()&checker.TypeFlagsUnknown != 0 {\n\t\treturn true",
+    "new": "if proven.Flags()&checker.TypeFlagsUnknown != 0 {\n\t\treturn false",
+    "switch": "if proven.Flags()&checker.TypeFlagsUnknown != 0 {\n\t\treturn auditBool(\"M05\", true)",
+    "kind": "change constant"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 26,
+    "old": "if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {",
+    "new": "if l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) || l.exactObject(argument, 0) {",
+    "switch": "if auditBool(\"M06\", !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0)) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/library_array_predicate.go",
+    "line": 51,
+    "old": "predicateReadonlyArray(l.checker, member, true)",
+    "new": "predicateReadonlyArray(l.checker, member, false)",
+    "switch": "predicateReadonlyArray(l.checker, member, auditBool(\"M07\", true))",
+    "kind": "change option"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/predicates.go",
+    "line": 266,
+    "old": "return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0)",
+    "new": "return false",
+    "switch": "if auditMutant(\"M08\") { return false }; return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0)",
+    "kind": "return early"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/cast_proof.go",
+    "line": 187,
+    "old": "if !l.castUnionWrites(source) {",
+    "new": "if l.castUnionWrites(source) {",
+    "switch": "if auditBool(\"M09\", !l.castUnionWrites(source)) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/cast.go",
+    "line": 90,
+    "old": "ir.NumberConstant{Value: value.Float()}",
+    "new": "ir.NumberConstant{Value: value.Float() + 1}",
+    "switch": "ir.NumberConstant{Value: auditNumber(\"M10\", value.Float())}",
+    "kind": "change constant"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/cast.go",
+    "line": 60,
+    "old": "return cast, nil",
+    "new": "return value, nil",
+    "switch": "if auditMutant(\"M11\") { return value, nil }; return cast, nil",
+    "kind": "return early"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/cast_proof.go",
+    "line": 254,
+    "old": "if declaration == nil || len(declaration.TypeParameters()) == 0 {",
+    "new": "if declaration == nil || len(declaration.TypeParameters()) != 0 {",
+    "switch": "if auditBool(\"M12\", declaration == nil || len(declaration.TypeParameters()) == 0) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/invariance.go",
+    "line": 120,
+    "old": "if !l.checker.IsTypeAssignableTo(source, target) {",
+    "new": "if l.checker.IsTypeAssignableTo(source, target) {",
+    "switch": "if auditBool(\"M13\", !l.checker.IsTypeAssignableTo(source, target)) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/invariance.go",
+    "line": 128,
+    "old": "if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {",
+    "new": "if l.enumAssignable(given, takes) || l.checker.IsTypeAssignableTo(given, takes) {",
+    "switch": "if auditBool(\"M14\", !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes)) {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/census_small.go",
+    "line": 134,
+    "old": "return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil",
+    "new": "return true",
+    "switch": "if auditMutant(\"M15\") { return true }; return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil",
+    "kind": "return early"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/expression.go",
+    "line": 1230,
+    "old": "if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {",
+    "new": "if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil && l.censusImplementation(declaration) != nil {",
+    "switch": "if declaration.Kind == ast.KindFunctionDeclaration && auditBool(\"M16\", declaration.Body() == nil) && l.censusImplementation(declaration) != nil {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/expression.go",
+    "line": 1302,
+    "old": "if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {",
+    "new": "if len(signatures) == 1 && !l.censusNeverRestSignature(signatures[0]) {",
+    "switch": "if len(signatures) == 1 && auditBool(\"M17\", l.censusNeverRestSignature(signatures[0])) {",
+    "kind": "flip condition"
+  }
+]
