@@ -114,7 +114,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_present(%s, %s.index);", object, cache)
+			e.line("adamic_object_present(%s, adamic_slot_index(%s, %s));", object, object, slot)
 			if e.fieldTypesNeeded() {
 				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
 			}

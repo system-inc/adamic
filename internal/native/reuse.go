@@ -555,9 +555,9 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		slot := e.temporary()
 		cache := e.cache()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-		e.line("adamic_object_present(%s, %s.index);", object, cache)
+		e.line("adamic_object_present(%s, adamic_slot_index(%s, %s));", object, object, slot)
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, field.Value.Type())
+			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
 		}
 		if e.program.UninitializedFields[field.Name] {
 			e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized])
@@ -572,6 +572,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	}
 	// A spread produces a plain object, even when its source allocation is reused.
 	e.line("%s->class = NULL;", object)
+	e.line("%s->tuple = false;", object)
 	return object, true
 }
 
