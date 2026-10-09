@@ -256,8 +256,9 @@ def main():
     store = os.environ.get('STAGE3_PRODUCT_STORE', str(cache / 'products'))
     if not args.build_product and 'STAGE3_PRODUCT_STORE' not in os.environ:
         if not (Path(store) / (key + '.manifest')).exists():
-            store = os.environ.get('ADAMIC_BUILD_CACHE_URL',
-                                   'https://adamic-build-cache.kirk-ouimet.workers.dev')
+            # Remote reads are opt-in: the gate supplies its public asset base.
+            # An unconfigured cold worker must use the local miss/build path.
+            store = os.environ.get('ADAMIC_BUILD_CACHE_URL', store)
     out.parent.mkdir(parents=True, exist_ok=True)
     if args.build_product:
         cache.mkdir(parents=True, exist_ok=True)

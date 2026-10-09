@@ -7,6 +7,7 @@ import json
 import shutil
 import sys
 from unittest import mock
+from types import SimpleNamespace
 from pathlib import Path
 import subprocess
 import tempfile
@@ -23,7 +24,25 @@ def shard(case, count):
     return CASES.index(case) % count
 
 
+def suite_cases():
+    # Use the same discovery as unittest.main, including future test classes.
+    suite = unittest.defaultTestLoader.loadTestsFromModule(SimpleNamespace(**globals()))
+    def flatten(group):
+        for test in group:
+            if isinstance(test, unittest.TestSuite):
+                yield from flatten(test)
+            else:
+                yield test
+    return list(flatten(suite))
 
+
+def case_name(test):
+    return test.id().removeprefix(__name__ + '.')
+
+
+def selected_suite(index, count):
+    return unittest.TestSuite(test for test in suite_cases()
+                              if shard(case_name(test), count) == index)
 
 class ApplyCheckoutTests(unittest.TestCase):
     def test_ordinary_apply_leaves_git_clean(self):
@@ -98,6 +117,12 @@ class ProductTests(unittest.TestCase):
                 empty = root / 'adapt/98-empty'
                 empty.mkdir()
                 self.assertNotEqual(APPLY.product_key(), baseline)
+                (empty / 'adapt.cjs').write_text('module.exports = {};')
+                added = APPLY.product_key()
+                self.assertNotEqual(added, baseline, 'new adaptation directory and script')
+                (empty / 'adapt.cjs').write_text('module.exports = {mutant: true};')
+                self.assertNotEqual(APPLY.product_key(), added, 'new adaptation contents')
+                (empty / 'adapt.cjs').unlink()
                 empty.rmdir()
                 file_link = root / 'adapt/99-probe/evidence-link'
                 file_link.symlink_to('helper.json')
@@ -116,6 +141,24 @@ class ProductTests(unittest.TestCase):
                 link.unlink()
                 (root / 'patch-set.md').write_text('stale generated output')
                 self.assertEqual(APPLY.product_key(), baseline)
+
+    def test_new_adaptation_directory_changes_hash(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name in ['source.json', 'apply.py', 'api/package.json', 'api/package-lock.json']:
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(name)
+            (root / 'adapt').mkdir()
+            with mock.patch.object(APPLY, 'stage', root):
+                original = APPLY.product_key()
+                adaptation = root / 'adapt/43-late-adaptation'
+                adaptation.mkdir()
+                (adaptation / 'adapt.cjs').write_text('module.exports = {version: 1};')
+                added = APPLY.product_key()
+                self.assertNotEqual(added, original, 'a new adaptation must invalidate the product')
+                (adaptation / 'adapt.cjs').write_text('module.exports = {version: 2};')
+                self.assertNotEqual(APPLY.product_key(), added, 'new adaptation bytes must participate')
 
     def test_unkeyed_parser_override_is_refused(self):
         with tempfile.TemporaryDirectory() as scratch:
@@ -200,6 +243,28 @@ class ProductTests(unittest.TestCase):
             APPLY.restore_product(str(scratch / 'products'), 'missing', scratch / 'fetched')
             self.assertEqual((scratch / 'fetched/patch-set.md').read_text(), 'fallback table')
 
+    def test_unconfigured_cold_cache_builds_without_remote_read(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            scratch = Path(scratch)
+            output = scratch / 'output'
+            def build(out, cache):
+                out.mkdir()
+                (out / 'patch-set.md').write_text('fallback table')
+            original_fetch = APPLY.fetch
+            def local_fetch(store, name, target):
+                self.assertEqual(store, str(scratch / 'cache/products'))
+                return original_fetch(store, name, target)
+            with (mock.patch.dict(os.environ, {'STAGE3_CACHE': str(scratch / 'cache')}, clear=True),
+                    mock.patch.object(APPLY, 'product_key', return_value='missing'),
+                    mock.patch.object(APPLY, 'fetch', side_effect=local_fetch),
+                    mock.patch.object(APPLY, 'build_product', side_effect=build) as builder,
+                    mock.patch.object(sys, 'argv', ['apply.py', str(output)]),
+                    mock.patch.object(sys, 'stderr', io.StringIO()) as message):
+                APPLY.main()
+            builder.assert_called_once_with(output, scratch / 'cache')
+            self.assertIn('cache miss: missing', message.getvalue())
+            self.assertEqual((output / 'patch-set.md').read_text(), 'fallback table')
+
     def test_only_manifest_absence_is_a_cache_miss(self):
         with tempfile.TemporaryDirectory() as scratch:
             output = Path(scratch) / 'output'
@@ -281,14 +346,18 @@ class ProductTests(unittest.TestCase):
                     APPLY.main()
 
     def test_shards_partition_every_case(self):
-        expected = sorted(CASES)
+        expected = sorted(case_name(test) for test in suite_cases())
+        self.assertEqual(CASES, expected)
+        self.assertEqual(len(CASES), len(set(CASES)))
         for count in [1, 2, 3, len(CASES), len(CASES) + 1]:
-            groups = [[case for case in CASES if shard(case, count) == index]
+            groups = [[case_name(test) for test in selected_suite(index, count)]
                       for index in range(count)]
             self.assertEqual(sorted(case for group in groups for case in group), expected)
             for case in CASES:
                 self.assertEqual(sum(case in group for group in groups), 1)
-                print(f'{case} shard={shard(case, count)}/{count}')
+        # Print one case partition; the additional counts above are validations.
+        for case in CASES:
+            print(f'{case} shard={shard(case, len(CASES))}/{len(CASES)}')
 
 
 class ProofShardTests(unittest.TestCase):
@@ -318,8 +387,7 @@ for (const name of ['30-indexed-reads', '31-indexed-reads-checker',
         subprocess.run(['node', '-e', script], cwd=ROOT, env=env, check=True)
 
 
-CASES = sorted(test.id().removeprefix(__name__ + '.') for cls in [ApplyCheckoutTests, ProductTests, ProofShardTests]
-               for test in unittest.defaultTestLoader.loadTestsFromTestCase(cls))
+CASES = sorted(case_name(test) for test in suite_cases())
 
 
 if __name__ == '__main__':
@@ -335,8 +403,7 @@ if __name__ == '__main__':
                 raise ValueError()
         except ValueError:
             raise SystemExit('ADAMIC_TEST_SHARD must be i/n with 0 <= i < n')
-        suite = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(case, sys.modules[__name__])
-                                   for case in CASES if shard(case, count) == index)
+        suite = selected_suite(index, count)
         result = unittest.TextTestRunner(verbosity=2).run(suite)
         raise SystemExit(not result.wasSuccessful())
     else:

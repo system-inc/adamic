@@ -18,7 +18,7 @@ bash stage3/apply.sh --publish-hook > /tmp/stage3-product-hook.json
 
 The hook JSON supplies format, key, inputs, pinned_source and payloads. Each payload has an absolute local path and an asset destination under adamic/build-cache/. Inputs are pinned stage3/source.json, apply.py, API package/lock, all adaptation entries (excluding generated __pycache__), and node --version. Names, modes, file bytes, directories, and file symlink targets participate in the hash; directory symlinks are refused. The payload is a gzip tar of the complete adapted tree including .git snapshot refs and patch-set.md, split into 16 MiB keyed .pNNN files, plus a keyed .manifest containing part and complete archive sizes and SHA256 hashes. The hook verifies each part before describing it. Developer tools publishes parts first and the manifest last, using only its own publisher and credentials.
 
-For fetches, ADAMIC_BUILD_CACHE_URL must be the public URL corresponding to the published adamic/build-cache/ asset directory. Requests append KEY.manifest or KEY.pNNN to that base. Existing workers.dev is the fallback base for compatibility; developer tools supplies the correct asset-serving base if different. STAGE3_PRODUCT_STORE can instead select a local directory or explicit URL. Missing manifest builds locally with `stage3 product cache miss: KEY; building adapted tree locally` on stderr and saves the result in the local product store. On a remote miss, that store defaults to STAGE3_CACHE/products. There is no remote write. Corruption is fatal rather than a cache miss.
+For fetches, ADAMIC_BUILD_CACHE_URL must be the public URL corresponding to the published adamic/build-cache/ asset directory. Requests append KEY.manifest or KEY.pNNN to that base. Remote retrieval is opt-in through ADAMIC_BUILD_CACHE_URL; developer tools supplies its public asset-serving base. Without a configured URL, the default store is local and an absent product builds locally. STAGE3_PRODUCT_STORE can instead select a local directory or explicit URL. Missing manifest builds locally with `stage3 product cache miss: KEY; building adapted tree locally` on stderr and saves the result in the local product store. On a remote miss, that store defaults to STAGE3_CACHE/products. There is no remote write. Corruption is fatal rather than a cache miss.
 
 The test suite now replaces the earlier never-build-on-miss test with build-and-report coverage, plus corrupt-product refusal, local hook contract, and precise missing-manifest classification. Earlier timings and mutant records below describe the initial revision and are retained as historical evidence. Current-revision timings and mutants are recorded separately in the follow-up validation section.
 
@@ -2244,3 +2244,56 @@ Commands: `python3 stage3/test_apply.py CASE`, output to `/tmp/stage3-followup-C
 Mutant commands: `python3 /tmp/stage3-followup-mutants.py > /tmp/stage3-followup-mutants.log 2>&1`; per-mutant logs and results.json in `/tmp/stage3-followup-mutants/`. The script mutates isolated apply modules, not repository files. The first hook-key probe accidentally mutated the fetch guard and survived; the corrected probe targets only the hook guard and was killed.
 
 Final product preparation exercises the ordinary local-store cache-miss path against the final input hash; its output and elapsed result are in `/tmp/stage3-followup-build-final.log` and `/tmp/stage3-followup-build-final.json`. This is preparation outside test units and is expected to exceed 30 seconds. Final ordinary apply and both clean/planted Python shards run after this product exists, with outputs and timings in `/tmp/stage3-followup-final-*.log` and `/tmp/stage3-followup-final.json`. The CLI hook output is `/tmp/stage3-followup-publish-hook.json`; developer tools can reproduce it with `bash stage3/apply.sh --publish-hook`. No product upload or credential use occurs.
+
+# Integration red reproduction and fix (October 9)
+
+Failing line: `urllib.error.HTTPError: HTTP Error 403: Forbidden`, followed by `RuntimeError: product KEY unavailable; run apply.sh --build-product outside tests and publish it to https://adamic-build-cache.kirk-ouimet.workers.dev`. This occurs while fetching the manifest, before building or applying any adaptation. The implicit endpoint introduced by a9637488 is the failing member. b02c1093 carries the original checkout test and does not define a second apply test partition. The two sizes printed by the initial revision are validation counts len(CASES) and len(CASES)+1, not two merged case tables.
+
+Reproductions used detached worktrees, separate initially absent STAGE3_CACHE directories for every invocation, and unset STAGE3_PRODUCT_STORE, ADAMIC_BUILD_CACHE_URL, parser overrides and shard/mutant settings. Command: `bash ABSOLUTE_WORKTREE/stage3/apply.sh RESULTS/adapted-tree`, exactly the lane command; tests: `python3 stage3/test_apply.py`. All output was redirected to files. These are reproduction timings, not proof of the sub-30-second fetched-product budget.
+
+| Revision | Invocation | Seconds | Exit |
+| --- | --- | ---: | ---: |
+| b05fa5c9 | apply | 0.687 | 1 |
+| b05fa5c9 | tests | 19.315 | 1 |
+| c6e445a9 | apply | 126.380 | 0 |
+| c6e445a9 | tests | 135.550 | 0 |
+| a9637488 | apply | 0.511 | 1 |
+| a9637488 | tests | 4.232 | 1 |
+
+Logs and exact commands: `/tmp/stage3-red-repro/results.json` and `/tmp/stage3-red-repro/REVISION-TASK-results/TASK.log`. Every baseline command finished. No upstream oracle ran in these reproductions.
+
+Fix: use a remote URL only when configured by the gate. An unconfigured cold cache uses the already tested local manifest-miss/build fallback. Configured endpoint authentication failures and corrupt products remain fatal; no check is weakened. The branch merges c6e445a9 without rewriting its published history. Before this report edit, its complete stage3/adapt tree matched stack b05fa5c9 byte for byte (`git diff b05fa5c9 -- stage3/adapt` was empty). The complete recursive hash already included the newly landed adapters.
+
+Suite discovery, the CASES table, and actual selected-suite execution now use the same unittest discovery. The partition test compares the real emitted suites with the complete discovered suite for several counts, asserts exact union and unique ownership, and prints one case partition. There are 17 discovered cases in this revision; `--list-shards N` and ADAMIC_TEST_SHARD=i/N use this same table.
+
+| Mutant | Assertion that caught it |
+| --- | --- |
+| Restore the implicit Workers URL | Unconfigured cold-cache test rejects any nonlocal fetch |
+| Omit the new 43-late-adaptation directory and its file from hash inputs | New-adaptation directory hash must differ |
+| Drop the first discovered case from executed shard suites | Exact suite union |
+| Duplicate the first discovered case in executed shard suites | Exact suite union/unique ownership |
+
+Each mutant produced one assertion failure and zero errors; results `/tmp/stage3-red-mutants.json`, individual logs `/tmp/stage3-red-mutant-NAME.log`. The new directory contains a real adapt.cjs file; changing its bytes also changes the hash.
+
+Every lightweight case was measured in its own fresh process:
+
+| Case | Seconds | Exit |
+| --- | ---: | ---: |
+| ProductTests.test_corrupt_product_never_builds | 0.181 | 0 |
+| ProductTests.test_existing_output_is_refused | 0.206 | 0 |
+| ProductTests.test_input_key_covers_all_inputs | 0.264 | 0 |
+| ProductTests.test_manifest_mutant_is_rejected | 0.205 | 0 |
+| ProductTests.test_missing_product_builds_and_reports | 0.189 | 0 |
+| ProductTests.test_new_adaptation_directory_changes_hash | 0.239 | 0 |
+| ProductTests.test_only_manifest_absence_is_a_cache_miss | 0.172 | 0 |
+| ProductTests.test_payload_manifest_mutant_is_rejected | 0.204 | 0 |
+| ProductTests.test_payload_mutant_is_rejected | 0.178 | 0 |
+| ProductTests.test_publish_hook_describes_local_payloads | 0.154 | 0 |
+| ProductTests.test_restore_fetches_verified_product | 0.206 | 0 |
+| ProductTests.test_shards_partition_every_case | 0.235 | 0 |
+| ProductTests.test_unconfigured_cold_cache_builds_without_remote_read | 0.181 | 0 |
+| ProductTests.test_unkeyed_parser_override_is_refused | 0.206 | 0 |
+| ProductTests.test_write_table_is_explicit | 0.208 | 0 |
+| ProofShardTests.test_every_indexed_read_file_has_one_shard | 0.219 | 0 |
+
+Final cold apply preparation logs: `/tmp/stage3-red-fixed-apply.log` and `/tmp/stage3-red-fixed-results.json`. Fetched-product tests and all 17 one-case shards, plus the planted table-writing mutant, write individual logs `/tmp/stage3-red-fixed-UNIT.log` and timings to the same JSON. The fixed files are also overlaid on detached b05fa5c9 and its lane apply command and apply suite are checked using the exact matching locally prepared product. These are apply-only checks; the full gate and upstream oracle remain unrun. No build cache credential is read and no product is uploaded.
