@@ -1,0 +1,12 @@
+FIRST FAILURE (tests, at 608.7 s):
+github.com/system-inc/adamic/bridge/tsgo TestBridge
+=== RUN   TestBridge
+    bridge_test.go:50: build go_build_./bridge/tsgo/archive_tsgo.a f8cd50228b4b fetched 2.17
+    bridge_test.go:51: build go_build_./bridge/tsgo/archive_tsgo-asan.a 7d1cedc9375f fetched 3.44
+    bridge_test.go:75: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:80: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:82: build go_build_./cmd/adamic_adamic 40b2d54a2b49 miss 194.21
+    bridge_test.go:83: build go build ./bridge/tsgo/oracle oracle: cache poisoning: the stored product for 8a7766d04acd (go build ./bridge/tsgo/oracle oracle) differs from a rebuild: stored [{"path":"oracle","sha256":"00f9731bdc75068af7b969385dcd18c52528da77a91c24028a0cf490bc466642","size":25979465,"mode":493}], rebuilt [{"path":"oracle","sha256":"fcb00c38a8110c48c5bf0bad9edb29b15af30a9766864efed4fe7ef18384b23b","size":25979465,"mode":493}] (or the build isn't reproducible)
+--- FAIL: TestBridge (217.68s)
+
+(box load 62.7 on 64 cores at first failure)
