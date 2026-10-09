@@ -1,0 +1,102 @@
+run adamic-verify-20261009T114423-0f890c0b: red, 17381 tests in 25 units, 1 failed, 0 units broken, 0 killed over budget; merged with trio-lint-alone-20261009T121629-5f4660ef (lint whole, 171 units), lint03-20261009T123549-16686de8 (its tests-03 split, green) and wasi-trio-20261009T123831-af902670 (TestWASIUnit00-35, green): 41 failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTreesSetupIsolation (tests-19)
+    jsx_setup_isolation_test.go:20: standalone cold shard failed: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_002 (tests-91)
+    shards_agree_split_test.go:251: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_004 (tests-91)
+    shards_agree_split_test.go:253: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_005 (tests-91)
+    shards_agree_split_test.go:254: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_006 (tests-91)
+    shards_agree_split_test.go:255: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_007 (tests-91)
+    shards_agree_split_test.go:256: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-91)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 73.56
+    shards_agree_split_test.go:168: build shards-agree-native efea7a0ee4e6 miss 13.12
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_012 (tests-92)
+    shards_agree_split_test.go:261: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_021 (tests-92)
+    shards_agree_split_test.go:461: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-92)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 68.65
+    shards_agree_split_test.go:168: build shards-agree-native efea7a0ee4e6 miss 9.81
+    shards_agree_split_test.go:125: build shards-agree-oracle a4ff910ae5c3 miss 3.47
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_000 (tests-101)
+    shards_agree_split_test.go:249: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_001 (tests-101)
+    shards_agree_split_test.go:250: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_003 (tests-101)
+    shards_agree_split_test.go:252: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_008 (tests-101)
+    shards_agree_split_test.go:257: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_009 (tests-101)
+    shards_agree_split_test.go:258: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_010 (tests-101)
+    shards_agree_split_test.go:259: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_011 (tests-101)
+    shards_agree_split_test.go:260: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-101)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 75.98
+    shards_agree_split_test.go:168: build shards-agree-native efea7a0ee4e6 miss 11.04
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_013 (tests-102)
+    shards_agree_split_test.go:262: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_014 (tests-102)
+    shards_agree_split_test.go:263: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_015 (tests-102)
+    shards_agree_split_test.go:264: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_016 (tests-102)
+    shards_agree_split_test.go:451: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_017 (tests-102)
+    shards_agree_split_test.go:453: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_018 (tests-102)
+    shards_agree_split_test.go:455: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_019 (tests-102)
+    shards_agree_split_test.go:457: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_020 (tests-102)
+    shards_agree_split_test.go:459: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-102)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 63.85
+    shards_agree_split_test.go:168: build shards-agree-native efea7a0ee4e6 miss 8.73
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_022 (tests-103)
+    shards_agree_split_test.go:463: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_023 (tests-103)
+    shards_agree_split_test.go:465: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_025 (tests-103)
+    shards_agree_split_test.go:469: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_028 (tests-103)
+    shards_agree_split_test.go:475: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_029 (tests-103)
+    shards_agree_split_test.go:477: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_031 (tests-103)
+    shards_agree_split_test.go:481: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-103)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 78.01
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Union (tests-103)
+    shards_agree_split_test.go:225: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_024 (tests-119)
+    shards_agree_split_test.go:467: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_026 (tests-119)
+    shards_agree_split_test.go:471: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_027 (tests-119)
+    shards_agree_split_test.go:473: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_030 (tests-119)
+    shards_agree_split_test.go:479: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-119)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 77.04
+    shards_agree_split_test.go:168: build shards-agree-native efea7a0ee4e6 miss 9.29
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-126)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	91.516s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests started 6487, verdicts 6347 of: TestCompilerAndStage1Agree (TestCompilerAndStage1Agree_6394, TestCompilerAndStage1Agree_6395, TestCompilerAndStage1Agree_6396, TestCompilerAndStage1Agree_6397, TestCompilerAndStage1Agree_6398, TestCompilerAndStage1Agree_6399, ...) (tests-02)
