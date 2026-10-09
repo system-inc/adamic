@@ -1,0 +1,26 @@
+[
+  [
+    "object-boundary",
+    "if contextual == nil {",
+    "if true {",
+    "scout_nullable_objects.a"
+  ],
+  [
+    "object-tag",
+    "Right: ir.Unary{Operator: ir.Not, Operand: null}",
+    "Right: ir.BooleanConstant{Value: true}",
+    "scout_nullable_object_stale_field.a"
+  ],
+  [
+    "object-optional",
+    "WhenTrue: ir.Undefined{Of: ir.Object}",
+    "WhenTrue: ir.ObjectLiteral{Fields: []ir.Field{{Name: \"text\", Value: ir.StringConstant{Index: l.constant(\"mutant\")}}}}",
+    "scout_nullable_objects.a"
+  ],
+  [
+    "object-null-field",
+    "if l.includesNull(observed) {\\n\\t\\tresult =",
+    "if false && l.includesNull(observed) {\\n\\t\\tresult =",
+    "scout_nullable_object_null_field.a"
+  ]
+]

@@ -1,0 +1,75 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_null_field.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a (1.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a (1.17s)
+PASS
+gate cache: native hits=3 misses=10
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.210s
