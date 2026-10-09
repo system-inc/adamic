@@ -1,0 +1,5 @@
+run adamic-verify-20261009T043506-1b2104e8: void, 5 tests in 8 units, 0 failed, 4 units broken, 0 killed over budget
+BROKEN tests-02: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-03: no results (exited true, last output "3.6G\t/tmp/adamic")
+BROKEN tests-05: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-07: no results (exited false, last output "loom-pilot: github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08 is new since the reference; running it whole")
