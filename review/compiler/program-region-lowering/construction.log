@@ -1,0 +1,17 @@
+=== RUN   TestProgramRegionConstruction
+=== PAUSE TestProgramRegionConstruction
+=== RUN   TestProgramRegionShortObjectMutant
+=== PAUSE TestProgramRegionShortObjectMutant
+=== CONT  TestProgramRegionConstruction
+=== CONT  TestProgramRegionShortObjectMutant
+    program_region_test.go:333: field-only adoption size caught by ASan heap-buffer-overflow
+--- PASS: TestProgramRegionShortObjectMutant (0.75s)
+=== NAME  TestProgramRegionConstruction
+    program_region_test.go:314: gate cache node miss
+    program_region_test.go:314: adamic: counts: allocations 10 frees 6 retains 9 releases 14 peak 7 regions 4
+--- PASS: TestProgramRegionConstruction (1.27s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.305s

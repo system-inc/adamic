@@ -1,0 +1,10 @@
+=== RUN   TestProgramRegionCensusMembership
+=== PAUSE TestProgramRegionCensusMembership
+=== CONT  TestProgramRegionCensusMembership
+    program_region_census_test.go:202: selection before=17.24745744s after=1.307573552s selected=1600 candidate-types=3120
+    program_region_census_test.go:288: compiler reading differs: K60 got in region want counted (ProjectReference[])
+    program_region_census_test.go:288: compiler reading differs: K144 got in region want counted (IncrementalBuildInfoFilePendingEmit[])
+    program_region_census_test.go:319: 1685 records: in region 1599 counted 86 unresolved container identities 0; source files 78; uninstantiated declarations waiting 77
+--- PASS: TestProgramRegionCensusMembership (22.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	22.086s

@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionMembership
+=== PAUSE TestProgramRegionMembership
+=== CONT  TestProgramRegionMembership
+    program_region_test.go:56: recursive Node left counted
+--- FAIL: TestProgramRegionMembership (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.177s
+FAIL

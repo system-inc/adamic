@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionShapeIndex
+=== PAUSE TestProgramRegionShapeIndex
+=== CONT  TestProgramRegionShapeIndex
+    program_region_test.go:204: shape index dropped an assignable optional-property view
+--- FAIL: TestProgramRegionShapeIndex (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.053s
+FAIL

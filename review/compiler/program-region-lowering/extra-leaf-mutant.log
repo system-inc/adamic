@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionMembership
+=== PAUSE TestProgramRegionMembership
+=== CONT  TestProgramRegionMembership
+    program_region_test.go:61: acyclic Leaf made a member
+--- FAIL: TestProgramRegionMembership (0.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.477s
+FAIL

@@ -1,5 +1,5 @@
 Built step 06 compiler Program selection, allocation-site flags, immediate adoption and storage reuse exclusion on runtime core a3f28d97.
-Implementation commits: e09a69d7 and 80d6b331; the following validation commit carries fixtures, counts and this report.
+Implementation commits: e09a69d7 and 80d6b331; validation commit b1eeed3a carries fixtures, counts and this report.
 Targeted lower, native and oracle checks pass; all 1,045 existing recorded count entries are unchanged.
 Both ruling selection mutants are caught by membership assertions; their runtime variants stay safe; reuse and short-size mutants are caught.
 Full TypeScript native lowering, graph compiler fallback, asynchronous work and the full gate were not covered. K60 and K144 remain explicit disagreements.
@@ -98,4 +98,10 @@ Final Program oracle leaf durations:
 --- PASS: TestProgramRegionCyclesGraphRelations (0.76s)
 --- PASS: TestProgramRegionConstruction (0.72s)
 --- PASS: TestProgramRegionGraphRegionsMillion (4.57s)
+```
+
+Final Program oracle suite passed in 4.588s. Required lane checks passed; the exact output follows:
+
+```text
+lane checks 12.0 s: gofmt and tools on 251 Go files, t.Parallel on 33 test packages; no t.Parallel analyzer on this tree; vet skipped, over 10 s
 ```

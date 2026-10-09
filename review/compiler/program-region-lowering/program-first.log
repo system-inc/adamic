@@ -1,0 +1,128 @@
+=== RUN   TestProgramRegionCyclesGraphParent
+=== PAUSE TestProgramRegionCyclesGraphParent
+=== RUN   TestProgramRegionCyclesGraphRelations
+=== PAUSE TestProgramRegionCyclesGraphRelations
+=== RUN   TestProgramRegionCyclesGraphSymbols
+=== PAUSE TestProgramRegionCyclesGraphSymbols
+=== RUN   TestProgramRegionCyclesWeakParent
+=== PAUSE TestProgramRegionCyclesWeakParent
+=== RUN   TestProgramRegionCyclesWeakRelations
+=== PAUSE TestProgramRegionCyclesWeakRelations
+=== RUN   TestProgramRegionCyclesWeakSymbols
+=== PAUSE TestProgramRegionCyclesWeakSymbols
+=== RUN   TestProgramRegionGraphRegionsMillion
+=== PAUSE TestProgramRegionGraphRegionsMillion
+=== RUN   TestProgramRegionProgramRegionOwnership
+=== PAUSE TestProgramRegionProgramRegionOwnership
+=== RUN   TestProgramRegionMapperStorage
+=== PAUSE TestProgramRegionMapperStorage
+=== RUN   TestProgramRegionMapperCountedStorage
+=== PAUSE TestProgramRegionMapperCountedStorage
+=== RUN   TestProgramRegionExtraLeafMutant
+=== PAUSE TestProgramRegionExtraLeafMutant
+=== RUN   TestProgramRegionMissingCyclicMemberMutant
+=== PAUSE TestProgramRegionMissingCyclicMemberMutant
+=== RUN   TestProgramRegionConstruction
+=== PAUSE TestProgramRegionConstruction
+=== RUN   TestProgramRegionShortObjectMutant
+=== PAUSE TestProgramRegionShortObjectMutant
+=== CONT  TestProgramRegionCyclesGraphParent
+=== CONT  TestProgramRegionProgramRegionOwnership
+=== CONT  TestProgramRegionExtraLeafMutant
+=== CONT  TestProgramRegionShortObjectMutant
+=== CONT  TestProgramRegionMissingCyclicMemberMutant
+=== NAME  TestProgramRegionShortObjectMutant
+    program_region_test.go:319: /workspace/adamic/internal/oracle/testdata/program_region_construction.a:10:14: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+        /workspace/adamic/internal/oracle/testdata/program_region_construction.a:12:34: error TS2554: Expected 1 arguments, but got 3.
+--- FAIL: TestProgramRegionShortObjectMutant (0.63s)
+=== CONT  TestProgramRegionConstruction
+    program_region_test.go:314: /workspace/adamic/internal/oracle/testdata/program_region_construction.a:10:14: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+        /workspace/adamic/internal/oracle/testdata/program_region_construction.a:12:34: error TS2554: Expected 1 arguments, but got 3.
+--- FAIL: TestProgramRegionConstruction (0.12s)
+=== CONT  TestProgramRegionCyclesWeakParent
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:308: gate cache node miss
+=== NAME  TestProgramRegionProgramRegionOwnership
+    program_region_test.go:172: gate cache node hit
+=== NAME  TestProgramRegionCyclesGraphParent
+    program_region_test.go:137: gate cache node miss
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:304: gate cache node hit
+=== NAME  TestProgramRegionCyclesWeakParent
+    program_region_test.go:152: gate cache node miss
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:308: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:304: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+=== NAME  TestProgramRegionProgramRegionOwnership
+    program_region_test.go:172: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+--- PASS: TestProgramRegionProgramRegionOwnership (35.75s)
+=== CONT  TestProgramRegionGraphRegionsMillion
+=== NAME  TestProgramRegionCyclesWeakParent
+    program_region_test.go:152: adamic: counts: allocations 4004 frees 2002 retains 3004 releases 7007 peak 3004 regions 2002
+--- PASS: TestProgramRegionCyclesWeakParent (35.16s)
+=== CONT  TestProgramRegionCyclesWeakSymbols
+=== NAME  TestProgramRegionCyclesGraphParent
+    program_region_test.go:137: adamic: counts: allocations 4003 frees 2001 retains 2003 releases 5005 peak 3003 regions 2002
+--- PASS: TestProgramRegionCyclesGraphParent (36.01s)
+=== CONT  TestProgramRegionCyclesWeakRelations
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:304: gate cache node hit
+=== NAME  TestProgramRegionCyclesWeakSymbols
+    program_region_test.go:162: gate cache node miss
+=== NAME  TestProgramRegionCyclesWeakRelations
+    program_region_test.go:157: gate cache node miss
+=== NAME  TestProgramRegionGraphRegionsMillion
+    program_region_test.go:167: gate cache node miss
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:308: gate cache node hit
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:304: adamic: counts: allocations 21 frees 18 retains 10 releases 26 peak 12 regions 3
+    program_region_test.go:304: ruling mutant extra=true: Node unchanged, sanitized and leak clean, member delta 1
+--- PASS: TestProgramRegionExtraLeafMutant (38.04s)
+=== CONT  TestProgramRegionCyclesGraphRelations
+=== NAME  TestProgramRegionCyclesWeakRelations
+    program_region_test.go:157: adamic: counts: allocations 8005 frees 8005 retains 4004 releases 6007 peak 6004 regions 0
+--- PASS: TestProgramRegionCyclesWeakRelations (2.84s)
+=== CONT  TestProgramRegionCyclesGraphSymbols
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:308: adamic: counts: allocations 21 frees 20 retains 10 releases 24 peak 12 regions 1
+    program_region_test.go:308: ruling mutant extra=false: Node unchanged, sanitized and leak clean, member delta -1
+--- PASS: TestProgramRegionMissingCyclicMemberMutant (39.29s)
+=== CONT  TestProgramRegionMapperCountedStorage
+=== NAME  TestProgramRegionCyclesWeakSymbols
+    program_region_test.go:162: adamic: counts: allocations 3006 frees 3006 retains 3008 releases 3010 peak 2005 regions 0
+--- PASS: TestProgramRegionCyclesWeakSymbols (3.49s)
+=== CONT  TestProgramRegionMapperStorage
+    program_region_test.go:238: gate cache node miss
+=== NAME  TestProgramRegionMapperCountedStorage
+    program_region_test.go:242: gate cache node hit
+=== NAME  TestProgramRegionCyclesGraphRelations
+    program_region_test.go:142: gate cache node miss
+=== NAME  TestProgramRegionCyclesGraphSymbols
+    program_region_test.go:147: gate cache node miss
+=== NAME  TestProgramRegionCyclesGraphRelations
+    program_region_test.go:142: adamic: counts: allocations 6005 frees 4003 retains 6003 releases 10009 peak 4004 regions 2002
+--- PASS: TestProgramRegionCyclesGraphRelations (4.98s)
+=== NAME  TestProgramRegionMapperCountedStorage
+    program_region_test.go:242: flag=false: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed
+--- PASS: TestProgramRegionMapperCountedStorage (3.81s)
+=== NAME  TestProgramRegionMapperStorage
+    program_region_test.go:238: flag=true: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed
+=== NAME  TestProgramRegionCyclesGraphSymbols
+    program_region_test.go:147: adamic: counts: allocations 3005 frees 2002 retains 3007 releases 5011 peak 2004 regions 1003
+--- PASS: TestProgramRegionCyclesGraphSymbols (4.60s)
+=== NAME  TestProgramRegionMapperStorage
+    program_region_test.go:238: reuse-admitted mutant caught by actual storage invariant under ASan/UBSan
+--- PASS: TestProgramRegionMapperStorage (4.63s)
+=== NAME  TestProgramRegionGraphRegionsMillion
+    program_region_test.go:167: adamic: counts: allocations 1000003 frees 3 retains 2949999 releases 2050002 peak 1000003 regions 1000000
+--- PASS: TestProgramRegionGraphRegionsMillion (11.77s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=5 misses=9
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	47.627s
+FAIL

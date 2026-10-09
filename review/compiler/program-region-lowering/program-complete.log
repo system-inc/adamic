@@ -1,0 +1,159 @@
+=== RUN   TestProgramRegionCyclesGraphParent
+=== PAUSE TestProgramRegionCyclesGraphParent
+=== RUN   TestProgramRegionCyclesGraphRelations
+=== PAUSE TestProgramRegionCyclesGraphRelations
+=== RUN   TestProgramRegionCyclesGraphSymbols
+=== PAUSE TestProgramRegionCyclesGraphSymbols
+=== RUN   TestProgramRegionCyclesWeakParent
+=== PAUSE TestProgramRegionCyclesWeakParent
+=== RUN   TestProgramRegionCyclesWeakRelations
+=== PAUSE TestProgramRegionCyclesWeakRelations
+=== RUN   TestProgramRegionCyclesWeakSymbols
+=== PAUSE TestProgramRegionCyclesWeakSymbols
+=== RUN   TestProgramRegionGraphRegionsMillion
+=== PAUSE TestProgramRegionGraphRegionsMillion
+=== RUN   TestProgramRegionProgramRegionOwnership
+=== PAUSE TestProgramRegionProgramRegionOwnership
+=== RUN   TestProgramRegionMapperStorage
+=== PAUSE TestProgramRegionMapperStorage
+=== RUN   TestProgramRegionMapperCountedStorage
+=== PAUSE TestProgramRegionMapperCountedStorage
+=== RUN   TestProgramRegionExtraLeafMutant
+=== PAUSE TestProgramRegionExtraLeafMutant
+=== RUN   TestProgramRegionMissingCyclicMemberMutant
+=== PAUSE TestProgramRegionMissingCyclicMemberMutant
+=== RUN   TestProgramRegionConstruction
+=== PAUSE TestProgramRegionConstruction
+=== RUN   TestProgramRegionShortObjectMutant
+=== PAUSE TestProgramRegionShortObjectMutant
+=== RUN   TestProgramRegionClosure
+=== PAUSE TestProgramRegionClosure
+=== RUN   TestProgramRegionDisabledParent
+=== PAUSE TestProgramRegionDisabledParent
+=== RUN   TestProgramRegionDisabledRelations
+=== PAUSE TestProgramRegionDisabledRelations
+=== RUN   TestProgramRegionDisabledSymbols
+=== PAUSE TestProgramRegionDisabledSymbols
+=== RUN   TestProgramRegionDisabledMillion
+=== PAUSE TestProgramRegionDisabledMillion
+=== RUN   TestProgramRegionDisabledOwnership
+=== PAUSE TestProgramRegionDisabledOwnership
+=== RUN   TestProgramRegionDisabledConstruction
+=== PAUSE TestProgramRegionDisabledConstruction
+=== RUN   TestProgramRegionDisabledClosure
+=== PAUSE TestProgramRegionDisabledClosure
+=== CONT  TestProgramRegionCyclesGraphParent
+=== CONT  TestProgramRegionMissingCyclicMemberMutant
+=== CONT  TestProgramRegionCyclesWeakSymbols
+=== CONT  TestProgramRegionExtraLeafMutant
+=== CONT  TestProgramRegionGraphRegionsMillion
+    program_region_test.go:126: gate cache node miss
+=== NAME  TestProgramRegionCyclesWeakSymbols
+    program_region_test.go:121: gate cache node hit
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:263: gate cache node miss
+=== NAME  TestProgramRegionCyclesGraphParent
+    program_region_test.go:96: gate cache node miss
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:267: gate cache node hit
+=== NAME  TestProgramRegionCyclesWeakSymbols
+    program_region_test.go:121: adamic: counts: allocations 3006 frees 3006 retains 3008 releases 3010 peak 2005 regions 0
+--- PASS: TestProgramRegionCyclesWeakSymbols (0.90s)
+=== CONT  TestProgramRegionMapperStorage
+    program_region_test.go:197: gate cache node hit
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:267: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:263: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+=== NAME  TestProgramRegionCyclesGraphParent
+    program_region_test.go:96: adamic: counts: allocations 4003 frees 2001 retains 2003 releases 5005 peak 3003 regions 2002
+--- PASS: TestProgramRegionCyclesGraphParent (1.05s)
+=== CONT  TestProgramRegionMapperCountedStorage
+    program_region_test.go:201: gate cache node hit
+=== NAME  TestProgramRegionMapperStorage
+    program_region_test.go:197: flag=true: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:267: gate cache node hit
+=== NAME  TestProgramRegionMapperStorage
+    program_region_test.go:197: reuse-admitted mutant caught by actual storage invariant under ASan/UBSan
+--- PASS: TestProgramRegionMapperStorage (0.70s)
+=== CONT  TestProgramRegionProgramRegionOwnership
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:263: gate cache node hit
+=== NAME  TestProgramRegionMapperCountedStorage
+    program_region_test.go:201: flag=false: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed
+--- PASS: TestProgramRegionMapperCountedStorage (0.58s)
+=== CONT  TestProgramRegionDisabledRelations
+--- PASS: TestProgramRegionDisabledRelations (0.09s)
+=== CONT  TestProgramRegionDisabledClosure
+--- PASS: TestProgramRegionDisabledClosure (0.06s)
+=== CONT  TestProgramRegionDisabledConstruction
+=== NAME  TestProgramRegionMissingCyclicMemberMutant
+    program_region_test.go:267: adamic: counts: allocations 21 frees 20 retains 10 releases 24 peak 12 regions 1
+    program_region_test.go:267: ruling mutant extra=false: Node unchanged, sanitized and leak clean, member delta -1
+--- PASS: TestProgramRegionMissingCyclicMemberMutant (1.80s)
+=== CONT  TestProgramRegionDisabledOwnership
+=== NAME  TestProgramRegionExtraLeafMutant
+    program_region_test.go:263: adamic: counts: allocations 21 frees 18 retains 10 releases 26 peak 12 regions 3
+    program_region_test.go:263: ruling mutant extra=true: Node unchanged, sanitized and leak clean, member delta 1
+--- PASS: TestProgramRegionExtraLeafMutant (1.82s)
+=== CONT  TestProgramRegionDisabledMillion
+--- PASS: TestProgramRegionDisabledConstruction (0.10s)
+=== CONT  TestProgramRegionDisabledSymbols
+--- PASS: TestProgramRegionDisabledOwnership (0.12s)
+=== CONT  TestProgramRegionShortObjectMutant
+--- PASS: TestProgramRegionDisabledMillion (0.10s)
+=== CONT  TestProgramRegionDisabledParent
+--- PASS: TestProgramRegionDisabledSymbols (0.08s)
+=== CONT  TestProgramRegionClosure
+--- PASS: TestProgramRegionDisabledParent (0.12s)
+=== CONT  TestProgramRegionCyclesWeakParent
+=== NAME  TestProgramRegionProgramRegionOwnership
+    program_region_test.go:131: gate cache node hit
+    program_region_test.go:131: adamic: counts: allocations 21 frees 19 retains 10 releases 25 peak 12 regions 2
+--- PASS: TestProgramRegionProgramRegionOwnership (0.74s)
+=== CONT  TestProgramRegionCyclesWeakRelations
+=== NAME  TestProgramRegionShortObjectMutant
+    program_region_test.go:292: field-only adoption size caught by ASan heap-buffer-overflow
+--- PASS: TestProgramRegionShortObjectMutant (0.43s)
+=== CONT  TestProgramRegionCyclesGraphSymbols
+=== NAME  TestProgramRegionCyclesWeakParent
+    program_region_test.go:111: gate cache node hit
+=== NAME  TestProgramRegionClosure
+    program_region_test.go:326: gate cache node miss
+=== NAME  TestProgramRegionCyclesWeakParent
+    program_region_test.go:111: adamic: counts: allocations 4004 frees 2002 retains 3004 releases 7007 peak 3004 regions 2002
+--- PASS: TestProgramRegionCyclesWeakParent (0.75s)
+=== CONT  TestProgramRegionCyclesGraphRelations
+=== NAME  TestProgramRegionCyclesWeakRelations
+    program_region_test.go:116: gate cache node hit
+=== NAME  TestProgramRegionCyclesGraphSymbols
+    program_region_test.go:106: gate cache node miss
+=== NAME  TestProgramRegionClosure
+    program_region_test.go:326: adamic: counts: allocations 8 frees 5 retains 9 releases 19 peak 6 regions 3
+--- PASS: TestProgramRegionClosure (1.00s)
+=== CONT  TestProgramRegionConstruction
+=== NAME  TestProgramRegionCyclesWeakRelations
+    program_region_test.go:116: adamic: counts: allocations 8005 frees 8005 retains 4004 releases 6007 peak 6004 regions 0
+--- PASS: TestProgramRegionCyclesWeakRelations (0.74s)
+=== NAME  TestProgramRegionCyclesGraphRelations
+    program_region_test.go:101: gate cache node miss
+=== NAME  TestProgramRegionCyclesGraphSymbols
+    program_region_test.go:106: adamic: counts: allocations 3005 frees 2002 retains 3007 releases 5011 peak 2004 regions 1003
+--- PASS: TestProgramRegionCyclesGraphSymbols (0.93s)
+=== NAME  TestProgramRegionConstruction
+    program_region_test.go:273: gate cache node miss
+=== NAME  TestProgramRegionCyclesGraphRelations
+    program_region_test.go:101: adamic: counts: allocations 6005 frees 4003 retains 6003 releases 10009 peak 4004 regions 2002
+--- PASS: TestProgramRegionCyclesGraphRelations (0.76s)
+=== NAME  TestProgramRegionConstruction
+    program_region_test.go:273: adamic: counts: allocations 10 frees 6 retains 9 releases 14 peak 7 regions 4
+--- PASS: TestProgramRegionConstruction (0.72s)
+=== NAME  TestProgramRegionGraphRegionsMillion
+    program_region_test.go:126: adamic: counts: allocations 1000003 frees 3 retains 2949999 releases 2050002 peak 1000003 regions 1000000
+--- PASS: TestProgramRegionGraphRegionsMillion (4.57s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=9 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.588s

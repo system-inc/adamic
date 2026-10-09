@@ -1,0 +1,99 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestProgramRegionDisabledParent
+=== PAUSE TestProgramRegionDisabledParent
+=== RUN   TestProgramRegionDisabledRelations
+=== PAUSE TestProgramRegionDisabledRelations
+=== RUN   TestProgramRegionDisabledSymbols
+=== PAUSE TestProgramRegionDisabledSymbols
+=== RUN   TestProgramRegionDisabledMillion
+=== PAUSE TestProgramRegionDisabledMillion
+=== RUN   TestProgramRegionDisabledOwnership
+=== PAUSE TestProgramRegionDisabledOwnership
+=== RUN   TestProgramRegionDisabledConstruction
+=== PAUSE TestProgramRegionDisabledConstruction
+=== RUN   TestProgramRegionDisabledClosure
+=== PAUSE TestProgramRegionDisabledClosure
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestProgramRegionDisabledMillion
+=== CONT  TestProgramRegionDisabledConstruction
+=== CONT  TestProgramRegionDisabledClosure
+=== CONT  TestProgramRegionDisabledOwnership
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+--- PASS: TestProgramRegionDisabledConstruction (0.25s)
+=== CONT  TestProgramRegionDisabledRelations
+=== CONT  TestProgramRegionDisabledSymbols
+--- PASS: TestProgramRegionDisabledClosure (0.27s)
+=== CONT  TestProgramRegionDisabledParent
+--- PASS: TestProgramRegionDisabledMillion (0.33s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+--- PASS: TestProgramRegionDisabledOwnership (0.33s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+--- PASS: TestProgramRegionDisabledSymbols (0.28s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+--- PASS: TestProgramRegionDisabledRelations (0.33s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+--- PASS: TestProgramRegionDisabledParent (0.36s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:758: gate cache node miss
+    oracle_test.go:758: gate cache node miss
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:649: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:649: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:649: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:649: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a (3.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a (3.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a (3.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a (4.30s)
+PASS
+gate cache: native hits=4 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.664s

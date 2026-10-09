@@ -1,0 +1,22 @@
+=== RUN   TestProgramRegionMembership
+=== PAUSE TestProgramRegionMembership
+=== RUN   TestProgramRegionViewCycleIsNotOwnership
+=== PAUSE TestProgramRegionViewCycleIsNotOwnership
+=== RUN   TestProgramRegionTaskBoundary
+=== PAUSE TestProgramRegionTaskBoundary
+=== RUN   TestProgramRegionConcreteContainers
+=== PAUSE TestProgramRegionConcreteContainers
+=== RUN   TestProgramRegionShapeIndex
+=== PAUSE TestProgramRegionShapeIndex
+=== CONT  TestProgramRegionMembership
+=== CONT  TestProgramRegionConcreteContainers
+=== CONT  TestProgramRegionTaskBoundary
+=== CONT  TestProgramRegionViewCycleIsNotOwnership
+--- PASS: TestProgramRegionViewCycleIsNotOwnership (0.00s)
+=== CONT  TestProgramRegionShapeIndex
+--- PASS: TestProgramRegionTaskBoundary (0.31s)
+--- PASS: TestProgramRegionConcreteContainers (0.34s)
+--- PASS: TestProgramRegionMembership (0.44s)
+--- PASS: TestProgramRegionShapeIndex (0.46s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.687s

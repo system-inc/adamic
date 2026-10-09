@@ -1,0 +1,110 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/program_region_closure.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/program_region_closure.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/program_region_construction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/program_region_construction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_parent.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_parent.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_relations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_relations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_symbols.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_symbols.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/program_region_ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/program_region_ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_closure.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_ownership.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_closure.a
+    oracle_test.go:750: want stage 0 to refuse with where and what, got /workspace/adamic/internal/oracle/testdata/program_region_closure.a:2:6: Adamic 0.1 refuses 'saved', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_parent.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_ownership.a
+    oracle_test.go:750: want stage 0 to refuse with where and what, got /workspace/adamic/internal/oracle/testdata/program_region_ownership.a:1:36: Adamic 0.1 refuses RegionNode.next, a mutable field of type RegionNode | undefined, which can reach back to the RegionNode holding it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/program_region_ownership.a:6:21 may close one (the value written may reach what it's written into, where run is called from the top level); declare it next: Weak<RegionNode> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_symbols.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_parent.a
+    oracle_test.go:750: want stage 0 to refuse with where and what, got /workspace/adamic/internal/oracle/testdata/cycles_graph_parent.a:1:48: Adamic 0.1 refuses Tree.parent, a mutable field of type Tree | undefined, which can reach back to the Tree holding it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycles_graph_parent.a:6:30 may close one (the value written may reach what it's written into, where run is called from the top level); declare it parent: Weak<Tree> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_relations.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_symbols.a
+    oracle_test.go:750: want stage 0 to refuse with where and what, got /workspace/adamic/internal/oracle/testdata/cycles_graph_symbols.a:2:30: Adamic 0.1 refuses Decl.symbol, a mutable field of type Sym | undefined, which can reach back to the Decl holding it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycles_graph_symbols.a:9:42 may close one (the value written may reach what it's written into, where run is called from the top level); declare it symbol: Weak<Sym> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_relations.a
+    oracle_test.go:750: want stage 0 to refuse with where and what, got /workspace/adamic/internal/oracle/testdata/cycles_graph_relations.a:1:30: Adamic 0.1 refuses Type.peer, a mutable field of type Type | undefined, which can reach back to the Type holding it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycles_graph_relations.a:9:22 may close one (the value written may reach what it's written into, where run is called from the top level); declare it peer: Weak<Type> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_construction.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_construction.a
+    oracle_test.go:750: want stage 0 to refuse with where and what, got /workspace/adamic/internal/oracle/testdata/program_region_construction.a:1:18: Adamic 0.1 refuses Link.next, a mutable field of type Link | undefined, which can reach back to the Link holding it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/program_region_construction.a:9:51 may close one (the value written may reach what it's written into, where run is called from the top level); declare it next: Weak<Link> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:758: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:642: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:623: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:635: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a
+    oracle_test.go:649: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a
+    oracle_test.go:649: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a
+    oracle_test.go:649: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a
+    oracle_test.go:649: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.18s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/program_region_closure.a (0.20s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/program_region_ownership.a (0.22s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_parent.a (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_symbols.a (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_graph_relations.a (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/program_region_construction.a (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_relations.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/program_region_map_storage.a (1.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_parent.a (2.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cycles_weak_symbols.a (2.03s)
+FAIL
+gate cache: native hits=4 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.221s
+FAIL

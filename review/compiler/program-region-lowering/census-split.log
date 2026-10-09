@@ -1,0 +1,48 @@
+=== RUN   TestProgramRegionCensusMembership
+=== PAUSE TestProgramRegionCensusMembership
+=== RUN   TestProgramRegionCensusSelectionBeforeIndex
+=== PAUSE TestProgramRegionCensusSelectionBeforeIndex
+=== CONT  TestProgramRegionCensusMembership
+=== CONT  TestProgramRegionCensusSelectionBeforeIndex
+=== NAME  TestProgramRegionCensusMembership
+    program_region_census_test.go:38: selection indexed=true duration=11.766952292s selected=1600 candidate-types=3120
+    program_region_census_test.go:38: K60 selector=in region compiler=counted schema=ProjectReference[]
+    program_region_census_test.go:294: K60 depth=0 type=readonly ProjectReference[] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K60 depth=1 type=ProjectReference flags=Object selected=true container=false scalar=false
+    program_region_census_test.go:38: compiler reading differs: K60 got in region want counted (ProjectReference[])
+    program_region_census_test.go:38: K144 selector=in region compiler=counted schema=IncrementalBuildInfoFilePendingEmit[]
+    program_region_census_test.go:294: K144 depth=0 type=IncrementalBuildInfoFilePendingEmit[] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K144 depth=1 type=IncrementalBuildInfoFilePendingEmit flags=Union selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=2 type=[fileId: IncrementalBuildInfoFileId] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=IncrementalBuildInfoFileId flags=Intersection selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=2 type=[fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=IncrementalBuildInfoFileId flags=Intersection selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=BuilderFileEmit flags=EnumLiteral|Union selected=false container=false scalar=false
+    program_region_census_test.go:294: K144 depth=2 type=IncrementalBuildInfoFileId flags=Intersection selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=number flags=Number selected=false container=false scalar=false
+    program_region_census_test.go:294: K144 depth=3 type={ __incrementalBuildInfoFileIdBrand: any; } flags=Object selected=true container=false scalar=false
+    program_region_census_test.go:38: compiler reading differs: K144 got in region want counted (IncrementalBuildInfoFilePendingEmit[])
+    program_region_census_test.go:38: 1685 records: in region 1599 counted 86 unresolved container identities 0; source files 78; uninstantiated declarations waiting 77
+--- PASS: TestProgramRegionCensusMembership (19.23s)
+=== NAME  TestProgramRegionCensusSelectionBeforeIndex
+    program_region_census_test.go:43: selection indexed=false duration=23.147740696s selected=1600 candidate-types=3120
+    program_region_census_test.go:43: K60 selector=in region compiler=counted schema=ProjectReference[]
+    program_region_census_test.go:294: K60 depth=0 type=readonly ProjectReference[] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K60 depth=1 type=ProjectReference flags=Object selected=true container=false scalar=false
+    program_region_census_test.go:43: compiler reading differs: K60 got in region want counted (ProjectReference[])
+    program_region_census_test.go:43: K144 selector=in region compiler=counted schema=IncrementalBuildInfoFilePendingEmit[]
+    program_region_census_test.go:294: K144 depth=0 type=IncrementalBuildInfoFilePendingEmit[] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K144 depth=1 type=IncrementalBuildInfoFilePendingEmit flags=Union selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=2 type=[fileId: IncrementalBuildInfoFileId] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=IncrementalBuildInfoFileId flags=Intersection selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=2 type=[fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit] flags=Object selected=true container=true scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=IncrementalBuildInfoFileId flags=Intersection selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=BuilderFileEmit flags=EnumLiteral|Union selected=false container=false scalar=false
+    program_region_census_test.go:294: K144 depth=2 type=IncrementalBuildInfoFileId flags=Intersection selected=true container=false scalar=false
+    program_region_census_test.go:294: K144 depth=3 type=number flags=Number selected=false container=false scalar=false
+    program_region_census_test.go:294: K144 depth=3 type={ __incrementalBuildInfoFileIdBrand: any; } flags=Object selected=true container=false scalar=false
+    program_region_census_test.go:43: compiler reading differs: K144 got in region want counted (IncrementalBuildInfoFilePendingEmit[])
+    program_region_census_test.go:43: 1685 records: in region 1599 counted 86 unresolved container identities 0; source files 78; uninstantiated declarations waiting 77
+--- PASS: TestProgramRegionCensusSelectionBeforeIndex (30.95s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	31.054s
