@@ -1,0 +1,97 @@
+{
+  "pass": true,
+  "scope": "type-node kind, pos/end, numeric payload and prefix/postfix; complete grammar and flags excluded",
+  "comparisons": [
+    {
+      "value": "*}",
+      "outer_kind": "JSDocAllType",
+      "kind": "JSDocAllType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": []
+    },
+    {
+      "value": "!number}",
+      "outer_kind": "JSDocNonNullableType",
+      "kind": "JSDocNonNullableType",
+      "pos": 1,
+      "end": 8,
+      "postfix": false,
+      "diagnostics": []
+    },
+    {
+      "value": "?}",
+      "outer_kind": "JSDocUnknownType",
+      "kind": "JSDocUnknownType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": []
+    },
+    {
+      "value": "?,",
+      "outer_kind": "JSDocUnknownType",
+      "kind": "JSDocUnknownType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": [
+        1005
+      ]
+    },
+    {
+      "value": "?)",
+      "outer_kind": "JSDocUnknownType",
+      "kind": "JSDocUnknownType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": [
+        1005
+      ]
+    },
+    {
+      "value": "?>",
+      "outer_kind": "JSDocUnknownType",
+      "kind": "JSDocUnknownType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": [
+        1005
+      ]
+    },
+    {
+      "value": "?=",
+      "outer_kind": "JSDocOptionalType",
+      "kind": "JSDocUnknownType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": [
+        1005
+      ]
+    },
+    {
+      "value": "?|",
+      "outer_kind": "UnionType",
+      "kind": "JSDocUnknownType",
+      "pos": 1,
+      "end": 2,
+      "postfix": false,
+      "diagnostics": [
+        1110
+      ]
+    },
+    {
+      "value": "?number}",
+      "outer_kind": "JSDocNullableType",
+      "kind": "JSDocNullableType",
+      "pos": 1,
+      "end": 8,
+      "postfix": false,
+      "diagnostics": []
+    }
+  ]
+}
