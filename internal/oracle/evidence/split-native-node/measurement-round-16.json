@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestNativeOracleShardUnion",
+    "wall_seconds": 0.017,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "under_45_seconds": true,
+    "under_60_seconds": true,
+    "assertions_passed": true,
+    "gate_passed": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-000",
+    "wall_seconds": 63.639,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "under_45_seconds": false,
+    "under_60_seconds": false,
+    "assertions_passed": true,
+    "gate_passed": false
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-001",
+    "wall_seconds": 62.934,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "under_45_seconds": false,
+    "under_60_seconds": false,
+    "assertions_passed": true,
+    "gate_passed": false
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-002",
+    "wall_seconds": 79.994,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "under_45_seconds": false,
+    "under_60_seconds": false,
+    "assertions_passed": true,
+    "gate_passed": false
+  }
+]

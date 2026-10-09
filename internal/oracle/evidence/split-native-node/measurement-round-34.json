@@ -1,0 +1,146 @@
+[
+  {
+    "test": "TestNativeOracleShardUnion",
+    "wall_seconds": 0.065,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-019-0",
+    "wall_seconds": 22.032,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-019-1",
+    "wall_seconds": 43.454,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-020",
+    "wall_seconds": 31.481,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-021",
+    "wall_seconds": 31.239,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-022",
+    "wall_seconds": 28.86,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-023",
+    "wall_seconds": 27.728,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-024",
+    "wall_seconds": 26.378,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-025",
+    "wall_seconds": 32.448,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-026",
+    "wall_seconds": 32.181,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-027",
+    "wall_seconds": 26.309,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-028",
+    "wall_seconds": 27.796,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-029",
+    "wall_seconds": 26.063,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-030",
+    "wall_seconds": 27.705,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-031",
+    "wall_seconds": 29.185,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  },
+  {
+    "test": "TestNativeOracleShardPlantedFailure",
+    "wall_seconds": 31.475,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true
+  }
+]
