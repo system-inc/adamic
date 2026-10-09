@@ -1,0 +1,8 @@
+run adamic-verify-20261009T121527-59bb98c8: red, 17455 tests in 18 units, 2 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_031 (tests-01)
+    shards_agree_split_test.go:481: build shards-agree-prepared-v1: shared setup missing: run TestShardsAgree_Setup before selecting leaves
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-01)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered d8c5a7efd71c miss 75.76
+    shards_agree_split_test.go:168: build shards-agree-native efea7a0ee4e6 miss 10.59
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
