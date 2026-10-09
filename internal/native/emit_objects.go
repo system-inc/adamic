@@ -133,6 +133,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
 		e.adoptGraphObject(object, literal)
+		e.programObject(object, literal.ProgramRegion)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -159,8 +160,8 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	// The literal a fresh function returns is made in the region it was handed, and so are the
 	// fresh values its fields are (region.go).
-	region := e.regionLiteralDepth != 0 && e.regionLiteralDepth == e.depth
-	if literal.Class != 0 && e.inRegion && e.program.Classes[literal.Class-1].Constructor == e.functionIndex {
+	region := !literal.ProgramRegion && e.regionLiteralDepth != 0 && e.regionLiteralDepth == e.depth
+	if !literal.ProgramRegion && literal.Class != 0 && e.inRegion && e.program.Classes[literal.Class-1].Constructor == e.functionIndex {
 		region = true
 	}
 	e.regionLiteralDepth = 0
@@ -184,6 +185,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 		e.adoptGraphObject(object, literal)
 	}
+	e.programObject(object, literal.ProgramRegion)
 	if literal.Tuple {
 		e.line("%s->tuple = true;", object)
 	}

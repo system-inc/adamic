@@ -1,0 +1,14 @@
+=== RUN   TestProgramRegionOwnership
+=== PAUSE TestProgramRegionOwnership
+=== CONT  TestProgramRegionOwnership
+    program_region_test.go:132: gate cache node miss
+    program_region_test.go:132: gate cache node miss
+    program_region_test.go:132: adamic: counts: allocations 21 frees 18 retains 10 releases 26 peak 12 regions 3
+    program_region_test.go:134: membership census: regions 3, want 2
+--- FAIL: TestProgramRegionOwnership (0.62s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.627s
+FAIL

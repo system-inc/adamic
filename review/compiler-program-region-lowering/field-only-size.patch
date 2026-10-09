@@ -1,0 +1,9 @@
+--- a/internal/native/program_region.go
++++ b/internal/native/program_region.go
+@@ -13,5 +13,5 @@
+ 	return e.adoptProgram(value, "sizeof *"+value, member)
+ }
+ func (e *emitter) programObject(value string, member bool) string {
+-	return e.adoptProgram(value, fmt.Sprintf("adamic_object_size(%s->shape->count)", value), member)
++	return e.adoptProgram(value, fmt.Sprintf("sizeof(adamic_object) + %s->shape->count * sizeof(uintptr_t)", value), member)
+ }

@@ -203,7 +203,13 @@ func (e *emitter) makeCell(local int, value string, owned bool) {
 	if declared.Type.IsReference() && !owned {
 		value = retained(value)
 	}
-	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
+	if declared.ProgramRegion {
+		e.line("adamic_cell *%s = adamic_cell_new((adamic_value){0}, %t);", cell, declared.Type.IsReference())
+		e.adoptProgram(cell, "sizeof *"+cell, true)
+		e.line("%s->value.%s = %s;", cell, member(declared.Type), slotted(declared.Type, value))
+	} else {
+		e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
+	}
 	e.hold(cell)
 }
 
@@ -251,6 +257,11 @@ func (e *emitter) allocateEnvironment(cells []int) {
 		graph = graph || e.program.Locals[local].GraphCell
 	}
 	e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph)
+	member := false
+	for _, local := range cells {
+		member = member || e.program.Locals[local].ProgramRegion
+	}
+	e.adoptProgram(environment, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", environment, len(cells), environment), member)
 	e.hold(environment)
 	for position, local := range cells {
 		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)

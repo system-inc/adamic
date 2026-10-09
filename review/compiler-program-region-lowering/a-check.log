@@ -1,0 +1,12 @@
+internal/oracle/testdata/program_region/constructor.a: expected flag-off refusal adamic/cycle-capable
+internal/oracle/testdata/program_region/cycles_graph_parent.a: expected flag-off refusal adamic/cycle-capable
+internal/oracle/testdata/program_region/cycles_graph_relations.a: expected flag-off refusal adamic/cycle-capable
+internal/oracle/testdata/program_region/cycles_graph_symbols.a: expected flag-off refusal adamic/cycle-capable
+internal/oracle/testdata/program_region/cycles_weak_parent.a: checked flag off
+internal/oracle/testdata/program_region/cycles_weak_relations.a: checked flag off
+internal/oracle/testdata/program_region/cycles_weak_symbols.a: checked flag off
+internal/oracle/testdata/program_region/million.a: expected flag-off refusal adamic/cycle-capable
+internal/oracle/testdata/program_region/optional.a: expected flag-off refusal adamic/cycle-capable
+internal/oracle/testdata/program_region/program_region_map_storage.a: checked flag off
+internal/oracle/testdata/program_region/program_region_ownership.a: expected flag-off refusal adamic/cycle-capable
+PASS: eleven changed .a checks

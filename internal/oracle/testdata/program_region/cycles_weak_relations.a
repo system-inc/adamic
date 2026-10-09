@@ -1,0 +1,16 @@
+import type { Weak } from 'adamic';
+interface Type { id: string; peer: Weak<Type>; }
+function run(): void {
+ const roots: Type[] = [];
+ const cache = new Map<string, Type>();
+ for (let i=0; i<1000; i++) {
+  const left: Type = { id: `${i}`, peer: undefined };
+  const right: Type = { id: `${i+1}`, peer: undefined };
+  roots.push(left); roots.push(right);
+  left.peer = right; right.peer = left;
+  cache.set('pair', left);
+ }
+ console.log(`${cache.get('pair')?.peer?.id}`);
+ console.log(`${roots.length}`);
+}
+run();

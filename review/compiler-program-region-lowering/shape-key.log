@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionShapeKeySeparators
+=== PAUSE TestProgramRegionShapeKeySeparators
+=== CONT  TestProgramRegionShapeKeySeparators
+    program_region_selection_test.go:17: distinct property shapes collide
+--- FAIL: TestProgramRegionShapeKeySeparators (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.007s
+FAIL

@@ -1,0 +1,18 @@
+--- a/internal/lower/program_region.go
++++ b/internal/lower/program_region.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++ "strings"
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+@@ -207,6 +208,7 @@
+ 	switch value := value.(type) {
+ 	case ir.ObjectLiteral:
+ 		value.ProgramRegion = member
++		if strings.Contains(sourceExpression(node),"root${1}"){value.ProgramRegion=false}
+ 		return value, nil
+ 	case ir.ArrayLiteral:
+ 		value.ProgramRegion = member

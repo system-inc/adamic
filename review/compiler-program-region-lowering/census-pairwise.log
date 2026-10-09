@@ -1,0 +1,10 @@
+=== RUN   TestProgramRegionCensusPairwise
+=== PAUSE TestProgramRegionCensusPairwise
+=== CONT  TestProgramRegionCensusPairwise
+    program_region_census_test.go:37: selection indexed=false: 7.415796 seconds
+    program_region_census_test.go:37: compiler reading differs: K60 got in region want counted (ProjectReference[])
+    program_region_census_test.go:37: compiler reading differs: K144 got in region want counted (IncrementalBuildInfoFilePendingEmit[])
+    program_region_census_test.go:37: 1685 records: in region 1599 counted 86 unresolved container identities 0; source files 78; uninstantiated declarations waiting 77
+--- PASS: TestProgramRegionCensusPairwise (8.99s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	9.024s
