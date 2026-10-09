@@ -9,7 +9,7 @@ import (
 )
 
 // The profiled -O2 -g binaries must answer the full corpus, not just the profile sample.
-const testProfileSnapshotsAgreeShards = 518
+const testProfileSnapshotsAgreeShards = 542
 
 // Profile binaries are provided inputs. ADAMIC_TEST_SHARD=i/n selects ordinal modulo n locally.
 func TestProfileSnapshotsAgree(t *testing.T) {
@@ -30,11 +30,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	tools, err := jsonGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := filepath.Join(jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle), "go-cohere")
+	oracle := filepath.Join(jsonGoOracleUnit(t), "go-cohere")
 	for ordinal, shard := range shards {
 		if ordinal%count != index {
 			continue
@@ -78,7 +74,7 @@ func TestCachedWidthMutantIsCaught(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := filepath.Join(jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle), "go-cohere")
+	oracle := filepath.Join(jsonGoOracleUnit(t), "go-cohere")
 	mutation := printerMutation{"zero cached width", "doc.ts", "width: stringWidth(text)", "width: 0"}
 	inputs := jsonLoweredPortInputs(tools)
 	inputs.Name = "json zero-cached-width lowered mutant"

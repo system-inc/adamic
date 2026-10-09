@@ -128,7 +128,7 @@ func corpusCases(t *testing.T) []textCase {
 
 // Prettier is a separate upstream report. Only the nine named disagreements are known;
 // an added difference or a closed difference requires updating the report explicitly.
-const testUpstreamRepositoryCorpusParityShards = 518
+const testUpstreamRepositoryCorpusParityShards = 542
 
 // ADAMIC_TEST_SHARD=i/n selects ordinal modulo n locally; the gate selects direct shard-NNN children.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
@@ -176,11 +176,7 @@ func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 			t.Fatalf("known difference missing from corpus: %s", id)
 		}
 	}
-	tools, err := jsonGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := filepath.Join(jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle), "go-cohere")
+	oracle := filepath.Join(jsonGoOracleUnit(t), "go-cohere")
 	reports := make([]string, len(shards))
 	for ordinal, shard := range shards {
 		if ordinal%count != index {

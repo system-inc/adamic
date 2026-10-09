@@ -1,0 +1,56 @@
+{
+  "direct": {
+    "program": "function read(): boolean { return Debug.isDebugging; }\nconsole.log(`${read()}`);\nnamespace Debug { export let isDebugging = false; }\n",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'isDebugging')\n"
+    },
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_direct.a:1:35: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_direct.a:1:35: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n"
+    }
+  },
+  "helper": {
+    "program": "function read(): boolean { return Debug.isDebugging; }\nfunction helper(): boolean { return read(); }\nconsole.log(`${helper()}`);\nnamespace Debug { export let isDebugging = false; }\n",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'isDebugging')\n"
+    },
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_helper.a:1:35: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_helper.a:1:35: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n"
+    }
+  },
+  "cycle": {
+    "program": "function one(n:number):boolean {return n > 0 ? two(n-1) : Debug.ready;}\nfunction two(n:number):boolean {return n > 0 ? one(n-1) : Debug.ready;}\nconsole.log(`${two(3)}`);\nnamespace Debug {export let ready=true;}\n",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'ready')\n"
+    },
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_cycle.a:2:59: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_cycle.a:2:59: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n"
+    }
+  }
+}

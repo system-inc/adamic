@@ -95,12 +95,6 @@ func jsonClangToolchain() ([]string, error) {
 	return []string{clang, string(version), archiver, string(arVersion), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
 }
 
-func jsonGoOracleInputs(toolchain []string) jsonBuildInputs {
-	flags := []string{"go", "build", "-overlay=<dir>/overlay.json", "-o=<dir>/go-cohere", "./command/formatter_comparison"}
-	flags = append(flags, jsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT", "GOCACHE", "GOMODCACHE", "GOWORK", "GOPATH", "GOENV", "GOROOT", "GO386", "GOARM", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS")...)
-	return jsonBuildInputs{Name: "json Go oracle", Files: []string{"go.work", "go.mod", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
-}
-
 // buildJSONGoOracle writes the driver and overlay only into its product directory.
 // Go's usual module/action caches remain managed by the Go toolchain.
 func buildJSONGoOracle(dir string) error {
@@ -196,36 +190,109 @@ func buildJSONSanitizedPort(source string) func(string) error {
 	}
 }
 
-// A named build census unit prepares immutable shared products before parallel
-// children, including when -run selects only one logic child. Overlay Go builds
-// remain local: buildcache.GoBuild deliberately refuses overlays. Their TempDir
-// belongs to the parent so it outlives the build subtest and all consumers.
-func jsonBuildUnit(parent *testing.T, name string, in jsonBuildInputs, build func(string) error) string {
+// jsonRunBuildUnit preserves exact gate selectors: filtered build children still
+// prepare their inputs, and local scratch belongs to the parent.
+func jsonRunBuildUnit(parent *testing.T, name string, prepare func(testing.TB) string) string {
 	var dir string
 	called := false
-	prepare := func(t testing.TB) {
-		called = true
-		start := time.Now()
-		// The oracle currently overlays its formatter_comparison main. Do not
-		// pass that overlay build to Product or GoBuild.
-		if name == "build-go-oracle" {
-			dir = parent.TempDir()
-			if err := build(dir); err != nil {
-				t.Fatal(err)
-			}
-			t.Log("Go oracle overlay: local build, outside the shared product cache")
-		} else {
-			dir = buildcache.Product(t, in, build)
-		}
-		t.Logf("shared %s %.3fs; inputs %s; files %v; %d flags; %d toolchain entries", name, time.Since(start).Seconds(), in.Name, in.Files, len(in.Flags), len(in.Toolchain))
-	}
-	if !parent.Run(name, func(t *testing.T) { prepare(t) }) {
+	run := func(t testing.TB) { called = true; dir = prepare(t) }
+	if !parent.Run(name, func(t *testing.T) { run(t) }) {
 		parent.FailNow()
 	}
 	if !called {
-		prepare(parent)
+		run(parent)
 	}
 	return dir
+}
+
+func jsonBuildUnit(parent *testing.T, name string, in buildcache.Inputs, build func(string) error) string {
+	return jsonRunBuildUnit(parent, name, func(t testing.TB) string {
+		start := time.Now()
+		dir := buildcache.Product(t, in, build)
+		t.Logf("shared %s %.3fs; inputs %s", name, time.Since(start).Seconds(), in.Name)
+		return dir
+	})
+}
+
+// GoBuild refuses overlays. Until this oracle has a normal repository package,
+// build it locally, once per parent, without hand-listing Go cache inputs.
+func jsonGoOracleUnit(parent *testing.T) string {
+	return jsonRunBuildUnit(parent, "build-go-oracle", func(t testing.TB) string {
+		start := time.Now()
+		dir := parent.TempDir()
+		if err := buildJSONGoOracle(dir); err != nil {
+			t.Fatal(err)
+		}
+		t.Logf("local Go oracle overlay build %.3fs", time.Since(start).Seconds())
+		return dir
+	})
+}
+
+func jsonLoweredProducts(t *testing.T, dir, entry string) jsonProducts {
+	t.Helper()
+	source, err := os.ReadFile(filepath.Join(dir, "main.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return jsonProducts{entry: filepath.Join(dir, entry), script: filepath.Join(dir, "program.mjs"), c: string(source)}
+}
+
+func jsonPrepareMutation(t *testing.T, mutation printerMutation) jsonProducts {
+	tools, err := jsonGoToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := jsonLoweredPortInputs(tools)
+	inputs.Name = "json lowered printer mutant"
+	inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutation=%+v", mutation))
+	dir := jsonBuildUnit(t, "build-lowered-mutant", inputs, func(dir string) error { return buildJSONLoweredPortMutation(dir, &mutation) })
+	return jsonLoweredProducts(t, dir, "main.ts")
+}
+
+func jsonPrepareFixture(t *testing.T, path string) jsonProducts {
+	tools, err := jsonGoToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := jsonLoweredPortInputs(tools)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	relative, err := filepath.Rel(root, absolute)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs.Name = "json lowered gap fixture"
+	inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
+	inputs.Flags = append(inputs.Flags, "entry="+filepath.ToSlash(relative))
+	dir := jsonBuildUnit(t, "build-lowered-fixture", inputs, func(dir string) error {
+		source, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		entry := filepath.Join(dir, filepath.Base(path))
+		if err := os.WriteFile(entry, source, 0644); err != nil {
+			return err
+		}
+		program, err := load.Load([]string{entry})
+		if err != nil {
+			return err
+		}
+		lowered, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+	})
+	return jsonLoweredProducts(t, dir, filepath.Base(path))
 }
 
 func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
@@ -246,7 +313,7 @@ func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
 	return answers
 }
 
-type jsonProducts struct{ oracle, entry, script, release, sanitized string }
+type jsonProducts struct{ oracle, entry, script, release, sanitized, c string }
 
 func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
 	t.Helper()
@@ -254,7 +321,7 @@ func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle)
+	oracle := jsonGoOracleUnit(t)
 	lowered := jsonBuildUnit(t, "build-lowered-port", jsonLoweredPortInputs(tools), buildJSONLoweredPort)
 	products := jsonProducts{oracle: filepath.Join(oracle, "go-cohere"), entry: filepath.Join(lowered, "main.ts"), script: filepath.Join(lowered, "program.mjs")}
 	if !release && !sanitized {

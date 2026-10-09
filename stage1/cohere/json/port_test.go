@@ -2,7 +2,6 @@ package json
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -15,11 +14,6 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const repository = "../../.."
@@ -27,20 +21,6 @@ const repository = "../../.."
 type run struct {
 	stdout, stderr []byte
 	exitCode       int
-}
-
-// lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatalf("Load: %v", err)
-	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatalf("Lower: %v", err)
-	}
-	return result
 }
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
@@ -78,17 +58,13 @@ func onNode(t *testing.T, path string, arguments ...string) run {
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
+func onJavaScriptBackend(t *testing.T, program jsonProducts, arguments ...string) run {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	return onNode(t, path, arguments...)
+	return onNode(t, program.script, arguments...)
 }
 
 // nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
+func nativelyRun(t *testing.T, program jsonProducts, arguments ...string) run {
 	t.Helper()
 	result, _ := natively(t, program, arguments...)
 	return result
@@ -97,12 +73,13 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
 // returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
 // its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
+func natively(t *testing.T, program jsonProducts, arguments ...string) (run, string) {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	tools, err := jsonClangToolchain()
+	if err != nil {
 		t.Fatal(err)
 	}
+	binary := filepath.Join(jsonBuildUnit(t, "build-sanitized", jsonNativePortInputs(program.c, true, tools), buildJSONSanitizedPort(program.c)), "port")
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
@@ -113,14 +90,15 @@ func natively(t *testing.T, program *ir.Program, arguments ...string) (run, stri
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+func leaks(t *testing.T, program jsonProducts, sanitized string, arguments ...string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		tools, err := jsonClangToolchain()
+		if err != nil {
 			t.Fatal(err)
 		}
+		binary := filepath.Join(jsonBuildUnit(t, "build-release", jsonNativePortInputs(program.c, false, tools), buildJSONReleasePort(program.c)), "port")
 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
@@ -139,27 +117,6 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 
 var portFiles = []string{"parser.ts", "doc.ts", "formatter.ts", "main.ts", "width.ts", "widthTables.ts", "identifierTables.ts"}
 
-func portDirectory(t *testing.T, mutation *printerMutation) string {
-	t.Helper()
-	directory := t.TempDir()
-	for _, name := range portFiles {
-		source, err := os.ReadFile(name)
-		if err != nil {
-			t.Fatal(err)
-		}
-		text := string(source)
-		if mutation != nil && mutation.file == name {
-			if strings.Count(text, mutation.from) != 1 {
-				t.Fatalf("mutant %s must change one place", mutation.name)
-			}
-			text = strings.Replace(text, mutation.from, mutation.to, 1)
-		}
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	return directory
-}
 func escape(text string) string {
 	return strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t").Replace(text)
 }
@@ -210,7 +167,7 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 
-const testPortMatchesGoCohereShards = 2072
+const testPortMatchesGoCohereShards = 2168
 
 // TestPortMatchesGoCohere checks every side, sanitizer and leak detector on every
 // shard. ADAMIC_TEST_SHARD=i/n (zero-based i) selects shard ordinals modulo n;
@@ -245,7 +202,7 @@ func TestPortMatchesGoCohere(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracleDir := jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(goTools), buildJSONGoOracle)
+	oracleDir := jsonGoOracleUnit(t)
 	loweredDir := jsonBuildUnit(t, "build-lowered-port", jsonLoweredPortInputs(goTools), buildJSONLoweredPort)
 	cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 	if err != nil {
@@ -475,9 +432,8 @@ func TestThreePortMutantsAreCaught(t *testing.T) {
 	} {
 		t.Run(mutation.name, func(t *testing.T) {
 			t.Parallel()
-			directory := portDirectory(t, &mutation)
-			entry := filepath.Join(directory, "main.ts")
-			program := lowered(t, entry)
+			program := jsonPrepareMutation(t, mutation)
+			entry := program.entry
 			for _, side := range []struct {
 				name   string
 				result run

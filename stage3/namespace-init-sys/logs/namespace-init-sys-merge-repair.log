@@ -1,0 +1,39 @@
+=== RUN   TestClassWrongOutputIteratorReceiver
+--- PASS: TestClassWrongOutputIteratorReceiver (3.79s)
+=== RUN   TestClassWrongOutputKeysRepair
+--- PASS: TestClassWrongOutputKeysRepair (0.61s)
+=== RUN   TestClassWrongOutputPrivateRepair
+--- PASS: TestClassWrongOutputPrivateRepair (0.45s)
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceAmbientContextsDoNotExecute
+=== PAUSE TestNamespaceAmbientContextsDoNotExecute
+=== RUN   TestParameterPropertiesSoundness
+=== PAUSE TestParameterPropertiesSoundness
+=== CONT  TestNamespaceAmbientHostInitialization
+=== CONT  TestParameterPropertiesSoundness
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+=== CONT  TestNamespaceAmbientContextsDoNotExecute
+=== RUN   TestParameterPropertiesSoundness/readonly_view
+--- PASS: TestNamespaceAmbientContextsDoNotExecute (0.75s)
+=== RUN   TestParameterPropertiesSoundness/mutable_override
+=== RUN   TestParameterPropertiesSoundness/readonly_override
+=== RUN   TestParameterPropertiesSoundness/inherited_initializer
+=== RUN   TestParameterPropertiesSoundness/early_default
+=== RUN   TestParameterPropertiesSoundness/field_initializer
+--- PASS: TestParameterPropertiesSoundness (3.75s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_view (0.79s)
+    --- PASS: TestParameterPropertiesSoundness/mutable_override (0.78s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_override (0.66s)
+    --- PASS: TestParameterPropertiesSoundness/inherited_initializer (0.42s)
+    --- PASS: TestParameterPropertiesSoundness/early_default (0.53s)
+    --- PASS: TestParameterPropertiesSoundness/field_initializer (0.57s)
+=== NAME  TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:30: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath3308652683/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:30: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationcwd962833859/002/main.a:7:43: stage 0 can't lower node:process.Process.cwd yet
+--- PASS: TestNamespaceAmbientHostInitialization (14.55s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (7.36s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (7.18s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	19.662s
