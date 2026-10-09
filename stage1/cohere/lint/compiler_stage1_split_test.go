@@ -272,9 +272,10 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
 }
 
-// Optional product measurements use the same independent preparation path as
-// shards. No top-level test publishes state that another test requires.
-func compilerAgreementSetupProduct(t *testing.T, prepare func(*testing.T) string) {
+// Product declarations run in the gate build phase. They use the exact shared
+// recipe and key that independent shards prepare through sync.Once. No test
+// publishes process-local state that another top-level test requires.
+func compilerAgreementMeasureProduct(t *testing.T, prepare func(*testing.T) string) {
 	t.Helper()
 	started := time.Now()
 	_ = prepare(t)
@@ -282,24 +283,24 @@ func compilerAgreementSetupProduct(t *testing.T, prepare func(*testing.T) string
 	t.Logf("%s: %.3fs cooked=%t", t.Name(), elapsed.Seconds(), elapsed >= 60*time.Second)
 }
 
-func TestCompilerAndStage1Agree_SetupGoOracle(t *testing.T) {
+func TestProduct_CompilerAgreementGoOracle(t *testing.T) {
 	t.Parallel()
-	compilerAgreementSetupProduct(t, compilerAgreementGoOracle)
+	compilerAgreementMeasureProduct(t, compilerAgreementGoOracle)
 }
 
-func TestCompilerAndStage1Agree_SetupLowering(t *testing.T) {
+func TestProduct_CompilerAgreementLowering(t *testing.T) {
 	t.Parallel()
-	compilerAgreementSetupProduct(t, compilerAgreementLowered)
+	compilerAgreementMeasureProduct(t, compilerAgreementLowered)
 }
 
-func TestCompilerAndStage1Agree_SetupSanitizedNative(t *testing.T) {
+func TestProduct_CompilerAgreementSanitizedNative(t *testing.T) {
 	t.Parallel()
-	compilerAgreementSetupProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, true) })
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, true) })
 }
 
-func TestCompilerAndStage1Agree_SetupReleaseNative(t *testing.T) {
+func TestProduct_CompilerAgreementReleaseNative(t *testing.T) {
 	t.Parallel()
-	compilerAgreementSetupProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, false) })
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, false) })
 }
 
 type compilerAgreementOracleAnswer struct {
