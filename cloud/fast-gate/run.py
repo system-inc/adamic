@@ -1362,12 +1362,47 @@ class Gate:
         if not requested:
             return
         outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
-        results = {importPath + " " + name: familyOutcome(outcomes, importPath, name)
-                   for importPath, names in requested.items() for name in sorted(names)}
+        # Each name resolves against the tree under test (hidden-boundaries 64a5179f, Oct 9 16:36Z: nine deferred names
+        # the test-grain work had split into shards read unproven): by the package's -test.list when this run listed it,
+        # else by its test sources, and the verdict is the family's (familyVerdict). A name the tree has neither the test
+        # nor any shard of is a stale deferred-list entry, not this candidate's red: named in the record and the status
+        # line, never counted as passed. A package whose tests aren't known is judged by the log alone, as before.
+        listings = getattr(self, "requestedListings", {})
+        results, families, stale = {}, {}, []
+        for importPath, names in sorted(requested.items()):
+            tests = {name: True for name in listings[importPath]} if importPath in listings else sourceTests(self.arguments.tree, importPath)
+            for name in sorted(names):
+                key = importPath + " " + name
+                members = requestedMembers(tests, name)
+                if members is None:
+                    results[key] = familyOutcome(outcomes, importPath, name)
+                elif not members:
+                    results[key] = "stale"
+                    stale.append(key)
+                else:
+                    results[key] = familyVerdict(outcomes, importPath, members)
+                    if list(members) != [name]:
+                        # A split family's members by outcome, and the first required ones the log never saw.
+                        seen = [outcomes.get(importPath + " " + member, "missing") for member in members]
+                        families[key] = {"members": len(members), **{outcome: seen.count(outcome) for outcome in sorted(set(seen))},
+                                         "missing_members": sorted(member for member, required in members.items()
+                                                                   if required and importPath + " " + member not in outcomes)[:10]}
         self.result["deferred_run_results"] = results
-        unproven = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
+        if families:
+            self.result["deferred_run_families"] = families
+        self.result["deferred_stale"] = stale
+        unprovenTests = [test for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail", "stale")]
+        unproven = ["%s: %s" % (test, results[test]) for test in unprovenTests]
+        absent = sorted({test.split(" ", 1)[0] for test in unprovenTests} -
+                        {key.split(" ", 1)[0] for key in outcomes if not key.split(" ", 1)[1].startswith("TestProduct_")})
+        if absent:
+            # The log holds no test of the package at all, its products aside (hidden-boundaries 64a5179f's 15:01Z pool
+            # log: 531 products and one smoke test, its Go test units unrun at the pool's 30-minute ceiling): what it
+            # lacks is the package's run, not one test's verdict.
+            self.result["deferred_packages_absent_from_log"] = absent
         if unproven:
-            self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven))
+            self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven) +
+                      "".join("\nthe log holds no test of %s at all, its products aside" % package for package in absent))
 
     def smokeList(self):
         for root, name in ((self.arguments.tree, "gated tree"), (self.arguments.tools, "tools checkout")):
@@ -1805,11 +1840,17 @@ class Gate:
                 if row["package"] == importPath:
                     productPool.submit(runProduct, row, binary)
             names = [] if productsOnly else [name for name in names if not name.startswith("TestProduct_")]
+            if importPath in getattr(self, "requested", {}) and not productsOnly:
+                # The package's -test.list is the tree's own answer to what each requested name is now: requestedRan
+                # judges each over the members it lists (requestedMembers), and a name it lists nothing of is stale.
+                with self.lock:
+                    self.requestedListings = dict(getattr(self, "requestedListings", {}), **{importPath: list(names)})
             if importPath in getattr(self, "onlyTests", {}):
                 names = [name for name in names if inFamily(name, self.onlyTests[importPath])]
                 if not names:
-                    # A package gated only for requested tests that selects none of them proves nothing: red, never a pass.
-                    self.fail("requested", "requested tests ran: 0 in %s: %s match no test in its -test.list" % (importPath, ", ".join(sorted(self.onlyTests[importPath]))))
+                    # A package gated only for requested names its -test.list has no test or shard of runs nothing, and
+                    # the names read stale in the record and the status line (requestedRan), never as a silent pass.
+                    self.result.setdefault("split_tests", {})[importPath] = 0
                     return
             selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}
             patterns = {}
@@ -2434,6 +2475,11 @@ class Gate:
         deferred = self.result.get("deferred_to_full_gate", [])
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
+            if self.result.get("deferred_stale"):
+                # Requested deferred names the tree has neither the test nor a shard of: the list's to fix, not this
+                # candidate's red, and loud on every line, green or red, never a silent pass.
+                steps += "; stale deferred entries: %d (%s)" % (len(self.result["deferred_stale"]), ", ".join(
+                    test.split(" ", 1)[0].rsplit("/", 1)[-1] + " " + test.split(" ", 1)[1] for test in self.result["deferred_stale"]))
             steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
             if self.result.get("gate_samples"):
                 steps += "; sampled: %s" % "; ".join(sorted(set(self.result["gate_samples"]))[:10])
@@ -2453,7 +2499,7 @@ class Gate:
             # A deferred red names the requested tests it lacked, so a page reads what didn't run (trio 114a6439, Oct 9
             # 10:50Z: "first failure at deferred" with nothing named, and five internal/native tests behind it).
             unproven = sorted(test.rsplit("/", 1)[-1] + " " + outcome for test, outcome in self.result.get("deferred_run_results", {}).items()
-                              if outcome not in ("pass", "fail")) if self.failure["step"] == "deferred" else []
+                              if outcome not in ("pass", "fail", "stale")) if self.failure["step"] == "deferred" else []
             if unproven:
                 crash += " (%d requested deferred tests unproven: %s%s)" % (len(unproven), ", ".join(unproven[:5]), ", ..." if len(unproven) > 5 else "")
             self.status("red: %s %s gate, first failure at %s%s after %.1f s%s%s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], loaded, cancelled, steps, self.counts["fail"], self.counts["pass"]))
@@ -2525,9 +2571,69 @@ def testUnits(path):
 
 def familyMember(name, requested):
     """Whether a top-level test is a requested name or one of its split's generated shards: the name followed by
-    Unit<n>, Points<n> or _<n> (@system_adamic, Oct 9 12:19Z). Never a bare prefix: TestWASIRefusesUnsupportedOptions
-    is not TestWASI run, while TestNormalizeMatchesNodePoints00 is TestNormalizeMatchesNode."""
-    return name == requested or re.fullmatch(re.escape(requested) + r"(Unit\d+|Points\d+|_\d+)", name) is not None
+    Unit<n>, Points<n> or _<n> (@system_adamic, Oct 9 12:19Z), or a named shard group's _<Group>_<n> (hidden-boundaries
+    64a5179f, Oct 9: TestCompilerAndStage1Agree split into _<n> and _CheckerSanitized_<n>). Never a bare prefix:
+    TestWASIRefusesUnsupportedOptions is not TestWASI run, while TestNormalizeMatchesNodePoints00 is
+    TestNormalizeMatchesNode."""
+    return name == requested or re.fullmatch(re.escape(requested) + r"(Unit\d+|Points\d+|_\d+|_[A-Z][A-Za-z0-9]*_\d+)", name) is not None
+
+
+goOperatingSystems = {"aix", "android", "darwin", "dragonfly", "freebsd", "hurd", "illumos", "ios", "js", "linux", "nacl",
+                      "netbsd", "openbsd", "plan9", "solaris", "wasip1", "windows", "zos"}
+goArchitectures = {"386", "amd64", "amd64p32", "arm", "arm64", "arm64be", "armbe", "loong64", "mips", "mipsle", "mips64",
+                   "mips64le", "mips64p32", "mips64p32le", "ppc", "ppc64", "ppc64le", "riscv", "riscv64", "s390", "s390x",
+                   "sparc", "sparc64", "wasm"}
+
+
+def sourceTests(tree, importPath):
+    """A package's top-level tests by its *_test.go sources, as productDeclarations reads products: {name: required}.
+    A test in a file under a build constraint (a //go:build line, or a _GOOS or _GOARCH name by go's own rule) is
+    listed, so its name is in the tree, but not required, since this box may not build it. None when the package has
+    no directory in the tree: then nothing is known, and the log alone judges."""
+    if importPath != module and not importPath.startswith(module + "/"):
+        return None
+    directory = os.path.join(tree, importPath[len(module) + 1:]) if importPath != module else tree
+    if not os.path.isdir(directory):
+        return None
+    tests = {}
+    for path in sorted(glob.glob(os.path.join(directory, "*_test.go"))):
+        # go's goodOSArchFile: everything before the first _ is ignored, then a trailing _test, then _GOOS, _GOARCH
+        # or _GOOS_GOARCH constrains the file (wasm_test.go is not constrained; x_wasm_test.go is).
+        stem = os.path.basename(path).split(".", 1)[0]
+        parts = stem[stem.index("_"):].split("_")[:-1] if "_" in stem else []
+        constrained = bool(parts) and (parts[-1] in goOperatingSystems or parts[-1] in goArchitectures)
+        try:
+            with open(path, errors="replace") as handle:
+                source = handle.read()
+        except OSError:
+            return None
+        constrained = constrained or re.search(r"^//go:build\s", source.split("\npackage ", 1)[0], re.M) is not None
+        for name in re.findall(r"^func\s+(Test\w*)\s*\(\s*\w+\s+\*testing\.T\s*\)", source, re.M):
+            tests[name] = tests.get(name, False) or not constrained
+    return tests
+
+
+def requestedMembers(tests, requested):
+    """A requested deferred name resolved against the tree under test: the top-level tests that are it or its split's
+    shards (familyMember), as {name: required}. Empty when the tree has neither the test nor any shard of it: a stale
+    deferred-list entry. None when the tree's tests aren't known (tests is None)."""
+    if tests is None:
+        return None
+    return {name: required for name, required in tests.items() if familyMember(name, requested)}
+
+
+def familyVerdict(outcomes, package, members):
+    """A requested name's verdict over the members the tree resolved it to (requestedMembers), the family's and never one
+    shard's: fail if any member failed; missing if a required member never reached a verdict, so one passing shard
+    can't stand for 36 that never ran; else pass if any passed, skip if every one skipped (proving nothing)."""
+    seen = {name: outcomes.get(package + " " + name, "missing") for name in members}
+    if "fail" in seen.values():
+        return "fail"
+    if any(seen[name] == "missing" for name, required in members.items() if required):
+        return "missing"
+    if "pass" in seen.values():
+        return "pass"
+    return "skip" if "skip" in seen.values() else "missing"
 
 
 def inFamily(name, requested):

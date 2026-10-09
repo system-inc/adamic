@@ -437,17 +437,62 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["stages_exit"].get("census"), 0)
         self.assertTrue(os.path.exists(os.path.join(gate.arguments.out, "census.log")))
 
-    def test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none(self):
-        # A requested name selects itself and its split's shards; one that selects nothing is red, never an empty pass
-        # (@system_adamic, Oct 9 11:01Z, after Loom's unit ran "no tests to run" and passed).
+    def test_a_package_gated_for_requested_tests_runs_their_family_and_a_name_it_lists_nothing_of_is_stale(self):
+        # A requested name selects itself and its split's shards, never an empty pass (@system_adamic, Oct 9 11:01Z, after
+        # Loom's unit ran "no tests to run" and passed). A name the package's -test.list has neither the test nor a shard
+        # of is a stale deferred-list entry (hidden-boundaries 64a5179f, Oct 9 16:36Z): not the candidate's red, and
+        # named in the record and the status line, never read as passed.
         with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestOne"}})):
             gate, status, result = self.gate()
         self.assertIsNone(gate.failure, status)
         self.assertEqual(result["split_tests"].get("q"), 1)
+        self.assertEqual(result["deferred_run_results"], {"q TestOne": "pass"})
         with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestNoSuchFamily"}})):
             gate, status, result = self.gate()
-        self.assertIn("first failure at requested", status)
-        self.assertIn("requested tests ran: 0 in q: TestNoSuchFamily", gate.failure["detail"])
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["split_tests"].get("q"), 0)
+        self.assertEqual(result["deferred_run_results"], {"q TestNoSuchFamily": "stale"})
+        self.assertEqual(result["deferred_stale"], ["q TestNoSuchFamily"])
+        self.assertIn("stale deferred entries: 1 (q TestNoSuchFamily)", status)
+
+    def test_a_requested_parent_split_into_shards_plans_and_judges_its_shards(self):
+        # Hidden-boundaries 64a5179f (Oct 9 16:36Z): TestShardsAgree no longer exists by its name; the tree runs it as
+        # _<n> shards and a named _CheckerSanitized_<n> group. The package's -test.list resolves the name: the gate plans
+        # every shard and no bare-prefix neighbour, and judges the family over them.
+        listing = "TestOne\nTestShardsAgree_000\nTestShardsAgree_001\nTestShardsAgree_CheckerSanitized_00\nTestShardsAgreeUnion\n"
+        realInit = FakeProcess.__init__
+
+        def shards(process, command, stdout):
+            realInit(process, command, stdout)
+            if "-test.list" in command:
+                process.lines = [listing]
+            elif "test2json" in command:
+                name = command[command.index("-test.run") + 1].strip("^$")
+                process.lines = [json.dumps({"Action": "pass", "Package": command[command.index("-p") + 1], "Test": name}) + "\n"]
+            process.stdout = io.StringIO("".join(process.lines)) if stdout == subprocess.PIPE else None
+
+        with mock.patch.object(FakeProcess, "__init__", shards), \
+                mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestShardsAgree"}})):
+            gate, status, result = self.gate()
+        self.assertTrue(status.startswith("green:"), status)
+        planned = sorted(row["test"] for row in result["test_outcomes"] if row["package"] == "q")
+        self.assertEqual(planned, ["TestShardsAgree_000", "TestShardsAgree_001", "TestShardsAgree_CheckerSanitized_00"])
+        self.assertEqual(result["deferred_run_results"], {"q TestShardsAgree": "pass"})
+        self.assertEqual(result["deferred_run_families"]["q TestShardsAgree"], {"members": 3, "pass": 3, "missing_members": []})
+        self.assertEqual(result["deferred_stale"], [])
+
+    def test_a_stale_requested_name_is_named_on_a_census_red_too_and_never_counted_as_unproven(self):
+        # The census phase resolves against the tree's test sources (wasm_test.go here holds TestWASI): one stale name
+        # beside one that never ran reds for the one that never ran alone, and the line names the stale one as well.
+        native = run.module + "/internal/native"
+        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {native: {"TestWASI", "TestGone"}})):
+            gate, status, result = self.gate(extra={"phase": "census", "census": self.poolLog()})
+        self.assertEqual(result["deferred_run_results"], {native + " TestWASI": "missing", native + " TestGone": "stale"})
+        self.assertIn("first failure at deferred (1 requested deferred tests unproven: native TestWASI missing)", status)
+        self.assertIn("stale deferred entries: 1 (native TestGone)", status)
+        self.assertNotIn("TestGone", gate.failure["detail"].split("\nthe log")[0])
+        self.assertIn("the log holds no test of %s at all, its products aside" % native, gate.failure["detail"])
+        self.assertEqual(result["deferred_packages_absent_from_log"], [native])
 
     def test_several_fast_phases_complete_the_pool_landing_record(self):
         gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
@@ -1027,6 +1072,78 @@ class GateRunsDeferred(unittest.TestCase):
         gate.requestedRan()
         self.assertIsNone(gate.failure)
         self.assertEqual(gate.deferred[native], {"TestSplitTSGoAgrees"})
+
+
+class DeferredSplitFamilies(unittest.TestCase):
+    """Hidden-boundaries 64a5179f (integration, Oct 9 16:36Z): 14 requested deferred tests read unproven, nine of them
+    names the test-grain work had split into top-level shards. A requested name resolves against the tree under test
+    (its test sources, in a pool's census phase): its shards are the family and the verdict is theirs; a name with
+    neither the test nor a shard in the tree is a stale deferred-list entry, never this candidate's red or a pass."""
+
+    gate = GateRunsDeferred.gate
+
+    def judge(self, events, sources=None):
+        gate, native, lint = self.gate("deferred")
+        os.makedirs(os.path.join(gate.arguments.tree, "stage1/cohere/lint"))
+        with open(os.path.join(gate.arguments.tree, "stage1/cohere/lint/shards_test.go"), "w") as handle:
+            handle.write(sources if sources is not None else "package lint\n\nimport \"testing\"\n\n" + "".join(
+                "func %s(t *testing.T) { t.Parallel(); shard(t, %d) }\n" % (name, index) for index, name in enumerate(
+                    ["TestShardsAgree_000", "TestShardsAgree_001", "TestShardsAgree_CheckerSanitized_00", "TestShardsAgreeUnion"])))
+        gate.deferred = {lint: {"TestShardsAgree", "TestNodeTableIsLinkOnly"}}
+        gate.runRequested()
+        with open(os.path.join(gate.arguments.out, "test.jsonl"), "w") as handle:
+            for test, action in events:
+                handle.write(json.dumps({"Action": action, "Package": lint, "Test": test}) + "\n")
+        with mock.patch("builtins.print"):
+            gate.requestedRan()
+        return gate, gate.result["deferred_run_results"], lint
+
+    def test_a_split_parent_is_judged_over_every_shard_the_tree_has(self):
+        shards = ["TestShardsAgree_000", "TestShardsAgree_001", "TestShardsAgree_CheckerSanitized_00"]
+        gate, results, lint = self.judge([(name, "pass") for name in shards])
+        self.assertEqual(results[lint + " TestShardsAgree"], "pass")
+        self.assertEqual(gate.result["deferred_run_families"][lint + " TestShardsAgree"], {"members": 3, "pass": 3, "missing_members": []})
+        # A failing shard, the named group's included, fails the family.
+        gate, results, lint = self.judge([(shards[0], "pass"), (shards[1], "pass"), (shards[2], "fail")])
+        self.assertEqual(results[lint + " TestShardsAgree"], "fail")
+        # One shard that passed doesn't stand for the ones that never ran: the family is unproven, and they are named.
+        gate, results, lint = self.judge([(shards[0], "pass")])
+        self.assertEqual(results[lint + " TestShardsAgree"], "missing")
+        self.assertEqual(gate.failure["step"], "deferred")
+        self.assertEqual(gate.result["deferred_run_families"][lint + " TestShardsAgree"]["missing_members"], shards[1:])
+        # A bare-prefix neighbour passing is no shard of it.
+        gate, results, lint = self.judge([("TestShardsAgreeUnion", "pass")])
+        self.assertEqual(results[lint + " TestShardsAgree"], "missing")
+        self.assertNotIn("deferred_packages_absent_from_log", gate.result)
+        # A log with the package's products and none of its tests says so: the package's run is what it lacks (64a5179f's
+        # 15:01Z pool log held 531 products and one smoke test, its test units unrun at the pool's ceiling).
+        gate, results, lint = self.judge([("TestProduct_ShardsAgreeNative", "pass")])
+        self.assertEqual(gate.result["deferred_packages_absent_from_log"], [lint])
+
+    def test_a_name_the_tree_has_neither_the_test_nor_a_shard_of_reads_stale_not_unproven(self):
+        shards = ["TestShardsAgree_000", "TestShardsAgree_001", "TestShardsAgree_CheckerSanitized_00"]
+        gate, results, lint = self.judge([(name, "pass") for name in shards])
+        self.assertEqual(results[lint + " TestNodeTableIsLinkOnly"], "stale")
+        self.assertEqual(gate.result["deferred_stale"], [lint + " TestNodeTableIsLinkOnly"])
+        # Not this candidate's red, and not a pass either: it is never counted among the passes.
+        self.assertIsNone(gate.failure)
+        self.assertNotIn("pass", [outcome for test, outcome in results.items() if test.endswith(" TestNodeTableIsLinkOnly")])
+        # A shard in a file under a build constraint names the family but isn't required on a box that may not build it.
+        constrained = "//go:build linux\n\npackage lint\n\nimport \"testing\"\n\nfunc TestNodeTableIsLinkOnly_000(t *testing.T) {}\n"
+        gate, results, lint = self.judge([], sources=constrained)
+        self.assertEqual(results[lint + " TestNodeTableIsLinkOnly"], "missing")
+        self.assertEqual(gate.result["deferred_stale"], [lint + " TestShardsAgree"])
+
+    def test_the_source_inventory_follows_go_s_file_name_constraints(self):
+        tree = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tree)
+        os.makedirs(os.path.join(tree, "internal/native"))
+        for name, test in (("wasm_test.go", "TestWASIUnit00"), ("x_wasm_test.go", "TestWasmOnly"), ("y_darwin_arm64_test.go", "TestDarwinOnly")):
+            with open(os.path.join(tree, "internal/native", name), "w") as handle:
+                handle.write("package native\n\nfunc %s(t *testing.T) {}\n" % test)
+        self.assertEqual(run.sourceTests(tree, run.module + "/internal/native"), {"TestWASIUnit00": True, "TestWasmOnly": False, "TestDarwinOnly": False})
+        self.assertIsNone(run.sourceTests(tree, run.module + "/internal/gone"))
+        self.assertIsNone(run.sourceTests(tree, "example.com/p"))
 
 
 class DeletedAFiles(unittest.TestCase):
