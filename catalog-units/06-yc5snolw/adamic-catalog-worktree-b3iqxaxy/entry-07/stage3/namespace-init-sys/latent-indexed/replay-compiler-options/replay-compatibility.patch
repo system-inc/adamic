@@ -1,0 +1,23 @@
+--- a/stage3/census/latent/make_overlay.py
++++ b/stage3/census/latent/make_overlay.py
+@@ -16,7 +16,7 @@
+     replace[str(repository / name)] = str(output)
+ 
+ original = (repository / 'internal/lower/lower.go').read_text()
+-start = original.index('\tfiles := program.Files()')
++start = original.index('\tfiles := []*ast.SourceFile{}')
+ end = original.index('\n}\n\ntype lowering', start)
+ original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurement only; no IR output")' + original[end:]
+ original = original.replace('\n\t"path/filepath"', '')
+@@ -44,9 +44,9 @@
+ # Keep all checker diagnostics and populated roots, but expose them only to measurement.
+ loader = (repository / 'internal/load/load.go').read_text()
+ loader = loader.replace('type Program struct {', 'type Program struct {\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
+-needle = 'return nil, &CheckError{Diagnostics: diagnostics}'
++needle = 'return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites, ScheduledOptionSites: scheduled, OptionDispositions: loaded.optionDispositions, OrdinaryDiagnostics: ordinaryDiagnostics}'
+ assert loader.count(needle) == 1
+-loader = loader.replace(needle, 'loaded.latentDiagnostics = diagnostics')
++loader = loader.replace(needle, 'loaded.latentDiagnostics = diagnostics; _ = ordinaryDiagnostics')
+ loader = loader.replace('formatted := make([]string, 0, len(all))', 'p.latentSites = all\n formatted := make([]string, 0, len(all))')
+ # Rename the permissive API; ordinary Load and LoadOverlay cannot expose rejected programs.
+ loader = loader.replace('func Load(paths []string)', 'func LatentLoad(paths []string)')

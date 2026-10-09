@@ -1,0 +1,91 @@
+Built: optional widening refusal on p2b, repaired field source, pinned original, node-only host hook.
+Commits: base 48c05d091f0a43c31cbe051b1d6578d99eeedf19; merged 9887f3772dc8d9aa4bd1a4898ae21110f6408010; implementation 6d625b5ba161a876980759b0a639d1bbc31b0525.
+Checks: IR, lower, flow, Linux counts regeneration and normal counts check, focused uncached oracle, vet and format all passed.
+Mutants: non-node exemption, exact diagnostic wording, and field retain count each caught by their intended assertions; true predicate behind node guard passed as a control.
+Not covered: full repository gate, stage3 census rerun, library's p3 node_fs fixtures or its future consumption predicate.
+
+Decision and observation
+The original line 20 passes a named structural source whose type omits amount.
+It is neither a fresh literal expression at the relation site nor a class instance.
+Conservative assumption: a structural view can hide fields, even when this one
+happens to have an initializer without amount. The refusal is right under this
+policy. The repaired source explicitly declares readonly amount?: number and
+retains label and padding. The complete original program is preserved under
+internal/lower/testdata/optional_widening/field_access_paths.a, with its complete
+line 20, column 18 diagnostic pinned in field_access_paths.refused.
+Both source programs ran on Node 24.19.0, exited 0, and printed identical bytes,
+including absent-extra -1. The focused oracle also passed against source Node,
+backend Node, release native, ASan, UBSan and LeakSanitizer.
+An initial intersection annotation reached p2b's NotYet, so the final annotation
+uses an explicit object type. The census harness was adapted to p2b's rooted
+path and filesystem checker APIs; the cast diagnostic pin now includes p2b's
+existing unchecked-cast guidance. No refusal was weakened for either adaptation.
+
+Library hook
+p2b has no internal/lower/library_node*.go consumption predicate. The one-line
+nodeHostConsumesArgument hook in optional_node_host.go returns false. Library
+can fill it when rebuilding p3. optionalAtSite calls it only for an actual
+argument of a call whose callee binding comes from a node:* import. The import
+binding is resolved through checker symbols, not the spelling of the callee.
+No node_fs fixture or library host lowerer was edited. Library must validate
+its positive consumption proof when it replaces the hook.
+
+Commands and observed outputs (all test output went directly to log files)
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh
+source /workspace/adamic-tools/env.sh
+Final setup exit 0: Go 0.044s, Node 0.047s, markdown dependencies 0.144s,
+submodules 0.242s, clang 0.398s, build 65.205s, warm cache 65.380s,
+done 65.416s. nproc 5; cgroup cpu.max 400000 100000.
+The initial setup failed with undefined tspath.RootedFilePath and related
+checker API mismatches in cmd/adamic-meter/optional.go while the checkout and
+submodule were being aligned. Its exact output is setup-initial-failure.log.
+Aligning the submodules to the requested p2b base and rerunning setup fixed it.
+The initial default fetch also lacked the p2b ref; explicit ref fetching worked.
+A stale recursive fetch and overlapping cold builds were stopped; final checks
+below completed. Build failures are not claimed as mutant catches.
+
+go test ./internal/ir ./internal/lower ./internal/flow -count=1 -timeout 30m
+exit 0: IR 4.378s, lower 99.997s, flow 219.088s.
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+exit 0: 100.196s, complete table regenerated on Linux.
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m
+exit 0: 41.101s, restored checked-in table compared with measurements.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(field_access_paths|optional_widening_)' -count=1 -timeout 30m
+exit 0: 2.370s.
+go test ./internal/lower -run TestOptionalWidening -count=1 -timeout 10m
+exit 0: 1.181s.
+go vet ./...
+exit 0, no output.
+gofmt -l cmd internal
+exit 0, no output.
+git diff --check
+exit 0, no output.
+node --input-type=module-typescript < each field_access_paths.a
+both exit 0; cmp of their output exits 0.
+
+Mutants, each restored
+python3 docs/optional-widening/refusal-3-mutants.py
+exit 0. Predicate true with the node import guard intact: tests pass, proving
+ordinary calls remain refused even if the library predicate returns true.
+Predicate true with the node guard removed: argument and field_access_paths
+refusal tests fail with got <nil>, exit 1. This is the non-node exemption mutant.
+Replace which can hide fields with which hides fields: both complete diagnostic
+pins fail, exit 1. No build error or clang warning caught these mutants.
+Separately increment the recorded field_access_paths retain count from 14 to 15
+and run the full TestCountsAreRecorded without -update-counts: exit 1, solely the
+recorded 15 versus measured 14 row mismatch (75.349s). Restore the table and
+rerun the same command: exit 0. Final field counts: 47/47/14/65/12/0.
+
+Counts diff against p2b
+field_access_paths is unchanged. Three optional_widening rows are added.
+The inherited user_iterators fixture rewrite moves its row from
+669/669/463/912/67/0 to 663/663/455/904/64/0. Every other row is unchanged.
+
+Evidence
+All final logs and the initial setup failure remain in the local workspace
+under docs/optional-widening/evidence/refusal-3/. Raw logs were not published;
+automatic approval review rejected exporting the ignored diagnostic payload.
+The public branch contains this command, result and mutant summary.
+The five-line summary records the implementation merge commit. The subsequent
+report commit and pushed head are reported to integration externally.

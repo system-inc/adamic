@@ -1,0 +1,29 @@
+File: markdownblocks.test
+Build ID: 4969b3899e588c266408cde8c75b57770347b00a
+Type: cpu
+Time: 2026-10-07 20:52:24 UTC
+Duration: 15.13s, Total samples = 16960ms (112.12%)
+Showing nodes accounting for 7810ms, 46.05% of 16960ms total
+Dropped 490 nodes (cum <= 84.80ms)
+Showing top 20 nodes out of 220
+      flat  flat%   sum%        cum   cum%
+    1630ms  9.61%  9.61%     2070ms 12.21%  internal/runtime/maps.(*Iter).Next
+     890ms  5.25% 14.86%      890ms  5.25%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     860ms  5.07% 19.93%      860ms  5.07%  internal/runtime/maps.memHashAES
+     410ms  2.42% 22.35%      610ms  3.60%  runtime.tryDeferToSpanScan
+     400ms  2.36% 24.71%      910ms  5.37%  internal/runtime/maps.(*Map).getWithoutKeySmallFastStr
+     390ms  2.30% 27.00%      390ms  2.30%  internal/runtime/maps.(*groupReference).key (inline)
+     390ms  2.30% 29.30%     2360ms 13.92%  runtime.mapassign_fast32
+     280ms  1.65% 30.96%      600ms  3.54%  internal/runtime/maps.(*Iter).Init
+     260ms  1.53% 32.49%      260ms  1.53%  internal/runtime/maps.memHash32AES
+     250ms  1.47% 33.96%      250ms  1.47%  internal/runtime/maps.ctrlGroup.matchFull (inline)
+     240ms  1.42% 35.38%      270ms  1.59%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).putRelater
+     240ms  1.42% 36.79%     1170ms  6.90%  runtime.mapaccess2_faststr
+     230ms  1.36% 38.15%      230ms  1.36%  internal/chacha8rand.block
+     230ms  1.36% 39.50%      950ms  5.60%  runtime.mapaccess2_fast32
+     220ms  1.30% 40.80%      750ms  4.42%  internal/runtime/maps.(*table).uncheckedPutSlot
+     190ms  1.12% 41.92%      200ms  1.18%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Type).AsStructuredType
+     190ms  1.12% 43.04%      400ms  2.36%  runtime.mallocgcSmallScanNoHeaderSC5
+     170ms  1.00% 44.04%      190ms  1.12%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     170ms  1.00% 45.05%      170ms  1.00%  runtime.memmove
+     170ms  1.00% 46.05%      260ms  1.53%  runtime.typedmemmove

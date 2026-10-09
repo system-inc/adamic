@@ -1,0 +1,127 @@
+package lint
+
+import (
+	"bytes"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+// Not parallel: registry generation and upstream capture share artifacts.
+func TestNextSupported(t *testing.T) {
+	rows := upstream(t)
+	var supported []string
+	count := 0
+	skipped := 0
+	for _, row := range rows {
+		fields := strings.Split(row, "\t")
+		data, err := os.ReadFile(fields[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		if strings.Contains(string(data), "<div") || strings.Contains(string(data), "<link") {
+			skipped++
+			continue
+		}
+		supported = append(supported, row)
+		if fields[1] == "@typescript-eslint/no-this-alias" {
+			count++
+		}
+	}
+	if count != 38 || skipped != 2 {
+		t.Fatalf("unexpected coverage: alias %d excluded %d", count, skipped)
+	}
+	t.Logf("no-this-alias upstream cases %d; all supported %d; JSX excluded %d", count, len(supported), skipped)
+	directory, _ := filepath.Abs(".")
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, supported))
+}
+
+// Not parallel: generated artifacts share paths.
+func TestNextCorpus(t *testing.T) {
+	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if corpus == "" {
+		t.Fatal("missing compiler corpus")
+	}
+	if strings.TrimSpace(string(execute(t, "", "git", "-C", corpus, "rev-parse", "HEAD").output)) != compilerCommit {
+		t.Fatal("wrong compiler pin")
+	}
+	var rows []string
+	for _, root := range []string{filepath.Join(corpus, "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+			if err == nil && !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				absolute, e := filepath.Abs(path)
+				if e != nil {
+					return e
+				}
+				rows = append(rows, absolute+"\t@typescript-eslint/no-this-alias")
+			}
+			return err
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	t.Logf("compiler plus stage1: %d file/rule rows", len(rows))
+	directory, _ := filepath.Abs(".")
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: builds share generated registry files.
+func TestNextOptions(t *testing.T) {
+	source := "const self = this; const other = this; const { props } = this; let foo; (foo) = this; [foo] = this;"
+	path := filepath.Join(t.TempDir(), "options.ts")
+	os.WriteFile(path, []byte(source), 0644)
+	var rows []string
+	for _, option := range []string{"null", `{}`, `{"ReportDestructuring":true}`, `{"AllowedNames":["self","foo"]}`, `{"AllowedNames":null}`, `{"ReportDestructuring":true,"AllowedNames":["props","self"]}`} {
+		rows = append(rows, path+"\t@typescript-eslint/no-this-alias\t\t\tfalse\t"+option)
+	}
+	directory, _ := filepath.Abs(".")
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: generated registry paths and toolchain artifacts are shared.
+func TestNextThroughput(t *testing.T) {
+	directory, _ := filepath.Abs(".")
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	var source strings.Builder
+	for i := 0; i < 1000; i++ {
+		fmt.Fprintf(&source, "const self%d = this;\n", i)
+	}
+	path := filepath.Join(t.TempDir(), "throughput.ts")
+	os.WriteFile(path, []byte(source.String()), 0644)
+	input := manifest(t, []string{path + "\t@typescript-eslint/no-this-alias"})
+	best := map[string]time.Duration{}
+	var want []byte
+	for round := 0; round < 5; round++ {
+		for _, side := range []string{"Go", "native", "Node"} {
+			var result execution
+			switch side {
+			case "Go":
+				result = execute(t, "", oracle, "--manifest", input, "--count")
+			case "native":
+				result = execute(t, "", binary, "--manifest", input, "--count")
+			case "Node":
+				result = node(t, directory, input, true)
+			}
+			if want == nil {
+				want = result.output
+			}
+			if !bytes.Equal(want, result.output) {
+				t.Fatalf("count differs %s", side)
+			}
+			if best[side] == 0 || result.duration < best[side] {
+				best[side] = result.duration
+			}
+		}
+	}
+	if string(want) != "1000\n" {
+		t.Fatalf("wrong count %s", want)
+	}
+	for _, side := range []string{"Go", "native", "Node"} {
+		t.Logf("no-this-alias %s %.6fs %.2f findings/s; best of 5 including startup, 1000 synthetic declarations", side, best[side].Seconds(), 1000/best[side].Seconds())
+	}
+}

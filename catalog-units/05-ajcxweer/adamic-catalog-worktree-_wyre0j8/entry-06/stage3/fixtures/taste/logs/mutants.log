@@ -1,0 +1,15 @@
+operand NotYet -> Compiles same Node: True
+object_condition Refused -> Compiles same Node: True
+string_condition Refused -> Compiles same Node: True
+optional_double_not NotYet -> Compiles same Node: True
+logical_assignment Refused -> Compiles same Node: True
+comma Refused -> NotYet same Node: True
+void Refused -> NotYet same Node: True
+label Refused -> NotYet same Node: True
+double_not NotYet -> Compiles same Node: True
+label_break Refused -> NotYet same Node: True
+named_export Refused -> Compiles same Node: True
+assignment_once Refused -> Compiles same Node: True
+finally_jumps Refused -> Compiles same Node: True
+truthy_loops Refused -> Compiles same Node: True
+star_export Refused -> Compiles same Node: True

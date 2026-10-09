@@ -1,0 +1,17 @@
+function optional(value?: number): string {
+	return `${value ?? -1}`;
+}
+const run = optional;
+console.log(run());
+console.log(run(undefined));
+console.log(run(7));
+function defaulted(value: number = 9): string { return `${value}`; }
+const defaultValue = defaulted;
+console.log(defaultValue());
+console.log(defaultValue(undefined));
+class Readerless {
+	read(value?: number): string { return `${value ?? -1}`; }
+}
+interface View { read(value?: number): string; }
+function viewed(value: View): string { return `${value.read()} ${value.read(6)}`; }
+console.log(viewed(new Readerless()));

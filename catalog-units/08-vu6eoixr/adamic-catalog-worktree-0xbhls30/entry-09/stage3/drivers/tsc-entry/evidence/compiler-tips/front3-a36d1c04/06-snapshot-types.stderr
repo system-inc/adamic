@@ -1,0 +1,592 @@
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10022:63: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10022:86: error TS18048: 'm' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10026:97: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10033:67: error TS18048: 'm' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10033:79: error TS18048: 'm' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10053:53: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10061:90: error TS18048: 'n' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10062:69: error TS18048: 's' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10063:69: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10064:47: error TS18048: 's' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10064:93: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10065:122: error TS18048: 's' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10066:103: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10070:50: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10319:83: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10320:51: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10324:76: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+      Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+        Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10336:86: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:10941:33: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'modifiers' are incompatible.
+    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.
+      Type 'undefined' is not assignable to type 'readonly Modifier[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:12034:30: error TS18048: 'file' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:13986:47: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:13990:49: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'.
+  Type 'undefined' is not assignable to type 'Declaration'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:14643:66: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15145:9: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15695:41: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15697:22: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15697:47: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15700:51: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15701:42: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15704:43: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:15706:52: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:16689:70: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:16693:62: error TS2322: Type '(Symbol | undefined)[] | undefined' is not assignable to type 'Symbol[] | undefined'.
+  Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+    Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+      Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.
+  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'typeArguments' are incompatible.
+            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.
+              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:1779:9: error TS2322: Type '(call: CallLikeExpression, editingArgument: Node) => (Signature | undefined)[]' is not assignable to type '(call: CallLikeExpression, editingArgument: Node) => Signature[]'.
+  Type '(Signature | undefined)[]' is not assignable to type 'Signature[]'.
+    Type 'Signature | undefined' is not assignable to type 'Signature'.
+      Type 'undefined' is not assignable to type 'Signature'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:17890:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:17946:29: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:18662:15: error TS2322: Type '(Type | undefined)[]' is not assignable to type 'Type[]'.
+  Type 'Type | undefined' is not assignable to type 'Type'.
+    Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:19044:25: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:20595:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:20618:50: error TS2345: Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.
+  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'debugInfo' are incompatible.
+      Type '(() => string) | undefined' is not assignable to type '() => string'.
+        Type 'undefined' is not assignable to type '() => string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:21434:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'errors' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:22498:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:22498:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:25972:13: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:25974:9: error TS2322: Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.
+  Type 'undefined' is not assignable to type 'Symbol[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:2900:36: error TS2488: Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:35290:33: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+      Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+        Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:35291:79: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:38430:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:42849:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:43517:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:43740:86: error TS2379: Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'value' are incompatible.
+    Type 'Type | undefined' is not assignable to type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:46114:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:46114:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:46128:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:46159:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.
+  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'errors' are incompatible.
+      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+        Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:46734:64: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.
+  Type 'undefined' is not assignable to type '__String'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:46736:167: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.
+  Type 'undefined' is not assignable to type '__String'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:50153:121: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:51465:110: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:51530:21: error TS18048: 's' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:51532:25: error TS18048: 'merged' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:51533:41: error TS18048: 'merged' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52426:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52427:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52429:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52430:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52432:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52433:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52435:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52436:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52438:14: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52439:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52441:42: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52443:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:52446:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:5311:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:54261:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'readFile' are incompatible.
+    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.
+      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:54329:7: error TS2420: Class 'SymbolTrackerImpl' incorrectly implements interface 'SymbolTracker'.
+  Types of property 'moduleResolverHost' are incompatible.
+    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:5564:33: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(string | undefined)[]' is not assignable to parameter of type 'readonly string[]'.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:6035:9: error TS2375: Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'aliasesToMakeVisible' are incompatible.
+    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.
+      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:7837:133: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'questionToken' are incompatible.
+    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.
+      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:8082:62: error TS2379: Argument of type '{ reportTruncationError?: () => void; reportNonlocalAugmentation?: (containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void; ... 10 more ...; moduleResolverHost: (ModuleSpecifierResolutionHost & ...) | undefined; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'moduleResolverHost' are incompatible.
+    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:8566:17: error TS2322: Type 'Set<number | undefined>' is not assignable to type 'Set<number>'.
+  Type 'number | undefined' is not assignable to type 'number'.
+    Type 'undefined' is not assignable to type 'number'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:8861:21: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:9363:17: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/checker.ts:9591:37: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:1874:96: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:2077:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:2663:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'build' are incompatible.
+    Type 'undefined' is not assignable to type 'boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:2677:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.
+  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.
+    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'originalPath' are incompatible.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:2689:66: error TS2345: Argument of type 'Set<string | undefined>' is not assignable to parameter of type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:2952:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:3449:55: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/commandLineParser.ts:4014:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/core.ts:1637:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/debug.ts:200:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/debug.ts:201:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:132:13: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'peerDependencies' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:2772:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.
+  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.
+    Types of property 'value' are incompatible.
+      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.
+        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'originalPath' are incompatible.
+            Type 'string | undefined' is not assignable to type 'string | true'.
+              Type 'undefined' is not assignable to type 'string | true'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'originalPath' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:474:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'originalPath' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:635:5: error TS2375: Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'resolutionDiagnostics' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:642:143: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:644:144: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:647:35: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/moduleNameResolver.ts:648:5: error TS2322: Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/performanceCore.ts:35:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/performanceCore.ts:35:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'directoryExists' are incompatible.
+    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
+      Type 'undefined' is not assignable to type '(path: string) => boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:406:25: error TS18046: 'e' is of type 'unknown'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:4157:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:4160:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:4160:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:441:25: error TS18046: 'e' is of type 'unknown'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:472:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:4956:9: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:4957:9: error TS2412: Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => string[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:4988:28: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:5038:14: error TS2488: Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/program.ts:5107:5: error TS2375: Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'trace' are incompatible.
+    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.
+      Type 'undefined' is not assignable to type '(s: string) => void'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1019:43: error TS2379: Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reusedNames' are incompatible.
+    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.
+      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1282:21: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1297:17: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1332:58: error TS2375: Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'nonRecursive' are incompatible.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1332:58: error TS2379: Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'nonRecursive' are incompatible.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1616:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1618:39: error TS18048: 'dirPath' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1619:46: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1619:74: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:1619:99: error TS18048: 'dirPath' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/resolutionCache.ts:990:43: error TS2379: Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reusedNames' are incompatible.
+    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.
+      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1281:43: error TS18046: 'e' is of type 'unknown'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1471:34: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1471:42: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1472:36: error TS2591: Cannot find name 'path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1472:46: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1473:21: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1475:36: error TS2591: Cannot find name 'crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1477:23: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1482:35: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1485:25: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1486:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1492:56: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1499:121: error TS2304: Cannot find name '__filename'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1499:35: error TS2304: Cannot find name '__filename'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1499:92: error TS2304: Cannot find name '__dirname'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1501:44: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1502:51: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1517:27: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1518:38: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1519:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1525:19: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1529:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1532:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1535:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1567:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1576:21: error TS2304: Cannot find name 'global'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1577:21: error TS2304: Cannot find name 'global'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1579:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1589:42: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1593:112: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1593:68: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1595:107: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1595:180: error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1595:192: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1595:26: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1595:62: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1598:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1598:69: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1607:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1610:33: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1615:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1616:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1617:13: error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.
+  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string; message?: string; }; }'.
+        Types of property 'error' are incompatible.
+          Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1620:38: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1630:49: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1651:44: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1651:59: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1673:47: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1697:54: error TS7006: Parameter 'err' implicitly has an 'any' type.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1697:61: error TS7031: Binding element 'profile' implicitly has an 'any' type.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1700:120: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1729:41: error TS2304: Cannot find name '__filename'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1747:47: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1747:73: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1789:25: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1854:38: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1854:59: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:1884:96: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:76:15: error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/sys.ts:77:15: error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tracing.ts:41:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tracing.ts:64:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tracing.ts:83:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tracing.ts:84:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformer.ts:367:9: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformer.ts:395:9: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformer.ts:563:9: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformer.ts:564:9: error TS2322: Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformer.ts:565:9: error TS2322: Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformer.ts:614:9: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:1835:21: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2251:45: error TS2538: Type 'undefined' cannot be used as an index type.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2252:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2253:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2297:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2376:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2745:16: error TS2375: Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'className' are incompatible.
+      Type 'undefined' is not assignable to type 'Identifier'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2864:52: error TS2345: Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.
+  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'setterName' are incompatible.
+      Type 'undefined' is not assignable to type 'Identifier'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/classFields.ts:2896:52: error TS2345: Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.
+  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'getterName' are incompatible.
+      Type 'undefined' is not assignable to type 'Identifier'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.
+  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:325:21: error TS2322: Type 'Set<__String | undefined>' is not assignable to type 'Set<__String>'.
+  Type '__String | undefined' is not assignable to type '__String'.
+    Type 'undefined' is not assignable to type '__String'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:327:17: error TS18048: 'catchClauseUnshadowedNames' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:599:86: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:765:25: error TS18048: 'originalParameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:765:58: error TS18048: 'originalParameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:767:76: error TS18048: 'outerParameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/es2017.ts:770:44: error TS18048: 'outerParameter' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esDecorators.ts:1164:45: error TS2538: Type 'undefined' cannot be used as an index type.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esDecorators.ts:1165:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esDecorators.ts:1192:80: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esDecorators.ts:351:9: error TS2322: Type '{ kind: "class"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.
+  Type '{ kind: "class"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'savedPendingExpressions' are incompatible.
+      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.
+        Type 'undefined' is not assignable to type 'Expression[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esDecorators.ts:398:13: error TS2322: Type '{ kind: "other"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.
+  Type '{ kind: "other"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'OtherLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'savedPendingExpressions' are incompatible.
+      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.
+        Type 'undefined' is not assignable to type 'Expression[]'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esnext.ts:183:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esnext.ts:205:52: error TS2345: Argument of type '(ExportSpecifier | undefined)[]' is not assignable to parameter of type 'readonly ExportSpecifier[]'.
+  Type 'ExportSpecifier | undefined' is not assignable to type 'ExportSpecifier'.
+    Type 'undefined' is not assignable to type 'ExportSpecifier'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esnext.ts:344:44: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esnext.ts:384:36: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esnext.ts:767:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/esnext.ts:767:70: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1283:39: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1370:35: error TS18048: 'variable' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1374:70: error TS2345: Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.
+  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.
+    Type 'undefined' is not assignable to type 'VariableDeclaration'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1684:46: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1729:55: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1866:21: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1880:25: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1881:43: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1881:50: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1887:62: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1887:69: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1889:55: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1889:85: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1889:92: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1911:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1918:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:1919:44: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2446:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2469:56: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2472:53: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2480:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2499:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2507:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2880:63: error TS18048: 'withBlock' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2951:21: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2983:57: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/generators.ts:2984:23: error TS2322: Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/jsx.ts:174:24: error TS2488: Type '[string, Map<string, ImportSpecifier>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/jsx.ts:187:172: error TS18046: 's' is of type 'unknown'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/jsx.ts:187:188: error TS18046: 's' is of type 'unknown'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/jsx.ts:309:58: error TS2345: Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.
+  Type 'undefined' is not assignable to type 'JsxChild'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/jsx.ts:502:62: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/module/esnextAnd2015.ts:100:46: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/module/esnextAnd2015.ts:163:91: error TS2345: Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.
+  Type 'undefined' is not assignable to type 'TextRange'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/module/esnextAnd2015.ts:194:37: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/module/esnextAnd2015.ts:196:81: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.
+  Type 'undefined' is not assignable to type 'Expression'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/transformers/module/esnextAnd2015.ts:251:22: error TS2532: Object is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:1064:76: error TS18048: 'data' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:1065:62: error TS18048: 'data' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:1066:42: error TS18048: 'data' is possibly 'undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:1776:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:302:5: error TS2412: Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => Date'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:438:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:439:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:440:5: error TS2412: Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:441:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:442:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:443:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:785:5: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:786:5: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => void'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/tsbuildPublic.ts:787:5: error TS2412: Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watch.ts:756:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'getDefaultLibLocation' are incompatible.
+    Type '(() => string) | undefined' is not assignable to type '() => string'.
+      Type 'undefined' is not assignable to type '() => string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watch.ts:845:5: error TS2375: Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:125:5: error TS2412: Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(data: string) => string'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:371:65: error TS2379: Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createProgram' are incompatible.
+    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
+      Type 'undefined' is not assignable to type 'CreateProgram<T>'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:383:52: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createProgram' are incompatible.
+    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
+      Type 'undefined' is not assignable to type 'CreateProgram<T>'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:506:5: error TS2412: Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:529:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:530:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:534:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:535:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:542:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:568:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:661:9: error TS2412: Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.
+/tmp/adamic-gate/tsc-entry-tip-snapshots-v695ex1n/src/compiler/watchPublic.ts:662:9: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directory: string) => void'.

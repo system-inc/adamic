@@ -1,0 +1,6 @@
+// utf8At past the last byte panics, in the same words natively and on Node.
+import { utf8At } from 'adamic';
+
+console.log(`${utf8At('é', 1)}`);
+console.log(`${utf8At('é', 2)}`);
+console.log('never printed');

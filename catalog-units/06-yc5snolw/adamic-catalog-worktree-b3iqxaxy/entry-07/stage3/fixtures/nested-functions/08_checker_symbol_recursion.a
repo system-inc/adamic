@@ -1,0 +1,16 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:17129
+// Census reason: a function inside a function (a closure)
+
+interface Symbol { escapedName: string; parent: Symbol | undefined; }
+function createTypeChecker() {
+    return getSymbolPath;
+    function getSymbolPath(symbol: Symbol): string {
+        return symbol.parent ? `${getSymbolPath(symbol.parent)}.${symbol.escapedName}` : symbol.escapedName as string;
+    }
+}
+const root: Symbol = { escapedName: 'ts', parent: undefined };
+const child: Symbol = { escapedName: 'SyntaxKind', parent: root };
+const leaf: Symbol = { escapedName: 'Identifier', parent: child };
+const path = createTypeChecker();
+console.log(path(root));
+console.log(path(leaf));

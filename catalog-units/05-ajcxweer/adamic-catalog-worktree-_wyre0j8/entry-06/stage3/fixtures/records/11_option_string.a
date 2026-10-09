@@ -1,0 +1,112 @@
+// From TypeScript 6.0.3, src/compiler/commandLineParser.ts:2039
+// From TypeScript 6.0.3, src/compiler/types.ts:7539
+// From TypeScript 6.0.3, src/compiler/types.ts:7571
+// Census reason: an index signature
+type CompilerOptionsValue = string | number | boolean | string[] | undefined;
+interface CompilerOptions {
+    strict?: boolean;
+    locale?: string;
+    maxNodeModuleJsDepth?: number;
+    [option: string]: CompilerOptionsValue;
+}
+type OptionsBase = CompilerOptions;
+type Diagnostic = string;
+interface CommandLineOption { name: string; type: string; isTSConfigOnly?: boolean; }
+type CommandLineOptionOfCustomType = CommandLineOption;
+interface ParseCommandLineWorkerDiagnostics { optionTypeMismatchDiagnostic: string; }
+const Diagnostics = {
+    Option_0_can_only_be_specified_in_tsconfig_json_file_or_set_to_false_or_null_on_command_line: "config-only",
+    Option_0_can_only_be_specified_in_tsconfig_json_file_or_set_to_null_on_command_line: "config-only",
+};
+const Debug = { fail: (message: string): never => { throw new Error(message); } };
+function startsWith(text: string, prefix: string): boolean { return text.startsWith(prefix); }
+function validateJsonOptionValue(opt: CommandLineOption, value: CompilerOptionsValue, errors: Diagnostic[]): CompilerOptionsValue { return value; }
+function createCompilerDiagnostic(message: string, name: string, type?: string): Diagnostic { return message + ":" + name; }
+function getCompilerOptionValueTypeString(opt: CommandLineOption): string { return opt.type; }
+function parseListTypeOption(opt: CommandLineOption, value: string | undefined, errors: Diagnostic[]): string[] | undefined { return value?.split(","); }
+function parseCustomTypeOption(opt: CommandLineOptionOfCustomType, value: string | undefined, errors: Diagnostic[]): CompilerOptionsValue { return value; }
+function parseOptionValue(
+    args: readonly string[],
+    i: number,
+    diagnostics: ParseCommandLineWorkerDiagnostics,
+    opt: CommandLineOption,
+    options: OptionsBase,
+    errors: Diagnostic[],
+) {
+    if (opt.isTSConfigOnly) {
+        const optValue = args[i];
+        if (optValue === "null") {
+            options[opt.name] = undefined;
+            i++;
+        }
+        else if (opt.type === "boolean") {
+            if (optValue === "false") {
+                options[opt.name] = validateJsonOptionValue(opt, /*value*/ false, errors);
+                i++;
+            }
+            else {
+                if (optValue === "true") i++;
+                errors.push(createCompilerDiagnostic(Diagnostics.Option_0_can_only_be_specified_in_tsconfig_json_file_or_set_to_false_or_null_on_command_line, opt.name));
+            }
+        }
+        else {
+            errors.push(createCompilerDiagnostic(Diagnostics.Option_0_can_only_be_specified_in_tsconfig_json_file_or_set_to_null_on_command_line, opt.name));
+            if (optValue && !startsWith(optValue, "-")) i++;
+        }
+    }
+    else {
+        // Check to see if no argument was provided (e.g. "--locale" is the last command-line argument).
+        if (!args[i] && opt.type !== "boolean") {
+            errors.push(createCompilerDiagnostic(diagnostics.optionTypeMismatchDiagnostic, opt.name, getCompilerOptionValueTypeString(opt)));
+        }
+
+        if (args[i] !== "null") {
+            switch (opt.type) {
+                case "number":
+                    options[opt.name] = validateJsonOptionValue(opt, parseInt(args[i]), errors);
+                    i++;
+                    break;
+                case "boolean":
+                    // boolean flag has optional value true, false, others
+                    const optValue = args[i];
+                    options[opt.name] = validateJsonOptionValue(opt, optValue !== "false", errors);
+                    // consume next argument as boolean flag value
+                    if (optValue === "false" || optValue === "true") {
+                        i++;
+                    }
+                    break;
+                case "string":
+                    options[opt.name] = validateJsonOptionValue(opt, args[i] || "", errors);
+                    i++;
+                    break;
+                case "list":
+                    const result = parseListTypeOption(opt, args[i], errors);
+                    options[opt.name] = result || [];
+                    if (result) {
+                        i++;
+                    }
+                    break;
+                case "listOrElement":
+                    Debug.fail("listOrElement not supported here");
+                    break;
+                // If not a primitive, the possible types are specified in what is effectively a map of options.
+                default:
+                    options[opt.name] = parseCustomTypeOption(opt as CommandLineOptionOfCustomType, args[i], errors);
+                    i++;
+                    break;
+            }
+        }
+        else {
+            options[opt.name] = undefined;
+            i++;
+        }
+    }
+    return i;
+}
+
+
+// Driver.
+const options: CompilerOptions = {};
+const errors: Diagnostic[] = [];
+parseOptionValue(["en"], 0, { optionTypeMismatchDiagnostic: "type" }, { name: "locale", type: "string" }, options, errors);
+console.log(`${options.locale}`);

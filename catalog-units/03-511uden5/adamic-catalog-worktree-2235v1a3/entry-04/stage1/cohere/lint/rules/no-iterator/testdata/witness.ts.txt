@@ -1,0 +1,13 @@
+/*😀*/ test.__iterator__;
+test['__iterator__'];
+test[`__iterator__`];
+test[__iterator__];
+const __iterator__ = null;
+test[`__iterator`];
+test[`__iterator__\n`];
+test[`__iterator${part}__`];
+test['\u005f_iterator__'];
+test[('__iterator__')];
+test[((`__iterator__`))];
+test?.__iterator__;
+test?.['__iterator__'];

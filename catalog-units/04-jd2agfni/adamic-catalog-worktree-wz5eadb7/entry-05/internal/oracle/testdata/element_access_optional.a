@@ -1,0 +1,31 @@
+function numberAt(values: readonly number[] | undefined, index: number): number | undefined {
+    return values?.[index];
+}
+function textAt(values: readonly string[] | undefined, index: number): string | undefined {
+    return values?.[index];
+}
+function objectAt(values: readonly ({ readonly value: number } | undefined)[] | undefined, index: number): { readonly value: number } | undefined {
+    return values?.[index];
+}
+console.log(`${numberAt(undefined, 0) ?? -1} ${numberAt([7], 0) ?? -1} ${numberAt([7], 1) ?? -1}`);
+console.log(`${numberAt([7], -1) ?? -1} ${numberAt([7], 0.5) ?? -1} ${numberAt([7], NaN) ?? -1}`);
+const built = ['native', 'node'].join('-');
+console.log(`${textAt(undefined, 0) ?? 'missing'} ${textAt([built], 0) ?? 'missing'} ${textAt([built], 2) ?? 'missing'}`);
+console.log(`${objectAt(undefined, 0)?.value ?? -1} ${objectAt([undefined, { value: 8 }], 0)?.value ?? -1} ${objectAt([undefined, { value: 8 }], 1)?.value ?? -1}`);
+
+const holder: { values: string[] | undefined } = { values: [built] };
+let receivers = 0;
+let keys = 0;
+function receiver(): string[] | undefined {
+    receivers += 1;
+    return holder.values;
+}
+function key(): number {
+    keys += 1;
+    holder.values = undefined;
+    console.log(['key', `${keys}`].join(':'));
+    return 0;
+}
+console.log(receiver()?.[key()] ?? 'missing');
+console.log(receiver()?.[key()] ?? 'missing');
+console.log(`${receivers} ${keys}`);

@@ -1,0 +1,18 @@
+// replace and replaceAll cut a piece per match, by UTF-16 units. Each piece was once sliced from the
+// string by index, walking it from the start every time, which made replaceAll quadratic natively:
+// 80,000 characters took 11.6 s where Node takes 0.1 s. The last case is 400,000 units with 200,000
+// matches, which only finishes inside the oracle's minute if every piece costs what it holds.
+const emoji = 'a\u{1F600}b\u{1F600}';
+console.log(emoji.replaceAll('', '-'));
+console.log(emoji.replaceAll('\u{1F600}', '[$&$&]'));
+console.log(emoji.replaceAll('b', "<$`|$'>"));
+console.log(emoji.replaceAll('a', '$$-$1-$<'));
+console.log(emoji.replace('\u{1F600}', '!'));
+// Half of a pair is a unit like any other: replacing it leaves the other half alone.
+console.log(emoji.replaceAll('\uD83D', 'H'));
+console.log('aaa'.replaceAll('aa', 'b'));
+console.log('abc'.replaceAll('x', 'y'));
+
+const text = 'ab'.repeat(200000);
+const replaced = text.replaceAll('a', 'xé');
+console.log(`${replaced.length} ${replaced.slice(0, 12)} ${replaced.slice(-12)}`);

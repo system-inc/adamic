@@ -1,0 +1,3 @@
+// a-check: refused a value as a condition
+const match = /ok/.exec("ok");
+if (match) console.log("ok");

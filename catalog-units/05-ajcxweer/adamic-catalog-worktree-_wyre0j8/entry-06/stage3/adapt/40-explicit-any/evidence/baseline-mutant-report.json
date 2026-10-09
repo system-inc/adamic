@@ -1,0 +1,56 @@
+{
+  "tree": "/workspace/explicit-any-pristine",
+  "nproc": 5,
+  "workers": 1,
+  "runners": "compiler",
+  "tests": "forInStatement1",
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.526
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 1.745
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=1",
+        "--lint=false",
+        "--no-colors",
+        "--runners=compiler",
+        "--tests=forInStatement1"
+      ],
+      "exit": 1,
+      "seconds": 3.945
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 3,
+    "failing": 3,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "forInStatement1.errors.txt",
+    "forInStatement1.js",
+    "forInStatement1.symbols",
+    "forInStatement1.types"
+  ],
+  "wall_seconds": 8.221
+}

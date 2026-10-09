@@ -1,0 +1,10 @@
+// Reduced from TypeScript 6.0.3, src/compiler/utilities.ts:10477-10485
+function show(input: number): string {
+    switch (input) {
+        case 1: return "one";
+        default:
+            const value = "other";
+            return value;
+    }
+}
+console.log(show(2));

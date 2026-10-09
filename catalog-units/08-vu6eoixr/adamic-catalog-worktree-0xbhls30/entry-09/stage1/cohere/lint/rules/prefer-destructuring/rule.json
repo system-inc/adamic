@@ -1,0 +1,14 @@
+{
+  "name": "prefer-destructuring",
+  "kinds": [
+    "VariableDeclaration",
+    "BinaryExpression"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferDestructuring",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferDestructuring"
+}

@@ -1,0 +1,6 @@
+interface Options { readonly target: number; }
+function target(value: Options | number): number {
+    return typeof value === "number" ? value : value.target;
+}
+const read = target;
+console.log(`${read(7)}:${read({ target: 12 })}`);

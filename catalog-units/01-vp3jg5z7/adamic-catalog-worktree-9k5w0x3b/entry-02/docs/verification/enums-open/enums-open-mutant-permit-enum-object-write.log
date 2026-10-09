@@ -1,0 +1,12 @@
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/object_assign
+    enums_test.go:54: got <nil>, want Refused
+--- FAIL: TestEnumSlotViews (0.00s)
+    --- FAIL: TestEnumSlotViews/object_assign (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.048s
+FAIL

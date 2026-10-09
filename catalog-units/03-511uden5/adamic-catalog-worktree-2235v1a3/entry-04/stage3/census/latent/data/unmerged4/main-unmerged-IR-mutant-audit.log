@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/audit.py", line 20, in <module>
+    subprocess.run([binary, str(source), str(output)], env=dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1', **extra), stdout=log, stderr=subprocess.STDOUT, check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/latent4-main-unmerged-guards/IR/census', '/tmp/adamic-gate/latent-audit-tuekzc9a/source', '/tmp/adamic-gate/latent-audit-tuekzc9a/baseline.jsonl']' returned non-zero exit status 2.

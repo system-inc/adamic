@@ -1,0 +1,8 @@
+function createScanner(textInitial?: string): () => string {
+    let text: string = undefined!;
+    setText(textInitial);
+    return () => text;
+    function setText(newText: string | undefined): void { text = newText || ''; }
+}
+console.log('[' + createScanner()() + ']');
+console.log('[' + createScanner('source')() + ']');

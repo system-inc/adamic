@@ -1,0 +1,18 @@
+// The holder is stored in a global, then reached from the value through a function: fetch makes a
+// fresh node, but what it holds it read from the global, which is the holder.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+let saved: Node = { kind: 'empty', nodes: [] };
+function fetch(): Node {
+	return { kind: 'fetched', nodes: [saved] };
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	saved = node;
+	node.nodes.push(fetch()); // closes the cycle
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);
+saved = { kind: 'cleared', nodes: [] };

@@ -1,0 +1,45 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/adjacent_overload_separation_ignored
+    lint_test.go:759: adjacent overload separation ignored caught on Node: case 145 line 2738: port "fixed\tfunction overload(x: string): void;\\u000afunction unrelated(): void {}\\u000afunction overload(x: number): void;\\u000a", Go "/tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored2520457089/016/typescript-adjacent-overload-signatures-0.ts:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored2520457089/016/typescript-adjacent-overload-signatures-0.ts:3:1
+          @typescript-eslint/adjacent-overload-signatures  This signature for overload is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for overload together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 66 101 adjacentSignature 			66 101
+        fixed	function overload(x: string): void;\u000afunction unrelated(): void {}\u000afunction overload(x: number): void;\u000a
+    lint_test.go:759: adjacent overload separation ignored caught on emitted JavaScript: case 145 line 2738: port "fixed\tfunction overload(x: string): void;\\u000afunction unrelated(): void {}\\u000afunction overload(x: number): void;\\u000a", Go "/tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored2520457089/016/typescript-adjacent-overload-signatures-0.ts:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored2520457089/016/typescript-adjacent-overload-signatures-0.ts:3:1
+          @typescript-eslint/adjacent-overload-signatures  This signature for overload is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for overload together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 66 101 adjacentSignature 			66 101
+        fixed	function overload(x: string): void;\u000afunction unrelated(): void {}\u000afunction overload(x: number): void;\u000a
+    lint_test.go:759: adjacent overload separation ignored caught on native: case 145 line 2738: port "fixed\tfunction overload(x: string): void;\\u000afunction unrelated(): void {}\\u000afunction overload(x: number): void;\\u000a", Go "/tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored2520457089/016/typescript-adjacent-overload-signatures-0.ts:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored2520457089/016/typescript-adjacent-overload-signatures-0.ts:3:1
+          @typescript-eslint/adjacent-overload-signatures  This signature for overload is separated from the others by unrelated members, so a reader scrolling the declaration sees an overload set that looks complete and is not. Move every signature for overload together, in the order the compiler resolves them, so the whole set can be read at once.
+        
+        range 66 101 adjacentSignature 			66 101
+        fixed	function overload(x: string): void;\u000afunction unrelated(): void {}\u000afunction overload(x: number): void;\u000a
+--- PASS: TestMutants (20.10s)
+    --- PASS: TestMutants/adjacent_overload_separation_ignored (17.44s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 90584 bytes
+--- PASS: TestOwnedWitnesses (20.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	40.425s

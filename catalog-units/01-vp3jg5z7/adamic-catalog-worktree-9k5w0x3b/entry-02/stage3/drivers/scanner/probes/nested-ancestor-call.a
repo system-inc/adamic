@@ -1,0 +1,10 @@
+// Reduced from TypeScript 6.0.3, src/compiler/scanner.ts:2651
+function outer(): void {
+    function read(): number { return 1; }
+    function worker(): void {
+        function scan(): void { console.log(`${read()}`); }
+        scan();
+    }
+    worker();
+}
+outer();

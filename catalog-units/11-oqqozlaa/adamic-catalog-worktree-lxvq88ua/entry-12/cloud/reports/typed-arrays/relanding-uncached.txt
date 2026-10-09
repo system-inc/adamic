@@ -1,0 +1,16 @@
+ok  	github.com/system-inc/adamic/internal/lower	46.176s
+ok  	github.com/system-inc/adamic/internal/ir	1.708s
+ok  	github.com/system-inc/adamic/internal/flow	144.779s
+ok  	github.com/system-inc/adamic/internal/fresh	81.737s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/native	371.894s
+--- FAIL: TestCountsAreRecorded (188.49s)
+    counts_test.go:200: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+        recorded: | internal/fresh/testdata/regexp_tree.ts | 97 | 97 | 69 | 85 | 35 | 0 |
+        measured: | internal/fresh/testdata/regexp_tree.ts | 91 | 91 | 81 | 85 | 35 | 0 |
+FAIL
+gate cache: native hits=0 misses=1775
+gate cache: node hits=0 misses=971
+gate cache: probe hits=0 misses=25
+FAIL	github.com/system-inc/adamic/internal/oracle	211.321s
+FAIL

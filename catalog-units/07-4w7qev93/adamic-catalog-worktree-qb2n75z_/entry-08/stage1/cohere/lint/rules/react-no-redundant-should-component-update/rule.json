@@ -1,0 +1,14 @@
+{
+  "name": "react/no-redundant-should-component-update",
+  "order": 15,
+  "kinds": [
+    "ClassDeclaration",
+    "ClassExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoRedundantShouldComponentUpdate",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoRedundantShouldComponentUpdate",
+  "factory": "create",
+  "class": "Rule"
+}

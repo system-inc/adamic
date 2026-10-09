@@ -1,0 +1,190 @@
+[
+  {
+    "name": "witness-0.ts",
+    "source": "switch(foo) { case 0: { /* falls through */ } case 1: b(); }"
+  },
+  {
+    "name": "witness-1.ts",
+    "source": "function f() { /* only */ }"
+  },
+  {
+    "name": "witness-2.ts",
+    "source": "const f = () => { /* arrow */ };"
+  },
+  {
+    "name": "witness-3.ts",
+    "source": "{ /* bare */ }"
+  },
+  {
+    "name": "witness-4.ts",
+    "source": "if (a) { /* then */ }"
+  },
+  {
+    "name": "witness-5.ts",
+    "source": "for (;;) { /* loop */ }"
+  },
+  {
+    "name": "witness-6.ts",
+    "source": "class A { m() { /* method */ } }"
+  },
+  {
+    "name": "witness-7.ts",
+    "source": "try { /* t */ } catch(e) { /* c */ } finally { /* f */ }"
+  },
+  {
+    "name": "witness-8.ts",
+    "source": "switch(a) { /* switch */ }"
+  },
+  {
+    "name": "witness-9.ts",
+    "source": "function f() {\n// only\n}\n"
+  },
+  {
+    "name": "witness-10.ts",
+    "source": "class A { /* class */ }"
+  },
+  {
+    "name": "witness-11.ts",
+    "source": "interface I { /* interface */ }"
+  },
+  {
+    "name": "witness-12.ts",
+    "source": "enum E { /* enum */ }"
+  },
+  {
+    "name": "witness-13.ts",
+    "source": "type T = { /* type */ };"
+  },
+  {
+    "name": "witness-14.ts",
+    "source": "const o = { /* object */ };"
+  },
+  {
+    "name": "witness-15.ts",
+    "source": "const a = [ /* array */ ];"
+  },
+  {
+    "name": "witness-16.ts",
+    "source": "f( /* args */ );"
+  },
+  {
+    "name": "witness-17.ts",
+    "source": "new C( /* args */ );"
+  },
+  {
+    "name": "witness-18.ts",
+    "source": "function g(/* params */) {}"
+  },
+  {
+    "name": "witness-19.ts",
+    "source": "const a=['a', // one\n'b', // two\n];"
+  },
+  {
+    "name": "witness-20.ts",
+    "source": "const { /* binding */ } = x;"
+  },
+  {
+    "name": "witness-21.ts",
+    "source": "const [ /* binding */ ] = x;"
+  },
+  {
+    "name": "witness-22.ts",
+    "source": "import { /* names */ } from 'a';"
+  },
+  {
+    "name": "witness-23.ts",
+    "source": "export { /* names */ };"
+  },
+  {
+    "name": "witness-24.ts",
+    "source": "const s='http://x'; // real\n"
+  },
+  {
+    "name": "witness-25.ts",
+    "source": "const r=/a\\/b/.test(c);"
+  },
+  {
+    "name": "witness-26.ts",
+    "source": "const d=6/2;"
+  },
+  {
+    "name": "witness-27.ts",
+    "source": "const t=`http://x`;"
+  },
+  {
+    "name": "witness-28.ts",
+    "source": "// once\nexport const value = { nested: { deeper: 1 } };"
+  },
+  {
+    "name": "witness-29.ts",
+    "source": "// lead\n/* block */\n/** jsdoc */\nlet x=1; // trail\n/* end */"
+  },
+  {
+    "name": "witness-30.ts",
+    "source": "#!/usr/bin/env node\n// lead\nconst a=1;"
+  },
+  {
+    "name": "witness-31.ts",
+    "source": "const \u00e9 = \"\ud83d\ude00\"; /* \u03a9 */\r\n// done\r\n"
+  },
+  {
+    "name": "witness-36.ts",
+    "source": "const f = (x = \"(//fake)\", /* parameter */) => x;"
+  },
+  {
+    "name": "witness-37.ts",
+    "source": "class A extends f(\"{/* fake */}\") { /* class */ }"
+  },
+  {
+    "name": "witness-38.ts",
+    "source": "function f<T = \"(//)\">(/* real */) {}"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1; // c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\t// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\n// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\r// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\r\n// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\u000b// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\f// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\u0085// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\u00a0// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\u2028// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\u2029// c\n/* b */"
+  },
+  {
+    "name": "separator.ts",
+    "source": "let x=1;\ufeff// c\n/* b */"
+  }
+]

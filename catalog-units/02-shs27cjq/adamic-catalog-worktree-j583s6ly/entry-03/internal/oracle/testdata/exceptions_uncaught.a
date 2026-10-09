@@ -1,0 +1,20 @@
+// An error nothing catches ends the program as a panic, String(error) after "adamic: panic: ", exit
+// 70, with every finally it passes run first and everything printed before it out.
+function inner(label: string): number {
+	try {
+		console.log(`working on ${label}`);
+		throw new Error(`${label} failed`);
+	} finally {
+		console.log('inner finally');
+	}
+}
+function outer(): number {
+	try {
+		return inner('the job');
+	} finally {
+		console.log('outer finally');
+	}
+}
+console.log('start');
+console.log(`${outer()}`);
+console.log('never printed');

@@ -1,0 +1,13 @@
+{
+  "name": "no-useless-concat",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUselessConcat",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUselessConcat"
+}

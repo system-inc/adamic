@@ -1,0 +1,10 @@
+{
+  "base": "4678c7302cae4ab51e2378156e228e9a771e73b4",
+  "branch": "lint-rules/compiler-agree-corpus-sources",
+  "files": {
+    "stage1/cohere/lint/lint_test.go": "3d25ac47312712c883ef36e5ec8105b5122c6cfe296d38c7ff0e7e8b4b6cd26e",
+    "stage1/cohere/lint/corpus_sources_test.go": "f033e84f56c9b7b40de7fe684abe848ecb18ee2b292f3808fee9c0e91e95ffb7"
+  },
+  "agreement_command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run ^TestCompilerAndStage1Agree$ -count=1 -v -json -failfast -timeout=0",
+  "fixture_command": "go test ./stage1/cohere/lint -run ^TestCompilerCorpusSourcesExcludeOnlyNamedFolders$ -count=1 -v -failfast -timeout=0"
+}

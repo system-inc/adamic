@@ -1,0 +1,65 @@
+function labeled(): string {
+ let out = '';
+ outer: for (const n of [0, 1, 2, 3]) {
+  const held = { text: `held${n}` };
+  switch (n) {
+   case 0: out += `${held.text}:zero;`;
+   case 1:
+    out += `${held.text}:one;`;
+    if (n === 1) { break outer; }
+    continue;
+   default: out += `${held.text}:default;`;
+  }
+  out += 'after;';
+ }
+ return out;
+}
+console.log(labeled());
+let total = 0;
+for (let n = 0; n < 3; n++) {
+ leave: switch (n) {
+  case 0:
+   for (const text of [`v${n}`, `w${n}`]) {
+    try { total += text.length; break leave; }
+    finally { total += 10; }
+   }
+  default: total += 100;
+ }
+ total += 1000;
+}
+console.log(`${total}`);
+function doubleLoop(): string {
+ let text = '';
+ done: for (let n = 0; n < 3; n++) {
+  for (let m = 0; m < 3; m++) {
+   switch (m) {
+    case 0: text += `a${n}${m}`;
+    case 1: text += `b${n}${m}`; break done;
+   }
+  }
+ }
+ return text;
+}
+console.log(doubleLoop());
+let whileTotal = 0;
+let i = 0;
+while (i < 4) {
+ i++;
+ switch (i) {
+  case 1: whileTotal += 1;
+  case 2: whileTotal += 10; continue;
+  default: whileTotal += 100;
+ }
+ whileTotal += 1000;
+}
+console.log(`${whileTotal}`);
+let doTotal = 0;
+i = 0;
+do {
+ i++;
+ switch (i) {
+  case 1: doTotal += 1;
+  default: doTotal += 10; continue;
+ }
+} while (i < 3);
+console.log(`${doTotal}`);

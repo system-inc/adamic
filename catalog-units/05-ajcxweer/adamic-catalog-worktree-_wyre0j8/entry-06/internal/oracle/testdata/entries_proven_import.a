@@ -1,0 +1,4 @@
+import {view} from './entries_proven_import_source.a';
+console.log(Object.keys(view).join(','));
+console.log(Object.values(view).join(','));
+for (const [key, value] of Object.entries(view)) console.log(`${key}:${value}`);

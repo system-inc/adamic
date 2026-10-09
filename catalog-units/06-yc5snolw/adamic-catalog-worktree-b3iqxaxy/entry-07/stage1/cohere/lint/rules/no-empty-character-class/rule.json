@@ -1,0 +1,13 @@
+{
+  "name": "no-empty-character-class",
+  "kinds": [
+    "RegularExpressionLiteral"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoEmptyCharacterClass",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoEmptyCharacterClass"
+}

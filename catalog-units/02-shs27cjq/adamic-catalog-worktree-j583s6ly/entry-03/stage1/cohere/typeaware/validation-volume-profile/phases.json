@@ -1,0 +1,56 @@
+{
+  "before": {
+    "disjoint_ns": {
+      "query_adapters": 9636427753,
+      "graph_decoding": 4318291557,
+      "parsing": 936797888,
+      "parent_index": 55532218,
+      "byte_offsets": 198895036,
+      "shadow_own": 7233656960,
+      "other_rule_own": 2928137209,
+      "other": 170779809
+    },
+    "other_rule_own_ns": {
+      "Rules_run": 455278884,
+      "Volume_run": 1172302961,
+      "Assignment_run": 237629828,
+      "VoidRule_run": 177524229,
+      "Returns_run": 338879548,
+      "Unbound_run": 546521759
+    },
+    "timing": {
+      "load_ns": 293787067,
+      "query_ns": 9636427753,
+      "queries": 854525,
+      "first_query_ns": 19747,
+      "run_ns": 25478518430
+    }
+  },
+  "after": {
+    "disjoint_ns": {
+      "query_adapters": 8125661852,
+      "graph_decoding": 4729036427,
+      "parsing": 968842397,
+      "parent_index": 56283535,
+      "byte_offsets": 206077943,
+      "shadow_own": 871912546,
+      "other_rule_own": 2959060432,
+      "other": 175259813
+    },
+    "other_rule_own_ns": {
+      "Rules_run": 453305146,
+      "Volume_run": 1193154061,
+      "Assignment_run": 233675221,
+      "VoidRule_run": 186319964,
+      "Returns_run": 374070756,
+      "Unbound_run": 518535284
+    },
+    "timing": {
+      "load_ns": 288304243,
+      "query_ns": 8125661852,
+      "queries": 854525,
+      "first_query_ns": 16962,
+      "run_ns": 18092134945
+    }
+  }
+}

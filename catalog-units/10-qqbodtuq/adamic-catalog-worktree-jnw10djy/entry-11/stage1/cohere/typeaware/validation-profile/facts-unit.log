@@ -1,0 +1,10 @@
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.015s

@@ -1,0 +1,7 @@
+source /workspace/adamic-tools/env.sh
+bash cloud/setup.sh > setup.log 2>&1
+go run ./cmd/lint-registry > registry-final.log 2>&1
+gofmt -w stage1/cohere/lint/rules/max-classes-per-file/oracle.go
+gofmt -l stage1/cohere/lint/rules/max-classes-per-file/oracle.go > gofmt.log
+go vet ./... > vet-final.log 2>&1
+TMPDIR=/workspace/wave-17-artifacts go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestRulesAgree)$|^TestMutants$/^one_excess_class_is_silently_allowed$' -count=1 -v -timeout=30m > checks-final.log 2>&1

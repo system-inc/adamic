@@ -1,0 +1,7 @@
+// Debug.fail after adaptation 55, with Node's typed capture operation.
+import type {} from 'node:util';
+function capture(stackCrawlMark?: {}): void {
+    Error.captureStackTrace(new Error(), stackCrawlMark || capture);
+}
+capture();
+console.log('ok');

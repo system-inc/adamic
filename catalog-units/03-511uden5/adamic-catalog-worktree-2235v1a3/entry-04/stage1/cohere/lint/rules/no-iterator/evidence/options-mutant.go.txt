@@ -1,0 +1,24 @@
+//go:build lintoracle
+
+package main
+
+import (
+	"encoding/json"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/core"
+)
+
+func oracleNoIterator() rule.Rule { return rules.NoIterator }
+
+// NoIterator defines no options type and ignores options upstream. Preserve any
+// supplied JSON value rather than dropping it before the shared adapter guard.
+func oracleNoIteratorOptions(fields []string) any {
+	if len(fields) >= 0 {
+		return nil
+	}
+	var options any
+	if err := json.Unmarshal([]byte(fields[5]), &options); err != nil {
+		panic(err)
+	}
+	return options
+}

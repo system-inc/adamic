@@ -1,0 +1,6 @@
+=== RUN   TestFailedFamilyCannotBeMarkedPassed
+    adamic_inventory_test.go:182: failed or unrun family marked passed: "FAIL\tgithub.com/system-inc/cohere/internal/lint/rules/core\t1s"
+--- FAIL: TestFailedFamilyCannotBeMarkedPassed (0.00s)
+FAIL
+FAIL	command-line-arguments	0.020s
+FAIL

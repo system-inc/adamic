@@ -1,0 +1,12 @@
+{
+  "emit": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "/tmp/adapt32-wave2-unit/verify.cjs:24\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in binder.ts: bda6c9db9dfd0fff3b2e7ccf3587927d4a1d83cd69f808fdb86d2b160b63b45e != d18f62b3a88a6c3aa0542ac40a397c7734a1cd2380e57ea2d664c2faceeffff7\n    at Object.<anonymous> (/tmp/adapt32-wave2-unit/verify.cjs:24:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+  },
+  "contract": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "required read defaulted: binder.ts:1428:20\n"
+  }
+}

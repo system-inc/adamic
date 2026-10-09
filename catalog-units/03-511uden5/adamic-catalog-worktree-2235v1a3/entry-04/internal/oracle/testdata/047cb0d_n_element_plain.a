@@ -1,0 +1,13 @@
+interface Leaf {
+	readonly kind: 'leaf';
+	readonly value: number;
+}
+const leaves: Leaf[] = [{ kind: 'leaf', value: 1 }];
+function cut(): void {
+	leaves.pop();
+}
+if (leaves[0] !== undefined) {
+	console.log(`${leaves[0].value}`);
+	cut();
+	console.log(`${leaves[0].value}`);
+}

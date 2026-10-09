@@ -1,0 +1,59 @@
+// Reference parameters written inside a try's body, its catch and its finally: each needs a count
+// of its own, as a parameter written anywhere does, since the write lets go of the old value and
+// that one is the caller's. The strings and arrays are built at run time, so a parameter borrowed
+// by mistake is let go of twice and caught.
+
+function word(stem: string, index: number): string {
+	return `${stem}${index}`;
+}
+
+function clamped(value: number, label: string): string {
+	try {
+		if (value < 0) {
+			value = 0;
+			label = `${label} (clamped)`;
+		}
+		if (value > 10) {
+			throw new Error(word('too big ', value));
+		}
+	} catch (error) {
+		label = `${label} (${error instanceof Error ? error.message : 'something'})`;
+		value = 10;
+	}
+	return `${label}: ${value}`;
+}
+console.log(clamped(-1, word('low ', 1)));
+console.log(clamped(5, word('mid ', 2)));
+console.log(clamped(50, word('high ', 3)));
+
+function finallyWrites(items: string[], tag: string): string {
+	try {
+		items = [...items, word('added ', items.length)];
+	} finally {
+		tag = word(tag, items.length);
+		items = items.map((item) => `${item}!`);
+	}
+	return `${tag} ${items.join(', ')}`;
+}
+const kept = [word('kept ', 1), word('kept ', 2)];
+console.log(finallyWrites(kept, word('tag ', 0)));
+console.log(kept.join(', '));
+
+class Holder {
+	name: string;
+	constructor(name: string) {
+		this.name = name;
+	}
+	renamed(next: string): string {
+		try {
+			if (next.length === 0) {
+				throw new Error('empty');
+			}
+		} catch {
+			next = word(this.name, 0);
+		}
+		return next;
+	}
+}
+const holder = new Holder(word('holder ', 7));
+console.log(`${holder.renamed(word('next ', 1))} ${holder.renamed('')}`);

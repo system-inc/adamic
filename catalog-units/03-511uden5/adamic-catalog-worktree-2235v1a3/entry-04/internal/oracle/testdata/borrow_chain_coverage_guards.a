@@ -1,0 +1,21 @@
+interface Leaf { readonly text: string; }
+interface Root { child: Leaf; }
+function before(root: Root): string {
+ root.child = { text: `before${2}` };
+ const child = root.child;
+ return child.text;
+}
+function unrelated(root: Root, other: Root): string {
+ const child = root.child;
+ other.child = { text: `other${3}` };
+ return child.text;
+}
+function runtime(root: Root): string {
+ const child = root.child;
+ const map = new Map<string, string>();
+ map.set('key', child.text);
+ return child.text + (map.get('key') ?? 'missing');
+}
+console.log(before({ child: { text: `old${1}` } }));
+console.log(unrelated({ child: { text: `held${1}` } }, { child: { text: `old${2}` } }));
+console.log(runtime({ child: { text: `runtime${1}` } }));

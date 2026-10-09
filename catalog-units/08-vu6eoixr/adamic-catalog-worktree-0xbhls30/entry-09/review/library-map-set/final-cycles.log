@@ -1,0 +1,18 @@
+=== RUN   TestFreshWriteProbesStayRefused
+=== PAUSE TestFreshWriteProbesStayRefused
+=== CONT  TestFreshWriteProbesStayRefused
+=== RUN   TestFreshWriteProbesStayRefused/map_iterator.a
+=== PAUSE TestFreshWriteProbesStayRefused/map_iterator.a
+=== RUN   TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a
+=== PAUSE TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a
+=== RUN   TestFreshWriteProbesStayRefused/set_iterator.a
+=== PAUSE TestFreshWriteProbesStayRefused/set_iterator.a
+=== CONT  TestFreshWriteProbesStayRefused/set_iterator.a
+=== CONT  TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a
+=== CONT  TestFreshWriteProbesStayRefused/map_iterator.a
+--- PASS: TestFreshWriteProbesStayRefused (0.00s)
+    --- PASS: TestFreshWriteProbesStayRefused/set_iterator.a (0.28s)
+    --- PASS: TestFreshWriteProbesStayRefused/map_iterator.a (0.27s)
+    --- PASS: TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.320s

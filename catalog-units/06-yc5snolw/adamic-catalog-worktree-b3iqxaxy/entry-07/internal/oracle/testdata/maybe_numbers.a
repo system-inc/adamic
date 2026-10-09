@@ -1,0 +1,38 @@
+// number | undefined, given a number or undefined: declared, assigned, returned and passed.
+let best: number | undefined;
+const pick = (): void => {
+	best = 1;
+};
+console.log(`${best ?? -1}`);
+pick();
+console.log(`${best ?? -1}`);
+best = undefined;
+console.log(`${best === undefined}`);
+
+function half(value: number): number | undefined {
+	if (value % 2 !== 0) {
+		return undefined;
+	}
+	return value / 2;
+}
+
+function describe(value: number | undefined): string {
+	if (value === undefined) {
+		return 'none';
+	}
+	return `${value + 0.5}`;
+}
+
+let found: number | undefined = 7;
+found = half(10);
+console.log(`${describe(found)} ${describe(half(3))} ${describe(4)} ${describe(undefined)}`);
+const counts = new Map<string, number>([['a', 2]]);
+console.log(`${describe(counts.get('a'))} ${describe(counts.get('z'))}`);
+
+class Tally {
+	last: number;
+	constructor(start: number | undefined) {
+		this.last = start ?? 0;
+	}
+}
+console.log(`${new Tally(5).last} ${new Tally(undefined).last}`);

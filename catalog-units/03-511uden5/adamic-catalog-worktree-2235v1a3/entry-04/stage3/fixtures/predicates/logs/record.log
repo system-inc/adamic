@@ -1,0 +1,11 @@
+01_identifier.a {'stdout': 'true\nfalse\ntrue\n', 'stderr': '', 'exit': 0} Refused
+02_module_name.a {'stdout': 'true\ntrue\nfalse\n', 'stderr': '', 'exit': 0} Refused
+03_void_zero.a {'stdout': 'true\nfalse\nfalse\n', 'stderr': '', 'exit': 0} Refused
+04_literal_or.a {'stdout': 'true\ntrue\nfalse\ntrue\n', 'stderr': '', 'exit': 0} Refused
+05_kind_switch.a {'stdout': 'true\ntrue\ntrue\nfalse\n', 'stderr': '', 'exit': 0} Refused
+06_signed_numeric.a {'stdout': 'true\nfalse\nfalse\n', 'stderr': '', 'exit': 0} Refused
+07_typeof.a {'stdout': 'node\ntypes.d.ts\n', 'stderr': '', 'exit': 0} Refused
+08_flags.a {'stdout': 'false\ntrue\n', 'stderr': '', 'exit': 0} Refused
+09_assert_defined.a {'stdout': 'present\n0\nmissing\n', 'stderr': '', 'exit': 0} Refused
+10_nullish.a {'stdout': 'true\ntrue\nfalse\nfalse\nfalse\n', 'stderr': '', 'exit': 0} Refused
+11_empty_assert.a {'stdout': 'undefined\n', 'stderr': '', 'exit': 0} Refused

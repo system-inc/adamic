@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/drivers/tsc/audit.py", line 40, in <module>
+    audit(Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT)
+  File "/workspace/adamic/stage3/drivers/tsc/audit.py", line 19, in audit
+    assert hashlib.sha256(raw).hexdigest() == row['source_sha256'], 'source hash: ' + row['id']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: source hash: 061_constEnumErrors

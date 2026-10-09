@@ -1,0 +1,12 @@
+function mutateMapSkippingNewValues<K, T>(map: Map<K, T>, newMap: ReadonlySet<K> | undefined, remove: (key: K, value: T) => void): void;
+function mutateMapSkippingNewValues<K, T, U>(map: Map<K, T>, newMap: ReadonlySet<K> | undefined, remove: (key: K, value: T) => void): void {
+    for (const [key, value] of map) {
+        if (newMap === undefined || !newMap.has(key)) {
+            remove(key, value);
+            map.delete(key);
+        }
+    }
+}
+const values = new Map<string, number>([['old', 3], ['keep', 4]]);
+mutateMapSkippingNewValues(values, new Set(['keep', 'new']), (key, value) => console.log(`${key}:${value}`));
+console.log(`${values.size}:${values.has('keep')}:${values.has('new')}`);

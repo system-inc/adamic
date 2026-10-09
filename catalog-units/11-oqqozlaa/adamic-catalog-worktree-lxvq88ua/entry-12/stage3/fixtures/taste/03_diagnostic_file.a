@@ -1,0 +1,10 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:8776
+// Census reason: non-boolean control condition
+interface Diagnostic { file?: { path: string }; }
+function getDiagnosticFilePath(diagnostic: Diagnostic): string | undefined {
+    return diagnostic.file ? diagnostic.file.path : undefined;
+}
+
+console.log(String(getDiagnosticFilePath({})));
+console.log(String(getDiagnosticFilePath({file: {path: ""}})));
+console.log(String(getDiagnosticFilePath({file: {path: "src/index.ts"}})));

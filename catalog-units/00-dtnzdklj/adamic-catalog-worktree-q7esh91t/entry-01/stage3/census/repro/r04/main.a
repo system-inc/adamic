@@ -1,0 +1,2 @@
+// a-check: refused a number as a condition
+const value = 1; if (value) { console.log(String(value)); }

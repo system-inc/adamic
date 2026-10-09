@@ -1,0 +1,12 @@
+11 refuse-definite-assignment: applies-and-fails-as-recorded
+Actual JSON Go test command: accepted with all four expected failing subtests
+11 refuse-definite-assignment: applies-but-failure-not-as-recorded (needs investigation)
+Unrelated failing test output mutant: rejected only by unexpected-test check
+11 refuse-definite-assignment: applies-but-failure-not-as-recorded (needs investigation)
+Missing required failing subtest mutant: rejected
+11 refuse-definite-assignment: applies-but-failure-not-as-recorded (needs investigation)
+Wrong named-test diagnostic mutant: rejected
+Unanchored pattern mutant: rejected
+Cached Go command mutant: rejected
+Named checker probes passed; worktree restored
+Label clarification: the "Cached Go command" probe changed -count=1 to -count=2. This is an incorrect repeat count, not an enabled cache. The repeat-count guard rejected it.

@@ -1,0 +1,916 @@
+{
+  "test262": "/tmp/adamic-string-test262",
+  "commit": "7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd",
+  "filters": [
+    {
+      "path": "built-ins/String",
+      "pass": 130,
+      "fail": 0,
+      "refused": 777,
+      "crashed": 0,
+      "skipped": 316,
+      "total": 1223,
+      "directories": [
+        {
+          "path": "built-ins/String",
+          "pass": 0,
+          "fail": 0,
+          "refused": 80,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 92
+        },
+        {
+          "path": "built-ins/String/fromCharCode",
+          "pass": 0,
+          "fail": 0,
+          "refused": 14,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 17
+        },
+        {
+          "path": "built-ins/String/fromCodePoint",
+          "pass": 2,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 11
+        },
+        {
+          "path": "built-ins/String/prototype",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 7
+        },
+        {
+          "path": "built-ins/String/prototype/Symbol.iterator",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 6
+        },
+        {
+          "path": "built-ins/String/prototype/at",
+          "pass": 4,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 11
+        },
+        {
+          "path": "built-ins/String/prototype/charAt",
+          "pass": 1,
+          "fail": 0,
+          "refused": 25,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 30
+        },
+        {
+          "path": "built-ins/String/prototype/charCodeAt",
+          "pass": 0,
+          "fail": 0,
+          "refused": 21,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 25
+        },
+        {
+          "path": "built-ins/String/prototype/codePointAt",
+          "pass": 5,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 16
+        },
+        {
+          "path": "built-ins/String/prototype/concat",
+          "pass": 0,
+          "fail": 0,
+          "refused": 19,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 22
+        },
+        {
+          "path": "built-ins/String/prototype/constructor",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 0,
+          "total": 2
+        },
+        {
+          "path": "built-ins/String/prototype/endsWith",
+          "pass": 2,
+          "fail": 0,
+          "refused": 17,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 27
+        },
+        {
+          "path": "built-ins/String/prototype/includes",
+          "pass": 5,
+          "fail": 0,
+          "refused": 14,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 27
+        },
+        {
+          "path": "built-ins/String/prototype/indexOf",
+          "pass": 0,
+          "fail": 0,
+          "refused": 35,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 47
+        },
+        {
+          "path": "built-ins/String/prototype/isWellFormed",
+          "pass": 0,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/String/prototype/lastIndexOf",
+          "pass": 1,
+          "fail": 0,
+          "refused": 21,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 25
+        },
+        {
+          "path": "built-ins/String/prototype/localeCompare",
+          "pass": 0,
+          "fail": 0,
+          "refused": 10,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 13
+        },
+        {
+          "path": "built-ins/String/prototype/match",
+          "pass": 0,
+          "fail": 0,
+          "refused": 36,
+          "crashed": 0,
+          "skipped": 15,
+          "total": 51
+        },
+        {
+          "path": "built-ins/String/prototype/matchAll",
+          "pass": 0,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 24,
+          "total": 25
+        },
+        {
+          "path": "built-ins/String/prototype/normalize",
+          "pass": 0,
+          "fail": 0,
+          "refused": 8,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 14
+        },
+        {
+          "path": "built-ins/String/prototype/padEnd",
+          "pass": 3,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 13
+        },
+        {
+          "path": "built-ins/String/prototype/padStart",
+          "pass": 3,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 13
+        },
+        {
+          "path": "built-ins/String/prototype/repeat",
+          "pass": 1,
+          "fail": 0,
+          "refused": 9,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 16
+        },
+        {
+          "path": "built-ins/String/prototype/replace",
+          "pass": 0,
+          "fail": 0,
+          "refused": 41,
+          "crashed": 0,
+          "skipped": 14,
+          "total": 55
+        },
+        {
+          "path": "built-ins/String/prototype/replaceAll",
+          "pass": 0,
+          "fail": 0,
+          "refused": 15,
+          "crashed": 0,
+          "skipped": 30,
+          "total": 45
+        },
+        {
+          "path": "built-ins/String/prototype/search",
+          "pass": 0,
+          "fail": 0,
+          "refused": 29,
+          "crashed": 0,
+          "skipped": 14,
+          "total": 43
+        },
+        {
+          "path": "built-ins/String/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "refused": 34,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 38
+        },
+        {
+          "path": "built-ins/String/prototype/split",
+          "pass": 0,
+          "fail": 0,
+          "refused": 106,
+          "crashed": 0,
+          "skipped": 14,
+          "total": 120
+        },
+        {
+          "path": "built-ins/String/prototype/startsWith",
+          "pass": 0,
+          "fail": 0,
+          "refused": 13,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 21
+        },
+        {
+          "path": "built-ins/String/prototype/substring",
+          "pass": 0,
+          "fail": 0,
+          "refused": 42,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 46
+        },
+        {
+          "path": "built-ins/String/prototype/toLocaleLowerCase",
+          "pass": 0,
+          "fail": 0,
+          "refused": 24,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 28
+        },
+        {
+          "path": "built-ins/String/prototype/toLocaleUpperCase",
+          "pass": 0,
+          "fail": 0,
+          "refused": 22,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 26
+        },
+        {
+          "path": "built-ins/String/prototype/toLowerCase",
+          "pass": 4,
+          "fail": 0,
+          "refused": 21,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 30
+        },
+        {
+          "path": "built-ins/String/prototype/toString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 7
+        },
+        {
+          "path": "built-ins/String/prototype/toUpperCase",
+          "pass": 2,
+          "fail": 0,
+          "refused": 20,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 26
+        },
+        {
+          "path": "built-ins/String/prototype/toWellFormed",
+          "pass": 0,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 8
+        },
+        {
+          "path": "built-ins/String/prototype/trim",
+          "pass": 93,
+          "fail": 0,
+          "refused": 34,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 129
+        },
+        {
+          "path": "built-ins/String/prototype/trimEnd",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 18,
+          "total": 23
+        },
+        {
+          "path": "built-ins/String/prototype/trimStart",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 18,
+          "total": 23
+        },
+        {
+          "path": "built-ins/String/prototype/valueOf",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 7
+        },
+        {
+          "path": "built-ins/String/raw",
+          "pass": 4,
+          "fail": 0,
+          "refused": 19,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 30
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "refuses var",
+          "count": 151
+        },
+        {
+          "reason": "error TS2345: Argument of type '…' is not assignable to parameter of type '…'.",
+          "count": 135
+        },
+        {
+          "reason": "error TS2339: Property '…' does not exist on type '…'.",
+          "count": 109
+        },
+        {
+          "reason": "error TS2769: No overload matches this call.",
+          "count": 55
+        },
+        {
+          "reason": "refuses throwing a Test262Error",
+          "count": 27
+        },
+        {
+          "reason": "not yet: a function expression (an arrow function captures this as written)",
+          "count": 25
+        },
+        {
+          "reason": "error TS2554: Expected 1-2 arguments, but got 0.",
+          "count": 21
+        },
+        {
+          "reason": "error TS2531: Object is possibly '…'.",
+          "count": 17
+        },
+        {
+          "reason": "error TS2704: The operand of a '…' operator cannot be a read-only property.",
+          "count": 15
+        },
+        {
+          "reason": "error TS7009: '…' expression, whose target lacks a construct signature, implicitly has an '…' type.",
+          "count": 14
+        },
+        {
+          "reason": "refuses !=",
+          "count": 13
+        },
+        {
+          "reason": "error TS2554: Expected 1 arguments, but got 0.",
+          "count": 11
+        },
+        {
+          "reason": "error TS2551: Property '…' does not exist on type '…'. Did you mean '…'?",
+          "count": 8
+        },
+        {
+          "reason": "error TS2322: Type '…' is not assignable to type '…'.",
+          "count": 6
+        },
+        {
+          "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+          "count": 6
+        },
+        {
+          "reason": "refuses the comma operator",
+          "count": 6
+        },
+        {
+          "reason": "error TS2554: Expected 2 arguments, but got 1.",
+          "count": 5
+        },
+        {
+          "reason": "error TS7015: Element implicitly has an '…' type because index expression is not of type '…'.",
+          "count": 5
+        },
+        {
+          "reason": "not yet: .toLocaleLowerCase on a string",
+          "count": 5
+        },
+        {
+          "reason": "not yet: endsWith with these arguments",
+          "count": 5
+        },
+        {
+          "reason": "not yet: new an Identifier",
+          "count": 5
+        },
+        {
+          "reason": "refuses a method read as a value (trimEnd would lose its object, and this with it)",
+          "count": 5
+        },
+        {
+          "reason": "refuses a method read as a value (trimStart would lose its object, and this with it)",
+          "count": 5
+        },
+        {
+          "reason": "refuses a method read as a value (valueOf would lose its object, and this with it)",
+          "count": 5
+        },
+        {
+          "reason": "refuses arguments",
+          "count": 5
+        },
+        {
+          "reason": "error TS2790: The operand of a '…' operator must be optional.",
+          "count": 4
+        },
+        {
+          "reason": "error TS7034: Variable '…' implicitly has type '…' in some locations where its type cannot be determined.",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (charAt would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (charCodeAt would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (concat would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (indexOf would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (lastIndexOf would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (localeCompare would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (search would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (slice would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (substring would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (toLocaleLowerCase would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (toLocaleUpperCase would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (toLowerCase would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (toUpperCase would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses the void operator",
+          "count": 4
+        },
+        {
+          "reason": "error TS2351: This expression is not constructable.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 2-3 arguments, but got 1.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 3 arguments, but got 1.",
+          "count": 3
+        },
+        {
+          "reason": "not yet: .toLocaleUpperCase on a string",
+          "count": 3
+        },
+        {
+          "reason": "not yet: String conversion of an object, array, map or function (ToPrimitive is not lowered)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (match would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (split would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "error TS2349: This expression is not callable.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2554: Expected 1-3 arguments, but got 0.",
+          "count": 2
+        },
+        {
+          "reason": "error TS7006: Parameter '…' implicitly has an '…' type.",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (trim would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses for...in",
+          "count": 2
+        },
+        {
+          "reason": "error TS1532: There is no capturing group named '…' in this regular expression.",
+          "count": 1
+        },
+        {
+          "reason": "error TS18048: '…' is possibly '…'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2345: Argument of type '…'0'…' is not assignable to parameter of type '…'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2362: The left-hand side of an arithmetic operation must be of type '…', '…', '…' or an enum type.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2363: The right-hand side of an arithmetic operation must be of type '…', '…', '…' or an enum type.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2403: Subsequent variable declarations must have the same type.  Variable '…' must be of type '…', but here has type '…'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2554: Expected 0 arguments, but got 3.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2554: Expected 2 arguments, but got 0.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2683: '…' implicitly has type '…' because it does not have a type annotation.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2741: Property '…' is missing in type '…' but required in type '…'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '…' type because expression of type '…' can'…'{ length: number; }'.",
+          "count": 1
+        },
+        {
+          "reason": "not yet: reading Function",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (fromCharCode would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (includes would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (replace would lose its object, and this with it)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 99
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 38
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 32
+        },
+        {
+          "reason": "feature Symbol.toPrimitive",
+          "count": 32
+        },
+        {
+          "reason": "feature Symbol.replace",
+          "count": 20
+        },
+        {
+          "reason": "feature Symbol.matchAll",
+          "count": 16
+        },
+        {
+          "reason": "feature Symbol.match",
+          "count": 14
+        },
+        {
+          "reason": "eval",
+          "count": 12
+        },
+        {
+          "reason": "Symbol",
+          "count": 9
+        },
+        {
+          "reason": "feature Symbol.search",
+          "count": 9
+        },
+        {
+          "reason": "feature Symbol.split",
+          "count": 7
+        },
+        {
+          "reason": "features Symbol, Symbol.toPrimitive",
+          "count": 3
+        },
+        {
+          "reason": "noStrict (sloppy mode only; Adamic modules are always strict)",
+          "count": 3
+        },
+        {
+          "reason": "feature Symbol.iterator",
+          "count": 2
+        },
+        {
+          "reason": "feature cross-realm",
+          "count": 2
+        },
+        {
+          "reason": "features BigInt, Symbol.toPrimitive",
+          "count": 2
+        },
+        {
+          "reason": "features Symbol, Symbol.match",
+          "count": 2
+        },
+        {
+          "reason": "features Symbol.search, regexp-v-flag",
+          "count": 2
+        },
+        {
+          "reason": "harness includes compareIterator.js, regExpUtils.js",
+          "count": 2
+        },
+        {
+          "reason": "feature BigInt",
+          "count": 1
+        },
+        {
+          "reason": "feature regexp-duplicate-named-groups",
+          "count": 1
+        },
+        {
+          "reason": "features Reflect, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol, Symbol.match, Symbol.replace",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol, Symbol.split, Symbol.toPrimitive",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.match, Symbol.replace",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.match, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.matchAll, regexp-unicode-property-escapes, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.replace, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "features regexp-duplicate-named-groups, regexp-match-indices",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": [],
+      "passes": [
+        "built-ins/String/fromCodePoint/arguments-is-empty.js",
+        "built-ins/String/fromCodePoint/return-string-value.js",
+        "built-ins/String/prototype/at/returns-code-unit.js",
+        "built-ins/String/prototype/at/returns-item-relative-index.js",
+        "built-ins/String/prototype/at/returns-item.js",
+        "built-ins/String/prototype/at/returns-undefined-for-out-of-range-index.js",
+        "built-ins/String/prototype/charAt/pos-rounding.js",
+        "built-ins/String/prototype/codePointAt/return-first-code-unit.js",
+        "built-ins/String/prototype/codePointAt/return-single-code-unit.js",
+        "built-ins/String/prototype/codePointAt/return-utf16-decode.js",
+        "built-ins/String/prototype/codePointAt/returns-undefined-on-position-equal-or-more-than-size.js",
+        "built-ins/String/prototype/codePointAt/returns-undefined-on-position-less-than-zero.js",
+        "built-ins/String/prototype/endsWith/String.prototype.endsWith_Fail.js",
+        "built-ins/String/prototype/endsWith/String.prototype.endsWith_Success.js",
+        "built-ins/String/prototype/includes/String.prototype.includes_FailBadLocation.js",
+        "built-ins/String/prototype/includes/String.prototype.includes_FailLocation.js",
+        "built-ins/String/prototype/includes/String.prototype.includes_FailMissingLetter.js",
+        "built-ins/String/prototype/includes/String.prototype.includes_Success.js",
+        "built-ins/String/prototype/includes/String.prototype.includes_SuccessNoLocation.js",
+        "built-ins/String/prototype/lastIndexOf/not-a-substring.js",
+        "built-ins/String/prototype/padEnd/fill-string-empty.js",
+        "built-ins/String/prototype/padEnd/fill-string-omitted.js",
+        "built-ins/String/prototype/padEnd/normal-operation.js",
+        "built-ins/String/prototype/padStart/fill-string-empty.js",
+        "built-ins/String/prototype/padStart/fill-string-omitted.js",
+        "built-ins/String/prototype/padStart/normal-operation.js",
+        "built-ins/String/prototype/repeat/count-is-zero-returns-empty-string.js",
+        "built-ins/String/prototype/toLowerCase/Final_Sigma_U180E.js",
+        "built-ins/String/prototype/toLowerCase/special_casing.js",
+        "built-ins/String/prototype/toLowerCase/special_casing_conditional.js",
+        "built-ins/String/prototype/toLowerCase/supplementary_plane.js",
+        "built-ins/String/prototype/toUpperCase/special_casing.js",
+        "built-ins/String/prototype/toUpperCase/supplementary_plane.js",
+        "built-ins/String/prototype/trim/15.5.4.20-1-3.js",
+        "built-ins/String/prototype/trim/15.5.4.20-1-4.js",
+        "built-ins/String/prototype/trim/15.5.4.20-1-7.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-1.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-10.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-11.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-12.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-13.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-14.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-15.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-16.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-17.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-18.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-19.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-2.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-20.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-21.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-22.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-23.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-24.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-25.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-26.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-27.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-28.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-29.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-3.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-30.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-31.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-32.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-33.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-4.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-5.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-6.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-7.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-8.js",
+        "built-ins/String/prototype/trim/15.5.4.20-2-9.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-10.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-11.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-12.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-13.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-14.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-8.js",
+        "built-ins/String/prototype/trim/15.5.4.20-3-9.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-10.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-11.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-12.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-13.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-14.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-16.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-18.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-19.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-2.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-20.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-21.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-22.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-24.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-27.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-28.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-29.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-3.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-30.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-32.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-34.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-35.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-36.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-37.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-38.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-39.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-4.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-40.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-41.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-42.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-43.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-44.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-45.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-46.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-47.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-48.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-49.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-5.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-50.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-51.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-52.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-53.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-54.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-55.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-56.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-57.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-58.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-6.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-60.js",
+        "built-ins/String/prototype/trim/15.5.4.20-4-8.js",
+        "built-ins/String/prototype/trim/u180e.js",
+        "built-ins/String/raw/return-the-string-value-from-template.js",
+        "built-ins/String/raw/special-characters.js",
+        "built-ins/String/raw/template-substitutions-are-appended-on-same-index.js",
+        "built-ins/String/raw/zero-literal-segments.js"
+      ]
+    }
+  ]
+}

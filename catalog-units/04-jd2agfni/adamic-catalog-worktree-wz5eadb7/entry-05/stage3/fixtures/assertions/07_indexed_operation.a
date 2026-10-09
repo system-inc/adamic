@@ -1,0 +1,77 @@
+// From TypeScript 6.0.3, src/compiler/transformers/generators.ts:3027
+// Census reason: the non-null assertion !
+// Support types and driver are reduced scaffolding; the upstream function is unchanged.
+
+const OpCode = { Nop: 0, Statement: 1, Assign: 2, Break: 3, BreakWhenTrue: 4, BreakWhenFalse: 5, Yield: 6, YieldStar: 7, Return: 8, Throw: 9, Endfinally: 10 } as const;
+interface Expression { readonly kind: 80; readonly text: string; }
+interface Statement { readonly kind: 245; readonly expression: Expression; }
+type Label = number;
+let operations: number[] | undefined = [0, 1, 2, 10];
+type OperationArguments = [Label] | [Label, Expression] | [Statement] | [Expression | undefined] | [Expression, Expression];
+let operationArguments: OperationArguments[] | undefined = [[0], [{ kind: 245, expression: { kind: 80, text: "statement" } }], [{ kind: 80, text: "left" }, { kind: 80, text: "right" }], [0]];
+let operationLocations: (number | undefined)[] | undefined = [0, 1, 2, 3];
+let lastOperationWasAbrupt = false;
+let lastOperationWasCompletion = false;
+function tryEnterLabel(index: number): void {}
+function tryEnterOrLeaveBlock(index: number): void {}
+function writeEndfinally(): void { console.log("endfinally"); }
+function writeStatement(statement: Statement): void { console.log(statement.expression.text); }
+function writeAssign(left: Expression, right: Expression, location: number | undefined): void { console.log(left.text + "=" + right.text); }
+function writeBreak(label: Label, location: number | undefined): void {}
+function writeBreakWhenTrue(label: Label, expression: Expression, location: number | undefined): void {}
+function writeBreakWhenFalse(label: Label, expression: Expression, location: number | undefined): void {}
+function writeYield(expression: Expression, location: number | undefined): void {}
+function writeYieldStar(expression: Expression, location: number | undefined): void {}
+function writeReturn(expression: Expression, location: number | undefined): void {}
+function writeThrow(expression: Expression, location: number | undefined): void {}
+
+function writeOperation(operationIndex: number): void {
+        tryEnterLabel(operationIndex);
+        tryEnterOrLeaveBlock(operationIndex);
+
+        // early termination, nothing else to process in this label
+        if (lastOperationWasAbrupt) {
+            return;
+        }
+
+        lastOperationWasAbrupt = false;
+        lastOperationWasCompletion = false;
+
+        const opcode = operations![operationIndex];
+        if (opcode === OpCode.Nop) {
+            return;
+        }
+        else if (opcode === OpCode.Endfinally) {
+            return writeEndfinally();
+        }
+
+        const args = operationArguments![operationIndex]!;
+        if (opcode === OpCode.Statement) {
+            return writeStatement(args[0] as Statement);
+        }
+
+        const location = operationLocations![operationIndex];
+        switch (opcode) {
+            case OpCode.Assign:
+                return writeAssign(args[0] as Expression, args[1] as Expression, location);
+            case OpCode.Break:
+                return writeBreak(args[0] as Label, location);
+            case OpCode.BreakWhenTrue:
+                return writeBreakWhenTrue(args[0] as Label, args[1] as Expression, location);
+            case OpCode.BreakWhenFalse:
+                return writeBreakWhenFalse(args[0] as Label, args[1] as Expression, location);
+            case OpCode.Yield:
+                return writeYield(args[0] as Expression, location);
+            case OpCode.YieldStar:
+                return writeYieldStar(args[0] as Expression, location);
+            case OpCode.Return:
+                return writeReturn(args[0] as Expression, location);
+            case OpCode.Throw:
+                return writeThrow(args[0] as Expression, location);
+        }
+    }
+
+writeOperation(0);
+writeOperation(1);
+writeOperation(2);
+writeOperation(3);

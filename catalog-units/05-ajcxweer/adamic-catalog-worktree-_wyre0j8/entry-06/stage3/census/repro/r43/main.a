@@ -1,0 +1,2 @@
+// a-check: type error TS2556
+function read(a: number, b: number): number { return a + b; } const values: number[] = []; console.log(String(read(...values)));

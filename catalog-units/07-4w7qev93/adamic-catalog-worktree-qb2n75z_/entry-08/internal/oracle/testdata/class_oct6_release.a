@@ -1,0 +1,40 @@
+class Base {
+    readonly label: string;
+    constructor(index: number) { this.label = `base${index}`; }
+    read(): string { return this.label; }
+}
+class Child extends Base {
+    readonly values: readonly string[];
+    constructor(index: number) { super(index); this.values = [`child${index}`, `again${index}`]; }
+    override read(): string { return super.read() + '/' + this.values.join(':'); }
+}
+class Grandchild extends Child {
+    readonly details: { readonly text: string };
+    constructor(index: number) { super(index); this.details = { text: `grandchild${index}` }; }
+    override read(): string { return super.read() + '/' + this.details.text; }
+}
+class Leaf extends Grandchild {
+    readonly extra: string;
+    constructor(index: number) { super(index); this.extra = `leaf${index}`; }
+    override read(): string { return super.read() + '/' + this.extra; }
+}
+function make(depth: number, index: number): Base {
+    if (depth === 0) { return new Base(index); }
+    if (depth === 1) { return new Child(index); }
+    if (depth === 2) { return new Grandchild(index); }
+    return new Leaf(index);
+}
+function scopes(index: number): void {
+    let value: Base = make(0, index);
+    for (const depth of [1, 2, 3, 0]) {
+        const alias = value;
+        value = make(depth, index + depth);
+        console.log(`${alias.read()} -> ${value.read()}`);
+    }
+    const mixed: Base[] = [make(3, index), make(1, index), make(2, index), make(0, index)];
+    while (mixed.length > 0) {
+        const removed = mixed.pop();
+        if (removed !== undefined) { console.log(removed.read()); }
+    }
+}
+for (let index = 0; index < 3; index += 1) { scopes(index); }

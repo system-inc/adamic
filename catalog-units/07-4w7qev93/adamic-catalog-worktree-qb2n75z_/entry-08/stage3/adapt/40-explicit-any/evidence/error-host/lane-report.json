@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "234ab1aa5f728a5221fb6075c35b94f88a2c6437",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 406.732
+  },
+  "results": "/workspace/scratch/error-host-lane-final",
+  "verdict": "PASS stage3 landing lane"
+}

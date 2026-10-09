@@ -1,0 +1,25 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-json",
+    "-v",
+    "-timeout=0"
+  ],
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/lint-guard-normal-profile",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/lint-guard-normal-profile",
+    "ADAMIC_GATE_UNCACHED": "1"
+  },
+  "wall_seconds": 2069.8767371177673,
+  "exit": 1,
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "load_before": "1.70 3.97 2.99 2/164 7775",
+  "load_after": "2.37 1.84 2.06 1/164 94050",
+  "burner_pids": []
+}

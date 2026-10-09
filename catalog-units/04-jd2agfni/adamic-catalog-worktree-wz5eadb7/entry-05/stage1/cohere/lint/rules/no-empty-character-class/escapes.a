@@ -1,0 +1,19 @@
+// Port of regexsyntax.SkipPatternEscape used by this rule only.
+export function escapeEnd(pattern: string, start: number, unicode: boolean): number {
+    if(start + 1 >= pattern.length) return -1;
+    const letter = pattern[start + 1] ?? '';
+    if(unicode && ['u', 'p', 'P', 'q'].includes(letter) && pattern[start + 2] === '{') {
+        const end = pattern.indexOf('}', start + 3);
+        if(end >= 0) return end + 1;
+    }
+    if(letter === 'c' && start + 2 < pattern.length) return start + 3;
+    const width = letter === 'x' ? 2 : letter === 'u' ? 4 : 0;
+    if(width > 0 && start + 2 + width <= pattern.length) {
+        let valid = true;
+        for(let offset = 0; offset < width; offset++) {
+            if(!'0123456789abcdefABCDEF'.includes(pattern[start + 2 + offset] ?? '')) valid = false;
+        }
+        if(valid) return start + 2 + width;
+    }
+    return start + ((pattern.codePointAt(start + 1) ?? 0) > 65535 ? 3 : 2);
+}

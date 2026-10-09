@@ -1,0 +1,11 @@
+--- a/api/typescript.d.ts
++++ b/api/typescript.d.ts
+@@ -8519,7 +8519,7 @@
+     function isIdentifierStart(ch: number, languageVersion: ScriptTarget | undefined): boolean;
+     function isIdentifierPart(ch: number, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant): boolean;
+     function createScanner(languageVersion: ScriptTarget, skipTrivia: boolean, languageVariant?: LanguageVariant, textInitial?: string, onError?: ErrorCallback, start?: number, length?: number): Scanner;
+-    type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;
++    type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: string | number) => void;
+     interface Scanner {
+         /** @deprecated use {@link getTokenFullStart} */
+         getStartPos(): number;

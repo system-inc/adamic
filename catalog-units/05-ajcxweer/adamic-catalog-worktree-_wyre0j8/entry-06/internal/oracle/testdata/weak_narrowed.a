@@ -1,0 +1,36 @@
+import type { Weak } from 'adamic';
+
+// A Weak narrowed to present is still kept as a handle wherever it's kept. filter and every, through
+// the predicate the checker infers for x => x !== undefined, make an array of Box & WeakBrand, whose
+// elements are still the handles; and a Weak<Map> narrowed to present is the map. Everything here is
+// read while something holds it strongly, so native and Node agree. (Reviewer R's a_filter, a_filter2,
+// a_every and a_map4.)
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const a: Box = { label: `a${n}` };
+	const b: Box = { label: `b${n}` };
+	const seen: Weak<Box>[] = [a, undefined, b];
+	const present = seen.filter((x) => x !== undefined);
+	console.log(`${present.length} ${present.indexOf(a)} ${present.includes(b)} ${present[1] === b}`);
+	for (const box of present) {
+		console.log(box.label);
+	}
+	const full: Weak<Box>[] = [b, a];
+	if (full.every((x) => x !== undefined)) {
+		console.log(`${full[0] === b} ${full[1]?.label ?? '-'} ${full.indexOf(a)}`);
+	}
+}
+run(1);
+
+interface Slots {
+	m: Weak<Map<string, number>>;
+}
+const counts = new Map<string, number>();
+counts.set(`k${1}`, 1);
+const slots: Slots = { m: counts };
+const narrowed = slots.m;
+if (narrowed !== undefined) {
+	console.log(`${narrowed.has('k1')} ${narrowed.get('k1') ?? -1} ${narrowed.size}`);
+}

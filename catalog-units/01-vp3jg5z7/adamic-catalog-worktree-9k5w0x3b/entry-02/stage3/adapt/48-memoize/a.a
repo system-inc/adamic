@@ -1,0 +1,15 @@
+export function memoize<T>(callback: (() => T) | undefined): () => T {
+    let value: T;
+    return () => {
+        if (callback) {
+            value = callback();
+            callback = undefined;
+        }
+        return value;
+    };
+}
+let calls = 0;
+const cached = memoize(() => { calls += 1; return 42; });
+const first = cached();
+const second = cached();
+console.log(`${first} ${second} ${calls}`);

@@ -1,0 +1,8 @@
+type Path = string & { readonly pathBrand: true };
+function forEachAncestorDirectory<T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined;
+function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined;
+function forEachAncestorDirectory<T, P extends string>(directory: P, callback: (directory: P) => T | undefined): T | undefined {
+    return directory.length === 0 ? undefined : callback(directory);
+}
+console.log(forEachAncestorDirectory('parent/child', (directory) => directory.slice(0, 6)) ?? 'missing');
+console.log(forEachAncestorDirectory('', (directory) => directory) ?? 'missing');

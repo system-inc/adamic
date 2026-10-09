@@ -1,0 +1,2 @@
+namespace Debug {export let level=0; export class AssertionError {} }
+console.log(`${Debug.level}`);

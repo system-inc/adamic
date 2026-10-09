@@ -1,0 +1,7 @@
+// Inlining a member must not erase the preceding namespace read.
+function read(): number { return Debug.Level.Info; }
+function invoke(action: () => number): number { return action(); }
+let action = (): number => 0;
+action = read;
+console.log(`${invoke(action)}`);
+namespace Debug { export const enum Level { Info = 1 } }

@@ -1,0 +1,36 @@
+import type { Weak } from 'adamic';
+let trace = '';
+function mark(value: string): string { trace += value; return `${value}${trace.length}`; }
+class PrivateStaticBase {
+    static #value = mark('a');
+    static #read(): string { return this.#value; }
+    static get #accessor(): string { return this.#value; }
+    static set #accessor(value: string) { this.#value = value; }
+    static { this.#value += 'block'; }
+    static read(): string { return this.#read(); }
+    static field(): string { return this.#value; }
+    static accessor(): string { return this.#accessor; }
+    static setField(): void { this.#value = mark('w'); }
+    static setAccessor(): void { this.#accessor = mark('s'); }
+    static explicit(): string { return PrivateStaticBase.#value; }
+}
+class PrivateStaticChild extends PrivateStaticBase {
+    static #value = mark('b');
+    static #parent: Weak<typeof PrivateStaticBase> = undefined;
+    static { this.#parent = PrivateStaticBase; }
+    static parent(): string { const parent = this.#parent; return parent === undefined ? 'missing' : parent.explicit(); }
+    static child(): string { return this.#value; }
+}
+console.log(PrivateStaticBase.read());
+console.log(PrivateStaticChild.child());
+console.log(PrivateStaticChild.explicit());
+console.log(Object.keys(PrivateStaticBase).join(',') + '/' + Object.keys(PrivateStaticChild).join(','));
+try { console.log(PrivateStaticChild.field()); } catch (error) { if (error instanceof Error) console.log(error.name + ':' + error.message); }
+try { console.log(PrivateStaticChild.read()); } catch (error) { if (error instanceof Error) console.log(error.name + ':' + error.message); }
+try { console.log(PrivateStaticChild.accessor()); } catch (error) { if (error instanceof Error) console.log(error.name + ':' + error.message); }
+try { PrivateStaticChild.setField(); } catch (error) { if (error instanceof Error) console.log(error.name + ':' + error.message); }
+try { PrivateStaticChild.setAccessor(); } catch (error) { if (error instanceof Error) console.log(error.name + ':' + error.message); }
+PrivateStaticBase.setAccessor();
+console.log(PrivateStaticBase.accessor() + '/' + trace);
+
+console.log(PrivateStaticChild.parent());

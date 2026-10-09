@@ -1,0 +1,4 @@
+// a-check: type error TS2488
+declare function transform<T, U>(items: Iterable<T>, callback: (item: T) => U): U[];
+declare const values: Iterable<[string, number] | undefined>;
+transform(values, ([key, value]) => value);

@@ -1,0 +1,2 @@
+// a-check: type error TS2339
+function read(value: {kind: "a"; count: number} | {kind: "b"}): number { return value.count; }

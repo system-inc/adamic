@@ -1,0 +1,5 @@
+// a-check: type error TS18048
+function show(file: { readonly path: string } | undefined): void {
+    console.log(file.path);
+}
+show({ path: "ok" });

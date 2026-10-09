@@ -1,0 +1,21 @@
+function show(text: string, start: number, length: number | undefined): void {
+    const result = text.substr(start, length);
+    console.log(`${start}/${length}:${result}:${result.length}:${result.charCodeAt(0)}:${result.charCodeAt(1)}`);
+}
+const text = ['ab', '🌍', 'cd', '\ud800', 'ef'].join('');
+const starts = [-100, -4.9, -0.9, 0, 1.9, 3, 100, 1 / 0, -1 / 0, 0 / 0];
+const lengths = [-10, -4.9, -1, -0.9, 0, 1.9, 4, 100, 1 / 0, -1 / 0, 0 / 0];
+for (const start of starts) {
+    for (const length of lengths) {
+        show(text, start, length);
+    }
+    show(text, start, undefined);
+}
+console.log(text.substr(2));
+console.log(text.substr(2, undefined));
+let order = '';
+function receiver(): string { order += 'r'; return ['abc', 'def'].join(''); }
+function start(): number { order += 's'; return -4; }
+function length(): number { order += 'l'; return 2; }
+console.log(receiver().substr(start(), length()));
+console.log(order);

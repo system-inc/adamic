@@ -1,0 +1,15 @@
+declare const object: any;
+declare const __proto__: string;
+object.__proto__;
+object['__proto__'];
+object[`__proto__`];
+object?.__proto__;
+object?.[`__proto__`];
+object['\u005f\u005fproto__'];
+object.__proto__ = null;
+object[__proto__];
+object[`__proto__${object}`];
+const literal = { __proto__: null };
+object.prototype;
+object[(('__proto__'))];
+object[(__proto__)];

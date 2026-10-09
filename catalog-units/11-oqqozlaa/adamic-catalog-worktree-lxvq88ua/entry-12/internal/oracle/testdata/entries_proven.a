@@ -1,0 +1,6 @@
+const source = {z: 9, '10': 10, '2': 2, '01': 1, end: 5};
+const view: {readonly z: number} = source;
+let alias = view;
+console.log(Object.keys(alias).join(','));
+console.log(Object.values(alias).join(','));
+for (const [key, value] of Object.entries(alias)) console.log(`${key}:${value}`);

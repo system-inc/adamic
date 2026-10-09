@@ -1,0 +1,28 @@
+--- FAIL: TestBridge (86.85s)
+    bridge_test.go:72: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:77: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:90: build, C and JavaScript commands refuse unlinked checker calls
+    bridge_test.go:149: go: tsgo: load_ns=199364969 query_ns=106555179 queries=162
+    bridge_test.go:154: oracle: 162 positions across 1 files, 3261 bytes identical under ASan/UBSan/LSan
+    bridge_test.go:156: native-round-1: tsgo: load_ns=126129430 query_ns=4574035 queries=162 first_query_ns=105587 run_ns=4920645
+    bridge_test.go:157: go-round-1: tsgo: load_ns=109988394 query_ns=31874242 queries=162
+    bridge_test.go:156: native-round-2: tsgo: load_ns=124126818 query_ns=870854 queries=162 first_query_ns=57848 run_ns=1129428
+    bridge_test.go:157: go-round-2: tsgo: load_ns=84103356 query_ns=46375034 queries=162
+    bridge_test.go:156: native-round-3: tsgo: load_ns=157503557 query_ns=781940 queries=162 first_query_ns=138318 run_ns=1026697
+    bridge_test.go:157: go-round-3: tsgo: load_ns=184150799 query_ns=21109897 queries=162
+    bridge_test.go:197: output string length off by one: ASan heap-buffer-overflow
+    bridge_test.go:207: released handle kept live: stale-handle assertion catches it
+    bridge_test.go:217: type from source-file position: oracle mismatch at byte 6
+    bridge_test.go:224: link opt-in guard removed: refusal test catches it
+    bridge_test.go:228: leak-build: exit status 1
+        # github.com/system-inc/adamic/bridge/tsgo/archive
+        /workspace/adamic-tools/go/pkg/tool/linux_amd64/link: running ar failed: exit status 1
+        ar: unable to copy file '/tmp/adamic-gate/go-build3204796637/b001/exe/a.out.a'; reason: No space left on device
+
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo	86.898s
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.142s
+ok  	github.com/system-inc/adamic/internal/load	1.687s
+ok  	github.com/system-inc/adamic/internal/lower	5.767s
+ok  	github.com/system-inc/adamic/internal/native	81.569s
+FAIL

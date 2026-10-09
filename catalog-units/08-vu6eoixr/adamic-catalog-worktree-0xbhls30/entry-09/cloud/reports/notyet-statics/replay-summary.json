@@ -1,0 +1,541 @@
+{
+  "before-579": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 20547,
+        "body_end": 22244,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "bindSourceFile",
+        "parent": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "top": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:576:29",
+        "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:576:29: stage 0 can't lower a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:579:18",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:579:18: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:585:73",
+        "reason": "a value of type Path",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:585:73: stage 0 can't lower a value of type Path yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:587:13",
+        "reason": "a call returning void | undefined",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:587:13: stage 0 can't lower a call returning void | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2458:14",
+        "reason": "a function returning undefined",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2458:14: stage 0 can't lower a function returning undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:594:16",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:594:16: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:595:19",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:595:19: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:596:27",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:596:27: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:597:18",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:597:18: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:598:21",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:598:21: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:599:31",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:599:31: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:600:31",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:600:31: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:601:25",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:601:25: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:602:30",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:602:30: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:603:24",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:603:24: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:605:23",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:605:23: stage 0 can't lower a NonNullExpression yet"
+      }
+    ]
+  },
+  "before-3695": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3684:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 183859,
+        "body_end": 185201,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "bindParameter",
+        "parent": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "top": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3684:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2428:84",
+        "reason": "a value of type __String",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2428:84: stage 0 can't lower a value of type __String yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3684:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3705:27",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3705:27: stage 0 can't lower a NonNullExpression yet"
+      }
+    ]
+  },
+  "before-3792": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 188986,
+        "body_end": 189889,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "isExportsOrModuleExportsOrAlias",
+        "top": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1570:41",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1570:41: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1573:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1573:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1577:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1577:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1581:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1581:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3792:5",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3792:5: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3793:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3793:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      }
+    ]
+  },
+  "after-579": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 20547,
+        "body_end": 22244,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "bindSourceFile",
+        "parent": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "top": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:576:29",
+        "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:576:29: stage 0 can't lower a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:585:73",
+        "reason": "a value of type Path",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:585:73: stage 0 can't lower a value of type Path yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:587:13",
+        "reason": "a call returning void | undefined",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:587:13: stage 0 can't lower a call returning void | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2458:14",
+        "reason": "a function returning undefined",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2458:14: stage 0 can't lower a function returning undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:594:16",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:594:16: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:595:19",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:595:19: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:596:27",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:596:27: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:597:18",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:597:18: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:598:21",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:598:21: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:599:31",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:599:31: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:600:31",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:600:31: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:601:25",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:601:25: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:602:30",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:602:30: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:603:24",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:603:24: stage 0 can't lower a NonNullExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:571:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:605:23",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:605:23: stage 0 can't lower a NonNullExpression yet"
+      }
+    ]
+  },
+  "after-3695": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3684:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 183859,
+        "body_end": 185201,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "bindParameter",
+        "parent": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "top": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:509:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3684:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2428:84",
+        "reason": "a value of type __String",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:2428:84: stage 0 can't lower a value of type __String yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3684:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3705:27",
+        "reason": "a NonNullExpression",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3705:27: stage 0 can't lower a NonNullExpression yet"
+      }
+    ]
+  },
+  "after-3792": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 188986,
+        "body_end": 189889,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "isExportsOrModuleExportsOrAlias",
+        "top": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1570:41",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1570:41: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1573:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1573:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1577:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1577:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1581:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/core.ts:1581:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3905:47",
+        "reason": "a value of type __String",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3905:47: stage 0 can't lower a value of type __String yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3789:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3801:19",
+        "reason": "reading symbol",
+        "text": "/tmp/notyet-statics-table-adapted/src/compiler/binder.ts:3801:19: stage 0 can't lower reading symbol yet"
+      }
+    ]
+  }
+}

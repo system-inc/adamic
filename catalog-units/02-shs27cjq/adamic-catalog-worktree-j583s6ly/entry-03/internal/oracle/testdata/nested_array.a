@@ -1,0 +1,9 @@
+function make(start: number, into: (() => string)[]): void {
+ let count = start;
+ const label = `item${start}`;
+ function next(): string { count += 1; return `${label}:${count}`; }
+ into.push(next); into.push(next);
+}
+const values: (() => string)[] = []; make(3, values); make(8, values);
+for (const value of values) { console.log(value()); }
+console.log(String(values[0] === values[1]));

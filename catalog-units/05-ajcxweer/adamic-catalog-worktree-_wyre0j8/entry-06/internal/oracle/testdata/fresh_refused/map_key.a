@@ -1,0 +1,11 @@
+// A map's set of the holder as a key of its own map.
+interface Room {
+	readonly name: string;
+	readonly visits: Map<Room, number>;
+}
+function run(n: number): number {
+	const hall: Room = { name: `h${n}`, visits: new Map<Room, number>() };
+	hall.visits.set(hall, n); // closes the cycle
+	return hall.visits.size;
+}
+console.log(`${run(1)}`);

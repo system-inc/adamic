@@ -1,0 +1,21 @@
+{
+  "family": "timers",
+  "typescript": "6.0.3",
+  "files": {
+    "src/compiler/sys.ts": {
+      "before": "5bbf980334502ca7ffda097d91e551fb9d493aaab2d620ca25875afac5e5870c",
+      "after": "66325f9ce19fb0bb5072818a920d796f52bd985098d8e490de2879b24ceee9f4",
+      "tokensRemoved": 3,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    }
+  },
+  "tokensRemoved": 3,
+  "mutants": [
+    {
+      "file": "src/compiler/sys.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    }
+  ]
+}

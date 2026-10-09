@@ -1,0 +1,51 @@
+class Box<Item> {
+	#item: Item;
+	readonly label: string;
+
+	constructor(item: Item, label: string) {
+		this.#item = item;
+		this.label = label;
+	}
+
+	get(): Item {
+		return this.#item;
+	}
+
+	put(item: Item): void {
+		this.#item = item;
+	}
+
+	describe(): string {
+		return `<${this.label}>`;
+	}
+}
+
+const numbers = new Box<number>(1, 'numbers');
+const words = new Box<string>('one', 'words');
+const alias = numbers;
+alias.put(41);
+numbers.put(numbers.get() + 1);
+words.put(words.get() + ' two');
+console.log(`${numbers.get()} ${words.get()} ${alias === numbers} ${numbers.describe()} ${words.label}`);
+
+class Counter {
+	private count = 0;
+
+	increment(): number {
+		this.count = this.count + 1;
+		return this.count;
+	}
+
+	twice(): number {
+		this.increment();
+		return this.increment();
+	}
+}
+
+const counter = new Counter();
+console.log(`${counter.twice()} ${counter.twice()}`);
+const stack: number[] = [1, 2];
+const last = stack.pop();
+const next = stack.pop();
+const none = stack.pop();
+console.log(`${last ?? -1} ${next ?? -1} ${none ?? -1} ${stack.length}`);

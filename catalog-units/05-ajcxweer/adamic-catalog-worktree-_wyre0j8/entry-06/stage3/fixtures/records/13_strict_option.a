@@ -1,0 +1,26 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9358
+// From TypeScript 6.0.3, src/compiler/utilities.ts:9369
+// Census reason: an index signature
+interface CompilerOptions { strict?: boolean; noImplicitAny?: boolean; [option: string]: boolean | undefined; }
+export type StrictOptionName =
+    | "noImplicitAny"
+    | "noImplicitThis"
+    | "strictNullChecks"
+    | "strictFunctionTypes"
+    | "strictBindCallApply"
+    | "strictPropertyInitialization"
+    | "strictBuiltinIteratorReturn"
+    | "useUnknownInCatchVariables";
+
+/** @internal */
+export function getStrictOptionValue(compilerOptions: CompilerOptions, flag: StrictOptionName): boolean {
+    return compilerOptions[flag] === undefined ? (compilerOptions.strict !== false) : !!compilerOptions[flag];
+}
+
+// Driver.
+const options: CompilerOptions = {};
+console.log(String(getStrictOptionValue(options, "noImplicitAny")));
+options["strict"] = false;
+console.log(String(getStrictOptionValue(options, "noImplicitAny")));
+options["noImplicitAny"] = true;
+console.log(String(getStrictOptionValue(options, "noImplicitAny")));

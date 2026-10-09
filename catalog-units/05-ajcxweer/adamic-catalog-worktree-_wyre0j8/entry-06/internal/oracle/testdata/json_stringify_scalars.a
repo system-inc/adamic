@@ -1,0 +1,24 @@
+// JSON numbers use JavaScript's shortest decimal, with its fixed/exponent boundaries.
+for (const value of [0, -0, 0.1, 1e-7, 1e-6, 1e20, 1e21, 1000000000000000100, Number.MIN_VALUE, Number.MAX_VALUE, NaN, Infinity, -Infinity]) {
+ console.log(JSON.stringify(value) ?? '<undefined>');
+}
+console.log(JSON.stringify(true) ?? '<undefined>');
+console.log(JSON.stringify(false) ?? '<undefined>');
+console.log(JSON.stringify(null) ?? '<undefined>');
+console.log(`${JSON.stringify(undefined) === undefined}`);
+console.log(`${JSON.stringify(() => 1) === undefined}`);
+let controls = '';
+for (let code = 0; code < 32; code += 1) { controls += String.fromCharCode(code); }
+console.log(JSON.stringify(controls) ?? '<undefined>');
+console.log(JSON.stringify('"\\/é🌍\u2028\u2029<>') ?? '<undefined>');
+const lone = String.fromCharCode(0xd800) + 'middle' + String.fromCharCode(0xdfff);
+console.log(JSON.stringify(lone) ?? '<undefined>');
+console.log(JSON.stringify(String.fromCharCode(0xd800, 0xdc00, 0xd800, 0xd800, 0xdc00, 0xdc00)) ?? '<undefined>');
+function show(value: number | string | boolean | undefined): void { console.log(JSON.stringify(value) ?? '<undefined>'); }
+show(1);
+show('two');
+show(false);
+show(undefined);
+show(NaN);
+const missingBoolean = [true][9];
+console.log(JSON.stringify(missingBoolean) ?? '<undefined>');

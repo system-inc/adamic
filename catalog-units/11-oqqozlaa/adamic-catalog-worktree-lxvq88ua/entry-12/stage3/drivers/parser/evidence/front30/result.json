@@ -1,0 +1,32 @@
+{
+  "result": "red",
+  "base": "ef3141e9b1152ab51b51497f8ce3a2799449c8a3",
+  "scratch_unpushed": "cadeac4fb323ef966cccd7957e2a5d0215052e66",
+  "clean_merges": [
+    "47a6fabe",
+    "2152fc3b",
+    "a36d1c04"
+  ],
+  "conflicting_merges_aborted": [
+    "51761b0",
+    "37fa06d3"
+  ],
+  "front3_supplies": [
+    "16cb9b10",
+    "0f722679",
+    "7d2cbc89"
+  ],
+  "ordered_stops": 15,
+  "checker_sites": 5,
+  "initial_checker_diagnostic_rows": 8,
+  "lowering_stops": 10,
+  "distinct_minimals": 14,
+  "node_success": 14,
+  "native_build_success": 0,
+  "native_comparison": "unreached: no C or binary",
+  "native_output_mutant": "unreached: no native output",
+  "artificial_diagnostics_excluded": "Three TS2454 tracing mode errors from the first discovery pass; canonical pass preserves removed mode assignment with a throwing typed initializer.",
+  "source": "unchanged validated parser-front25-packaged-slice",
+  "compiler_edits": false,
+  "discovery_acceptance": false
+}

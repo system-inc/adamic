@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/13_flag_downcast.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/13_flag_downcast.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0\nexit status 1\n",
+    "exit": 1
+  },
+  "node": {
+    "stdout": "8\n0\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": null
+}

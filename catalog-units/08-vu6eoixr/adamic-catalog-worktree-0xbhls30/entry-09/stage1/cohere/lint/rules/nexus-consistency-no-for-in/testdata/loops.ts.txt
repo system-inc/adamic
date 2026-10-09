@@ -1,0 +1,11 @@
+// Unicode trivia keeps token starts and UTF-16/byte conversion honest: 🐈
+for(const key in object) use(key);
+for(const key in object) { if(Object.hasOwn(object, key)) use(key); }
+for(const item of items) { for(let key in item) use(key); }
+for(var key in object);
+let other; for(other in object) use(other);
+// These neighboring shapes must stay silent.
+for(const key of Object.keys(object)) use(key);
+if('name' in object) use(object.name);
+for(let i = 0; i < 3; i++) use(i);
+async function run() { for await(const item of stream) use(item); }

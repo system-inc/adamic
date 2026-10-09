@@ -1,0 +1,19 @@
+// Captures stay in the result, a limit counts pieces, and an empty match still advances.
+function pieces(values: (string | undefined)[]): string {
+	return values.map((value) => value ?? 'undefined').join('|');
+}
+console.log(pieces('a,b;;c'.split(/([,;])|(z)/)));
+console.log(pieces('a,b,c'.split(/(,)/, 3)));
+console.log(pieces('a,b,c'.split(/(,)/, 1)));
+console.log(pieces('a,b,c'.split(/(,)/, 0)));
+console.log(pieces('abc'.split(/b/, -1)));
+console.log(pieces('ab'.split(/(?:)/)));
+console.log(pieces('ab'.split(/()/)));
+console.log(pieces(''.split(/(?:)/)));
+console.log(pieces(''.split(/x/)));
+console.log(pieces(''.split(/(x)/)));
+console.log(pieces(''.split(/()/, 1)));
+console.log(pieces('🌍a'.split(/(?:)/)));
+console.log(pieces('🌍a'.split(/(?:)/u)));
+console.log(pieces('🌍a'.split(/()/u)));
+console.log(`${'aaa'.split(/a*/, 2).join('|')} ${'aaa'.split(/(a)/, 4).join('|')}`);

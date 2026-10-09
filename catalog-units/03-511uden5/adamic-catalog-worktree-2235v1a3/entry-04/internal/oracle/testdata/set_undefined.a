@@ -1,0 +1,23 @@
+// set.has, set.add and set.delete with undefined written out, on a Set whose elements may be
+// undefined: undefined is an element like any other, distinct from '' and from every object. The
+// strings are built at runtime.
+interface Tag {
+	label: string;
+}
+
+const words = new Set<string | undefined>([['a', 'b'].join(''), undefined, '']);
+console.log(`${words.size} ${words.has(undefined)} ${words.has('')} ${words.has(['a', 'b'].join(''))}`);
+console.log(`${words.delete(undefined)} ${words.delete(undefined)} ${words.size} ${words.has(undefined)} ${words.has('')}`);
+words.add(undefined);
+words.add(undefined);
+console.log(`${words.size} ${words.has(undefined)}`);
+for (const word of words) {
+	console.log(word === undefined ? 'undefined' : `'${word}'`);
+}
+
+const first: Tag = { label: ['fir', 'st'].join('') };
+const tags = new Set<Tag | undefined>([first]);
+console.log(`${tags.has(undefined)} ${tags.has(first)} ${tags.size}`);
+tags.add(undefined);
+console.log(`${tags.has(undefined)} ${tags.size}`);
+console.log(`${tags.delete(undefined)} ${tags.has(undefined)} ${tags.has(first)} ${tags.size}`);

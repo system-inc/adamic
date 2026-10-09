@@ -1,0 +1,47 @@
+file	heritage.ts
+SourceFile 0 24 0	
+InterfaceDeclaration 0 23 0	
+Identifier 9 11 0	I
+HeritageClause 11 21 0	
+ExpressionWithTypeArguments 19 21 0	
+Identifier 19 21 0	N
+EndOfFileToken 23 24 0	
+diagnostics 0
+file	binding-hole.ts
+SourceFile 0 11 0	
+VariableStatement 0 10 0	
+VariableDeclarationList 0 9 1	
+VariableDeclaration 3 9 0	
+ArrayBindingPattern 3 7 0	
+OmittedExpression 4 4 0	
+BindingElement 5 6 0	
+Identifier 5 6 0	x
+Identifier 8 9 0	a
+EndOfFileToken 10 11 0	
+diagnostics 0
+file	class-extends-control.ts
+SourceFile 0 20 0	
+ClassDeclaration 0 19 0	
+Identifier 5 7 0	C
+HeritageClause 7 17 0	
+ExpressionWithTypeArguments 15 17 0	
+Identifier 15 17 0	N
+EndOfFileToken 19 20 0	
+diagnostics 0
+file	class-implements.ts
+SourceFile 0 23 0	
+ClassDeclaration 0 22 0	
+Identifier 5 7 0	C
+HeritageClause 7 20 0	
+ExpressionWithTypeArguments 18 20 0	
+Identifier 18 20 0	N
+EndOfFileToken 22 23 0	
+diagnostics 0
+file	array-hole-control.ts
+SourceFile 0 6 0	
+ExpressionStatement 0 5 0	
+ArrayLiteralExpression 0 4 0	
+OmittedExpression 1 1 0	
+Identifier 2 3 0	x
+EndOfFileToken 5 6 0	
+diagnostics 0

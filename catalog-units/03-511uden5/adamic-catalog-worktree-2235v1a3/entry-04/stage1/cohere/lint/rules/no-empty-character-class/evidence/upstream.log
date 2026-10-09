@@ -1,0 +1,194 @@
+=== RUN   TestNoEmptyCharacterClassFires
+=== PAUSE TestNoEmptyCharacterClassFires
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses
+=== RUN   TestNoEmptyCharacterClassStaysSilent
+=== PAUSE TestNoEmptyCharacterClassStaysSilent
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses
+=== RUN   TestNoEmptyCharacterClassReportsTheClassAndNotTheLiteral
+=== PAUSE TestNoEmptyCharacterClassReportsTheClassAndNotTheLiteral
+=== RUN   TestNoEmptyCharacterClassReportsPastLeadingTrivia
+=== PAUSE TestNoEmptyCharacterClassReportsPastLeadingTrivia
+=== RUN   TestNoEmptyCharacterClassReportsEachClassSeparately
+=== PAUSE TestNoEmptyCharacterClassReportsEachClassSeparately
+=== RUN   TestNoEmptyCharacterClassScansEachLiteralSeparately
+=== PAUSE TestNoEmptyCharacterClassScansEachLiteralSeparately
+=== RUN   TestNoEmptyCharacterClassSkipsAnUnterminatedClass
+=== PAUSE TestNoEmptyCharacterClassSkipsAnUnterminatedClass
+=== CONT  TestNoEmptyCharacterClassFires
+=== CONT  TestNoEmptyCharacterClassReportsPastLeadingTrivia
+=== RUN   TestNoEmptyCharacterClassFires/at_the_end_of_a_pattern
+--- PASS: TestNoEmptyCharacterClassReportsPastLeadingTrivia (0.00s)
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses
+=== PAUSE TestNoEmptyCharacterClassFires/at_the_end_of_a_pattern
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_negated_empty_class
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_negated_empty_class
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_close_bracket
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_close_bracket
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_open_bracket
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_open_bracket
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_difference_of_two_populated_operands
+=== RUN   TestNoEmptyCharacterClassFires/in_the_middle_of_a_pattern
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_difference_of_two_populated_operands
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses
+=== PAUSE TestNoEmptyCharacterClassFires/in_the_middle_of_a_pattern
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/an_intersection_of_two_populated_operands
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/an_intersection_of_two_populated_operands
+=== RUN   TestNoEmptyCharacterClassFires/followed_by_a_literal_bracket
+=== PAUSE TestNoEmptyCharacterClassFires/followed_by_a_literal_bracket
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/a_bare_empty_class
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/a_bare_empty_class
+=== CONT  TestNoEmptyCharacterClassReportsTheClassAndNotTheLiteral
+--- PASS: TestNoEmptyCharacterClassReportsTheClassAndNotTheLiteral (0.00s)
+=== CONT  TestNoEmptyCharacterClassScansEachLiteralSeparately
+--- PASS: TestNoEmptyCharacterClassScansEachLiteralSeparately (0.00s)
+=== CONT  TestNoEmptyCharacterClassSkipsAnUnterminatedClass
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/two_populated_classes_side_by_side
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/two_populated_classes_side_by_side
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_class_holding_an_empty_string_literal
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_class_holding_an_empty_string_literal
+=== RUN   TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_negated_empty_class_as_a_difference_operand
+=== RUN   TestNoEmptyCharacterClassFires/after_an_escaped_open_bracket
+=== PAUSE TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_negated_empty_class_as_a_difference_operand
+=== PAUSE TestNoEmptyCharacterClassFires/after_an_escaped_open_bracket
+=== RUN   TestNoEmptyCharacterClassFires/after_several_escaped_brackets
+=== CONT  TestNoEmptyCharacterClassStaysSilent
+=== PAUSE TestNoEmptyCharacterClassFires/after_several_escaped_brackets
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_populated_class
+=== RUN   TestNoEmptyCharacterClassFires/with_an_unrelated_flag_set
+=== PAUSE TestNoEmptyCharacterClassFires/with_an_unrelated_flag_set
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_populated_class
+=== RUN   TestNoEmptyCharacterClassFires/inside_a_call_argument
+=== PAUSE TestNoEmptyCharacterClassFires/inside_a_call_argument
+=== RUN   TestNoEmptyCharacterClassFires/as_a_call_receiver
+=== PAUSE TestNoEmptyCharacterClassFires/as_a_call_receiver
+=== RUN   TestNoEmptyCharacterClassFires/under_the_unicode_flag
+=== PAUSE TestNoEmptyCharacterClassFires/under_the_unicode_flag
+=== RUN   TestNoEmptyCharacterClassStaysSilent/no_class_at_all
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/no_class_at_all
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_negated_empty_class
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_negated_empty_class
+=== RUN   TestNoEmptyCharacterClassStaysSilent/an_escaped_open_bracket_inside_a_class
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/an_escaped_open_bracket_inside_a_class
+=== RUN   TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_inside_a_class
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_inside_a_class
+=== RUN   TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_with_flags
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_negated_empty_class_as_a_difference_operand
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_class_holding_an_empty_string_literal
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_with_flags
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/two_populated_classes_side_by_side
+=== RUN   TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_under_dotall
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_under_dotall
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_class_holding_a_range_and_a_bracket
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_class_holding_a_range_and_a_bracket
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_raw_open_bracket_inside_a_class
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/an_intersection_of_two_populated_operands
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_raw_open_bracket_inside_a_class
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_class_opened_and_closed_around_an_escape
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_difference_of_two_populated_operands
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_class_opened_and_closed_around_an_escape
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_class_of_escaped_punctuation
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_class_of_escaped_punctuation
+=== RUN   TestNoEmptyCharacterClassStaysSilent/a_pattern_with_no_brackets_at_all
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/a_pattern_with_no_brackets_at_all
+=== RUN   TestNoEmptyCharacterClassStaysSilent/an_escaped_bracket_followed_by_a_close
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_open_bracket
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/an_escaped_bracket_followed_by_a_close
+=== RUN   TestNoEmptyCharacterClassStaysSilent/the_RegExp_constructor
+=== PAUSE TestNoEmptyCharacterClassStaysSilent/the_RegExp_constructor
+=== CONT  TestNoEmptyCharacterClassReportsEachClassSeparately
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_close_bracket
+=== CONT  TestNoEmptyCharacterClassFires/at_the_end_of_a_pattern
+=== CONT  TestNoEmptyCharacterClassFires/with_an_unrelated_flag_set
+=== CONT  TestNoEmptyCharacterClassFires/after_several_escaped_brackets
+=== CONT  TestNoEmptyCharacterClassFires/after_an_escaped_open_bracket
+=== CONT  TestNoEmptyCharacterClassFires/in_the_middle_of_a_pattern
+=== CONT  TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_negated_empty_class
+=== CONT  TestNoEmptyCharacterClassFires/under_the_unicode_flag
+=== CONT  TestNoEmptyCharacterClassFires/inside_a_call_argument
+=== CONT  TestNoEmptyCharacterClassFires/as_a_call_receiver
+=== CONT  TestNoEmptyCharacterClassFires/followed_by_a_literal_bracket
+=== CONT  TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_under_dotall
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_in_one_other
+=== CONT  TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_with_flags
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_in_one_other
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_beside_a_non-empty_sibling
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_beside_a_non-empty_sibling
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_three_deep
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_three_deep
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_a_difference
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_a_difference
+=== CONT  TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_inside_a_class
+=== CONT  TestNoEmptyCharacterClassStaysSilent/an_escaped_open_bracket_inside_a_class
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_negated_empty_class
+=== CONT  TestNoEmptyCharacterClassStaysSilent/no_class_at_all
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_class_holding_a_range_and_a_bracket
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_populated_class
+=== CONT  TestNoEmptyCharacterClassStaysSilent/the_RegExp_constructor
+=== CONT  TestNoEmptyCharacterClassStaysSilent/an_escaped_bracket_followed_by_a_close
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_pattern_with_no_brackets_at_all
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_class_of_escaped_punctuation
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_raw_open_bracket_inside_a_class
+--- PASS: TestNoEmptyCharacterClassSkipsAnUnterminatedClass (0.00s)
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_a_difference
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_a_difference
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_an_intersection
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_an_intersection
+=== RUN   TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_an_intersection
+=== PAUSE TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_an_intersection
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/a_bare_empty_class
+=== CONT  TestNoEmptyCharacterClassStaysSilent/a_class_opened_and_closed_around_an_escape
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_three_deep
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_beside_a_non-empty_sibling
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_in_one_other
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_a_difference
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_an_intersection
+--- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_negated_empty_class_as_a_difference_operand (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_class_holding_an_empty_string_literal (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/two_populated_classes_side_by_side (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/an_intersection_of_two_populated_operands (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_difference_of_two_populated_operands (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_open_bracket (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_escaped_close_bracket (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilentInsideNestedClasses/a_nested_negated_empty_class (0.00s)
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_an_intersection
+--- PASS: TestNoEmptyCharacterClassReportsEachClassSeparately (0.00s)
+=== CONT  TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_a_difference
+--- PASS: TestNoEmptyCharacterClassFires (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/with_an_unrelated_flag_set (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/at_the_end_of_a_pattern (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/after_several_escaped_brackets (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/after_an_escaped_open_bracket (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/in_the_middle_of_a_pattern (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/under_the_unicode_flag (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/followed_by_a_literal_bracket (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/as_a_call_receiver (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFires/inside_a_call_argument (0.00s)
+--- PASS: TestNoEmptyCharacterClassStaysSilent (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_under_dotall (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_with_flags (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/an_escaped_close_bracket_inside_a_class (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/an_escaped_open_bracket_inside_a_class (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_negated_empty_class (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/no_class_at_all (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_class_holding_a_range_and_a_bracket (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_populated_class (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/an_escaped_bracket_followed_by_a_close (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/the_RegExp_constructor (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_raw_open_bracket_inside_a_class (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_class_of_escaped_punctuation (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_pattern_with_no_brackets_at_all (0.00s)
+    --- PASS: TestNoEmptyCharacterClassStaysSilent/a_class_opened_and_closed_around_an_escape (0.00s)
+--- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/a_bare_empty_class (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_three_deep (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_beside_a_non-empty_sibling (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_an_intersection (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/the_right_operand_of_a_difference (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_an_intersection (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/the_left_operand_of_a_difference (0.00s)
+    --- PASS: TestNoEmptyCharacterClassFiresInsideNestedClasses/an_empty_class_nested_in_one_other (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.008s

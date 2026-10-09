@@ -1,0 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
+const method = String.prototype.trimEnd;
+console.log(method.call('  x  '));
+console.log(method.apply('  x  ', []));

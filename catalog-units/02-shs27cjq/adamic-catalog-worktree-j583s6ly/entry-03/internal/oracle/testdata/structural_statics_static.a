@@ -1,0 +1,7 @@
+interface Reader { read(value: string): string; }
+class ReaderImpl {
+    static prefix = 'static';
+    static read(value: string): string { return this.prefix + value; }
+}
+function report(reader: Reader): string { return reader.read('-' + 'argument'); }
+console.log(report(ReaderImpl));

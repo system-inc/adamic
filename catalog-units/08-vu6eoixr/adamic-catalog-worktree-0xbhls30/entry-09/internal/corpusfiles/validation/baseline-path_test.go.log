@@ -1,0 +1,96 @@
+package markdownblocks
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Parallel execution reserves memory: this compares full per-node path observations and sanitized mutant output.
+func TestMarkdownAstPath(t *testing.T) {
+	parallelMarkdownMemory(t, 5)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs, files := blockCorpus(t, root, "whitespace")
+	for depth := 1; depth <= 32; depth++ {
+		text := strings.Repeat("> ", depth) + "- a *b*\n"
+		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/path/depth%d", depth), Text: text})
+	}
+	dir := t.TempDir()
+	var batch bytes.Buffer
+	encoder := json.NewEncoder(&batch)
+	for _, item := range inputs {
+		if err := encoder.Encode(item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	cases := filepath.Join(dir, "cases.jsonl")
+	write(t, cases, batch.Bytes())
+	cohere := filepath.Join(root, "cohere")
+	mainPath := filepath.Join(cohere, "cmd/adamic_path/main.go")
+	driver, err := filepath.Abs("testdata/path_go.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bridge, err := filepath.Abs("testdata/path_bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	astBridge, err := filepath.Abs("testdata/ast_bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pathFacts, err := filepath.Abs("testdata/path_facts.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/adamic_path_facts.go"): pathFacts, filepath.Join(cohere, "internal/format/markdown/adamic_path.go"): bridge, filepath.Join(cohere, "internal/format/markdown/adamic_ast.go"): astBridge}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(dir, "overlay.json")
+	write(t, overlayPath, overlay)
+	goBinary := filepath.Join(dir, "go-path")
+	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
+	build.Dir = cohere
+	if output, err := build.CombinedOutput(); err != nil {
+		t.Fatalf("Go path %v %s", err, output)
+	}
+	nativeCases := filepath.Join(dir, "native.txt")
+	want := execute(t, nil, goBinary, cases, nativeCases)
+	clean(t, "actual Go AstPath", want)
+	if keep := os.Getenv("ADAMIC_PATH_KEEP"); keep != "" {
+		if err := os.MkdirAll(keep, 0755); err != nil {
+			t.Fatal(err)
+		}
+		data, err := os.ReadFile(nativeCases)
+		if err != nil {
+			t.Fatal(err)
+		}
+		write(t, filepath.Join(keep, "native.txt"), data)
+		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+	}
+	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
+	if fork == "" {
+		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
+	}
+	installed, err := os.ReadFile(filepath.Join(fork, "standalone.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/standalone.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	equal(t, "pinned standalone", installed, pinned)
+	t.Logf("baseline original collector: %d physical files, %d Go output bytes", files, len(want.stdout))
+	actual := execute(t, nil, "node", "testdata/path_library.mjs", fork, nativeCases)
+	clean(t, "baseline actual original AstPath", actual)
+	equal(t, "baseline original AstPath", actual.stdout, want.stdout)
+}

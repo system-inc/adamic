@@ -1,0 +1,2 @@
+// a-check: type error TS2740
+const values: number[] = {}; console.log(String(values));

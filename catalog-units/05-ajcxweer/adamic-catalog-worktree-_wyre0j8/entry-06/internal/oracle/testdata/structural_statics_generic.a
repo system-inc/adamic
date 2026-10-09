@@ -1,0 +1,8 @@
+interface Reader { read(value: string): string; }
+class Box<T> {
+    static read(value: string): string { return 'static' + value; }
+    readonly value: T; constructor(value: T) { this.value = value; }
+    read(value: string): string { return `${this.value}` + value; }
+}
+function report(reader: Reader): string { return reader.read('-argument'); }
+console.log(report(Box)); console.log(report(new Box('string'))); console.log(report(new Box(42)));

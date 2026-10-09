@@ -1,0 +1,112 @@
+[
+  {
+    "where": "src/compiler/debug.ts:617:33",
+    "reason": "new an Identifier",
+    "source": "const weakTypeTextMap = new WeakMap<Type, string>();"
+  },
+  {
+    "where": "src/compiler/debug.ts:618:33",
+    "reason": "new an Identifier",
+    "source": "const weakNodeTextMap = new WeakMap<Node, string>();"
+  },
+  {
+    "where": "src/compiler/sys.ts:1656:29",
+    "reason": "new a PropertyAccessExpression",
+    "source": "const session = new inspector.Session();"
+  },
+  {
+    "where": "src/compiler/utilities.ts:10222:29",
+    "reason": "new an Identifier",
+    "source": "const parsedPatternsCache = new WeakMap<MapLike<string[]>, ParsedPatterns>();"
+  },
+  {
+    "where": "src/compiler/utilities.ts:10491:22",
+    "reason": "new an Identifier",
+    "source": "const segments = new Uint16Array((bitsNeeded >>> 4) + (bitsNeeded & 15 ? 1 : 0));"
+  },
+  {
+    "where": "src/compiler/factory/baseNodeFactory.ts:42:16",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return new (SourceFileConstructor || (SourceFileConstructor = objectAllocator.getSourceFileConstructor()))(kind, /*pos*/ -1, /*end*/ -1);"
+  },
+  {
+    "where": "src/compiler/factory/baseNodeFactory.ts:46:16",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return new (IdentifierConstructor || (IdentifierConstructor = objectAllocator.getIdentifierConstructor()))(kind, /*pos*/ -1, /*end*/ -1);"
+  },
+  {
+    "where": "src/compiler/factory/baseNodeFactory.ts:50:16",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return new (PrivateIdentifierConstructor || (PrivateIdentifierConstructor = objectAllocator.getPrivateIdentifierConstructor()))(kind, /*pos*/ -1, /*end*/ -1);"
+  },
+  {
+    "where": "src/compiler/factory/baseNodeFactory.ts:54:16",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return new (TokenConstructor || (TokenConstructor = objectAllocator.getTokenConstructor()))(kind, /*pos*/ -1, /*end*/ -1);"
+  },
+  {
+    "where": "src/compiler/factory/baseNodeFactory.ts:58:16",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return new (NodeConstructor || (NodeConstructor = objectAllocator.getNodeConstructor()))(kind, /*pos*/ -1, /*end*/ -1);"
+  },
+  {
+    "where": "src/compiler/factory/nodeFactory.ts:7415:12",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return new (SourceMapSource || (SourceMapSource = objectAllocator.getSourceMapSourceConstructor()))(fileName, text, skipTrivia);"
+  },
+  {
+    "where": "src/compiler/factory/nodeChildren.ts:11:34",
+    "reason": "new an Identifier",
+    "source": "const sourceFileToNodeChildren = new WeakMap<SourceFileLike, WeakMap<Node, readonly Node[] | undefined>>();"
+  },
+  {
+    "where": "src/compiler/parser.ts:433:39",
+    "reason": "new a ParenthesizedExpression",
+    "source": "createBaseSourceFileNode: kind => new (SourceFileConstructor || (SourceFileConstructor = objectAllocator.getSourceFileConstructor()))(kind, -1, -1),"
+  },
+  {
+    "where": "src/compiler/parser.ts:9927:34",
+    "reason": "new an Identifier",
+    "source": "const incrementallyParsedFiles = new WeakSet<SourceFile>();"
+  },
+  {
+    "where": "src/compiler/parser.ts:9936:31",
+    "reason": "new an Identifier",
+    "source": "const intersectingChangeSet = new WeakSet<Node | NodeArray<Node>>();"
+  },
+  {
+    "where": "src/compiler/binder.ts:632:16",
+    "reason": "new an Identifier",
+    "source": "return new Symbol(flags, name);"
+  },
+  {
+    "where": "src/compiler/checker.ts:2635:24",
+    "reason": "new an Identifier",
+    "source": "const symbol = new Symbol(flags | SymbolFlags.Transient, name) as TransientSymbol;"
+  },
+  {
+    "where": "src/compiler/checker.ts:2935:36",
+    "reason": "new an Identifier",
+    "source": "return symbolLinks[id] ??= new SymbolLinks();"
+  },
+  {
+    "where": "src/compiler/checker.ts:2940:58",
+    "reason": "new a ParenthesizedExpression",
+    "source": "return nodeLinks[nodeId] || (nodeLinks[nodeId] = new (NodeLinks as any)());"
+  },
+  {
+    "where": "src/compiler/checker.ts:5518:24",
+    "reason": "new an Identifier",
+    "source": "const result = new Type(checker, flags);"
+  },
+  {
+    "where": "src/compiler/checker.ts:5532:16",
+    "reason": "new an Identifier",
+    "source": "return new Type(checker, flags);"
+  },
+  {
+    "where": "src/compiler/checker.ts:14134:21",
+    "reason": "new an Identifier",
+    "source": "const sig = new Signature(checker, flags);"
+  }
+]

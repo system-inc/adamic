@@ -1,0 +1,11 @@
+function outer(seed: number): void {
+ function reader(value?: number): number { return seed + arguments.length * 10 + (value ?? 0); }
+ function sibling(): number { const saved: (value?: number) => number = reader; return saved() + saved(undefined) + saved(2); }
+ console.log(String(reader()) + " " + String(reader(undefined)) + " " + String(sibling()));
+ const saved: (value?: number) => number = reader;
+ console.log(String(saved === reader));
+ function tail(first: number = 3, ...remaining: number[]): number { return first + remaining.length; }
+ const rest: (first?: number, ...remaining: number[]) => number = tail;
+ console.log(String(rest()) + " " + String(rest(undefined, 4, 5)));
+}
+outer(1);

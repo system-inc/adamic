@@ -1,0 +1,10 @@
+// TypeScript condition coverage; also preserves the resolved base's Adamic behavior.
+function probe(value: { readonly value: number }): void {
+    let branch = 'false';
+    if (value) { branch = 'true'; }
+    let loops = 0;
+    while (value) { loops += 1; break; }
+    for (; value;) { loops += 1; break; }
+    console.log(`${branch}:${value ? 'true' : 'false'}:${!value}:${loops}`);
+}
+probe({ value: 0 });

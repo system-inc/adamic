@@ -1,0 +1,3 @@
+const state: { index?: number } = { index: 1 };
+state.index!++;
+console.log(`${state.index}`);

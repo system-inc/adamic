@@ -1,0 +1,5 @@
+    lint_test.go:458: empty function body reported caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported1634407219/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported1634407219/001/generated-0.ts:1:125"
+    lint_test.go:458: empty function body reported caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported1634407219/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported1634407219/001/generated-0.ts:1:125"
+--- PASS: TestMutants (29.36s)
+    --- PASS: TestMutants/empty_function_body_reported (17.69s)
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	29.383s

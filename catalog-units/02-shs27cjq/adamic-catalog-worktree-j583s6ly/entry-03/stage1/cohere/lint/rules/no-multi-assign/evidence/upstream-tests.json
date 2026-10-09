@@ -1,0 +1,12 @@
+[
+  "TestNoMultiAssignFires",
+  "TestNoMultiAssignStaysSilent",
+  "TestNoMultiAssignFiresOnCasesBeyondTheCorpus",
+  "TestNoMultiAssignStaysSilentOnCasesBeyondTheCorpus",
+  "TestNoMultiAssignIgnoreNonDeclarationDropsOnlyTheBareChain",
+  "TestNoMultiAssignSpansTheInnerAssignment",
+  "TestDecodeNoMultiAssignOptions",
+  "TestNoMultiAssignWithNilOptionsUsesTheDefault",
+  "TestNoMultiAssignMessage",
+  "TestNoMultiAssignStaysSilentOnAnAssignmentTargetTheParserRecovered"
+]

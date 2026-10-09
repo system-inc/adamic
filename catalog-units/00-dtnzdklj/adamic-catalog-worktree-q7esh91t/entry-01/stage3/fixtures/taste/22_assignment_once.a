@@ -1,0 +1,44 @@
+// From TypeScript 6.0.3, src/compiler/scanner.ts:3280
+// From TypeScript 6.0.3, src/compiler/checker.ts:2935
+// Census reason: &&=
+// Supplemental field/index forms of the actual &&= and ??= sites above.
+let fieldReceivers = 0;
+let arrayReceivers = 0;
+let indices = 0;
+let rhs = 0;
+interface Slot {value: number | undefined;}
+const holder: Slot = {value: undefined};
+const slots: (number | undefined)[] = [1, undefined];
+function receiver(): Slot {fieldReceivers += 1; return holder;}
+function arrayReceiver(): (number | undefined)[] {arrayReceivers += 1; return slots;}
+function index(): number {indices += 1; return 1;}
+function right(): number {rhs += 1; return 7;}
+function report(): void {console.log(String(fieldReceivers) + ":" + String(arrayReceivers) + ":" + String(indices) + ":" + String(rhs) + ":" + String(holder.value) + ":" + String(slots[1]));}
+for (const value of [undefined, 0, -0, NaN, 2]) {
+    holder.value = value; slots[1] = value;
+    fieldReceivers = 0; arrayReceivers = 0; indices = 0; rhs = 0;
+    receiver().value &&= right();
+    arrayReceiver()[index()] &&= right();
+    report();
+    holder.value = value; slots[1] = value;
+    fieldReceivers = 0; arrayReceivers = 0; indices = 0; rhs = 0;
+    receiver().value ??= right();
+    arrayReceiver()[index()] ??= right();
+    report();
+}
+
+// Exact statements retained from scanClassSetSubExpression, with other token branches cut.
+type ClassSetExpressionType = number;
+let mayContainStrings = false;
+let operandStrings = false;
+function scanClassSetOperand(): void {mayContainStrings = operandStrings;}
+function scanClassSetSubExpression(expressionType: ClassSetExpressionType) {
+    let expressionMayContainStrings = mayContainStrings;
+    scanClassSetOperand();
+    expressionMayContainStrings &&= mayContainStrings;
+    mayContainStrings = expressionMayContainStrings;
+}
+for (const left of [false, true]) {for (const rightValue of [false, true]) {
+    mayContainStrings = left; operandStrings = rightValue;
+    scanClassSetSubExpression(0); console.log(String(mayContainStrings));
+}}

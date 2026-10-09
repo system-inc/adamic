@@ -1,0 +1,112 @@
+{
+  "warning": "All rows after first found behind cumulative source stubs. No native or Node identity claim. Validated slice unchanged.",
+  "rows": [
+    {
+      "step": 1,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/parser-front24-discovery3-slice/src/compiler/core.ts:525:17: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter\n",
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front24-discovery3-slice/src/compiler/core.ts",
+        "line": 525,
+        "column": 17,
+        "name": "reduceLeft",
+        "edits": [
+          {
+            "start": 20043,
+            "end": 20726,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/parser-front24-discovery3-slice/src/compiler/core.ts:594:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front24-discovery3-slice/src/compiler/core.ts",
+        "line": 594,
+        "column": 5,
+        "name": "isArray",
+        "edits": [
+          {
+            "start": 21452,
+            "end": 21556,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n}"
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/parser-front24-discovery3-slice/src/compiler/core.ts:616:97: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front24-discovery3-slice/src/compiler/core.ts",
+        "line": 616,
+        "column": 97,
+        "name": "cast",
+        "edits": [
+          {
+            "start": 22073,
+            "end": 22263,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n}"
+          },
+          {
+            "start": 22052,
+            "end": 22065,
+            "replacement": "boolean"
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/parser-front24-discovery3-slice/src/compiler/debug.ts:429:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\n",
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front24-discovery3-slice/src/compiler/debug.ts",
+        "line": 429,
+        "column": 5,
+        "name": "attachFlowNodeDebugInfoWorker",
+        "edits": [
+          {
+            "start": 22729,
+            "end": 24783,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/parser-front24-discovery3-slice/src/compiler/debug.ts:526:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\n",
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front24-discovery3-slice/src/compiler/debug.ts",
+        "line": 526,
+        "column": 5,
+        "name": "enableDebugInfo",
+        "edits": [
+          {
+            "start": 25853,
+            "end": 37300,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/parser-front24-discovery3-slice/src/compiler/debug.ts:739:5: stage 0 can't lower a class inside a namespace; namespace constructor registration and initialization are not yet proven yet\n",
+      "stub_exit": 1,
+      "stub_error": "/workspace/scratch/parser-front24-stub3.cjs:5\nwalk(sf);const n=candidates.at(-1);if(!n)throw Error('No function stub for diagnostic');\n                                         ^\n\nError: No function stub for diagnostic\n    at Object.<anonymous> (/workspace/scratch/parser-front24-stub3.cjs:5:48)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    }
+  ]
+}

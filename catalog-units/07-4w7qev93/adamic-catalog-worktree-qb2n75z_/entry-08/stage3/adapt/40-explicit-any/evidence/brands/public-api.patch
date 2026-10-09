@@ -1,0 +1,203 @@
+--- before/api/typescript.d.ts
++++ after/api/typescript.d.ts
+@@ -3662,13 +3662,13 @@
+         [index: string]: T;
+     }
+     interface SortedReadonlyArray<T> extends ReadonlyArray<T> {
+-        " __sortedArrayBrand": any;
++        " __sortedArrayBrand": undefined;
+     }
+     interface SortedArray<T> extends Array<T> {
+-        " __sortedArrayBrand": any;
++        " __sortedArrayBrand": undefined;
+     }
+     type Path = string & {
+-        __pathBrand: any;
++        __pathBrand: undefined;
+     };
+     interface TextRange {
+         pos: number;
+@@ -4325,13 +4325,13 @@
+         forEachChild<T>(cbNode: (node: Node) => T | undefined, cbNodeArray?: (nodes: NodeArray<Node>) => T | undefined): T | undefined;
+     }
+     interface JSDocContainer extends Node {
+-        _jsdocContainerBrand: any;
++        _jsdocContainerBrand: undefined;
+     }
+     interface LocalsContainer extends Node {
+-        _localsContainerBrand: any;
++        _localsContainerBrand: undefined;
+     }
+     interface FlowContainer extends Node {
+-        _flowContainerBrand: any;
++        _flowContainerBrand: undefined;
+     }
+     type HasJSDoc =
+         | AccessorDeclaration
+@@ -4487,7 +4487,7 @@
+     type MemberName = Identifier | PrivateIdentifier;
+     type DeclarationName = PropertyName | JsxAttributeName | StringLiteralLike | ElementAccessExpression | BindingPattern | EntityNameExpression;
+     interface Declaration extends Node {
+-        _declarationBrand: any;
++        _declarationBrand: undefined;
+     }
+     interface NamedDeclaration extends Declaration {
+         readonly name?: DeclarationName;
+@@ -4587,10 +4587,10 @@
+         readonly initializer?: Expression;
+     }
+     interface AutoAccessorPropertyDeclaration extends PropertyDeclaration {
+-        _autoAccessorBrand: any;
++        _autoAccessorBrand: undefined;
+     }
+     interface ObjectLiteralElement extends NamedDeclaration {
+-        _objectLiteralBrand: any;
++        _objectLiteralBrand: undefined;
+         readonly name?: PropertyName;
+     }
+     /** Unlike ObjectLiteralElement, excludes JSXAttribute and JSXSpreadAttribute. */
+@@ -4635,7 +4635,7 @@
+      * - AccessorDeclaration
+      */
+     interface FunctionLikeDeclarationBase extends SignatureDeclarationBase {
+-        _functionLikeDeclarationBrand: any;
++        _functionLikeDeclarationBrand: undefined;
+         readonly asteriskToken?: AsteriskToken | undefined;
+         readonly questionToken?: QuestionToken | undefined;
+         readonly exclamationToken?: ExclamationToken | undefined;
+@@ -4701,7 +4701,7 @@
+         readonly body: Block;
+     }
+     interface TypeNode extends Node {
+-        _typeNodeBrand: any;
++        _typeNodeBrand: undefined;
+     }
+     interface KeywordTypeNode<TKind extends KeywordTypeSyntaxKind = KeywordTypeSyntaxKind> extends KeywordToken<TKind>, TypeNode {
+         readonly kind: TKind;
+@@ -4847,7 +4847,7 @@
+         readonly literal: TemplateMiddle | TemplateTail;
+     }
+     interface Expression extends Node {
+-        _expressionBrand: any;
++        _expressionBrand: undefined;
+     }
+     interface OmittedExpression extends Expression {
+         readonly kind: SyntaxKind.OmittedExpression;
+@@ -4857,12 +4857,12 @@
+         readonly expression: Expression;
+     }
+     interface UnaryExpression extends Expression {
+-        _unaryExpressionBrand: any;
++        _unaryExpressionBrand: undefined;
+     }
+     /** Deprecated, please use UpdateExpression */
+     type IncrementExpression = UpdateExpression;
+     interface UpdateExpression extends UnaryExpression {
+-        _updateExpressionBrand: any;
++        _updateExpressionBrand: undefined;
+     }
+     type PrefixUnaryOperator = SyntaxKind.PlusPlusToken | SyntaxKind.MinusMinusToken | SyntaxKind.PlusToken | SyntaxKind.MinusToken | SyntaxKind.TildeToken | SyntaxKind.ExclamationToken;
+     interface PrefixUnaryExpression extends UpdateExpression {
+@@ -4877,13 +4877,13 @@
+         readonly operator: PostfixUnaryOperator;
+     }
+     interface LeftHandSideExpression extends UpdateExpression {
+-        _leftHandSideExpressionBrand: any;
++        _leftHandSideExpressionBrand: undefined;
+     }
+     interface MemberExpression extends LeftHandSideExpression {
+-        _memberExpressionBrand: any;
++        _memberExpressionBrand: undefined;
+     }
+     interface PrimaryExpression extends MemberExpression {
+-        _primaryExpressionBrand: any;
++        _primaryExpressionBrand: undefined;
+     }
+     interface NullLiteral extends PrimaryExpression {
+         readonly kind: SyntaxKind.NullKeyword;
+@@ -5011,7 +5011,7 @@
+         rawText?: string;
+     }
+     interface LiteralExpression extends LiteralLikeNode, PrimaryExpression {
+-        _literalExpressionBrand: any;
++        _literalExpressionBrand: undefined;
+     }
+     interface RegularExpressionLiteral extends LiteralExpression {
+         readonly kind: SyntaxKind.RegularExpressionLiteral;
+@@ -5095,7 +5095,7 @@
+         readonly name: MemberName;
+     }
+     interface PropertyAccessChain extends PropertyAccessExpression {
+-        _optionalChainBrand: any;
++        _optionalChainBrand: undefined;
+         readonly name: MemberName;
+     }
+     interface SuperPropertyAccessExpression extends PropertyAccessExpression {
+@@ -5103,7 +5103,7 @@
+     }
+     /** Brand for a PropertyAccessExpression which, like a QualifiedName, consists of a sequence of identifiers separated by dots. */
+     interface PropertyAccessEntityNameExpression extends PropertyAccessExpression {
+-        _propertyAccessExpressionLikeQualifiedNameBrand?: any;
++        _propertyAccessExpressionLikeQualifiedNameBrand?: undefined;
+         readonly expression: EntityNameExpression;
+         readonly name: Identifier;
+     }
+@@ -5114,7 +5114,7 @@
+         readonly argumentExpression: Expression;
+     }
+     interface ElementAccessChain extends ElementAccessExpression {
+-        _optionalChainBrand: any;
++        _optionalChainBrand: undefined;
+     }
+     interface SuperElementAccessExpression extends ElementAccessExpression {
+         readonly expression: SuperExpression;
+@@ -5128,7 +5128,7 @@
+         readonly arguments: NodeArray<Expression>;
+     }
+     interface CallChain extends CallExpression {
+-        _optionalChainBrand: any;
++        _optionalChainBrand: undefined;
+     }
+     type OptionalChain = PropertyAccessChain | ElementAccessChain | CallChain | NonNullChain;
+     interface SuperCall extends CallExpression {
+@@ -5178,7 +5178,7 @@
+         readonly expression: Expression;
+     }
+     interface NonNullChain extends NonNullExpression {
+-        _optionalChainBrand: any;
++        _optionalChainBrand: undefined;
+     }
+     interface MetaProperty extends PrimaryExpression, FlowContainer {
+         readonly kind: SyntaxKind.MetaProperty;
+@@ -5272,7 +5272,7 @@
+     }
+     type JsxChild = JsxText | JsxExpression | JsxElement | JsxSelfClosingElement | JsxFragment;
+     interface Statement extends Node, JSDocContainer {
+-        _statementBrand: any;
++        _statementBrand: undefined;
+     }
+     interface NotEmittedStatement extends Statement {
+         readonly kind: SyntaxKind.NotEmittedStatement;
+@@ -5431,11 +5431,11 @@
+     }
+     type ClassLikeDeclaration = ClassDeclaration | ClassExpression;
+     interface ClassElement extends NamedDeclaration {
+-        _classElementBrand: any;
++        _classElementBrand: undefined;
+         readonly name?: PropertyName;
+     }
+     interface TypeElement extends NamedDeclaration {
+-        _typeElementBrand: any;
++        _typeElementBrand: undefined;
+         readonly name?: PropertyName;
+         readonly questionToken?: QuestionToken | undefined;
+     }
+@@ -5703,7 +5703,7 @@
+         readonly right: Identifier;
+     }
+     interface JSDocType extends TypeNode {
+-        _jsDocTypeBrand: any;
++        _jsDocTypeBrand: undefined;
+     }
+     interface JSDocAllType extends JSDocType {
+         readonly kind: SyntaxKind.JSDocAllType;

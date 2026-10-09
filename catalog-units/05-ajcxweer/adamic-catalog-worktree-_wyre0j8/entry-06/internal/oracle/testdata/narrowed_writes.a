@@ -1,0 +1,16 @@
+// Writing through a narrowing a call undid: JavaScript evaluates the value, then throws at the write,
+// and so does native, word for word.
+interface Link {
+	value: number;
+}
+let chain: Link | undefined = { value: 1 };
+function drop(): number {
+	chain = undefined;
+	console.log('dropped');
+	return 2;
+}
+if (chain !== undefined) {
+	chain.value = 5;
+	drop();
+	chain.value = drop();
+}

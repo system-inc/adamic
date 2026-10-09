@@ -1,0 +1,5 @@
+const first: () => number = true ? () => 7 : () => 9;
+const second: () => number = false ? Date.now : () => 11;
+console.log(`${first()}:${second()}`);
+enum Pending { Zero }
+console.log(String(Pending.Zero));

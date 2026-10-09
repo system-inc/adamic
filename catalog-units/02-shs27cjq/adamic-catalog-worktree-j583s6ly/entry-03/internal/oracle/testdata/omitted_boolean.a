@@ -1,0 +1,33 @@
+function f(s: string, a?: boolean): void {
+ console.log(s + ':' + String(a === undefined));
+}
+f('direct');
+({ f }).f('field');
+const methodValue = ({ f }).f;
+methodValue('method-value');
+const value = f;
+value('value');
+const narrow: (s: string) => void = f;
+narrow('narrow');
+f('explicit', undefined);
+f('present', false);
+const closure = (s: string, a?: boolean): void => { console.log(s + ':' + String(a === undefined)); };
+closure('arrow');
+const narrowClosure: (s: string) => void = closure;
+narrowClosure('narrow-arrow');
+({ f: closure }).f('arrow-field');
+function make(): (s: string, a?: boolean) => void {
+ function inner(s: string, a?: boolean): void { console.log(s + ':' + String(a === undefined)); }
+ inner('nested-direct');
+ return inner;
+}
+const escaped = make();
+escaped('escaped');
+const narrowEscaped: (s: string) => void = escaped;
+narrowEscaped('narrow-escaped');
+
+const pick = (value?: boolean): boolean | undefined => value;
+console.log(String(pick() === undefined));
+console.log(String(pick(false) === false));
+console.log(String(pick(true) === true));
+console.log(String(pick(undefined) === undefined));

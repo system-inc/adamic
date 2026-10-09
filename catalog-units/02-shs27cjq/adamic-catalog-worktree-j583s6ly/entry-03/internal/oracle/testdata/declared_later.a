@@ -1,0 +1,109 @@
+// Every function's and method's signature comes from the checker before any body is lowered: a call
+// to one declared further down knows what it returns, two functions can call each other, and a
+// declared function can be a value.
+
+function describe(value: number): string {
+	return `${value} is ${isEven(value) ? 'even' : 'odd'}, ${label(value)}`;
+}
+
+function isEven(value: number): boolean {
+	return value === 0 ? true : isOdd(value - 1);
+}
+
+function isOdd(value: number): boolean {
+	return value === 0 ? false : isEven(value - 1);
+}
+
+function label(value: number): string {
+	return value > 5 ? 'big' : unused(value, 'never read');
+}
+
+// A parameter nothing reads, as JavaScript allows.
+function unused(value: number, text: string): string {
+	return 'small';
+}
+
+for (const value of [0, 3, 8]) {
+	console.log(describe(value));
+}
+
+// Declared functions as values: passed, stored, called through, the same one read twice.
+function shout(word: string): string {
+	return `${word.toUpperCase()}!`;
+}
+
+function byLength(left: string, right: string): number {
+	return left.length - right.length;
+}
+
+function report(line: string): void {
+	console.log(`report: ${line}`);
+}
+
+const words = ['ccc', 'a', 'bb'];
+console.log(words.map(shout).join(' '));
+console.log(words.filter(isLong).join(' '));
+words.sort(byLength);
+console.log(words.join(' '));
+words.forEach(report);
+const transforms: ((word: string) => string)[] = [shout, shout];
+console.log(transforms.map((transform) => transform('twice')).join(' '));
+// The same function read twice is the same value, as in JavaScript.
+const firstShout = shout;
+const secondShout: (word: string) => string = shout;
+const shouts = [firstShout, isLongText];
+console.log(`${firstShout === secondShout} ${shouts.includes(shout)} ${shouts.indexOf(secondShout)} ${firstShout === isLongText}`);
+const test: (value: number) => boolean = isOdd;
+console.log(`${test(7)} ${test(10)}`);
+const compare: (left: string, right: string) => number = byLength;
+const join: (left: string, right: number) => string = joined;
+console.log(`${compare('long', 'a')} ${join('first', 2)} ${words.sort(compare).join(' ')}`);
+
+function joined(left: string, right: number): string {
+	return `${left}-${right}`;
+}
+
+function isLong(word: string): boolean {
+	return word.length > 1;
+}
+
+// Methods: a constructor and a method calling methods declared below them, and two methods calling
+// each other, in a generic class lowered twice.
+class Walker<Item> {
+	readonly items: Item[];
+	steps: number;
+
+	constructor(items: Item[]) {
+		this.items = items;
+		this.steps = 0;
+		this.steps = this.start();
+	}
+
+	describe(): string {
+		return `${this.count()} items, ${this.down(this.items.length)} steps`;
+	}
+
+	down(remaining: number): number {
+		return remaining === 0 ? this.steps : this.up(remaining - 1);
+	}
+
+	up(remaining: number): number {
+		this.steps = this.steps + 1;
+		return this.down(remaining);
+	}
+
+	count(): number {
+		return this.items.length;
+	}
+
+	start(): number {
+		return 100;
+	}
+}
+
+console.log(new Walker<string>(['a', 'b', 'c']).describe());
+console.log(new Walker<number>([1, 2]).describe());
+
+function isLongText(word: string): string {
+	return word.length > 1 ? 'long' : 'short';
+}

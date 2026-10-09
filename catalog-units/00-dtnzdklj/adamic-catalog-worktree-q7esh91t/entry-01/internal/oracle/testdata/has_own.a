@@ -1,0 +1,5 @@
+const empty = {};
+const box = { foo: 42 };
+console.log(`${empty.hasOwnProperty("foo")}`);
+console.log(`${box.hasOwnProperty("foo")}`);
+console.log(`${box.hasOwnProperty("bar")}`);

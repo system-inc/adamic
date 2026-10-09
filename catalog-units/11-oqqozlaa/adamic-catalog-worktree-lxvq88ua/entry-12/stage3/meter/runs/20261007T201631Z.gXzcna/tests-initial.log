@@ -1,0 +1,20 @@
+.E..................
+======================================================================
+ERROR: test_overlay_planted_notyet_moves_only_its_reason_count (report_test.LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/report_test.py", line 264, in test_overlay_planted_notyet_moves_only_its_reason_count
+    subprocess.run([os.environ['LATENT_CENSUS_BINARY'], str(compiler), str(run / 'latent.jsonl')],
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/adamic-gate/stage3-meter.mDNuUB/latent-census'
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.446s
+
+FAILED (errors=1)

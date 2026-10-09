@@ -1,0 +1,2 @@
+// a-check: type error TS2366
+function read(flag: boolean): number { if (flag) { return 1; } }

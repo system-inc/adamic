@@ -1,0 +1,61 @@
+=== RUN   TestRulesAgree
+    lint_test.go:406: cohere cases: 3777 unique source/rule/options combinations
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-278/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-278/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-278/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-280/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:440: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-284/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-284/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-284/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-285/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-285/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-285/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-294/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-294/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-294/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-296/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree2022052627/019/case-296/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:440: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-298/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree2022052627/019/case-298/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-298/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-298/repository/source/Thing.ts
+    lint_test.go:439: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2022052627/019/case-299/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:440: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree2022052627/019/case-299/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:440: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2022052627/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-299/repository/source/Thing.ts
+    lint_test.go:440: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2022052627/019/case-299/repository/source/Thing.ts
+    lint_test.go:445: Go, Node, emitted JavaScript, native identical: 13739539 bytes
+--- PASS: TestRulesAgree (78.46s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 300148 bytes
+--- PASS: TestOwnedWitnesses (43.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	121.594s

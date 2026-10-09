@@ -1,0 +1,15 @@
+const enum Flag { None, Read = 1 << 0, Write = 1 << 1, Both = Read | Write }
+const enum Name { Yes = 'yes', No = 'no' }
+function describe(value: Flag): string {
+ switch (value) {
+  case Flag.None: return 'none';
+  case Flag.Read: return 'read';
+  case Flag.Write: return 'write';
+  case Flag.Both: return 'both';
+ }
+}
+const values: readonly Flag[] = [Flag.None, Flag.Read, Flag.Write, Flag.Both];
+for (const value of values) { console.log(`${value} ${describe(value)}`); }
+function identity<T>(value: T): T { return value; }
+const member: Flag.Read = identity(Flag.Read);
+console.log(`${member} ${Name.Yes} ${Name.No}`);

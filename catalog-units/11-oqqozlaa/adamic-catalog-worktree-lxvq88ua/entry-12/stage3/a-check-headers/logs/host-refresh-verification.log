@@ -1,0 +1,3 @@
+PASS all 25 Node goldens/provenance unchanged; only 17 stage0 values changed
+PASS 25 source mutants and 75 normalized diagnostic/line/code mutants caught; 25 Go stage0 parity subtests pass
+PASS all .a headers, compiler sources, Go fixture runner and host source-span audit unchanged

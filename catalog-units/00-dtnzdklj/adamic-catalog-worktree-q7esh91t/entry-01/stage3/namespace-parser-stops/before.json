@@ -1,0 +1,89 @@
+[
+  {
+    "probe": "native-namespace-class.a",
+    "mode": "node",
+    "argv": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage3/namespace-parser-stops/native-namespace-class.a"
+    ],
+    "exit": 0,
+    "stdout": "class declaration loaded\n",
+    "stderr": ""
+  },
+  {
+    "probe": "native-namespace-class.a",
+    "mode": "native",
+    "argv": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage3/namespace-parser-stops/native-namespace-class.a",
+      "-o",
+      "/tmp/native-namespace-class"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespace-parser-stops/native-namespace-class.a:3:5: stage 0 can't lower a namespace member other than a function, type, initialized binding or nested namespace yet\nexit status 1\n"
+  },
+  {
+    "probe": "native-namespace-object-receiver.a",
+    "mode": "node",
+    "argv": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage3/namespace-parser-stops/native-namespace-object-receiver.a"
+    ],
+    "exit": 0,
+    "stdout": "receiver declaration loaded\n",
+    "stderr": ""
+  },
+  {
+    "probe": "native-namespace-object-receiver.a",
+    "mode": "native",
+    "argv": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage3/namespace-parser-stops/native-namespace-object-receiver.a",
+      "-o",
+      "/tmp/native-namespace-object-receiver"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespace-parser-stops/native-namespace-object-receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\nexit status 1\n"
+  },
+  {
+    "probe": "native-callable-namespace.a",
+    "mode": "node",
+    "argv": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "stage3/namespace-parser-stops/native-callable-namespace.a"
+    ],
+    "exit": 0,
+    "stdout": "callable namespace loaded\n",
+    "stderr": ""
+  },
+  {
+    "probe": "native-callable-namespace.a",
+    "mode": "native",
+    "argv": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage3/namespace-parser-stops/native-callable-namespace.a",
+      "-o",
+      "/tmp/native-callable-namespace"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespace-parser-stops/native-callable-namespace.a:4:5: stage 0 can't lower a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module yet\nexit status 1\n"
+  }
+]

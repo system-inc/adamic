@@ -1,0 +1,2 @@
+declare function visit<T>(items: Iterable<T>, callback: (item: T) => void): void;
+visit(new Map<string, string>().values(), item => { item.toUpperCase(); });

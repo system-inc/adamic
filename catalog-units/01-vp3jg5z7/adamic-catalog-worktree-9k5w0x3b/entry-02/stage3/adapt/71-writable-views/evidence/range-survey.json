@@ -1,0 +1,2296 @@
+[
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "textRangeContainsPositionInclusive",
+    "parameter": "range",
+    "where": "src/compiler/utilitiesPublic.ts:361:52",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilitiesPublic.ts:361:52",
+        "reads": [
+          "src/compiler/utilitiesPublic.ts:362:24",
+          "src/compiler/utilitiesPublic.ts:362:49"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "textSpanContainsTextRange",
+    "parameter": "range",
+    "where": "src/compiler/utilitiesPublic.ts:371:59",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilitiesPublic.ts:371:59",
+        "reads": [
+          "src/compiler/utilitiesPublic.ts:372:12",
+          "src/compiler/utilitiesPublic.ts:372:39"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "textRangeContainsTextSpan",
+    "parameter": "range",
+    "where": "src/compiler/utilitiesPublic.ts:376:43",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilitiesPublic.ts:376:43",
+        "reads": [
+          "src/compiler/utilitiesPublic.ts:377:26",
+          "src/compiler/utilitiesPublic.ts:377:60"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "textRangeIntersectsWithTextSpan",
+    "parameter": "range",
+    "where": "src/compiler/utilitiesPublic.ts:408:49",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilitiesPublic.ts:408:49",
+        "reads": [
+          "src/compiler/utilitiesPublic.ts:409:41",
+          "src/compiler/utilitiesPublic.ts:409:52",
+          "src/compiler/utilitiesPublic.ts:409:64"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeStartPositionsAreOnSameLine",
+    "parameter": "range1",
+    "where": "src/compiler/utilities.ts:7920:50",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7920:50",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7965:41"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7965:41",
+        "reads": [
+          "src/compiler/utilities.ts:7966:34",
+          "src/compiler/utilities.ts:7966:80"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeStartPositionsAreOnSameLine",
+    "parameter": "range2",
+    "where": "src/compiler/utilities.ts:7920:69",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7920:69",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7965:41"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7965:41",
+        "reads": [
+          "src/compiler/utilities.ts:7966:34",
+          "src/compiler/utilities.ts:7966:80"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeEndPositionsAreOnSameLine",
+    "parameter": "range1",
+    "where": "src/compiler/utilities.ts:7929:48",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7929:48",
+        "reads": [
+          "src/compiler/utilities.ts:7930:35"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeEndPositionsAreOnSameLine",
+    "parameter": "range2",
+    "where": "src/compiler/utilities.ts:7929:67",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7929:67",
+        "reads": [
+          "src/compiler/utilities.ts:7930:47"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeEndIsOnSameLineAsRangeStart",
+    "parameter": "range1",
+    "where": "src/compiler/utilities.ts:7939:50",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7939:50",
+        "reads": [
+          "src/compiler/utilities.ts:7940:35"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeEndIsOnSameLineAsRangeStart",
+    "parameter": "range2",
+    "where": "src/compiler/utilities.ts:7939:69",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7939:69",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7965:41"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7965:41",
+        "reads": [
+          "src/compiler/utilities.ts:7966:34",
+          "src/compiler/utilities.ts:7966:80"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "getLinesBetweenRangeEndAndRangeStart",
+    "parameter": "range1",
+    "where": "src/compiler/utilities.ts:7944:54",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7944:54",
+        "reads": [
+          "src/compiler/utilities.ts:7946:49"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "getLinesBetweenRangeEndAndRangeStart",
+    "parameter": "range2",
+    "where": "src/compiler/utilities.ts:7944:73",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7944:73",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7965:41"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7965:41",
+        "reads": [
+          "src/compiler/utilities.ts:7966:34",
+          "src/compiler/utilities.ts:7966:80"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "getLinesBetweenRangeEndPositions",
+    "parameter": "range1",
+    "where": "src/compiler/utilities.ts:7950:50",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7950:50",
+        "reads": [
+          "src/compiler/utilities.ts:7951:49"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "getLinesBetweenRangeEndPositions",
+    "parameter": "range2",
+    "where": "src/compiler/utilities.ts:7950:69",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7950:69",
+        "reads": [
+          "src/compiler/utilities.ts:7951:61"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeContainsRange",
+    "parameter": "r1",
+    "where": "src/compiler/utilities.ts:7983:36",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7983:36",
+        "reads": [
+          "src/compiler/utilities.ts:7984:34",
+          "src/compiler/utilities.ts:7984:42"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "rangeContainsRange",
+    "parameter": "r2",
+    "where": "src/compiler/utilities.ts:7983:51",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7983:51",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7988:67"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7988:67",
+        "reads": [
+          "src/compiler/utilities.ts:7989:21",
+          "src/compiler/utilities.ts:7989:41"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "startEndContainsRange",
+    "parameter": "range",
+    "where": "src/compiler/utilities.ts:7988:67",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/utilities.ts:7988:67",
+        "reads": [
+          "src/compiler/utilities.ts:7989:21",
+          "src/compiler/utilities.ts:7989:41"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/factory/emitHelpers.ts",
+    "function": "createParamHelper",
+    "parameter": "location",
+    "where": "src/compiler/factory/emitHelpers.ts:240:81",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/factory/emitHelpers.ts:240:81",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/factory/emitHelpers.ts",
+    "function": "createRestHelper",
+    "parameter": "location",
+    "where": "src/compiler/factory/emitHelpers.ts:461:157",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/factory/emitHelpers.ts:461:157",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/factory/utilities.ts",
+    "function": "createExpressionForJsxElement",
+    "parameter": "location",
+    "where": "src/compiler/factory/utilities.ts:247:186",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/factory/utilities.ts:247:186",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/factory/utilities.ts",
+    "function": "createExpressionForJsxFragment",
+    "parameter": "location",
+    "where": "src/compiler/factory/utilities.ts:280:254",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/factory/utilities.ts:280:254",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "function": "flattenBindingOrAssignmentElement",
+    "parameter": "location",
+    "where": "src/compiler/transformers/destructuring.ts:342:5",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:373:71",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:594:65",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:413:139",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:425:135",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:433:127",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:513:126",
+        "reason": "unresolved or external consumer"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:342:5",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:373:71",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/transformers/destructuring.ts:541:111",
+          "src/compiler/transformers/destructuring.ts:583:115",
+          "src/compiler/transformers/destructuring.ts:386:180",
+          "src/compiler/transformers/destructuring.ts:446:178"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:541:111",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/destructuring.ts:583:115"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:583:115",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:594:65",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:386:180",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:413:139",
+            "reason": "unresolved or external consumer"
+          },
+          {
+            "where": "src/compiler/transformers/destructuring.ts:425:135",
+            "reason": "unresolved or external consumer"
+          },
+          {
+            "where": "src/compiler/transformers/destructuring.ts:433:127",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/transformers/destructuring.ts:583:115"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:446:178",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:513:126",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/transformers/destructuring.ts:583:115",
+          "src/compiler/transformers/destructuring.ts:583:115"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "function": "flattenObjectBindingOrAssignmentPattern",
+    "parameter": "location",
+    "where": "src/compiler/transformers/destructuring.ts:386:180",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:413:139",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:425:135",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:433:127",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:594:65",
+        "reason": "unresolved or external consumer"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:386:180",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:413:139",
+            "reason": "unresolved or external consumer"
+          },
+          {
+            "where": "src/compiler/transformers/destructuring.ts:425:135",
+            "reason": "unresolved or external consumer"
+          },
+          {
+            "where": "src/compiler/transformers/destructuring.ts:433:127",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/transformers/destructuring.ts:583:115"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:583:115",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:594:65",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "function": "flattenArrayBindingOrAssignmentPattern",
+    "parameter": "location",
+    "where": "src/compiler/transformers/destructuring.ts:446:178",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:513:126",
+        "reason": "unresolved or external consumer"
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:594:65",
+        "reason": "unresolved or external consumer"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:446:178",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:513:126",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/transformers/destructuring.ts:583:115",
+          "src/compiler/transformers/destructuring.ts:583:115"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:583:115",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:594:65",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "function": "createDefaultValueCheck",
+    "parameter": "location",
+    "where": "src/compiler/transformers/destructuring.ts:541:111",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:594:65",
+        "reason": "unresolved or external consumer"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:541:111",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/destructuring.ts:583:115"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/destructuring.ts:583:115",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:594:65",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "function": "ensureIdentifier",
+    "parameter": "location",
+    "where": "src/compiler/transformers/destructuring.ts:583:115",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:594:65",
+        "reason": "unresolved or external consumer"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/destructuring.ts:583:115",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/destructuring.ts:594:65",
+            "reason": "unresolved or external consumer"
+          }
+        ],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "function": "createNamespaceExport",
+    "parameter": "location",
+    "where": "src/compiler/transformers/ts.ts:2540:85",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/ts.ts:2540:85",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "function": "createNamespaceExportExpression",
+    "parameter": "location",
+    "where": "src/compiler/transformers/ts.ts:2552:95",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/ts.ts:2552:95",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/es2017.ts",
+    "function": "createSuperElementAccessInAsyncMethod",
+    "parameter": "location",
+    "where": "src/compiler/transformers/es2017.ts:1027:84",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/es2017.ts:1027:84",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/es2018.ts",
+    "function": "createSuperElementAccessInAsyncMethod",
+    "parameter": "location",
+    "where": "src/compiler/transformers/es2018.ts:1461:84",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/es2018.ts:1461:84",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "function": "visitJsxOpeningLikeElementJSX",
+    "parameter": "location",
+    "where": "src/compiler/transformers/jsx.ts:316:134",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/jsx.ts:316:134",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/jsx.ts:339:9"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/jsx.ts:339:9",
+        "reads": [
+          "src/compiler/transformers/jsx.ts:359:77"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "function": "visitJsxOpeningLikeElementOrFragmentJSX",
+    "parameter": "location",
+    "where": "src/compiler/transformers/jsx.ts:339:9",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/jsx.ts:339:9",
+        "reads": [
+          "src/compiler/transformers/jsx.ts:359:77"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "function": "visitJsxOpeningLikeElementCreateElement",
+    "parameter": "location",
+    "where": "src/compiler/transformers/jsx.ts:382:144",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/jsx.ts:382:144",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilities.ts:247:186"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilities.ts:247:186",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "function": "visitJsxOpeningFragmentJSX",
+    "parameter": "location",
+    "where": "src/compiler/transformers/jsx.ts:413:117",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/jsx.ts:413:117",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/jsx.ts:339:9"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/jsx.ts:339:9",
+        "reads": [
+          "src/compiler/transformers/jsx.ts:359:77"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "function": "visitJsxOpeningFragmentCreateElement",
+    "parameter": "location",
+    "where": "src/compiler/transformers/jsx.ts:431:126",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/jsx.ts:431:126",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilities.ts:280:254"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilities.ts:280:254",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "function": "transformFunctionLikeToExpression",
+    "parameter": "location",
+    "where": "src/compiler/transformers/es2015.ts:2512:79",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/es2015.ts:2512:79",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "visitElements",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:1073:90",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:1073:90",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "createInlineBreak",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2556:46",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2556:46",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "createInlineReturn",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2575:58",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2575:58",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "createGeneratorResume",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2591:36",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2591:36",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitAssignment",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2630:66",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2630:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitBreak",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2640:38",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2640:38",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitBreakWhenTrue",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2652:69",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2652:69",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitBreakWhenFalse",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2664:70",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2664:70",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitYieldStar",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2674:53",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2674:53",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitYield",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2684:49",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2684:49",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitReturn",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2694:50",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2694:50",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitThrow",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2704:48",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2704:48",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/generators.ts:2721:66"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "emitWorker",
+    "parameter": "location",
+    "where": "src/compiler/transformers/generators.ts:2721:66",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2736:47",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:2721:66",
+        "reads": [],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/transformers/generators.ts:2736:47",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeAssign",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3096:63",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3096:63",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeThrow",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3106:49",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3106:49",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeReturn",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3118:62",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3118:62",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeBreak",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3144:39",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3144:39",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeBreakWhenTrue",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3169:70",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3169:70",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeBreakWhenFalse",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3199:71",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3199:71",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeYield",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3228:49",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3228:49",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "function": "writeYieldStar",
+    "parameter": "operationLocation",
+    "where": "src/compiler/transformers/generators.ts:3253:53",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/generators.ts:3253:53",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "function": "createAllExportExpressions",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/module.ts:1905:78",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/module.ts:1905:78",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/module/module.ts:2185:80"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/module.ts:2185:80",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "function": "appendExportStatement",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/module.ts:2131:161",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/module.ts:2131:161",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/module/module.ts:2168:79"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/module.ts:2168:79",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "function": "createExportStatement",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/module.ts:2168:79",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/module.ts:2168:79",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "function": "createExportExpression",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/module.ts:2185:80",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/module.ts:2185:80",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "function": "createExportedVariableAssignment",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/system.ts:974:84",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/system.ts:974:84",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/module/system.ts:997:76"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/system.ts:997:76",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "function": "createNonExportedVariableAssignment",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/system.ts:985:87",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/system.ts:985:87",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/transformers/module/system.ts:997:76"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/system.ts:997:76",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "function": "createVariableAssignment",
+    "parameter": "location",
+    "where": "src/compiler/transformers/module/system.ts:997:76",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/transformers/module/system.ts:997:76",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/factory/utilitiesPublic.ts:10:61",
+          "src/compiler/factory/utilitiesPublic.ts:10:61"
+        ]
+      },
+      {
+        "where": "src/compiler/factory/utilitiesPublic.ts:10:61",
+        "reads": [
+          "src/compiler/factory/utilitiesPublic.ts:11:12",
+          "src/compiler/factory/utilitiesPublic.ts:11:49",
+          "src/compiler/factory/utilitiesPublic.ts:11:63"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "function": "emitNodeListItems",
+    "parameter": "childrenTextRange",
+    "where": "src/compiler/emitter.ts:4729:274",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/emitter.ts:5121:33",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/emitter.ts:4729:274",
+        "reads": [
+          "src/compiler/emitter.ts:4841:64",
+          "src/compiler/emitter.ts:4841:89"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/emitter.ts:5110:123"
+        ]
+      },
+      {
+        "where": "src/compiler/emitter.ts:5110:123",
+        "reads": [
+          "src/compiler/emitter.ts:5121:77",
+          "src/compiler/emitter.ts:5121:102"
+        ],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/emitter.ts:5121:33",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "function": "getClosingLineTerminatorCount",
+    "parameter": "childrenTextRange",
+    "where": "src/compiler/emitter.ts:5110:123",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/emitter.ts:5121:33",
+        "reason": "BinaryExpression"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/emitter.ts:5110:123",
+        "reads": [
+          "src/compiler/emitter.ts:5121:77",
+          "src/compiler/emitter.ts:5121:102"
+        ],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/emitter.ts:5121:33",
+            "reason": "BinaryExpression"
+          }
+        ],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "function": "emitBodyWithDetachedComments",
+    "parameter": "detachedRange",
+    "where": "src/compiler/emitter.ts:5922:68",
+    "writes": [],
+    "escapes": [
+      {
+        "where": "src/compiler/emitter.ts:5924:30",
+        "reason": "VariableDeclaration"
+      }
+    ],
+    "dependencies": [
+      {
+        "where": "src/compiler/emitter.ts:5922:68",
+        "reads": [
+          "src/compiler/emitter.ts:5944:33"
+        ],
+        "writes": [],
+        "escapes": [
+          {
+            "where": "src/compiler/emitter.ts:5924:30",
+            "reason": "VariableDeclaration"
+          }
+        ],
+        "calls": [
+          "src/compiler/emitter.ts:6142:56"
+        ]
+      },
+      {
+        "where": "src/compiler/emitter.ts:6142:56",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7017:5"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7017:5",
+        "reads": [
+          "src/compiler/utilities.ts:7029:13",
+          "src/compiler/utilities.ts:7030:68",
+          "src/compiler/utilities.ts:7035:57",
+          "src/compiler/utilities.ts:7064:90",
+          "src/compiler/utilities.ts:7069:57"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:6938:95"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:6938:95",
+        "reads": [
+          "src/compiler/utilities.ts:6939:65"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "function": "emitDetachedCommentsAndUpdateCommentsInfo",
+    "parameter": "range",
+    "where": "src/compiler/emitter.ts:6142:56",
+    "writes": [],
+    "escapes": [],
+    "dependencies": [
+      {
+        "where": "src/compiler/emitter.ts:6142:56",
+        "reads": [],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:7017:5"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:7017:5",
+        "reads": [
+          "src/compiler/utilities.ts:7029:13",
+          "src/compiler/utilities.ts:7030:68",
+          "src/compiler/utilities.ts:7035:57",
+          "src/compiler/utilities.ts:7064:90",
+          "src/compiler/utilities.ts:7069:57"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": [
+          "src/compiler/utilities.ts:6938:95"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:6938:95",
+        "reads": [
+          "src/compiler/utilities.ts:6939:65"
+        ],
+        "writes": [],
+        "escapes": [],
+        "calls": []
+      }
+    ]
+  }
+]

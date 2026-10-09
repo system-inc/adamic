@@ -1,0 +1,13 @@
+// a-check: type error TS2591
+// From TypeScript 6.0.3, src/compiler/core.ts:2588-2595
+// Type-only import activates library's pinned Node loader in this isolated probe.
+import type {} from "node:process";
+declare const process: (NodeJS.Process & { browser?: unknown }) | undefined;
+declare const require: unknown;
+function isNodeLikeSystem(): boolean {
+    return typeof process !== "undefined"
+        && !!process.nextTick
+        && !process.browser
+        && typeof require !== "undefined";
+}
+console.log(`${isNodeLikeSystem()}`);

@@ -1,0 +1,8 @@
+declare class BaseError { constructor(message: string, options?: object); }
+const identifier = 'AccountNotFound';
+const named = new BaseError('boom', { identifier: 'AccountNotFound' });
+const shorthand = new BaseError('boom', { identifier });
+const independentStatus = new BaseError('boom', { identifier: 'X', statusCode: 404 });
+const unnamed = new BaseError('boom', { statusCode: 500 });
+const quotedKey = new BaseError('boom', { 'identifier': 'X' });
+const computedKey = new BaseError('boom', { ['identifier']: 'X' });

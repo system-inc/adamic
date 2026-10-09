@@ -1,0 +1,26 @@
+// From TypeScript 6.0.3, src/compiler/debug.ts:99
+// From TypeScript 6.0.3, src/compiler/debug.ts:113
+// From TypeScript 6.0.3, src/compiler/debug.ts:123
+// Census reason: a namespace
+export enum LogLevel {
+    Off,
+    Error,
+    Warning,
+    Info,
+    Verbose,
+}
+interface LoggingHost { log(level: LogLevel, s: string): void; }
+export namespace Debug {
+    export let currentLogLevel: LogLevel = LogLevel.Warning;
+    export let isDebugging = false;
+    export let loggingHost: LoggingHost | undefined;
+    /* eslint-enable prefer-const */
+    export function shouldLog(level: LogLevel): boolean {
+        return currentLogLevel <= level;
+    }
+}
+for (const level of [LogLevel.Warning, LogLevel.Verbose, LogLevel.Off]) {
+    Debug.currentLogLevel = level;
+    Debug.isDebugging = level === LogLevel.Verbose;
+    console.log(`${Debug.currentLogLevel} ${Debug.isDebugging} ${Debug.shouldLog(LogLevel.Error)} ${Debug.shouldLog(LogLevel.Info)}`);
+}

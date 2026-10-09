@@ -1,0 +1,11 @@
+=== RUN   TestPrinterConstructorGap
+=== PAUSE TestPrinterConstructorGap
+=== RUN   TestPrinterWhitespaceGap
+    gaps_test.go:59: repository and submodules: 0 .graphql files
+    gaps_test.go:100: five whitespace texts: native and Node equal Go refusals; npm and embedded Prettier return empty text
+--- PASS: TestPrinterWhitespaceGap (9.45s)
+=== CONT  TestPrinterConstructorGap
+    gaps_test.go:32: /workspace/adamic/stage1/cohere/graphql/printer/gaps/nestedInner.ts:5:29: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestPrinterConstructorGap (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql/printer	9.585s

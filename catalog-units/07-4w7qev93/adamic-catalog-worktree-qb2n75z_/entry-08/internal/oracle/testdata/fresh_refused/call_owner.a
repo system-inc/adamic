@@ -1,0 +1,16 @@
+// A helper that makes a child holding its parent, then pushes the child into the parent.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+	readonly owner: Node | undefined;
+}
+function adopt(parent: Node, kind: string): void {
+	const child: Node = { kind, nodes: [], owner: parent };
+	parent.nodes.push(child); // closes the cycle
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [], owner: undefined };
+	adopt(node, `c${n}`);
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

@@ -1,0 +1,5 @@
+console.log(`${typeof Array.prototype.indexOf} ${Array.prototype.indexOf.length} ${Array.prototype.indexOf.name}`);
+console.log(`${Array.prototype.flat.length} ${Array.prototype.copyWithin.length} ${Array.prototype.with.length}`);
+console.log(`${typeof Array.prototype.values} ${Array.prototype.values.name} ${Array.prototype.toSorted.length}`);
+const local = { name: 'mine', length: 99 };
+console.log(`${local.name} ${local.length}`);

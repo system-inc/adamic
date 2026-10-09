@@ -1,0 +1,206 @@
+[
+  {
+    "loop": 1,
+    "mode": "before",
+    "cold": null,
+    "seconds": 0.6382699480000156,
+    "instrument": [
+      "bash",
+      "-x",
+      "/workspace/setup-trials-e8wcw_93/before-1/before.sh"
+    ],
+    "before": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 2/328 84376",
+      "cached": "action-cache"
+    },
+    "after": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 2/329 84582",
+      "cached": "action-cache"
+    },
+    "exit": 0,
+    "log": "/tmp/markdown-warm-final/before-1.log",
+    "scratch": "/workspace/setup-trials-e8wcw_93/before-1"
+  },
+  {
+    "loop": 1,
+    "mode": "after",
+    "cold": null,
+    "seconds": 0.5931728569994448,
+    "instrument": [
+      "bash",
+      "-x",
+      "/workspace/adamic/cloud/setup.sh"
+    ],
+    "before": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 2/329 84590",
+      "cached": "action-cache"
+    },
+    "after": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 3/330 84802",
+      "cached": "action-cache"
+    },
+    "exit": 0,
+    "log": "/tmp/markdown-warm-final/after-1.log",
+    "scratch": "/workspace/setup-trials-e8wcw_93/after-1"
+  },
+  {
+    "loop": 2,
+    "mode": "after",
+    "cold": null,
+    "seconds": 0.6163079279995145,
+    "instrument": [
+      "bash",
+      "-x",
+      "/workspace/adamic/cloud/setup.sh"
+    ],
+    "before": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 2/330 84810",
+      "cached": "action-cache"
+    },
+    "after": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 2/331 85025",
+      "cached": "action-cache"
+    },
+    "exit": 0,
+    "log": "/tmp/markdown-warm-final/after-2.log",
+    "scratch": "/workspace/setup-trials-e8wcw_93/after-2"
+  },
+  {
+    "loop": 2,
+    "mode": "before",
+    "cold": null,
+    "seconds": 0.6008855049994963,
+    "instrument": [
+      "bash",
+      "-x",
+      "/workspace/setup-trials-e8wcw_93/before-2/before.sh"
+    ],
+    "before": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.62 5.90 3.69 2/331 85033",
+      "cached": "action-cache"
+    },
+    "after": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.09 5.83 3.68 2/332 85237",
+      "cached": "action-cache"
+    },
+    "exit": 0,
+    "log": "/tmp/markdown-warm-final/before-2.log",
+    "scratch": "/workspace/setup-trials-e8wcw_93/before-2"
+  },
+  {
+    "loop": 3,
+    "mode": "before",
+    "cold": null,
+    "seconds": 0.6095466299993859,
+    "instrument": [
+      "bash",
+      "-x",
+      "/workspace/setup-trials-e8wcw_93/before-3/before.sh"
+    ],
+    "before": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.09 5.83 3.68 2/332 85245",
+      "cached": "action-cache"
+    },
+    "after": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.09 5.83 3.68 2/333 85450",
+      "cached": "action-cache"
+    },
+    "exit": 0,
+    "log": "/tmp/markdown-warm-final/before-3.log",
+    "scratch": "/workspace/setup-trials-e8wcw_93/before-3"
+  },
+  {
+    "loop": 3,
+    "mode": "after",
+    "cold": null,
+    "seconds": 0.6133507889999237,
+    "instrument": [
+      "bash",
+      "-x",
+      "/workspace/adamic/cloud/setup.sh"
+    ],
+    "before": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.09 5.83 3.68 2/333 85458",
+      "cached": "action-cache"
+    },
+    "after": {
+      "commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "load": "8.09 5.83 3.68 2/329 85669",
+      "cached": "action-cache"
+    },
+    "exit": 0,
+    "log": "/tmp/markdown-warm-final/after-3.log",
+    "scratch": "/workspace/setup-trials-e8wcw_93/after-3"
+  }
+]

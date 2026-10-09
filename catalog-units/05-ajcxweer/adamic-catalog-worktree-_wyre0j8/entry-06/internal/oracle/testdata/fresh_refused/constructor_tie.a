@@ -1,0 +1,20 @@
+// A constructor that holds its parent and adds itself to the parent's children: this was made here,
+// but it holds what it's written into.
+class TreeNode {
+	readonly name: string;
+	readonly nodes: TreeNode[] = [];
+	parent: TreeNode | undefined = undefined;
+	constructor(name: string, parent: TreeNode | undefined) {
+		this.name = name;
+		if (parent !== undefined) {
+			this.parent = parent;
+			parent.nodes.push(this); // closes the cycle
+		}
+	}
+}
+function run(n: number): number {
+	const root = new TreeNode(`r${n}`, undefined);
+	const child = new TreeNode(`c${n}`, root);
+	return root.nodes.length + (child.parent === undefined ? 0 : 1);
+}
+console.log(`${run(1)}`);

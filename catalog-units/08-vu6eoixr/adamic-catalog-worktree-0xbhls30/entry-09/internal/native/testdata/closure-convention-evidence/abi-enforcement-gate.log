@@ -1,0 +1,132 @@
+=== RUN   TestNoReaderCallingConvention
+=== RUN   TestNoReaderCallingConvention/closure_convention_plain.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+--- PASS: TestNoReaderCallingConvention (0.33s)
+    --- PASS: TestNoReaderCallingConvention/closure_convention_plain.a (0.10s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_no_reader.a (0.10s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_unrelated_type.a (0.13s)
+=== RUN   TestClosureConventionDropCount
+    closure_convention_test.go:51: drop-count mutant rejected by clang under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionDropCount (0.58s)
+=== RUN   TestClosureConventionRuntimeDropCount
+    closure_convention_test.go:79: runtime callback drop-count mutant rejected by clang under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionRuntimeDropCount (4.30s)
+=== RUN   TestClosureConventionRuntimeFeaturesIgnoreLiterals
+--- PASS: TestClosureConventionRuntimeFeaturesIgnoreLiterals (4.00s)
+=== RUN   TestClosureConventionWrongOrder
+=== RUN   TestClosureConventionWrongOrder/definition
+    closure_convention_test.go:121: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-169422207/main.c:60:21: error: conflicting types for 'adamic_function_4_reader_value'
+           60 | static adamic_value adamic_function_4_reader_value(adamic_closure *self, size_t argument_count, adamic_value *arguments) {
+              |                     ^
+        /tmp/adamic-gate/adamic-build-169422207/main.c:24:37: note: previous declaration is here
+           24 | static adamic_counted_code_function adamic_function_4_reader_value;
+              |                                     ^
+        1 error generated.
+        
+=== RUN   TestClosureConventionWrongOrder/call
+    closure_convention_test.go:148: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1453932648/main.c:43:76: error: incompatible integer to pointer conversion passing 'int' to parameter of type 'adamic_value *' (aka 'union adamic_value *') [-Wint-conversion]
+           43 |         adamic_value adamic_temporary_3 = adamic_closure_call(adamic_local_3_run, 2, (adamic_value[]){{.number = (0x1p+00)}, {.number = (0x1p+01)}});
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/ce1bca615ccfa1f933ad616cb79a0c154dc14c11acc087bcaf2667227f988dc1/adamic.h:138:87: note: passing argument to parameter 'arguments' here
+          138 | static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+              |                                                                                       ^
+        /tmp/adamic-gate/adamic-build-1453932648/main.c:43:79: error: incompatible pointer to integer conversion passing 'adamic_value[2]' (aka 'union adamic_value[2]') to parameter of type 'size_t' (aka 'unsigned long') [-Wint-conversion]
+           43 |         adamic_value adamic_temporary_3 = adamic_closure_call(adamic_local_3_run, 2, (adamic_value[]){{.number = (0x1p+00)}, {.number = (0x1p+01)}});
+              |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/ce1bca615ccfa1f933ad616cb79a0c154dc14c11acc087bcaf2667227f988dc1/adamic.h:138:105: note: passing argument to parameter 'argument_count' here
+          138 | static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+              |                                                                                                         ^
+        2 errors generated.
+        
+=== RUN   TestClosureConventionWrongOrder/function-pointer-cast
+    closure_convention_test.go:159: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2261492758/main.c:6:37: error: cast from 'adamic_value (*)(adamic_closure *, size_t, adamic_value *)' (aka 'union adamic_value (*)(struct adamic_closure *, unsigned long, union adamic_value *)') to 'adamic_counted_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+            6 | static adamic_counted_code erased = (adamic_counted_code)wrong;
+              |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+        
+=== RUN   TestClosureConventionWrongOrder/void-pointer-cast
+    closure_convention_test.go:159: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-559679876/main.c:6:73: error: controlling expression type 'void *' not compatible with any generic association type
+            6 | static adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }
+              |                                                                         ^~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/ce1bca615ccfa1f933ad616cb79a0c154dc14c11acc087bcaf2667227f988dc1/adamic.h:1028:86: note: expanded from macro 'adamic_counted_closure_new'
+         1028 | #define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+              |                                                                                      ^~~~
+        1 error generated.
+        
+--- PASS: TestClosureConventionWrongOrder (0.26s)
+    --- PASS: TestClosureConventionWrongOrder/definition (0.05s)
+    --- PASS: TestClosureConventionWrongOrder/call (0.05s)
+    --- PASS: TestClosureConventionWrongOrder/function-pointer-cast (0.05s)
+    --- PASS: TestClosureConventionWrongOrder/void-pointer-cast (0.05s)
+=== RUN   TestDevirtualizedCalls
+=== PAUSE TestDevirtualizedCalls
+=== CONT  TestDevirtualizedCalls
+--- PASS: TestDevirtualizedCalls (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	9.590s
+=== RUN   TestArgumentsLengthTypeScriptSource
+=== PAUSE TestArgumentsLengthTypeScriptSource
+=== CONT  TestArgumentsLengthTypeScriptSource
+=== RUN   TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_no_reader.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_no_reader.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_value.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_value.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_spread.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_spread.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_extended.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_extended.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_static_constructor.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_static_constructor.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_method.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_method.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_static.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_static.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a
+=== RUN   TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a
+=== PAUSE TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a
+=== CONT  TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_extended.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_static.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_value.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_spread.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_method.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_static_constructor.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_no_reader.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a
+=== CONT  TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a
+--- PASS: TestArgumentsLengthTypeScriptSource (0.00s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a (18.55s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_static.a (18.60s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_value.a (18.75s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_spread.a (18.96s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a (1.27s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_method.a (1.28s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_static_constructor.a (1.20s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a (1.05s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length.a (1.09s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_no_reader.a (1.06s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a (0.98s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a (1.12s)
+    --- PASS: TestArgumentsLengthTypeScriptSource/arguments_length_extended.a (24.75s)
+PASS
+gate cache: native hits=0 misses=39
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	24.776s

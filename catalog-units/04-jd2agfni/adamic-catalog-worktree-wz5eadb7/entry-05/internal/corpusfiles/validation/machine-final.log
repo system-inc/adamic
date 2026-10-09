@@ -1,0 +1,10 @@
+nproc: 5
+/proc/loadavg: 0.46 1.07 1.54 1/472 158800
+/sys/fs/cgroup/cpu.max: 400000 100000
+/sys/fs/cgroup/memory.max: 17179869184
+/sys/fs/cgroup/memory.events: low 0
+high 0
+max 154786
+oom 0
+oom_kill 0
+oom_group_kill 0

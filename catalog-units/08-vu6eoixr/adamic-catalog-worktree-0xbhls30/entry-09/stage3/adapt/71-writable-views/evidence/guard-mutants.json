@@ -1,0 +1,17 @@
+{
+  "caught": 2,
+  "results": [
+    {
+      "name": "range-writer",
+      "exit": 1,
+      "guard": "cannot prove rangeStartPositionsAreOnSameLine.range1 readonly",
+      "no_source_edits": true
+    },
+    {
+      "name": "cache-initializer",
+      "exit": 1,
+      "guard": "SourceFile cache initialization changed",
+      "no_source_edits": true
+    }
+  ]
+}

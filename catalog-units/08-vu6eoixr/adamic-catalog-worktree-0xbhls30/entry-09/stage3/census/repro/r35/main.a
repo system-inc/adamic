@@ -1,0 +1,1 @@
+const values: Record<string, number> = {}; values["x"] = 1; console.log(String(values["x"]));

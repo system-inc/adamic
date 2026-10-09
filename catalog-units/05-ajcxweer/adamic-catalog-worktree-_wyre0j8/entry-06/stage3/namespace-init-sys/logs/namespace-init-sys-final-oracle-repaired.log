@@ -1,0 +1,441 @@
+=== RUN   TestClassWrongOutput103
+=== RUN   TestClassWrongOutput103/init_super_number
+    class_wrong_output_test.go:22: gate cache node hit
+=== RUN   TestClassWrongOutput103/init_super_getter
+    class_wrong_output_test.go:22: gate cache node hit
+=== RUN   TestClassWrongOutput103/init_super
+    class_wrong_output_test.go:22: gate cache node hit
+--- PASS: TestClassWrongOutput103 (0.58s)
+    --- PASS: TestClassWrongOutput103/init_super_number (0.29s)
+    --- PASS: TestClassWrongOutput103/init_super_getter (0.16s)
+    --- PASS: TestClassWrongOutput103/init_super (0.13s)
+=== RUN   TestClassWrongOutput107
+=== RUN   TestClassWrongOutput107/iterators_override_this
+    class_wrong_output_test.go:45: gate cache node hit
+=== RUN   TestClassWrongOutput107/iterators_hidden_return
+    class_wrong_output_test.go:45: gate cache node hit
+--- PASS: TestClassWrongOutput107 (0.26s)
+    --- PASS: TestClassWrongOutput107/iterators_override_this (0.11s)
+    --- PASS: TestClassWrongOutput107/iterators_hidden_return (0.15s)
+=== RUN   TestClassWrongOutput108
+    class_wrong_output_test.go:63: gate cache node hit
+--- PASS: TestClassWrongOutput108 (0.13s)
+=== RUN   TestClassWrongOutput106
+=== RUN   TestClassWrongOutput106/classfeat_static_private_instance
+    class_wrong_output_test.go:84: gate cache node hit
+=== RUN   TestClassWrongOutput106/classfeat_static_private_method
+    class_wrong_output_test.go:84: gate cache node hit
+--- PASS: TestClassWrongOutput106 (1.05s)
+    --- PASS: TestClassWrongOutput106/classfeat_static_private_instance (0.19s)
+    --- PASS: TestClassWrongOutput106/classfeat_static_private_method (0.86s)
+=== RUN   TestNamespaceSemanticMutants
+=== RUN   TestNamespaceSemanticMutants/wrong_scoped_function
+=== PAUSE TestNamespaceSemanticMutants/wrong_scoped_function
+=== RUN   TestNamespaceSemanticMutants/wrong_scoped_constant
+=== PAUSE TestNamespaceSemanticMutants/wrong_scoped_constant
+=== RUN   TestNamespaceSemanticMutants/wrong_namespace_enum
+=== PAUSE TestNamespaceSemanticMutants/wrong_namespace_enum
+=== RUN   TestNamespaceSemanticMutants/wrong_body_order
+=== PAUSE TestNamespaceSemanticMutants/wrong_body_order
+=== RUN   TestNamespaceSemanticMutants/wrong_exported_state
+=== PAUSE TestNamespaceSemanticMutants/wrong_exported_state
+=== RUN   TestNamespaceSemanticMutants/wrong_debug_initialization
+=== PAUSE TestNamespaceSemanticMutants/wrong_debug_initialization
+=== RUN   TestNamespaceSemanticMutants/drop_returned_assignment
+=== PAUSE TestNamespaceSemanticMutants/drop_returned_assignment
+=== RUN   TestNamespaceSemanticMutants/wrong_factory_binding
+=== PAUSE TestNamespaceSemanticMutants/wrong_factory_binding
+=== CONT  TestNamespaceSemanticMutants/wrong_scoped_function
+=== CONT  TestNamespaceSemanticMutants/wrong_exported_state
+=== CONT  TestNamespaceSemanticMutants/wrong_namespace_enum
+=== CONT  TestNamespaceSemanticMutants/wrong_body_order
+=== CONT  TestNamespaceSemanticMutants/wrong_factory_binding
+=== NAME  TestNamespaceSemanticMutants/wrong_body_order
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/drop_returned_assignment
+=== NAME  TestNamespaceSemanticMutants/wrong_factory_binding
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_debug_initialization
+=== NAME  TestNamespaceSemanticMutants/wrong_exported_state
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_scoped_constant
+=== NAME  TestNamespaceSemanticMutants/wrong_namespace_enum
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_function
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/drop_returned_assignment
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_debug_initialization
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_constant
+    namespaces_test.go:195: gate cache node hit
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+--- PASS: TestNamespaceSemanticMutants (0.00s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_body_order (1.14s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_factory_binding (1.27s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_exported_state (1.29s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_namespace_enum (1.45s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_scoped_function (1.46s)
+    --- PASS: TestNamespaceSemanticMutants/drop_returned_assignment (0.73s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_debug_initialization (0.61s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_scoped_constant (0.83s)
+=== RUN   TestNamespaceStateMutants
+=== RUN   TestNamespaceStateMutants/lose_assignment
+    namespaces_test.go:262: gate cache node hit
+    namespaces_test.go:265: caught by Node comparison
+=== RUN   TestNamespaceStateMutants/lose_hoisting
+    namespaces_test.go:262: gate cache node hit
+    namespaces_test.go:265: caught by Node comparison
+=== RUN   TestNamespaceStateMutants/skip_ready_check
+    namespaces_test.go:257: gate cache node hit
+    namespaces_test.go:260: caught by checked JavaScript exit comparison
+--- PASS: TestNamespaceStateMutants (1.26s)
+    --- PASS: TestNamespaceStateMutants/lose_assignment (0.45s)
+    --- PASS: TestNamespaceStateMutants/lose_hoisting (0.38s)
+    --- PASS: TestNamespaceStateMutants/skip_ready_check (0.43s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_graph.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_graph.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_cycle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_cycle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_map_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_map_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_safe_initialization.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_safe_initialization.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_probe.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_probe.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_observed_narrowing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_observed_narrowing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_factory.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_factory.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_modules/main.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_modules/main.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_state.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_state.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_body.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_body.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_state.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_state.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_modules/main.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_modules/main.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unready.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unready.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_deinitialize_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_deinitialize_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_modules/main.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_observed_narrowing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_observed_narrowing.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_observed_narrowing.a
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+    oracle_test.go:757: gate cache node hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_deinitialize_parameter.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_modules/main.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_deinitialize_parameter.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_body.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_state.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_cycle.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_body.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_probe.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_state.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_safe_initialization.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_map_before.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_cycle.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_graph.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_probe.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_safe_initialization.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_modules/main.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_map_before.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_state.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_graph.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_factory.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_factory.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_state.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_modules/main.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unready.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unready.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_observed_narrowing.a (1.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/9984394_view_method_parameter_matching.a (1.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a (1.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a (1.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_modules/main.a (1.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a (0.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_deinitialize_parameter.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a (0.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_body.a (0.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_state.a (0.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a (0.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_cycle.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_probe.a (0.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_safe_initialization.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_map_before.a (0.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_call_graph.a (0.15s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a (0.17s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a (0.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_factory.a (0.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_state.a (0.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a (0.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_debug_modules/main.a (0.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a (0.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a (0.25s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a (0.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unready.a (0.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a (0.26s)
+PASS
+gate cache: native hits=92 misses=0
+gate cache: node hits=85 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.281s

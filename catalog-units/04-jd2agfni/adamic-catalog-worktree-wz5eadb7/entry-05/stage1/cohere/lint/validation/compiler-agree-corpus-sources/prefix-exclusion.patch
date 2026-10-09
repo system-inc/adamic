@@ -1,0 +1,11 @@
+--- original
++++ prefix-exclusion
+@@ -32,7 +32,7 @@
+ 		}
+ 		fixture := false
+ 		for _, directory := range strings.Split(filepath.ToSlash(filepath.Dir(relative)), "/") {
+-			if slices.Contains(compilerCorpusFixtureFolders, directory) {
++			if strings.HasPrefix(directory, "testdata") || slices.Contains(compilerCorpusFixtureFolders, directory) {
+ 				fixture = true
+ 			}
+ 		}

@@ -1,0 +1,140 @@
+diff --cc internal/javascript/javascript.go
+index ff8bbe46e,e5f363db5..000000000
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@@ -48,27 -48,16 +48,34 @@@ func JavaScriptWith(program *ir.Program
+    // A closure is its code and its cells, an instance of its own class so typeof can tell it from an
+    // object that happens to have fields of those names.
+    builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
+ +  builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
+    builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+ +  builder.WriteString(fieldReadinessRuntime)
+ +  builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
+    builder.WriteString(collectionIteratorRuntime)
+    builder.WriteString(jsonStringifyRuntime)
+ +  counted := false
+ +  for _, function := range program.Functions {
+ +      counted = counted || function.ArgumentsCount != 0
+ +  }
+ +  if counted {
+ +      builder.WriteString("const adamicDirect = (fn, values, count = values.length - (fn.adamicReceiver ? 1 : 0)) => fn(...(fn.adamicCount ? [count] : []), ...values);\n")
+ +  }
+    builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
++   // A static constructor's live parent prototype carries inherited fields. Keep its
++   // named method map separately, keyed by the actual constructor function.
++   builder.WriteString("const adamicStaticMethods = new WeakMap();\n")
+    // object.name(...) through an interface: the object's own function value, or else its class's
+    // method (on the prototype its constructor gave it), called with the object as this.
+++<<<<<<< HEAD
+ +  if counted {
+ +      builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const fn = object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+ +  } else {
+ +      builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } return { code: (closure, values) => object[name](object, ...values) }; };\n")
+ +  }
+++=======
++   builder.WriteString("const adamicCallee = (object, name) => { if (!Object.hasOwn(object, name)) { const methods = adamicStaticMethods.get(object); const method = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => method(object, ...values) }; } const callee = object[name]; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
+++>>>>>>> b6aa4f000 (Dispatch structural methods through the actual receiver)
+    builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+    // The array and the callback are each evaluated once, in that order, before the first call.
+    builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
+@@@ -89,8 -78,8 +96,13 @@@
+    builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
+    builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
+    if len(program.Classes) > 0 {
+++<<<<<<< HEAD
+ +      builder.WriteString(classCountRuntime("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args]);\n", counted))
+ +      builder.WriteString(classCountRuntime("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : adamicDirect(get, [value]); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : adamicDirect(set, [value, next]); };\n", counted))
+++=======
++       builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; adamicStaticMethods.set(value, Object.getPrototypeOf(storage)); if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
++       builder.WriteString("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : get(value); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : set(value, next); };\n")
+++>>>>>>> b6aa4f000 (Dispatch structural methods through the actual receiver)
+        classes := []string{}
+        for _, class := range program.Classes {
+            methods := []string{}
+@@@ -203,41 -167,14 +215,46 @@@
+    emitter.function = nil
+    emitter.indent = 0
+    builder.WriteString("\n")
+++<<<<<<< HEAD
+ +  for index, function := range program.Functions {
+ +      if function.ArgumentsCount != 0 && !function.Closure {
+ +          fmt.Fprintf(&builder, "%s.adamicCount = true;\n", functionName(program, index))
+ +      }
+ +      if function.Receiver && function.ArgumentsCount != 0 {
+ +          fmt.Fprintf(&builder, "%s.adamicReceiver = true;\n", functionName(program, index))
+ +      }
+ +  }
+ +  // Each class's methods, the prototype of the objects its constructor makes, declared before the
+ +  // program runs; a class's methods are functions, hoisted, so each is there to name.
+++=======
++   // Discover main's static allocations too, before declaring their named maps. The
++   // generated main still runs after every map, with its original statement order.
++   emitter.statements(program.Main)
+++>>>>>>> b6aa4f000 (Dispatch structural methods through the actual receiver)
+    for _, prototype := range emitter.prototypes {
+        builder.WriteString(prototype)
+    }
+-   emitter.statements(program.Main)
+    builder.WriteString(emitter.out.String())
+ -  return builder.String()
+ +  code := builder.String()
+ +  if strings.Contains(code, "adamicNodeFSFile.") {
+ +      code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
+ +  }
+ +  for _, module := range []struct{ name, path string }{{"adamicNodePath", "node:path"}, {"adamicNodeOS", "node:os"}, {"adamicNodeProcess", "node:process"}} {
+ +      if strings.Contains(code, module.name+".") {
+ +          code = "import * as " + module.name + " from '" + module.path + "';\n" + code
+ +      }
+ +  }
+ +  return code
+ +}
+ +
+ +// Only compiler runtime text is rewritten; source literals are emitted later.
+ +func classCountRuntime(runtime string, counted bool) string {
+ +  if counted {
+ +      return runtime
+ +  }
+ +  runtime = strings.ReplaceAll(runtime, "adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args])", "adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args)")
+ +  runtime = strings.ReplaceAll(runtime, "adamicDirect(get, [value])", "get(value)")
+ +  return strings.ReplaceAll(runtime, "adamicDirect(set, [value, next])", "set(value, next)")
+  }
+
+  type emitter struct {
+diff --cc internal/oracle/counts.md
+index a329c8dcd,141ff8da9..000000000
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@@ -743,24 -592,12 +743,33 @@@ Generated by TestCountsAreRecorded; aft
+  | internal/oracle/testdata/regexp_cycle_collections.a | 31 | 31 | 85 | 89 | 23 | 0 |
+  | internal/oracle/testdata/regexp_cycle_closures.a | 11 | 11 | 25 | 26 | 10 | 0 |
+  | internal/oracle/testdata/regexp_cycle_weak.a | 4 | 4 | 12 | 14 | 4 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/regexp_replace/argument_guard.a | 6 | 0 | 5 | 0 | 6 | 0 |
+ +| internal/oracle/testdata/regexp_replace/group_guard.a | 7 | 0 | 7 | 0 | 7 | 0 |
+ +| internal/oracle/testdata/regexp_replace/callback.a | 290 | 290 | 244 | 291 | 37 | 0 |
+ +| internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 11 | 14 | 11 | 0 |
+ +| internal/oracle/testdata/regexp_replace/arguments.a | 14 | 14 | 18 | 21 | 12 | 0 |
+ +| internal/oracle/testdata/scanner_nested_overload.a | 1 | 1 | 2 | 3 | 1 | 0 |
+ +| stage3/drivers/scanner/probes/nested-sibling-callback.a | 3 | 3 | 3 | 4 | 3 | 0 |
+ +| stage3/drivers/scanner/probes/nested-generic-sibling-call.a | 5 | 5 | 1 | 6 | 5 | 0 |
+ +| stage3/drivers/scanner/probes/nested-ancestor-call.a | 6 | 6 | 4 | 7 | 6 | 0 |
+ +| internal/oracle/testdata/nested_reference_identity.a | 31 | 31 | 71 | 73 | 18 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/scanner.a | 0 | 0 | 3 | 3 | 0 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/shared.a | 34 | 34 | 25 | 48 | 22 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/neighbors.a | 18 | 18 | 20 | 35 | 4 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/fallthrough.a | 65 | 65 | 35 | 82 | 11 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone.a | 8 | 5 | 7 | 8 | 5 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 3 | 3 | 3 | 5 | 2 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 3 | 0 | 3 | 1 | 3 | 0 |
+ +| internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 5 | 1 | 3 | 2 | 5 | 0 |
+++=======
++ | internal/oracle/testdata/structural_statics_instance.a | 4 | 4 | 5 | 9 | 4 | 0 |
++ | internal/oracle/testdata/structural_statics_static.a | 3 | 3 | 4 | 8 | 3 | 0 |
++ | internal/oracle/testdata/structural_statics_mixed.a | 15 | 15 | 18 | 32 | 5 | 0 |
++ | internal/oracle/testdata/structural_statics_inherited.a | 14 | 14 | 24 | 37 | 5 | 0 |
++ | internal/oracle/testdata/structural_statics_optional.a | 7 | 7 | 16 | 24 | 4 | 0 |
++ | internal/oracle/testdata/structural_statics_generic.a | 9 | 9 | 8 | 18 | 5 | 0 |
+++>>>>>>> b6aa4f000 (Dispatch structural methods through the actual receiver)
+  | internal/oracle/testdata/93122fa_s1.a | 1 | 1 | 8 | 9 | 1 | 0 |
+  | internal/oracle/testdata/93122fa_s2.a | 1 | 1 | 3 | 4 | 1 | 0 |
+  | internal/oracle/testdata/switch_empty_neighbors.a | 28 | 28 | 34 | 56 | 3 | 0 |

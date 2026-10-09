@@ -1,0 +1,11 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:614-628
+function some<T>(array: readonly T[] | undefined): array is readonly T[];
+function some<T>(array: readonly T[] | undefined): boolean {
+    return array !== undefined && array.length > 0;
+}
+function use(xs: readonly number[] | undefined): void {
+    if (some(xs)) { console.log(`${xs.length}`); }
+    else { console.log("absent"); }
+}
+const empty: number[] = [];
+use(empty);

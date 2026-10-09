@@ -1,0 +1,184 @@
+[
+  {
+    "unit": "preparation-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestPrepareFixtureOracleHook$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 6.93,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-0-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 9.008,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-1-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 8.748,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-2-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 7.647,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-3-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 7.981,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-4-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 8.893,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-5-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 8.064,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-6-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 9.209,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "shard-7-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 8.993,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "fixtures-all-cold-compiler",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 19.361,
+    "exit": 0,
+    "recompiled_oracle_tests": true
+  },
+  {
+    "unit": "fixture-paths",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixturePaths$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 0.008,
+    "exit": 0,
+    "recompiled_oracle_tests": false
+  },
+  {
+    "unit": "fixture-manifest",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 0.01,
+    "exit": 0,
+    "recompiled_oracle_tests": false
+  },
+  {
+    "unit": "runner-guard",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestTransformedNodeRunnerGuard$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 0.028,
+    "exit": 0,
+    "recompiled_oracle_tests": false
+  },
+  {
+    "unit": "runner-guard-hook",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestTransformedNodeRunnerGuardHook$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "seconds": 0.006,
+    "exit": 0,
+    "recompiled_oracle_tests": false
+  }
+]

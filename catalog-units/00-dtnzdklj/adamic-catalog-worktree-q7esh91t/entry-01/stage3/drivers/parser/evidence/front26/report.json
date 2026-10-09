@@ -1,0 +1,76 @@
+{
+  "status": "green: requested partial-record witness only",
+  "scratch": "/workspace/scratch/parser-front26-scratch",
+  "scratch_head": "1b382081ccd6df2eeb445b1e6432c714d3715326",
+  "inputs": [
+    {
+      "ref": "parser base",
+      "sha": "c109c06da826524b697c11f0423812debc2ef1d4",
+      "scratch_contains": true
+    },
+    {
+      "ref": "area/stage3",
+      "sha": "b61e70642652a7f23af113278ce2fc357d7b4646",
+      "scratch_contains": true
+    },
+    {
+      "ref": "records-lowering",
+      "sha": "456c981b1c108abae5f2c8d6ae665cfd6b92e2fe",
+      "scratch_contains": true
+    }
+  ],
+  "excluded_ancestry": {
+    "arguments-length": true,
+    "quarantined scratch": true
+  },
+  "merge_conflicts": [],
+  "compiler_build": {
+    "command": "GOWORK=off TMPDIR=/workspace/scratch/parser-build-tmp go build -mod=mod -o /workspace/scratch/parser-front26-adamic ./cmd/adamic",
+    "exit": 0,
+    "SDK": "Pinned cohere 7945d102 and TypeScript d92d9bfee reused through scratch-only absolute go.mod replacements; go.sum regenerated. No compiler implementation edits."
+  },
+  "probe": {
+    "file": "native-partial-record-view.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a"
+      ],
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "/workspace/scratch/parser-front26-adamic",
+        "build",
+        "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a",
+        "-o",
+        "/workspace/scratch/parser-front26-partial-record-probe/native-partial-record-view.a.bin"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "pass": true,
+    "native": {
+      "command": [
+        "/workspace/scratch/parser-front26-partial-record-probe/native-partial-record-view.a.bin"
+      ],
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "comparison": {
+      "stdout": 0,
+      "stderr": 0
+    },
+    "binary_bytes": 360312,
+    "native_byte_mutant_cmp": 1
+  },
+  "source_sha256": "4fb8f66dcd77970863cc408717cf4eba9c46ff34ab52d8425d5d6610d2ebaa4d",
+  "coverage": "Only native-partial-record-view.a: empty finite Partial<Record> passed to getOwnKeys(MapLike). No full parser, arguments probe, feature suite or native acceptance run. No general finite-record semantic claim beyond this witness. Quarantined scratch and published slice untouched.",
+  "infrastructure": "Fresh worktree and first correct-directory compiler link exhausted disk. Compressed retained duplicate case dumps, removed completed disposable JSDoc copies and an unused clean area worktree, and removed six obsolete rebuildable compiler binaries with exact paths in cleanup.json. An intervening build ran from the own checkout rather than fresh scratch and failed before producing a binary; retained separately in compiler.log. Final correct-directory build succeeds."
+}

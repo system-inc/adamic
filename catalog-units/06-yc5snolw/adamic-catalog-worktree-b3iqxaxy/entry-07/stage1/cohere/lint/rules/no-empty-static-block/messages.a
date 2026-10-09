@@ -1,0 +1,2 @@
+export const messageUnexpectedEmptyStaticBlock =
+    'This static initialization block is empty, so it runs nothing at class definition time and exists only as syntax. Unlike an empty catch, there is no reading where that is deliberate: a static block has no parameter to bind and no error to swallow, so an empty one is a body that was deleted or never written. Remove it, or say in a comment why the class needs an initialization step that does nothing.';

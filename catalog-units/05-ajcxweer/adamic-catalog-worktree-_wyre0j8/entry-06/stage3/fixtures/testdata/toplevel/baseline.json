@@ -1,0 +1,20 @@
+{
+  "base": "709de60d",
+  "name": "TestFixtures",
+  "wall_seconds": 21.934,
+  "exit": 0,
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/stage3-toplevel-evidence/baseline-overlay.json",
+    "./stage3/fixtures/...",
+    "-run",
+    "^TestFixtures$",
+    "-count=1",
+    "-parallel=4",
+    "-timeout",
+    "90s",
+    "-v"
+  ]
+}

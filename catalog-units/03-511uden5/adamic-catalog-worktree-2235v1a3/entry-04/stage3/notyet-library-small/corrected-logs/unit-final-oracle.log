@@ -1,0 +1,67 @@
+=== RUN   TestNotYetLibraryObjectEntriesConstMutant
+    notyet_library_object_entries_const_test.go:49: field-order mutant caught by Node stdout comparison
+--- PASS: TestNotYetLibraryObjectEntriesConstMutant (0.48s)
+=== RUN   TestNotYetLibraryRegexCallbackMutants
+=== RUN   TestNotYetLibraryRegexCallbackMutants/match
+    notyet_library_regex_callback_test.go:105: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryRegexCallbackMutants/literal
+    notyet_library_regex_callback_test.go:105: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryRegexCallbackMutants/unicode
+    notyet_library_regex_callback_test.go:105: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryRegexCallbackMutants/global
+    notyet_library_regex_callback_test.go:105: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryRegexCallbackMutants/offset
+    notyet_library_regex_callback_test.go:105: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryRegexCallbackMutants/reset
+    notyet_library_regex_callback_test.go:105: caught by source Node stdout comparison
+--- PASS: TestNotYetLibraryRegexCallbackMutants (7.54s)
+    --- PASS: TestNotYetLibraryRegexCallbackMutants/match (1.23s)
+    --- PASS: TestNotYetLibraryRegexCallbackMutants/literal (1.24s)
+    --- PASS: TestNotYetLibraryRegexCallbackMutants/unicode (1.24s)
+    --- PASS: TestNotYetLibraryRegexCallbackMutants/global (1.21s)
+    --- PASS: TestNotYetLibraryRegexCallbackMutants/offset (1.22s)
+    --- PASS: TestNotYetLibraryRegexCallbackMutants/reset (1.39s)
+=== RUN   TestNotYetLibraryRegexOffsetMutants
+=== RUN   TestNotYetLibraryRegexOffsetMutants/offset
+    notyet_library_regex_offset_test.go:60: caught by Node stdout comparison
+=== RUN   TestNotYetLibraryRegexOffsetMutants/input
+    notyet_library_regex_offset_test.go:60: caught by Node stdout comparison
+--- PASS: TestNotYetLibraryRegexOffsetMutants (1.62s)
+    --- PASS: TestNotYetLibraryRegexOffsetMutants/offset (0.82s)
+    --- PASS: TestNotYetLibraryRegexOffsetMutants/input (0.80s)
+=== RUN   TestNotYetLibraryStringBoundsMutants
+=== RUN   TestNotYetLibraryStringBoundsMutants/slice
+    notyet_library_string_bounds_test.go:97: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryStringBoundsMutants/substring
+    notyet_library_string_bounds_test.go:97: caught by source Node stdout comparison
+=== RUN   TestNotYetLibraryStringBoundsMutants/position
+    notyet_library_string_bounds_test.go:97: caught by source Node stdout comparison
+--- PASS: TestNotYetLibraryStringBoundsMutants (1.19s)
+    --- PASS: TestNotYetLibraryStringBoundsMutants/slice (0.38s)
+    --- PASS: TestNotYetLibraryStringBoundsMutants/substring (0.42s)
+    --- PASS: TestNotYetLibraryStringBoundsMutants/position (0.39s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_object_entries_const.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_object_entries_const.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_offset.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_offset.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_string_bounds.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_string_bounds.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_object_entries_const.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_offset.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_string_bounds.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_object_entries_const.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_string_bounds.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_offset.a (1.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a (2.08s)
+PASS
+gate cache: native hits=0 misses=36
+gate cache: node hits=0 misses=20
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.975s

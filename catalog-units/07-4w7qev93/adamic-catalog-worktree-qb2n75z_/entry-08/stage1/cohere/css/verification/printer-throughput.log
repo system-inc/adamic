@@ -1,0 +1,30 @@
+=== RUN   TestCSSPrinterThroughput
+    print_test.go:195: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.696349262s, 89291 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.61s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.614s
+    print_test.go:196: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 1.065369985s
+        --- PASS: TestAdamicPrinterCases (1.07s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.075s
+    print_test.go:225: shared exact-output throughput corpus: 4952 successful inputs, 510298 UTF-16 output units per round
+    print_test.go:243: Adamic source on Node round 1: 49520 stylesheets in 28.989046929s, 1708 stylesheets/s; 49520 of 49520 stylesheets formatted, 5102980 units
+    print_test.go:243: Prettier fork on Node round 1: 49520 stylesheets in 27.870063678s, 1777 stylesheets/s; 49520 of 49520 stylesheets formatted, 5102980 units
+    print_test.go:243: Adamic source on Node round 2: 49520 stylesheets in 31.345060373s, 1580 stylesheets/s; 49520 of 49520 stylesheets formatted, 5102980 units
+    print_test.go:243: Prettier fork on Node round 2: 49520 stylesheets in 30.348451254s, 1632 stylesheets/s; 49520 of 49520 stylesheets formatted, 5102980 units
+    print_test.go:243: Adamic source on Node round 3: 49520 stylesheets in 31.032962393s, 1596 stylesheets/s; 49520 of 49520 stylesheets formatted, 5102980 units
+    print_test.go:243: Prettier fork on Node round 3: 49520 stylesheets in 29.071201843s, 1703 stylesheets/s; 49520 of 49520 stylesheets formatted, 5102980 units
+    print_test.go:268: === RUN   TestAdamicPrinterThroughput
+            adamic_print_side_test.go:139: Go round 1: 49520 stylesheets in 11.173462489s, 4432 stylesheets/s; 5102980 units
+            adamic_print_side_test.go:139: Go round 2: 49520 stylesheets in 9.261266371s, 5347 stylesheets/s; 5102980 units
+            adamic_print_side_test.go:139: Go round 3: 49520 stylesheets in 8.893329869s, 5568 stylesheets/s; 5102980 units
+        --- PASS: TestAdamicPrinterThroughput (29.35s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	29.354s
+--- PASS: TestCSSPrinterThroughput (226.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	226.708s

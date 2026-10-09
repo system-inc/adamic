@@ -1,0 +1,2 @@
+// a-check: refused delete
+const value: {count?: number} = {count: 1}; delete value.count;

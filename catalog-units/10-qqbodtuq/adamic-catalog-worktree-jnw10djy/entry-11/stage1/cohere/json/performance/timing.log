@@ -1,0 +1,80 @@
+round 1 baseline-native: 17.733414s, 60.62 texts/s; exact Go bytes
+round 1 native: 11.410386s, 94.21 texts/s; exact Go bytes
+round 1 baseline-Node: 12.178104s, 88.27 texts/s; exact Go bytes
+round 1 Node: 7.093499s, 151.55 texts/s; exact Go bytes
+round 1 Go: 9.665237s, 111.22 texts/s; exact Go bytes
+round 2 baseline-native: 18.126304s, 59.31 texts/s; exact Go bytes
+round 2 native: 11.452970s, 93.86 texts/s; exact Go bytes
+round 2 baseline-Node: 12.017419s, 89.45 texts/s; exact Go bytes
+round 2 Node: 6.909909s, 155.57 texts/s; exact Go bytes
+round 2 Go: 9.784682s, 109.87 texts/s; exact Go bytes
+round 3 baseline-native: 17.924087s, 59.98 texts/s; exact Go bytes
+round 3 native: 11.173259s, 96.21 texts/s; exact Go bytes
+round 3 baseline-Node: 12.331095s, 87.18 texts/s; exact Go bytes
+round 3 Node: 7.228586s, 148.72 texts/s; exact Go bytes
+round 3 Go: 9.982169s, 107.69 texts/s; exact Go bytes
+round 4 baseline-native: 18.924134s, 56.81 texts/s; exact Go bytes
+round 4 native: 11.199523s, 95.99 texts/s; exact Go bytes
+round 4 baseline-Node: 11.969561s, 89.81 texts/s; exact Go bytes
+round 4 Node: 7.282475s, 147.61 texts/s; exact Go bytes
+round 4 Go: 9.829242s, 109.37 texts/s; exact Go bytes
+round 5 baseline-native: 18.088123s, 59.43 texts/s; exact Go bytes
+round 5 native: 11.811525s, 91.01 texts/s; exact Go bytes
+round 5 baseline-Node: 12.957035s, 82.97 texts/s; exact Go bytes
+round 5 Node: 7.435575s, 144.58 texts/s; exact Go bytes
+round 5 Go: 9.848623s, 109.15 texts/s; exact Go bytes
+{
+  "texts": 1075,
+  "answer_bytes": 62400611,
+  "rounds": {
+    "baseline-native": [
+      17.733414430000266,
+      18.126304489000177,
+      17.92408726099984,
+      18.92413388499972,
+      18.088123133999943
+    ],
+    "native": [
+      11.410386169000049,
+      11.452970174999791,
+      11.17325877500025,
+      11.199522945000354,
+      11.81152463000035
+    ],
+    "baseline-Node": [
+      12.178103997000107,
+      12.017419408999558,
+      12.331095071999698,
+      11.969561336999504,
+      12.95703470799981
+    ],
+    "Node": [
+      7.093499461000647,
+      6.9099086959995475,
+      7.22858585799986,
+      7.282475140000315,
+      7.435575304999475
+    ],
+    "Go": [
+      9.665237086999696,
+      9.784681899999669,
+      9.982169419000456,
+      9.829242181000154,
+      9.848623449000115
+    ]
+  },
+  "median_texts_per_second": {
+    "baseline-native": 59.43126282567927,
+    "native": 94.2124117517232,
+    "baseline-Node": 88.2731827766301,
+    "Node": 148.715118159702,
+    "Go": 109.36753619500456
+  },
+  "loadavg": [
+    "1.45 1.40 1.28 1/143 54050",
+    "1.16 1.32 1.26 1/144 54114",
+    "1.06 1.26 1.25 1/145 54140",
+    "1.31 1.28 1.25 1/144 54163",
+    "1.11 1.22 1.23 1/143 54190"
+  ]
+}

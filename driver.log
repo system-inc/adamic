@@ -1,0 +1,6 @@
+idle preemption: 0 marked, 0 survivors in their sessions, 5 ms
+FIRST FAILURE (wasi/internal/load/testdata/0.1/compile/06_stack.ts, at 43.1 s):
+None (package)
+
+(box load 49.0 on 64 cores at first failure)
+red: 2ac796ea6cfa80069fb143af1dd2ef591f4fc953 full gate, first failure at wasi/internal/load/testdata/0.1/compile/06_stack.ts after 43.1 s, cancelled after first failure (coverage=0.0s build=13.1s tools=0.1s determinism=13.6s stage3=28.6s tests=28.7s vet=28.7s catalog=29.2s wasi=29.2s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 25.7 on 64 cores at start, load 49.0 on 64 cores at first failure, load 49.0 on 64 cores at end), 0 fail, 1 pass

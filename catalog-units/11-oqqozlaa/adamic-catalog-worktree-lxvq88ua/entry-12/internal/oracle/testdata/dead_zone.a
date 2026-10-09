@@ -1,0 +1,8 @@
+function readLater(): number {
+	return later * 2;
+}
+
+console.log('before');
+const early = readLater();
+const later = 21;
+console.log(`${early} ${later}`);

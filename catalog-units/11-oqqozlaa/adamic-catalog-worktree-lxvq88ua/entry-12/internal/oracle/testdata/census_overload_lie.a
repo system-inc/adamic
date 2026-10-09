@@ -1,0 +1,3 @@
+function lie(value: number): string;
+function lie(value: number): string | undefined { console.log('called'); return undefined; }
+console.log(typeof lie(1));

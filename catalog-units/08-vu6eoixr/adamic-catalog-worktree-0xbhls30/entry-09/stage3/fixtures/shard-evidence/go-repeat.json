@@ -1,0 +1,250 @@
+[
+  {
+    "unit": "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-0.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestCompiler41231d51Shape",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestCompiler41231d51Shape$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.007,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-1.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestMissingFunctionMutantFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestMissingFunctionMutantFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.002,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-2.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestChangedVisitorMutantFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestChangedVisitorMutantFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.003,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-3.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestVisitorsCollectContinueAndSkipDiagnosedBodies$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.249,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-4.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.046,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-5.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/replay::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/replay"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.046,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-6.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/replay/worker::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/replay/worker"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.035,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-7.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statecopy::TestUnknownMutableContainerFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_statecopy.test",
+      "-test.run=^TestUnknownMutableContainerFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/statecopy",
+    "seconds": 0.045,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-8.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statecopy::TestUnknownForeignPointerFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_statecopy.test",
+      "-test.run=^TestUnknownForeignPointerFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/statecopy",
+    "seconds": 0.049,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-9.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite::TestMissingStatementFailsWithMethodName",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_statementrewrite.test",
+      "-test.run=^TestMissingStatementFailsWithMethodName$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/statementrewrite",
+    "seconds": 0.048,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-10.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/tool::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.027,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-11.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/predicates/tools/tool::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/predicates/tools/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.031,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-12.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/tool::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.077,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-13.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/drivers/parser/probe::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/drivers/parser/probe"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.078,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-14.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/ledger/checker-259::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/ledger/checker-259"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.069,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-15.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.066,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/go-repeat-16.log"
+  }
+]

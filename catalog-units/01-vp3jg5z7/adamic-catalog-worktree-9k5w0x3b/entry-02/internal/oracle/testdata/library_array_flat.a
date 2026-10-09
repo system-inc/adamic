@@ -1,0 +1,10 @@
+const grid: number[][] = [[1, 2], [], [3, 4]];
+console.log(grid.flat().join('|'));
+const deep: number[][][] = [[[1], [2, 3]], [], [[4]]];
+console.log(deep.flat(2).join('|'));
+console.log(deep.flat().map((row: number[]): string => row.join(',')).join('|'));
+console.log(`${grid.flat() === grid[0]}`);
+const words: string[][] = [['a'.repeat(2)], [], ['b'.repeat(2), 'c'.repeat(2)]];
+const flattened = words.flat();
+words.splice(0, 3);
+console.log(flattened.join('|'));

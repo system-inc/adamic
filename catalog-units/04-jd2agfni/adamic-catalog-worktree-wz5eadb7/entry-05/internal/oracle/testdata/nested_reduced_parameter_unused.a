@@ -1,0 +1,5 @@
+// Reduced from 02_scanner_digits.a at b15216d by adamic-reduce.
+function createScanner(text: string) { function charCodeUnchecked() { return text.charCodeAt(0); } }
+
+createScanner("scanner " + String(2));
+console.log("scanner created");

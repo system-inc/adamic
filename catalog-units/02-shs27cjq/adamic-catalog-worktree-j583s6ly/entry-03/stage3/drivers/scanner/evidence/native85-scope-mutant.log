@@ -1,0 +1,17 @@
+/workspace/adamic/stage3/adapt/85-temporary-scanner-lexical-locals/adapt.cjs:8
+  if(!ts.isVariableStatement(statement)||!ts.isBlock(body)||!ts.isFunctionDeclaration(func)||!['createScanner','scanRegularExpressionWorker'].includes(func.name?.text))throw new Error('var is not in an authorized function body');
+                                                                                                                                                                        ^
+
+Error: var is not in an authorized function body
+    at visit (/workspace/adamic/stage3/adapt/85-temporary-scanner-lexical-locals/adapt.cjs:8:175)
+    at visitNode2 (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:32551:18)
+    at forEachChildInVariableStatement (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:32775:59)
+    at Object.forEachChild (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at visit (/workspace/adamic/stage3/adapt/85-temporary-scanner-lexical-locals/adapt.cjs:13:5)
+    at visitNodes (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:32559:22)
+    at forEachChildInBlock (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:33029:10)
+    at Object.forEachChild (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at visit (/workspace/adamic/stage3/adapt/85-temporary-scanner-lexical-locals/adapt.cjs:13:5)
+    at visitNodes (/home/agent/.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js:32559:22)
+
+Node.js v24.19.0

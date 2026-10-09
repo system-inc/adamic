@@ -1,0 +1,21 @@
+01_map_call.a Refused
+02_code_point_call.a Refused
+03_exports_field.a Refused
+04_field_then_call.a Refused
+05_regex_call_index.a Refused
+06_memoize_clear.a Refused
+07_indexed_operation.a Refused
+08_optional_start.a Refused
+09_interface_kind.a Refused
+10_union_kind.a Compiles
+11_parenthesized_kind.a Refused
+12_union_target.a Refused
+13_flag_downcast.a Refused
+14_structural_cache.a NotYet
+15_mutable_view.a Refused
+16_unknown_chain.a NotYet
+17_brand_upcast.a NotYet
+18_const_tuple.a Compiles
+19_identifier_kind.a NotYet
+20_type_flag_mask.a Refused
+missing ! mutant: Checker

@@ -1,0 +1,6 @@
+const object = { value: 1 };
+const view: { value: number } = object;
+Object.freeze(object);
+console.log(`${Object.isFrozen(object)}`);
+view.value = 2;
+console.log(`${object.value}`);

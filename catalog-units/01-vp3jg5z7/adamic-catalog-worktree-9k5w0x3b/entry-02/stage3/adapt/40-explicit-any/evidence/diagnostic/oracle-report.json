@@ -1,0 +1,49 @@
+{
+  "tree": "/workspace/explicit-any-pristine",
+  "nproc": 5,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.383
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 1.702
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 0,
+      "seconds": 206.04
+    }
+  },
+  "status": "pass",
+  "counts": {
+    "passing": 106367,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "wall_seconds": 210.184
+}

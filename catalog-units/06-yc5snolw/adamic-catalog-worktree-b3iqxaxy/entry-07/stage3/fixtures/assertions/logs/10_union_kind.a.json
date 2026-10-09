@@ -1,0 +1,26 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/10_union_kind.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  "node": {
+    "stdout": "true\nfalse\nfalse\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": {
+    "stdout": "true\nfalse\nfalse\n",
+    "stderr": "",
+    "exit": 0
+  }
+}

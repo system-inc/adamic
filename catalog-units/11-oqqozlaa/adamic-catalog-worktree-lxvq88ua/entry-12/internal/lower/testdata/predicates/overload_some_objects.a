@@ -1,0 +1,11 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:614-628
+function some<T>(array: readonly T[] | undefined): array is readonly T[];
+function some<T>(array: readonly T[] | undefined): boolean {
+    return array !== undefined && array.length > 0;
+}
+interface Node { readonly kind: number }
+function use(xs: readonly Node[] | undefined): void {
+    if (!some(xs)) return;
+    console.log(`${xs.length}`);
+}
+use([{ kind: 80 }]);

@@ -1,0 +1,78 @@
+// Adversarial reading, early exits: continue, break and return from inside switches, nested loops,
+// for...of over strings and maps, and do...while, each leaving strings the body made, and closures
+// made in iterations that continue or break. Every exit lets go of exactly what it held.
+function find(words: string[], target: string): string {
+	for (const word of words) {
+		const shouted = `${word}!`.repeat(2);
+		switch (shouted.length) {
+			case 4:
+				continue;
+			case 6:
+				if (word === target) {
+					return `${shouted}-found`;
+				}
+				break;
+			default:
+				for (const letter of word) {
+					const doubled = letter.repeat(2);
+					if (doubled === 'zz') {
+						return doubled;
+					}
+					if (doubled === 'qq') {
+						break;
+					}
+				}
+		}
+	}
+	return 'none'.repeat(1);
+}
+const words = ['a', 'bb', 'cc', 'dqd', 'xzx'];
+console.log(`${find(words, 'cc')} ${find(words, 'zz')} ${find(words, 'q')}`);
+const scores = new Map<string, string>([['x', 'one'.repeat(2)], ['y', 'two'.repeat(2)]]);
+function firstLong(): string {
+	for (const [key, value] of scores) {
+		const both = `${key}${value}`;
+		if (both.length > 3) {
+			scores.delete(key);
+			return both;
+		}
+	}
+	return '';
+}
+console.log(`${firstLong()} ${firstLong()} ${firstLong()} ${scores.size}`);
+let total = 0;
+do {
+	const step = `${total}`.repeat(2);
+	total += 1;
+	if (step === '22') {
+		continue;
+	}
+	if (step === '44') {
+		break;
+	}
+} while (total < 10);
+console.log(`${total}`);
+
+const makers: (() => string)[] = [];
+for (let index = 0; index < 5; index += 1) {
+	const label = `n${index}`.repeat(2);
+	if (index === 1) {
+		continue;
+	}
+	makers.push(() => `${label}:${index}`);
+	if (index === 3) {
+		break;
+	}
+}
+console.log(makers.map((make) => make()).join(' '));
+let shared = 'start'.repeat(1);
+const appenders: (() => void)[] = [];
+for (let round = 0; round < 3; round += 1) {
+	appenders.push(() => {
+		shared = `${shared}-${round}`;
+	});
+}
+for (const append of appenders) {
+	append();
+}
+console.log(shared);

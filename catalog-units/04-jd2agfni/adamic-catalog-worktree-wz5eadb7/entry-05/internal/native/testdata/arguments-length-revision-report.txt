@@ -1,0 +1,109 @@
+Built: reader-only packed count slots with main's two-argument closure/method ABI; optional and rest binding needs no count.
+Commits: implementation 89c8e81e; benchmark baseline 71d7e491; current main integration 48c05d091f0a43c31cbe051b1d6578d99eeedf19; all post-merge checks passed.
+Commands and outputs: final release stage 1 parse, best of five wall time against 71d7e491: main 11.504 ms, integrated revision 12.113 ms; 10,523 nodes each. Before integration: 10.351/9.557 ms and byte-identical C/binaries. After integration: byte-identical C/binaries to current main.
+Mutants: nine killed, including an unwanted nonreader count caught by TestNoReaderCallingConvention's pinned emitted-C count-slot check.
+Not covered: instructions and cycles are unavailable on this box: perf_event_open returns ENOENT for both hardware events. No complete ./... test gate; original unsupported spread/rest forms remain unsupported.
+
+Calling convention
+
+The universal third argument has been removed from closure.code and adamic_method, including array sort and collection iterator runtime calls. The original two-argument calling convention remains. The hidden count is a designated numeric slot in the existing packed argument buffer, present only if the resolved function type has an actual reader candidate. Optional slots are padded by the caller; rest tails are collected into separately reserved slots. Neither binding requires a callee count. Merely reserving stable IR offsets emits no instructions.
+
+Reader facts are distinct from uniform virtual signatures: sharing a native signature with a reader never turns an implementation into a reader candidate. Virtual implementations still share their slot's typed C signature when that slot has a reader. Named-function value adapters get a hidden local only when their forwarded function reads the count. Callback checker types are recorded so library calls select their own candidate set, rather than inheriting unrelated readers. Known empty types stay empty; an unresolved closure with unknown targets conservatively includes the program's functions, while a bounded closure uses its targets.
+
+The no-reader fixture covers optional values, explicit undefined, defaults, numeric rest arrays, rest spreads and an interface method. Its C has no hidden count slots or count local. The unrelated-type fixture contains a reader and a string-returning nonreader function value; exactly the reader-compatible call has a count slot. Both fixtures join the Node oracle for .a and temporary .ts sources.
+
+Retain changes
+
+Observed: weak_parent retains/releases were 255/304 on 2ac11b57, now 253/302, matching 71d7e491. typeof_dispatch was 7/17, now 6/16, matching 71d7e491. The complete recorded-count gate passed before merging newer main.
+
+Cause: fitCallArguments converted fixed arguments before ownership planning. In weak_parent this materialized two owned Weak values; in typeof_dispatch it materialized one owned Union value. Those values added balanced retain/release pairs. The numeric count did not retain anything. Fixed fitting is now left to the existing native call boundary after planning, as on main. Only rest-tail element fitting remains in lowering. No other pre-existing fixture count row changed against 71d7e491; changes in the new unit fixtures reflect caller-side rest arrays.
+
+Release measurement
+
+Both Go compiler binaries were built with go build -buildvcs=false. Adamic build uses the default release flags (-O2, no sanitizer or runtime counting). Both compile the same canonical /workspace/adamic/stage1/typescript/parser/main.ts entry. Each parser was called with --manifest /tmp/arguments-length-parse-manifest.txt --count --whole, where the manifest contains one path: /workspace/adamic/stage1/typescript/parser/parser.ts. Runs alternated main/revision five times; stdout and stderr went to separate log files. All exited zero and printed 10523. Here --count is the parser's AST-node-count mode, not a counted native runtime build.
+
+The two release binaries have SHA256 89b0b797dba305cc6b040be47a3c5d7ebe283398687189b72f60a45f867b6785. The C files also compare byte for byte. Observation: the artifacts are identical. Inference: this unit adds no generated instructions to this no-reader parser. Wall-time minima alone are not a hardware instructions/cycles measurement.
+
+Hardware events were probed directly with perf_event_open, PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS / PERF_COUNT_HW_CPU_CYCLES, exclude_kernel=1 and exclude_hv=1. Both returned errno 2, No such file or directory. /sys/bus/event_source/devices exposes breakpoint, msr and software, but no cpu PMU; perf_event_paranoid is 2. Installing a perf executable cannot supply a missing PMU. The attempted package installation also lacked sudo/root permissions. Instructions and cycles are unmeasured, not zero.
+
+Five runs (wall/user/system milliseconds)
+main 1: 14.318 / 4.513 / 9.217; exit 0
+revised 1: 10.712 / 10.405 / 0.000; exit 0
+main 2: 11.073 / 10.739 / 0.000; exit 0
+revised 2: 9.945 / 9.600 / 0.000; exit 0
+main 3: 10.351 / 3.308 / 6.595; exit 0
+revised 3: 9.557 / 9.307 / 0.000; exit 0
+main 4: 10.726 / 10.388 / 0.000; exit 0
+revised 4: 17.132 / 12.478 / 4.377; exit 0
+main 5: 10.512 / 10.091 / 0.000; exit 0
+revised 5: 12.979 / 8.398 / 4.244; exit 0
+
+Mutants and evidence
+
+native-declared-count: Node stdout disagreement.
+native-function-value-count: Node stdout disagreement.
+javascript-declared-count: Node stdout disagreement.
+javascript-function-value-count: Node stdout disagreement.
+arrow-refusal: pinned refusal failure.
+write-refusal: pinned refusal failure.
+unknown-count-target: unknown-type inclusion assertion failed.
+ignore-count-reader-type: reader-layout assertion failed.
+nonreader-count: hidden count slots: got 12, want 0 (pinned emitted C, not clang -Werror).
+
+Runner: source /workspace/adamic-tools/env.sh; python3 internal/native/testdata/run-arguments-length-mutants.py > /tmp/arguments-length-revision-mutants.log 2>&1. Every source was restored in a finally block. The native function-value mutant replaces its true count with zero; the nonreader mutant forces layout.Count at the packed boundary.
+
+Setup
+
+export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh > /tmp/arguments-length-revision-setup.log 2>&1; source /workspace/adamic-tools/env.sh.
+setup: node ready (0.044s)
+setup: go ready (0.047s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.054s
+setup: markdown dependencies ready (0.185s)
+setup: submodules ready (0.201s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.416s)
+setup: go build ready (37.609s)
+setup: test binaries deferred (use --warm-tests) (38.017s)
+setup: build cache warm (38.019s)
+setup: build-flags commit=2ac11b570d43ff1d131d29394d45869f0a468eb5 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.00 0.34 1.99 1/154 37525 load-after=4.82 1.56 2.34 1/154 38151
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (38.063s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.okkxjY
+
+Pre-merge checks
+
+Complete lower/ir/fresh packages: PASS 71.107s / 52.913s / 74.710s.
+Scoped uncached native/JavaScript/lowering/IR and Node/counts gate: PASS; oracle 86.233s, native 2.212s, lower 7.100s, IR 0.180s. JavaScript has no package tests.
+go vet ./...: PASS (empty log); gofmt and git diff --check: PASS.
+Scoped command:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/ir ./internal/fresh ./internal/native ./internal/javascript ./internal/oracle -run 'TestArgumentsLength|TestArgumentLayouts|TestClosureArgumentsCountTargets|TestCallTargets|TestNoReaderCallingConvention|TestDevirtualizedCalls|TestBorrowChain|TestLoopCallCoverage|TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length|TestCountsAreRecorded' -count=1 -timeout 30m
+All test output was redirected to logs, never piped.
+
+Integration observations
+
+Current main advanced to 48c05d09. Merge conflicts were limited to the expression intrinsic/enum checks and appended count rows; both checks and both sets of rows are preserved. Cohere is now the main pin 7945d102 with nested TypeScript d92d9bfe. An initial post-merge attempt failed with missing typed-path symbols because the nested checkout was still old; updating it fixed that checkout mismatch. A subsequent cloud-environment restart interrupted in-flight compilation, so those interrupted logs are not green evidence. The restarted compiler build succeeded and every final validation below completed successfully.
+
+Final post-merge checks
+
+The same scoped command, uncached, passed: lower 3.840s, IR 0.418s, native 2.278s, oracle 146.025s. Oracle includes all recorded counts, the twelve .a argument-length fixtures and their .ts counterparts, comparing Node with sanitized native, release native and the JavaScript backend, plus leaks.
+Complete packages passed: lower 108.179s, IR 103.799s, fresh 167.507s.
+go vet ./... passed (empty log); gofmt -l cmd internal passed (empty log); git diff --check passed.
+All nine mutants were rerun after integration and killed by the same specified checks; sources restored.
+Logs: /tmp/arguments-length-revision-postmerge-final-gate.log, /tmp/arguments-length-revision-postmerge-final-analysis.log, /tmp/arguments-length-revision-postmerge-final-vet.log, /tmp/arguments-length-revision-postmerge-mutants.log.
+
+Current-main artifact check
+
+Baseline: detached worktree /tmp/arguments-length-current-main at 48c05d09. It references the actual cohere submodule with a symlink; no cohere code was copied. Both current-main and integrated compilers use go build -buildvcs=false, the same canonical parser entry, default release flags and the same toolchain. Emitted C compares byte for byte. Both release parser binaries have SHA256 db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e. This proves the unit adds no code to the no-reader parser after integration as well as before it. Newer main itself changed the parser artifact relative to 71d7e491; that change is shared by the integrated revision and its current-main baseline.
+
+Final five runs against the requested 71d7e491 (wall/user/system milliseconds)
+main_71d7 1: 46.167 / 4.240 / 41.442; exit 0; stdout 10523
+integrated 1: 26.527 / 9.034 / 17.210; exit 0; stdout 10523
+main_71d7 2: 13.583 / 13.336 / 0.000; exit 0; stdout 10523
+integrated 2: 13.930 / 13.680 / 0.000; exit 0; stdout 10523
+main_71d7 3: 31.442 / 16.754 / 14.306; exit 0; stdout 10523
+integrated 3: 12.113 / 11.788 / 0.000; exit 0; stdout 10523
+main_71d7 4: 15.054 / 11.036 / 3.709; exit 0; stdout 10523
+integrated 4: 13.255 / 13.007 / 0.000; exit 0; stdout 10523
+main_71d7 5: 11.504 / 11.207 / 0.000; exit 0; stdout 10523
+integrated 5: 13.729 / 13.420 / 0.000; exit 0; stdout 10523
+
+Observed final wall-time minima: 11.504 ms baseline, 12.113 ms integrated. These short parses show startup/scheduling variability; no retired-instruction or hardware-cycle count is asserted. The exact byte-identity comparisons isolate the unit from changes already present on newer main. The unavailable hardware-event measurement remains the only requested measurement not delivered.

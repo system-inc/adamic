@@ -1,0 +1,1821 @@
+{
+  "before": 135,
+  "after": 124,
+  "beforeSites": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2940,
+      "column": 76,
+      "source": "        return nodeLinks[nodeId] || (nodeLinks[nodeId] = new (NodeLinks as any)());",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6834,
+      "column": 40,
+      "source": "                        (parentName as any).isTypeOf = true; // mutably update, node is freshly manufactured anyhow",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10953,
+      "column": 77,
+      "source": "                    return Debug.fail(`Unhandled class member kind! ${(p as any).__debugFlags || p.flags}`);",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 87,
+      "source": "    function widenTypeForVariableLikeDeclaration(type: Type | undefined, declaration: any, reportErrors?: boolean) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 110,
+      "source": "export function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): { config?: any; error?: Diagnostic | undefined; } {",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 91,
+      "source": "export function parseConfigFileTextToJson(fileName: string, jsonText: string): { config?: any; error?: Diagnostic | undefined; } {",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2430,
+      "column": 16,
+      "source": "        value: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2441,
+      "column": 4,
+      "source": "): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2467,
+      "column": 84,
+      "source": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2484,
+      "column": 4,
+      "source": "): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2494,
+      "column": 8,
+      "source": "    ): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2495,
+      "column": 23,
+      "source": "        const result: any = returnValue ? {} : undefined;",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2538,
+      "column": 110,
+      "source": "    function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2606,
+      "column": 79,
+      "source": "function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3013,
+      "column": 50,
+      "source": "export function parseJsonConfigFileContent(json: any, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3038,
+      "column": 31,
+      "source": "function isNullOrUndefined(x: any): x is null | undefined { // eslint-disable-line no-restricted-syntax",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3060,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3300,
+      "column": 45,
+      "source": "function startsWithConfigDirTemplate(value: any): value is string {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3354,
+      "column": 48,
+      "source": "export function canJsonReportNoInputFiles(raw: any): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3377,
+      "column": 10,
+      "source": "    raw: any;",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3406,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3497,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3599,
+      "column": 16,
+      "source": "        value: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3725,
+      "column": 57,
+      "source": "function convertCompileOnSaveOptionFromJson(jsonOption: any, basePath: string, errors: Diagnostic[]): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3733,
+      "column": 61,
+      "source": "export function convertCompilerOptionsFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: CompilerOptions; errors: Diagnostic[]; } {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3739,
+      "column": 61,
+      "source": "export function convertTypeAcquisitionFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: TypeAcquisition; errors: Diagnostic[]; } {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3752,
+      "column": 60,
+      "source": "function convertCompilerOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): CompilerOptions {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3765,
+      "column": 60,
+      "source": "function convertTypeAcquisitionFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): TypeAcquisition {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3771,
+      "column": 57,
+      "source": "function convertWatchOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[]): WatchOptions | undefined {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3775,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3777,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3803,
+      "column": 12,
+      "source": "    value: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3835,
+      "column": 90,
+      "source": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: any): CompilerOptionsValue {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3880,
+      "column": 22,
+      "source": "    values: readonly any[],",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3886,
+      "column": 4,
+      "source": "): any[] {",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4276,
+      "column": 48,
+      "source": "function getOptionValueWithEmptyStrings(value: any, option: CommandLineOption): {} | undefined {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 136,
+      "source": "export function* flatMapIterator<T, U>(iter: Iterable<T>, mapfn: (x: T) => readonly U[] | Iterable<U> | undefined): Generator<U, void, any> {",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 736,
+      "column": 50,
+      "source": "    if (array.length === 0) return emptyArray as any as SortedReadonlyArray<T>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 759,
+      "column": 28,
+      "source": "    return deduplicated as any as SortedReadonlyArray<T>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 764,
+      "column": 18,
+      "source": "    return [] as any as SortedArray<T>; // TODO: GH#19873",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 810,
+      "column": 120,
+      "source": "    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1066,
+      "column": 119,
+      "source": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = !!(Array.prototype as any).at",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1067,
+      "column": 36,
+      "source": "    ? (array, offset) => (array as any)?.at(offset)",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1479,
+      "column": 19,
+      "source": "    const result: any = {};",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1482,
+      "column": 37,
+      "source": "            result[id] = (object as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1496,
+      "column": 35,
+      "source": "    const result: T1 & T2 = {} as any;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 24,
+      "source": "            (result as any)[id] = (second as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 46,
+      "source": "            (result as any)[id] = (second as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 24,
+      "source": "            (result as any)[id] = (first as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 45,
+      "source": "            (result as any)[id] = (first as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1516,
+      "column": 23,
+      "source": "            (first as any)[id] = second[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1522,
+      "column": 40,
+      "source": "export function maybeBind<T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined): ((...args: A) => R) | undefined {",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1778,
+      "column": 49,
+      "source": "export function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined {",
+      "parentKind": "TypeParameter"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1783,
+      "column": 46,
+      "source": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {",
+      "parentKind": "TypeParameter"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2593,
+      "column": 25,
+      "source": "        && !(process as any).browser",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 31,
+      "source": "                    (Debug as any)[key] = cachedFunc;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 190,
+      "column": 23,
+      "source": "            (Debug as any)[name] = noop;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 373,
+      "column": 29,
+      "source": "            return (func as any).name;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1274,
+      "column": 53,
+      "source": "    var currentParenthesizerRule: ParenthesizerRule<any> | undefined;",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 22,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 43,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 954,
+      "column": 69,
+      "source": "            str += `${key}: ${compilerOptionValueToString((value as any)[key])}`;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "column": 54,
+      "source": "            const packageJsonContent: Record<string, any> | undefined = cachedPackageJson?.contents.packageJsonContent || tryParseJson(host.readFile!(packageJsonPath)!);",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1253,
+      "column": 78,
+      "source": "    const fn = (forEachChildTable as Record<SyntaxKind, ForEachChildFunction<any>>)[node.kind];",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10207,
+      "column": 25,
+      "source": "        if ((element as any).parent) {",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10208,
+      "column": 40,
+      "source": "            const parent = (element as any).parent as Node;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 393,
+      "column": 27,
+      "source": "    readFile: ProgramHost<any>[\"readFile\"],",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 130,
+      "source": "        return rootNames.length ? sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice()) : emptyArray as any as SortedReadonlyArray<Diagnostic>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4379,
+      "column": 81,
+      "source": "            const moduleResolutionName = ModuleResolutionKind[moduleKindName as any] ? moduleKindName : \"Node16\";",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 209,
+      "column": 8,
+      "source": "    ): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 15,
+      "source": "        data: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 216,
+      "column": 8,
+      "source": "    ): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 563,
+      "column": 46,
+      "source": "            (primaryResult.resolvedModule as any) = resolvedModule;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 952,
+      "column": 111,
+      "source": "function appendCommentRange(pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, _state: any, comments: CommentRange[] = []) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4065,
+      "column": 77,
+      "source": "const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : utf16EncodeAsStringFallback;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4065,
+      "column": 122,
+      "source": "const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : utf16EncodeAsStringFallback;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 404,
+      "column": 28,
+      "source": "function isStringOrNull(x: any) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 408,
+      "column": 28,
+      "source": "function isRawSourceMap(x: any): x is RawSourceMap {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 27,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 46,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 208,
+      "column": 41,
+      "source": "                    const query = (d as any).type as TypeQueryNode;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 48,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 82,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 52,
+      "column": 39,
+      "source": "declare function clearTimeout(handle: any): void;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 464,
+      "column": 24,
+      "source": "    let pollScheduled: any;",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 517,
+      "column": 30,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 517,
+      "column": 58,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 618,
+      "column": 36,
+      "source": "    let timerToUpdateChildWatches: any;",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1442,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1595,
+      "column": 203,
+      "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1610,
+      "column": 51,
+      "source": "                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 232,
+      "column": 42,
+      "source": "            const objectFlags = (type as any).objectFlags;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 318,
+      "column": 41,
+      "source": "                intrinsicName: (type as any).intrinsicName,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 338,
+      "column": 116,
+      "source": "        tracing?.push(tracing.Phase.Emit, \"transformNodes\", node.kind === SyntaxKind.SourceFile ? { path: (node as any as SourceFile).path } : { kind: node.kind, pos: node.pos, end: node.end });",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 37,
+      "source": "    timerToBuildInvalidatedProject: any;",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 992,
+      "column": 34,
+      "source": "                    ((program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile) &&",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 993,
+      "column": 33,
+      "source": "                    (program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile(cancellationToken, ignoreSourceFile),",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1355,
+      "column": 64,
+      "source": "    return readBuilderProgram(parsed.options, compilerHost) as any as T;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7716,
+      "column": 11,
+      "source": "    raw?: any;",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 9868,
+      "column": 64,
+      "source": "    /** @internal */ onBeforeEmitNodeArray?: (nodes: NodeArray<any> | undefined) => void;",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 9869,
+      "column": 63,
+      "source": "    /** @internal */ onAfterEmitNodeArray?: (nodes: NodeArray<any> | undefined) => void;",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10331,
+      "column": 49,
+      "source": "export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;",
+      "parentKind": "ConditionalType"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10334,
+      "column": 91,
+      "source": "export type ArgumentDefinitionToFieldUnion<T extends readonly PragmaArgumentSpecification<any>[]> = {",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10343,
+      "column": 155,
+      "source": "export type PragmaArgumentType<KPrag extends keyof ConcretePragmaSpecs> = ConcretePragmaSpecs[KPrag] extends { args: readonly PragmaArgumentSpecification<any>[]; } ? UnionToIntersection<ArgumentDefinitionToFieldUnion<ConcretePragmaSpecs[KPrag][\"args\"]>>",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7809,
+      "column": 45,
+      "source": "export function tryParseJson(text: string): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 41,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 51,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8486,
+      "column": 14,
+      "source": "    (this as any).links = undefined; // used by TransientSymbol",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8553,
+      "column": 39,
+      "source": "    getNodeConstructor: () => Node as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8554,
+      "column": 41,
+      "source": "    getTokenConstructor: () => Token as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8555,
+      "column": 51,
+      "source": "    getIdentifierConstructor: () => Identifier as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8556,
+      "column": 52,
+      "source": "    getPrivateIdentifierConstructor: () => Node as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8557,
+      "column": 45,
+      "source": "    getSourceFileConstructor: () => Node as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8558,
+      "column": 43,
+      "source": "    getSymbolConstructor: () => Symbol as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8559,
+      "column": 39,
+      "source": "    getTypeConstructor: () => Type as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8560,
+      "column": 49,
+      "source": "    getSignatureConstructor: () => Signature as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8561,
+      "column": 61,
+      "source": "    getSourceMapSourceConstructor: () => SourceMapSource as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9029,
+      "column": 97,
+      "source": "type CompilerOptionKeys = keyof { [K in keyof CompilerOptions as string extends K ? never : K]: any; };",
+      "parentKind": "MappedType"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 603,
+      "column": 82,
+      "source": "    const fn = (visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>)[node.kind];",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 221,
+      "column": 49,
+      "source": "    const host: ParseConfigFileHost = system as any;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 754,
+      "column": 69,
+      "source": "export function createCompilerHostFromProgramHost(host: ProgramHost<any>, getCompilerOptions: () => CompilerOptions, directoryStructureHost: DirectoryStructureHost = host): CompilerHost {",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 862,
+      "column": 91,
+      "source": "        createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 150,
+      "column": 88,
+      "source": "    createProgram = createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "column": 61,
+      "source": "    const oldProgram = readBuilderProgram(options, host) as any as T;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 31,
+      "source": "    let timerToUpdateProgram: any; // timer callback to recompile the program",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 51,
+      "source": "    let timerToInvalidateFailedLookupResolutions: any; // timer callback to invalidate resolutions for changes in failed lookup locations",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 555,
+      "column": 75,
+      "source": "    builderProgram = readBuilderProgram(compilerOptions, compilerHost) as any as T;",
+      "parentKind": "AsExpression"
+    }
+  ],
+  "remainingSites": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2940,
+      "column": 76,
+      "source": "        return nodeLinks[nodeId] || (nodeLinks[nodeId] = new (NodeLinks as any)());",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6834,
+      "column": 40,
+      "source": "                        (parentName as any).isTypeOf = true; // mutably update, node is freshly manufactured anyhow",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10953,
+      "column": 77,
+      "source": "                    return Debug.fail(`Unhandled class member kind! ${(p as any).__debugFlags || p.flags}`);",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 87,
+      "source": "    function widenTypeForVariableLikeDeclaration(type: Type | undefined, declaration: any, reportErrors?: boolean) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 110,
+      "source": "export function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): { config?: any; error?: Diagnostic | undefined; } {",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 91,
+      "source": "export function parseConfigFileTextToJson(fileName: string, jsonText: string): { config?: any; error?: Diagnostic | undefined; } {",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2430,
+      "column": 16,
+      "source": "        value: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2441,
+      "column": 4,
+      "source": "): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2467,
+      "column": 84,
+      "source": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2484,
+      "column": 4,
+      "source": "): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2494,
+      "column": 8,
+      "source": "    ): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2495,
+      "column": 23,
+      "source": "        const result: any = returnValue ? {} : undefined;",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2538,
+      "column": 110,
+      "source": "    function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2606,
+      "column": 79,
+      "source": "function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3013,
+      "column": 50,
+      "source": "export function parseJsonConfigFileContent(json: any, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3038,
+      "column": 31,
+      "source": "function isNullOrUndefined(x: any): x is null | undefined { // eslint-disable-line no-restricted-syntax",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3060,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3300,
+      "column": 45,
+      "source": "function startsWithConfigDirTemplate(value: any): value is string {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3354,
+      "column": 48,
+      "source": "export function canJsonReportNoInputFiles(raw: any): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3377,
+      "column": 10,
+      "source": "    raw: any;",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3406,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3497,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3599,
+      "column": 16,
+      "source": "        value: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3725,
+      "column": 57,
+      "source": "function convertCompileOnSaveOptionFromJson(jsonOption: any, basePath: string, errors: Diagnostic[]): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3733,
+      "column": 61,
+      "source": "export function convertCompilerOptionsFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: CompilerOptions; errors: Diagnostic[]; } {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3739,
+      "column": 61,
+      "source": "export function convertTypeAcquisitionFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: TypeAcquisition; errors: Diagnostic[]; } {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3752,
+      "column": 60,
+      "source": "function convertCompilerOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): CompilerOptions {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3765,
+      "column": 60,
+      "source": "function convertTypeAcquisitionFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): TypeAcquisition {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3771,
+      "column": 57,
+      "source": "function convertWatchOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[]): WatchOptions | undefined {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3775,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3777,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3803,
+      "column": 12,
+      "source": "    value: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3835,
+      "column": 90,
+      "source": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: any): CompilerOptionsValue {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3880,
+      "column": 22,
+      "source": "    values: readonly any[],",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3886,
+      "column": 4,
+      "source": "): any[] {",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4276,
+      "column": 48,
+      "source": "function getOptionValueWithEmptyStrings(value: any, option: CommandLineOption): {} | undefined {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 136,
+      "source": "export function* flatMapIterator<T, U>(iter: Iterable<T>, mapfn: (x: T) => readonly U[] | Iterable<U> | undefined): Generator<U, void, any> {",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 736,
+      "column": 50,
+      "source": "    if (array.length === 0) return emptyArray as any as SortedReadonlyArray<T>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 759,
+      "column": 28,
+      "source": "    return deduplicated as any as SortedReadonlyArray<T>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 764,
+      "column": 18,
+      "source": "    return [] as any as SortedArray<T>; // TODO: GH#19873",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 810,
+      "column": 120,
+      "source": "    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1066,
+      "column": 119,
+      "source": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = !!(Array.prototype as any).at",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1067,
+      "column": 36,
+      "source": "    ? (array, offset) => (array as any)?.at(offset)",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1479,
+      "column": 19,
+      "source": "    const result: any = {};",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1482,
+      "column": 37,
+      "source": "            result[id] = (object as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1496,
+      "column": 35,
+      "source": "    const result: T1 & T2 = {} as any;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 24,
+      "source": "            (result as any)[id] = (second as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 46,
+      "source": "            (result as any)[id] = (second as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 24,
+      "source": "            (result as any)[id] = (first as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 45,
+      "source": "            (result as any)[id] = (first as any)[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1516,
+      "column": 23,
+      "source": "            (first as any)[id] = second[id];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1522,
+      "column": 40,
+      "source": "export function maybeBind<T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined): ((...args: A) => R) | undefined {",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1778,
+      "column": 49,
+      "source": "export function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined {",
+      "parentKind": "TypeParameter"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1783,
+      "column": 46,
+      "source": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {",
+      "parentKind": "TypeParameter"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2593,
+      "column": 25,
+      "source": "        && !(process as any).browser",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 31,
+      "source": "                    (Debug as any)[key] = cachedFunc;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 190,
+      "column": 23,
+      "source": "            (Debug as any)[name] = noop;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1274,
+      "column": 53,
+      "source": "    var currentParenthesizerRule: ParenthesizerRule<any> | undefined;",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 22,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 43,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 954,
+      "column": 69,
+      "source": "            str += `${key}: ${compilerOptionValueToString((value as any)[key])}`;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "column": 54,
+      "source": "            const packageJsonContent: Record<string, any> | undefined = cachedPackageJson?.contents.packageJsonContent || tryParseJson(host.readFile!(packageJsonPath)!);",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1253,
+      "column": 78,
+      "source": "    const fn = (forEachChildTable as Record<SyntaxKind, ForEachChildFunction<any>>)[node.kind];",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10207,
+      "column": 25,
+      "source": "        if ((element as any).parent) {",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10208,
+      "column": 40,
+      "source": "            const parent = (element as any).parent as Node;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 130,
+      "source": "        return rootNames.length ? sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice()) : emptyArray as any as SortedReadonlyArray<Diagnostic>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4379,
+      "column": 81,
+      "source": "            const moduleResolutionName = ModuleResolutionKind[moduleKindName as any] ? moduleKindName : \"Node16\";",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 209,
+      "column": 8,
+      "source": "    ): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 15,
+      "source": "        data: any,",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 216,
+      "column": 8,
+      "source": "    ): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 563,
+      "column": 46,
+      "source": "            (primaryResult.resolvedModule as any) = resolvedModule;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 404,
+      "column": 28,
+      "source": "function isStringOrNull(x: any) {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 408,
+      "column": 28,
+      "source": "function isRawSourceMap(x: any): x is RawSourceMap {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 27,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 46,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 208,
+      "column": 41,
+      "source": "                    const query = (d as any).type as TypeQueryNode;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 48,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 82,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 52,
+      "column": 39,
+      "source": "declare function clearTimeout(handle: any): void;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 464,
+      "column": 24,
+      "source": "    let pollScheduled: any;",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 517,
+      "column": 30,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 517,
+      "column": 58,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 618,
+      "column": 36,
+      "source": "    let timerToUpdateChildWatches: any;",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1442,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1595,
+      "column": 203,
+      "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1610,
+      "column": 51,
+      "source": "                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 232,
+      "column": 42,
+      "source": "            const objectFlags = (type as any).objectFlags;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 318,
+      "column": 41,
+      "source": "                intrinsicName: (type as any).intrinsicName,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 338,
+      "column": 116,
+      "source": "        tracing?.push(tracing.Phase.Emit, \"transformNodes\", node.kind === SyntaxKind.SourceFile ? { path: (node as any as SourceFile).path } : { kind: node.kind, pos: node.pos, end: node.end });",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 37,
+      "source": "    timerToBuildInvalidatedProject: any;",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 992,
+      "column": 34,
+      "source": "                    ((program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile) &&",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 993,
+      "column": 33,
+      "source": "                    (program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile(cancellationToken, ignoreSourceFile),",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1355,
+      "column": 64,
+      "source": "    return readBuilderProgram(parsed.options, compilerHost) as any as T;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7716,
+      "column": 11,
+      "source": "    raw?: any;",
+      "parentKind": "PropertySignature"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10331,
+      "column": 49,
+      "source": "export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;",
+      "parentKind": "ConditionalType"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7809,
+      "column": 45,
+      "source": "export function tryParseJson(text: string): any {",
+      "parentKind": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 41,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 51,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8486,
+      "column": 14,
+      "source": "    (this as any).links = undefined; // used by TransientSymbol",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8553,
+      "column": 39,
+      "source": "    getNodeConstructor: () => Node as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8554,
+      "column": 41,
+      "source": "    getTokenConstructor: () => Token as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8555,
+      "column": 51,
+      "source": "    getIdentifierConstructor: () => Identifier as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8556,
+      "column": 52,
+      "source": "    getPrivateIdentifierConstructor: () => Node as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8557,
+      "column": 45,
+      "source": "    getSourceFileConstructor: () => Node as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8558,
+      "column": 43,
+      "source": "    getSymbolConstructor: () => Symbol as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8559,
+      "column": 39,
+      "source": "    getTypeConstructor: () => Type as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8560,
+      "column": 49,
+      "source": "    getSignatureConstructor: () => Signature as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8561,
+      "column": 61,
+      "source": "    getSourceMapSourceConstructor: () => SourceMapSource as any,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 603,
+      "column": 82,
+      "source": "    const fn = (visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>)[node.kind];",
+      "parentKind": "TypeReference"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 221,
+      "column": 49,
+      "source": "    const host: ParseConfigFileHost = system as any;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 862,
+      "column": 91,
+      "source": "        createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>,",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 150,
+      "column": 88,
+      "source": "    createProgram = createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "column": 61,
+      "source": "    const oldProgram = readBuilderProgram(options, host) as any as T;",
+      "parentKind": "AsExpression"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "MethodSignature"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "parentKind": "Parameter"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 31,
+      "source": "    let timerToUpdateProgram: any; // timer callback to recompile the program",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 51,
+      "source": "    let timerToInvalidateFailedLookupResolutions: any; // timer callback to invalidate resolutions for changes in failed lookup locations",
+      "parentKind": "VariableDeclaration"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 555,
+      "column": 75,
+      "source": "    builderProgram = readBuilderProgram(compilerOptions, compilerHost) as any as T;",
+      "parentKind": "AsExpression"
+    }
+  ]
+}

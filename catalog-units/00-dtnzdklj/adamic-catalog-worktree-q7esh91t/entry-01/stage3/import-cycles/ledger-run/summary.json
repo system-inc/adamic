@@ -1,0 +1,20 @@
+{
+  "fixtures": {
+    "refused": 10,
+    "checked": 0,
+    "provenSafe": 0
+  },
+  "ledgerStatements": {
+    "refused": 0,
+    "checked": 0,
+    "provenSafe": 0,
+    "unassessed": 58
+  },
+  "ledgerObservedReadOccurrences": {
+    "refused": 0,
+    "checked": 0,
+    "provenSafe": 0,
+    "unassessed": 914
+  },
+  "reason": "Original tsc statements are not reproduced by their scheduling-witness fixture; public runner unavailable. Zero classifications do not mean accepted."
+}

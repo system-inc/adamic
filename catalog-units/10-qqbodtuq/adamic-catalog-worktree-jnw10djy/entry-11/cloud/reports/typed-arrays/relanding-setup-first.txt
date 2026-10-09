@@ -1,0 +1,19 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+v24.19.0
+setup: node ready (1s)
+setup: submodules ready (1s)
+# github.com/system-inc/adamic/cmd/adamic-test262
+cmd/adamic-test262/run.go:15:2: could not import sync (open : no such file or directory)
+cmd/adamic-test262/run.go:35:20: undefined: resultCache
+cmd/adamic-test262/run.go:39:20: undefined: compilerWorker
+cmd/adamic-test262/run.go:42:20: undefined: runProfile
+cmd/adamic-test262/run.go:52:72: undefined: runProfile
+cmd/adamic-test262/run.go:56:69: undefined: runProfile
+cmd/adamic-test262/run.go:92:34: undefined: prepareCache
+cmd/adamic-test262/run.go:96:25: undefined: loweringSourceIdentity
+cmd/adamic-test262/main.go:81:15: undefined: runProfile
+cmd/adamic-test262/main.go:83:13: undefined: newRunProfile
+cmd/adamic-test262/run.go:96:25: too many errors

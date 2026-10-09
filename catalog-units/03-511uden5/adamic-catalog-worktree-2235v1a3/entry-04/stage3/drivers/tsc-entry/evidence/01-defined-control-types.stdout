@@ -1,0 +1,5 @@
+/tmp/tsc-entry-probe-01-control.a:1:6: type Path: string & { readonly pathBrand: unknown; }
+/tmp/tsc-entry-probe-01-control.a:1:33: property pathBrand: unknown
+/tmp/tsc-entry-probe-01-control.a:2:10: function accept: (path: string) => void
+/tmp/tsc-entry-probe-01-control.a:2:17: parameter path: string
+/tmp/tsc-entry-probe-01-control.a:3:7: variable paths: readonly Path[]

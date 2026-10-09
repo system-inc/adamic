@@ -1,0 +1,222 @@
+[
+  {
+    "file": "docs/0.1.md",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "docs/escape-hatches.md",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/flow/build.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/flow/flow_test.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/fresh/fresh.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/ir/ir.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/load/load.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/load/source_fs.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/assignments.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/cast.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/cast_proof.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/lower/class.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/lower/class_inheritance.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/lower/control.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/cycles.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/exceptions.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "conflict_hunks": 17
+  },
+  {
+    "file": "internal/lower/functions.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/library_node_fs_file_test.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/lower/library_node_test.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/lower/library_string.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/lower/locals.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/lower/lower_test.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/lower/object.go",
+    "conflict_hunks": 6
+  },
+  {
+    "file": "internal/lower/optional_widening_test.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/lower/refusals.go",
+    "conflict_hunks": 4
+  },
+  {
+    "file": "internal/lower/statements.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/class_accessors.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/emit_arrays.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/emit_expressions.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/emit_functions.go",
+    "conflict_hunks": 4
+  },
+  {
+    "file": "internal/native/emit_maps.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/native/emit_objects.go",
+    "conflict_hunks": 6
+  },
+  {
+    "file": "internal/native/emit_statements.go",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/from.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/native/reuse.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "conflict_hunks": 4
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/runtime/region.c",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "internal/native/slots.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/oracle/counts.md",
+    "conflict_hunks": 15
+  },
+  {
+    "file": "internal/oracle/counts_test.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/oracle/nested_functions_test.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/oracle/node_fs_file_test.go",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/oracle/oracle_test.go",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "internal/oracle/testdata/field_access_paths.a",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "internal/oracle/testdata/node_fs_file_close.a",
+    "conflict_hunks": 1
+  },
+  {
+    "file": "stage3/fixtures/assertions/status.json",
+    "conflict_hunks": 3
+  },
+  {
+    "file": "stage3/fixtures/host/status.json",
+    "conflict_hunks": 18
+  },
+  {
+    "file": "stage3/fixtures/nested-functions/status.json",
+    "conflict_hunks": 2
+  },
+  {
+    "file": "stage3/fixtures/objects/status.json",
+    "conflict_hunks": 2
+  }
+]

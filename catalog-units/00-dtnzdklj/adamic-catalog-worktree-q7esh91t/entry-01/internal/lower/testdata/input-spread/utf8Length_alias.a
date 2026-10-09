@@ -1,0 +1,3 @@
+import { utf8Length as door } from 'adamic';
+const args: [string] = ['é'];
+door(...args);

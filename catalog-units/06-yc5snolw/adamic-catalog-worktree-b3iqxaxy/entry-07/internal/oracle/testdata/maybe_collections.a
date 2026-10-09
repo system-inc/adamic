@@ -1,0 +1,79 @@
+// number | undefined where stage 0 couldn't hold it before: a Map's values, reduce's result, and an
+// array sorted with undefined among its elements, which JavaScript puts at the end without ever
+// passing one to the comparator.
+import { panic } from 'adamic';
+
+const scores = new Map<string, number | undefined>([['Kirk', 42], ['Ahra', undefined]]);
+scores.set('Ken', undefined);
+scores.set('Dennis', NaN);
+scores.set('Rob', 7);
+scores.set('Kirk', undefined);
+scores.set('Ahra', -0);
+// A key held with undefined is there; a key never set isn't. get gives undefined for both.
+console.log(`${scores.size} ${scores.has('Ken')} ${scores.has('Nobody')} ${scores.get('Ken')} ${scores.get('Nobody')} ${scores.get('Rob')}`);
+console.log(`${scores.get('Ken') ?? -1} ${scores.get('Rob') ?? -1} ${scores.get('Dennis') ?? -1}`);
+for (const [name, score] of scores) {
+	console.log(`${name}=${score}`);
+}
+// A value is kept as it was set: -0 stays -0, where a key would be made +0.
+console.log(`${1 / (scores.get('Ahra') ?? 1)}`);
+let present = 0;
+for (const score of scores.values()) {
+	if (score !== undefined) {
+		present += 1;
+	}
+}
+console.log(`${present} present`);
+const byNumber = new Map<number, number | undefined>();
+for (let index = 0; index < 100; index += 1) {
+	byNumber.set(index % 10, index % 3 === 0 ? undefined : index);
+}
+let total = 0;
+for (const [key, value] of byNumber) {
+	total += key * (value ?? 1000);
+}
+console.log(`${byNumber.size} ${total}`);
+
+// reduce to number | undefined.
+const values = [3, 9, 4];
+const largest = values.reduce<number | undefined>((best, value) => (best === undefined || value > best ? value : best), undefined);
+const none = values.slice(0, 0).reduce<number | undefined>((best, value) => (best === undefined || value > best ? value : best), undefined);
+const words = ['a', 'b', 'c', 'b'];
+const firstB = words.reduce<number | undefined>((found, word, index) => {
+	if (found !== undefined) {
+		return found;
+	}
+	if (word === 'b') {
+		return index;
+	}
+	return undefined;
+}, undefined);
+console.log(`${largest} ${none} ${firstB}`);
+
+// sort with undefined: to the end, the comparator never seeing one.
+const sparse: (number | undefined)[] = [5, undefined, 1, undefined, 3, -0, 0, 12, undefined];
+sparse.sort((left, right) => {
+	if (left === undefined || right === undefined) {
+		panic('the comparator was passed undefined');
+	}
+	return left - right;
+});
+const shown: string[] = [];
+for (const value of sparse) {
+	shown.push(`${value}`);
+}
+console.log(shown.join(' '));
+function descending(left: number | undefined, right: number | undefined): number {
+	if (left === undefined || right === undefined) {
+		panic('the comparator was passed undefined');
+	}
+	return right - left;
+}
+const again: (number | undefined)[] = [undefined, 2, undefined, 8, 1];
+again.sort(descending);
+console.log(again.join(','));
+const empty: (number | undefined)[] = [];
+empty.push(undefined);
+empty.push(undefined);
+empty.sort(descending);
+console.log(`${empty.length} ${empty[0] === undefined} ${empty.join(',')}`);

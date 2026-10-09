@@ -1,0 +1,49 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -84,7 +84,7 @@
+ 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
+ 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+ 			}
+-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
++			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.MaybeBoolean || declared == ir.Weak {
+ 				// Store the value as the member's slot holds it, rather than the initializer's type.
+ 				value = fit(value, declared)
+ 			}
+@@ -150,27 +150,6 @@
+ 	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+ 	if contextual == nil {
+ 		return 0
+-	}
+-	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
+-		// The union's combined property can hold unrelated types. The literal belongs to a
+-		// member, whose fields are what reads after discriminant narrowing expect.
+-		made := l.checker.GetTypeAtLocation(literal)
+-		var shared ir.Type
+-		for _, member := range contextual.Types() {
+-			if !l.checker.IsTypeAssignableTo(made, member) {
+-				continue
+-			}
+-			field := l.checker.GetPropertyOfType(member, name)
+-			if field == nil {
+-				continue
+-			}
+-			declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+-			if shared != 0 && shared != declared {
+-				return 0
+-			}
+-			shared = declared
+-		}
+-		return shared
+ 	}
+ 	field := l.checker.GetPropertyOfType(contextual, name)
+ 	if field == nil {
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -166,7 +166,6 @@
+ 			if expression.Readiness != "" && !expression.Absent {
+ 				e.line("(void)%s;", slot)
+ 			}
+-			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+ 			if expression.Of == ir.MaybeBoolean {
+ 				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+ 			}

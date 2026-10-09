@@ -1,0 +1,31 @@
+=== RUN   TestSixPinnedFlags
+=== PAUSE TestSixPinnedFlags
+=== RUN   TestFactsDecoderGuards
+    suite_test.go:474: wire mutant empty: panic 70, invalid checker facts frame
+    suite_test.go:474: wire mutant length-negative: panic 70, invalid checker facts length
+    suite_test.go:474: wire mutant length-short: panic 70, invalid checker facts length
+    suite_test.go:474: wire mutant trailing: panic 70, trailing checker facts
+    suite_test.go:474: wire mutant version: panic 70, unsupported checker facts schema
+    suite_test.go:474: wire mutant question: panic 70, unsupported checker facts schema
+    suite_test.go:474: wire mutant not-integer: panic 70, invalid checker facts integer
+    suite_test.go:474: wire mutant rounded-integer: panic 70, invalid checker facts integer
+    suite_test.go:474: wire mutant noncanonical-integer: panic 70, invalid checker facts integer
+    suite_test.go:474: wire mutant negative-natural: panic 70, negative checker fact
+    suite_test.go:474: wire mutant bad-boolean: panic 70, invalid checker facts boolean
+    suite_test.go:474: wire mutant zero-id: panic 70, invalid checker type record
+    suite_test.go:474: wire mutant negative-tuple: panic 70, invalid checker type record
+    suite_test.go:474: wire mutant missing-root: panic 70, missing checker type identity
+    suite_test.go:474: wire mutant missing-constraint: panic 70, missing checker type identity
+    suite_test.go:474: wire mutant missing-element: panic 70, missing checker type identity
+    suite_test.go:474: wire mutant duplicate-id: panic 70, invalid checker type record
+    suite_test.go:474: wire mutant missing-link-17: panic 70, missing checker type identity
+    suite_test.go:474: wire mutant missing-link-18: panic 70, missing checker type identity
+--- PASS: TestFactsDecoderGuards (5.69s)
+=== RUN   TestPinnedTypeFlags
+=== PAUSE TestPinnedTypeFlags
+=== CONT  TestSixPinnedFlags
+--- PASS: TestSixPinnedFlags (0.00s)
+=== CONT  TestPinnedTypeFlags
+--- PASS: TestPinnedTypeFlags (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	5.697s

@@ -1,0 +1,53 @@
+{
+  "tree": "/workspace/explicit-any-pristine",
+  "nproc": 5,
+  "workers": 1,
+  "runners": "unittest",
+  "tests": "Public APIs",
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.869
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 1.859
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=1",
+        "--lint=false",
+        "--no-colors",
+        "--runners=unittest",
+        "--tests=Public APIs"
+      ],
+      "exit": 1,
+      "seconds": 4.278
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 30,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "wall_seconds": 9.026
+}

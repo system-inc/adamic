@@ -1,0 +1,5 @@
+// From TypeScript 6.0.3, src/compiler/debug.ts:26
+namespace Debug {
+    export let isDebugging = false;
+}
+console.log(`${Debug.isDebugging}`);
