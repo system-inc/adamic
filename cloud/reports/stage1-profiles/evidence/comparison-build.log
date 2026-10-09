@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/profiles/compare.py", line 68, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/adamic/stage1/profiles/compare.py", line 46, in main
+    if '-pgo=' not in settings:raise RuntimeError('default.pgo was not applied by Go')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: default.pgo was not applied by Go

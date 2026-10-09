@@ -1,0 +1,8 @@
+=== RUN   TestInitializerChunksKeepStorageAndOrder
+=== PAUSE TestInitializerChunksKeepStorageAndOrder
+=== CONT  TestInitializerChunksKeepStorageAndOrder
+    outline_test.go:40: large initializer was not outlined into bounded helpers
+--- FAIL: TestInitializerChunksKeepStorageAndOrder (5.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	5.429s
+FAIL

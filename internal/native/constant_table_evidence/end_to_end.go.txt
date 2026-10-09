@@ -1,0 +1,36 @@
+package native
+
+import (
+ "context"
+ "encoding/json"
+ "os"
+ "path/filepath"
+ "testing"
+ "time"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+
+func TestOutlineEndToEnd(t *testing.T) {
+ directory:=os.Getenv("OUTLINE_MEASURE")
+ originalPath:=os.Getenv("PATH")
+ type measurement struct { Source,Mode string; Seconds float64 }
+ var measurements []measurement
+ for _,mode:=range []string{"sanitized"} {
+  wrapper:="full";if mode=="line-tables" { wrapper="line" }
+  t.Setenv("PATH",filepath.Join(directory,wrapper)+string(os.PathListSeparator)+originalPath)
+  t.Setenv("OUTLINE_TRACE", "")
+  options:=Options{Sanitize:mode!="release",Split:true,Jobs:5}
+  if _,err:=RuntimeLibrary("",options);err!=nil { t.Fatal(err) }
+  start:=time.Now()
+  program,err:=load.Load([]string{filepath.Join(os.Getenv("OUTLINE_ROOT"),"stage1/cohere/markdownblocks/testdata/list_probe.ts")});if err!=nil { t.Fatal(err) }
+  lowered,err:=lower.Lower(context.Background(),program);if err!=nil { t.Fatal(err) }
+  code:=C(lowered)
+  if err:=Build(code,filepath.Join(directory,"end-to-end-"+os.Getenv("OUTLINE_VERSION")+"-"+mode),options);err!=nil { t.Fatal(err) }
+  seconds:=time.Since(start).Seconds()
+  saved,err:=os.ReadFile(filepath.Join(directory,os.Getenv("OUTLINE_VERSION")+".c"));if err!=nil { t.Fatal(err) };if string(saved)!=code { t.Fatal("end-to-end emitter differs from saved timing input") }
+  measurements=append(measurements,measurement{os.Getenv("OUTLINE_VERSION"),mode,seconds})
+  encoded,_:=json.MarshalIndent(measurements,"","  ");if err:=os.WriteFile(filepath.Join(directory,"end-to-end-"+os.Getenv("OUTLINE_VERSION")+".json"),encoded,0644);err!=nil { t.Fatal(err) }
+  t.Logf("%s %s full frontend and native build: %.6f s",os.Getenv("OUTLINE_VERSION"),mode,measurements[len(measurements)-1].Seconds)
+ }
+}

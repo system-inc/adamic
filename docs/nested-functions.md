@@ -803,3 +803,10 @@ fresh 99.593s, whole oracle 247.308s. The full repository stage1 gate was not ru
 The whole oracle includes the Reader zero-padding, callback wrong-carrier, and
 existing sibling-cycle leak mutants. The independent rebinding-guard overlay
 also failed as intended, with lowering succeeding when the refusal was removed.
+## Follow-on environment placement
+
+The conservative escape proof, stack and call-region placement, shared cleanup,
+allocation and peak-memory measurements, mutants and exact gate results are
+recorded in [Closure environment placement](environment-placement.md). The
+implementation preserves this document's single AllocateEnvironment site and
+stable slot layout. The earlier heap-only measurements above describe the base.

@@ -1,0 +1,12 @@
+// Reassignment drops the cell's old value while the caller keeps its own reference.
+function run(text: string): string {
+ function read(): string { return text; }
+ console.log(read());
+ text = text + '!';
+ console.log(read());
+ text = 'replacement' + String(2);
+ return read();
+}
+const original = 'original' + String(1);
+console.log(run(original));
+console.log(original);

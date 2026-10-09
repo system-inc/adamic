@@ -1,0 +1,7 @@
+=== RUN   TestReportLintUnitChanges
+    constant_unit_changes_test.go:57: add-function: body/state units changed=1/140 shared-header-changed=false effective-invalidations=1
+    constant_unit_changes_test.go:57: add-temporary: body/state units changed=1/140 shared-header-changed=false effective-invalidations=1
+    constant_unit_changes_test.go:57: 14-to-array-length: body/state units changed=1/140 shared-header-changed=false effective-invalidations=1
+--- PASS: TestReportLintUnitChanges (51.90s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	51.937s

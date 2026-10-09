@@ -1,0 +1,20 @@
+// More than one stdout buffer (64 KiB) of short lines, with stderr between them, then
+// one stdout line and one stderr line each longer than that buffer. Surrogates sit on
+// both streams. A pipe flushes when the buffer fills and before every stderr write.
+const high = String.fromCharCode(0xd800);
+const low = String.fromCharCode(0xdfff);
+for (let line = 0; line < 1200; line += 1) {
+	if (line % 10 === 0) {
+		console.log(`${high}${line}${low}`);
+		console.error(`${low}e${line}${high}`);
+	} else if (line % 4 === 0) {
+		console.log('');
+		console.error(`e${line}`);
+	} else {
+		console.log(`${line} ${'o'.repeat(line % 60)}`);
+	}
+}
+console.log('L'.repeat(70000));
+console.error('E'.repeat(70000));
+console.log('tail');
+console.error('tail err');

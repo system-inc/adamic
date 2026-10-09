@@ -30,6 +30,9 @@ void *adamic_program_adopt_owned(void *value, size_t size) {
  heap = adamic_heap_program_storage(heap, size);
  adamic_graph_header_of(heap)->next = members;
  members = heap;
+ if (heap->kind == adamic_kind_environment) {
+  ((adamic_environment *)heap)->cells = (adamic_cell *)(void *)(((adamic_environment *)heap) + 1);
+ }
 #ifdef ADAMIC_CANONICAL_CLOSURES
  // Interior cells share this indivisible member and take the header fast path too.
  if (heap->kind == adamic_kind_environment) {

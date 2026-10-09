@@ -1,0 +1,6 @@
+=== RUN   TestOutlinedSanitizerLocations
+    outline_debug_test.go:35: full: ASan reports generated file and line
+    outline_debug_test.go:35: line: ASan reports generated file and line
+--- PASS: TestOutlinedSanitizerLocations (93.88s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	93.948s

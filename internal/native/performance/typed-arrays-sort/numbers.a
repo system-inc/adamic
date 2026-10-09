@@ -1,0 +1,17 @@
+const size = 1000000;
+const values: number[] = [];
+let state = 42;
+for (let index = 0; index < size; index += 1) {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    values.push(state % 1000001 - 500000);
+}
+values.sort((left, right) => left - right);
+let sum = 0;
+let previous = -Infinity;
+let ordered = true;
+for (const value of values) {
+    ordered = ordered && previous <= value;
+    previous = value;
+    sum += value;
+}
+console.log(`${values.length} ${values[0]} ${values[size - 1]} ${sum} ordered ${ordered}`);

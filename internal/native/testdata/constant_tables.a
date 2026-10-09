@@ -1,0 +1,46 @@
+import { panic } from 'adamic';
+function numbers(): number[] { return [1,-0,-2,3]; }
+const first = numbers(); const second = numbers(); first[0] = 99;
+console.log(first.join(',') + ':' + second.join(',') + ':' + (first === second).toString());
+console.log((1 / (second[1] ?? 0)).toString());
+interface TableRow { value: number; label: string; flag: boolean; ranges: number[]; other: number[]; }
+let recordCalls = 0;
+function makeRow(): TableRow { recordCalls += 1; return {value:16,label:'dynamic',flag:true,ranges:[16,116],other:[216]}; }
+const rows: TableRow[] = [
+{value:0,label:'row',flag:true,ranges:[],other:[200]},{value:1,label:'row',flag:false,ranges:[1,101],other:[201]},{value:2,label:'row',flag:true,ranges:[2,102],other:[202]},{value:3,label:'row',flag:false,ranges:[],other:[203]},{value:4,label:'row',flag:true,ranges:[4,104],other:[204]},{value:5,label:'row',flag:false,ranges:[5,105],other:[205]},{value:6,label:'row',flag:true,ranges:[],other:[206]},{value:7,label:'row',flag:false,ranges:[7,107],other:[207]},{value:8,label:'row',flag:true,ranges:[8,108],other:[208]},{value:9,label:'row',flag:false,ranges:[],other:[209]},{value:10,label:'row',flag:true,ranges:[10,110],other:[210]},{value:11,label:'row',flag:false,ranges:[11,111],other:[211]},{value:12,label:'row',flag:true,ranges:[],other:[212]},{value:13,label:'row',flag:false,ranges:[13,113],other:[213]},{value:14,label:'row',flag:true,ranges:[14,114],other:[214]},{value:15,label:'row',flag:false,ranges:[],other:[215]},makeRow(),{value:17,label:'row',flag:false,ranges:[17,117],other:[217]},{value:18,label:'row',flag:true,ranges:[],other:[218]},{value:19,label:'row',flag:false,ranges:[19,119],other:[219]},{value:20,label:'row',flag:true,ranges:[20,120],other:[220]},{value:21,label:'row',flag:false,ranges:[],other:[221]},{value:22,label:'row',flag:true,ranges:[22,122],other:[222]},{value:23,label:'row',flag:false,ranges:[23,123],other:[223]},{value:24,label:'row',flag:true,ranges:[],other:[224]},{value:25,label:'row',flag:false,ranges:[25,125],other:[225]},{value:26,label:'row',flag:true,ranges:[26,126],other:[226]},{value:27,label:'row',flag:false,ranges:[],other:[227]},{value:28,label:'row',flag:true,ranges:[28,128],other:[228]},{value:29,label:'row',flag:false,ranges:[29,129],other:[229]},{value:30,label:'row',flag:true,ranges:[],other:[230]},{value:31,label:'row',flag:false,ranges:[31,131],other:[231]}
+];
+const twin: TableRow[] = [
+{value:0,label:'row',flag:true,ranges:[],other:[200]},{value:1,label:'row',flag:false,ranges:[1,101],other:[201]},{value:2,label:'row',flag:true,ranges:[2,102],other:[202]},{value:3,label:'row',flag:false,ranges:[],other:[203]},{value:4,label:'row',flag:true,ranges:[4,104],other:[204]},{value:5,label:'row',flag:false,ranges:[5,105],other:[205]},{value:6,label:'row',flag:true,ranges:[],other:[206]},{value:7,label:'row',flag:false,ranges:[7,107],other:[207]},{value:8,label:'row',flag:true,ranges:[8,108],other:[208]},{value:9,label:'row',flag:false,ranges:[],other:[209]},{value:10,label:'row',flag:true,ranges:[10,110],other:[210]},{value:11,label:'row',flag:false,ranges:[11,111],other:[211]},{value:12,label:'row',flag:true,ranges:[],other:[212]},{value:13,label:'row',flag:false,ranges:[13,113],other:[213]},{value:14,label:'row',flag:true,ranges:[14,114],other:[214]},{value:15,label:'row',flag:false,ranges:[],other:[215]},makeRow(),{value:17,label:'row',flag:false,ranges:[17,117],other:[217]},{value:18,label:'row',flag:true,ranges:[],other:[218]},{value:19,label:'row',flag:false,ranges:[19,119],other:[219]},{value:20,label:'row',flag:true,ranges:[20,120],other:[220]},{value:21,label:'row',flag:false,ranges:[],other:[221]},{value:22,label:'row',flag:true,ranges:[22,122],other:[222]},{value:23,label:'row',flag:false,ranges:[23,123],other:[223]},{value:24,label:'row',flag:true,ranges:[],other:[224]},{value:25,label:'row',flag:false,ranges:[25,125],other:[225]},{value:26,label:'row',flag:true,ranges:[26,126],other:[226]},{value:27,label:'row',flag:false,ranges:[],other:[227]},{value:28,label:'row',flag:true,ranges:[28,128],other:[228]},{value:29,label:'row',flag:false,ranges:[29,129],other:[229]},{value:30,label:'row',flag:true,ranges:[],other:[230]},{value:31,label:'row',flag:false,ranges:[31,131],other:[231]}
+];
+const row0 = rows[0] ?? panic('row0'); const row1 = rows[1] ?? panic('row1');
+const twin0 = twin[0] ?? panic('twin0'); const twin1 = twin[1] ?? panic('twin1');
+console.log(rows.map(row => row.value.toString() + ':' + row.label + ':' + row.flag.toString() + ':' + row.ranges.join(',') + ':' + row.other.join(',')).join(';'));
+row1.value = 999; row1.ranges[0] = 888; row0.ranges.push(777);
+console.log(twin1.value.toString() + ':' + twin1.ranges.join(',') + ':' + twin0.ranges.length.toString());
+console.log((rows === twin).toString() + ':' + (row1 === twin1).toString() + ':' + (row1.ranges === twin1.ranges).toString());
+let effects = 0; function next(): number { effects += 1; return effects; }
+console.log([next(),next(),3].join(',') + ':' + effects.toString());
+console.log([...second,next()].join(','));
+console.log(recordCalls.toString());
+console.log([1e400,-1e400,5e-324,1.7976931348623157e308].join(','));
+const emptyRows: TableRow[] = [
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]},
+{value:0,label:'empty',flag:false,ranges:[],other:[]}
+];
+const empty0 = emptyRows[0] ?? panic('empty0'); const empty1 = emptyRows[1] ?? panic('empty1'); empty0.ranges.push(42); console.log(empty1.ranges.length.toString() + ':' + (empty0.ranges === empty0.other).toString());
+const scalars = [{value:0},{value:1},{value:2},{value:3},{value:4},{value:5},{value:6},{value:7},{value:8},{value:9},{value:10},{value:11},{value:12},{value:13},{value:14},{value:15}];
+console.log(scalars.map(row => row.value.toString()).join(','));

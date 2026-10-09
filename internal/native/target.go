@@ -11,6 +11,9 @@ func ValidateOptions(options Options) error {
 	if (options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1") && (options.Request || options.Target != "") {
 		return fmt.Errorf("native: Program regions require a one-shot native CLI")
 	}
+	if options.ProfileGenerate && options.Profile != "" {
+		return fmt.Errorf("native: profile generation and use are mutually exclusive")
+	}
 	if options.Request && options.Target != "wasm32-wasi" {
 		return fmt.Errorf("native: request exports require wasm32-wasi")
 	}

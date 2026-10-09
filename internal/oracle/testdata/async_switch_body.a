@@ -1,0 +1,28 @@
+async function choose(value: number): Promise<number> {
+    let result = 0;
+    switch (value) {
+        case 1:
+            result = await Promise.resolve(10);
+            break;
+        case 2:
+        case 3:
+            result = await Promise.resolve(20);
+            result += 3;
+        default:
+            result += await Promise.resolve(4);
+    }
+    return result;
+}
+console.log(`${await choose(1)} ${await choose(2)} ${await choose(3)} ${await choose(8)}`);
+async function direct(value: string): Promise<string> {
+    switch (value) {
+        case "a":
+            return await Promise.resolve(`case${1}`);
+        case "b":
+        case "c":
+            return await Promise.resolve(`case${2}`);
+        default:
+            return await Promise.resolve(`case${3}`);
+    }
+}
+console.log(`${await direct("a")} ${await direct("b")} ${await direct("c")} ${await direct("d")}`);

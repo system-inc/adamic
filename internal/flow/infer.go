@@ -311,6 +311,10 @@ func (n *inference) value(expression ir.Expression) shape {
 			n.value(argument)
 		}
 		return array
+	case ir.TypedArraySort:
+		array := n.value(expression.Array)
+		n.store(array, shape{})
+		return array
 	case ir.TypedArrayFill:
 		array := n.value(expression.Array)
 		for _, argument := range expression.Arguments {
@@ -465,7 +469,7 @@ func writes(expression ir.Expression) bool {
 	switch call := expression.(type) {
 	case ir.NodeBufferCall:
 		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
-	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
+	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete, ir.MapClear:
 		return true
 	}
 	return false

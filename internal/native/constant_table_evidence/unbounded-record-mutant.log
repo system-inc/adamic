@@ -1,0 +1,8 @@
+=== RUN   TestConstantRecordConstructorsStayBounded
+=== PAUSE TestConstantRecordConstructorsStayBounded
+=== CONT  TestConstantRecordConstructorsStayBounded
+    constant_tables_test.go:68: unbounded constant record constructor: adamic_initialize_record_table_copy_data_617afc2a3e2827170a13dbfcbd09dbda
+--- FAIL: TestConstantRecordConstructorsStayBounded (2.58s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	2.647s
+FAIL

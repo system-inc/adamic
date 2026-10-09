@@ -29,6 +29,8 @@ int main(int argc, char **argv) {
  while(fread(header,1,4,file)==4) {
   size_t length=read16(header), expected=read16(header+2);
   if(length>sizeof prefix || expected>sizeof oracle || fread(prefix,1,length,file)!=length || fread(oracle,1,expected,file)!=expected)return 2;
+  // Node's decoded UTF-8 oracle supplies the expected UTF-16 count independently.
+  size_t oracle_units=0;for(size_t k=0;k<expected;k++)if(oracle[k]<0x80 || oracle[k]>=0xc0)oracle_units+=oracle[k]>=0xf0?2:1;
   bool ascii=true;for(size_t k=0;k<length;k++)if(prefix[k]>=0x80)ascii=false;
   for(size_t run=0;run<=64;run++)for(size_t offset=0;offset<8;offset++)for(size_t tail=0;tail<2;tail++) {
    size_t suffix=tail?run:0, size=run+length+suffix;
@@ -38,7 +40,7 @@ int main(int argc, char **argv) {
    memset(bytes,'A',run);memcpy(bytes+run,prefix,length);memset(bytes+run+length,'A',suffix);
    adamic_string *current=adamic_decode_utf8(bytes,size), *baseline=baseline_decode_utf8(bytes,size);
    bool flag=current->units==current->length+1;
-   bool cache=flag==ascii && (ascii || current->units==0);
+   bool cache=flag==ascii && current->units==run+oracle_units+suffix+1;
    if(!cache){fprintf(stderr,"decode cache mismatch record=%zu run=%zu offset=%zu ascii=%d units=%zu bytes=%zu\n",records,run,offset,ascii,current->units,current->length);adamic_release(current);adamic_release(baseline);free(allocation);fclose(file);return 1;}
    bool equal=current->length==run+expected+suffix && baseline->length==current->length;
    if(equal) equal=memcmp(current->bytes,baseline->bytes,current->length)==0 && memcmp(current->bytes+run,oracle,expected)==0;

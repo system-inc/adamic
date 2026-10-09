@@ -1,0 +1,22 @@
+=== RUN   TestMarkdownListLayout
+=== PAUSE TestMarkdownListLayout
+=== CONT  TestMarkdownListLayout
+    lists_test.go:252: original fork full Markdown parsing/layout off agrees on all 5166 source documents
+=== RUN   TestMarkdownListLayout/unordered_marker
+    lists_test.go:391: output-only native mutant caught by "CLAUDE.md" at byte 626
+=== RUN   TestMarkdownListLayout/task_box
+    lists_test.go:391: output-only native mutant caught by "generated/list-layout/- [x] a *b _c_* `x`\n" at byte 12897777
+=== RUN   TestMarkdownListLayout/ordered_cap
+    lists_test.go:391: output-only native mutant caught by "generated/list/999999999./nn" at byte 12896203
+=== NAME  TestMarkdownListLayout
+    lists_test.go:420: 1099 physical files, 4067 generated, 5166 whole-document contexts; 3735 native list frames, 703029 composed word nodes; Go/source/native/backend/original doc bytes identical
+    lists_test.go:421: 2036 native HTML frames
+    lists_test.go:422: 6618 native code frames
+    lists_test.go:423: 1271 native table frames
+    lists_test.go:424: 2989 native quote frames
+--- PASS: TestMarkdownListLayout (1346.32s)
+    --- PASS: TestMarkdownListLayout/unordered_marker (65.67s)
+    --- PASS: TestMarkdownListLayout/task_box (77.98s)
+    --- PASS: TestMarkdownListLayout/ordered_cap (437.28s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	1346.486s

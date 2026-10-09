@@ -1,0 +1,21 @@
+async function change(items: number[]): Promise<void> {
+    await Promise.resolve();
+    items[1] = 20;
+    items.push(4);
+}
+async function walk(): Promise<number> {
+    const items = [1, 2, 3];
+    let total = 0;
+    for (const item of items) {
+        if (item === 1) {
+            const pending = change(items);
+            await pending;
+        } else {
+            await Promise.resolve();
+        }
+        console.log(`${item}`);
+        total += item;
+    }
+    return total;
+}
+console.log(`${await walk()}`);

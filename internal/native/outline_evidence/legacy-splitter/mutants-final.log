@@ -1,0 +1,4 @@
+module-order caught: stdout differs
+unbounded-chunk caught: large initializer was not outlined
+inline-again caught: large initializer was not outlined
+omit-root-cleanup caught: LeakSanitizer: detected memory leaks

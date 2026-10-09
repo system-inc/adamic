@@ -1,0 +1,130 @@
+import { Suggestion } from './suggestion.a';
+import { space, noEdits } from './context.a';
+import type { Context } from './context.a';
+import { messageNoUselessConstructor, messageNoUselessConstructorRemove } from './messages.a';
+function forwarding(context: Context, body: number, parameters: readonly number[]): boolean {
+    if(context.node(body).children.length !== 1) {
+        return false;
+    }
+    const statement = context.child(body, 0);
+    if(context.kind(statement) !== 'ExpressionStatement') {
+        return false;
+    }
+    const call = context.child(statement, 0);
+    if(context.kind(call) !== 'CallExpression' || context.kind(context.child(call, 0)) !== 'SuperKeyword') {
+        return false;
+    }
+    for(const parameter of parameters) {
+        const name = context.name(parameter);
+        if(context.kind(name) !== 'Identifier') {
+            return false;
+        }
+        if(context.initializer(parameter) >= 0) {
+            return false;
+        }
+    }
+    const arguments_ = context.arguments(call);
+    if(arguments_.length === 1 && context.kind(arguments_[0] ?? -1) === 'SpreadElement') {
+        const inner = context.child(arguments_[0] ?? -1, 0);
+        if(context.kind(inner) === 'Identifier' && context.node(inner).text === 'arguments') {
+            return true;
+        }
+    }
+    if(parameters.length !== arguments_.length) {
+        return false;
+    }
+    for(let position = 0; position < parameters.length; position++) {
+        const parameter = parameters[position] ?? -1;
+        const rest = context.children(parameter, 'DotDotDotToken').length !== 0;
+        let argument = arguments_[position] ?? -1;
+        if(rest) {
+            if(context.kind(argument) !== 'SpreadElement') {
+                return false;
+            }
+            argument = context.child(argument, 0);
+        }
+        const name = context.name(parameter);
+        if(context.kind(argument) !== 'Identifier' || context.node(argument).text !== context.node(name).text) {
+            return false;
+        }
+    }
+    return true;
+}
+export function noUselessConstructor(context: Context, index: number): void {
+    if(!context.enabled('no-useless-constructor')) {
+        return;
+    }
+    const name = context.memberName(index);
+    // TypeScript treats a quoted constructor name as Constructor; this parser retains MethodDeclaration.
+    const quoted =
+        context.kind(index) === 'MethodDeclaration' &&
+        context.kind(name) === 'StringLiteral' &&
+        context.node(name).text === 'constructor';
+    if(context.kind(index) !== 'Constructor' && !quoted) {
+        return;
+    }
+    const body = context.children(index, 'Block')[0] ?? -1;
+    if(body < 0) {
+        return;
+    }
+    const parameters = context.children(index, 'Parameter');
+    for(const parameter of parameters) {
+        if(
+            context
+                .node(parameter)
+                .children.some((child) =>
+                    [
+                        'Decorator',
+                        'PublicKeyword',
+                        'PrivateKeyword',
+                        'ProtectedKeyword',
+                        'ReadonlyKeyword',
+                        'OverrideKeyword',
+                    ].includes(context.kind(child)),
+                )
+        ) {
+            return;
+        }
+    }
+    const extending = context.extendsClass(context.parent(index));
+    if(
+        context.children(index, 'PrivateKeyword').length !== 0 ||
+        context.children(index, 'ProtectedKeyword').length !== 0 ||
+        (extending && context.children(index, 'PublicKeyword').length !== 0)
+    ) {
+        return;
+    }
+    if(extending ? !forwarding(context, body, parameters) : context.node(body).children.length !== 0) {
+        return;
+    }
+    const start = context.start(index);
+    let end = start;
+    while(context.source.slice(end, end + 1) !== '(' && end < context.node(index).end) {
+        end++;
+    }
+    while(space(context.source.slice(end - 1, end))) {
+        end--;
+    }
+    let replacement = '';
+    const members = context.members(context.parent(index));
+    const position = members.indexOf(index);
+    const previous = members[position - 1] ?? -1;
+    const next = members[position + 1] ?? -1;
+    if(
+        context.kind(previous) === 'PropertyDeclaration' &&
+        next >= 0 &&
+        !context.raw(previous).trimEnd().endsWith(';')
+    ) {
+        const initialized = context.initializer(previous) >= 0;
+        context.scanAt(context.start(next));
+        if(
+            initialized &&
+            ['OpenBracketToken', 'AsteriskToken', 'InKeyword', 'InstanceOfKeyword'].includes(context.scanKind())
+        ) {
+            replacement = ';';
+        }
+    }
+    context.range(start, end, 'no-useless-constructor', 'noUselessConstructor', messageNoUselessConstructor, noEdits, [
+        new Suggestion('removeConstructor', messageNoUselessConstructorRemove, [context.edit(index, replacement)]),
+    ]);
+}

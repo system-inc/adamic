@@ -1,0 +1,128 @@
+[
+  {
+    "Round": 0,
+    "Source": "before",
+    "Mode": "sanitized",
+    "Seconds": 17.946550935,
+    "RuntimeSeconds": 0.037983998
+  },
+  {
+    "Round": 0,
+    "Source": "after",
+    "Mode": "sanitized",
+    "Seconds": 7.077584902,
+    "RuntimeSeconds": 0.037983998
+  },
+  {
+    "Round": 0,
+    "Source": "before",
+    "Mode": "release",
+    "Seconds": 4.337527948,
+    "RuntimeSeconds": 0.035648507
+  },
+  {
+    "Round": 0,
+    "Source": "after",
+    "Mode": "release",
+    "Seconds": 1.48577893,
+    "RuntimeSeconds": 0.035648507
+  },
+  {
+    "Round": 0,
+    "Source": "before",
+    "Mode": "line-tables",
+    "Seconds": 18.543372241,
+    "RuntimeSeconds": 0.038656513
+  },
+  {
+    "Round": 0,
+    "Source": "after",
+    "Mode": "line-tables",
+    "Seconds": 7.0186053,
+    "RuntimeSeconds": 0.038656513
+  },
+  {
+    "Round": 1,
+    "Source": "after",
+    "Mode": "sanitized",
+    "Seconds": 7.853473933,
+    "RuntimeSeconds": 0.036452447
+  },
+  {
+    "Round": 1,
+    "Source": "before",
+    "Mode": "sanitized",
+    "Seconds": 17.796712559,
+    "RuntimeSeconds": 0.036452447
+  },
+  {
+    "Round": 1,
+    "Source": "after",
+    "Mode": "release",
+    "Seconds": 1.697069722,
+    "RuntimeSeconds": 0.039260077
+  },
+  {
+    "Round": 1,
+    "Source": "before",
+    "Mode": "release",
+    "Seconds": 4.495453593,
+    "RuntimeSeconds": 0.039260077
+  },
+  {
+    "Round": 1,
+    "Source": "after",
+    "Mode": "line-tables",
+    "Seconds": 6.176710414,
+    "RuntimeSeconds": 0.039868304
+  },
+  {
+    "Round": 1,
+    "Source": "before",
+    "Mode": "line-tables",
+    "Seconds": 17.57619265,
+    "RuntimeSeconds": 0.039868304
+  },
+  {
+    "Round": 2,
+    "Source": "before",
+    "Mode": "sanitized",
+    "Seconds": 18.461520645,
+    "RuntimeSeconds": 0.036178153
+  },
+  {
+    "Round": 2,
+    "Source": "after",
+    "Mode": "sanitized",
+    "Seconds": 7.656111096,
+    "RuntimeSeconds": 0.036178153
+  },
+  {
+    "Round": 2,
+    "Source": "before",
+    "Mode": "release",
+    "Seconds": 4.796749659,
+    "RuntimeSeconds": 0.036540527
+  },
+  {
+    "Round": 2,
+    "Source": "after",
+    "Mode": "release",
+    "Seconds": 1.7363454630000001,
+    "RuntimeSeconds": 0.036540527
+  },
+  {
+    "Round": 2,
+    "Source": "before",
+    "Mode": "line-tables",
+    "Seconds": 19.049203912,
+    "RuntimeSeconds": 0.03774286
+  },
+  {
+    "Round": 2,
+    "Source": "after",
+    "Mode": "line-tables",
+    "Seconds": 6.529119836,
+    "RuntimeSeconds": 0.03774286
+  }
+]

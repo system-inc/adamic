@@ -1,0 +1,12 @@
+function check(start: number, text: string, words: string[], item: { label: string }): string {
+ const byName = new Map<string, string>(); byName.set('key', text);
+ const names = new Set<string>(); names.add(text);
+ function read(): string { return `${text}:${words.join(',')}:${item.label}:${byName.get('key') ?? ''}:${names.has(text)}`; }
+ if (start === 0) { throw new Error(read()); }
+ return read();
+}
+for (const start of [0, 1]) {
+ const text = 'value' + String(start);
+ try { console.log(check(start, text, [text], { label: text + '!' })); }
+ catch (error) { if (error instanceof Error) { console.log(error.message); } }
+}

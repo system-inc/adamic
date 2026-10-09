@@ -1,0 +1,194 @@
+[
+  {
+    "mode": "sanitized",
+    "source": "before",
+    "whole_build_median": 15.689848615,
+    "main_compile_median": 0.03886205399612663,
+    "slowest_compile_median": 14.212747835998016,
+    "slowest_units": [
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c"
+    ],
+    "whole_build_runs": [
+      15.689848615,
+      15.350608648,
+      15.79860177
+    ],
+    "main_compile_runs": [
+      0.047505948998150416,
+      0.03886205399612663,
+      0.03584012100327527
+    ],
+    "slowest_compile_runs": [
+      14.225225538000814,
+      13.795288386005268,
+      14.212747835998016
+    ],
+    "units": [
+      58,
+      58,
+      58
+    ]
+  },
+  {
+    "mode": "sanitized",
+    "source": "after",
+    "whole_build_median": 7.136490081,
+    "main_compile_median": 0.03862813700106926,
+    "slowest_compile_median": 3.5249023209980805,
+    "slowest_units": [
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c"
+    ],
+    "whole_build_runs": [
+      7.242398244,
+      6.906889608,
+      7.136490081
+    ],
+    "main_compile_runs": [
+      0.03862813700106926,
+      0.033962871006224304,
+      0.06486970699916128
+    ],
+    "slowest_compile_runs": [
+      3.783369198004948,
+      3.2549804089940153,
+      3.5249023209980805
+    ],
+    "units": [
+      80,
+      80,
+      80
+    ]
+  },
+  {
+    "mode": "release",
+    "source": "before",
+    "whole_build_median": 4.20822894,
+    "main_compile_median": 0.03677932899881853,
+    "slowest_compile_median": 3.123380871002155,
+    "slowest_units": [
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c"
+    ],
+    "whole_build_runs": [
+      4.192758847,
+      4.20822894,
+      4.381082782
+    ],
+    "main_compile_runs": [
+      0.02611887300008675,
+      0.04174400299962144,
+      0.03677932899881853
+    ],
+    "slowest_compile_runs": [
+      3.077712222999253,
+      3.123380871002155,
+      3.2008894109967514
+    ],
+    "units": [
+      58,
+      58,
+      58
+    ]
+  },
+  {
+    "mode": "release",
+    "source": "after",
+    "whole_build_median": 2.97941294,
+    "main_compile_median": 0.022683928000333253,
+    "slowest_compile_median": 0.3056077750006807,
+    "slowest_units": [
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c"
+    ],
+    "whole_build_runs": [
+      2.97941294,
+      2.885614487,
+      3.107951089
+    ],
+    "main_compile_runs": [
+      0.03941257800033782,
+      0.020848856001975946,
+      0.022683928000333253
+    ],
+    "slowest_compile_runs": [
+      0.3056077750006807,
+      0.296875062995241,
+      0.32666975599568104
+    ],
+    "units": [
+      80,
+      80,
+      80
+    ]
+  },
+  {
+    "mode": "line-tables",
+    "source": "before",
+    "whole_build_median": 15.215484342,
+    "main_compile_median": 0.04638936700212071,
+    "slowest_compile_median": 13.695363482001994,
+    "slowest_units": [
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c"
+    ],
+    "whole_build_runs": [
+      14.878672769,
+      15.215484342,
+      15.674411963
+    ],
+    "main_compile_runs": [
+      0.04638936700212071,
+      0.04316157200082671,
+      0.06064435699954629
+    ],
+    "slowest_compile_runs": [
+      13.429270130996883,
+      13.695363482001994,
+      13.935896562994458
+    ],
+    "units": [
+      58,
+      58,
+      58
+    ]
+  },
+  {
+    "mode": "line-tables",
+    "source": "after",
+    "whole_build_median": 5.845179054,
+    "main_compile_median": 0.043956713998341,
+    "slowest_compile_median": 3.303568882001855,
+    "slowest_units": [
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c",
+      "module__2e__2e__2f_widthTables_2e_ts_9a9983a619e7fdf13ddd9ca4f1c25ab84372ffced184ad862375bca49e0149a1.c"
+    ],
+    "whole_build_runs": [
+      5.549770996,
+      5.845179054,
+      5.921953982
+    ],
+    "main_compile_runs": [
+      0.043956713998341,
+      0.050569874001666903,
+      0.04162507299770368
+    ],
+    "slowest_compile_runs": [
+      3.061813368003641,
+      3.303568882001855,
+      3.700645347998943
+    ],
+    "units": [
+      80,
+      80,
+      80
+    ]
+  }
+]

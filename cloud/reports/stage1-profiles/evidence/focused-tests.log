@@ -1,0 +1,22 @@
+=== RUN   TestTrainingNeverIncludesBenchmarks
+    corpus_test.go:57: actual benchmark path and renamed benchmark-content mutants caught
+--- PASS: TestTrainingNeverIncludesBenchmarks (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/profiles	0.006s
+=== RUN   TestNonShippingFlagsStayIdentical
+=== PAUSE TestNonShippingFlagsStayIdentical
+=== RUN   TestReleaseFlagsReachLink
+=== PAUSE TestReleaseFlagsReachLink
+=== RUN   TestStage1ProfileStalenessAndDeterminism
+    stage1_profile_test.go:142: two profile builds are byte-identical: 57cd377d09308011373065bc8a294895c37e35ae56f023516c713b5d45f266bf; all 48 runtime compiles and link retain both semantic flags
+    stage1_profile_test.go:169: one changed emitted-C byte: adamic: stage 1 profile unavailable (source, runtime, profile or toolchain changed); using plain ThinLTO
+        
+    stage1_profile_test.go:172: runtime snapshot mismatch: adamic: stage 1 profile unavailable (source, runtime, profile or toolchain changed); using plain ThinLTO
+        
+--- PASS: TestStage1ProfileStalenessAndDeterminism (8.44s)
+=== CONT  TestNonShippingFlagsStayIdentical
+=== CONT  TestReleaseFlagsReachLink
+--- PASS: TestReleaseFlagsReachLink (0.00s)
+--- PASS: TestNonShippingFlagsStayIdentical (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.445s

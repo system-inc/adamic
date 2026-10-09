@@ -54,6 +54,7 @@ void *adamic_graph_adopt(void *value, size_t bytes) {
 	// Interior cells must point at the environment's final address.
 	if (heap->kind == adamic_kind_environment) {
 		adamic_environment *environment = (adamic_environment *)heap;
+		environment->cells = (adamic_cell *)(void *)(environment + 1);
 		for (size_t i = 0; i < environment->count; i++) { environment->cells[i].owner = &environment->heap; }
 	}
 	return heap;

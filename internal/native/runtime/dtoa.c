@@ -145,6 +145,9 @@ static void bignum_assign_uint64(bignum *number, uint64_t value) {
 }
 
 static void bignum_assign_bignum(bignum *number, const bignum *other) {
+	// V8 13.6.233.17 bignum.cc: Zero starts at 0 and Clamp decrements only above 0;
+	// AssignBignum therefore always starts clearing at a nonnegative digit count.
+	if (other->used_digits < 0) { adamic_unreachable(); }
 	number->exponent = other->exponent;
 	for (int i = 0; i < other->used_digits; ++i) {
 		number->bigits[i] = other->bigits[i];

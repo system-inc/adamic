@@ -1,0 +1,37 @@
+package native
+import (
+ "os"
+ "os/exec"
+ "path/filepath"
+ "regexp"
+ "strings"
+ "testing"
+)
+func TestOutlinedSanitizerLocations(t *testing.T) {
+ directory:=os.Getenv("OUTLINE_MEASURE")
+ entry:=filepath.Join(directory,"debug.a")
+ if err:=os.WriteFile(entry,[]byte("const words = [1, 2, 3]; console.log(words.join('-'));"),0644);err!=nil { t.Fatal(err) }
+ program:=namedProgram(t,entry,nil)
+ names:=&emitter{program:program}
+ local:=-1
+ for i,declared:=range program.Locals { if declared.Name=="words" { local=i;break } }
+ if local<0 { t.Fatal("missing canary global") }
+ code:=C(program)
+ ready:=names.readyName(local)+" = true;"
+ if strings.Count(code,ready)!=1 { t.Fatal("canary readiness write missing") }
+ code=strings.Replace(code,ready,ready+"\n\tadamic_release("+names.localName(local)+");",1)
+ if err:=os.WriteFile(filepath.Join(directory,"debug-mutant.c"),[]byte(code),0644);err!=nil { t.Fatal(err) }
+ originalPath:=os.Getenv("PATH")
+ for _,mode:=range []string{"full","line"} {
+  t.Setenv("PATH",filepath.Join(directory,mode)+string(os.PathListSeparator)+originalPath)
+  t.Setenv("OUTLINE_TRACE","")
+  binary:=filepath.Join(directory,"debug-"+mode)
+  if err:=Build(code,binary,Options{Sanitize:true,Split:true,Jobs:5});err!=nil { t.Fatal(err) }
+  command:=exec.Command(binary);command.Env=append(os.Environ(),"ASAN_OPTIONS=detect_leaks=0")
+  output,err:=command.CombinedOutput()
+  if writeErr:=os.WriteFile(filepath.Join(directory,"debug-"+mode+".log"),output,0644);writeErr!=nil { t.Fatal(writeErr) }
+  if err==nil || !strings.Contains(string(output),"AddressSanitizer: heap-use-after-free") { t.Fatalf("canary did not fail: %v\n%s",err,output) }
+  if !regexp.MustCompile(`/adamic-units/module_[^\s/:]+\.c:[0-9]+`).Match(output) { t.Fatalf("sanitizer file/line absent:\n%s",output) }
+  t.Logf("%s: ASan reports generated file and line",mode)
+ }
+}

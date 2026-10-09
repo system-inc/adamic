@@ -1,0 +1,23 @@
+{
+  "baseline": "a7ddba49d92c4d19d9cb998f9efe1df2269ae278",
+  "implementation": "f70f3c85fe3cd4bd8a45da028e0e8cd46fac9f6d",
+  "main_merge": "d878e81661641b2cea722c594f6b9861dba0abea",
+  "merged_main": "f4efdd23",
+  "bounded_constructor": "397fa125cbea54f3a4e40888b7ad479506cf8d54",
+  "source_C": {
+    "before": "bc311d9575b1658353755a0ab40367ebc8f26fd4744d693a2ebd4405f8305959",
+    "after": "e2c34b30bbad482d1c4fcef8cbbbd706e9d01acda9188fae05790084c2eb3820"
+  },
+  "final_emission_matches_measured_C": true,
+  "split": true,
+  "jobs": 5,
+  "sanitized": true,
+  "clang": "20.1.8",
+  "go": "1.27.1",
+  "node": "24.19.0",
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "runtime_archive": "warmed outside all timed intervals",
+  "program_unit_objects": "uncached in all timed builds",
+  "samples": "3 interleaved rounds before/after, after/before, before/after"
+}

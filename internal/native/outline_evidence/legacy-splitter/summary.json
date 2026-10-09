@@ -1,0 +1,128 @@
+[
+  {
+    "mode": "sanitized",
+    "source": "before",
+    "whole_build_median": 17.946550935,
+    "main_compile_median": 16.918912451001233,
+    "whole_build_runs": [
+      17.946550935,
+      17.796712559,
+      18.461520645
+    ],
+    "main_compile_runs": [
+      16.918912451001233,
+      16.582716272001562,
+      17.28169630100456
+    ],
+    "units": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "mode": "sanitized",
+    "source": "after",
+    "whole_build_median": 7.656111096,
+    "main_compile_median": 0.06486460500309477,
+    "whole_build_runs": [
+      7.077584902,
+      7.853473933,
+      7.656111096
+    ],
+    "main_compile_runs": [
+      0.05985689000226557,
+      0.06486460500309477,
+      0.07486079000227619
+    ],
+    "units": [
+      19,
+      19,
+      19
+    ]
+  },
+  {
+    "mode": "release",
+    "source": "before",
+    "whole_build_median": 4.495453593,
+    "main_compile_median": 3.803652971997508,
+    "whole_build_runs": [
+      4.337527948,
+      4.495453593,
+      4.796749659
+    ],
+    "main_compile_runs": [
+      3.7269377860066015,
+      3.803652971997508,
+      4.064446667005541
+    ],
+    "units": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "mode": "release",
+    "source": "after",
+    "whole_build_median": 1.697069722,
+    "main_compile_median": 0.04293191999749979,
+    "whole_build_runs": [
+      1.48577893,
+      1.697069722,
+      1.7363454630000001
+    ],
+    "main_compile_runs": [
+      0.046010514997760765,
+      0.04293191999749979,
+      0.02947167600359535
+    ],
+    "units": [
+      19,
+      19,
+      19
+    ]
+  },
+  {
+    "mode": "line-tables",
+    "source": "before",
+    "whole_build_median": 18.543372241,
+    "main_compile_median": 17.443875142998877,
+    "whole_build_runs": [
+      18.543372241,
+      17.57619265,
+      19.049203912
+    ],
+    "main_compile_runs": [
+      17.443875142998877,
+      16.590525741994497,
+      17.89197376800439
+    ],
+    "units": [
+      10,
+      10,
+      10
+    ]
+  },
+  {
+    "mode": "line-tables",
+    "source": "after",
+    "whole_build_median": 6.529119836,
+    "main_compile_median": 0.04670162399997935,
+    "whole_build_runs": [
+      7.0186053,
+      6.176710414,
+      6.529119836
+    ],
+    "main_compile_runs": [
+      0.04670162399997935,
+      0.0628619479975896,
+      0.03991231399413664
+    ],
+    "units": [
+      19,
+      19,
+      19
+    ]
+  }
+]

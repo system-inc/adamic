@@ -1,0 +1,58 @@
+=== RUN   TestShippedProfileAgreesWithGo
+    profile_test.go:63: tested shipping binary SHA256 bcddb4c06d50ba26f30043194d2e50fb1581b9d6e5e5067cb9df2f49ae38fb36; second build byte-identical
+    profile_test.go:130: same shipping binary and source Node match Go: 44767604 full AST bytes; byte mutant caught
+--- PASS: TestShippedProfileAgreesWithGo (20.88s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/parse	20.891s
+=== RUN   TestShippedProfileAgreesWithGo
+    shipped_profile_test.go:35: tested shipping binary SHA256 417f6fd62dee32addbfed51fd96f2768acecafedb305d68e1a870396f3ba7fa1; second build byte-identical
+    lint_test.go:286: cohere cases: 1272 unique source/rule/options combinations
+    shipped_profile_test.go:44: Go recovered output: case 0
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-079.ts
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-079.ts
+    shipped_profile_test.go:44: Go recovered output: case 0
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=true: signal: killed: 
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    shipped_profile_test.go:44: Go recovered output: case 0
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-085.ts
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-085.ts
+    shipped_profile_test.go:44: Go recovered output: case 0
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-086.ts
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-086.ts
+    shipped_profile_test.go:44: Go recovered output: case 0
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-095.ts
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-095.ts
+    shipped_profile_test.go:44: Go recovered output: case 0
+        /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-097.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=true: signal: killed: 
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    shipped_profile_test.go:44: Go recovered output: case 0
+        /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-099.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-099.ts
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-099.ts
+    shipped_profile_test.go:44: Go recovered output: case 0
+        /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-100.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    shipped_profile_test.go:44: explicit unsupported recovery: /workspace/scratch/stage1-profiles/regeneration/lint-profile: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-100.ts
+    shipped_profile_test.go:44: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestShippedProfileAgreesWithGo1912978088/020/case-100.ts
+    shipped_profile_test.go:62: Go, Node, native identical: 18692000 bytes
+    shipped_profile_test.go:63: the tested profile-built binary is the shipping artifact, including all compiler files and supported upstream cases
+--- PASS: TestShippedProfileAgreesWithGo (42.26s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	42.269s

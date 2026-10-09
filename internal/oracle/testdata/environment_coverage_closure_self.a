@@ -1,0 +1,11 @@
+function make(start: number): (n: number) => string {
+ const text = 'self' + String(start);
+ function read(): string { return text; }
+ console.log(read());
+ const self = function current(n: number): string {
+  const calls = [current]; const call = calls[0];
+  return n <= 0 || call === undefined ? text : call(n - 1);
+ };
+ return self;
+}
+const read = make(7); console.log(read(2));

@@ -1,0 +1,8 @@
+=== RUN   TestConstantTablesMatchNode
+=== PAUSE TestConstantTablesMatchNode
+=== CONT  TestConstantTablesMatchNode
+    constant_tables_test.go:39: /tmp/adamic-gate/TestConstantTablesMatchNode2763118002/001/tables: signal: segmentation fault
+--- FAIL: TestConstantTablesMatchNode (4.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	4.189s
+FAIL

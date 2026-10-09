@@ -1,0 +1,154 @@
+[
+  {
+    "name": "src/compiler/_namespaces/ts.performance.ts",
+    "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+  },
+  {
+    "name": "src/compiler/binder.ts",
+    "sha256": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3"
+  },
+  {
+    "name": "src/compiler/builderPublic.ts",
+    "sha256": "a6a304c41be6a7b33febcae8dd98955f90313c7e2d56af02f476e6b9722b82d6"
+  },
+  {
+    "name": "src/compiler/builderStatePublic.ts",
+    "sha256": "93138f0f93fd9dff071c3def9feebc5f88fbe65bcb028d4ca8871d3155b9b522"
+  },
+  {
+    "name": "src/compiler/commandLineParser.ts",
+    "sha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab"
+  },
+  {
+    "name": "src/compiler/corePublic.ts",
+    "sha256": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09"
+  },
+  {
+    "name": "src/compiler/emitter.ts",
+    "sha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63"
+  },
+  {
+    "name": "src/compiler/expressionToTypeNode.ts",
+    "sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+  },
+  {
+    "name": "src/compiler/factory/emitHelpers.ts",
+    "sha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8"
+  },
+  {
+    "name": "src/compiler/factory/nodeChildren.ts",
+    "sha256": "bded8155f089e40a86d99d53e135b8f3a4cbc49f70ff2bdd0b80f0683a2e9606"
+  },
+  {
+    "name": "src/compiler/factory/nodeFactory.ts",
+    "sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "name": "src/compiler/factory/parenthesizerRules.ts",
+    "sha256": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764"
+  },
+  {
+    "name": "src/compiler/factory/utilitiesPublic.ts",
+    "sha256": "a91c2dcc86ec6711aeae4fb0ad512209abe7a220ef2a0e7d2f04c3adcb7a0ff1"
+  },
+  {
+    "name": "src/compiler/moduleSpecifiers.ts",
+    "sha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a"
+  },
+  {
+    "name": "src/compiler/path.ts",
+    "sha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc"
+  },
+  {
+    "name": "src/compiler/performanceCore.ts",
+    "sha256": "7f6e15fcf84111901e95303399ba69c9baacc3466a3ad5b5b21633c3d382f7b4"
+  },
+  {
+    "name": "src/compiler/programDiagnostics.ts",
+    "sha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5"
+  },
+  {
+    "name": "src/compiler/scanner.ts",
+    "sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49"
+  },
+  {
+    "name": "src/compiler/sourcemap.ts",
+    "sha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4"
+  },
+  {
+    "name": "src/compiler/sys.ts",
+    "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+  },
+  {
+    "name": "src/compiler/transformer.ts",
+    "sha256": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066"
+  },
+  {
+    "name": "src/compiler/transformers/classThis.ts",
+    "sha256": "41c65d5bb7518697a301cce563f6f800ed3ba8856372e86998d259a3eb439a6e"
+  },
+  {
+    "name": "src/compiler/transformers/declarations/diagnostics.ts",
+    "sha256": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721"
+  },
+  {
+    "name": "src/compiler/transformers/es2015.ts",
+    "sha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4"
+  },
+  {
+    "name": "src/compiler/transformers/es2017.ts",
+    "sha256": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5"
+  },
+  {
+    "name": "src/compiler/transformers/es2019.ts",
+    "sha256": "99d755a8cd5bdd07d23590330990828ae7c8a33dae9d55926f5b0ab07db84878"
+  },
+  {
+    "name": "src/compiler/transformers/es2021.ts",
+    "sha256": "29798cddd385947caa004effdf997df6bc97b9a9b1d9919413dcee3a6a8b5205"
+  },
+  {
+    "name": "src/compiler/transformers/esnext.ts",
+    "sha256": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1"
+  },
+  {
+    "name": "src/compiler/transformers/jsx.ts",
+    "sha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b"
+  },
+  {
+    "name": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "sha256": "6c163c8dc720431f02b335d8d5c25efe849039d5805bfa722899f8a2cc2e6945"
+  },
+  {
+    "name": "src/compiler/transformers/module/module.ts",
+    "sha256": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36"
+  },
+  {
+    "name": "src/compiler/transformers/namedEvaluation.ts",
+    "sha256": "7529078853a659502ab39832a4eec7e0ee6b94df675f63960254c56cc31060e7"
+  },
+  {
+    "name": "src/compiler/transformers/ts.ts",
+    "sha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2"
+  },
+  {
+    "name": "src/compiler/transformers/utilities.ts",
+    "sha256": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5"
+  },
+  {
+    "name": "src/compiler/tsbuildPublic.ts",
+    "sha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5"
+  },
+  {
+    "name": "src/compiler/utilities.ts",
+    "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+  },
+  {
+    "name": "src/compiler/visitorPublic.ts",
+    "sha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e"
+  },
+  {
+    "name": "src/compiler/watchPublic.ts",
+    "sha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef"
+  }
+]

@@ -1,0 +1,27 @@
+/workspace/scratch/stage1-profiles/comparison/go-profile: go1.27.1
+	path	command-line-arguments
+	dep	github.com/klauspost/cpuid/v2	v2.2.10	h1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=
+	dep	github.com/microsoft/TypeScript/tsc	(devel)	
+	dep	github.com/microsoft/TypeScript/tsc/shim/ast	v0.0.0
+	=>	./TypeScript-shim/ast	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/core	v0.0.0
+	=>	./TypeScript-shim/core	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/parser	v0.0.0
+	=>	./TypeScript-shim/parser	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/tspath	v0.0.0
+	=>	./TypeScript-shim/tspath	(devel)	
+	
+	dep	github.com/zeebo/xxh3	v1.1.0	h1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=
+	dep	golang.org/x/sync	v0.23.0	h1:KameEIfc1IkluZyXWLn39Wd4tURc6GbCiISGiZm2bQk=
+	dep	golang.org/x/text	v0.42.0	h1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=
+	build	-buildmode=exe
+	build	-compiler=gc
+	build	-pgo=default.pgo
+	build	-trimpath=true
+	build	CGO_ENABLED=1
+	build	GOAMD64=v1
+	build	GOARCH=amd64
+	build	GOOS=linux

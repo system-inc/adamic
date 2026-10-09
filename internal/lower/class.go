@@ -137,11 +137,15 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		name += "_" + typeName(argument)
 	}
 	lowered := &instance{constructor: len(l.result.Functions), methods: map[string]int{}, staticMethods: map[string]bool{}, slots: map[string]int{}, initializer: -1, superReady: -1}
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Returns: ir.Object})
+	source := l.functionSource(declaration)
+	source.Specialization = l.sourceTypeKey(classType, map[*checker.Type]bool{})
+	source.Role = "allocate"
+	source.Declaration = append(append([]string{}, source.Declaration...), "allocate")
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_new", Source: source, Returns: ir.Object})
 	lowered.hasDescendants = l.derivedAncestors[l.symbol(declaration.Name())]
 	lowered.base = base
 	lowered.class = len(l.result.Classes) + 1
-	metadata := ir.Class{Name: name, Constructor: lowered.constructor, Definition: l.classDefinition(declaration)}
+	metadata := ir.Class{Source: l.functionSource(declaration), Name: name, Constructor: lowered.constructor, Definition: l.classDefinition(declaration)}
 	if base != nil {
 		metadata.Base = base.class
 		metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)

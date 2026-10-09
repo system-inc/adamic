@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "c4e133659f737fb43d0d02da3811211bfa20a2d0",
+  "stable_names_commit": "aca418919f345ecd41889e73832e6a93c95cd3db",
+  "main_commit": "48c05d091f0a43c31cbe051b1d6578d99eeedf19",
+  "fixture": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+  "fixture_sha256": "541e36fdb51601fec0ce350cb54568a012e3dc69d62ede5b3257aad1b35d45a9",
+  "nproc": 5,
+  "jobs": 5,
+  "cpu_max": "400000 100000",
+  "go": "1.27.1",
+  "clang": "20.1.8",
+  "node": "v24.19.0",
+  "C_sha256": {
+    "before": "b2634e87f22afe080c244389ed4c8b6cfeb75a598fc01b8e266e08a915ca745c",
+    "after": "873cdb2fe8b7e44c953ee5c50783e632397b1a6a2b9f8a3b6a874ae8c5df552b"
+  },
+  "implementation_commit": "f4d39ac659b739e85cc17ac626ce7c0704cbff7b"
+}

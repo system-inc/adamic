@@ -1,0 +1,43 @@
+package native
+
+import (
+ "bytes"
+ "os"
+ "os/exec"
+ "path/filepath"
+ "testing"
+)
+
+// Not parallel: each observation runs the complete large fixture corpus.
+func TestOutlineFixtureCurrentRuntime(t *testing.T) {
+ directory:=os.Getenv("OUTLINE_MEASURE")
+ root:=os.Getenv("OUTLINE_ROOT")
+ data:=filepath.Join(directory,"parity")
+ observe:=func(label,command string,args ...string) []byte {
+  t.Helper()
+  process:=exec.Command(command,args...)
+  var stdout,stderr bytes.Buffer;process.Stdout=&stdout;process.Stderr=&stderr
+  err:=process.Run()
+  if writeErr:=os.WriteFile(filepath.Join(data,label+".stdout"),stdout.Bytes(),0644);writeErr!=nil {t.Fatal(writeErr)}
+  if writeErr:=os.WriteFile(filepath.Join(data,label+".stderr"),stderr.Bytes(),0644);writeErr!=nil {t.Fatal(writeErr)}
+  if err!=nil || stderr.Len()!=0 {t.Fatalf("%s: %v\n%s",label,err,stderr.Bytes())}
+  return stdout.Bytes()
+ }
+ nativeCases:=filepath.Join(data,"native.txt");canonical:=filepath.Join(data,"canonical.txt")
+ want:=observe("go",""+filepath.Join(data,"go-layout"),canonical)
+ source:=observe("source-node","node","--disable-warning=ExperimentalWarning",filepath.Join(root,"oracle/node.mjs"),filepath.Join(root,"stage1/cohere/markdownblocks/testdata/list_probe.ts"),nativeCases)
+ original:=observe("original-node","node",filepath.Join(root,"stage1/cohere/markdownblocks/testdata/document_library.mjs"),filepath.Join(root,"cohere/internal/format/prettier/bundles"),canonical)
+ if !bytes.Equal(source,want) || !bytes.Equal(original,want) {t.Fatal("Node and Go fixture oracles differ")}
+ code,err:=os.ReadFile(filepath.Join(directory,"after.c"));if err!=nil {t.Fatal(err)}
+ originalPath:=os.Getenv("PATH")
+ for _,mode:=range []string{"sanitized","release","line-tables"} {
+  wrapper:="full";if mode=="line-tables" {wrapper="line"}
+  t.Setenv("PATH",filepath.Join(directory,wrapper)+string(os.PathListSeparator)+originalPath)
+  t.Setenv("OUTLINE_TRACE","")
+  binary:=filepath.Join(data,"native-"+mode)
+  if err:=Build(string(code),binary,Options{Sanitize:mode!="release",Split:true,Jobs:5});err!=nil {t.Fatal(err)}
+  got:=observe("native-"+mode,binary,nativeCases)
+  if !bytes.Equal(got,want) {t.Fatalf("%s fixture bytes differ",mode)}
+  t.Logf("%s: %d output bytes match Go and both Node observations; stderr empty",mode,len(got))
+ }
+}

@@ -1,0 +1,9 @@
+function check(start: number): string {
+ let flag = start > 0;
+ let maybe: number | undefined = undefined;
+ let empty: string | undefined = undefined;
+ function read(): string { return `${flag}:${maybe ?? -1}:${empty ?? 'empty'}`; }
+ function change(): void { flag = !flag; maybe = start; empty = 'value' + String(start); }
+ const before = read(); change(); return before + ' ' + read();
+}
+console.log(check(3));

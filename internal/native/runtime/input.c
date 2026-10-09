@@ -118,16 +118,16 @@ static size_t ascii_prefix(const unsigned char *bytes, size_t length) {
 // always valid UTF-8, so no lone surrogate can come in from outside.
 static adamic_string *decode(const unsigned char *bytes, size_t length) {
 	size_t ascii = ascii_prefix(bytes, length);
-	size_t size = ascii;
+	size_t size = ascii, units = ascii;
 	unsigned point;
 	for (size_t offset = ascii; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
 		size += encoded_size(point);
+		units += point > 0xffff ? 2 : 1;
 	}
 	adamic_string *string = new_string(size);
-	if (ascii == length) {
-		string->units = length + 1;
-	}
+	// Preserve the decoded UTF-16 count, including the ASCII prefix.
+	string->units = units + 1;
 	unsigned char *cursor = (unsigned char *)string->bytes;
 	if (ascii != 0) {
 		memcpy(cursor, bytes, ascii);

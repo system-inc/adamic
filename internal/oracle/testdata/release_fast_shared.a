@@ -1,0 +1,132 @@
+// Release fast path (runtime/heap.c): adamic_release returns immediately for NULL, for an
+// immortal (references 0), and when the decrement leaves the value shared. Only a last
+// reference enters release_last. Each value here is built at runtime, except the literal and
+// the boolean boxes, which are immortal on purpose. A second holder is dropped, then the one
+// that remains is read.
+import { panic, type Weak } from 'adamic';
+
+function word(n: number): string {
+	let text = '';
+	for (let index = 0; index < 8; index += 1) {
+		text += 'x';
+	}
+	return `${text}${n}`;
+}
+
+interface Box {
+	readonly label: string;
+	readonly n: number;
+}
+
+function box(n: number): Box {
+	return { label: word(n), n };
+}
+
+function showFlag(value: string | boolean): string {
+	if (typeof value === 'boolean') {
+		return value ? 'yes' : 'no';
+	}
+	return value;
+}
+
+function showCount(value: string | number): string {
+	if (typeof value === 'number') {
+		return `${value}`;
+	}
+	return value;
+}
+
+// NULL: the local held undefined, and the store releases it before keeping the box.
+let missing: Box | undefined = undefined;
+missing = box(1);
+const missingLabel = missing?.label ?? panic('missing box');
+missing = undefined;
+
+// Immortal string: the alias releases the literal while `literal` still has it.
+let literal = 'literal-text';
+let literalAlias = literal;
+literalAlias = word(2);
+
+// Immortal boolean boxes: true and false are the two static boxes, references 0.
+let flag: string | boolean = true;
+let flagAlias: string | boolean = flag;
+flagAlias = word(3);
+
+// Shared dynamic string, object, array, map, and closure. Dropping the alias must not free them.
+const text = word(4);
+let textAlias = text;
+textAlias = word(5);
+
+const object = box(6);
+let objectAlias = object;
+objectAlias = box(7);
+
+const items = [box(8), box(9)];
+let itemsAlias = items;
+itemsAlias = [box(10)];
+
+const table = new Map<string, Box>();
+table.set('a', box(11));
+let tableAlias = table;
+tableAlias = new Map<string, Box>();
+
+const greet = (): string => word(12);
+let greetAlias = greet;
+greetAlias = () => word(13);
+
+// A slice keeps its parent. The parent local is released on return; the slice still reads it.
+function sliceOf(n: number): string {
+	const parent = `${word(n)}${word(n + 1)}`;
+	return parent.slice(1, 9);
+}
+const slice = sliceOf(18);
+
+// Cell: both closures retain it, the frame releases it on return, then one closure is dropped.
+function cells(): readonly [() => string, () => string] {
+	let value = word(14);
+	const left = (): string => value;
+	const right = (): string => value;
+	value = word(15);
+	return [left, right];
+}
+const paired = cells();
+let left = paired[0] ?? panic('left closure');
+let right = paired[1] ?? panic('right closure');
+right = () => word(16);
+
+// Number box, shared, then the alias replaced. A unique box is released as the last reference.
+let count: string | number = 30 + 12;
+let countAlias: string | number = count;
+countAlias = word(17);
+let only: string | number = 4 + 5;
+only = word(19);
+
+// Weak handles for one target are one object. Dropping one leaves the other.
+const target = box(20);
+let weakOne: Weak<Box> = target;
+let weakTwo: Weak<Box> = target;
+weakTwo = undefined;
+
+// Last reference of each kind, dropped when the block ends, after the iterator is released.
+let blockNote = '';
+{
+	const onlyString = word(30);
+	const onlyBox = box(31);
+	const onlyItems = [box(32)];
+	const onlyTable = new Map<string, Box>();
+	onlyTable.set('z', box(33));
+	const onlyFn = (): string => word(34);
+	let seen = '';
+	for (const [key, value] of onlyTable) {
+		seen += `${key}${value.n}`;
+	}
+	const captured = word(36);
+	const readCaptured = (): string => captured;
+	blockNote = `${onlyString.length} ${onlyBox.n} ${onlyItems.length} ${seen} ${onlyFn()} ${readCaptured()}`;
+}
+
+const first = items[0] ?? panic('first item');
+const fromTable = table.get('a') ?? panic('map a');
+console.log(
+	`${missingLabel} ${literal} ${showFlag(flag)} ${text} ${object.label}:${object.n} ${items.length}:${first.n} ${table.size}:${fromTable.label} ${greet()} ${slice} ${left()} ${showCount(count)} ${showCount(only)} ${weakOne?.label ?? 'gone'} ${target.n} ${blockNote}`,
+);

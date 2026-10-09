@@ -241,6 +241,9 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *)) {
 }
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map) {
+	// Iteration requires a map. retain(NULL) is valid for undefined values, but
+	// incrementing this map's atomic iterator count is not; make that explicit.
+	if (map == NULL) { adamic_unreachable(); }
 	adamic_map_iterator *iterator = adamic_allocate(sizeof *iterator, adamic_kind_map_iterator);
 	iterator->map = adamic_retain(map);
 	iterator->next = 0;

@@ -1,0 +1,59 @@
+Merge made by the 'ort' strategy.
+ documentation/velocity/landings.csv                |     5 +
+ internal/native/runtime/adamic.c                   |     6 +-
+ internal/oracle/output_test.go                     |    83 +-
+ .../runs/20261007T133549Z.AVISfy/area/apply.log    | 18953 +++++++++++
+ .../runs/20261007T133549Z.AVISfy/area/census.log   |    83 +
+ .../runs/20261007T133549Z.AVISfy/area/latent.log   |    79 +
+ .../runs/20261007T133549Z.AVISfy/area/report.json  |  9169 +++++
+ .../runs/20261007T133549Z.AVISfy/area/report.md    |   112 +
+ .../meter/runs/20261007T133549Z.AVISfy/build.log   |     0
+ .../meter/runs/20261007T133549Z.AVISfy/fetch.log   |     0
+ .../runs/20261007T133549Z.AVISfy/latent-build.log  |     0
+ .../20261007T133549Z.AVISfy/latent-overlay.log     |     1 +
+ .../runs/20261007T133549Z.AVISfy/main/apply.log    | 18876 +++++++++++
+ .../runs/20261007T133549Z.AVISfy/main/census.log   |    83 +
+ .../runs/20261007T133549Z.AVISfy/main/latent.log   |    79 +
+ .../runs/20261007T133549Z.AVISfy/main/report.json  |  8435 +++++
+ .../runs/20261007T133549Z.AVISfy/main/report.md    |   112 +
+ .../meter/runs/20261007T133549Z.AVISfy/report.json | 29161 ++++++++++++++++
+ .../meter/runs/20261007T133549Z.AVISfy/report.md   |   158 +
+ .../runs/20261007T205008Z.iT8wjb/area/report.json  | 10261 ++++++
+ .../runs/20261007T205008Z.iT8wjb/area/report.md    |   112 +
+ .../runs/20261007T205008Z.iT8wjb/comparison.json   |   195 +
+ .../runs/20261007T205008Z.iT8wjb/comparison.md     |    62 +
+ .../20261007T205008Z.iT8wjb/input-comparison.json  |   347 +
+ .../runs/20261007T205008Z.iT8wjb/main/report.json  |  9671 ++++++
+ .../runs/20261007T205008Z.iT8wjb/main/report.md    |   112 +
+ .../meter/runs/20261007T205008Z.iT8wjb/report.json | 33405 +++++++++++++++++++
+ .../meter/runs/20261007T205008Z.iT8wjb/report.md   |   168 +
+ .../runs/20261007T205008Z.iT8wjb/unowned-all.md    |   407 +
+ stage3/progress.json                               |    27 +
+ 30 files changed, 140124 insertions(+), 38 deletions(-)
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/area/apply.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/area/census.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/area/latent.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/area/report.json
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/area/report.md
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/build.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/fetch.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/latent-build.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/latent-overlay.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/main/apply.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/main/census.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/main/latent.log
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/main/report.json
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/main/report.md
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/report.json
+ create mode 100644 stage3/meter/runs/20261007T133549Z.AVISfy/report.md
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/area/report.json
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/area/report.md
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/comparison.json
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/comparison.md
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/input-comparison.json
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/main/report.json
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/main/report.md
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/report.json
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/report.md
+ create mode 100644 stage3/meter/runs/20261007T205008Z.iT8wjb/unowned-all.md
+ create mode 100644 stage3/progress.json

@@ -1,0 +1,59 @@
+package native
+import("context";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower";"os";"path/filepath";"strings";"testing")
+// Not parallel: this is a reporting probe for one lint entrypoint.
+func TestReportLintUnitChanges(t *testing.T) {
+	entry := "../../stage1/cohere/lint/main.ts"
+	module, err := filepath.Abs("../../stage1/typescript/parser/grammar.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(module)
+	if err != nil {
+		t.Fatal(err)
+	}
+	emit := func(source string) (string, []compilationUnit) {
+		loaded, err := load.LoadOverlay([]string{entry}, map[string]string{module: source})
+		if err != nil {
+			t.Fatal(err)
+		}
+		program, err := lower.Lower(context.Background(), loaded)
+		if err != nil {
+			t.Fatal(err)
+		}
+		header, units, err := splitC(C(program))
+		if err != nil {
+			t.Fatal(err)
+		}
+		return header, units
+	}
+	original := string(data)
+	header, units := emit(original)
+	for _, edit := range []struct{ name, source string }{
+		{"add-function", strings.Replace(original, "export function precedence", "function isolatedProbe(): number { return 0; }\nexport function precedence", 1)},
+		{"add-temporary", strings.Replace(original, "export function precedence(kind: string): number {", "export function precedence(kind: string): number {\n const isolatedProbe = [14].length;", 1)},
+		{"14-to-array-length", strings.Replace(original, "return 14;", "return [14].length;", 1)},
+	} {
+		if edit.source == original {
+			t.Fatalf("edit %s not applied", edit.name)
+		}
+		changedHeader, changedUnits := emit(edit.source)
+		byName := map[string]string{}
+		for _, u := range units {
+			byName[u.name] = u.source
+		}
+		changed := 0
+		for _, u := range changedUnits {
+			if byName[u.name] != u.source {
+				changed++
+			}
+		}
+		effective := changed
+		if header != changedHeader {
+			effective = len(changedUnits)
+		}
+        if os.Getenv("STABLE_NAMES_ACCEPTANCE") == "1" && edit.name == "14-to-array-length" && (changed != 1 || header != changedHeader) {
+            t.Fatalf("function-local edit changed %d units; shared-header-changed=%v", changed, header != changedHeader)
+        }
+		t.Logf("%s: body/state units changed=%d/%d shared-header-changed=%v effective-invalidations=%d", edit.name, changed, len(changedUnits), header != changedHeader, effective)
+	}
+}

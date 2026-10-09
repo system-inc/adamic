@@ -43,7 +43,8 @@ static void suite(enum adamic_typed_array_kind kind) {
 	}
 	show(array);
 	adamic_typed_array *copied = adamic_typed_array_new(kind, (double)array->length);
-	adamic_typed_array_set_from(copied, array, 0, false); show(copied); adamic_release(copied);
+	adamic_typed_array_set_from(copied, array, 0, false); show(copied);
+	assert(adamic_typed_array_sort(copied) == copied); show(copied); adamic_release(copied);
 	copied = adamic_typed_array_new(kind, 1);
 	for (size_t index = 0; index < sizeof edges / sizeof *edges; index++) {
 		adamic_typed_array_fill(copied, edges[index], 0, 0, false, false); show(copied);
@@ -66,10 +67,11 @@ static void suite(enum adamic_typed_array_kind kind) {
 	adamic_typed_array *view = adamic_typed_array_subarray(array, 1, -1, true);
 	adamic_typed_array_set(view, 0, 300); show(array);
 	adamic_typed_array_set(array, 2, -1); show(view);
+	assert(adamic_typed_array_sort(view) == view); show(array); show(view);
 	adamic_typed_array *nested = adamic_typed_array_subarray(view, 1, 0, false);
 	show(nested);
 	adamic_release(view);
-	adamic_release(array); show(nested);
+	adamic_release(array); assert(adamic_typed_array_sort(nested) == nested); show(nested);
 	adamic_typed_array_set(nested, 0, 42); show(nested);
 	adamic_release(nested);
 	const double indexes[] = {-INFINITY, -99, -6, -2.9, -0.0, NAN, 0.9, 2.9, 6, 99, INFINITY};
@@ -113,6 +115,21 @@ static void suite(enum adamic_typed_array_kind kind) {
 	view = adamic_typed_array_subarray(array, 0, 0, false);
 	adamic_release(array); show(view); adamic_release(view);
 }
+static void sort_lengths(enum adamic_typed_array_kind kind) {
+	const size_t lengths[] = {0, 1, 2, 3, 7, 16, 31, 32, 33, 127, 128, 129, 1025};
+	for (size_t at = 0; at < sizeof lengths / sizeof *lengths; at++) {
+		adamic_typed_array *array = adamic_typed_array_new(kind, (double)lengths[at]);
+		uint32_t state = 42;
+		for (size_t index = 0; index < array->length; index++) {
+			state = state * UINT32_C(1664525) + UINT32_C(1013904223);
+			adamic_typed_array_set(array, (double)index, (double)(state % 10001) - 5000);
+		}
+		size_t before = adamic_counted.allocations;
+		assert(adamic_typed_array_sort(array) == array);
+		assert(adamic_counted.allocations == before);
+		show(array); adamic_release(array);
+	}
+}
 int main(int argc, char **argv) {
 	if (argc > 1) {
 		enum adamic_typed_array_kind kind = strstr(argv[1], "16") != NULL ? adamic_typed_array_uint16 : adamic_typed_array_uint8;
@@ -125,7 +142,7 @@ int main(int argc, char **argv) {
 		if (strcmp(argv[1], "kind") == 0) { adamic_typed_array *other = adamic_typed_array_new(adamic_typed_array_int32, 0); adamic_typed_array_set_from(array, other, 0, false); adamic_release(other); }
 		adamic_release(array); return 0;
 	}
-	for (int kind = adamic_typed_array_uint8; kind <= adamic_typed_array_uint16; kind++) { suite((enum adamic_typed_array_kind)kind); }
+	for (int kind = adamic_typed_array_uint8; kind <= adamic_typed_array_uint16; kind++) { suite((enum adamic_typed_array_kind)kind); sort_lengths((enum adamic_typed_array_kind)kind); }
 	assert(adamic_counted.allocations == adamic_counted.frees);
 	puts("balanced");
 	return 0;

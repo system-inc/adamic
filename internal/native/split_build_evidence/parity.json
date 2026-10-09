@@ -1,0 +1,231 @@
+{
+  "before_executions": 9172,
+  "after_executions": 9172,
+  "identical_executions": 9141,
+  "missing": [],
+  "added": [],
+  "mismatches": [
+    {
+      "test": "TestAsyncCapturedBindingSurvivesFinishMutant",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncCompilerChecksCatchMutants/missing-frame-parameter-retain",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncGeneratedAbandonment/cancel/mutant=true",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncGeneratedAbandonment/exit/mutant=true",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncOperandAndRejectionMutants/async_catches",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestAsyncReferenceSlotDropMutants/array",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncReferenceSlotDropMutants/box",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncReferenceSlotDropMutants/object",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncReferenceSlotDropMutants/text",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestAsyncThrowReleasesFrame/missing-local-release",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_arguments.a",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestEnumCleanupMutant",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestEnumSemanticMutants/reverse_alias",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestGraphRegionsCompiledMillion",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestGraphRegionsCompiledMillion",
+      "number": 1,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestGraphRegionsCompiledMillion",
+      "number": 2,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a",
+      "number": 1,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a",
+      "number": 2,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a",
+      "number": 3,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a",
+      "number": 4,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestNestedSiblingCycleMutantIsCaught",
+      "number": 2,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestOct6ReleaseMutant",
+      "number": 2,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestOutputEdges/fsize",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestOutputEdges/fsize_out",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestOutputEdges/nonblock",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestOutputEdges/usr1",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestOutputLinesArriveWhileRunning/file",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestOutputLinesArriveWhileRunning/terminal",
+      "number": 0,
+      "fields": [
+        "Stdout"
+      ]
+    },
+    {
+      "test": "TestStartupPreservesSanitizerSegvReport",
+      "number": 0,
+      "fields": [
+        "Stderr"
+      ]
+    },
+    {
+      "test": "TestTypeOfNullSlotPresenceMutant",
+      "number": 1,
+      "fields": [
+        "Stdout"
+      ]
+    }
+  ],
+  "main_executions": 4113,
+  "main_tests": 797,
+  "main_missing": [],
+  "main_added": [],
+  "main_mismatches": []
+}

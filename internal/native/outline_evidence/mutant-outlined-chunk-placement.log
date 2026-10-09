@@ -1,0 +1,8 @@
+=== RUN   TestInitializerUnitOwnership
+=== PAUSE TestInitializerUnitOwnership
+=== CONT  TestInitializerUnitOwnership
+    outline_test.go:114: large initializer stayed in its module unit
+--- FAIL: TestInitializerUnitOwnership (0.52s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.636s
+FAIL

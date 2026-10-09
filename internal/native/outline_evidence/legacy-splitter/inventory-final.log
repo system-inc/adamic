@@ -1,0 +1,6 @@
+=== RUN   TestOutlineInventory
+    outline_prepare_test.go:4: before main=19607 lines initializer-functions=0 largest-initializer=0 lines 
+    outline_prepare_test.go:4: after main=133 lines initializer-functions=154 largest-initializer=1050 lines adamic_initialize_list_probe_ts_6dedb391789b04f98e69c27e28b530eb
+--- PASS: TestOutlineInventory (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.158s

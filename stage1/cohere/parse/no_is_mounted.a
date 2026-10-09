@@ -1,0 +1,35 @@
+import type { Context } from './context.a';
+import { messageNoIsMounted } from './messages.a';
+export function noIsMounted(context: Context, index: number): void {
+    if(!context.enabled('react/no-is-mounted')) {
+        return;
+    }
+    if(context.kind(index) !== 'CallExpression') {
+        return;
+    }
+    const callee = context.child(index, 0);
+    if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(context.kind(callee))) {
+        return;
+    }
+    if(context.kind(context.child(callee, 0)) !== 'ThisKeyword') {
+        return;
+    }
+    const name = context.property(callee);
+    if(context.node(name).text !== 'isMounted') {
+        return;
+    }
+    if(
+        context.kind(callee) === 'ElementAccessExpression' &&
+        !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(context.kind(name))
+    ) {
+        return;
+    }
+    let ancestor = context.parent(index);
+    while(ancestor >= 0) {
+        if(['PropertyAssignment', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(context.kind(ancestor))) {
+            context.report(index, 'react/no-is-mounted', 'noIsMounted', messageNoIsMounted);
+            return;
+        }
+        ancestor = context.parent(ancestor);
+    }
+}

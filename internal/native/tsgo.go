@@ -77,6 +77,13 @@ func TSGoC(program *ir.Program) (string, error) {
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
 func BuildTSGo(source, output, archive string, options Options) error {
+	if err := ValidateOptions(options); err != nil {
+		return err
+	}
+	if useSplitSource(source, options) {
+		return BuildSplitTSGo(source, output, archive, options)
+	}
+
 	archive, err := filepath.Abs(archive)
 	if err != nil {
 		return err

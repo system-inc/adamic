@@ -1,0 +1,30 @@
+[
+  {
+    "log": "main-gate.jsonl",
+    "Time": "2026-10-07T22:39:30.044182435Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Elapsed": 66.316
+  },
+  {
+    "log": "main-gate.jsonl",
+    "Time": "2026-10-07T22:47:25.171819997Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Elapsed": 541.444
+  },
+  {
+    "log": "main-gate.jsonl",
+    "Time": "2026-10-07T22:48:23.061491429Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Elapsed": 602.002
+  },
+  {
+    "log": "main-split-gate.jsonl",
+    "Time": "2026-10-07T22:49:39.116334214Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Elapsed": 671.243
+  }
+]

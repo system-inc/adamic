@@ -81,7 +81,7 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 		return nil, err
 	}
 	for _, module := range modules {
-		body, err := lowering.statements(module.Statements.Nodes)
+		body, err := lowering.moduleStatements(module)
 		if err != nil {
 			return nil, err
 		}
@@ -134,6 +134,7 @@ type lowering struct {
 	program                 *load.Program
 	checker                 *checker.Checker
 	result                  *ir.Program
+	sourceIdentities        map[*ast.Node]ir.SourceIdentity
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool

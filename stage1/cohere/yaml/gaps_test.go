@@ -48,8 +48,7 @@ func TestLexerGaps(t *testing.T) {
 	}
 }
 
-func TestStructuralPositionRefusal(t *testing.T) {
-	t.Parallel()
+func TestStructuralPositionMatchesNode(t *testing.T) {
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -58,19 +57,26 @@ func TestStructuralPositionRefusal(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if out := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path); string(out) != "1\n" {
-		t.Fatalf("Node got %q", out)
+	expected := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	if string(expected) != "1\n" {
+		t.Fatalf("Node got %q", expected)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "Span[], an array whose elements can reach back") {
-		t.Fatalf("refusal changed or closed: %v", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Log(err)
+	binary := filepath.Join(t.TempDir(), "structural-position")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if !bytes.Equal(actual, expected) {
+		t.Fatalf("native %q Node %q", actual, expected)
+	}
 }
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).

@@ -76,11 +76,21 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.CopyCell {
+			cell := e.cellReference(statement.Local)
+			e.replaceIterationCell(statement.Local, e.asyncSlots[statement.Local], unslotted(e.program.Locals[statement.Local].Type, cell+"->value."+member(e.program.Locals[statement.Local].Type)), false)
+			return
+		}
 		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}
 			local := e.program.Locals[statement.Local]
+			if local.IterationCell {
+				e.replaceIterationCell(statement.Local, e.asyncSlots[statement.Local], zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+				return
+			}
 			if local.Captured {
 				e.makeCell(statement.Local, zero(local.Type), true)
 				e.line("%s->ready = false;", e.cellReference(statement.Local))
@@ -100,9 +110,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized && (!local.NamespaceState || statement.Value != nil))
+			e.line("%s = %t;", e.readyName(statement.Local), !statement.Uninitialized && (!local.NamespaceState || statement.Value != nil))
 			if local.Uninitialized {
-				e.line("%s_declared = true;", readyName(statement.Local))
+				e.line("%s_declared = true;", e.readyName(statement.Local))
 			}
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
@@ -111,7 +121,7 @@ func (e *emitter) statement(statement ir.Statement) {
 				if local.Captured {
 					e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 				} else {
-					e.line("bool %s = %t; (void)%s;", readyName(statement.Local), !statement.Uninitialized, readyName(statement.Local))
+					e.line("bool %s = %t; (void)%s;", e.readyName(statement.Local), !statement.Uninitialized, e.readyName(statement.Local))
 				}
 			}
 		}
@@ -139,7 +149,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		value := e.value(statement.Value)
 		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
-			e.line("if (!%s_declared) {", readyName(statement.Local))
+			e.line("if (!%s_declared) {", e.readyName(statement.Local))
 			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
 			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
 			e.line("}")
@@ -154,7 +164,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if e.program.Locals[statement.Local].Uninitialized {
 			e.line("%s = true;", e.localReady(statement.Local))
 		} else if e.program.Locals[statement.Local].NamespaceState {
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = true;", e.readyName(statement.Local))
 		}
 		e.end()
 	case ir.Evaluate:
@@ -370,8 +380,7 @@ func (e *emitter) nested(statements []ir.Statement, after func()) {
 // body in its own scope, then a continue label and the update. A continue releases the body's
 // locals and jumps to the label, so it runs the update and the check, as JavaScript's does.
 func (e *emitter) loop(statement ir.Loop) {
-	e.temporaries++
-	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
+	current := &loop{label: e.temporary() + "_continue"}
 	check := func() {
 		condition := e.decide(statement.Condition)
 		e.line("if (!(%s)) {", unwrap(condition))
@@ -463,8 +472,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
-	e.temporaries++
-	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
+	current := &loop{label: e.temporary() + "_continue"}
 	entryKey, entryValue := e.temporary(), e.temporary()
 	if overTyped {
 		e.line("double %s;", entryValue)

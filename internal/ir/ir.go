@@ -37,6 +37,9 @@ type Program struct {
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
+	// MainModules preserves module boundaries after lowering concatenates Main.
+	MainModules []MainModule
+
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
@@ -106,6 +109,7 @@ type NonNullCheck struct {
 type Class struct {
 	Graph         bool
 	ProgramRegion bool
+	Source        SourceIdentity
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -136,6 +140,7 @@ type Function struct {
 	CheckedUnionNarrow bool
 	Name               string
 	MethodName         string
+	Source             SourceIdentity
 
 	// Parameters are locals, in order.
 	Parameters []int
@@ -169,6 +174,7 @@ type Function struct {
 	// anonymous closure. Its complete shared layout is forwarded after lowering.
 	ForwardedNestedParent int
 	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	// An IterationCell slot holds a reference to the current separately counted binding.
 	FrameEnvironment []int
 	NestedFrame      bool
 	// FrameIdentity is a synthetic cell plus one, anchoring canonical nested values.
@@ -281,6 +287,7 @@ type Local struct {
 	Hoisted               bool
 	Name                  string
 	Type                  Type
+	Source                SourceIdentity
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -300,6 +307,8 @@ type Local struct {
 	Preallocated bool
 	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
 	EnvironmentCell bool
+	// IterationCell is a separately counted binding held by an async frame slot.
+	IterationCell bool
 	// NestedFunction is the named declaration this binding holds, plus one.
 	NestedFunction int
 
@@ -1224,8 +1233,10 @@ type (
 	Declare struct {
 		// Uninitialized allocates only a captured cell, with its ready bit clear.
 		Uninitialized bool
-		Local         int
-		Value         Expression
+		// CopyCell starts the next for-header binding with the current value.
+		CopyCell bool
+		Local    int
+		Value    Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
@@ -1390,3 +1401,23 @@ func (p *Program) HasInheritance() bool {
 }
 
 func (ParallelMap) Type() Type { return Array }
+
+// SourceIdentity is independent of the order declarations are lowered.
+// Module is relative to the entry file's directory (the program root).
+// Declaration holds class/function ancestry. Anonymous functions are indexed within
+// their enclosing declaration; repeated same-spelling declarations have a local collision suffix.
+// Specialization distinguishes concrete instantiations of the same declaration.
+type SourceIdentity struct {
+	Module         string
+	Declaration    []string
+	Specialization string
+	// Role distinguishes generated adapters from same-spelling source declarations.
+	Role string
+}
+
+// MainModule records a module's contiguous statements, in ECMAScript execution order.
+// Any prefix of Main not covered by these counts is compiler-generated initialization.
+type MainModule struct {
+	Module     string
+	Statements int
+}

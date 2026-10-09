@@ -37,6 +37,7 @@ var targetReaders = map[string]targetReader{
 	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":                               {"runtime", "names the function to call"},
 	"internal/native/loop_borrow_test.go:TestGlobalArgumentLending:Call.Function":                     {"runtime", "names the function under test"},
 	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":                          {"runtime", "names the function under test"},
+	"internal/native/region.go:environmentEscapes:CallClosure.Closure":                                {"runtime", "follows carrier lifetime through callee evaluation; target identity comes from ClosureTargets"},
 }
 
 func TestCallTargetReaders(t *testing.T) {

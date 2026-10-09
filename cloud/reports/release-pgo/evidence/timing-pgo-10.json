@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "command": "taskset -c 3 /workspace/scratch/release-pgo/pgo/parse --manifest /workspace/scratch/release-pgo/held-out.txt --count",
+      "mean": 0.41055914000000004,
+      "stddev": null,
+      "median": 0.41055914000000004,
+      "user": 0.38614499999999996,
+      "system": 0.02418,
+      "min": 0.41055914000000004,
+      "max": 0.41055914000000004,
+      "times": [
+        0.41055914000000004
+      ],
+      "exit_codes": [
+        0
+      ]
+    }
+  ]
+}
