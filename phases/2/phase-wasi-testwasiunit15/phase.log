@@ -1,0 +1,4 @@
+FIRST FAILURE (products, at 457.0 s):
+github.com/system-inc/adamic/bridge/tsgo ^TestProduct_ApiDriver$ killed at 90 s
+(box load 4.3 on 5 cores at first failure)
+red: 53498c51475ea49667b345affac60b031037ef21 full gate, first failure at products after 457.0 s, cancelled after first failure (products=456.6s; 2 units over 30 s (129 s, 0 on the burn-down, 2 drifted over); product github.com/system-inc/adamic/bridge/tsgo TestProduct_ApiDriver 90.0 s; product github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceCatchLowered 38.9 s; box load 0.1 on 5 cores at start, load 4.3 on 5 cores at first failure, load 4.3 on 5 cores at end), 0 fail, 30 pass

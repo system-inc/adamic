@@ -1,0 +1,10 @@
+FIRST FAILURE (products, at 1344.7 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_oracle
+=== RUN   TestProduct_volume_oracle
+=== PAUSE TestProduct_volume_oracle
+=== CONT  TestProduct_volume_oracle
+    volume_test.go:18: build typeaware six volume-oracle-build: mkdir /home/agent/.cache/adamic-build/.building-10a306b7320b-1997237861: no space left on device
+--- FAIL: TestProduct_volume_oracle (0.78s)
+
+(box load 1.0 on 5 cores at first failure)
+red: 53498c51475ea49667b345affac60b031037ef21 full gate, first failure at products after 1344.7 s, cancelled after first failure (products=1344.2s; 12 units over 30 s (507 s, 0 on the burn-down, 12 drifted over); product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementReleaseNative 87.3 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume_asan 56.5 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_native 40.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_first_binding 37.4 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_binding_slot 37.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_strict_this_native 36.5 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume 36.4 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementSanitizedNative 36.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_scope_containment 35.9 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_missing_binding 35.2 s; product github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownLeafLowered 34.4 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_type_symbol_native 33.7 s; box load 2.4 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 1 fail, 132 pass

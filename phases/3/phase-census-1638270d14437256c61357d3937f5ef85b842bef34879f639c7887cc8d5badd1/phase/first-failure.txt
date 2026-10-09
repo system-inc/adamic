@@ -1,0 +1,16 @@
+cloud/fast-gate/deferred.txt names tests the whole gate doesn't run to a verdict; take each off the list or give the gate its input:
+github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants: missing
+github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestRecordMutants: missing
+github.com/system-inc/adamic/internal/native TestRecordReadMutants: missing
+github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode: missing
+github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262: missing
+github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees: missing
+github.com/system-inc/adamic/internal/native TestWASI: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree: missing
+(box load 0.5 on 5 cores at first failure)

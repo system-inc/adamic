@@ -1,0 +1,14 @@
+github.com/system-inc/adamic/stage1/cohere/lint TestProduct_RulesAgreeCapture
+=== RUN   TestProduct_RulesAgreeCapture
+=== PAUSE TestProduct_RulesAgreeCapture
+=== CONT  TestProduct_RulesAgreeCapture
+    grain_rules_agree_shards_test.go:734: capture package typescript: 61.410s cooked=true
+    grain_rules_agree_shards_test.go:734: capture package react: 61.558s cooked=true
+    grain_rules_agree_shards_test.go:734: capture package nexus: 62.635s cooked=true
+    grain_rules_agree_shards_test.go:734: capture package adamic: 9.344s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package base: 9.969s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package core: 75.130s cooked=true
+    grain_rules_agree_shards_test.go:250: build lint-rules-agree-capture: capture package core cooked: over 60s; split smaller
+--- FAIL: TestProduct_RulesAgreeCapture (76.33s)
+
+(box load 5.7 on 5 cores at first failure)

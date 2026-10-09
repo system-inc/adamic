@@ -1,0 +1,4 @@
+FIRST FAILURE (products, at 117.6 s):
+github.com/system-inc/adamic/stage1/cohere/estree ^TestProduct_AcceptanceCatchLowered$ killed at 90 s
+(box load 5.0 on 5 cores at first failure)
+red: 53498c51475ea49667b345affac60b031037ef21 full gate, first failure at products after 117.6 s, cancelled after first failure (products=114.8s; 1 units over 30 s (90 s, 0 on the burn-down, 1 drifted over); product github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceCatchLowered 90.1 s; box load 0.7 on 5 cores at start, load 5.0 on 5 cores at first failure, load 5.0 on 5 cores at end), 0 fail, 0 pass

@@ -1,0 +1,8 @@
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_oracle
+=== RUN   TestProduct_volume_oracle
+=== PAUSE TestProduct_volume_oracle
+=== CONT  TestProduct_volume_oracle
+    volume_test.go:18: build typeaware six volume-oracle-build: mkdir /home/agent/.cache/adamic-build/.building-10a306b7320b-1997237861: no space left on device
+--- FAIL: TestProduct_volume_oracle (0.78s)
+
+(box load 1.0 on 5 cores at first failure)

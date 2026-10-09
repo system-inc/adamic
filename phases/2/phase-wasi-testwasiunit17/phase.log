@@ -1,0 +1,16 @@
+FIRST FAILURE (products, at 877.3 s):
+github.com/system-inc/adamic/stage1/cohere/lint TestProduct_RulesAgreeCapture
+=== RUN   TestProduct_RulesAgreeCapture
+=== PAUSE TestProduct_RulesAgreeCapture
+=== CONT  TestProduct_RulesAgreeCapture
+    grain_rules_agree_shards_test.go:734: capture package adamic: 49.200s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package base: 50.062s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package typescript: 56.656s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package nexus: 15.764s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package react: 16.214s cooked=false
+    grain_rules_agree_shards_test.go:734: capture package core: 69.417s cooked=true
+    grain_rules_agree_shards_test.go:250: build lint-rules-agree-capture: capture package core cooked: over 60s; split smaller
+--- FAIL: TestProduct_RulesAgreeCapture (70.44s)
+
+(box load 6.7 on 5 cores at first failure)
+red: 53498c51475ea49667b345affac60b031037ef21 full gate, first failure at products after 877.3 s, under load (load 6.7 on 5 cores at first failure), cancelled after first failure (products=876.8s; 6 units over 30 s (310 s, 0 on the burn-down, 6 drifted over); product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementReleaseNative 83.7 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_RulesAgreeCapture 70.5 s; product github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLMutantDefaults 46.0 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementSanitizedNative 38.1 s; product github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownLeafLowered 36.1 s; product github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceCatchLowered 35.4 s; box load 0.0 on 5 cores at start, load 6.7 on 5 cores at first failure, load 6.7 on 5 cores at end), 1 fail, 79 pass

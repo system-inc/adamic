@@ -1,0 +1,915 @@
+{"Time":"2026-10-09T07:17:34.3514192Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:17:34.361652753Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered"}
+{"Time":"2026-10-09T07:17:34.361752193Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"=== RUN   TestProduct_AcceptanceCatchLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:34.361786104Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"=== PAUSE TestProduct_AcceptanceCatchLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:34.361788478Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered"}
+{"Time":"2026-10-09T07:17:34.361790551Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered"}
+{"Time":"2026-10-09T07:17:34.361792354Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"=== CONT  TestProduct_AcceptanceCatchLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:14.334192359Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"    acceptance_grain_test.go:138: build estree-acceptance-mutant-lowered-catch-initializer d728489997da miss 39.97\n"}
+{"Time":"2026-10-09T07:18:14.336511067Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"--- PASS: TestProduct_AcceptanceCatchLowered (39.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:14.336523015Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Elapsed":39.97}
+{"Time":"2026-10-09T07:18:14.336901907Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:14.339742333Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":39.988}
+{"Time":"2026-10-09T07:18:14.537808273Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:18:14.548656893Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative"}
+{"Time":"2026-10-09T07:18:14.548740419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"=== RUN   TestProduct_AcceptanceCatchNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:14.548875172Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"=== PAUSE TestProduct_AcceptanceCatchNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:14.548877445Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative"}
+{"Time":"2026-10-09T07:18:14.548879168Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative"}
+{"Time":"2026-10-09T07:18:14.54888037Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"=== CONT  TestProduct_AcceptanceCatchNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:16.308413658Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"    acceptance_grain_test.go:142: build estree-acceptance-mutant-lowered-catch-initializer d728489997da hit 1.76\n"}
+{"Time":"2026-10-09T07:18:52.461679137Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"    acceptance_grain_test.go:142: build estree-acceptance-mutant-native-catch-initializer 0faa069b3917 miss 36.01\n"}
+{"Time":"2026-10-09T07:18:52.462223027Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"--- PASS: TestProduct_AcceptanceCatchNative (37.91s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:52.462226092Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Elapsed":37.91}
+{"Time":"2026-10-09T07:18:52.462243999Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:52.464069903Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":37.926}
+{"Time":"2026-10-09T07:18:52.551180526Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:18:52.559578928Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered"}
+{"Time":"2026-10-09T07:18:52.559810948Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"=== RUN   TestProduct_AcceptanceClassLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:52.559837749Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"=== PAUSE TestProduct_AcceptanceClassLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:18:52.559840272Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered"}
+{"Time":"2026-10-09T07:18:52.559842466Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered"}
+{"Time":"2026-10-09T07:18:52.559844178Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"=== CONT  TestProduct_AcceptanceClassLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:19:25.572769358Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"    acceptance_grain_test.go:146: build estree-acceptance-mutant-lowered-class-keyword-name 5229a0bf7617 miss 33.01\n"}
+{"Time":"2026-10-09T07:19:25.573792583Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"--- PASS: TestProduct_AcceptanceClassLowered (33.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:19:25.573796058Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Elapsed":33.01}
+{"Time":"2026-10-09T07:19:25.573806283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:19:25.577698728Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":33.027}
+{"Time":"2026-10-09T07:19:25.75334362Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:19:25.764035587Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative"}
+{"Time":"2026-10-09T07:19:25.764106324Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"=== RUN   TestProduct_AcceptanceClassNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:19:25.764172794Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"=== PAUSE TestProduct_AcceptanceClassNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:19:25.764175498Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative"}
+{"Time":"2026-10-09T07:19:25.764212504Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative"}
+{"Time":"2026-10-09T07:19:25.764214217Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"=== CONT  TestProduct_AcceptanceClassNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:19:27.108718876Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"    acceptance_grain_test.go:150: build estree-acceptance-mutant-lowered-class-keyword-name 5229a0bf7617 hit 1.34\n"}
+{"Time":"2026-10-09T07:20:00.308325619Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"    acceptance_grain_test.go:150: build estree-acceptance-mutant-native-class-keyword-name f39874133a49 miss 33.17\n"}
+{"Time":"2026-10-09T07:20:00.30923379Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"--- PASS: TestProduct_AcceptanceClassNative (34.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:00.309238858Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Elapsed":34.54}
+{"Time":"2026-10-09T07:20:00.309264266Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:00.310732323Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":34.557}
+{"Time":"2026-10-09T07:20:00.483631582Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:20:00.493546195Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle"}
+{"Time":"2026-10-09T07:20:00.493630302Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"=== RUN   TestProduct_AcceptanceOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:00.49365548Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"=== PAUSE TestProduct_AcceptanceOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:00.493657574Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle"}
+{"Time":"2026-10-09T07:20:00.493660107Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle"}
+{"Time":"2026-10-09T07:20:00.493661399Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"=== CONT  TestProduct_AcceptanceOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:03.252102163Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"    acceptance_grain_test.go:111: build estree-acceptance-mutants-go-oracle 6547e5213968 miss 2.75\n"}
+{"Time":"2026-10-09T07:20:03.253402535Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"--- PASS: TestProduct_AcceptanceOracle (2.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:03.253756309Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Elapsed":2.76}
+{"Time":"2026-10-09T07:20:03.253787676Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:03.255886543Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":2.7720000000000002}
+{"Time":"2026-10-09T07:20:03.306963103Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:20:03.315787799Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000"}
+{"Time":"2026-10-09T07:20:03.31584115Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000","Output":"=== RUN   TestProduct_SyntaxMutantLowered_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:03.315862612Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000","Output":"=== PAUSE TestProduct_SyntaxMutantLowered_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:03.315864465Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000"}
+{"Time":"2026-10-09T07:20:03.315866168Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000"}
+{"Time":"2026-10-09T07:20:03.3158674Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000","Output":"=== CONT  TestProduct_SyntaxMutantLowered_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:36.783052991Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000","Output":"    syntax_mutants_self_setup_test.go:209: build estree-syntax-mutant-lowered-mapped-constraint 2a7b18105ca7 miss 33.46\n"}
+{"Time":"2026-10-09T07:20:36.784904625Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000","Output":"--- PASS: TestProduct_SyntaxMutantLowered_000 (33.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:36.784911735Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_000","Elapsed":33.47}
+{"Time":"2026-10-09T07:20:36.784923293Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:36.786996601Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":33.48}
+{"Time":"2026-10-09T07:20:36.968373877Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:20:36.980891522Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001"}
+{"Time":"2026-10-09T07:20:36.980973496Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001","Output":"=== RUN   TestProduct_SyntaxMutantLowered_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:36.981000527Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001","Output":"=== PAUSE TestProduct_SyntaxMutantLowered_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:20:36.981003281Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001"}
+{"Time":"2026-10-09T07:20:36.981007928Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001"}
+{"Time":"2026-10-09T07:20:36.981010131Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001","Output":"=== CONT  TestProduct_SyntaxMutantLowered_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:11.73751884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001","Output":"    syntax_mutants_self_setup_test.go:214: build estree-syntax-mutant-lowered-erasure-precedence 4614bd4ea90b miss 34.76\n"}
+{"Time":"2026-10-09T07:21:11.738784209Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001","Output":"--- PASS: TestProduct_SyntaxMutantLowered_001 (34.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:11.738789677Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_001","Elapsed":34.76}
+{"Time":"2026-10-09T07:21:11.738800824Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:11.744077225Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":34.776}
+{"Time":"2026-10-09T07:21:11.908687593Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:21:11.917515223Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002"}
+{"Time":"2026-10-09T07:21:11.917568563Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002","Output":"=== RUN   TestProduct_SyntaxMutantLowered_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:11.917616495Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002","Output":"=== PAUSE TestProduct_SyntaxMutantLowered_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:11.917694103Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002"}
+{"Time":"2026-10-09T07:21:11.917696707Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002"}
+{"Time":"2026-10-09T07:21:11.917698319Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002","Output":"=== CONT  TestProduct_SyntaxMutantLowered_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:38.966278506Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002","Output":"    syntax_mutants_self_setup_test.go:219: build estree-syntax-mutant-lowered-reference-pragma f53f956237b0 miss 27.05\n"}
+{"Time":"2026-10-09T07:21:38.968273667Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002","Output":"--- PASS: TestProduct_SyntaxMutantLowered_002 (27.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:38.968279295Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantLowered_002","Elapsed":27.05}
+{"Time":"2026-10-09T07:21:38.968293246Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:38.973486056Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":27.065}
+{"Time":"2026-10-09T07:21:39.117823109Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:21:39.129173755Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001"}
+{"Time":"2026-10-09T07:21:39.129251131Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Output":"=== RUN   TestProduct_SyntaxMutantNative_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:39.129272724Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Output":"=== PAUSE TestProduct_SyntaxMutantNative_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:39.129274687Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001"}
+{"Time":"2026-10-09T07:21:39.129276389Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001"}
+{"Time":"2026-10-09T07:21:39.129277631Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Output":"=== CONT  TestProduct_SyntaxMutantNative_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:21:40.437991345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Output":"    syntax_mutants_self_setup_test.go:224: build estree-syntax-mutant-lowered-erasure-precedence 4614bd4ea90b hit 1.31\n"}
+{"Time":"2026-10-09T07:22:10.074962119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Output":"    syntax_mutants_self_setup_test.go:224: build estree-syntax-mutant-native-erasure-precedence 590ea3a8be45 miss 29.61\n"}
+{"Time":"2026-10-09T07:22:10.075531979Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Output":"--- PASS: TestProduct_SyntaxMutantNative_001 (30.95s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:10.075535824Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_001","Elapsed":30.95}
+{"Time":"2026-10-09T07:22:10.075545759Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:10.077925636Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":30.96}
+{"Time":"2026-10-09T07:22:10.200952143Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:22:10.212704448Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002"}
+{"Time":"2026-10-09T07:22:10.212796977Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Output":"=== RUN   TestProduct_SyntaxMutantNative_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:10.212830518Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Output":"=== PAUSE TestProduct_SyntaxMutantNative_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:10.212833122Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002"}
+{"Time":"2026-10-09T07:22:10.212837178Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002"}
+{"Time":"2026-10-09T07:22:10.212839011Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Output":"=== CONT  TestProduct_SyntaxMutantNative_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:11.88770926Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Output":"    syntax_mutants_self_setup_test.go:229: build estree-syntax-mutant-lowered-reference-pragma f53f956237b0 hit 1.67\n"}
+{"Time":"2026-10-09T07:22:47.45303514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Output":"    syntax_mutants_self_setup_test.go:229: build estree-syntax-mutant-native-reference-pragma fd9c38af271d miss 35.48\n"}
+{"Time":"2026-10-09T07:22:47.453637679Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Output":"--- PASS: TestProduct_SyntaxMutantNative_002 (37.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:47.453642797Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantNative_002","Elapsed":37.24}
+{"Time":"2026-10-09T07:22:47.453656257Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:47.454778451Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":37.254}
+{"Time":"2026-10-09T07:22:47.536639028Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:22:47.546896422Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle"}
+{"Time":"2026-10-09T07:22:47.547050895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle","Output":"=== RUN   TestProduct_SyntaxMutantsGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:47.547133169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle","Output":"=== PAUSE TestProduct_SyntaxMutantsGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:47.547135723Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle"}
+{"Time":"2026-10-09T07:22:47.547137446Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle"}
+{"Time":"2026-10-09T07:22:47.547138648Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle","Output":"=== CONT  TestProduct_SyntaxMutantsGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:50.950511783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle","Output":"    syntax_mutants_self_setup_test.go:204: build syntax-mutants-go-oracle-v1 16e065012287 miss 3.39\n"}
+{"Time":"2026-10-09T07:22:50.951330404Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle","Output":"--- PASS: TestProduct_SyntaxMutantsGoOracle (3.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:50.951350755Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsGoOracle","Elapsed":3.4}
+{"Time":"2026-10-09T07:22:50.951382733Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:50.954494118Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":3.418}
+{"Time":"2026-10-09T07:22:51.03834248Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:22:51.051157659Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup"}
+{"Time":"2026-10-09T07:22:51.051292282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"=== RUN   TestProduct_SyntaxMutantsSetup\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:51.051355638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"=== PAUSE TestProduct_SyntaxMutantsSetup\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:51.051357821Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup"}
+{"Time":"2026-10-09T07:22:51.051362759Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup"}
+{"Time":"2026-10-09T07:22:51.051364361Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"=== CONT  TestProduct_SyntaxMutantsSetup\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:22:55.008163859Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-lowered-mapped-constraint 2a7b18105ca7 hit 2.21\n"}
+{"Time":"2026-10-09T07:22:55.013948558Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-lowered-erasure-precedence 4614bd4ea90b hit 2.22\n"}
+{"Time":"2026-10-09T07:22:55.014278126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-lowered-reference-pragma f53f956237b0 hit 2.22\n"}
+{"Time":"2026-10-09T07:22:55.017247877Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:153: build syntax-mutants-go-oracle-v1 16e065012287 hit 2.22\n"}
+{"Time":"2026-10-09T07:22:56.518011297Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-lowered-mapped-constraint 2a7b18105ca7 hit 1.51\n"}
+{"Time":"2026-10-09T07:22:56.527839579Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-lowered-erasure-precedence 4614bd4ea90b hit 1.51\n"}
+{"Time":"2026-10-09T07:22:56.596175681Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-lowered-reference-pragma f53f956237b0 hit 1.58\n"}
+{"Time":"2026-10-09T07:22:58.140294626Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-native-erasure-precedence 590ea3a8be45 hit 1.61\n"}
+{"Time":"2026-10-09T07:22:58.31159748Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-native-reference-pragma fd9c38af271d hit 1.72\n"}
+{"Time":"2026-10-09T07:23:28.710228443Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:160: build estree-syntax-mutant-native-mapped-constraint 07d35ce2eefc miss 32.19\n"}
+{"Time":"2026-10-09T07:23:28.720719192Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"    syntax_mutants_self_setup_test.go:189: build syntax-mutants-setup-v1 33118e6233cc miss 37.65\n"}
+{"Time":"2026-10-09T07:23:28.721019365Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Output":"--- PASS: TestProduct_SyntaxMutantsSetup (37.67s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:28.72109575Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_SyntaxMutantsSetup","Elapsed":37.67}
+{"Time":"2026-10-09T07:23:28.721128039Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:28.723776556Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":37.685}
+{"Time":"2026-10-09T07:23:28.800146923Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:23:28.808772792Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle"}
+{"Time":"2026-10-09T07:23:28.808829027Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle","Output":"=== RUN   TestProduct_scalar_edges_go_oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:28.808847816Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle","Output":"=== PAUSE TestProduct_scalar_edges_go_oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:28.808849849Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle"}
+{"Time":"2026-10-09T07:23:28.808851421Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle"}
+{"Time":"2026-10-09T07:23:28.808852613Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle","Output":"=== CONT  TestProduct_scalar_edges_go_oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:31.184504549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle","Output":"    scalar_edges_preparation_test.go:287: build scalar-edges-go-oracle d57a6fe9eb41 miss 2.37\n"}
+{"Time":"2026-10-09T07:23:31.184562066Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle","Output":"--- PASS: TestProduct_scalar_edges_go_oracle (2.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:31.18456472Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_go_oracle","Elapsed":2.38}
+{"Time":"2026-10-09T07:23:31.184574815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:31.18644309Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":2.386}
+{"Time":"2026-10-09T07:23:31.245184203Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:23:31.253462231Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered"}
+{"Time":"2026-10-09T07:23:31.253537464Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered","Output":"=== RUN   TestProduct_scalar_edges_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:31.253573539Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered","Output":"=== PAUSE TestProduct_scalar_edges_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:23:31.253599077Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered"}
+{"Time":"2026-10-09T07:23:31.25360757Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered"}
+{"Time":"2026-10-09T07:23:31.253609864Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered","Output":"=== CONT  TestProduct_scalar_edges_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:03.583896455Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered","Output":"    scalar_edges_preparation_test.go:292: build scalar-edges-lowered 41410d95c137 miss 32.33\n"}
+{"Time":"2026-10-09T07:24:03.585153322Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered","Output":"--- PASS: TestProduct_scalar_edges_lowered (32.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:03.585158099Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_lowered","Elapsed":32.33}
+{"Time":"2026-10-09T07:24:03.585177508Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:03.589504339Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":32.344}
+{"Time":"2026-10-09T07:24:03.765384316Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T07:24:03.779885142Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native"}
+{"Time":"2026-10-09T07:24:03.779983871Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Output":"=== RUN   TestProduct_scalar_edges_sanitized_native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:03.780011963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Output":"=== PAUSE TestProduct_scalar_edges_sanitized_native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:03.780013816Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native"}
+{"Time":"2026-10-09T07:24:03.780015759Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native"}
+{"Time":"2026-10-09T07:24:03.780017071Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Output":"=== CONT  TestProduct_scalar_edges_sanitized_native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:05.135866954Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Output":"    scalar_edges_preparation_test.go:297: build scalar-edges-lowered 41410d95c137 hit 1.36\n"}
+{"Time":"2026-10-09T07:24:32.28035531Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Output":"    scalar_edges_preparation_test.go:298: build scalar-edges-sanitized-native 2bc8b7552328 miss 27.12\n"}
+{"Time":"2026-10-09T07:24:32.280669605Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Output":"--- PASS: TestProduct_scalar_edges_sanitized_native (28.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:32.280672429Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_scalar_edges_sanitized_native","Elapsed":28.5}
+{"Time":"2026-10-09T07:24:32.280682815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:32.282664415Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":28.517}
+{"Time":"2026-10-09T07:24:32.339920294Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:24:32.347732604Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T07:24:32.34779563Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== RUN   TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:32.347828619Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== PAUSE TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:32.347834378Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T07:24:32.347838184Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T07:24:32.347840237Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== CONT  TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:42.120870674Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"    products_test.go:243: build bridge-test-tsgo-asan.a 1425f29d240b miss 8.49\n"}
+{"Time":"2026-10-09T07:24:42.454256132Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"    product_units_test.go:88: build bridge-test-api 3247c78d1555 miss 9.29\n"}
+{"Time":"2026-10-09T07:24:42.497832776Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"--- PASS: TestProduct_ApiDriver (10.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:42.497879696Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Elapsed":10.15}
+{"Time":"2026-10-09T07:24:42.497890553Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:42.50325863Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":10.163}
+{"Time":"2026-10-09T07:24:42.5473522Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:24:42.556261752Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T07:24:42.556317366Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== RUN   TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:42.556341352Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== PAUSE TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:42.556343445Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T07:24:42.556348072Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T07:24:42.556349354Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== CONT  TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:24:52.747033473Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    products_test.go:260: build bridge-test-stage0 456d88260844 miss 9.41\n"}
+{"Time":"2026-10-09T07:24:53.265088549Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    products_test.go:261: build bridge-test-tsgo-asan.a 1425f29d240b hit 0.03\n"}
+{"Time":"2026-10-09T07:25:04.6964024Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    product_units_test.go:123: build bridge-test-healthy-region 78e14d3f48d9 miss 21.75\n"}
+{"Time":"2026-10-09T07:25:04.766672426Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"--- PASS: TestProduct_HealthyRegion (22.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:04.767740729Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Elapsed":22.21}
+{"Time":"2026-10-09T07:25:04.76780765Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:04.776935748Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":22.23}
+{"Time":"2026-10-09T07:25:04.928098494Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:25:04.938231178Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T07:25:04.938287874Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== RUN   TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:04.938314274Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== PAUSE TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:04.938328014Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T07:25:04.938334514Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T07:25:04.938336036Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== CONT  TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:16.076078997Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"    product_units_test.go:73: build bridge-test-leak.a b61fa66e8c7c miss 10.00\n"}
+{"Time":"2026-10-09T07:25:16.150018291Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"--- PASS: TestProduct_LeakArchive (11.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:16.150067405Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Elapsed":11.21}
+{"Time":"2026-10-09T07:25:16.1500836Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:16.157330108Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":11.229}
+{"Time":"2026-10-09T07:25:16.328380271Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:25:16.337339804Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T07:25:16.337392864Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== RUN   TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:16.337415669Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== PAUSE TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:16.337417672Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T07:25:16.337419475Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T07:25:16.337420747Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== CONT  TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:17.306844727Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"    products_test.go:243: build bridge-test-leak.a b61fa66e8c7c hit 0.04\n"}
+{"Time":"2026-10-09T07:25:17.706615137Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"    product_units_test.go:103: build bridge-test-leak-driver 7dc1c8f51be9 miss 0.86\n"}
+{"Time":"2026-10-09T07:25:18.059775737Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"--- PASS: TestProduct_LeakDriver (1.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:18.061895397Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Elapsed":1.72}
+{"Time":"2026-10-09T07:25:18.062022609Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:18.069177549Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":1.741}
+{"Time":"2026-10-09T07:25:18.292460749Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:25:18.311136187Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T07:25:18.311198582Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== RUN   TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:18.311220745Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== PAUSE TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:18.311222628Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T07:25:18.311225783Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T07:25:18.311227165Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== CONT  TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:26.810534343Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"    product_units_test.go:58: build bridge-test-length.a 2536aced7f2b miss 7.99\n"}
+{"Time":"2026-10-09T07:25:26.870083151Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"--- PASS: TestProduct_LengthArchive (8.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:26.87012215Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Elapsed":8.56}
+{"Time":"2026-10-09T07:25:26.87013535Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:26.875307088Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":8.583}
+{"Time":"2026-10-09T07:25:26.939902826Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:25:26.950603401Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T07:25:26.950663872Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== RUN   TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:26.950690051Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== PAUSE TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:26.950692054Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T07:25:26.950698564Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T07:25:26.950703732Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== CONT  TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:27.80205648Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"    products_test.go:243: build bridge-test-length.a 2536aced7f2b hit 0.04\n"}
+{"Time":"2026-10-09T07:25:28.182691562Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"    product_units_test.go:93: build bridge-test-length-driver 82a4f2a01cb5 miss 0.81\n"}
+{"Time":"2026-10-09T07:25:28.3137098Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"--- PASS: TestProduct_LengthDriver (1.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:28.313911435Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Elapsed":1.36}
+{"Time":"2026-10-09T07:25:28.3139215Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:28.323107693Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":1.383}
+{"Time":"2026-10-09T07:25:28.387596664Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:25:28.397154579Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T07:25:28.397209322Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== RUN   TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:28.39722836Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== PAUSE TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:28.397230333Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T07:25:28.39723504Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T07:25:28.397236352Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== CONT  TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:44.556813723Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"    product_units_test.go:138: build bridge-test-linkage.test 653b1f575084 miss 15.74\n"}
+{"Time":"2026-10-09T07:25:44.793264048Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"--- PASS: TestProduct_LinkageTest (16.39s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:44.79508742Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Elapsed":16.39}
+{"Time":"2026-10-09T07:25:44.79534575Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:44.798275798Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":16.411}
+{"Time":"2026-10-09T07:25:45.067250873Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:25:45.081467869Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T07:25:45.081546809Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== RUN   TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:45.081609253Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== PAUSE TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:45.081611406Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T07:25:45.081613038Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T07:25:45.08161423Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== CONT  TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:25:46.068321429Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"    products_test.go:260: build bridge-test-stage0 456d88260844 hit 0.04\n"}
+{"Time":"2026-10-09T07:25:55.997559266Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"    products_test.go:261: build bridge-test-tsgo.a 57fd523cb6a6 miss 9.40\n"}
+{"Time":"2026-10-09T07:26:00.86862401Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"    product_units_test.go:113: build bridge-test-native 85ce5b323670 miss 15.26\n"}
+{"Time":"2026-10-09T07:26:00.910637172Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"--- PASS: TestProduct_Native (15.83s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:00.910796723Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Elapsed":15.83}
+{"Time":"2026-10-09T07:26:00.910810023Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:00.91609226Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":15.849}
+{"Time":"2026-10-09T07:26:00.991276579Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:01.000421641Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T07:26:01.000478918Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== RUN   TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:01.000507841Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== PAUSE TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:01.000510295Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T07:26:01.000512849Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T07:26:01.000514431Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== CONT  TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:09.046132952Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"    product_units_test.go:83: build bridge-test-oracle a8d479dec303 miss 7.33\n"}
+{"Time":"2026-10-09T07:26:09.079838427Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"--- PASS: TestProduct_Oracle (8.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:09.080109206Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Elapsed":8.08}
+{"Time":"2026-10-09T07:26:09.080128204Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:09.082778435Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":8.092}
+{"Time":"2026-10-09T07:26:09.143149715Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:09.15248455Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T07:26:09.152564972Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== RUN   TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:09.152634477Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== PAUSE TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:09.1526368Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T07:26:09.152638513Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T07:26:09.152642328Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== CONT  TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:19.572744128Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    products_test.go:260: build bridge-test-region-stage0 8ef5c293a141 miss 8.96\n"}
+{"Time":"2026-10-09T07:26:19.993624126Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    products_test.go:261: build bridge-test-tsgo.a 57fd523cb6a6 hit 0.03\n"}
+{"Time":"2026-10-09T07:26:29.526815802Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    product_units_test.go:133: build bridge-test-region-native 923986399d0e miss 19.91\n"}
+{"Time":"2026-10-09T07:26:29.596986426Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"--- PASS: TestProduct_RegionNative (20.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:29.597298907Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Elapsed":20.44}
+{"Time":"2026-10-09T07:26:29.597311216Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:29.604518212Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":20.461}
+{"Time":"2026-10-09T07:26:29.767931428Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:29.777880442Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T07:26:29.777941895Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== RUN   TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:29.77796529Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== PAUSE TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:29.777967273Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T07:26:29.77797182Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T07:26:29.777973392Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== CONT  TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:30.236095467Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"    product_units_test.go:128: build bridge-test-region-stage0 8ef5c293a141 hit 0.03\n"}
+{"Time":"2026-10-09T07:26:30.313759033Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"--- PASS: TestProduct_RegionStage0 (0.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:30.313821127Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Elapsed":0.54}
+{"Time":"2026-10-09T07:26:30.313832784Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:30.316280128Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.548}
+{"Time":"2026-10-09T07:26:30.365106619Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:30.373244325Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T07:26:30.373544337Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== RUN   TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:30.373573131Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== PAUSE TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:30.373575174Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T07:26:30.373577007Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T07:26:30.373578189Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== CONT  TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:31.249751635Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"    products_test.go:260: build bridge-test-stage0 456d88260844 hit 0.07\n"}
+{"Time":"2026-10-09T07:26:32.200750799Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"    products_test.go:261: build bridge-test-tsgo-asan.a 1425f29d240b hit 0.04\n"}
+{"Time":"2026-10-09T07:26:41.059577162Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"    product_units_test.go:108: build bridge-test-native-asan 76e490c3e769 miss 10.27\n"}
+{"Time":"2026-10-09T07:26:41.121353823Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"--- PASS: TestProduct_SanitizedNative (10.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.12145176Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Elapsed":10.75}
+{"Time":"2026-10-09T07:26:41.121618162Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.13491507Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":10.77}
+{"Time":"2026-10-09T07:26:41.210978244Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:41.219051074Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T07:26:41.219146959Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== RUN   TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.219175191Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== PAUSE TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.219177385Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T07:26:41.219179117Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T07:26:41.219180249Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== CONT  TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.714043123Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"    product_units_test.go:78: build bridge-test-stage0 456d88260844 hit 0.04\n"}
+{"Time":"2026-10-09T07:26:41.758331559Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"--- PASS: TestProduct_Stage0 (0.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.75838486Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Elapsed":0.54}
+{"Time":"2026-10-09T07:26:41.758395075Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.761838993Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.551}
+{"Time":"2026-10-09T07:26:41.810545657Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:41.820333515Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T07:26:41.820445715Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== RUN   TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.820484503Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== PAUSE TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:41.820487177Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T07:26:41.820496601Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T07:26:41.820502791Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== CONT  TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:52.278925086Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"    product_units_test.go:63: build bridge-test-stale.a b909949bab21 miss 9.44\n"}
+{"Time":"2026-10-09T07:26:52.336331449Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"--- PASS: TestProduct_StaleArchive (10.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:52.33642503Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Elapsed":10.52}
+{"Time":"2026-10-09T07:26:52.33643792Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:52.340093983Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":10.53}
+{"Time":"2026-10-09T07:26:52.39508416Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:52.404850265Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T07:26:52.404972149Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== RUN   TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:52.405081604Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== PAUSE TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:52.40508556Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T07:26:52.405090928Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T07:26:52.405093282Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== CONT  TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:53.293315991Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"    products_test.go:243: build bridge-test-stale.a b909949bab21 hit 0.04\n"}
+{"Time":"2026-10-09T07:26:54.083377345Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"    product_units_test.go:98: build bridge-test-stale-driver 164e5a79c5b9 miss 1.24\n"}
+{"Time":"2026-10-09T07:26:54.149720753Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"--- PASS: TestProduct_StaleDriver (1.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:54.1503284Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Elapsed":1.74}
+{"Time":"2026-10-09T07:26:54.150345826Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:54.16041572Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":1.7650000000000001}
+{"Time":"2026-10-09T07:26:54.443001947Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:54.454977989Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T07:26:54.455077409Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== RUN   TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:54.455106353Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== PAUSE TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:54.455109207Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T07:26:54.45511753Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T07:26:54.455119763Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== CONT  TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:55.062241865Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"    product_units_test.go:48: build bridge-test-tsgo.a 57fd523cb6a6 hit 0.08\n"}
+{"Time":"2026-10-09T07:26:55.157150129Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"--- PASS: TestProduct_TsgoArchive (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:55.157241657Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Elapsed":0.7}
+{"Time":"2026-10-09T07:26:55.157271903Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:55.162277733Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.719}
+{"Time":"2026-10-09T07:26:55.226345596Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:55.235378316Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T07:26:55.235447811Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== RUN   TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:55.235614162Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== PAUSE TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:55.235617547Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T07:26:55.23561948Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T07:26:55.235620732Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== CONT  TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:55.895626675Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"    product_units_test.go:53: build bridge-test-tsgo-asan.a 1425f29d240b hit 0.19\n"}
+{"Time":"2026-10-09T07:26:56.058818174Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"--- PASS: TestProduct_TsgoSanitizedArchive (0.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:56.058882692Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Elapsed":0.82}
+{"Time":"2026-10-09T07:26:56.059260722Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:56.064758732Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.838}
+{"Time":"2026-10-09T07:26:56.288666445Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:26:56.298482626Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T07:26:56.2985451Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== RUN   TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:56.298613543Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== PAUSE TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:26:56.298616177Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T07:26:56.298621325Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T07:26:56.298626262Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== CONT  TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:10.68641981Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"    product_units_test.go:68: build bridge-test-wrong.a d543e3887966 miss 13.87\n"}
+{"Time":"2026-10-09T07:27:10.777063199Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"--- PASS: TestProduct_WrongArchive (14.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:10.777128568Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Elapsed":14.48}
+{"Time":"2026-10-09T07:27:10.777147176Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:10.78126449Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":14.493}
+{"Time":"2026-10-09T07:27:10.906201958Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:27:10.914535245Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T07:27:10.91463105Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== RUN   TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:10.914658371Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== PAUSE TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:10.914660274Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T07:27:10.914664841Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T07:27:10.914666223Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== CONT  TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:11.764695666Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"    products_test.go:260: build bridge-test-stage0 456d88260844 hit 0.04\n"}
+{"Time":"2026-10-09T07:27:12.256534643Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"    products_test.go:261: build bridge-test-wrong.a d543e3887966 hit 0.03\n"}
+{"Time":"2026-10-09T07:27:21.943699086Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"    product_units_test.go:118: build bridge-test-wrong-native d89984711189 miss 10.60\n"}
+{"Time":"2026-10-09T07:27:21.995459065Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"--- PASS: TestProduct_WrongNative (11.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:21.995494648Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Elapsed":11.08}
+{"Time":"2026-10-09T07:27:21.995730154Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:22.005475228Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":11.099}
+{"Time":"2026-10-09T07:27:22.075025633Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:22.085328163Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle"}
+{"Time":"2026-10-09T07:27:22.08539205Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle","Output":"=== RUN   TestProduct_FormatfilesGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:22.085413462Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle","Output":"=== PAUSE TestProduct_FormatfilesGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:22.085415395Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle"}
+{"Time":"2026-10-09T07:27:22.085436267Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle"}
+{"Time":"2026-10-09T07:27:22.085437649Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle","Output":"=== CONT  TestProduct_FormatfilesGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:24.197753536Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle","Output":"    formatfiles_products_test.go:9: build formatfiles-go-oracle 30b4c7472694 miss 2.10\n"}
+{"Time":"2026-10-09T07:27:24.19783599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle","Output":"--- PASS: TestProduct_FormatfilesGoOracle (2.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:24.197839125Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesGoOracle","Elapsed":2.11}
+{"Time":"2026-10-09T07:27:24.19784883Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:24.198706439Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":2.124}
+{"Time":"2026-10-09T07:27:24.248617583Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:24.257763112Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative"}
+{"Time":"2026-10-09T07:27:24.257824574Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative","Output":"=== RUN   TestProduct_FormatfilesNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:24.25784831Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative","Output":"=== PAUSE TestProduct_FormatfilesNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:24.257850293Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative"}
+{"Time":"2026-10-09T07:27:24.257852066Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative"}
+{"Time":"2026-10-09T07:27:24.257853308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative","Output":"=== CONT  TestProduct_FormatfilesNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:29.214283055Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative","Output":"    formatfiles_shards_test.go:182: build formatfiles-native cacaf1db3f1f miss 4.19\n"}
+{"Time":"2026-10-09T07:27:29.21924884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative","Output":"--- PASS: TestProduct_FormatfilesNative (4.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:29.219282902Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNative","Elapsed":4.96}
+{"Time":"2026-10-09T07:27:29.219296172Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:29.22067282Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":4.9719999999999995}
+{"Time":"2026-10-09T07:27:29.318673771Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:29.329940873Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined"}
+{"Time":"2026-10-09T07:27:29.330013482Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined","Output":"=== RUN   TestProduct_FormatfilesNativeAdamicFilesDeclined\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:29.330037809Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined","Output":"=== PAUSE TestProduct_FormatfilesNativeAdamicFilesDeclined\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:29.330040523Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined"}
+{"Time":"2026-10-09T07:27:29.330043618Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined"}
+{"Time":"2026-10-09T07:27:29.33004498Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined","Output":"=== CONT  TestProduct_FormatfilesNativeAdamicFilesDeclined\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:35.85628209Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-Adamic_files_declined_instead_of_held_back ba8393d7245d miss 5.26\n"}
+{"Time":"2026-10-09T07:27:35.857011831Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined","Output":"--- PASS: TestProduct_FormatfilesNativeAdamicFilesDeclined (6.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:35.857435551Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeAdamicFilesDeclined","Elapsed":6.53}
+{"Time":"2026-10-09T07:27:35.857450363Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:35.857981045Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":6.539}
+{"Time":"2026-10-09T07:27:35.967416186Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:35.978038123Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName"}
+{"Time":"2026-10-09T07:27:35.978110453Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName","Output":"=== RUN   TestProduct_FormatfilesNativeBareAdamicName\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:35.97814174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName","Output":"=== PAUSE TestProduct_FormatfilesNativeBareAdamicName\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:35.978143963Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName"}
+{"Time":"2026-10-09T07:27:35.97814853Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName"}
+{"Time":"2026-10-09T07:27:35.978150022Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName","Output":"=== CONT  TestProduct_FormatfilesNativeBareAdamicName\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:41.478328598Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_bare_.a_name_held_back_as_Adamic cc6d297e7c6f miss 4.38\n"}
+{"Time":"2026-10-09T07:27:41.479011378Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName","Output":"--- PASS: TestProduct_FormatfilesNativeBareAdamicName (5.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:41.479165782Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeBareAdamicName","Elapsed":5.5}
+{"Time":"2026-10-09T07:27:41.479177549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:41.479325723Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":5.5120000000000005}
+{"Time":"2026-10-09T07:27:41.573683627Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:41.584358904Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit"}
+{"Time":"2026-10-09T07:27:41.584431354Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit","Output":"=== RUN   TestProduct_FormatfilesNativeDanglingGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:41.584459776Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit","Output":"=== PAUSE TestProduct_FormatfilesNativeDanglingGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:41.58446181Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit"}
+{"Time":"2026-10-09T07:27:41.584463572Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit"}
+{"Time":"2026-10-09T07:27:41.584464944Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit","Output":"=== CONT  TestProduct_FormatfilesNativeDanglingGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:46.266993672Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_.git_link_to_nothing_taken_for_a_repository f4c7616ac35e miss 3.94\n"}
+{"Time":"2026-10-09T07:27:46.267673338Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit","Output":"--- PASS: TestProduct_FormatfilesNativeDanglingGit (4.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:46.26784706Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingGit","Elapsed":4.68}
+{"Time":"2026-10-09T07:27:46.267857225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:46.270145905Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":4.696}
+{"Time":"2026-10-09T07:27:46.369885747Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:46.378654523Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink"}
+{"Time":"2026-10-09T07:27:46.378742326Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink","Output":"=== RUN   TestProduct_FormatfilesNativeDanglingLink\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:46.378782005Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink","Output":"=== PAUSE TestProduct_FormatfilesNativeDanglingLink\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:46.37878507Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink"}
+{"Time":"2026-10-09T07:27:46.378787664Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink"}
+{"Time":"2026-10-09T07:27:46.378789647Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink","Output":"=== CONT  TestProduct_FormatfilesNativeDanglingLink\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:51.172789099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_link_to_nothing_taken_for_nothing 71f2289404f3 miss 3.77\n"}
+{"Time":"2026-10-09T07:27:51.173788308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink","Output":"--- PASS: TestProduct_FormatfilesNativeDanglingLink (4.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:51.173969641Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingLink","Elapsed":4.79}
+{"Time":"2026-10-09T07:27:51.173978905Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:51.174531749Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":4.805}
+{"Time":"2026-10-09T07:27:51.472784363Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:51.568678175Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore"}
+{"Time":"2026-10-09T07:27:51.568887541Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore","Output":"=== RUN   TestProduct_FormatfilesNativeDanglingPrettierignore\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:51.569050647Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore","Output":"=== PAUSE TestProduct_FormatfilesNativeDanglingPrettierignore\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:51.569053672Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore"}
+{"Time":"2026-10-09T07:27:51.569056206Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore"}
+{"Time":"2026-10-09T07:27:51.569058149Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore","Output":"=== CONT  TestProduct_FormatfilesNativeDanglingPrettierignore\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:57.086118947Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_.prettierignore_link_to_nothing_let_through 2013a53172d9 miss 4.43\n"}
+{"Time":"2026-10-09T07:27:57.08696897Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore","Output":"--- PASS: TestProduct_FormatfilesNativeDanglingPrettierignore (5.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:57.08697498Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeDanglingPrettierignore","Elapsed":5.52}
+{"Time":"2026-10-09T07:27:57.086986707Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:57.088754846Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":5.616}
+{"Time":"2026-10-09T07:27:57.20241983Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:27:57.211795216Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase"}
+{"Time":"2026-10-09T07:27:57.211874956Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase","Output":"=== RUN   TestProduct_FormatfilesNativeJavaScriptLowercase\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:57.212080016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase","Output":"=== PAUSE TestProduct_FormatfilesNativeJavaScriptLowercase\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:27:57.212085504Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase"}
+{"Time":"2026-10-09T07:27:57.212090592Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase"}
+{"Time":"2026-10-09T07:27:57.212092064Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase","Output":"=== CONT  TestProduct_FormatfilesNativeJavaScriptLowercase\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:03.386423693Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-an_extension_lowercased_as_JavaScript_does bae9c2bc9240 miss 4.79\n"}
+{"Time":"2026-10-09T07:28:03.387250571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase","Output":"--- PASS: TestProduct_FormatfilesNativeJavaScriptLowercase (6.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:03.38725653Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeJavaScriptLowercase","Elapsed":6.17}
+{"Time":"2026-10-09T07:28:03.387270551Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:03.3891641Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":6.187}
+{"Time":"2026-10-09T07:28:03.481657689Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:03.494139114Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop"}
+{"Time":"2026-10-09T07:28:03.494244363Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop","Output":"=== RUN   TestProduct_FormatfilesNativeLinkLoop\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:03.494314269Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop","Output":"=== PAUSE TestProduct_FormatfilesNativeLinkLoop\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:03.494316582Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop"}
+{"Time":"2026-10-09T07:28:03.494318485Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop"}
+{"Time":"2026-10-09T07:28:03.494319907Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop","Output":"=== CONT  TestProduct_FormatfilesNativeLinkLoop\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:10.804067784Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_link_round_a_loop_taken_for_nothing ecde8782899e miss 6.17\n"}
+{"Time":"2026-10-09T07:28:10.805113733Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop","Output":"--- PASS: TestProduct_FormatfilesNativeLinkLoop (7.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:10.805120423Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeLinkLoop","Elapsed":7.31}
+{"Time":"2026-10-09T07:28:10.805131549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:10.80516477Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":7.324}
+{"Time":"2026-10-09T07:28:10.95252351Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:10.964409691Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL"}
+{"Time":"2026-10-09T07:28:10.964489752Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL","Output":"=== RUN   TestProduct_FormatfilesNativeQuoteDEL\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:10.964511675Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL","Output":"=== PAUSE TestProduct_FormatfilesNativeQuoteDEL\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:10.964513468Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL"}
+{"Time":"2026-10-09T07:28:10.96451517Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL"}
+{"Time":"2026-10-09T07:28:10.964516633Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL","Output":"=== CONT  TestProduct_FormatfilesNativeQuoteDEL\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:16.044436501Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-DEL_passed_by_the_quoting's_fast_path 4e720f4a659a miss 4.32\n"}
+{"Time":"2026-10-09T07:28:16.045646178Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL","Output":"--- PASS: TestProduct_FormatfilesNativeQuoteDEL (5.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:16.045772588Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteDEL","Elapsed":5.08}
+{"Time":"2026-10-09T07:28:16.045784967Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:16.048944066Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":5.096}
+{"Time":"2026-10-09T07:28:16.193712823Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:16.210998955Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark"}
+{"Time":"2026-10-09T07:28:16.21108208Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark","Output":"=== RUN   TestProduct_FormatfilesNativeQuoteMark\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:16.211104855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark","Output":"=== PAUSE TestProduct_FormatfilesNativeQuoteMark\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:16.211110323Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark"}
+{"Time":"2026-10-09T07:28:16.211112426Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark"}
+{"Time":"2026-10-09T07:28:16.211113858Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark","Output":"=== CONT  TestProduct_FormatfilesNativeQuoteMark\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:21.905867388Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_quote_passed_by_the_quoting's_fast_path 0b596d629c71 miss 4.60\n"}
+{"Time":"2026-10-09T07:28:21.906431449Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark","Output":"--- PASS: TestProduct_FormatfilesNativeQuoteMark (5.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:21.906436938Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeQuoteMark","Elapsed":5.69}
+{"Time":"2026-10-09T07:28:21.906447784Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:21.908824061Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":5.715}
+{"Time":"2026-10-09T07:28:21.993277004Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:22.003049856Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot"}
+{"Time":"2026-10-09T07:28:22.003120492Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot","Output":"=== RUN   TestProduct_FormatfilesNativeTrailingDot\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:22.003146712Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot","Output":"=== PAUSE TestProduct_FormatfilesNativeTrailingDot\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:22.003148975Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot"}
+{"Time":"2026-10-09T07:28:22.003150848Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot"}
+{"Time":"2026-10-09T07:28:22.00315221Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot","Output":"=== CONT  TestProduct_FormatfilesNativeTrailingDot\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:26.514109184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-a_trailing_dot_no_extension da59a7590c5f miss 3.78\n"}
+{"Time":"2026-10-09T07:28:26.514675289Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot","Output":"--- PASS: TestProduct_FormatfilesNativeTrailingDot (4.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:26.514780948Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeTrailingDot","Elapsed":4.51}
+{"Time":"2026-10-09T07:28:26.514789982Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:26.516912677Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":4.524}
+{"Time":"2026-10-09T07:28:26.623469795Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:26.635169341Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort"}
+{"Time":"2026-10-09T07:28:26.635237304Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort","Output":"=== RUN   TestProduct_FormatfilesNativeUTF16Sort\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:26.635264685Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort","Output":"=== PAUSE TestProduct_FormatfilesNativeUTF16Sort\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:26.635266818Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort"}
+{"Time":"2026-10-09T07:28:26.635268671Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort"}
+{"Time":"2026-10-09T07:28:26.635270013Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort","Output":"=== CONT  TestProduct_FormatfilesNativeUTF16Sort\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:31.419132263Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-the_declined_extensions_sorted_by_UTF-16_unit bb2dd92b7360 miss 4.05\n"}
+{"Time":"2026-10-09T07:28:31.419544245Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort","Output":"--- PASS: TestProduct_FormatfilesNativeUTF16Sort (4.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:31.4195478Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUTF16Sort","Elapsed":4.78}
+{"Time":"2026-10-09T07:28:31.419560429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:31.42109147Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":4.798}
+{"Time":"2026-10-09T07:28:31.515432419Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:31.524229126Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized"}
+{"Time":"2026-10-09T07:28:31.524290309Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized","Output":"=== RUN   TestProduct_FormatfilesNativeUnsanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:31.524319232Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized","Output":"=== PAUSE TestProduct_FormatfilesNativeUnsanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:31.524321205Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized"}
+{"Time":"2026-10-09T07:28:31.524323008Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized"}
+{"Time":"2026-10-09T07:28:31.52432435Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized","Output":"=== CONT  TestProduct_FormatfilesNativeUnsanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:34.689761735Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized","Output":"    formatfiles_prepare_test.go:117: build formatfiles-native-unsanitized db0bc44c715d miss 2.10\n"}
+{"Time":"2026-10-09T07:28:34.69095758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized","Output":"--- PASS: TestProduct_FormatfilesNativeUnsanitized (3.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:34.690963599Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUnsanitized","Elapsed":3.16}
+{"Time":"2026-10-09T07:28:34.690976338Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:34.691163501Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":3.176}
+{"Time":"2026-10-09T07:28:34.82696209Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles"}
+{"Time":"2026-10-09T07:28:34.840288063Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension"}
+{"Time":"2026-10-09T07:28:34.840356126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension","Output":"=== RUN   TestProduct_FormatfilesNativeUppercaseAdamicExtension\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:34.840386742Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension","Output":"=== PAUSE TestProduct_FormatfilesNativeUppercaseAdamicExtension\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:34.840388775Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension"}
+{"Time":"2026-10-09T07:28:34.840390488Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension"}
+{"Time":"2026-10-09T07:28:34.84039187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension","Output":"=== CONT  TestProduct_FormatfilesNativeUppercaseAdamicExtension\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:39.327369855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension","Output":"    formatfiles_shards_test.go:182: build formatfiles-native-uppercase_.A_held_back_as_Adamic 9a385751c982 miss 3.76\n"}
+{"Time":"2026-10-09T07:28:39.328231906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension","Output":"--- PASS: TestProduct_FormatfilesNativeUppercaseAdamicExtension (4.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:39.328236232Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Test":"TestProduct_FormatfilesNativeUppercaseAdamicExtension","Elapsed":4.49}
+{"Time":"2026-10-09T07:28:39.328248801Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:39.329533405Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/formatfiles","Elapsed":4.503}
+{"Time":"2026-10-09T07:28:39.416855333Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:28:39.429810785Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults"}
+{"Time":"2026-10-09T07:28:39.429894551Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"=== RUN   TestProduct_GraphQLMutantDefaults\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:39.429934031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"=== PAUSE TestProduct_GraphQLMutantDefaults\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:39.429936134Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults"}
+{"Time":"2026-10-09T07:28:39.429988263Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults"}
+{"Time":"2026-10-09T07:28:39.429990166Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"=== CONT  TestProduct_GraphQLMutantDefaults\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:43.871435014Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"    grain_mutant_test.go:97: build Go GraphQL printer oracle cold wall 2.949s (overlay, uncached)\n"}
+{"Time":"2026-10-09T07:28:43.939258648Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"    grain_mutant_test.go:92: build GraphQL_mutant_Go_oracle fd8b942a003b miss 4.37\n"}
+{"Time":"2026-10-09T07:28:43.95700179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"    grain_mutant_test.go:109: corpus-files: upstream /tmp/adamic/cohere root internal/format/graphql pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 3\n"}
+{"Time":"2026-10-09T07:28:43.957038135Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"    grain_mutant_test.go:109: GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls\n"}
+{"Time":"2026-10-09T07:28:44.42861833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"    grain_mutant_test.go:109: build GraphQL_printer_oracle_outputs 9061639c723d miss 0.42\n"}
+{"Time":"2026-10-09T07:28:44.431206537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Output":"--- PASS: TestProduct_GraphQLMutantDefaults (5.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:44.431226357Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantDefaults","Elapsed":5}
+{"Time":"2026-10-09T07:28:44.431236142Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:44.439382644Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":5.023}
+{"Time":"2026-10-09T07:28:44.483070141Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:28:44.491872147Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000"}
+{"Time":"2026-10-09T07:28:44.491937696Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"=== RUN   TestProduct_GraphQLMutantLowered000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:44.491994592Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"=== PAUSE TestProduct_GraphQLMutantLowered000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:44.491997456Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000"}
+{"Time":"2026-10-09T07:28:44.491999589Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000"}
+{"Time":"2026-10-09T07:28:44.492001252Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"=== CONT  TestProduct_GraphQLMutantLowered000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:44.494664592Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_000_source dbb5fa6d0142 miss 0.00\n"}
+{"Time":"2026-10-09T07:28:47.877252187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"    shards_test.go:131: lowering wall 0.866s\n"}
+{"Time":"2026-10-09T07:28:49.906046597Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"    shards_test.go:134: C emission wall 2.029s\n"}
+{"Time":"2026-10-09T07:28:50.018078318Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"    grain_mutant_test.go:61: build lowered_GraphQL_printer 4e2cdb8c5cc9 miss 5.36\n"}
+{"Time":"2026-10-09T07:28:50.018312291Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Output":"--- PASS: TestProduct_GraphQLMutantLowered000 (5.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:50.018319802Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered000","Elapsed":5.53}
+{"Time":"2026-10-09T07:28:50.018909192Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:50.026046707Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":5.543}
+{"Time":"2026-10-09T07:28:50.200298165Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:28:50.213052713Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001"}
+{"Time":"2026-10-09T07:28:50.213125553Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"=== RUN   TestProduct_GraphQLMutantLowered001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:50.213149419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"=== PAUSE TestProduct_GraphQLMutantLowered001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:50.213151322Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001"}
+{"Time":"2026-10-09T07:28:50.213153045Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001"}
+{"Time":"2026-10-09T07:28:50.213154287Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"=== CONT  TestProduct_GraphQLMutantLowered001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:50.217078651Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_001_source 353795a39a50 miss 0.00\n"}
+{"Time":"2026-10-09T07:28:53.462950575Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"    shards_test.go:131: lowering wall 0.637s\n"}
+{"Time":"2026-10-09T07:28:55.125248668Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"    shards_test.go:134: C emission wall 1.662s\n"}
+{"Time":"2026-10-09T07:28:55.181863471Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"    grain_mutant_test.go:61: build lowered_GraphQL_printer 7d4de9f82dff miss 4.77\n"}
+{"Time":"2026-10-09T07:28:55.182039867Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Output":"--- PASS: TestProduct_GraphQLMutantLowered001 (4.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:55.182043833Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered001","Elapsed":4.97}
+{"Time":"2026-10-09T07:28:55.182055191Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:55.188146646Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":4.9879999999999995}
+{"Time":"2026-10-09T07:28:55.256566078Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:28:55.265568768Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002"}
+{"Time":"2026-10-09T07:28:55.265645294Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"=== RUN   TestProduct_GraphQLMutantLowered002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:55.265674758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"=== PAUSE TestProduct_GraphQLMutantLowered002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:55.265676651Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002"}
+{"Time":"2026-10-09T07:28:55.265679285Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002"}
+{"Time":"2026-10-09T07:28:55.265680597Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"=== CONT  TestProduct_GraphQLMutantLowered002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:28:55.266463018Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_002_source 9ef3de3b3435 hit 0.00\n"}
+{"Time":"2026-10-09T07:28:58.704152718Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"    shards_test.go:131: lowering wall 0.631s\n"}
+{"Time":"2026-10-09T07:29:00.55984697Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"    shards_test.go:134: C emission wall 1.854s\n"}
+{"Time":"2026-10-09T07:29:00.6388341Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"    grain_mutant_test.go:61: build lowered_GraphQL_printer 6a577ab28179 miss 5.01\n"}
+{"Time":"2026-10-09T07:29:00.639157028Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Output":"--- PASS: TestProduct_GraphQLMutantLowered002 (5.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:00.639164819Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantLowered002","Elapsed":5.37}
+{"Time":"2026-10-09T07:29:00.63960917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:00.644686164Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":5.388}
+{"Time":"2026-10-09T07:29:00.819125634Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:00.831005036Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle"}
+{"Time":"2026-10-09T07:29:00.831068552Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle","Output":"=== RUN   TestProduct_GraphQLMutantOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:00.831164237Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle","Output":"=== PAUSE TestProduct_GraphQLMutantOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:00.83116661Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle"}
+{"Time":"2026-10-09T07:29:00.831168673Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle"}
+{"Time":"2026-10-09T07:29:00.831170126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle","Output":"=== CONT  TestProduct_GraphQLMutantOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:02.318601436Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle","Output":"    grain_mutant_test.go:92: build GraphQL_mutant_Go_oracle fd8b942a003b hit 1.34\n"}
+{"Time":"2026-10-09T07:29:02.320980466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle","Output":"--- PASS: TestProduct_GraphQLMutantOracle (1.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:02.321041689Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantOracle","Elapsed":1.49}
+{"Time":"2026-10-09T07:29:02.321091063Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:02.324013515Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":1.505}
+{"Time":"2026-10-09T07:29:02.455800184Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:02.466332778Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000"}
+{"Time":"2026-10-09T07:29:02.466419218Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"=== RUN   TestProduct_GraphQLMutantSanitized000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:02.466449264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"=== PAUSE TestProduct_GraphQLMutantSanitized000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:02.466451347Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000"}
+{"Time":"2026-10-09T07:29:02.466455833Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000"}
+{"Time":"2026-10-09T07:29:02.466457135Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"=== CONT  TestProduct_GraphQLMutantSanitized000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:02.468402632Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_000_source dbb5fa6d0142 hit 0.00\n"}
+{"Time":"2026-10-09T07:29:04.93463613Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"    grain_mutant_test.go:61: build lowered_GraphQL_printer 4e2cdb8c5cc9 hit 2.28\n"}
+{"Time":"2026-10-09T07:29:13.029531629Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"    shards_test.go:160: clang wall 8.055s\n"}
+{"Time":"2026-10-09T07:29:13.029874667Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"    grain_mutant_test.go:68: build sanitized_GraphQL_printer e0bbba8b8bdd miss 8.07\n"}
+{"Time":"2026-10-09T07:29:13.029893505Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Output":"--- PASS: TestProduct_GraphQLMutantSanitized000 (10.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:13.029895969Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized000","Elapsed":10.56}
+{"Time":"2026-10-09T07:29:13.029913255Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:13.03216211Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":10.576}
+{"Time":"2026-10-09T07:29:13.106099972Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:13.114848674Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001"}
+{"Time":"2026-10-09T07:29:13.114911649Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"=== RUN   TestProduct_GraphQLMutantSanitized001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:13.114937307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"=== PAUSE TestProduct_GraphQLMutantSanitized001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:13.114939381Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001"}
+{"Time":"2026-10-09T07:29:13.114943807Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001"}
+{"Time":"2026-10-09T07:29:13.114945169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"=== CONT  TestProduct_GraphQLMutantSanitized001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:13.11629045Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_001_source 353795a39a50 hit 0.00\n"}
+{"Time":"2026-10-09T07:29:15.566422916Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"    grain_mutant_test.go:61: build lowered_GraphQL_printer 7d4de9f82dff hit 2.27\n"}
+{"Time":"2026-10-09T07:29:23.87472641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"    shards_test.go:160: clang wall 8.271s\n"}
+{"Time":"2026-10-09T07:29:23.87520329Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"    grain_mutant_test.go:68: build sanitized_GraphQL_printer 2224d0a2e851 miss 8.29\n"}
+{"Time":"2026-10-09T07:29:23.875215088Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Output":"--- PASS: TestProduct_GraphQLMutantSanitized001 (10.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:23.875425025Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized001","Elapsed":10.76}
+{"Time":"2026-10-09T07:29:23.875438836Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:23.878348619Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":10.772}
+{"Time":"2026-10-09T07:29:23.988958792Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:23.998799276Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002"}
+{"Time":"2026-10-09T07:29:23.999023665Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"=== RUN   TestProduct_GraphQLMutantSanitized002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:23.999049744Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"=== PAUSE TestProduct_GraphQLMutantSanitized002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:23.999051747Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002"}
+{"Time":"2026-10-09T07:29:23.999057025Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002"}
+{"Time":"2026-10-09T07:29:23.999058507Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"=== CONT  TestProduct_GraphQLMutantSanitized002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:24.000327353Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_002_source 9ef3de3b3435 hit 0.00\n"}
+{"Time":"2026-10-09T07:29:27.21737337Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"    grain_mutant_test.go:61: build lowered_GraphQL_printer 6a577ab28179 hit 3.00\n"}
+{"Time":"2026-10-09T07:29:36.937621765Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"    shards_test.go:160: clang wall 9.654s\n"}
+{"Time":"2026-10-09T07:29:36.937873615Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"    grain_mutant_test.go:68: build sanitized_GraphQL_printer 564b1206e689 miss 9.68\n"}
+{"Time":"2026-10-09T07:29:36.937882288Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Output":"--- PASS: TestProduct_GraphQLMutantSanitized002 (12.94s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:36.93791001Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSanitized002","Elapsed":12.94}
+{"Time":"2026-10-09T07:29:36.937989319Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:36.941166786Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":12.952}
+{"Time":"2026-10-09T07:29:37.028236773Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:37.03710177Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000"}
+{"Time":"2026-10-09T07:29:37.037154199Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000","Output":"=== RUN   TestProduct_GraphQLMutantSource000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.037191906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000","Output":"=== PAUSE TestProduct_GraphQLMutantSource000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.037193899Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000"}
+{"Time":"2026-10-09T07:29:37.037195671Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000"}
+{"Time":"2026-10-09T07:29:37.037197153Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000","Output":"=== CONT  TestProduct_GraphQLMutantSource000\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.037727855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_000_source dbb5fa6d0142 hit 0.00\n"}
+{"Time":"2026-10-09T07:29:37.03775797Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000","Output":"--- PASS: TestProduct_GraphQLMutantSource000 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.037760093Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource000","Elapsed":0}
+{"Time":"2026-10-09T07:29:37.037766843Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.038097117Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":0.01}
+{"Time":"2026-10-09T07:29:37.095604199Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:37.10324303Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001"}
+{"Time":"2026-10-09T07:29:37.103315129Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001","Output":"=== RUN   TestProduct_GraphQLMutantSource001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.103339325Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001","Output":"=== PAUSE TestProduct_GraphQLMutantSource001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.103341328Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001"}
+{"Time":"2026-10-09T07:29:37.103343071Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001"}
+{"Time":"2026-10-09T07:29:37.103344393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001","Output":"=== CONT  TestProduct_GraphQLMutantSource001\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.104020503Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_001_source 353795a39a50 hit 0.00\n"}
+{"Time":"2026-10-09T07:29:37.104048716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001","Output":"--- PASS: TestProduct_GraphQLMutantSource001 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.104050979Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource001","Elapsed":0}
+{"Time":"2026-10-09T07:29:37.104059402Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.104594329Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":0.009}
+{"Time":"2026-10-09T07:29:37.153782519Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T07:29:37.161399206Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002"}
+{"Time":"2026-10-09T07:29:37.161463283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002","Output":"=== RUN   TestProduct_GraphQLMutantSource002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.161486748Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002","Output":"=== PAUSE TestProduct_GraphQLMutantSource002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.161488541Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002"}
+{"Time":"2026-10-09T07:29:37.161490424Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002"}
+{"Time":"2026-10-09T07:29:37.161491866Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002","Output":"=== CONT  TestProduct_GraphQLMutantSource002\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.161959342Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002","Output":"    grain_mutant_test.go:46: build GraphQL_mutant_002_source 9ef3de3b3435 hit 0.00\n"}
+{"Time":"2026-10-09T07:29:37.161992932Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002","Output":"--- PASS: TestProduct_GraphQLMutantSource002 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.161997669Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestProduct_GraphQLMutantSource002","Elapsed":0}
+{"Time":"2026-10-09T07:29:37.162008596Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.162253465Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":0.008}
+{"Time":"2026-10-09T07:29:37.214080499Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T07:29:37.222813821Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle"}
+{"Time":"2026-10-09T07:29:37.222877157Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"=== RUN   TestProduct_JSONGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.222959321Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"=== PAUSE TestProduct_JSONGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:37.222961794Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle"}
+{"Time":"2026-10-09T07:29:37.22356216Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle"}
+{"Time":"2026-10-09T07:29:37.223566747Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"=== CONT  TestProduct_JSONGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:40.042532482Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"    port_matches_prepared_split_test.go:595: build json_split_Go_oracle 20aa1053e9dc miss 2.81\n"}
+{"Time":"2026-10-09T07:29:40.042795279Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"--- PASS: TestProduct_JSONGoOracle (2.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:40.042803401Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Elapsed":2.82}
+{"Time":"2026-10-09T07:29:40.042814918Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:40.046056171Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":2.832}
+{"Time":"2026-10-09T07:29:40.15437695Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T07:29:40.170131061Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort"}
+{"Time":"2026-10-09T07:29:40.17022291Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"=== RUN   TestProduct_JSONLoweredPort\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:40.170259395Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"=== PAUSE TestProduct_JSONLoweredPort\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:40.170262249Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort"}
+{"Time":"2026-10-09T07:29:40.171379756Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort"}
+{"Time":"2026-10-09T07:29:40.171412846Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"=== CONT  TestProduct_JSONLoweredPort\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:42.928618027Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"    port_matches_prepared_split_test.go:602: build json_lowered_port_and_backend_sources 3b91dacb25f9 miss 2.74\n"}
+{"Time":"2026-10-09T07:29:42.932072625Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"--- PASS: TestProduct_JSONLoweredPort (2.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:42.932092485Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Elapsed":2.76}
+{"Time":"2026-10-09T07:29:42.932178334Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:42.932305406Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":2.778}
+{"Time":"2026-10-09T07:29:43.265383762Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T07:29:43.297724631Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease"}
+{"Time":"2026-10-09T07:29:43.29779029Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"=== RUN   TestProduct_JSONNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:43.29791556Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"=== PAUSE TestProduct_JSONNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:43.297918854Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease"}
+{"Time":"2026-10-09T07:29:43.300231618Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease"}
+{"Time":"2026-10-09T07:29:43.30024598Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"=== CONT  TestProduct_JSONNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:44.386839142Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"    port_matches_prepared_split_test.go:602: build json_lowered_port_and_backend_sources 3b91dacb25f9 hit 1.05\n"}
+{"Time":"2026-10-09T07:29:50.117785627Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"    port_matches_prepared_split_test.go:617: build json_native_release_port 4c045b530270 miss 5.69\n"}
+{"Time":"2026-10-09T07:29:50.118364251Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"--- PASS: TestProduct_JSONNativeRelease (6.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:50.118606126Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Elapsed":6.82}
+{"Time":"2026-10-09T07:29:50.118779628Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:50.120160604Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":6.855}
+{"Time":"2026-10-09T07:29:50.230847904Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T07:29:50.24095218Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized"}
+{"Time":"2026-10-09T07:29:50.241029396Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"=== RUN   TestProduct_JSONNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:50.241060954Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"=== PAUSE TestProduct_JSONNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:50.241063678Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized"}
+{"Time":"2026-10-09T07:29:50.241852229Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized"}
+{"Time":"2026-10-09T07:29:50.241867983Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"=== CONT  TestProduct_JSONNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:29:51.354932095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"    port_matches_prepared_split_test.go:602: build json_lowered_port_and_backend_sources 3b91dacb25f9 hit 1.09\n"}
+{"Time":"2026-10-09T07:30:01.665460861Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"    port_matches_prepared_split_test.go:617: build json_native_ASan_UBSan_port 23134b1ff9f7 miss 10.11\n"}
+{"Time":"2026-10-09T07:30:01.665770709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"--- PASS: TestProduct_JSONNativeSanitized (11.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:01.66577783Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Elapsed":11.42}
+{"Time":"2026-10-09T07:30:01.665800073Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:01.667405763Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":11.437}
+{"Time":"2026-10-09T07:30:01.879985975Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T07:30:01.936273139Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle"}
+{"Time":"2026-10-09T07:30:01.936338177Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle","Output":"=== RUN   TestProduct_JSONUpstreamOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:01.936559091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle","Output":"=== PAUSE TestProduct_JSONUpstreamOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:01.936564589Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle"}
+{"Time":"2026-10-09T07:30:01.936567053Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle"}
+{"Time":"2026-10-09T07:30:01.936568806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle","Output":"=== CONT  TestProduct_JSONUpstreamOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:05.488436195Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle","Output":"    upstream_parity_split_test.go:409: build json_upstream_parity_audit_oracle c4e979c60b0c miss 3.53\n"}
+{"Time":"2026-10-09T07:30:05.488499861Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle","Output":"--- PASS: TestProduct_JSONUpstreamOracle (3.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:05.488502926Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONUpstreamOracle","Elapsed":3.55}
+{"Time":"2026-10-09T07:30:05.488515415Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:05.489704675Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":3.61}
+{"Time":"2026-10-09T07:30:05.534897027Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T07:30:05.544378491Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout"}
+{"Time":"2026-10-09T07:30:05.544436819Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout","Output":"=== RUN   TestProduct_MarkdownLeafGoDocLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:05.544455608Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout","Output":"=== PAUSE TestProduct_MarkdownLeafGoDocLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:05.544457591Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout"}
+{"Time":"2026-10-09T07:30:05.544459514Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout"}
+{"Time":"2026-10-09T07:30:05.544460725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout","Output":"=== CONT  TestProduct_MarkdownLeafGoDocLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:07.264473616Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout","Output":"    leaf_composition_products_test.go:35: build markdown-leaf-go-adamic_markdown_doclayout 31612f4f566d miss 1.72\n"}
+{"Time":"2026-10-09T07:30:07.26492705Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout","Output":"--- PASS: TestProduct_MarkdownLeafGoDocLayout (1.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:07.264945608Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoDocLayout","Elapsed":1.72}
+{"Time":"2026-10-09T07:30:07.265004267Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:07.265056476Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.73}
+{"Time":"2026-10-09T07:30:07.324018965Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T07:30:07.33410565Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists"}
+{"Time":"2026-10-09T07:30:07.334173532Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists","Output":"=== RUN   TestProduct_MarkdownLeafGoLists\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:07.334328957Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists","Output":"=== PAUSE TestProduct_MarkdownLeafGoLists\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:07.334331581Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists"}
+{"Time":"2026-10-09T07:30:07.334333554Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists"}
+{"Time":"2026-10-09T07:30:07.334334806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists","Output":"=== CONT  TestProduct_MarkdownLeafGoLists\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:09.273263369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists","Output":"    leaf_composition_products_test.go:30: build markdown-leaf-go-adamic_markdown_lists b79ff5cee325 miss 1.93\n"}
+{"Time":"2026-10-09T07:30:09.273382329Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists","Output":"--- PASS: TestProduct_MarkdownLeafGoLists (1.94s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:09.273385003Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafGoLists","Elapsed":1.94}
+{"Time":"2026-10-09T07:30:09.273394867Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:09.273975164Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.95}
+{"Time":"2026-10-09T07:30:09.330741948Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T07:30:09.338752683Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered"}
+{"Time":"2026-10-09T07:30:09.338807596Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"=== RUN   TestProduct_MarkdownLeafLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:09.338849709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"=== PAUSE TestProduct_MarkdownLeafLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:09.338852003Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered"}
+{"Time":"2026-10-09T07:30:09.338854747Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered"}
+{"Time":"2026-10-09T07:30:09.338856069Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"=== CONT  TestProduct_MarkdownLeafLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:58.097140363Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"    leaf_composition_independent_test.go:510: build markdown-leaf-lowered d9252e5825b3 miss 48.75\n"}
+{"Time":"2026-10-09T07:30:58.100801469Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"--- PASS: TestProduct_MarkdownLeafLowered (48.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:58.100813818Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Elapsed":48.76}
+{"Time":"2026-10-09T07:30:58.100827949Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:58.130233125Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":48.799}
+{"Time":"2026-10-09T07:30:58.356009869Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T07:30:58.376142171Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease"}
+{"Time":"2026-10-09T07:30:58.376236994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Output":"=== RUN   TestProduct_MarkdownLeafNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:58.376264786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Output":"=== PAUSE TestProduct_MarkdownLeafNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:30:58.376266719Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease"}
+{"Time":"2026-10-09T07:30:58.376268522Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease"}
+{"Time":"2026-10-09T07:30:58.376269994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Output":"=== CONT  TestProduct_MarkdownLeafNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:00.065442147Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Output":"    leaf_composition_independent_test.go:510: build markdown-leaf-lowered d9252e5825b3 hit 1.69\n"}
+{"Time":"2026-10-09T07:31:00.185106325Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Output":"    leaf_composition_independent_test.go:41: build markdown-leaf-native-false a30d48eb6f43 hit 0.02\n"}
+{"Time":"2026-10-09T07:31:00.18523541Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Output":"--- PASS: TestProduct_MarkdownLeafNativeRelease (1.81s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:00.185238645Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeRelease","Elapsed":1.81}
+{"Time":"2026-10-09T07:31:00.185248039Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:00.187035417Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.831}
+{"Time":"2026-10-09T07:31:00.28190547Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T07:31:00.293435216Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized"}
+{"Time":"2026-10-09T07:31:00.293500044Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Output":"=== RUN   TestProduct_MarkdownLeafNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:00.293538392Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Output":"=== PAUSE TestProduct_MarkdownLeafNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:00.293541677Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized"}
+{"Time":"2026-10-09T07:31:00.293547636Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized"}
+{"Time":"2026-10-09T07:31:00.293552633Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Output":"=== CONT  TestProduct_MarkdownLeafNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:01.75950013Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Output":"    leaf_composition_independent_test.go:510: build markdown-leaf-lowered d9252e5825b3 hit 1.46\n"}
+{"Time":"2026-10-09T07:31:01.916352479Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Output":"    leaf_composition_independent_test.go:41: build markdown-leaf-native-true 850c17277172 hit 0.02\n"}
+{"Time":"2026-10-09T07:31:01.916519491Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Output":"--- PASS: TestProduct_MarkdownLeafNativeSanitized (1.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:01.91653235Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafNativeSanitized","Elapsed":1.62}
+{"Time":"2026-10-09T07:31:01.916545129Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:01.918562936Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.637}
+{"Time":"2026-10-09T07:31:02.030712419Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T07:31:02.064559255Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle"}
+{"Time":"2026-10-09T07:31:02.064666286Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Output":"=== RUN   TestProduct_CompilerAgreementGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:02.064699597Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Output":"=== PAUSE TestProduct_CompilerAgreementGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:02.064702491Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle"}
+{"Time":"2026-10-09T07:31:02.065068023Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle"}
+{"Time":"2026-10-09T07:31:02.065073521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Output":"=== CONT  TestProduct_CompilerAgreementGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:08.357937778Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Output":"    compiler_stage1_split_test.go:182: build compiler-agreement-go-oracle 9dcf4fc65eec miss 6.09\n"}
+{"Time":"2026-10-09T07:31:08.357999602Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Output":"    compiler_stage1_split_test.go:287: TestProduct_CompilerAgreementGoOracle: 6.293s cooked=false\n"}
+{"Time":"2026-10-09T07:31:08.358008365Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Output":"--- PASS: TestProduct_CompilerAgreementGoOracle (6.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:08.358012101Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementGoOracle","Elapsed":6.29}
+{"Time":"2026-10-09T07:31:08.358022326Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:08.362051388Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":6.331}
+{"Time":"2026-10-09T07:31:08.432415752Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T07:31:08.465619376Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementReleaseNative"}
+{"Time":"2026-10-09T07:31:08.465693578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementReleaseNative","Output":"=== RUN   TestProduct_CompilerAgreementReleaseNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:08.465732156Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementReleaseNative","Output":"=== PAUSE TestProduct_CompilerAgreementReleaseNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:31:08.46573452Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementReleaseNative"}
+{"Time":"2026-10-09T07:31:08.466096776Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementReleaseNative"}
+{"Time":"2026-10-09T07:31:08.466123977Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_CompilerAgreementReleaseNative","Output":"=== CONT  TestProduct_CompilerAgreementReleaseNative\n","OutputType":"frame"}

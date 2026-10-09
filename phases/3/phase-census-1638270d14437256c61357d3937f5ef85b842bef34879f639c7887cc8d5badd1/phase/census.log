@@ -1,0 +1,3 @@
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestStage3FixtureHook	TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d	Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
+pending	github.com/system-inc/adamic/internal/oracle	TestEntriesAcceptance	TestEntriesAcceptance:extra	awaits codex/step12-entries-fixtures
+skips=2 required-input=0 unknown=0 pending=1

@@ -1,0 +1,883 @@
+run adamic-gate-pilot-again-20261009T080703-ddebb217: void, 1613 tests in 525 units, 203 failed, 262 units broken, 202 killed over budget
+BROKEN tests-18: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-91: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-92: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-93: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-95: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-96: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-97: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-98: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-100: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-101: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-102: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-103: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-104: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-105: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-106: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-107: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-108: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-109: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-110: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-112: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-113: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-116: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-117: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-118: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-119: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-121: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-122: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-123: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-124: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-125: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-128: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-130: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-131: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-132: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-133: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-134: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-135: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-136: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-137: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-138: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-139: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-140: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-142: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-143: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-144: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-146: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-147: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-148: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-149: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-151: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-152: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-153: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-154: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-155: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-156: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-157: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-158: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-159: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-160: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-161: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-162: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-163: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-164: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-165: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-166: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-167: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-168: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-170: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-171: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-172: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-173: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-174: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-175: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-176: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-177: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-178: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-180: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-181: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-183: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-184: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-185: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-186: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-188: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-190: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-191: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-192: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-194: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-195: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-196: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-197: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-198: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-199: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-201: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-202: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-204: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-205: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-206: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-207: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-208: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-209: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-210: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-211: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-212: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-213: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-214: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-216: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-217: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-219: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-220: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-222: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-223: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-224: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-225: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-226: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-227: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-228: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-229: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-230: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-231: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-232: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-233: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-234: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-235: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-236: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-237: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-238: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-239: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-241: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-242: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-244: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-245: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-246: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-247: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-248: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-249: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-372: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-373: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-375: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-376: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-377: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-378: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-379: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-380: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-381: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-384: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-385: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-386: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-387: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-388: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-389: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-390: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-392: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-393: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-394: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-396: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-397: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-398: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-399: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-400: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-401: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-402: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-403: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-404: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-405: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-407: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-412: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-413: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-414: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-415: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-416: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-417: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-418: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-419: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-420: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-422: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-424: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-425: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-426: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-427: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-428: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-430: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-431: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-432: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-433: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-434: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-435: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-436: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-438: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-439: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-440: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-441: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-442: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-444: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-446: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-447: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-448: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-449: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-450: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-451: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-452: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-453: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-454: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-455: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-456: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-457: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-458: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-459: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-460: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-461: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-462: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-464: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-466: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-468: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-469: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-470: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-471: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-473: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-476: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-477: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-478: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-479: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-481: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-482: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-483: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-484: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-486: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-487: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-488: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-489: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-490: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-491: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-492: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-493: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-494: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-495: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-498: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-499: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-501: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-502: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-503: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-505: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-506: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-507: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-509: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-510: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-511: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-512: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-513: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-514: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-515: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-517: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-518: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-519: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-520: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-521: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-522: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-523: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-527: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-528: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-529: no results (exited true, last output "3.5G\t/tmp/adamic")
+BROKEN tests-765: no results (exited true, last output "loom-pilot: running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_330")
+BROKEN tests-1262: no results (exited true, last output "3.7G\t/tmp/adamic")
+KILLED tests-00: over budget, P0
+KILLED tests-94: over budget, P0
+KILLED tests-99: over budget, P0
+KILLED tests-115: over budget, P0
+KILLED tests-126: over budget, P0
+KILLED tests-129: over budget, P0
+KILLED tests-150: over budget, P0
+KILLED tests-187: over budget, P0
+KILLED tests-189: over budget, P0
+KILLED tests-200: over budget, P0
+KILLED tests-218 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_Setup: over budget, P0
+KILLED tests-218 github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_0049: over budget, P0
+KILLED tests-243: over budget, P0
+KILLED tests-383: over budget, P0
+KILLED tests-391: over budget, P0
+KILLED tests-406: over budget, P0
+KILLED tests-408: over budget, P0
+KILLED tests-409: over budget, P0
+KILLED tests-410: over budget, P0
+KILLED tests-411: over budget, P0
+KILLED tests-421: over budget, P0
+KILLED tests-429: over budget, P0
+KILLED tests-475: over budget, P0
+KILLED tests-485: over budget, P0
+KILLED tests-497: over budget, P0
+KILLED tests-504: over budget, P0
+KILLED tests-530: over budget, P0
+KILLED tests-531: over budget, P0
+KILLED tests-534: over budget, P0
+KILLED tests-535: over budget, P0
+KILLED tests-536: over budget, P0
+KILLED tests-538: over budget, P0
+KILLED tests-540: over budget, P0
+KILLED tests-541: over budget, P0
+KILLED tests-542: over budget, P0
+KILLED tests-544: over budget, P0
+KILLED tests-545: over budget, P0
+KILLED tests-548: over budget, P0
+KILLED tests-549: over budget, P0
+KILLED tests-550: over budget, P0
+KILLED tests-551: over budget, P0
+KILLED tests-552: over budget, P0
+KILLED tests-553: over budget, P0
+KILLED tests-554: over budget, P0
+KILLED tests-557: over budget, P0
+KILLED tests-558: over budget, P0
+KILLED tests-560: over budget, P0
+KILLED tests-561: over budget, P0
+KILLED tests-562: over budget, P0
+KILLED tests-563: over budget, P0
+KILLED tests-565: over budget, P0
+KILLED tests-567: over budget, P0
+KILLED tests-568: over budget, P0
+KILLED tests-570: over budget, P0
+KILLED tests-572: over budget, P0
+KILLED tests-573: over budget, P0
+KILLED tests-574: over budget, P0
+KILLED tests-575: over budget, P0
+KILLED tests-576: over budget, P0
+KILLED tests-577: over budget, P0
+KILLED tests-578: over budget, P0
+KILLED tests-579: over budget, P0
+KILLED tests-580: over budget, P0
+KILLED tests-581: over budget, P0
+KILLED tests-582: over budget, P0
+KILLED tests-583: over budget, P0
+KILLED tests-585: over budget, P0
+KILLED tests-587: over budget, P0
+KILLED tests-589: over budget, P0
+KILLED tests-592: over budget, P0
+KILLED tests-593: over budget, P0
+KILLED tests-594: over budget, P0
+KILLED tests-596: over budget, P0
+KILLED tests-597: over budget, P0
+KILLED tests-598: over budget, P0
+KILLED tests-600: over budget, P0
+KILLED tests-602: over budget, P0
+KILLED tests-603: over budget, P0
+KILLED tests-606: over budget, P0
+KILLED tests-610: over budget, P0
+KILLED tests-613: over budget, P0
+KILLED tests-614: over budget, P0
+KILLED tests-615: over budget, P0
+KILLED tests-620: over budget, P0
+KILLED tests-621: over budget, P0
+KILLED tests-622: over budget, P0
+KILLED tests-623: over budget, P0
+KILLED tests-625: over budget, P0
+KILLED tests-626: over budget, P0
+KILLED tests-628: over budget, P0
+KILLED tests-629: over budget, P0
+KILLED tests-630: over budget, P0
+KILLED tests-632: over budget, P0
+KILLED tests-634: over budget, P0
+KILLED tests-635: over budget, P0
+KILLED tests-638: over budget, P0
+KILLED tests-642: over budget, P0
+KILLED tests-643: over budget, P0
+KILLED tests-644: over budget, P0
+KILLED tests-646: over budget, P0
+KILLED tests-647: over budget, P0
+KILLED tests-649: over budget, P0
+KILLED tests-650: over budget, P0
+KILLED tests-651: over budget, P0
+KILLED tests-652: over budget, P0
+KILLED tests-673: over budget, P0
+KILLED tests-675: over budget, P0
+KILLED tests-678: over budget, P0
+KILLED tests-681 github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo: over budget, P0
+KILLED tests-682: over budget, P0
+KILLED tests-684: over budget, P0
+KILLED tests-685: over budget, P0
+KILLED tests-686: over budget, P0
+KILLED tests-687: over budget, P0
+KILLED tests-688: over budget, P0
+KILLED tests-689: over budget, P0
+KILLED tests-693: over budget, P0
+KILLED tests-694: over budget, P0
+KILLED tests-695: over budget, P0
+KILLED tests-696: over budget, P0
+KILLED tests-697: over budget, P0
+KILLED tests-701: over budget, P0
+KILLED tests-702 github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier: over budget, P0
+KILLED tests-711: over budget, P0
+KILLED tests-713: over budget, P0
+KILLED tests-714: over budget, P0
+KILLED tests-719 github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange2/4176-4192-adede38c345b: over budget, P0
+KILLED tests-719 github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange2/4112-4128-edc57ff7cd1d: over budget, P0
+KILLED tests-719 github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange3/4240-4256-a4c37161a774: over budget, P0
+KILLED tests-719 github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange3/4304-4320-a406f17a91e7: over budget, P0
+KILLED tests-720: over budget, P0
+KILLED tests-721: over budget, P0
+KILLED tests-723: over budget, P0
+KILLED tests-724: over budget, P0
+KILLED tests-725: over budget, P0
+KILLED tests-737: over budget, P0
+KILLED tests-738: over budget, P0
+KILLED tests-739: over budget, P0
+KILLED tests-740: over budget, P0
+KILLED tests-742: over budget, P0
+KILLED tests-744: over budget, P0
+KILLED tests-745 github.com/system-inc/adamic/stage1/cohere/tsprinter TestTSCCorpusAgreement_001: over budget, P0
+KILLED tests-745 github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier: over budget, P0
+KILLED tests-747: over budget, P0
+KILLED tests-748: over budget, P0
+KILLED tests-750: over budget, P0
+KILLED tests-751: over budget, P0
+KILLED tests-753: over budget, P0
+KILLED tests-754: over budget, P0
+KILLED tests-755: over budget, P0
+KILLED tests-757: over budget, P0
+KILLED tests-758: over budget, P0
+KILLED tests-759: over budget, P0
+KILLED tests-760: over budget, P0
+KILLED tests-761: over budget, P0
+KILLED tests-762 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_231: over budget, P0
+KILLED tests-762 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_229: over budget, P0
+KILLED tests-762 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_220: over budget, P0
+KILLED tests-762 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_245: over budget, P0
+KILLED tests-762 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_232: over budget, P0
+KILLED tests-763: over budget, P0
+KILLED tests-764: over budget, P0
+KILLED tests-767: over budget, P0
+KILLED tests-768: over budget, P0
+KILLED tests-769: over budget, P0
+KILLED tests-771: over budget, P0
+KILLED tests-772: over budget, P0
+KILLED tests-774: over budget, P0
+KILLED tests-775: over budget, P0
+KILLED tests-777 github.com/system-inc/adamic/stage1/cohere/estree TestSyntaxMutantsUnion: over budget, P0
+KILLED tests-777 github.com/system-inc/adamic/stage1/cohere/estree TestBoundedPortParser_003: over budget, P0
+KILLED tests-778: over budget, P0
+KILLED tests-780: over budget, P0
+KILLED tests-781: over budget, P0
+KILLED tests-783: over budget, P0
+KILLED tests-785: over budget, P0
+KILLED tests-788: over budget, P0
+KILLED tests-789: over budget, P0
+KILLED tests-790 github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngineUnion: over budget, P0
+KILLED tests-791: over budget, P0
+KILLED tests-828: over budget, P0
+KILLED tests-829: over budget, P0
+KILLED tests-830: over budget, P0
+KILLED tests-832: over budget, P0
+KILLED tests-836: over budget, P0
+KILLED tests-837: over budget, P0
+KILLED tests-840: over budget, P0
+KILLED tests-842: over budget, P0
+KILLED tests-844: over budget, P0
+KILLED tests-847: over budget, P0
+KILLED tests-848 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_000: over budget, P0
+KILLED tests-848 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_Setup: over budget, P0
+KILLED tests-855: over budget, P0
+KILLED tests-856: over budget, P0
+KILLED tests-857: over budget, P0
+KILLED tests-858: over budget, P0
+KILLED tests-859 github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_004: over budget, P0
+KILLED tests-860: over budget, P0
+KILLED tests-861: over budget, P0
+KILLED tests-863: over budget, P0
+KILLED tests-864: over budget, P0
+KILLED tests-865: over budget, P0
+KILLED tests-870: over budget, P0
+KILLED tests-871: over budget, P0
+KILLED tests-872: over budget, P0
+KILLED tests-876: over budget, P0
+KILLED tests-877: over budget, P0
+KILLED tests-878: over budget, P0
+KILLED tests-879: over budget, P0
+KILLED tests-880: over budget, P0
+KILLED tests-882: over budget, P0
+KILLED tests-885: over budget, P0
+KILLED tests-886: over budget, P0
+FAIL tests-00 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-94 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-99 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-115 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-126 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-129 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-150 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-187 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-189 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-200 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-218 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_Setup; github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity_0049
+FAIL tests-243 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-383 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-391 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-406 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-408 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-409 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-410 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-411 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-421 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-429 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-475 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-485 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-497 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-504 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-530 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-531 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-534 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-535 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-536 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-538 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-540 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-541 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-542 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-544 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-545 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-548 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-549 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-550 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-551 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-552 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-553 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-554 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-557 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-558 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-560 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-561 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-562 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-563 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-565 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-567 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-568 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-570 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-572 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-573 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-574 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-575 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-576 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-577 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-578 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-579 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-580 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-581 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-582 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-583 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-585 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-587 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-589 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-592 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-593 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-594 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-596 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-597 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-598 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-600 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-602 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-603 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-606 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-610 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-613 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-614 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-615 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-620 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-621 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-622 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-623 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-625 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-626 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-628 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-629 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-630 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-632 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-634 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-635 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-638 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-642 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-643 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-644 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-646 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-647 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-649 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-650 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-651 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-652 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-673 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-675 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-678 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-681 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo
+FAIL tests-682 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-684 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-685 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-686 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-687 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-688 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-689 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-693 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-694 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-695 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-696 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-697 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-701 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-702 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+FAIL tests-711 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-713 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-714 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-719 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange2/4176-4192-adede38c345b; github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange2/4112-4128-edc57ff7cd1d; github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange3/4240-4256-a4c37161a774; github.com/system-inc/adamic/internal/unicodeproperties TestCanonicalizeUnicodeNodeRange3/4304-4320-a406f17a91e7
+FAIL tests-720 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-721 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-723 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-724 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-725 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-737 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-738 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-739 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-740 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-742 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-744 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-745 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/tsprinter TestTSCCorpusAgreement_001; github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+FAIL tests-747 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-748 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-750 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-751 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-753 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-754 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-755 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-757 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-758 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-759 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-760 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-761 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-762 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_231; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_229; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_220; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_245; github.com/system-inc/adamic/stage1/cohere/markdownblocks TestTokenizerEvents_232
+FAIL tests-763 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-764 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-767 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-768 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-769 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-771 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-772 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-774 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-775 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-777 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/estree TestSyntaxMutantsUnion; github.com/system-inc/adamic/stage1/cohere/estree TestBoundedPortParser_003
+FAIL tests-778 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-780 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-781 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-783 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-785 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-788 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-789 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-790 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngineUnion
+FAIL tests-791 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-828 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-829 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-830 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-832 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-836 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-837 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-840 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-842 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-844 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-847 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-848 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_000; github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_Setup
+FAIL tests-855 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-856 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-857 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-858 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-859 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_004
+FAIL tests-860 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-861 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-863 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-864 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-865 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller (package) (tests-868)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller [setup failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller [setup failed]
+FAIL tests-870 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-871 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-872 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-876 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-877 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-878 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-879 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-880 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-882 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-885 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-886 (killed at 90 s, over budget)
+    last output "Terminated"
