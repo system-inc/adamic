@@ -16,6 +16,9 @@ import (
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
 // adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	if name == "stack" {
+		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+	}
 	// Uniform offsets describe own storage; static names may instead read live parent data.
 	if e.staticFieldName(name) {
 		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
@@ -70,6 +73,9 @@ func (e *emitter) staticFieldName(name string) bool {
 // already has that guard. Unknown, absent and conflicting layouts keep checked lookup.
 // Frozen checks and value evaluation remain at the statement. Only C names may repeat.
 func (e *emitter) writeFieldSlot(object, name string, class int) string {
+	if name == "stack" {
+		return fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
+	}
 	lookup := fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if !cName.MatchString(object) {
 		return lookup
@@ -142,10 +148,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
+				e.line("adamic_object_set_slot_type(%s, %s, %d);", object, slot, fieldInitialRepresentation(field))
 			}
 			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+				e.line("adamic_object_set_slot_initialized(%s, %s, %t);", object, slot, !field.Uninitialized)
 			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
@@ -280,10 +286,13 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	table := "NULL"
 	methodNames, thunks := []string{}, []string{}
 	for _, method := range methods {
+		methodNames = append(methodNames, cString(method.Name))
 		if !e.dispatchable(method.Function) {
+			// Presence does not need a callable thunk. Keep the name even when
+			// this signature cannot be called through an adamic_value slot.
+			thunks = append(thunks, "NULL")
 			continue
 		}
-		methodNames = append(methodNames, cString(method.Name))
 		thunk := e.methodThunk(method.Function)
 		if e.program.ClosureConventionNeeded() {
 			field := "code"
@@ -320,7 +329,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 // dispatchable reports whether a class's method can be called through an interface: each value it
 // takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
-// interface reaches it with one, and it's left out of its class's table.
+// interface reaches it with one. Its name remains in the table for presence tests.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
 	needed := e.program.StructuralMethodThunks[function]

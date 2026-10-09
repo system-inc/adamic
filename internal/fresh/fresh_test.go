@@ -42,6 +42,10 @@ func freshPrograms(t *testing.T) []string {
 func checkFreshProgram(t *testing.T, path string) {
 	t.Helper()
 	writes, proven := 0, 0
+	// Runtime-only process probes are checked by their dedicated oracle tests.
+	if filepath.Base(path) == "node_process_directory_mutation.a" || filepath.Base(path) == "node_process_environment_mutation.a" {
+		return
+	}
 	absolute, err := filepath.Abs(path)
 	if err != nil {
 		t.Fatal(err)

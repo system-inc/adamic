@@ -115,9 +115,27 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 }
 
 // expressionStatement lowers an expression used as a statement: a console call, an assignment, or
-// ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
+// ++ and --. A discarded RegExp still evaluates construction and its arguments.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
+	if value, handled, err := l.borrowedOwnCall(expression); handled {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
+	if value, known, err := l.libraryErrorValue(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
+	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
@@ -190,6 +208,14 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
 		return l.increment(expression)
+	case ast.KindRegularExpressionLiteral, ast.KindNewExpression:
+		if expression.Kind == ast.KindRegularExpressionLiteral || l.isLibraryGlobal(expression.AsNewExpression().Expression, "RegExp") {
+			value, err := l.expression(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 	}
 	return nil, l.notYet(expression, describe(expression)+" as a statement")
 }
@@ -214,7 +240,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 		return l.returnAssignment(expression)
 	}
-	if l.isPanicCall(expression) {
+	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}

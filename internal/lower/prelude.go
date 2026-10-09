@@ -3,6 +3,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -22,10 +23,26 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	if value.Type() != ir.String {
-		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
+	// A checked assertion of a statically empty operand stops before console observes it.
+	// Keep the assertion evaluation rather than admitting an object to the scalar boundary.
+	argument := ast.SkipParentheses(arguments[0])
+	if argument.Kind == ast.KindNonNullExpression && l.checkedAssertionSource(argument) {
+		operand := l.checker.GetTypeAtLocation(argument.AsNonNullExpression().Expression)
+		if operand.Flags() == checker.TypeFlagsNull || operand.Flags() == checker.TypeFlagsUndefined {
+			return ir.Evaluate{Value: value}, nil
+		}
 	}
-	return ir.WriteLine{Stream: stream, Value: l.spelled(arguments[0], value)}, nil
+	if _, null := value.(ir.Null); null {
+		value = ir.StringConstant{Index: l.constant("null")}
+	} else if _, undefined := value.(ir.Undefined); undefined {
+		value = ir.StringConstant{Index: l.constant("undefined")}
+	} else {
+		value = l.spelled(arguments[0], value)
+		if value.Type() != ir.String {
+			return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
+		}
+	}
+	return ir.WriteLine{Stream: stream, Value: value}, nil
 }
 
 // isPanicCall reports whether an expression is a call to the prelude's panic, which never returns.

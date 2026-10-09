@@ -1,0 +1,13 @@
+const value = {text: 'old'.repeat(2), n: 1};
+Object.freeze(value);
+try { value.text = 'new'.repeat(2); } catch(error) {
+ if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+ console.log(`${error instanceof TypeError}/${error instanceof RangeError}`);
+}
+console.log(`${value.text}`);
+try { Object.assign(value, {n: 2}); } catch(error) {
+ if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+ console.log(`${error instanceof TypeError}/${error instanceof RangeError}`);
+}
+console.log(`${value.n}`);
+console.log('after property');

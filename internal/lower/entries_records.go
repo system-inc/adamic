@@ -207,6 +207,11 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
 	if target.Kind == ast.KindElementAccessExpression {
 		receiver = target.AsElementAccessExpression().Expression
 	}
+	if receiver != nil {
+		if err := l.regexUnsupportedUse(receiver); err != nil {
+			return err
+		}
+	}
 	if receiver == nil || !l.entriesStringIndexed(receiver) || l.entriesLiteralOrigin(receiver, 0) != nil {
 		return nil
 	}

@@ -1,0 +1,24 @@
+// a-check: checked
+// Copyright (c) Microsoft Corporation. Licensed under the Apache License, Version 2.0.
+// TypeScript d92d9bfe, compiler/core.ts:600-611, implementation overload narrowed to present maps.
+export function mapEntries<K1, V1, K2, V2>(map: ReadonlyMap<K1, V1>, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2> {
+    const result = new Map<K2, V2>();
+    map.forEach((value, key) => {
+        const [newKey, newValue] = f(key, value);
+        result.set(newKey, newValue);
+    });
+    return result;
+}
+
+// compiler/core.ts:1548-1557. An explicit receiver avoids the unchecked MultiMap expando cast.
+export function multiMapAdd<K, V>(map: Map<K, V[]>, key: K, value: V): V[] {
+    let values = map.get(key);
+    if (values !== undefined) {
+        values.push(value);
+    }
+    else {
+        values = [value];
+        map.set(key, values);
+    }
+    return values;
+}

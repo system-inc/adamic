@@ -410,6 +410,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
+		// A qualified name (NodeJS.ErrnoException) has no Text; only the identifier const is as const.
 		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
