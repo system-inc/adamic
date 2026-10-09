@@ -101,12 +101,11 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	normal := h.archive("checker", "", false)
+	stage0 := volumeStage0(t)
+	normal := volumeArchive(h, "checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	binary := h.build(stage0, "volume", entry, normal, false)
-	oracle := volumeOracle(h, "volume-oracle", "oracle_volume.go")
+	binary := volumeNative(h, stage0, "volume", entry, normal, false, false)
+	oracle := volumeProductOracle(h)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	var paths []string
 	for i, source := range volumeControls() {
@@ -121,8 +120,8 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 			t.Fatalf("rule %s lacks a positive control", name)
 		}
 	}
-	sanitized := h.archive("checker-asan", "", true)
-	asan := h.build(stage0, "volume-asan", entry, sanitized, true)
+	sanitized := volumeArchive(h, "checker-asan", "", true)
+	asan := volumeNative(h, stage0, "volume-asan", entry, sanitized, true, false)
 	h.compare("controls-asan", oracle, asan, config, manifest)
 
 	// Each new compiler question is proven consequential by replacing its answer
@@ -151,9 +150,9 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 			h.t = t
 			defer func() { h.t = previous }()
 			overlay := h.overlay(change.name, change.path, change.from, change.to)
-			archive := h.archive(change.name+"-checker", overlay, false)
+			archive := volumeArchive(h, change.name+"-checker", overlay, false)
 			t.Cleanup(func() { os.Remove(archive) })
-			mutant := h.build(stage0, change.name+"-native", entry, archive, false)
+			mutant := volumeNative(h, stage0, change.name+"-native", entry, archive, false, true)
 			t.Cleanup(func() { os.Remove(mutant) })
 			observed := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
 			if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
@@ -171,7 +170,7 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 const args=programArguments(); const path=args[1] ?? ''; const program=tsgoProgram(args[0] ?? '',[path]);tsgoRelease(program);
 console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 `)
-	stale := h.build(stage0, "released-inspect", releasedSource, normal, false)
+	stale := volumeNative(h, stage0, "released-inspect", releasedSource, normal, false, false)
 	probe := h.write("probe.ts", "x;\n")
 	observed := h.run("released-inspect-run", exec.Command(stale, config, probe))
 	if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(observed.stderr) != "adamic: panic: invalid or released checker handle\n" {
@@ -179,8 +178,8 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 	}
 	t.Log("released program queried with new question: panic 70, invalid or released checker handle")
 	overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
-	archive := h.archive("released-registry-checker", overlay, false)
-	mutated := h.build(stage0, "released-registry-native", releasedSource, archive, false)
+	archive := volumeArchive(h, "released-registry-checker", overlay, false)
+	mutated := volumeNative(h, stage0, "released-registry-native", releasedSource, archive, false, true)
 	observed = h.must("released-registry-run", exec.Command(mutated, config, probe))
 	t.Log("released registry mutant: exit 0 caught by required panic 70")
 	os.Remove(archive)
