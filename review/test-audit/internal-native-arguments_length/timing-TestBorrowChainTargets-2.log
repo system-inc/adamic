@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T15:05:06.86807831Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:05:06.878846213Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:06.878995784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== RUN   TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:06.879038738Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== PAUSE TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:06.879439811Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:06.879445399Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:06.879448053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== CONT  TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:06.87945918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"--- PASS: TestBorrowChainTargets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:06.879462374Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Elapsed":0}
+{"Time":"2026-10-09T15:05:06.879477326Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:06.879872615Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.011s\n"}
+{"Time":"2026-10-09T15:05:06.879900396Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.012}

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T15:05:12.047078133Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:05:12.056102466Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers"}
+{"Time":"2026-10-09T15:05:12.056204968Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"=== RUN   TestPassThroughsAreNotConsumers\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:12.056269523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"=== PAUSE TestPassThroughsAreNotConsumers\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:12.056273359Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers"}
+{"Time":"2026-10-09T15:05:12.056277114Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers"}
+{"Time":"2026-10-09T15:05:12.056279969Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"=== CONT  TestPassThroughsAreNotConsumers\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:12.057331253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"--- PASS: TestPassThroughsAreNotConsumers (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:12.057346766Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Elapsed":0}
+{"Time":"2026-10-09T15:05:12.057364272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:12.057400706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.010s\n"}
+{"Time":"2026-10-09T15:05:12.057411312Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.01}

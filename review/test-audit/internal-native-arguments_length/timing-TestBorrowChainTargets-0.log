@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T15:05:01.606215686Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:05:01.615134216Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:01.615223528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== RUN   TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:01.615281855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== PAUSE TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:01.615286511Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:01.61529216Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:01.615296096Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== CONT  TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:01.615321313Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"--- PASS: TestBorrowChainTargets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:01.6153263Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Elapsed":0}
+{"Time":"2026-10-09T15:05:01.615342054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:01.616330926Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.010s\n"}
+{"Time":"2026-10-09T15:05:01.616381Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.01}

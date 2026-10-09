@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T15:06:22.246772937Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:06:22.254565506Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount"}
+{"Time":"2026-10-09T15:06:22.254657072Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount","Output":"=== RUN   TestClosureConventionRuntimeDropCount\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:22.254756519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount","Output":"=== PAUSE TestClosureConventionRuntimeDropCount\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:22.254759653Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount"}
+{"Time":"2026-10-09T15:06:22.254842125Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount"}
+{"Time":"2026-10-09T15:06:22.25484505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount","Output":"=== CONT  TestClosureConventionRuntimeDropCount\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:22.335411981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount","Output":"    closure_convention_test.go:83: runtime callback drop-count mutant rejected by clang under -Werror: expected 3, have 2\n"}
+{"Time":"2026-10-09T15:06:22.335491579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount","Output":"--- PASS: TestClosureConventionRuntimeDropCount (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:22.335497908Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeDropCount","Elapsed":0.08}
+{"Time":"2026-10-09T15:06:22.335521022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:22.337117604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.090s\n"}
+{"Time":"2026-10-09T15:06:22.337147468Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.09}

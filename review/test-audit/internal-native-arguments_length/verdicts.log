@@ -1,0 +1,16 @@
+{
+  "TestNoReaderCallingConvention": "subsumed",
+  "TestBorrowChainDeclarations": "sacred",
+  "TestBorrowChainTargets": "sacred",
+  "TestPassThroughsAreNotConsumers": "sacred",
+  "TestCaseMappingMatchesNode": "sacred",
+  "TestCaseTablesMatchNodesUnicode": "sacred",
+  "TestInheritanceMemoryPlans": "sacred",
+  "TestClosureConventionDropCount": "witness",
+  "TestClosureConventionRuntimeDropCount": "witness",
+  "TestClosureConventionRuntimeFeaturesIgnoreLiterals": "subsumed",
+  "TestClosureConventionWrongOrder": "witness",
+  "TestParserHasNoUnusedOptionalMethodThunks": "untrue",
+  "TestOptionalMethodThunksMatchNode": "sacred",
+  "TestArithmeticIsNeverFused": "sacred"
+}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T15:06:17.565562268Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:06:17.576082979Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount"}
+{"Time":"2026-10-09T15:06:17.576331828Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount","Output":"=== RUN   TestClosureConventionDropCount\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:17.576438927Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount","Output":"=== PAUSE TestClosureConventionDropCount\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:17.576451235Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount"}
+{"Time":"2026-10-09T15:06:17.576476252Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount"}
+{"Time":"2026-10-09T15:06:17.576479698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount","Output":"=== CONT  TestClosureConventionDropCount\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:17.758228384Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount","Output":"    closure_convention_test.go:54: drop-count mutant rejected by clang under -Werror: expected 3, have 2\n"}
+{"Time":"2026-10-09T15:06:17.758329073Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount","Output":"--- PASS: TestClosureConventionDropCount (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:17.758659849Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionDropCount","Elapsed":0.18}
+{"Time":"2026-10-09T15:06:17.758700419Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:17.760801666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.193s\n"}
+{"Time":"2026-10-09T15:06:17.760825391Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.196}

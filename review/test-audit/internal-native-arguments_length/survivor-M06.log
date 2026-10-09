@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T15:17:04.53020806Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:17:04.539104728Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation"}
+{"Time":"2026-10-09T15:17:04.539190084Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation","Output":"=== RUN   TestAuditSurvivorObservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.539219157Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/captured-root"}
+{"Time":"2026-10-09T15:17:04.539222292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/captured-root","Output":"=== RUN   TestAuditSurvivorObservation/captured-root\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.539225777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/captured-root","Output":"captured-root borrows=1\n"}
+{"Time":"2026-10-09T15:17:04.539258586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/captured-root","Output":"--- PASS: TestAuditSurvivorObservation/captured-root (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.539267439Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/captured-root","Elapsed":0}
+{"Time":"2026-10-09T15:17:04.53928189Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/region-eligibility"}
+{"Time":"2026-10-09T15:17:04.539283823Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/region-eligibility","Output":"=== RUN   TestAuditSurvivorObservation/region-eligibility\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.578595183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/region-eligibility","Output":"region marked=4 ineligible-marked=0\n"}
+{"Time":"2026-10-09T15:17:04.578658968Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/region-eligibility","Output":"--- PASS: TestAuditSurvivorObservation/region-eligibility (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.578665097Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/region-eligibility","Elapsed":0.04}
+{"Time":"2026-10-09T15:17:04.578684786Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/actual-count"}
+{"Time":"2026-10-09T15:17:04.578687981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/actual-count","Output":"=== RUN   TestAuditSurvivorObservation/actual-count\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.68393265Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/actual-count","Output":"actual-count stdout=\"77\\n2\\n3\\n\"\n"}
+{"Time":"2026-10-09T15:17:04.683993339Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/actual-count","Output":"--- PASS: TestAuditSurvivorObservation/actual-count (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.68400049Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation/actual-count","Elapsed":0.11}
+{"Time":"2026-10-09T15:17:04.68400734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation","Output":"--- PASS: TestAuditSurvivorObservation (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.684012838Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAuditSurvivorObservation","Elapsed":0.14}
+{"Time":"2026-10-09T15:17:04.684030424Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:17:04.685909283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.155s\n"}
+{"Time":"2026-10-09T15:17:04.685945356Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.156}

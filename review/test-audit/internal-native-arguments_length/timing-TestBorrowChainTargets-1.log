@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T15:05:04.109731799Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:05:04.118584887Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:04.118665226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== RUN   TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:04.118691004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== PAUSE TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:04.118693458Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:04.118695541Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T15:05:04.118697274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== CONT  TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:04.118706718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"--- PASS: TestBorrowChainTargets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:04.118710022Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Elapsed":0}
+{"Time":"2026-10-09T15:05:04.118779956Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:04.119393659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.009s\n"}
+{"Time":"2026-10-09T15:05:04.119431074Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.01}

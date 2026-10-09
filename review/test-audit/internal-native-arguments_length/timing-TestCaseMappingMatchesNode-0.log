@@ -1,0 +1,30 @@
+{"Time":"2026-10-09T15:05:16.515323671Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:05:16.522619041Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode"}
+{"Time":"2026-10-09T15:05:16.52269325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode","Output":"=== RUN   TestCaseMappingMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.522718628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode","Output":"=== PAUSE TestCaseMappingMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.522720881Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode"}
+{"Time":"2026-10-09T15:05:16.522723285Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode"}
+{"Time":"2026-10-09T15:05:16.522724867Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode","Output":"=== CONT  TestCaseMappingMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.719514062Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points"}
+{"Time":"2026-10-09T15:05:16.719589654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points","Output":"=== RUN   TestCaseMappingMatchesNode/points\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.719602373Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points","Output":"=== PAUSE TestCaseMappingMatchesNode/points\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.719604576Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points"}
+{"Time":"2026-10-09T15:05:16.719609373Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts"}
+{"Time":"2026-10-09T15:05:16.719611546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts","Output":"=== RUN   TestCaseMappingMatchesNode/contexts\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.719615602Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts","Output":"=== PAUSE TestCaseMappingMatchesNode/contexts\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.719617475Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts"}
+{"Time":"2026-10-09T15:05:16.71962091Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points"}
+{"Time":"2026-10-09T15:05:16.719622653Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points","Output":"=== CONT  TestCaseMappingMatchesNode/points\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:16.719625397Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts"}
+{"Time":"2026-10-09T15:05:16.719628101Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts","Output":"=== CONT  TestCaseMappingMatchesNode/contexts\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:18.106130484Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts","Output":"    case_test.go:234: 245410 lines, 0 mismatches\n"}
+{"Time":"2026-10-09T15:05:18.106196511Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts","Output":"--- PASS: TestCaseMappingMatchesNode/contexts (1.39s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:29.206826589Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/contexts","Elapsed":1.39}
+{"Time":"2026-10-09T15:05:29.206895771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points","Output":"    case_test.go:234: 1114112 lines, 0 mismatches\n"}
+{"Time":"2026-10-09T15:05:29.206907809Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points","Output":"--- PASS: TestCaseMappingMatchesNode/points (12.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:29.207394479Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode/points","Elapsed":12.49}
+{"Time":"2026-10-09T15:05:29.207400668Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode","Output":"--- PASS: TestCaseMappingMatchesNode (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:29.207403783Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCaseMappingMatchesNode","Elapsed":0.2}
+{"Time":"2026-10-09T15:05:29.207405826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:05:29.208525928Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t12.693s\n"}
+{"Time":"2026-10-09T15:05:29.208553729Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":12.693}

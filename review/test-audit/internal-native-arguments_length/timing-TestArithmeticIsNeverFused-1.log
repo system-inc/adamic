@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T15:07:19.695806799Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:07:19.703069086Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused"}
+{"Time":"2026-10-09T15:07:19.703178288Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"=== RUN   TestArithmeticIsNeverFused\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:07:19.703213831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"=== PAUSE TestArithmeticIsNeverFused\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:07:19.703217446Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused"}
+{"Time":"2026-10-09T15:07:19.703221041Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused"}
+{"Time":"2026-10-09T15:07:19.703223765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"=== CONT  TestArithmeticIsNeverFused\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:07:19.968753804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"    contract_test.go:92: linux/amd64, -march=\"haswell\": contraction allowed fuses, and Build never does, with or without the sanitizers\n"}
+{"Time":"2026-10-09T15:07:19.982351836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"--- PASS: TestArithmeticIsNeverFused (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:07:19.98240141Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Elapsed":0.27}
+{"Time":"2026-10-09T15:07:19.98244863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:07:19.982518213Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.286s\n"}
+{"Time":"2026-10-09T15:07:19.982528838Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.287}

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T15:06:31.578808703Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T15:06:31.586327507Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals"}
+{"Time":"2026-10-09T15:06:31.586416349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals","Output":"=== RUN   TestClosureConventionRuntimeFeaturesIgnoreLiterals\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:31.586441045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals","Output":"=== PAUSE TestClosureConventionRuntimeFeaturesIgnoreLiterals\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:31.586443679Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals"}
+{"Time":"2026-10-09T15:06:31.586445953Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals"}
+{"Time":"2026-10-09T15:06:31.586447825Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals","Output":"=== CONT  TestClosureConventionRuntimeFeaturesIgnoreLiterals\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:31.599169743Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals","Output":"--- PASS: TestClosureConventionRuntimeFeaturesIgnoreLiterals (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:31.599222631Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestClosureConventionRuntimeFeaturesIgnoreLiterals","Elapsed":0.01}
+{"Time":"2026-10-09T15:06:31.599261498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:06:31.59997227Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.021s\n"}
+{"Time":"2026-10-09T15:06:31.59999243Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.021}
