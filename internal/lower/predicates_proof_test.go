@@ -138,11 +138,11 @@ func TestPredicateCallbackContracts(t *testing.T) {
 }
 
 func TestEveryNeedsCallbackEffects(t *testing.T) {
-	source, err := os.ReadFile("testdata/predicates/every_alias.a")
+	source, err := os.ReadFile("testdata/predicates/every_alias.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "every.a")
+	path := filepath.Join(t.TempDir(), "every.ts")
 	if err = os.WriteFile(path, source, 0644); err != nil {
 		t.Fatal(err)
 	}

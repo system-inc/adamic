@@ -365,7 +365,8 @@ stderr on native and Node, and the byte comparison catches each:
 
 [emptyAlternative.ts](gaps/emptyAlternative.ts) proves the additional
 `lower.NotYet` observation `an array of never`: an untyped empty array in a
-conditional branch does not lower, though Node prints `1`. The workaround is a
+conditional branch did not lower, though Node prints `1`; it lowers on compiler/area-stack
+(views slice 1, Oct 8) and `TestClosedLexerGaps` holds it. The workaround is a
 separately initialized, explicitly typed array followed by conditional assignment.
 The earlier GraphQL-era forward class method limitation is closed on this main:
 a scratch forward-method probe compiled successfully. No new refusal is claimed
@@ -418,7 +419,7 @@ closed gap requires updating the workaround.
 
 | Program | Node stdout | Observed refusal | Port workaround |
 | --- | --- | --- | --- |
-| [prefixIncrement.ts](gaps/prefixIncrement.ts) | `1` | `a PrefixUnaryExpression on a number` | Increment in a separate statement |
+| [prefixIncrement.ts](gaps/prefixIncrement.ts) | `1` | Closed by compiler/area-stack (views slice 1) | Increment in a separate statement |
 | [assignmentValue.ts](gaps/assignmentValue.ts) | `1` | Closed by compiler/area-next | Assign before reading the result |
 | [stringPresence.ts](gaps/stringPresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Lexer sentinel tests use native string truthiness and negation |
 
@@ -431,7 +432,9 @@ LeakSanitizer and from emitted JavaScript, as the presence gaps do. valueConjunc
 lowers but its C emission panics, `native: no conversion from 4 to 9`; the test names
 that as its failure rather than letting the panic end the package, and it is the
 compiler's to fix or refuse. The port's workarounds still stand; retiring each is
-its own change against the corpus. `TestLexerGaps` keeps the three that still refuse.
+its own change against the corpus. compiler/area-stack (views slice 1) closes two more,
+prefixIncrement and emptyAlternative, and `TestClosedLexerGaps` holds them the same way.
+`TestLexerGaps` keeps the one that still stops, multiplePush.
 
 Labels and logical assignment operators are explicit 0.1 refusals, not newly
 observed language gaps. The port uses ordinary loop control and assignments.
