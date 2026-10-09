@@ -75,6 +75,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				return call, true, nil
 			}
 		}
+		if l.errorAncestry(l.checker.GetTypeAtLocation(written[0])) {
+			return nil, true, l.notYet(written[0], "Object."+name+" on Error (its inherited name and non-enumerable own descriptors need presence representation)")
+		}
 		// Assignment and freezing retain their existing exact-shape requirement.
 		// A plain const's literal initializer proves the complete shape, including field presence.
 		shape := ast.SkipParentheses(written[0])
@@ -255,7 +258,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 }
 
 // objectCanFreeze is conservative across aliases and calls. A try around a write in a program
-// that freezes objects is NotYet until library TypeErrors participate in exception cleanup.
+// that freezes objects needs checked writes and catchable library TypeErrors.
 func (l *lowering) objectCanFreeze() bool {
 	found := false
 	walk(l.result.Main, func(node any) bool {

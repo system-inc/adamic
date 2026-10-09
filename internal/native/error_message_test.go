@@ -19,8 +19,12 @@ int main(void) {
     adamic_string *messages[] = {NULL, &empty, &text, NULL};
     adamic_slot_cache cache = {NULL, 0};
     adamic_slot_cache optional_cache = {NULL, 0};
+    const char *kinds[] = {"Error", "RangeError", "TypeError"};
+    const adamic_class *classes[] = {&adamic_error_class, &adamic_range_error_class, &adamic_type_error_class};
+    for (size_t kind = 0; kind < 3; kind++) {
     for (size_t i = 0; i < 4; i++) {
-        adamic_object *error = adamic_error_new(messages[i]);
+        adamic_object *error = adamic_error_new_kind(messages[i], kinds[kind]);
+        if (error->class != classes[kind]) return 3;
         adamic_string *message = adamic_object_field(error, "message", &cache)->reference;
         printf("[%.*s] %s %s\n", (int)message->length, message->bytes,
             adamic_object_has(error, &key) ? "true" : "false",
@@ -31,12 +35,14 @@ int main(void) {
         if (checked.reference != message) return 2;
         adamic_release(error);
     }
+    }
     return 0;
 }
 `
-	const oracle = `for (const error of [new Error(), new Error(''), new Error('m'), new Error(undefined)]) console.log('[' + error.message + '] ' + error.hasOwnProperty('message') + ' ' + Object.hasOwn(error, 'message'));`
+	const oracle = `for (const Constructor of [Error, RangeError, TypeError]) for (const error of [new Constructor(), new Constructor(''), new Constructor('m'), new Constructor(undefined)]) console.log('[' + error.message + '] ' + error.hasOwnProperty('message') + ' ' + Object.hasOwn(error, 'message'));`
 	want := runWithInput(t, "", "node", "--eval", oracle)
-	if want != "[] false false\n[] true true\n[m] true true\n[] false false\n" {
+	const oneKind = "[] false false\n[] true true\n[m] true true\n[] false false\n"
+	if want != oneKind+oneKind+oneKind {
 		t.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(t.TempDir(), "error-message")

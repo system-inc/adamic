@@ -1,0 +1,11 @@
+// Generalizes program.ts:2854 rethrow to a fresh object passed through a consumer.
+// The same payload must remain alive after unwinding the consuming statement.
+interface Failure { readonly message: string; }
+function build(index: number): Failure { return { message: `payload${index}` }; }
+function fail(value: Failure): void { throw value; }
+try { fail(build(1)); }
+catch (error) {
+    if (typeof error === 'object' && error !== null && 'message' in error && typeof error.message === 'string') {
+        console.log(error.message);
+    }
+}

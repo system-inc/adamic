@@ -4,32 +4,25 @@
 // makes preceding writes reach their descriptors before process.exit, including pipes on macOS.
 import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 
-// A second failure while the first is being reported (stderr closed under it, say) ends the program
-// at once. Without this, the write fails, that failure is another uncaught exception, whose report
-// fails the same way, forever, at full speed: two orphaned processes once ran for half an hour so.
-let panicking = false;
-
-process.on('uncaughtException', (error) => {
-	if (panicking) {
-		process.exit(70);
-	}
-	panicking = true;
-	let message = String(error);
-	// Preserve the independently observed function from V8's stack. Generated
-	// backend function labels carry the same source name after their index.
-	if (message === 'RangeError: Maximum call stack size exceeded') {
-		const frame = String(error.stack).split('\n')[1] ?? '';
-		const name = frame.match(/^\s*at ([^ ()]+) \(/)?.[1];
-		if (name) message += ` in ${name.replace(/^function_\d+_/, '')}`;
-	}
-	process.stderr.write(`adamic: panic: ${message}\n`);
-	process.exitCode = 70;
-});
-
+// Uncaught language exceptions retain Node's exit 1 behavior. Only panic exits 70.
 for (const stream of [process.stdout, process.stderr]) {
 	// Node exposes this on pipe and terminal handles; regular files already write synchronously.
 	stream._handle?.setBlocking(true);
 	stream.on('error', () => process.exit(70));
+}
+
+// Opt-in comparison for the hash-pinned terminal fixtures in node.mjs. This
+// observes Node's own engine failure; it does not classify arbitrary payloads.
+export function terminalCheckOracle() {
+	process.on('uncaughtExceptionMonitor', (error) => {
+		let message = String(error);
+		if (message === 'RangeError: Maximum call stack size exceeded') {
+			const frame = String(error.stack).split('\n')[1] ?? '';
+			const name = frame.match(/^\s*at ([^ ()]+) \(/)?.[1];
+			if (name) message += ` in ${name.replace(/^function_\d+_/, '')}`;
+		}
+		panic(message);
+	});
 }
 
 export function panic(message) {

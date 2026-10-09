@@ -912,10 +912,19 @@ void adamic_weak_dropped(adamic_weak *handle);
 // nothing else can reach, and a Weak reaches without counting.
 bool adamic_weak_held(const void *target);
 
-// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
-// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
-// Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern adamic_object *adamic_thrown;
+// adamic_thrown owns a tagged union payload (NULL is undefined). The separate pending flag
+// distinguishes a thrown undefined from no exception. Every throwing call tests the flag.
+// A catch takes ownership; adamic_uncaught flushes stdout and exits 1 without conversion.
+extern adamic_heap *adamic_thrown;
+extern bool adamic_exception_pending;
+extern const adamic_class adamic_error_class;
+extern const adamic_class adamic_host_error_class;
+extern const adamic_class adamic_host_type_error_class;
+extern const adamic_class adamic_host_range_error_class;
+extern const adamic_class adamic_range_error_class;
+extern const adamic_class adamic_type_error_class;
+adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind);
+adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code);
 // NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
 const char *adamic_error_field_name(const adamic_object *object, const char *name);

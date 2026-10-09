@@ -73,6 +73,15 @@ func TestStep18SourceBaselines(t *testing.T) {
 				t.Fatal(err)
 			}
 			got := onNode(t, path)
+			// Historical source observations keep the pre-step-21 exit-70 renderer.
+			// The same language TypeError now has Node's ordinary uncaught exit 1.
+			if observation.Node.Exit == 70 && got.exitCode != 70 && strings.HasPrefix(observation.Node.Stderr, "adamic: panic: TypeError:") {
+				message := strings.TrimSpace(strings.TrimPrefix(observation.Node.Stderr, "adamic: panic: "))
+				if got.exitCode != 1 || string(got.stdout) != observation.Node.Stdout || !strings.Contains(string(got.stderr), message) {
+					t.Fatalf("Node language exception differs: got %#v, want stdout %q and %s", got, observation.Node.Stdout, message)
+				}
+				return
+			}
 			if got.exitCode != observation.Node.Exit || string(got.stdout) != observation.Node.Stdout || string(got.stderr) != observation.Node.Stderr {
 				t.Fatalf("Node differs from source baseline: exit %d, stdout %q, stderr %q; want exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr, observation.Node.Exit, observation.Node.Stdout, observation.Node.Stderr)
 			}

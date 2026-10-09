@@ -1,0 +1,5 @@
+missing-exception-edge: exit 1, caught by runtime error:
+assignment-kills-handler-value: exit 1, caught by old text is dead
+throw-temporaries-leak: exit 1, caught by leaks:
+pending-finally-leak: exit 1, caught by leaks:
+error-message-not-retained: exit 1, caught by AddressSanitizer: heap-use-after-free

@@ -66,7 +66,7 @@ func TestParserStackPathological(t *testing.T) {
 	}
 	actual, _ := nativelyUncached(t, program)
 	want := "adamic: panic: RangeError: Maximum call stack size exceeded in parseNested\n"
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program), "release": released(t, program)} {
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program, path), "release": released(t, program)} {
 		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != want {
 			t.Errorf("%s %+v, want %q", backend, got, want)
 		}

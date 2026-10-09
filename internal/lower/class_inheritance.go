@@ -17,6 +17,11 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 			continue
 		}
 		types := clause.AsHeritageClause().Types.Nodes
+		for _, name := range []string{"Error", "RangeError", "TypeError"} {
+			if len(types) == 1 && l.isLibraryGlobal(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression), name) {
+				return l.errorBase(name), nil
+			}
+		}
 		if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
 			return nil, l.notYet(clause, "a computed class base; name the base class directly")
 		}
@@ -429,6 +434,9 @@ func (l *lowering) superCall(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "super outside a derived constructor")
 	}
 	arguments := []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}}
+	if l.result.Classes[l.instance.base.class-1].BuiltinError != "" && len(nodesOf(node.AsCallExpression().Arguments)) > 1 {
+		return nil, l.notYet(node, "Error constructor options")
+	}
 	for _, argument := range nodesOf(node.AsCallExpression().Arguments) {
 		value, err := l.expression(argument)
 		if err != nil {

@@ -111,6 +111,9 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, l.notYet(name, "the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
+	if l.caught[symbol] {
+		valueType = ir.Union
+	}
 	inferred := l.evolvingObject(name)
 	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
@@ -303,6 +306,27 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			b := l.libraryArrayBuilder([]ir.Expression{read})
 			held := b.read(b.parameters[0])
 			matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+			if narrowed == ir.Object && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error", "RangeError", "TypeError") {
+				identity := -1
+				for index, builtin := range []string{"Error", "RangeError", "TypeError"} {
+					if l.isLibraryType(l.checker.GetTypeAtLocation(node), builtin) {
+						identity = -index - 1
+						break
+					}
+				}
+				matches = ir.InstanceOf{Value: held, Class: identity}
+			} else if narrowed == ir.Object && isClassInstance(l.checker.GetTypeAtLocation(node)) {
+				proven := l.checker.GetTypeAtLocation(node)
+				declaration := l.classes[proven.Symbol()]
+				if declaration == nil {
+					return nil, l.notYet(node, "an unknown narrowed to an unrepresented nominal class")
+				}
+				instance, err := l.instantiate(declaration, proven, node)
+				if err != nil {
+					return nil, err
+				}
+				matches = ir.InstanceOf{Value: held, Class: instance.class}
+			}
 			if narrowed == ir.Array {
 				matches = ir.ArrayIsArray{Value: held}
 			}

@@ -63,9 +63,8 @@ func TestStep18StorageTypeLie(t *testing.T) {
 				t.Fatal(err)
 			}
 			node := onNode(t, path)
-			wantNode := run{stdout: []byte("arguments\n"), stderr: []byte("adamic: panic: TypeError: host.callback is not a function\n"), exitCode: 70}
-			if difference := disagreement(wantNode, node); difference != "" {
-				t.Fatalf("Node order changed: %s; got %#v", difference, node)
+			if node.exitCode != 1 || string(node.stdout) != "arguments\n" || !strings.Contains(string(node.stderr), "TypeError: host.callback is not a function") {
+				t.Fatalf("Node order changed: got %#v", node)
 			}
 
 			want := run{stdout: []byte("arguments\n"), stderr: []byte("adamic: panic: TypeError: optional call value is not callable\n"), exitCode: 70}
@@ -88,9 +87,8 @@ func TestStep18DetachedMethod(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := onNode(t, path)
-	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: TypeError: Cannot read properties of undefined (reading 'label')\n"), exitCode: 70}
-	if difference := disagreement(want, source); difference != "" {
-		t.Fatalf("Node: %s; got %#v", difference, source)
+	if source.exitCode != 1 || string(source.stdout) != "before\n" || !strings.Contains(string(source.stderr), "TypeError: Cannot read properties of undefined (reading 'label')") {
+		t.Fatalf("Node: got %#v", source)
 	}
 	program, err := lowered(t, path)
 	var refused *lower.Refused
