@@ -1,0 +1,8 @@
+=== RUN   TestOverloadCallbackUnserved
+=== RUN   TestOverloadCallbackUnserved/representation
+    overload_callback_test.go:38: expected an unserved callback refusal, got <nil>
+--- FAIL: TestOverloadCallbackUnserved (0.03s)
+    --- FAIL: TestOverloadCallbackUnserved/representation (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.040s
+FAIL

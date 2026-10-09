@@ -1,0 +1,12 @@
+interface Result<T> { readonly value:T; }
+function make() {
+ function evaluate(input:string):Result<string|undefined>;
+ function evaluate(input:string|number):Result<string|number|undefined>;
+ function evaluate(input:string|number):Result<string|number|undefined> { return {value:'word'}; }
+ return evaluate;
+}
+const evaluate=make();
+const narrow:(input:string)=>Result<string|undefined>=evaluate;
+console.log(`${narrow===evaluate}`);
+console.log(`${narrow('text').value}`);
+console.log(`${evaluate(1).value}`);

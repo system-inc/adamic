@@ -1,0 +1,25 @@
+// Reduced overload boundary from compiler/utilities.ts createEvaluator.
+interface TemplateExpression { readonly kind: 'template'; readonly text: string; }
+interface NumericExpression { readonly kind: 'number'; readonly number: number; }
+type Expression = TemplateExpression | NumericExpression;
+interface EvaluatorResult<T extends string | number | undefined = string | number | undefined> {
+ value: T;
+ isSyntacticallyString: boolean;
+ resolvedOtherFiles: boolean;
+ hasExternalReferences: boolean;
+}
+function evaluatorResult<T extends string | number | undefined>(value: T): EvaluatorResult<T> {
+ return { value, isSyntacticallyString: false, resolvedOtherFiles: false, hasExternalReferences: false };
+}
+function evaluate(expr: TemplateExpression): EvaluatorResult<string | undefined>;
+function evaluate(expr: Expression): EvaluatorResult;
+function evaluate(expr: Expression): EvaluatorResult {
+ if (expr.kind === 'template') { return evaluatorResult<string | number | undefined>(expr.text); }
+ return evaluatorResult<string | number | undefined>(expr.number);
+}
+const template = evaluate({ kind: 'template', text: 'hello' });
+console.log(`${template.value}:${template.hasExternalReferences}`);
+template.value = 'changed';
+console.log(`${template.value}`);
+const numeric = evaluate({ kind: 'number', number: 17 });
+console.log(`${typeof numeric.value}:${String(numeric.value)}`);

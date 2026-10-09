@@ -1,0 +1,10 @@
+--- stage3/census/latent/units.go.txt
++++ stage3/census/latent/units.go.txt
+@@ -141,6 +141,7 @@
+ 		base.latentRegisterNested(program.Files())
+ 		for _, candidate := range latentCandidates(program, file) {
+ 			node := candidate.node
++ if selection != nil && selection.node == nil { continue }
+ 			if selection != nil && selection.node != nil && node != selection.node {
+ 				continue
+ 			}

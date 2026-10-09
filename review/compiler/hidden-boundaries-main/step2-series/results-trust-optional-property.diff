@@ -1,0 +1,11 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -92,7 +92,7 @@
+ 			return false
+ 		}
+ 		sourceProperty := l.checker.GetPropertyOfType(produced, property.Name)
+-		if sourceProperty == nil || sourceProperty.Flags&ast.SymbolFlagsOptional != 0 || accessorSymbol(sourceProperty) {
++		if sourceProperty == nil || accessorSymbol(sourceProperty) {
+ 			return false
+ 		}
+ 		source := l.concrete(l.checker.GetTypeOfSymbol(sourceProperty))

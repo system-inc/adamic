@@ -1,0 +1,6 @@
+interface Declaration { readonly kind: number; }
+interface Assignment { readonly kind: 1; readonly value: number; }
+interface Access { readonly kind: 2; readonly name: string; }
+function declaration(): Declaration { return { kind: 3 }; }
+const narrowed = declaration() as Assignment | Access;
+console.log(`${narrowed.kind}`);

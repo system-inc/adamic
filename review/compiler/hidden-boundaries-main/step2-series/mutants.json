@@ -1,0 +1,577 @@
+[
+  {
+    "mutant": "results-trust-optional-property",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadResultsRefusesOptionalResultProperty$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadResultsRefusesOptionalResultProperty",
+        "seconds": 0.03
+      }
+    ],
+    "wall_seconds": 11.784
+  },
+  {
+    "mutant": "results-trust-result",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadResultsLiarStops",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadResultsLiarStopsLiar",
+        "seconds": 0.89
+      },
+      {
+        "test": "TestOverloadResultsLiarStopsEvaluateLiar",
+        "seconds": 1.35
+      }
+    ],
+    "wall_seconds": 7.573
+  },
+  {
+    "mutant": "results-drop-specialization",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestNativeAgreesWithNode$/internal/oracle/testdata/overload_results_binding.a$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a",
+        "seconds": 0.55
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "seconds": 0.04
+      }
+    ],
+    "wall_seconds": 16.229
+  },
+  {
+    "mutant": "results-drop-parameter-check",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadResultsLiarStopsParameterLiar$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadResultsLiarStopsParameterLiar",
+        "seconds": 0.53
+      }
+    ],
+    "wall_seconds": 12.023
+  },
+  {
+    "mutant": "results-trust-shared-result",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadResultsRefuses",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadResultsRefusesSharedReadonlyResult",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestOverloadResultsRefusesSharedWritableResult",
+        "seconds": 0.29
+      }
+    ],
+    "wall_seconds": 6.602
+  },
+  {
+    "mutant": "callback-input",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadCallbackUnservedInput$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadCallbackUnservedInput",
+        "seconds": 0.07
+      }
+    ],
+    "wall_seconds": 11.258
+  },
+  {
+    "mutant": "callback-result",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadCallbackUnservedResult$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadCallbackUnservedResult",
+        "seconds": 0.09
+      }
+    ],
+    "wall_seconds": 10.457
+  },
+  {
+    "mutant": "callback-representation",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadCallbackUnservedRepresentation$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadCallbackUnservedRepresentation",
+        "seconds": 0.09
+      }
+    ],
+    "wall_seconds": 10.924
+  },
+  {
+    "mutant": "callback-field-storage",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadCallbackFieldStorage$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadCallbackFieldStorage",
+        "seconds": 0.08
+      }
+    ],
+    "wall_seconds": 10.681
+  },
+  {
+    "mutant": "structural-drop-proof",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralResults$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralResults",
+        "seconds": 0.07
+      }
+    ],
+    "wall_seconds": 10.769
+  },
+  {
+    "mutant": "structural-trust-shape",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesMissingBlockField$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesMissingBlockField",
+        "seconds": 0.17
+      }
+    ],
+    "wall_seconds": 11.018
+  },
+  {
+    "mutant": "structural-reverse-covariance",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesReverseReadonlyVariance$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesReverseReadonlyVariance",
+        "seconds": 0.19
+      }
+    ],
+    "wall_seconds": 10.617
+  },
+  {
+    "mutant": "structural-mutable-variance",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesWritableVariance$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesWritableVariance",
+        "seconds": 0.2
+      }
+    ],
+    "wall_seconds": 10.79
+  },
+  {
+    "mutant": "fields-drop-field-storage",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesMixedFieldStorage$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesMixedFieldStorage",
+        "seconds": 0.18
+      }
+    ],
+    "wall_seconds": 10.486
+  },
+  {
+    "mutant": "fields-drop-constraint-storage",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestHiddenTNodeConstraint",
+    "marker": "constraint representation",
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintNumber",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestHiddenTNodeConstraintObjectUnion",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestHiddenTNodeConstraintString",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestHiddenTNodeConstraintObject",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestHiddenTNodeConstraintBoolean",
+        "seconds": 0.2
+      },
+      {
+        "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+        "seconds": 0.09
+      }
+    ],
+    "wall_seconds": 11.156
+  },
+  {
+    "mutant": "fields-object-layout",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestHiddenTNodeConstraintMutationRemainsNotYet$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+        "seconds": 0.09
+      }
+    ],
+    "wall_seconds": 10.612
+  },
+  {
+    "mutant": "fields-array-layout",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestHiddenTNodeConstraintArrayLayout$",
+    "marker": "constraint representation",
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintArrayLayout",
+        "seconds": 0.09
+      }
+    ],
+    "wall_seconds": 11.235
+  },
+  {
+    "mutant": "fields-unconstrained-layout",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestHiddenTNodeConstraint",
+    "marker": "constraint representation",
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintUnconstrained",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestHiddenTNodeConstraintAny",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestHiddenTNodeConstraintUnknown",
+        "seconds": 0.09
+      }
+    ],
+    "wall_seconds": 13.409
+  },
+  {
+    "mutant": "fields-ignore-substitution",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestHiddenTNodeConstraint",
+    "marker": "lost concrete substitution",
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintStructuralLength",
+        "seconds": 0.21
+      },
+      {
+        "test": "TestHiddenTNodeConstraintObject",
+        "seconds": 0.22
+      },
+      {
+        "test": "TestHiddenTNodeConstraintNumber",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestHiddenTNodeConstraintObjectUnion",
+        "seconds": 0.3
+      },
+      {
+        "test": "TestHiddenTNodeConstraintString",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestHiddenTNodeConstraintAny",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestHiddenTNodeConstraintBoolean",
+        "seconds": 0.2
+      },
+      {
+        "test": "TestHiddenTNodeConstraintUnconstrained",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestHiddenTNodeConstraintArrayLayout",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestHiddenTNodeConstraintUnknown",
+        "seconds": 0.16
+      }
+    ],
+    "wall_seconds": 16.791
+  },
+  {
+    "mutant": "fields-ignore-mapper",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestHiddenTNodeConstraint",
+    "marker": "lost concrete checker mapping",
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintBoolean",
+        "seconds": 0.23
+      },
+      {
+        "test": "TestHiddenTNodeConstraintString",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestHiddenTNodeConstraintStructuralLength",
+        "seconds": 0.31
+      },
+      {
+        "test": "TestHiddenTNodeConstraintObjectUnion",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestHiddenTNodeConstraintObject",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestHiddenTNodeConstraintAny",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestHiddenTNodeConstraintArrayLayout",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestHiddenTNodeConstraintUnknown",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestHiddenTNodeConstraintUnconstrained",
+        "seconds": 0.14
+      }
+    ],
+    "wall_seconds": 18.562
+  },
+  {
+    "mutant": "admission-drop-fixed-return-proof",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralResults$",
+    "marker": "result Block",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralResults",
+        "seconds": 0.35
+      }
+    ],
+    "wall_seconds": 17.812
+  },
+  {
+    "mutant": "admission-reverse-result-covariance",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesFactoryLiteralCovariance$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesFactoryLiteralCovariance",
+        "seconds": 0.39
+      }
+    ],
+    "wall_seconds": 18.376
+  },
+  {
+    "mutant": "admission-trust-visitor-input",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesVisitorDomainLiar$",
+    "marker": "wanted refusal naming callback contravariance",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesVisitorDomainLiar",
+        "seconds": 0.31
+      }
+    ],
+    "wall_seconds": 3.938,
+    "note": "The test catches the missing early variance proof by its diagnostic. The later invocation guard still refuses this unsafe program."
+  },
+  {
+    "mutant": "admission-trust-writable-result",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesFactoryWritableInvariance$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesFactoryWritableInvariance",
+        "seconds": 0.24
+      }
+    ],
+    "wall_seconds": 17.419
+  },
+  {
+    "mutant": "admission-drop-return-storage",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesFactoryFieldStorage$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesFactoryFieldStorage",
+        "seconds": 0.51
+      }
+    ],
+    "wall_seconds": 19.019
+  },
+  {
+    "mutant": "admission-drop-relation-diagnostic",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadStructuralRefusesFactoryResultCovariance$",
+    "marker": "wanted refusal naming readonly covariance",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesFactoryResultCovariance",
+        "seconds": 0.37
+      }
+    ],
+    "wall_seconds": 19.73
+  },
+  {
+    "mutant": "field-hatch-kind",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadFieldHatchKindLiar$",
+    "marker": "unchecked wrong result",
+    "failures": [
+      {
+        "test": "TestOverloadFieldHatchKindLiar",
+        "seconds": 0.57
+      }
+    ],
+    "wall_seconds": 21.454
+  },
+  {
+    "mutant": "field-hatch-value",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadFieldHatchValueLiar$",
+    "marker": "unchecked wrong result",
+    "failures": [
+      {
+        "test": "TestOverloadFieldHatchValueLiar",
+        "seconds": 0.62
+      }
+    ],
+    "wall_seconds": 14.751
+  },
+  {
+    "mutant": "values-drop-indirect-check",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadValuesReturnedLiar$",
+    "marker": "unchecked wrong result",
+    "failures": [
+      {
+        "test": "TestOverloadValuesReturnedLiar",
+        "seconds": 0.89
+      }
+    ],
+    "wall_seconds": 19.064
+  },
+  {
+    "mutant": "values-skip-single-signature-check",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadValuesNarrowLiar$",
+    "marker": "unchecked wrong result",
+    "failures": [
+      {
+        "test": "TestOverloadValuesNarrowLiar",
+        "seconds": 0.93
+      }
+    ],
+    "wall_seconds": 20.355
+  },
+  {
+    "mutant": "visitors-erase-TIn-to-Node",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadVisitorsHelperLiar$",
+    "marker": "unproven visitor input admitted",
+    "failures": [
+      {
+        "test": "TestOverloadVisitorsHelperLiar",
+        "seconds": 0.88
+      }
+    ],
+    "wall_seconds": 27.785
+  },
+  {
+    "mutant": "visitors-admit-unproven-invocation",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadVisitorsOverloadedHelperLiar$",
+    "marker": "unproven visitor input admitted",
+    "failures": [
+      {
+        "test": "TestOverloadVisitorsOverloadedHelperLiar",
+        "seconds": 0.9
+      }
+    ],
+    "wall_seconds": 29.301
+  },
+  {
+    "mutant": "binder-result-drop-check",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestNativeAgreesWithNode$/internal/oracle/testdata/census_overload_binder_result_checked.a$",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binder_result_checked.a",
+        "seconds": 0.78
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "seconds": 0.08
+      }
+    ],
+    "wall_seconds": 24.09
+  }
+]

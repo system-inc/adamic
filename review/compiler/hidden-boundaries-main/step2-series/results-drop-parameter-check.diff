@@ -1,0 +1,12 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -313,7 +313,8 @@
+ 		held := l.result.Locals[l.result.Functions[invoked.Function].Parameters[position]].Type
+ 		if l.overloadNullableParameter(given, takes) {
+ 			message := fmt.Sprintf("overload %d of %s parameter %d %s cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(given), l.checker.TypeToString(takes))
+-			checked.Arguments[position] = ir.Coalesce{Value: argument, Of: held, Panic: ir.StringConstant{Index: l.constant(message)}}
++			_ = message
++checked.Arguments[position] = fit(argument, held)
+ 		} else {
+ 			checked.Arguments[position] = fit(argument, held)
+ 		}
