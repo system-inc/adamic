@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
@@ -39,41 +40,66 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
+const testOwnedWitnessesShards = 16
+
+// ADAMIC_TEST_SHARD=i/n selects every nth shard starting at i; unset runs all.
+// Build products are prepared once before the parallel, independently runnable units.
 func TestOwnedWitnesses(t *testing.T) {
 	t.Parallel()
+	started := time.Now()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := goOracle(t)
-	var rows []string
-	for _, d := range prepareRegistry(t, ".") {
-		for _, row := range ownedWitnessRows(t, directory, d) {
-			path := strings.SplitN(row, "\t", 2)[0]
-			if d.Typed {
-				config := filepath.Join(t.TempDir(), "tsconfig.json")
-				options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, path)
-				if err := os.WriteFile(config, []byte(options), 0644); err != nil {
-					t.Fatal(err)
-				}
-				projectManifest := manifest(t, []string{"program " + config, row, path + "\tall"})
-				compare(t, oracle, buildPort(t, directory, true), directory, projectManifest)
-				answer := execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count")
-				if string(answer.output) == "0\n" {
-					t.Fatalf("%s typed witness reports no findings", d.Name)
-				}
-				continue
-			}
-			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
-			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
-			if string(answer.output) == "0\n" {
-				t.Fatalf("%s witness reports no findings", d.Name)
-			}
-			rows = append(rows, pair...)
-		}
+	cases := ownedWitnessCases(t, directory)
+	plan, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
+	if err != nil {
+		t.Fatal(err)
 	}
-	path := manifest(t, rows)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
+	selected := ownedShardSelection(t)
+	oracle, binary, module, builds := ownedBuildProducts(t, directory)
+	t.Logf("setup: with builds=%s without builds=%s; union=%d witnesses, %d manifest cases; shards=%d", time.Since(started), time.Since(started)-builds, len(cases), 2*len(cases), len(plan))
+	enumerated := 0
+	for index, group := range plan {
+		enumerated++
+		if !selected(index) {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", index), func(t *testing.T) {
+			t.Parallel()
+			var rows []string
+			for _, witness := range group {
+				row, d := witness.row, witness.descriptor
+				path := strings.SplitN(row, "\t", 2)[0]
+				if d.Typed {
+					config := filepath.Join(t.TempDir(), "tsconfig.json")
+					options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, path)
+					if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+						t.Fatal(err)
+					}
+					projectManifest := manifest(t, []string{"program " + config, row, path + "\tall"})
+					compareOwnedWitness(t, oracle, binary, directory, projectManifest, module, witness.id)
+					answer := execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count")
+					if string(answer.output) == "0\n" {
+						t.Fatalf("%s typed witness reports no findings", d.Name)
+					}
+					continue
+				}
+				pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
+				answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
+				if string(answer.output) == "0\n" {
+					t.Fatalf("%s witness reports no findings", d.Name)
+				}
+				rows = append(rows, pair...)
+			}
+			if len(rows) != 0 {
+				compareOwnedWitness(t, oracle, binary, directory, manifest(t, rows), module, group[0].id)
+			}
+		})
+	}
+	if enumerated != testOwnedWitnessesShards {
+		t.Fatalf("enumerated %d shards, want %d", enumerated, testOwnedWitnessesShards)
+	}
 }
 
 func TestRegistrationMutant(t *testing.T) {
