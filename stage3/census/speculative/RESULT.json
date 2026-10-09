@@ -1,0 +1,851 @@
+{
+  "status": "partial; four separately loaded directory census projects, not a whole-compiler run",
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "covered_directories": [
+    "_namespaces",
+    "factory",
+    "transformers/declarations",
+    "transformers/module"
+  ],
+  "projects": [
+    {
+      "directory": "_namespaces",
+      "files": 3,
+      "counts": {
+        "NotYet": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "Refused": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "full_sites": 0,
+      "speculative_sites": 0,
+      "no_stubs_byte_identical": true,
+      "checker_diagnostics_identical": true,
+      "independent_depth_matches": 0,
+      "independent_depth_unmatched": 0,
+      "outside_scope_attempts": 0
+    },
+    {
+      "directory": "factory",
+      "files": 10,
+      "counts": {
+        "NotYet": [
+          3182,
+          880,
+          126,
+          22,
+          5
+        ],
+        "Refused": [
+          642,
+          270,
+          18,
+          4,
+          11
+        ]
+      },
+      "full_sites": 1371,
+      "speculative_sites": 5160,
+      "no_stubs_byte_identical": true,
+      "checker_diagnostics_identical": true,
+      "independent_depth_matches": 5171,
+      "independent_depth_unmatched": 0,
+      "outside_scope_attempts": 0
+    },
+    {
+      "directory": "transformers/declarations",
+      "files": 1,
+      "counts": {
+        "NotYet": [
+          346,
+          13,
+          58,
+          0,
+          0
+        ],
+        "Refused": [
+          23,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      "full_sites": 108,
+      "speculative_sites": 448,
+      "no_stubs_byte_identical": true,
+      "checker_diagnostics_identical": true,
+      "independent_depth_matches": 450,
+      "independent_depth_unmatched": 0,
+      "outside_scope_attempts": 1
+    },
+    {
+      "directory": "transformers/module",
+      "files": 4,
+      "counts": {
+        "NotYet": [
+          1020,
+          98,
+          2,
+          0,
+          0
+        ],
+        "Refused": [
+          294,
+          44,
+          1,
+          0,
+          0
+        ]
+      },
+      "full_sites": 640,
+      "speculative_sites": 1459,
+      "no_stubs_byte_identical": true,
+      "checker_diagnostics_identical": true,
+      "independent_depth_matches": 1459,
+      "independent_depth_unmatched": 0,
+      "outside_scope_attempts": 0
+    }
+  ],
+  "counts": {
+    "NotYet": [
+      4548,
+      991,
+      186,
+      22,
+      5
+    ],
+    "Refused": [
+      959,
+      322,
+      19,
+      4,
+      11
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "reading SyntaxKind",
+      "counts": [
+        971,
+        42,
+        62,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "an assignment value to a member",
+      "counts": [
+        973,
+        57,
+        16,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a generic function as a value",
+      "counts": [
+        505,
+        192,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "an object refinement using an open numeric enum as a literal tag",
+      "counts": [
+        268,
+        242,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading TransformFlags",
+      "counts": [
+        43,
+        228,
+        9,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+      "counts": [
+        246,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a union of differently held members variable a function value captures",
+      "counts": [
+        87,
+        56,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading Diagnostics",
+      "counts": [
+        103,
+        0,
+        29,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a namespace member without a lowered binding",
+      "counts": [
+        79,
+        10,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading Debug",
+      "counts": [
+        0,
+        79,
+        10,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a BinaryExpression with a value and a value",
+      "counts": [
+        87,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "a cast the runtime can't check",
+      "counts": [
+        41,
+        24,
+        6,
+        2,
+        6
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member push read as an own field",
+      "counts": [
+        70,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading visitNode",
+      "counts": [
+        65,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a boolean | undefined variable a function value captures",
+      "counts": [
+        50,
+        15,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading setTextRange",
+      "counts": [
+        49,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        8,
+        39,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading EmitFlags",
+      "counts": [
+        39,
+        4,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading ModifierFlags",
+      "counts": [
+        42,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isExpression",
+      "counts": [
+        42,
+        2,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "files": [
+    {
+      "file": "_namespaces/ts.moduleSpecifiers.ts",
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "source_bytes": 111,
+      "total_nodes": 4,
+      "visited_nodes": 4,
+      "attempted_nodes": 1,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "_namespaces/ts.performance.ts",
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "source_bytes": 101,
+      "total_nodes": 4,
+      "visited_nodes": 4,
+      "attempted_nodes": 1,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "_namespaces/ts.ts",
+      "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+      "source_bytes": 3288,
+      "total_nodes": 166,
+      "visited_nodes": 166,
+      "attempted_nodes": 77,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/baseNodeFactory.ts",
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+      "source_bytes": 2682,
+      "total_nodes": 316,
+      "visited_nodes": 316,
+      "attempted_nodes": 174,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "sha256": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7",
+      "source_bytes": 69184,
+      "total_nodes": 3572,
+      "visited_nodes": 3572,
+      "attempted_nodes": 1905,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+      "source_bytes": 12800,
+      "total_nodes": 1525,
+      "visited_nodes": 1525,
+      "attempted_nodes": 713,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeChildren.ts",
+      "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86",
+      "source_bytes": 2252,
+      "total_nodes": 254,
+      "visited_nodes": 254,
+      "attempted_nodes": 176,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeConverters.ts",
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+      "source_bytes": 7275,
+      "total_nodes": 670,
+      "visited_nodes": 670,
+      "attempted_nodes": 536,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "source_bytes": 336646,
+      "total_nodes": 37888,
+      "visited_nodes": 37888,
+      "attempted_nodes": 21219,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeTests.ts",
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+      "source_bytes": 37936,
+      "total_nodes": 5245,
+      "visited_nodes": 5245,
+      "attempted_nodes": 1867,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09",
+      "source_bytes": 34072,
+      "total_nodes": 2180,
+      "visited_nodes": 2180,
+      "attempted_nodes": 1340,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/utilities.ts",
+      "sha256": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a",
+      "source_bytes": 76615,
+      "total_nodes": 7263,
+      "visited_nodes": 7263,
+      "attempted_nodes": 3846,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/utilitiesPublic.ts",
+      "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352",
+      "source_bytes": 2131,
+      "total_nodes": 347,
+      "visited_nodes": 347,
+      "attempted_nodes": 231,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "sha256": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d",
+      "source_bytes": 46404,
+      "total_nodes": 3513,
+      "visited_nodes": 3513,
+      "attempted_nodes": 2020,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71",
+      "source_bytes": 18686,
+      "total_nodes": 1687,
+      "visited_nodes": 1687,
+      "attempted_nodes": 1081,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/module/impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "source_bytes": 3750,
+      "total_nodes": 411,
+      "visited_nodes": 411,
+      "attempted_nodes": 255,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c",
+      "source_bytes": 111793,
+      "total_nodes": 8194,
+      "visited_nodes": 8194,
+      "attempted_nodes": 5549,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6",
+      "source_bytes": 85481,
+      "total_nodes": 6050,
+      "visited_nodes": 6050,
+      "attempted_nodes": 3938,
+      "unvisited_nodes": 0
+    }
+  ],
+  "source_bytes": 10615807,
+  "typescript_source_bytes": 10009820,
+  "examined_bytes": 851207,
+  "examined_share": 0.08018297619766449,
+  "typescript_examined_share": 0.08503719347600656,
+  "unexamined": [
+    {
+      "file": "binder.ts",
+      "bytes": 195107,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "builder.ts",
+      "bytes": 117298,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "builderPublic.ts",
+      "bytes": 11609,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "builderState.ts",
+      "bytes": 26209,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "bytes": 392,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "checker.ts",
+      "bytes": 3154156,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "bytes": 183733,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "core.ts",
+      "bytes": 92680,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "corePublic.ts",
+      "bytes": 1320,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "debug.ts",
+      "bytes": 57713,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "diagnosticInformationMap.generated.ts",
+      "bytes": 579194,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "diagnosticMessages.generated.json",
+      "bytes": 306771,
+      "reason": "non-TypeScript input; no lowering sites"
+    },
+    {
+      "file": "diagnosticMessages.json",
+      "bytes": 299061,
+      "reason": "non-TypeScript input; no lowering sites"
+    },
+    {
+      "file": "emitter.ts",
+      "bytes": 274627,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "bytes": 54177,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "bytes": 70354,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "hostErrors.ts",
+      "bytes": 447,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "bytes": 183618,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "bytes": 80070,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "parser.ts",
+      "bytes": 541260,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "path.ts",
+      "bytes": 44181,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "performance.ts",
+      "bytes": 6161,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "performanceCore.ts",
+      "bytes": 3279,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "program.ts",
+      "bytes": 271300,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "bytes": 21401,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "bytes": 82223,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "scanner.ts",
+      "bytes": 219390,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "semver.ts",
+      "bytes": 18012,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "sourcemap.ts",
+      "bytes": 32210,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "symbolWalker.ts",
+      "bytes": 8267,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "sys.ts",
+      "bytes": 86254,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "tracing.ts",
+      "bytes": 15322,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformer.ts",
+      "bytes": 29875,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "bytes": 156676,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/classThis.ts",
+      "bytes": 5565,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "bytes": 99818,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "bytes": 30894,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "bytes": 231789,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2016.ts",
+      "bytes": 4519,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "bytes": 50181,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "bytes": 69980,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2019.ts",
+      "bytes": 1563,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "bytes": 13128,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/es2021.ts",
+      "bytes": 4144,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "bytes": 127380,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "bytes": 32645,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/generators.ts",
+      "bytes": 124036,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "bytes": 36207,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "bytes": 36740,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/namedEvaluation.ts",
+      "bytes": 22318,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/taggedTemplate.ts",
+      "bytes": 5489,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/ts.ts",
+      "bytes": 116741,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/typeSerializer.ts",
+      "bytes": 28972,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "bytes": 35851,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "tsbuild.ts",
+      "bytes": 5332,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "bytes": 114655,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "tsconfig.json",
+      "bytes": 155,
+      "reason": "non-TypeScript input; no lowering sites"
+    },
+    {
+      "file": "types.ts",
+      "bytes": 491930,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "utilities.ts",
+      "bytes": 514740,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "bytes": 104608,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "visitorPublic.ts",
+      "bytes": 88114,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "watch.ts",
+      "bytes": 45924,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "watchPublic.ts",
+      "bytes": 61201,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "bytes": 35634,
+      "reason": "outside covered directories; full census interrupted before buffered observations were emitted"
+    }
+  ]
+}
