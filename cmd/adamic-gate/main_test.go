@@ -127,6 +127,7 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 	}
 }
 
+// Not parallel: t.Chdir moves the process to the repository root, where children reads internal/oracle.
 func TestNativeOracleGateShardCoverage(t *testing.T) {
 	t.Chdir("../..")
 	pkg := "github.com/system-inc/adamic/internal/oracle"
