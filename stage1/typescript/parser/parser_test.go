@@ -273,6 +273,6 @@ func compilerManifest(t *testing.T) (string, int) {
 }
 
 // Not parallel: initializes shared compilerExpressionsProducts before the parallel shards run.
-func TestCompilerExpressionsAgree(t *testing.T) {
+func TestCompilerExpressionsAgree_Setup(t *testing.T) {
 	compilerExpressionsSetup(t)
 }

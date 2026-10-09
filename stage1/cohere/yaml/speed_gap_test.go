@@ -30,6 +30,7 @@ func TestSpeedCostProbes(t *testing.T) {
 		{"arenaNodeRead.ts", "accessor", "direct", "57600000000\n"},
 		{"numericMapLookup.ts", "integer", "fractional", "1702000\n"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(probe.file, func(t *testing.T) {
 			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
 			if err != nil {
