@@ -49,95 +49,52 @@ var leafCompositionBuilds leafCompositionProducts
 
 func testMarkdownLeafShards(t *testing.T) { leafCompositionFixtureFor(t) }
 
-// Not parallel: publishes shared Go oracle products before the other setup phases and parallel shards.
-func TestMarkdownLeafComposition_SetupGo(t *testing.T) {
-	configureMarkdownMemory(t)
-	deadline := leafCompositionDeadline(t)
-	defer deadline.Stop()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	leafCompositionBuilds = prepareLeafCompositionGo(t, root)
-}
+// Preparation is process-wide and precedes every shard's work deadline.
+var leafCompositionOnce sync.Once
 
-// Not parallel: publishes lowered source consumed by native setup and every parallel shard.
-func TestMarkdownLeafComposition_SetupLowered(t *testing.T) {
-	deadline := leafCompositionDeadline(t)
-	defer deadline.Stop()
-	if leafCompositionBuilds.main == "" {
-		t.Fatal("select all TestMarkdownLeafComposition_Setup tests; Go setup is not ready")
-	}
-	prepareLeafCompositionLowered(t, &leafCompositionBuilds)
-}
-
-// Not parallel: publishes the shared sanitized native product before fixture setup and parallel shards.
-func TestMarkdownLeafComposition_SetupNativeSanitized(t *testing.T) {
-	deadline := leafCompositionDeadline(t)
-	defer deadline.Stop()
-	if leafCompositionBuilds.source == "" {
-		t.Fatal("lowered setup is not ready; select all TestMarkdownLeafComposition_Setup tests")
-	}
-	leafCompositionBuilds.sanitized = leafCompositionNative(t, leafCompositionBuilds.source, true)
-}
-
-// Not parallel: publishes the shared release native product before fixture setup and parallel shards.
-func TestMarkdownLeafComposition_SetupNativeRelease(t *testing.T) {
-	deadline := leafCompositionDeadline(t)
-	defer deadline.Stop()
-	if leafCompositionBuilds.source == "" {
-		t.Fatal("lowered setup is not ready; select all TestMarkdownLeafComposition_Setup tests")
-	}
-	leafCompositionBuilds.release = leafCompositionNative(t, leafCompositionBuilds.source, false)
-}
-
-// Not parallel: publishes the shared leaf-composition fixture before parallel shards resume.
 func TestMarkdownLeafComposition_Setup(t *testing.T) {
-	configureMarkdownMemory(t)
-	started := time.Now()
-	deadline := leafCompositionDeadline(t)
-	defer deadline.Stop()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	all, _ := blockCorpus(t, root, "whitespace")
-	if leafCompositionBuilds.source == "" {
-		t.Fatal("select all TestMarkdownLeafComposition_Setup tests; lowered setup is not ready")
-	}
-	products := leafCompositionBuilds
-	if products.sanitized == "" || products.release == "" {
-		t.Fatal("native setup is not ready; select all TestMarkdownLeafComposition_Setup tests")
-	}
-	fixture := &leafCompositionFixture{layoutFixture: &layoutFixture{inputs: all}}
-	mutantDir, err := os.MkdirTemp(artifactDirectory, "leaf-composition-mutants-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var batch bytes.Buffer
-	for _, input := range all {
-		if err := json.NewEncoder(&batch).Encode(input); err != nil {
-			t.Fatal(err)
-		}
-	}
-	cases := filepath.Join(mutantDir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
-	mutantCases := filepath.Join(mutantDir, "native.txt")
-	want := leafCompositionExecute(t, nil, products.goList, cases, mutantCases, filepath.Join(mutantDir, "canonical.txt"))
-	clean(t, "full Go mutant fixtures", want)
-	fixture.mutantInputs, fixture.mutantWant, fixture.mutantNativeCases, fixture.main = all, want.stdout, mutantCases, products.main
-	fixture.want = want.stdout
-	poisonLeafCompositionCases(t, mutantCases)
-	leafCompositionPrepared, leafCompositionBuilds = fixture, products
-	t.Logf("TestMarkdownLeafComposition (setup): %.3fs", time.Since(started).Seconds())
+	t.Parallel()
+	leafCompositionFixtureFor(t)
 }
 
-// Selection must include _Setup when running shards: Go's serial phase finishes
-// shared preparation before any t.Parallel shard resumes. Never build on a miss here.
 func leafCompositionFixtureFor(t *testing.T) *leafCompositionFixture {
 	t.Helper()
+	configureMarkdownMemory(t)
+	leafCompositionOnce.Do(func() {
+		started := time.Now()
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			t.Fatal(err)
+		}
+		all, _ := blockCorpus(t, root, "whitespace")
+		products := prepareLeafCompositionGo(t, root)
+		prepareLeafCompositionLowered(t, &products)
+		products.sanitized = leafCompositionNative(t, products.source, true)
+		products.release = leafCompositionNative(t, products.source, false)
+		fixture := &leafCompositionFixture{layoutFixture: &layoutFixture{inputs: all}}
+		mutantDir, err := os.MkdirTemp(artifactDirectory, "leaf-composition-mutants-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		var batch bytes.Buffer
+		for _, input := range all {
+			if err := json.NewEncoder(&batch).Encode(input); err != nil {
+				t.Fatal(err)
+			}
+		}
+		cases := filepath.Join(mutantDir, "cases.jsonl")
+		write(t, cases, batch.Bytes())
+		mutantCases := filepath.Join(mutantDir, "native.txt")
+		want := leafCompositionExecute(t, nil, products.goList, cases, mutantCases, filepath.Join(mutantDir, "canonical.txt"))
+		clean(t, "full Go mutant fixtures", want)
+		fixture.mutantInputs, fixture.mutantWant, fixture.mutantNativeCases, fixture.main = all, want.stdout, mutantCases, products.main
+		fixture.want = want.stdout
+		poisonLeafCompositionCases(t, mutantCases)
+		leafCompositionPrepared, leafCompositionBuilds = fixture, products
+		t.Logf("TestMarkdownLeafComposition (setup): %.3fs", time.Since(started).Seconds())
+	})
 	if leafCompositionPrepared == nil {
-		t.Fatal("leaf composition setup is not ready: select TestMarkdownLeafComposition_Setup together with the shard")
+		t.Fatal("leaf composition preparation failed")
 	}
 	return leafCompositionPrepared
 }
@@ -150,6 +107,15 @@ func leafCompositionDeadline(t *testing.T) *time.Timer {
 
 func TestMarkdownLeafCompositionUnion(t *testing.T) {
 	t.Parallel()
+	testMarkdownLeafCompositionUnion(t)
+}
+
+func TestMarkdownLeafCompositionPlantedDisagreement(t *testing.T) {
+	t.Parallel()
+	testMarkdownLeafCompositionUnion(t)
+}
+
+func testMarkdownLeafCompositionUnion(t *testing.T) {
 	configureMarkdownMemory(t)
 	deadline := leafCompositionDeadline(t)
 	defer deadline.Stop()
@@ -600,10 +566,10 @@ func poisonLeafCompositionCases(t *testing.T, protocolPath string) {
 	write(t, protocolPath, []byte(strings.Join(lines, "\n")))
 }
 
-// Keep deadlines local to this test rather than changing the shared child helpers.
+// Preparation has no local deadline; the unit runner bounds the whole process.
 func leafCompositionCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
