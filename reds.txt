@@ -1,0 +1,11 @@
+run adamic-verify-20261009T081515-d3c6ba1b: void, 537 tests in 12 units, 0 failed, 10 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited false, last output "loom-runner: still running after 570 s")
+BROKEN tests-02: no results (exited false, last output "")
+BROKEN tests-03: no results (exited true, last output "loom-pilot: checkout of 3095b21270a69971e89ac22d4267b63e2f3b5cdc failed")
+BROKEN tests-04: no results (exited false, last output "")
+BROKEN tests-05: no results (exited false, last output "loom-pilot: 957c63584be7 slot ? cpus ? tree 3095b21270a69971e89ac22d4267b63e2f3b5cdc setup 1 s, 2 packages at a time")
+BROKEN tests-06: no results (exited false, last output "")
+BROKEN tests-07: no results (exited false, last output "")
+BROKEN tests-09: no results (exited false, last output "")
+BROKEN tests-10: no results (exited false, last output "loom-runner: still running after 420 s")
+BROKEN tests-11: no results (exited false, last output "loom-pilot: df920e0f8598 slot ? cpus ? tree 3095b21270a69971e89ac22d4267b63e2f3b5cdc setup 3 s, 2 packages at a time")
