@@ -5,7 +5,6 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -30,6 +29,7 @@ func mixedUnionLowering(t *testing.T, source string) (*lowering, *checker.Type, 
 }
 
 func TestMixedUnionContractGraph(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`interface Identifier {readonly text:string} type Target=string|Identifier;`,
 		`interface Node {readonly ready:boolean} type Target=number|Node;`,
@@ -38,10 +38,6 @@ func TestMixedUnionContractGraph(t *testing.T) {
 		`interface Left {readonly left:string} interface Right {readonly right:number} type Target=Left|Right;`,
 	} {
 		t.Run(source, func(t *testing.T) {
-			if strings.Contains(source, "readonly Node[]") {
-				// Array membership needs V3 element-kind metadata and hole-aware reads.
-				t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
-			}
 			l, target, release := mixedUnionLowering(t, source)
 			defer release()
 			node := l.program.Files()[0].Statements.Nodes[0]

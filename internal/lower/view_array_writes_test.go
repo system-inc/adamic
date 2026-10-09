@@ -54,9 +54,9 @@ func TestViewArraySourceCertificateOmission(t *testing.T) {
 	t.Log("source-slot certificate guard omitted; the pinned refusal rejects the mutant")
 }
 
-// Array readers certify selected slots, not an untagged union's membership.
-// V2 removes this boundary when its array matcher is installed.
-func TestArrayMembershipAwaitingUnionMatcher(t *testing.T) {
+// Array membership uses the installed element-kind and hole-aware adapter.
+func TestArrayMembershipUsesUnionMatcher(t *testing.T) {
+	t.Parallel()
 	p := &ir.Program{ViewContracts: []ir.ViewContract{
 		{Kind: ir.ViewScalar, Of: ir.Number},
 		{Kind: ir.ViewArray, Of: ir.Array, Element: 1},
@@ -64,7 +64,16 @@ func TestArrayMembershipAwaitingUnionMatcher(t *testing.T) {
 	}}
 	root := ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Object, Members: []ir.ViewContractID{3}}
 	l := &lowering{result: p}
-	if l.supportsUntaggedRead(root) {
-		t.Fatal("awaits views-v2: array union membership dispatch")
+	if !l.supportsUntaggedRead(root) {
+		t.Fatal("represented array union membership was not admitted")
+	}
+	for _, unavailable := range []ir.ViewContract{
+		{Kind: ir.ViewUnknown, Unsupported: "dictionary"},
+		{Kind: ir.ViewObject, Of: ir.Object, Nominal: "Class"},
+	} {
+		p.ViewContracts[0] = unavailable
+		if l.supportsUntaggedRead(root) {
+			t.Fatalf("array element borrowed an unavailable adapter: %#v", unavailable)
+		}
 	}
 }
