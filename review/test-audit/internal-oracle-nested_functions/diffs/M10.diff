@@ -1,0 +1,11 @@
+--- a/internal/lower/new_class_value.go
++++ b/internal/lower/new_class_value.go
+@@ -160,7 +160,7 @@
+ 				closed = len(value.Arguments) == 0 && len(targets) > 0
+ 				for _, target := range targets {
+ 					initializer := l.result.Functions[target]
+-					closed = closed && !initializer.Closure && len(initializer.Environment) == 0
++					closed = closed && initializer.Closure && len(initializer.Environment) == 0
+ 				}
+ 			}
+ 			if !closed {

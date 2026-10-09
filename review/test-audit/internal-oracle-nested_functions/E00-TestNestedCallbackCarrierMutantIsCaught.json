@@ -1,0 +1,33 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedCallbackCarrierMutantIsCaught$"
+  ],
+  "wall_seconds": 2.1193407559985644,
+  "exit": 1,
+  "binary_seconds": 0.049,
+  "failed": [
+    "TestNestedCallbackCarrierMutantIsCaught"
+  ],
+  "passed": [],
+  "outputs": {
+    "TestNestedCallbackCarrierMutantIsCaught": [
+      "=== RUN   TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== PAUSE TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== CONT  TestNestedCallbackCarrierMutantIsCaught\n",
+      "    nested_functions_test.go:166: carrier mutant did not change a call\n",
+      "--- FAIL: TestNestedCallbackCarrierMutantIsCaught (0.04s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.049s\n"
+    ]
+  }
+}

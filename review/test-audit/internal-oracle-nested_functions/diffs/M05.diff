@@ -1,0 +1,11 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -361,7 +361,7 @@
+ 		visited[node] = true
+ 		if node.cell != 0 {
+ 			if node == target {
+-				return true
++				return false
+ 			}
+ 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
+ 				queue = append(queue, cycleNode{proven: proven})

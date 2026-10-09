@@ -1,0 +1,202 @@
+{
+  "ViewOrigins": null,
+  "ViewContracts": null,
+  "ViewContractTypes": null,
+  "UninitializedFields": {},
+  "PredicateChecks": {
+    "Proven": 0,
+    "Checked": 0,
+    "Unobservable": 0,
+    "Sites": null
+  },
+  "CheckedFields": {},
+  "NonNullChecks": {
+    "Proven": 0,
+    "Checked": 0,
+    "Sites": null
+  },
+  "Source": "uncaptured-preallocation.a",
+  "Strings": null,
+  "Regexps": null,
+  "Locals": [
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "n",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "inner",
+      "Type": 8,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 2,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    }
+  ],
+  "Functions": [
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "outer",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 1,
+      "Body": [
+        {
+          "Uninitialized": true,
+          "Local": 0,
+          "Value": null
+        },
+        {
+          "Uninitialized": false,
+          "Local": 1,
+          "Value": {
+            "Function": 1
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 0,
+          "Value": {
+            "Value": 1
+          }
+        },
+        {
+          "Value": {
+            "Operator": 1,
+            "Left": {
+              "Local": 0,
+              "Of": 1,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Right": {
+              "Direct": 0,
+              "Closure": {
+                "Local": 1,
+                "Of": 8,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Arguments": [],
+              "Spread": null,
+              "FunctionType": 3804,
+              "Returns": 1
+            }
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": true,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "inner",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 1,
+      "Body": [
+        {
+          "Value": {
+            "Value": 2
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [],
+      "NestedParent": 1,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    }
+  ],
+  "Classes": null,
+  "MethodTargets": {},
+  "StructuralMethodThunks": {},
+  "FunctionTypeTargets": {
+    "15": [],
+    "322": [],
+    "3804": [
+      0,
+      1
+    ],
+    "3806": [
+      0,
+      1
+    ],
+    "3807": [
+      0,
+      1
+    ]
+  },
+  "FixedArgumentSlots": 0,
+  "RestArgumentSlots": {},
+  "Main": [
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "Function": 0,
+          "Arguments": [],
+          "Spread": null,
+          "ArgumentCount": null,
+          "RestPacked": false,
+          "ForwardCount": false,
+          "Returns": 1,
+          "Virtual": 0,
+          "Accessor": "",
+          "Setter": false
+        }
+      }
+    }
+  ],
+  "ClosuresMayThrow": false
+}

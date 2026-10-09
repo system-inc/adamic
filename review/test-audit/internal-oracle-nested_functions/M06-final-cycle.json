@@ -1,0 +1,47 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedCycleRefusal$"
+  ],
+  "wall_seconds": 3.285737677000725,
+  "exit": 1,
+  "binary_seconds": 0.697,
+  "failed": [
+    "TestNestedCycleRefusal"
+  ],
+  "passed": [],
+  "outputs": {
+    "TestNestedCycleRefusal": [
+      "=== RUN   TestNestedCycleRefusal\n",
+      "=== PAUSE TestNestedCycleRefusal\n",
+      "=== CONT  TestNestedCycleRefusal\n",
+      "    nested_functions_test.go:114: accepted a strong captured-function cycle; leak check:\n",
+      "        exit 1\n",
+      "        \n",
+      "        =================================================================\n",
+      "        ==60531==ERROR: LeakSanitizer: detected memory leaks\n",
+      "        \n",
+      "        Indirect leak of 136 byte(s) in 2 object(s) allocated from:\n",
+      "            #0 0x559df4b12274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x559df4b68abf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x7ff4abb2eca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n",
+      "        \n",
+      "        SUMMARY: AddressSanitizer: 136 byte(s) leaked in 2 allocation(s).\n",
+      "--- FAIL: TestNestedCycleRefusal (0.68s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=1\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.697s\n"
+    ]
+  }
+}

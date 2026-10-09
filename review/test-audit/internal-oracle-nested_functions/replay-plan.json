@@ -1,0 +1,173 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/load/load.go",
+    "line": 147,
+    "old": "len(diagnostics) > 0",
+    "new": "len(diagnostics) > 1",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M02",
+    "file": "internal/load/load.go",
+    "line": 233,
+    "old": "\t\tall = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)",
+    "new": "\t\t// Semantic diagnostic collection dropped.",
+    "menu": "drop statement",
+    "kind": "production"
+  },
+  {
+    "id": "M03",
+    "file": "internal/load/load.go",
+    "line": 255,
+    "old": "diagnostic.Code(), message",
+    "new": "diagnostic.Code()+1, message",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/cycles.go",
+    "line": 105,
+    "old": "!declared.Captured || declared.Global",
+    "new": "declared.Captured || declared.Global",
+    "menu": "flip condition",
+    "kind": "production"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/cycles.go",
+    "line": 363,
+    "old": "if node == target {\n\t\t\t\treturn true",
+    "new": "if node == target {\n\t\t\t\treturn false",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/cycles.go",
+    "line": 112,
+    "old": "&& !l.closedFrameInput(local)",
+    "new": "&& l.closedFrameInput(local)",
+    "menu": "flip condition",
+    "kind": "production"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/typed_arrays.go",
+    "line": 59,
+    "old": "\"typed array element type \"+name",
+    "new": "\"typed array facility \"+name",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/typed_arrays.go",
+    "line": 43,
+    "old": "if node.Kind == ast.KindNewExpression {",
+    "new": "if node.Kind == ast.KindCallExpression {",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/new_class_value.go",
+    "line": 166,
+    "old": "if !closed {",
+    "new": "if closed {",
+    "menu": "flip condition",
+    "kind": "production"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/new_class_value.go",
+    "line": 163,
+    "old": "closed && !initializer.Closure",
+    "new": "closed && initializer.Closure",
+    "menu": "flip condition",
+    "kind": "production"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/new_class_value.go",
+    "line": 160,
+    "old": "len(value.Arguments) == 0 && len(targets) > 0",
+    "new": "len(value.Arguments) <= 1 && len(targets) > 0",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/nested_functions.go",
+    "line": 56,
+    "old": "l.function.NestedFrame = true",
+    "new": "l.function.NestedFrame = false",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/nested_functions.go",
+    "line": 227,
+    "old": "l.result.Locals[local].Preallocated = true\n\t\treturn []ir.Statement",
+    "new": "l.result.Locals[local].Preallocated = false\n\t\treturn []ir.Statement",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/nested_functions.go",
+    "line": 190,
+    "old": "\tfor _, function := range l.closures[boundary+1:] {\n\t\tl.result.Functions[function].ForwardedNestedParent = parent\n\t}",
+    "new": "\t// Single-statement registration loop dropped.",
+    "menu": "drop statement",
+    "kind": "production"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/nested_functions.go",
+    "line": 140,
+    "old": "\tfor _, index := range functions {\n\t\tl.result.Functions[index].Environment = slices.Clone(environment)\n\t}",
+    "new": "\t// Single-statement registration loop dropped.",
+    "menu": "drop statement",
+    "kind": "production"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/diagnostics.go",
+    "line": 33,
+    "old": "What: what",
+    "new": "What: \"unsupported construct\"",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "E00",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) { return &ir.Program{}, nil;",
+    "menu": "return early",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "W01",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 712,
+    "old": "return fmt.Sprintf(\"exit %d\\n%s\", report.exitCode, report.stderr)",
+    "new": "return \"\"",
+    "menu": "return early",
+    "kind": "witness"
+  },
+  {
+    "id": "W02",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "old": "func disagreement(oracle run, native run) string {",
+    "new": "func disagreement(oracle run, native run) string { return \"\";",
+    "menu": "return early",
+    "kind": "witness"
+  }
+]

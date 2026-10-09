@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -40,7 +40,7 @@
+ 			}
+ 		}
+ 	}
+-	if node.Kind == ast.KindNewExpression {
++	if node.Kind == ast.KindCallExpression {
+ 		made := node.AsNewExpression()
+ 		if l.isLibraryGlobal(made.Expression, "SharedArrayBuffer") {
+ 			return l.notYet(node, "sharing typed arrays across parallel tasks")

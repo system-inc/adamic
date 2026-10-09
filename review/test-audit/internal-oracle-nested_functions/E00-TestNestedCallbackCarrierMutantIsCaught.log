@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:14:31.735951577Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T08:14:31.746046416Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught"}
+{"Time":"2026-10-09T08:14:31.746166084Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"=== RUN   TestNestedCallbackCarrierMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:31.74626156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"=== PAUSE TestNestedCallbackCarrierMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:31.746265192Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught"}
+{"Time":"2026-10-09T08:14:31.746268118Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught"}
+{"Time":"2026-10-09T08:14:31.746270272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"=== CONT  TestNestedCallbackCarrierMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:31.78497758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"    nested_functions_test.go:166: carrier mutant did not change a call\n","OutputType":"error"}
+{"Time":"2026-10-09T08:14:31.785037763Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"--- FAIL: TestNestedCallbackCarrierMutantIsCaught (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:31.785043275Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Elapsed":0.04}
+{"Time":"2026-10-09T08:14:31.785078718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:31.785289744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.049s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:31.785304525Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.049}

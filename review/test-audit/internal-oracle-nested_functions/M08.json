@@ -1,0 +1,192 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestNestedRebindingCheckerRefusal|TestNestedCallbackCarrierMutantIsCaught|TestNewExpressionUint16RemainsNotYet|TestNewExpressionCacheCaptureRemainsNotYet|TestNativeAgreesWithNode|TestScannerNestedReferences|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant|TestTheOracleCatchesOneByte)$/^(internal|stage3|nested)/^(oracle|drivers)$/^(testdata|scanner)$/^(nested_|new_expression_|typed_arrays|probes)"
+  ],
+  "wall_seconds": 1.8718922509997356,
+  "exit": 1,
+  "binary_seconds": 0.129,
+  "failed": [
+    "TestNestedSiblingCycleMutantIsCaught"
+  ],
+  "passed": [],
+  "outputs": {
+    "TestNestedSiblingCycleMutantIsCaught": [
+      "=== RUN   TestNestedSiblingCycleMutantIsCaught\n",
+      "=== PAUSE TestNestedSiblingCycleMutantIsCaught\n",
+      "=== CONT  TestNestedSiblingCycleMutantIsCaught\n",
+      "--- FAIL: TestNestedSiblingCycleMutantIsCaught (0.11s)\n",
+      "panic: interface conversion: ast.nodeData is *ast.CallExpression, not *ast.NewExpression [recovered, repanicked]\n",
+      "\n",
+      "goroutine 34 [running]:\n",
+      "testing.tRunner.func1.2({0x1c92a28, 0x2207961addd0})\n",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n",
+      "testing.tRunner.func1()\n",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n",
+      "panic({0x1c92a28?, 0x2207961addd0?})\n",
+      "\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsNewExpression(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9375\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).typedArrayUnsupported(0x2207962d6e00, 0x220794267740)\n",
+      "\t/workspace/adamic/internal/lower/typed_arrays.go:44 +0x73d\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x220794267740)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:108 +0x394\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*ConditionalExpression).ForEachChild(0x220794267800, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:4128 +0xf1\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2207962d6e00?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8826 +0xca5\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x220794267800)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:231 +0x1099\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1163\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2207962d6e00?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8716 +0x1262\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x220794262ab0)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:231 +0x1099\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2207962d6e00?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x2207942678c0)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:231 +0x1099\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x2207938b58c0, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2207962d6e00?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x2207938b58c0)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:231 +0x1099\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2207962d6e00?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x220793d7f080)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:231 +0x1099\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x220794336908, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2207962d6e00?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x220794336908)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:231 +0x1099\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x2207945f0008, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b\n",
+      "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3?, 0x220794207890)\n",
+      "\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5\n",
+      "github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x2207962d6e00, 0x2207945f0008)\n",
+      "\t/workspace/adamic/internal/lower/refusals.go:234 +0x548\n",
+      "github.com/system-inc/adamic/internal/lower.Lower({0x1de6f30, 0x1ed5840}, 0x22079474e0f0)\n",
+      "\t/workspace/adamic/internal/lower/lower.go:50 +0x485\n",
+      "github.com/system-inc/adamic/internal/oracle.lowered(0x220793b1a248, {0x220793b2c2c0, 0x3a})\n",
+      "\t/workspace/adamic/internal/oracle/oracle_test.go:574 +0x18b\n",
+      "github.com/system-inc/adamic/internal/oracle.TestNestedSiblingCycleMutantIsCaught(0x220793b1a248)\n",
+      "\t/workspace/adamic/internal/oracle/nested_functions_test.go:31 +0xee\n",
+      "testing.tRunner(0x220793b1a248, 0x1df16e8)\n",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n",
+      "created by testing.(*T).Run in goroutine 1\n",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"
+    ],
+    "TestNestedCycleRefusal": [
+      "=== RUN   TestNestedCycleRefusal\n",
+      "=== PAUSE TestNestedCycleRefusal\n"
+    ],
+    "TestNestedRebindingCheckerRefusal": [
+      "=== RUN   TestNestedRebindingCheckerRefusal\n",
+      "=== PAUSE TestNestedRebindingCheckerRefusal\n"
+    ],
+    "TestNestedCallbackCarrierMutantIsCaught": [
+      "=== RUN   TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== PAUSE TestNestedCallbackCarrierMutantIsCaught\n"
+    ],
+    "TestNewExpressionUint16RemainsNotYet": [
+      "=== RUN   TestNewExpressionUint16RemainsNotYet\n",
+      "=== PAUSE TestNewExpressionUint16RemainsNotYet\n"
+    ],
+    "TestNewExpressionCacheCaptureRemainsNotYet": [
+      "=== RUN   TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== PAUSE TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== CONT  TestNewExpressionCacheCaptureRemainsNotYet\n"
+    ],
+    "TestNativeAgreesWithNode": [
+      "=== RUN   TestNativeAgreesWithNode\n",
+      "=== PAUSE TestNativeAgreesWithNode\n",
+      "=== CONT  TestNativeAgreesWithNode\n"
+    ],
+    "TestTheOracleCatchesOneByte": [
+      "=== RUN   TestTheOracleCatchesOneByte\n",
+      "=== PAUSE TestTheOracleCatchesOneByte\n",
+      "=== CONT  TestTheOracleCatchesOneByte\n"
+    ],
+    "TestScannerNestedReferenceMutants": [
+      "=== RUN   TestScannerNestedReferenceMutants\n",
+      "=== PAUSE TestScannerNestedReferenceMutants\n",
+      "=== CONT  TestScannerNestedReferenceMutants\n"
+    ],
+    "TestScannerNestedReferences": [
+      "=== RUN   TestScannerNestedReferences\n",
+      "=== PAUSE TestScannerNestedReferences\n",
+      "=== CONT  TestScannerNestedReferences\n"
+    ],
+    "TestNestedReferenceIdentityMutant": [
+      "=== RUN   TestNestedReferenceIdentityMutant\n",
+      "=== PAUSE TestNestedReferenceIdentityMutant\n",
+      "=== CONT  TestNestedReferenceIdentityMutant\n"
+    ],
+    "TestScannerNestedReferences/nested_reference_identity.a": [
+      "=== RUN   TestScannerNestedReferences/nested_reference_identity.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested_reference_identity.a\n"
+    ],
+    "TestScannerNestedReferenceMutants/nested-sibling-callback": [
+      "=== RUN   TestScannerNestedReferenceMutants/nested-sibling-callback\n",
+      "=== PAUSE TestScannerNestedReferenceMutants/nested-sibling-callback\n"
+    ],
+    "TestScannerNestedReferenceMutants/nested-generic-sibling-call": [
+      "=== RUN   TestScannerNestedReferenceMutants/nested-generic-sibling-call\n",
+      "=== PAUSE TestScannerNestedReferenceMutants/nested-generic-sibling-call\n"
+    ],
+    "TestScannerNestedReferences/nested-sibling-callback.a": [
+      "=== RUN   TestScannerNestedReferences/nested-sibling-callback.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested-sibling-callback.a\n"
+    ],
+    "TestScannerNestedReferenceMutants/nested-ancestor-call": [
+      "=== RUN   TestScannerNestedReferenceMutants/nested-ancestor-call\n",
+      "=== PAUSE TestScannerNestedReferenceMutants/nested-ancestor-call\n"
+    ],
+    "TestScannerNestedReferences/nested-generic-sibling-call.a": [
+      "=== RUN   TestScannerNestedReferences/nested-generic-sibling-call.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested-generic-sibling-call.a\n"
+    ],
+    "TestScannerNestedReferences/nested-ancestor-call.a": [
+      "=== RUN   TestScannerNestedReferences/nested-ancestor-call.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested-ancestor-call.a\n"
+    ],
+    "": [
+      "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.129s\n"
+    ]
+  }
+}

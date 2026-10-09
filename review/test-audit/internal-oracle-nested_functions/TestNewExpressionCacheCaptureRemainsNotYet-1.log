@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T08:07:26.570952327Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T08:07:26.58010354Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet"}
+{"Time":"2026-10-09T08:07:26.580197444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet","Output":"=== RUN   TestNewExpressionCacheCaptureRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:26.58025567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet","Output":"=== PAUSE TestNewExpressionCacheCaptureRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:26.580259368Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet"}
+{"Time":"2026-10-09T08:07:26.580263071Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet"}
+{"Time":"2026-10-09T08:07:26.580265696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet","Output":"=== CONT  TestNewExpressionCacheCaptureRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:26.83619708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet","Output":"--- PASS: TestNewExpressionCacheCaptureRemainsNotYet (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:26.837061584Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionCacheCaptureRemainsNotYet","Elapsed":0.26}
+{"Time":"2026-10-09T08:07:26.83731854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:26.837322562Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T08:07:26.837326023Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T08:07:26.837328187Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T08:07:26.837781981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.266s\n"}
+{"Time":"2026-10-09T08:07:26.837918074Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.267}

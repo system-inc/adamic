@@ -1,0 +1,2289 @@
+{
+  "ViewOrigins": null,
+  "ViewContracts": null,
+  "ViewContractTypes": null,
+  "UninitializedFields": {},
+  "PredicateChecks": {
+    "Proven": 0,
+    "Checked": 0,
+    "Unobservable": 0,
+    "Sites": null
+  },
+  "CheckedFields": {},
+  "NonNullChecks": {
+    "Proven": 0,
+    "Checked": 0,
+    "Sites": null
+  },
+  "Source": "cache-one-argument.a",
+  "Strings": [
+    "initialize ",
+    "constructed ",
+    "a constructor value without a registered class allocator",
+    "box"
+  ],
+  "Regexps": null,
+  "Locals": [
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "Box",
+      "Type": 4,
+      "Global": true,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": -1,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "Box_class",
+      "Type": 4,
+      "Global": true,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": -1,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "initializations",
+      "Type": 1,
+      "Global": true,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": -1,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "create",
+      "Type": 8,
+      "Global": true,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": -1,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "separate",
+      "Type": 8,
+      "Global": true,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": -1,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "unused",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "Cached",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 1,
+      "Captured": true,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "value",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 4,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "this",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 5,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "value",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 5,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 8,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": true,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 8,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "Cached",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 2,
+      "Captured": true,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "first",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 2,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 10,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": true,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 10,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "second",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 2,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 12,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": true,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 12,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "Cached",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 3,
+      "Captured": true,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "first",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 3,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 14,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": true,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 14,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "second",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 3,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 16,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": true,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "argument",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 16,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "this",
+      "Type": 4,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 17,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": true,
+      "ConstantClosure": 0,
+      "Counter": false
+    }
+  ],
+  "Functions": [
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "initialize",
+      "MethodName": "",
+      "Parameters": [
+        5
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Local": 2,
+          "Value": {
+            "Operator": 1,
+            "Left": {
+              "Local": 2,
+              "Of": 1,
+              "Checked": true,
+              "Readiness": ""
+            },
+            "Right": {
+              "Value": 1
+            }
+          },
+          "Checked": true
+        },
+        {
+          "Stream": 1,
+          "Value": {
+            "Parts": [
+              {
+                "Index": 0
+              },
+              {
+                "Value": {
+                  "Local": 2,
+                  "Of": 1,
+                  "Checked": true,
+                  "Readiness": ""
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Value": {
+            "Local": 0,
+            "Of": 4,
+            "Checked": true,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "factory",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 8,
+      "Body": [
+        {
+          "Uninitialized": false,
+          "Local": 6,
+          "Value": {
+            "Of": 4
+          }
+        },
+        {
+          "Value": {
+            "Function": 4
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "localCache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 1,
+      "Body": [
+        {
+          "Uninitialized": false,
+          "Local": 12,
+          "Value": {
+            "Of": 4
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 13,
+          "Value": {
+            "Function": 10,
+            "Arguments": [
+              {
+                "Value": {
+                  "Local": 12,
+                  "Of": 4,
+                  "Checked": false,
+                  "Readiness": ""
+                },
+                "Fallback": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Function": 9
+                  },
+                  "Arguments": null,
+                  "Spread": null,
+                  "FunctionType": 0,
+                  "Returns": 4
+                },
+                "Panic": null,
+                "Of": 4
+              },
+              {
+                "Value": 5
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 16,
+          "Value": {
+            "Function": 12,
+            "Arguments": [
+              {
+                "Value": {
+                  "Local": 12,
+                  "Of": 4,
+                  "Checked": false,
+                  "Readiness": ""
+                },
+                "Fallback": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Function": 11
+                  },
+                  "Arguments": null,
+                  "Spread": null,
+                  "FunctionType": 0,
+                  "Returns": 4
+                },
+                "Panic": null,
+                "Of": 4
+              },
+              {
+                "Value": 6
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          }
+        },
+        {
+          "Value": {
+            "Operator": 1,
+            "Left": {
+              "ViewContract": 0,
+              "ViewTypeID": 15,
+              "ViewReceiverTypeID": 3804,
+              "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:30:12",
+              "ViewOrdinary": false,
+              "View": "",
+              "ViewType": "",
+              "ViewAllowed": null,
+              "Readiness": "",
+              "Object": {
+                "Local": 13,
+                "Of": 4,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Name": "value",
+              "Of": 1,
+              "Optional": false,
+              "Absent": false,
+              "Class": 6,
+              "Method": false
+            },
+            "Right": {
+              "ViewContract": 0,
+              "ViewTypeID": 15,
+              "ViewReceiverTypeID": 3804,
+              "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:30:26",
+              "ViewOrdinary": false,
+              "View": "",
+              "ViewType": "",
+              "ViewAllowed": null,
+              "Readiness": "",
+              "Object": {
+                "Local": 16,
+                "Of": 4,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Name": "value",
+              "Of": 1,
+              "Optional": false,
+              "Absent": false,
+              "Class": 6,
+              "Method": false
+            }
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "directCache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 1,
+      "Body": [
+        {
+          "Uninitialized": false,
+          "Local": 19,
+          "Value": {
+            "Of": 4
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 20,
+          "Value": {
+            "Function": 14,
+            "Arguments": [
+              {
+                "Value": {
+                  "Local": 19,
+                  "Of": 4,
+                  "Checked": false,
+                  "Readiness": ""
+                },
+                "Fallback": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Function": 13
+                  },
+                  "Arguments": null,
+                  "Spread": null,
+                  "FunctionType": 0,
+                  "Returns": 4
+                },
+                "Panic": null,
+                "Of": 4
+              },
+              {
+                "Value": 7
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 23,
+          "Value": {
+            "Function": 16,
+            "Arguments": [
+              {
+                "Value": {
+                  "Null": false,
+                  "Value": {
+                    "Local": 19,
+                    "Of": 4,
+                    "Checked": false,
+                    "Readiness": ""
+                  },
+                  "Message": "undefined where the checker narrowed it away: a call since the narrowing put it back"
+                },
+                "Fallback": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Function": 15
+                  },
+                  "Arguments": null,
+                  "Spread": null,
+                  "FunctionType": 0,
+                  "Returns": 4
+                },
+                "Panic": null,
+                "Of": 4
+              },
+              {
+                "Value": 8
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          }
+        },
+        {
+          "Value": {
+            "Operator": 1,
+            "Left": {
+              "ViewContract": 0,
+              "ViewTypeID": 15,
+              "ViewReceiverTypeID": 3804,
+              "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:38:12",
+              "ViewOrdinary": false,
+              "View": "",
+              "ViewType": "",
+              "ViewAllowed": null,
+              "Readiness": "",
+              "Object": {
+                "Local": 20,
+                "Of": 4,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Name": "value",
+              "Of": 1,
+              "Optional": false,
+              "Absent": false,
+              "Class": 6,
+              "Method": false
+            },
+            "Right": {
+              "ViewContract": 0,
+              "ViewTypeID": 15,
+              "ViewReceiverTypeID": 3804,
+              "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:38:26",
+              "ViewOrdinary": false,
+              "View": "",
+              "ViewType": "",
+              "ViewAllowed": null,
+              "Readiness": "",
+              "Object": {
+                "Local": 23,
+                "Of": 4,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Name": "value",
+              "Of": 1,
+              "Optional": false,
+              "Absent": false,
+              "Class": 6,
+              "Method": false
+            }
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "closure",
+      "MethodName": "",
+      "Parameters": [
+        7
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Value": {
+            "Function": 8,
+            "Arguments": [
+              {
+                "Value": {
+                  "Local": 6,
+                  "Of": 4,
+                  "Checked": false,
+                  "Readiness": ""
+                },
+                "Fallback": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Function": 7
+                  },
+                  "Arguments": null,
+                  "Spread": null,
+                  "FunctionType": 0,
+                  "Returns": 4
+                },
+                "Panic": null,
+                "Of": 4
+              },
+              {
+                "Local": 7,
+                "Of": 1,
+                "Checked": false,
+                "Readiness": ""
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        6
+      ],
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "Box_new",
+      "MethodName": "",
+      "Parameters": [
+        9
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Uninitialized": false,
+          "Local": 8,
+          "Value": {
+            "Record": false,
+            "GraphTypes": null,
+            "SpreadReadiness": "",
+            "Class": 2,
+            "Spread": null,
+            "Fields": [
+              {
+                "Uninitialized": false,
+                "Name": "value",
+                "Value": {
+                  "Value": 0
+                },
+                "Private": false
+              }
+            ],
+            "NoReuse": false,
+            "SpreadMaybeUndefined": false,
+            "Empty": null,
+            "Tuple": false,
+            "Methods": []
+          }
+        },
+        {
+          "Record": false,
+          "Uninitialized": false,
+          "Object": {
+            "Local": 8,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          },
+          "Name": "value",
+          "Value": {
+            "Value": 0
+          },
+          "Class": 0,
+          "Site": 1,
+          "Define": false
+        },
+        {
+          "Record": false,
+          "Uninitialized": false,
+          "Object": {
+            "Local": 8,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          },
+          "Name": "value",
+          "Value": {
+            "Local": 9,
+            "Of": 1,
+            "Checked": false,
+            "Readiness": ""
+          },
+          "Class": 6,
+          "Site": 2,
+          "Define": false
+        },
+        {
+          "Stream": 1,
+          "Value": {
+            "Parts": [
+              {
+                "Index": 1
+              },
+              {
+                "Value": {
+                  "Local": 9,
+                  "Of": 1,
+                  "Checked": false,
+                  "Readiness": ""
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Value": {
+            "Local": 8,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "Box_new_initialize",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 0,
+      "Body": null,
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_constructor_cache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Local": 6,
+          "Value": {
+            "Function": 0,
+            "Arguments": [
+              {
+                "Value": 1
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          },
+          "Checked": false
+        },
+        {
+          "Value": {
+            "Local": 6,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        6
+      ],
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_value_new",
+      "MethodName": "",
+      "Parameters": [
+        10,
+        11
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Condition": {
+            "Value": {
+              "Local": 10,
+              "Of": 4,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Class": 1,
+            "Exact": true
+          },
+          "Then": [
+            {
+              "Value": {
+                "Function": 5,
+                "Arguments": [
+                  {
+                    "Local": 11,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  }
+                ],
+                "Spread": null,
+                "ArgumentCount": null,
+                "RestPacked": false,
+                "ForwardCount": false,
+                "Returns": 4,
+                "Virtual": 0,
+                "Accessor": "",
+                "Setter": false
+              }
+            }
+          ],
+          "Else": null
+        },
+        {
+          "Message": {
+            "Index": 2
+          }
+        },
+        {
+          "Value": {
+            "Of": 4
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_constructor_cache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Local": 12,
+          "Value": {
+            "Function": 0,
+            "Arguments": [
+              {
+                "Value": 1
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          },
+          "Checked": false
+        },
+        {
+          "Value": {
+            "Local": 12,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        12
+      ],
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_value_new",
+      "MethodName": "",
+      "Parameters": [
+        14,
+        15
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Condition": {
+            "Value": {
+              "Local": 14,
+              "Of": 4,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Class": 1,
+            "Exact": true
+          },
+          "Then": [
+            {
+              "Value": {
+                "Function": 5,
+                "Arguments": [
+                  {
+                    "Local": 15,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  }
+                ],
+                "Spread": null,
+                "ArgumentCount": null,
+                "RestPacked": false,
+                "ForwardCount": false,
+                "Returns": 4,
+                "Virtual": 0,
+                "Accessor": "",
+                "Setter": false
+              }
+            }
+          ],
+          "Else": null
+        },
+        {
+          "Message": {
+            "Index": 2
+          }
+        },
+        {
+          "Value": {
+            "Of": 4
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_constructor_cache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Local": 12,
+          "Value": {
+            "Function": 0,
+            "Arguments": [
+              {
+                "Value": 1
+              }
+            ],
+            "Spread": null,
+            "ArgumentCount": null,
+            "RestPacked": false,
+            "ForwardCount": false,
+            "Returns": 4,
+            "Virtual": 0,
+            "Accessor": "",
+            "Setter": false
+          },
+          "Checked": false
+        },
+        {
+          "Value": {
+            "Local": 12,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        12
+      ],
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_value_new",
+      "MethodName": "",
+      "Parameters": [
+        17,
+        18
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Condition": {
+            "Value": {
+              "Local": 17,
+              "Of": 4,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Class": 1,
+            "Exact": true
+          },
+          "Then": [
+            {
+              "Value": {
+                "Function": 5,
+                "Arguments": [
+                  {
+                    "Local": 18,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  }
+                ],
+                "Spread": null,
+                "ArgumentCount": null,
+                "RestPacked": false,
+                "ForwardCount": false,
+                "Returns": 4,
+                "Virtual": 0,
+                "Accessor": "",
+                "Setter": false
+              }
+            }
+          ],
+          "Else": null
+        },
+        {
+          "Message": {
+            "Index": 2
+          }
+        },
+        {
+          "Value": {
+            "Of": 4
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_constructor_cache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Local": 19,
+          "Value": {
+            "Local": 0,
+            "Of": 4,
+            "Checked": true,
+            "Readiness": ""
+          },
+          "Checked": false
+        },
+        {
+          "Value": {
+            "Local": 19,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        19
+      ],
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_value_new",
+      "MethodName": "",
+      "Parameters": [
+        21,
+        22
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Condition": {
+            "Value": {
+              "Local": 21,
+              "Of": 4,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Class": 1,
+            "Exact": true
+          },
+          "Then": [
+            {
+              "Value": {
+                "Function": 5,
+                "Arguments": [
+                  {
+                    "Local": 22,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  }
+                ],
+                "Spread": null,
+                "ArgumentCount": null,
+                "RestPacked": false,
+                "ForwardCount": false,
+                "Returns": 4,
+                "Virtual": 0,
+                "Accessor": "",
+                "Setter": false
+              }
+            }
+          ],
+          "Else": null
+        },
+        {
+          "Message": {
+            "Index": 2
+          }
+        },
+        {
+          "Value": {
+            "Of": 4
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_constructor_cache",
+      "MethodName": "",
+      "Parameters": null,
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Local": 19,
+          "Value": {
+            "Local": 0,
+            "Of": 4,
+            "Checked": true,
+            "Readiness": ""
+          },
+          "Checked": false
+        },
+        {
+          "Value": {
+            "Local": 19,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        19
+      ],
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "class_value_new",
+      "MethodName": "",
+      "Parameters": [
+        24,
+        25
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 4,
+      "Body": [
+        {
+          "Condition": {
+            "Value": {
+              "Local": 24,
+              "Of": 4,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Class": 1,
+            "Exact": true
+          },
+          "Then": [
+            {
+              "Value": {
+                "Function": 5,
+                "Arguments": [
+                  {
+                    "Local": 25,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  }
+                ],
+                "Spread": null,
+                "ArgumentCount": null,
+                "RestPacked": false,
+                "ForwardCount": false,
+                "Returns": 4,
+                "Virtual": 0,
+                "Accessor": "",
+                "Setter": false
+              }
+            }
+          ],
+          "Else": null
+        },
+        {
+          "Message": {
+            "Index": 2
+          }
+        },
+        {
+          "Value": {
+            "Of": 4
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "Box_static_initialize",
+      "MethodName": "",
+      "Parameters": [
+        26
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": null,
+      "RestElement": 0,
+      "Returns": 0,
+      "Body": [
+        {
+          "Record": false,
+          "Uninitialized": false,
+          "Object": {
+            "Local": 26,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          },
+          "Name": "label",
+          "Value": {
+            "Index": 3
+          },
+          "Class": 0,
+          "Site": 3,
+          "Define": true
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    }
+  ],
+  "Classes": [
+    {
+      "Definition": 0,
+      "Name": "Box_static",
+      "Base": 0,
+      "Constructor": -1,
+      "Fields": [
+        {
+          "Uninitialized": false,
+          "Name": "label",
+          "Value": {
+            "Of": 3
+          },
+          "Private": false
+        },
+        {
+          "Uninitialized": false,
+          "Name": "#static-present:label",
+          "Value": {
+            "Value": 0
+          },
+          "Private": true
+        }
+      ],
+      "OwnStart": 0,
+      "Methods": null,
+      "Accessors": null,
+      "Literal": false,
+      "PublicFields": [
+        {
+          "Uninitialized": false,
+          "Name": "label",
+          "Value": {
+            "Of": 3
+          },
+          "Private": false
+        }
+      ],
+      "Static": true,
+      "StaticParent": 0,
+      "StaticFlags": [
+        2,
+        0
+      ]
+    },
+    {
+      "Definition": 2,
+      "Name": "Box",
+      "Base": 0,
+      "Constructor": 5,
+      "Fields": [
+        {
+          "Uninitialized": false,
+          "Name": "value",
+          "Value": {
+            "Value": 0
+          },
+          "Private": false
+        }
+      ],
+      "OwnStart": 0,
+      "Methods": null,
+      "Accessors": null,
+      "Literal": false,
+      "PublicFields": null,
+      "Static": false,
+      "StaticParent": 0,
+      "StaticFlags": null
+    }
+  ],
+  "MethodTargets": {},
+  "StructuralMethodThunks": {},
+  "FunctionTypeTargets": {
+    "15": [],
+    "2449": [],
+    "3804": [],
+    "3807": [],
+    "3809": [
+      1,
+      2,
+      3
+    ],
+    "3812": [],
+    "3813": [
+      4
+    ],
+    "3815": [
+      1
+    ],
+    "3817": [
+      0
+    ],
+    "3819": [
+      2,
+      3
+    ],
+    "3820": [
+      2,
+      3
+    ]
+  },
+  "FixedArgumentSlots": 2,
+  "RestArgumentSlots": {},
+  "Main": [
+    {
+      "Uninitialized": false,
+      "Local": 1,
+      "Value": {
+        "Record": false,
+        "GraphTypes": null,
+        "SpreadReadiness": "",
+        "Class": 1,
+        "Spread": null,
+        "Fields": [
+          {
+            "Uninitialized": false,
+            "Name": "label",
+            "Value": {
+              "Of": 3
+            },
+            "Private": false
+          },
+          {
+            "Uninitialized": false,
+            "Name": "#static-present:label",
+            "Value": {
+              "Value": 0
+            },
+            "Private": true
+          }
+        ],
+        "NoReuse": false,
+        "SpreadMaybeUndefined": false,
+        "Empty": null,
+        "Tuple": false,
+        "Methods": []
+      }
+    },
+    {
+      "Value": {
+        "Function": 17,
+        "Arguments": [
+          {
+            "Local": 1,
+            "Of": 4,
+            "Checked": false,
+            "Readiness": ""
+          }
+        ],
+        "Spread": null,
+        "ArgumentCount": null,
+        "RestPacked": false,
+        "ForwardCount": false,
+        "Returns": 0,
+        "Virtual": 0,
+        "Accessor": "",
+        "Setter": false
+      }
+    },
+    {
+      "Uninitialized": false,
+      "Local": 0,
+      "Value": {
+        "Local": 1,
+        "Of": 4,
+        "Checked": false,
+        "Readiness": ""
+      }
+    },
+    {
+      "Uninitialized": false,
+      "Local": 2,
+      "Value": {
+        "Value": 0
+      }
+    },
+    {
+      "Uninitialized": false,
+      "Local": 3,
+      "Value": {
+        "Function": 1,
+        "Arguments": [],
+        "Spread": null,
+        "ArgumentCount": null,
+        "RestPacked": false,
+        "ForwardCount": false,
+        "Returns": 8,
+        "Virtual": 0,
+        "Accessor": "",
+        "Setter": false
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "ViewContract": 0,
+          "ViewTypeID": 15,
+          "ViewReceiverTypeID": 3804,
+          "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:20:13",
+          "ViewOrdinary": false,
+          "View": "",
+          "ViewType": "",
+          "ViewAllowed": null,
+          "Readiness": "",
+          "Object": {
+            "Direct": 0,
+            "Closure": {
+              "Local": 3,
+              "Of": 8,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Arguments": [
+              {
+                "Value": 1
+              }
+            ],
+            "Spread": null,
+            "FunctionType": 3813,
+            "Returns": 4
+          },
+          "Name": "value",
+          "Of": 1,
+          "Optional": false,
+          "Absent": false,
+          "Class": 6,
+          "Method": false
+        }
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "ViewContract": 0,
+          "ViewTypeID": 15,
+          "ViewReceiverTypeID": 3804,
+          "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:21:13",
+          "ViewOrdinary": false,
+          "View": "",
+          "ViewType": "",
+          "ViewAllowed": null,
+          "Readiness": "",
+          "Object": {
+            "Direct": 0,
+            "Closure": {
+              "Local": 3,
+              "Of": 8,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Arguments": [
+              {
+                "Value": 2
+              }
+            ],
+            "Spread": null,
+            "FunctionType": 3813,
+            "Returns": 4
+          },
+          "Name": "value",
+          "Of": 1,
+          "Optional": false,
+          "Absent": false,
+          "Class": 6,
+          "Method": false
+        }
+      }
+    },
+    {
+      "Uninitialized": false,
+      "Local": 4,
+      "Value": {
+        "Function": 1,
+        "Arguments": [],
+        "Spread": null,
+        "ArgumentCount": null,
+        "RestPacked": false,
+        "ForwardCount": false,
+        "Returns": 8,
+        "Virtual": 0,
+        "Accessor": "",
+        "Setter": false
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "ViewContract": 0,
+          "ViewTypeID": 15,
+          "ViewReceiverTypeID": 3804,
+          "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:23:13",
+          "ViewOrdinary": false,
+          "View": "",
+          "ViewType": "",
+          "ViewAllowed": null,
+          "Readiness": "",
+          "Object": {
+            "Direct": 0,
+            "Closure": {
+              "Local": 4,
+              "Of": 8,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Arguments": [
+              {
+                "Value": 3
+              }
+            ],
+            "Spread": null,
+            "FunctionType": 3813,
+            "Returns": 4
+          },
+          "Name": "value",
+          "Of": 1,
+          "Optional": false,
+          "Absent": false,
+          "Class": 6,
+          "Method": false
+        }
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "ViewContract": 0,
+          "ViewTypeID": 15,
+          "ViewReceiverTypeID": 3804,
+          "ViewWhere": "/workspace/adamic/review/test-audit/internal-oracle-nested_functions/cache-one-argument.a:24:13",
+          "ViewOrdinary": false,
+          "View": "",
+          "ViewType": "",
+          "ViewAllowed": null,
+          "Readiness": "",
+          "Object": {
+            "Direct": 0,
+            "Closure": {
+              "Local": 3,
+              "Of": 8,
+              "Checked": false,
+              "Readiness": ""
+            },
+            "Arguments": [
+              {
+                "Value": 4
+              }
+            ],
+            "Spread": null,
+            "FunctionType": 3813,
+            "Returns": 4
+          },
+          "Name": "value",
+          "Of": 1,
+          "Optional": false,
+          "Absent": false,
+          "Class": 6,
+          "Method": false
+        }
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "Local": 2,
+          "Of": 1,
+          "Checked": false,
+          "Readiness": ""
+        }
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "Function": 2,
+          "Arguments": [],
+          "Spread": null,
+          "ArgumentCount": null,
+          "RestPacked": false,
+          "ForwardCount": false,
+          "Returns": 1,
+          "Virtual": 0,
+          "Accessor": "",
+          "Setter": false
+        }
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "Local": 2,
+          "Of": 1,
+          "Checked": false,
+          "Readiness": ""
+        }
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Value": {
+          "Function": 3,
+          "Arguments": [],
+          "Spread": null,
+          "ArgumentCount": null,
+          "RestPacked": false,
+          "ForwardCount": false,
+          "Returns": 1,
+          "Virtual": 0,
+          "Accessor": "",
+          "Setter": false
+        }
+      }
+    }
+  ],
+  "ClosuresMayThrow": false
+}

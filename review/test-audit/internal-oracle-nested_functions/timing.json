@@ -1,0 +1,26 @@
+{
+  "nproc": 5,
+  "setup_seconds": 0,
+  "setup": "Skipped: warm env.sh works",
+  "npm_ci": {
+    "seconds": 0.7954460059991106,
+    "exit": 0
+  },
+  "switched_build": {
+    "seconds": 16.710972247999962,
+    "exit": 0
+  },
+  "probe_build": {
+    "seconds": 9.59338884600038,
+    "exit": 0
+  },
+  "test_wall_seconds": 381.1456086230064,
+  "test_binary_seconds": 255.829,
+  "run_count": 54,
+  "timing_method": "Three separate count=1 runs; median package ok-line binary seconds",
+  "baseline_package": 92.19690059400091,
+  "standalone_validation_seconds": 263.2121255410002,
+  "standalone_compile_results": 21,
+  "standalone_compile_successes": 19,
+  "standalone_validation_note": "Includes two initial compile failures and their successful repairs; excludes interrupted linking time."
+}

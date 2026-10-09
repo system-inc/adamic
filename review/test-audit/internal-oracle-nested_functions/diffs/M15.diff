@@ -1,0 +1,13 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -137,9 +137,7 @@
+ 			}
+ 		}
+ 	}
+-	for _, index := range functions {
+-		l.result.Functions[index].Environment = slices.Clone(environment)
+-	}
++	// Single-statement registration loop dropped.
+ 	return prologue, nil
+ }
+ 

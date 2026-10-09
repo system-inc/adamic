@@ -1,0 +1,32 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedRebindingCheckerRefusal$"
+  ],
+  "wall_seconds": 2.175203471999339,
+  "exit": 0,
+  "binary_seconds": 0.05,
+  "failed": [],
+  "passed": [
+    "TestNestedRebindingCheckerRefusal"
+  ],
+  "outputs": {
+    "TestNestedRebindingCheckerRefusal": [
+      "=== RUN   TestNestedRebindingCheckerRefusal\n",
+      "=== PAUSE TestNestedRebindingCheckerRefusal\n",
+      "=== CONT  TestNestedRebindingCheckerRefusal\n",
+      "--- PASS: TestNestedRebindingCheckerRefusal (0.04s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.050s\n"
+    ]
+  }
+}

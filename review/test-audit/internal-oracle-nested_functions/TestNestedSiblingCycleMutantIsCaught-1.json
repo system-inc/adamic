@@ -1,0 +1,51 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedSiblingCycleMutantIsCaught$"
+  ],
+  "wall_seconds": 2.522619080000368,
+  "exit": 0,
+  "binary_seconds": 0.423,
+  "failed": [],
+  "passed": [
+    "TestNestedSiblingCycleMutantIsCaught"
+  ],
+  "outputs": {
+    "TestNestedSiblingCycleMutantIsCaught": [
+      "=== RUN   TestNestedSiblingCycleMutantIsCaught\n",
+      "=== PAUSE TestNestedSiblingCycleMutantIsCaught\n",
+      "=== CONT  TestNestedSiblingCycleMutantIsCaught\n",
+      "    nested_functions_test.go:92: sibling capture mutant caught only by the leak check:\n",
+      "        exit 1\n",
+      "        \n",
+      "        =================================================================\n",
+      "        ==31542==ERROR: LeakSanitizer: detected memory leaks\n",
+      "        \n",
+      "        Indirect leak of 232 byte(s) in 3 object(s) allocated from:\n",
+      "            #0 0x55cb30bd4274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x55cb30c2b73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x55cb30c1792a in main /tmp/adamic-gate/adamic-build-2897855165/main.c:140:40\n",
+      "        \n",
+      "        Indirect leak of 80 byte(s) in 2 object(s) allocated from:\n",
+      "            #0 0x55cb30bd4274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x55cb30c2b73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "        \n",
+      "        SUMMARY: AddressSanitizer: 312 byte(s) leaked in 5 allocation(s).\n",
+      "--- PASS: TestNestedSiblingCycleMutantIsCaught (0.41s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=1\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.422s\n"
+    ]
+  }
+}

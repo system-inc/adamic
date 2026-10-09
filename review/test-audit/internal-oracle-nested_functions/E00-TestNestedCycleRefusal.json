@@ -1,0 +1,36 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedCycleRefusal$"
+  ],
+  "wall_seconds": 2.574233526000171,
+  "exit": 1,
+  "binary_seconds": 0.355,
+  "failed": [
+    "TestNestedCycleRefusal"
+  ],
+  "passed": [],
+  "outputs": {
+    "TestNestedCycleRefusal": [
+      "=== RUN   TestNestedCycleRefusal\n",
+      "=== PAUSE TestNestedCycleRefusal\n",
+      "=== CONT  TestNestedCycleRefusal\n",
+      "    nested_functions_test.go:112: accepted cycle differs from Node: stdout differs\n",
+      "--- FAIL: TestNestedCycleRefusal (0.34s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=1\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.354s\n"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:14:24.716757263Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T08:14:24.72681558Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught"}
+{"Time":"2026-10-09T08:14:24.726908623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught","Output":"=== RUN   TestNestedSiblingCycleMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:24.726963231Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught","Output":"=== PAUSE TestNestedSiblingCycleMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:24.726966449Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught"}
+{"Time":"2026-10-09T08:14:24.726997409Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught"}
+{"Time":"2026-10-09T08:14:24.727001237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught","Output":"=== CONT  TestNestedSiblingCycleMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:24.764456749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught","Output":"    nested_functions_test.go:46: mutant requires two siblings\n","OutputType":"error"}
+{"Time":"2026-10-09T08:14:24.764513958Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught","Output":"--- FAIL: TestNestedSiblingCycleMutantIsCaught (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:24.764517718Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedSiblingCycleMutantIsCaught","Elapsed":0.04}
+{"Time":"2026-10-09T08:14:24.764539742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:24.764717273Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.047s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:24.764729074Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.048}

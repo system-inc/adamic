@@ -1,0 +1,11 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -224,7 +224,7 @@
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		l.result.Locals[local].Preallocated = true
++		l.result.Locals[local].Preallocated = false
+ 		return []ir.Statement{ir.Declare{Local: local, Uninitialized: true}}, nil
+ 	}
+ 	if name.Kind != ast.KindArrayBindingPattern && name.Kind != ast.KindObjectBindingPattern {

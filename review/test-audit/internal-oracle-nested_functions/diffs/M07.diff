@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -56,7 +56,7 @@
+ 		}
+ 		for _, name := range []string{"Int8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
+ 			if l.isLibraryGlobal(made.Expression, name) {
+-				return l.notYet(node, "typed array element type "+name)
++				return l.notYet(node, "typed array facility "+name)
+ 			}
+ 		}
+ 	}

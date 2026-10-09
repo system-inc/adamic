@@ -1,0 +1,523 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestNestedRebindingCheckerRefusal|TestNestedCallbackCarrierMutantIsCaught|TestNewExpressionUint16RemainsNotYet|TestNewExpressionCacheCaptureRemainsNotYet|TestNativeAgreesWithNode|TestScannerNestedReferences|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant|TestTheOracleCatchesOneByte)$/^(internal|stage3|nested)/^(oracle|drivers)$/^(testdata|scanner)$/^(nested_|new_expression_|typed_arrays|probes)"
+  ],
+  "wall_seconds": 10.611659882000822,
+  "exit": 1,
+  "binary_seconds": 8.722,
+  "failed": [
+    "TestNestedRebindingCheckerRefusal"
+  ],
+  "passed": [
+    "TestNewExpressionCacheCaptureRemainsNotYet",
+    "TestNestedSiblingCycleMutantIsCaught",
+    "TestTheOracleCatchesOneByte",
+    "TestNestedCycleRefusal",
+    "TestNestedCallbackCarrierMutantIsCaught",
+    "TestNewExpressionUint16RemainsNotYet",
+    "TestNestedReferenceIdentityMutant",
+    "TestScannerNestedReferenceMutants/nested-sibling-callback",
+    "TestScannerNestedReferences/nested-ancestor-call.a",
+    "TestScannerNestedReferences/nested-generic-sibling-call.a",
+    "TestScannerNestedReferences/nested-sibling-callback.a",
+    "TestScannerNestedReferences/nested_reference_identity.a",
+    "TestScannerNestedReferences",
+    "TestScannerNestedReferenceMutants/nested-ancestor-call",
+    "TestScannerNestedReferenceMutants/nested-generic-sibling-call",
+    "TestScannerNestedReferenceMutants",
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stop.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stats.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes_large.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_order.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_workers_stats.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_views.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a",
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-ancestor-call.a",
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-generic-sibling-call.a",
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-sibling-callback.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_or.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_local.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a",
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a",
+    "TestNativeAgreesWithNode"
+  ],
+  "outputs": {
+    "TestNestedSiblingCycleMutantIsCaught": [
+      "=== RUN   TestNestedSiblingCycleMutantIsCaught\n",
+      "=== PAUSE TestNestedSiblingCycleMutantIsCaught\n",
+      "=== CONT  TestNestedSiblingCycleMutantIsCaught\n",
+      "    nested_functions_test.go:92: sibling capture mutant caught only by the leak check:\n",
+      "        exit 1\n",
+      "        \n",
+      "        =================================================================\n",
+      "        ==34483==ERROR: LeakSanitizer: detected memory leaks\n",
+      "        \n",
+      "        Indirect leak of 232 byte(s) in 3 object(s) allocated from:\n",
+      "            #0 0x558513a11274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x558513a6873f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x558513a5492a in main /tmp/adamic-gate/adamic-build-1240484465/main.c:140:40\n",
+      "        \n",
+      "        Indirect leak of 232 byte(s) in 3 object(s) allocated from:\n",
+      "            #0 0x558513a11274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x558513a6873f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x558513a5494f in main /tmp/adamic-gate/adamic-build-1240484465/main.c:143:40\n",
+      "        \n",
+      "        Indirect leak of 160 byte(s) in 4 object(s) allocated from:\n",
+      "            #0 0x558513a11274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x558513a6873f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "        \n",
+      "        SUMMARY: AddressSanitizer: 624 byte(s) leaked in 10 allocation(s).\n",
+      "--- PASS: TestNestedSiblingCycleMutantIsCaught (0.57s)\n"
+    ],
+    "TestNestedCycleRefusal": [
+      "=== RUN   TestNestedCycleRefusal\n",
+      "=== PAUSE TestNestedCycleRefusal\n",
+      "=== CONT  TestNestedCycleRefusal\n",
+      "--- PASS: TestNestedCycleRefusal (0.09s)\n"
+    ],
+    "TestNestedRebindingCheckerRefusal": [
+      "=== RUN   TestNestedRebindingCheckerRefusal\n",
+      "=== PAUSE TestNestedRebindingCheckerRefusal\n",
+      "=== CONT  TestNestedRebindingCheckerRefusal\n",
+      "    nested_functions_test.go:125: want checker refusal, got <nil>\n",
+      "--- FAIL: TestNestedRebindingCheckerRefusal (0.12s)\n"
+    ],
+    "TestNestedCallbackCarrierMutantIsCaught": [
+      "=== RUN   TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== PAUSE TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== CONT  TestNestedCallbackCarrierMutantIsCaught\n",
+      "    nested_functions_test.go:179: wrong carrier caught by Node: stdout differs\n",
+      "--- PASS: TestNestedCallbackCarrierMutantIsCaught (0.71s)\n"
+    ],
+    "TestNewExpressionUint16RemainsNotYet": [
+      "=== RUN   TestNewExpressionUint16RemainsNotYet\n",
+      "=== PAUSE TestNewExpressionUint16RemainsNotYet\n",
+      "=== CONT  TestNewExpressionUint16RemainsNotYet\n",
+      "--- PASS: TestNewExpressionUint16RemainsNotYet (0.27s)\n"
+    ],
+    "TestNewExpressionCacheCaptureRemainsNotYet": [
+      "=== RUN   TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== PAUSE TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== CONT  TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "--- PASS: TestNewExpressionCacheCaptureRemainsNotYet (0.33s)\n"
+    ],
+    "TestNativeAgreesWithNode": [
+      "=== RUN   TestNativeAgreesWithNode\n",
+      "=== PAUSE TestNativeAgreesWithNode\n",
+      "=== CONT  TestNativeAgreesWithNode\n",
+      "--- PASS: TestNativeAgreesWithNode (0.23s)\n"
+    ],
+    "TestTheOracleCatchesOneByte": [
+      "=== RUN   TestTheOracleCatchesOneByte\n",
+      "=== PAUSE TestTheOracleCatchesOneByte\n",
+      "=== CONT  TestTheOracleCatchesOneByte\n",
+      "--- PASS: TestTheOracleCatchesOneByte (0.48s)\n"
+    ],
+    "TestScannerNestedReferenceMutants": [
+      "=== RUN   TestScannerNestedReferenceMutants\n",
+      "=== PAUSE TestScannerNestedReferenceMutants\n",
+      "=== CONT  TestScannerNestedReferenceMutants\n",
+      "--- PASS: TestScannerNestedReferenceMutants (0.00s)\n"
+    ],
+    "TestScannerNestedReferences": [
+      "=== RUN   TestScannerNestedReferences\n",
+      "=== PAUSE TestScannerNestedReferences\n",
+      "=== CONT  TestScannerNestedReferences\n",
+      "--- PASS: TestScannerNestedReferences (0.01s)\n"
+    ],
+    "TestNestedReferenceIdentityMutant": [
+      "=== RUN   TestNestedReferenceIdentityMutant\n",
+      "=== PAUSE TestNestedReferenceIdentityMutant\n",
+      "=== CONT  TestNestedReferenceIdentityMutant\n",
+      "    scanner_nested_references_test.go:145: native identity mutant caught: output \"false false false false\\n11 12 21\\nfalse 7\\n32 33\\n\" next to Node \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\"\n",
+      "    scanner_nested_references_test.go:145: JavaScript identity mutant caught: output \"false false false false\\n11 12 21\\nfalse 7\\n32 33\\n\" next to Node \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\"\n",
+      "--- PASS: TestNestedReferenceIdentityMutant (0.86s)\n"
+    ],
+    "TestScannerNestedReferences/nested_reference_identity.a": [
+      "=== RUN   TestScannerNestedReferences/nested_reference_identity.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested_reference_identity.a\n",
+      "=== CONT  TestScannerNestedReferences/nested_reference_identity.a\n",
+      "    scanner_nested_references_test.go:104: native output \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\" next to Node \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: release output \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\" next to Node \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: JavaScript output \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\" next to Node \"true true true false\\n11 12 21\\ntrue 7\\n32 33\\n\"; exits 0/0\n",
+      "--- PASS: TestScannerNestedReferences/nested_reference_identity.a (1.01s)\n"
+    ],
+    "TestScannerNestedReferences/nested-sibling-callback.a": [
+      "=== RUN   TestScannerNestedReferences/nested-sibling-callback.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested-sibling-callback.a\n",
+      "=== CONT  TestScannerNestedReferences/nested-sibling-callback.a\n",
+      "    scanner_nested_references_test.go:104: native output \"x\\n\" next to Node \"x\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: release output \"x\\n\" next to Node \"x\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: JavaScript output \"x\\n\" next to Node \"x\\n\"; exits 0/0\n",
+      "--- PASS: TestScannerNestedReferences/nested-sibling-callback.a (0.68s)\n"
+    ],
+    "TestScannerNestedReferences/nested-generic-sibling-call.a": [
+      "=== RUN   TestScannerNestedReferences/nested-generic-sibling-call.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested-generic-sibling-call.a\n",
+      "=== CONT  TestScannerNestedReferences/nested-generic-sibling-call.a\n",
+      "    scanner_nested_references_test.go:104: native output \"x\\n\" next to Node \"x\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: release output \"x\\n\" next to Node \"x\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: JavaScript output \"x\\n\" next to Node \"x\\n\"; exits 0/0\n",
+      "--- PASS: TestScannerNestedReferences/nested-generic-sibling-call.a (0.76s)\n"
+    ],
+    "TestScannerNestedReferences/nested-ancestor-call.a": [
+      "=== RUN   TestScannerNestedReferences/nested-ancestor-call.a\n",
+      "=== PAUSE TestScannerNestedReferences/nested-ancestor-call.a\n",
+      "=== CONT  TestScannerNestedReferences/nested-ancestor-call.a\n",
+      "    scanner_nested_references_test.go:104: native output \"1\\n\" next to Node \"1\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: release output \"1\\n\" next to Node \"1\\n\"; exits 0/0\n",
+      "    scanner_nested_references_test.go:104: JavaScript output \"1\\n\" next to Node \"1\\n\"; exits 0/0\n",
+      "--- PASS: TestScannerNestedReferences/nested-ancestor-call.a (0.80s)\n"
+    ],
+    "TestScannerNestedReferenceMutants/nested-sibling-callback": [
+      "=== RUN   TestScannerNestedReferenceMutants/nested-sibling-callback\n",
+      "=== PAUSE TestScannerNestedReferenceMutants/nested-sibling-callback\n",
+      "=== CONT  TestScannerNestedReferenceMutants/nested-sibling-callback\n",
+      "    scanner_nested_references_test.go:72: native mutant caught: output \"\" next to Node \"x\\n\"\n",
+      "    scanner_nested_references_test.go:72: JavaScript mutant caught: output \"\" next to Node \"x\\n\"\n",
+      "--- PASS: TestScannerNestedReferenceMutants/nested-sibling-callback (0.54s)\n"
+    ],
+    "TestScannerNestedReferenceMutants/nested-generic-sibling-call": [
+      "=== RUN   TestScannerNestedReferenceMutants/nested-generic-sibling-call\n",
+      "=== PAUSE TestScannerNestedReferenceMutants/nested-generic-sibling-call\n",
+      "=== CONT  TestScannerNestedReferenceMutants/nested-generic-sibling-call\n",
+      "    scanner_nested_references_test.go:72: native mutant caught: output \"\" next to Node \"x\\n\"\n",
+      "    scanner_nested_references_test.go:72: JavaScript mutant caught: output \"\" next to Node \"x\\n\"\n",
+      "--- PASS: TestScannerNestedReferenceMutants/nested-generic-sibling-call (0.66s)\n"
+    ],
+    "TestScannerNestedReferenceMutants/nested-ancestor-call": [
+      "=== RUN   TestScannerNestedReferenceMutants/nested-ancestor-call\n",
+      "=== PAUSE TestScannerNestedReferenceMutants/nested-ancestor-call\n",
+      "=== CONT  TestScannerNestedReferenceMutants/nested-ancestor-call\n",
+      "    scanner_nested_references_test.go:72: native mutant caught: output \"0\\n\" next to Node \"1\\n\"\n",
+      "    scanner_nested_references_test.go:72: JavaScript mutant caught: output \"0\\n\" next to Node \"1\\n\"\n",
+      "--- PASS: TestScannerNestedReferenceMutants/nested-ancestor-call (0.67s)\n"
+    ],
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a": [
+      "=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a\n",
+      "=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a\n",
+      "--- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a (0.88s)\n"
+    ],
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a": [
+      "=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a\n",
+      "=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a\n",
+      "--- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a (0.66s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a (0.63s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a (0.81s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a (0.68s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a (0.71s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a (0.75s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a (0.75s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a (0.75s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a (0.73s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a (0.60s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a (0.76s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a (0.72s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a (0.74s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a (0.78s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a (0.77s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a (0.72s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a (0.79s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a (0.74s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a (0.77s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a (0.69s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a (0.71s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a (0.85s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a (0.84s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a (0.77s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a (0.76s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a\n",
+      "    oracle_test.go:753: not yet: /workspace/adamic/internal/oracle/testdata/new_expression_uint16.a:1:23: stage 0 can't lower typed array facility Uint16Array yet\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a (0.06s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a\n",
+      "    oracle_test.go:753: not yet: /workspace/adamic/internal/oracle/testdata/new_expression_uint16_notyet.a:1:16: stage 0 can't lower typed array element type Uint16Array yet\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a (0.07s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a (0.93s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_or.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_or.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_or.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_or.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_or.a (0.83s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_local.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_local.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_local.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_local.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_local.a (0.90s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a\n",
+      "    oracle_test.go:753: not yet: /workspace/adamic/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a:8:52: stage 0 can't lower a lexical constructor-cache initializer needing additional captures yet\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a (0.05s)\n"
+    ],
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-sibling-callback.a": [
+      "=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-sibling-callback.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-sibling-callback.a\n",
+      "=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-sibling-callback.a\n",
+      "--- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-sibling-callback.a (0.68s)\n"
+    ],
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-generic-sibling-call.a": [
+      "=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-generic-sibling-call.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-generic-sibling-call.a\n",
+      "=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-generic-sibling-call.a\n",
+      "--- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-generic-sibling-call.a (0.75s)\n"
+    ],
+    "TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-ancestor-call.a": [
+      "=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-ancestor-call.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-ancestor-call.a\n",
+      "=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-ancestor-call.a\n",
+      "--- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/nested-ancestor-call.a (0.72s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a (0.91s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a (0.65s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a (0.79s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a (0.86s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_views.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_views.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_views.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_views.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_views.a (0.90s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_order.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_order.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_order.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_order.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_order.a (0.74s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes.a (0.75s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes_large.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes_large.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes_large.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes_large.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_primes_large.a (0.74s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stats.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stats.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stats.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stats.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stats.a (0.78s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_workers_stats.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_workers_stats.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_workers_stats.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_workers_stats.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_workers_stats.a (1.07s)\n"
+    ],
+    "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stop.a": [
+      "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stop.a\n",
+      "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stop.a\n",
+      "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stop.a\n",
+      "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_stop.a (0.74s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "gate cache: native hits=0 misses=125\n",
+      "gate cache: node hits=0 misses=107\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t8.722s\n"
+    ]
+  }
+}

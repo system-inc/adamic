@@ -1,0 +1,17 @@
+{
+  "rows": [
+    "TestNestedSiblingCycleMutantIsCaught",
+    "TestNestedCycleRefusal",
+    "TestNestedRebindingCheckerRefusal",
+    "TestNestedCallbackCarrierMutantIsCaught",
+    "TestNewExpressionUint16RemainsNotYet",
+    "TestNewExpressionCacheCaptureRemainsNotYet",
+    "TestNativeAgreesWithNode",
+    "TestScannerNestedReferences",
+    "TestScannerNestedReferenceMutants",
+    "TestNestedReferenceIdentityMutant",
+    "TestTheOracleCatchesOneByte"
+  ],
+  "pattern": "^(TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestNestedRebindingCheckerRefusal|TestNestedCallbackCarrierMutantIsCaught|TestNewExpressionUint16RemainsNotYet|TestNewExpressionCacheCaptureRemainsNotYet|TestNativeAgreesWithNode|TestScannerNestedReferences|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant|TestTheOracleCatchesOneByte)$/^(internal|stage3|nested)/^(oracle|drivers)$/^(testdata|scanner)$/^(nested_|new_expression_|typed_arrays|probes)",
+  "limitation": "TestNativeAgreesWithNode is restricted to named fixture subtests. All other package kills unknown."
+}

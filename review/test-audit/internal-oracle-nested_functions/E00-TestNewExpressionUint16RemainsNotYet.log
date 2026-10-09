@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T08:14:33.877978227Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T08:14:33.88800065Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet"}
+{"Time":"2026-10-09T08:14:33.888101319Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet","Output":"=== RUN   TestNewExpressionUint16RemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:33.888172916Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet","Output":"=== PAUSE TestNewExpressionUint16RemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:33.888177641Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet"}
+{"Time":"2026-10-09T08:14:33.888184463Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet"}
+{"Time":"2026-10-09T08:14:33.888189408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet","Output":"=== CONT  TestNewExpressionUint16RemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:34.09515312Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet","Output":"    new_expression_test.go:36: want Uint16Array element-type NotYet, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T08:14:34.095272751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet","Output":"--- FAIL: TestNewExpressionUint16RemainsNotYet (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:34.095279389Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNewExpressionUint16RemainsNotYet","Elapsed":0.21}
+{"Time":"2026-10-09T08:14:34.095335623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:34.095344216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T08:14:34.095347708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T08:14:34.095350745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T08:14:34.096776263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.218s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:14:34.096830001Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.219}

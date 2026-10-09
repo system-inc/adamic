@@ -1,0 +1,98 @@
+{
+  "scope": {
+    "rows": [
+      "TestNestedSiblingCycleMutantIsCaught",
+      "TestNestedCycleRefusal",
+      "TestNestedRebindingCheckerRefusal",
+      "TestNestedCallbackCarrierMutantIsCaught",
+      "TestNewExpressionUint16RemainsNotYet",
+      "TestNewExpressionCacheCaptureRemainsNotYet",
+      "TestNativeAgreesWithNode",
+      "TestScannerNestedReferences",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant",
+      "TestTheOracleCatchesOneByte"
+    ],
+    "pattern": "^(TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestNestedRebindingCheckerRefusal|TestNestedCallbackCarrierMutantIsCaught|TestNewExpressionUint16RemainsNotYet|TestNewExpressionCacheCaptureRemainsNotYet|TestNativeAgreesWithNode|TestScannerNestedReferences|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant|TestTheOracleCatchesOneByte)$/^(internal|stage3|nested)/^(oracle|drivers)$/^(testdata|scanner)$/^(nested_|new_expression_|typed_arrays|probes)",
+    "limitation": "TestNativeAgreesWithNode is restricted to named fixture subtests. All other package kills unknown."
+  },
+  "columns": {
+    "M01": [
+      "TestNestedRebindingCheckerRefusal"
+    ],
+    "M02": [
+      "TestNestedRebindingCheckerRefusal"
+    ],
+    "M03": [
+      "TestNestedRebindingCheckerRefusal"
+    ],
+    "M04": [
+      "TestNestedCycleRefusal"
+    ],
+    "M05": [
+      "TestNestedCycleRefusal"
+    ],
+    "M06": [
+      "TestNestedCycleRefusal"
+    ],
+    "M07": [
+      "TestNewExpressionUint16RemainsNotYet"
+    ],
+    "M08": [
+      "TestNestedCallbackCarrierMutantIsCaught",
+      "TestNestedCycleRefusal",
+      "TestNestedSiblingCycleMutantIsCaught",
+      "TestNewExpressionCacheCaptureRemainsNotYet",
+      "TestNewExpressionUint16RemainsNotYet"
+    ],
+    "M09": [
+      "TestNativeAgreesWithNode",
+      "TestNewExpressionCacheCaptureRemainsNotYet"
+    ],
+    "M10": [
+      "TestNativeAgreesWithNode"
+    ],
+    "M11": [],
+    "M12": [
+      "TestNativeAgreesWithNode",
+      "TestNestedReferenceIdentityMutant",
+      "TestScannerNestedReferenceMutants",
+      "TestScannerNestedReferences"
+    ],
+    "M13": [
+      "TestNativeAgreesWithNode"
+    ],
+    "M14": [
+      "TestNativeAgreesWithNode",
+      "TestNestedCallbackCarrierMutantIsCaught"
+    ],
+    "M15": [],
+    "M16": [
+      "TestNewExpressionCacheCaptureRemainsNotYet",
+      "TestNewExpressionUint16RemainsNotYet"
+    ],
+    "E00": [
+      "TestNestedCallbackCarrierMutantIsCaught",
+      "TestNestedCycleRefusal",
+      "TestNestedReferenceIdentityMutant",
+      "TestNestedSiblingCycleMutantIsCaught",
+      "TestNewExpressionCacheCaptureRemainsNotYet",
+      "TestNewExpressionUint16RemainsNotYet",
+      "TestTheOracleCatchesOneByte"
+    ],
+    "W01": [
+      "TestNestedSiblingCycleMutantIsCaught"
+    ],
+    "W02": [
+      "TestNestedCallbackCarrierMutantIsCaught",
+      "TestNestedReferenceIdentityMutant",
+      "TestScannerNestedReferenceMutants",
+      "TestTheOracleCatchesOneByte"
+    ]
+  },
+  "incomplete_columns": [
+    "M08",
+    "E00"
+  ],
+  "note": "Isolated unit-row reruns complete those six observations only. No package-unique kills proven."
+}

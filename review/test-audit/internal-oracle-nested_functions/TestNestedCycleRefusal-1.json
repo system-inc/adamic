@@ -1,0 +1,32 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedCycleRefusal$"
+  ],
+  "wall_seconds": 1.828502848999051,
+  "exit": 0,
+  "binary_seconds": 0.046,
+  "failed": [],
+  "passed": [
+    "TestNestedCycleRefusal"
+  ],
+  "outputs": {
+    "TestNestedCycleRefusal": [
+      "=== RUN   TestNestedCycleRefusal\n",
+      "=== PAUSE TestNestedCycleRefusal\n",
+      "=== CONT  TestNestedCycleRefusal\n",
+      "--- PASS: TestNestedCycleRefusal (0.04s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.046s\n"
+    ]
+  }
+}

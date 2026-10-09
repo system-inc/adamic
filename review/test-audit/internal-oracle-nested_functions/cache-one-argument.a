@@ -1,0 +1,40 @@
+class Box {
+    static readonly label = "box";
+    readonly value: number;
+    constructor(value: number) {
+        this.value = value;
+        console.log(`constructed ${value}`);
+    }
+}
+let initializations = 0;
+function initialize(unused: number): typeof Box {
+    initializations++;
+    console.log(`initialize ${initializations}`);
+    return Box;
+}
+function factory(): (value: number) => Box {
+    let Cached: typeof Box | undefined = undefined;
+    return (value: number): Box => new (Cached || (Cached = initialize(1)))(value);
+}
+const create = factory();
+console.log(create(1).value.toString());
+console.log(create(2).value.toString());
+const separate = factory();
+console.log(separate(3).value.toString());
+console.log(create(4).value.toString());
+console.log(initializations.toString());
+function localCache(): number {
+    let Cached: typeof Box | undefined = undefined;
+    const first = new (Cached ?? (Cached = initialize(1)))(5);
+    const second = new (Cached ?? (Cached = initialize(1)))(6);
+    return first.value + second.value;
+}
+console.log(localCache().toString());
+console.log(initializations.toString());
+function directCache(): number {
+    let Cached: typeof Box | undefined = undefined;
+    const first = new (Cached || (Cached = Box))(7);
+    const second = new (Cached || (Cached = Box))(8);
+    return first.value + second.value;
+}
+console.log(directCache().toString());

@@ -1,0 +1,56 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedSiblingCycleMutantIsCaught$"
+  ],
+  "wall_seconds": 2.2223949979997997,
+  "exit": 0,
+  "binary_seconds": 0.406,
+  "failed": [],
+  "passed": [
+    "TestNestedSiblingCycleMutantIsCaught"
+  ],
+  "outputs": {
+    "TestNestedSiblingCycleMutantIsCaught": [
+      "=== RUN   TestNestedSiblingCycleMutantIsCaught\n",
+      "=== PAUSE TestNestedSiblingCycleMutantIsCaught\n",
+      "=== CONT  TestNestedSiblingCycleMutantIsCaught\n",
+      "    nested_functions_test.go:92: sibling capture mutant caught only by the leak check:\n",
+      "        exit 1\n",
+      "        \n",
+      "        =================================================================\n",
+      "        ==31686==ERROR: LeakSanitizer: detected memory leaks\n",
+      "        \n",
+      "        Indirect leak of 232 byte(s) in 3 object(s) allocated from:\n",
+      "            #0 0x5636744a8274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x5636744ff73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x5636744eb92a in main /tmp/adamic-gate/adamic-build-3166506914/main.c:140:40\n",
+      "        \n",
+      "        Indirect leak of 232 byte(s) in 3 object(s) allocated from:\n",
+      "            #0 0x5636744a8274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x5636744ff73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x5636744eb94f in main /tmp/adamic-gate/adamic-build-3166506914/main.c:143:40\n",
+      "        \n",
+      "        Indirect leak of 160 byte(s) in 4 object(s) allocated from:\n",
+      "            #0 0x5636744a8274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x5636744ff73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "        \n",
+      "        SUMMARY: AddressSanitizer: 624 byte(s) leaked in 10 allocation(s).\n",
+      "--- PASS: TestNestedSiblingCycleMutantIsCaught (0.39s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=1\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.406s\n"
+    ]
+  }
+}

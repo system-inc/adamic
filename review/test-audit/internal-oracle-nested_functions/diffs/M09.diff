@@ -1,0 +1,11 @@
+--- a/internal/lower/new_class_value.go
++++ b/internal/lower/new_class_value.go
+@@ -163,7 +163,7 @@
+ 					closed = closed && !initializer.Closure && len(initializer.Environment) == 0
+ 				}
+ 			}
+-			if !closed {
++			if closed {
+ 				return nil, l.notYet(node, "a lexical constructor-cache initializer needing additional captures")
+ 			}
+ 			l.result.Locals[local].Captured = true

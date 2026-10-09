@@ -1,0 +1,11 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -102,7 +102,7 @@
+ 		}
+ 	}
+ 	for local, declared := range l.result.Locals {
+-		if !declared.Captured || declared.Global {
++		if declared.Captured || declared.Global {
+ 			continue
+ 		}
+ 		proven, node := l.localTypes[local], l.localNodes[local]

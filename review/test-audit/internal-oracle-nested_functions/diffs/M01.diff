@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -144,7 +144,7 @@
+ 	}
+ 
+ 	loaded := &Program{compiler: program, fs: fs}
+-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
++	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 1 {
+ 		return nil, &CheckError{Diagnostics: diagnostics}
+ 	}
+ 

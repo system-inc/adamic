@@ -1,0 +1,250 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 2515e26f..b162a6c3 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -144,7 +144,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
+ 	}
+ 
+ 	loaded := &Program{compiler: program, fs: fs}
+-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
++	if diagnostics := loaded.diagnostics(context.Background()); (!auditMutant("M01") && (len(diagnostics) > 0)) || (auditMutant("M01") && (len(diagnostics) > 1)) {
+ 		return nil, &CheckError{Diagnostics: diagnostics}
+ 	}
+ 
+@@ -230,7 +230,9 @@ func (p *Program) diagnostics(ctx context.Context) []string {
+ 		all = append(all, p.compiler.GetProgramDiagnostics()...)
+ 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
+ 		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
+-		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
++		if !auditMutant("M02") {
++			all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
++		}
+ 	}
+ 	formatted := make([]string, 0, len(all))
+ 	for _, diagnostic := range all {
+@@ -252,7 +254,7 @@ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
+ 	if message == "" {
+ 		message = diagnostic.Localize(english)
+ 	}
+-	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
++	fmt.Fprintf(&builder, "error TS%d: %s", auditDiagnosticCode(diagnostic.Code()), message)
+ 	writeChain(&builder, diagnostic.MessageChain(), 1)
+ 	return builder.String()
+ }
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index 63513189..32cd59a3 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -102,14 +102,14 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+ 		}
+ 	}
+ 	for local, declared := range l.result.Locals {
+-		if !declared.Captured || declared.Global {
++		if (!auditMutant("M04") && (!declared.Captured || declared.Global)) || (auditMutant("M04") && (declared.Captured || declared.Global)) {
+ 			continue
+ 		}
+ 		proven, node := l.localTypes[local], l.localNodes[local]
+ 		if proven == nil || node == nil || finder.weak(proven) {
+ 			continue
+ 		}
+-		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
++		if finder.reaches(proven, cycleNode{cell: local + 1}) && (l.closedFrameInput(local) == auditMutant("M06")) {
+ 			return &Refused{
+ 				Where: l.program.Where(node),
+ 				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+@@ -361,7 +361,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+ 		visited[node] = true
+ 		if node.cell != 0 {
+ 			if node == target {
+-				return true
++				return !auditMutant("M05")
+ 			}
+ 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
+ 				queue = append(queue, cycleNode{proven: proven})
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..aafb0f95 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -30,7 +30,7 @@ func (r *Refused) Error() string {
+ }
+ 
+ func (l *lowering) notYet(node *ast.Node, what string) error {
+-	return &NotYet{Where: l.program.Where(node), What: what}
++	return &NotYet{Where: l.program.Where(node), What: auditNotYetWhat(what)}
+ }
+ 
+ // describe names a node's kind for a person: "a VariableStatement", "an ImportDeclaration".
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..341a6a0a 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditMutant("E00") {
++		return &ir.Program{}, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/nested_functions.go b/internal/lower/nested_functions.go
+index cc7ed208..ed38ed54 100644
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -53,7 +53,7 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+ 	if len(declarations) == 0 {
+ 		return nil, nil
+ 	}
+-	l.function.NestedFrame = true
++	l.function.NestedFrame = !auditMutant("M12")
+ 	owner := l.functionIndex
+ 	prologue := []ir.Statement{}
+ 	// Captures of a declaration later in the source must already have a cell when
+@@ -138,7 +138,9 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+ 		}
+ 	}
+ 	for _, index := range functions {
+-		l.result.Functions[index].Environment = slices.Clone(environment)
++		if !auditMutant("M15") {
++			l.result.Functions[index].Environment = slices.Clone(environment)
++		}
+ 	}
+ 	return prologue, nil
+ }
+@@ -188,7 +190,9 @@ func (l *lowering) nestedSibling(node *ast.Node) int {
+ 		}
+ 	}
+ 	for _, function := range l.closures[boundary+1:] {
+-		l.result.Functions[function].ForwardedNestedParent = parent
++		if !auditMutant("M14") {
++			l.result.Functions[function].ForwardedNestedParent = parent
++		}
+ 	}
+ 	// Known slots propagate now; slots discovered by later sibling bodies are
+ 	// added to every forwarding closure when the enclosing frame is completed.
+@@ -224,7 +228,7 @@ func (l *lowering) preallocateNestedBindings(name *ast.Node) ([]ir.Statement, er
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		l.result.Locals[local].Preallocated = true
++		l.result.Locals[local].Preallocated = !auditMutant("M13")
+ 		return []ir.Statement{ir.Declare{Local: local, Uninitialized: true}}, nil
+ 	}
+ 	if name.Kind != ast.KindArrayBindingPattern && name.Kind != ast.KindObjectBindingPattern {
+diff --git a/internal/lower/new_class_value.go b/internal/lower/new_class_value.go
+index 2dd09731..f43be22c 100644
+--- a/internal/lower/new_class_value.go
++++ b/internal/lower/new_class_value.go
+@@ -157,13 +157,13 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error)
+ 				closed = l.result.Locals[value.Local].Global
+ 			case ir.Call:
+ 				targets := l.result.CallTargets(value)
+-				closed = len(value.Arguments) == 0 && len(targets) > 0
++				closed = ((!auditMutant("M11") && (len(value.Arguments) == 0 && len(targets) > 0)) || (auditMutant("M11") && (len(value.Arguments) <= 1 && len(targets) > 0)))
+ 				for _, target := range targets {
+ 					initializer := l.result.Functions[target]
+-					closed = closed && !initializer.Closure && len(initializer.Environment) == 0
++					closed = ((!auditMutant("M10") && (closed && !initializer.Closure)) || (auditMutant("M10") && (closed && initializer.Closure))) && len(initializer.Environment) == 0
+ 				}
+ 			}
+-			if !closed {
++			if (!auditMutant("M09") && (!closed)) || (auditMutant("M09") && (closed)) {
+ 				return nil, l.notYet(node, "a lexical constructor-cache initializer needing additional captures")
+ 			}
+ 			l.result.Locals[local].Captured = true
+diff --git a/internal/lower/typed_arrays.go b/internal/lower/typed_arrays.go
+index 4d45eedd..672842f6 100644
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -40,7 +40,7 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
+ 			}
+ 		}
+ 	}
+-	if node.Kind == ast.KindNewExpression {
++	if (!auditMutant("M08") && (node.Kind == ast.KindNewExpression)) || (auditMutant("M08") && (node.Kind == ast.KindCallExpression)) {
+ 		made := node.AsNewExpression()
+ 		if l.isLibraryGlobal(made.Expression, "SharedArrayBuffer") {
+ 			return l.notYet(node, "sharing typed arrays across parallel tasks")
+@@ -56,7 +56,7 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
+ 		}
+ 		for _, name := range []string{"Int8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
+ 			if l.isLibraryGlobal(made.Expression, name) {
+-				return l.notYet(node, "typed array element type "+name)
++				return l.notYet(node, auditElementMessage(name))
+ 			}
+ 		}
+ 	}
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..b78d3b50 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -709,11 +709,17 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 	if report.exitCode == 0 {
+ 		return ""
+ 	}
++	if auditMutant("W01") {
++		return ""
++	}
+ 	return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+ }
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if auditMutant("W02") {
++		return ""
++	}
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"
+diff --git a/internal/load/audit_mutant.go b/internal/load/audit_mutant.go
+new file mode 100644
+index 00000000..9027a2bc
+--- /dev/null
++++ b/internal/load/audit_mutant.go
+@@ -0,0 +1,11 @@
++package load
++
++import "os"
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
++func auditDiagnosticCode(n int32) int32 {
++	if auditMutant("M03") {
++		return n + 1
++	}
++	return n
++}
+diff --git a/internal/lower/audit_mutant.go b/internal/lower/audit_mutant.go
+new file mode 100644
+index 00000000..0cd09370
+--- /dev/null
++++ b/internal/lower/audit_mutant.go
+@@ -0,0 +1,17 @@
++package lower
++
++import "os"
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
++func auditElementMessage(name string) string {
++	if auditMutant("M07") {
++		return "typed array facility " + name
++	}
++	return "typed array element type " + name
++}
++func auditNotYetWhat(what string) string {
++	if auditMutant("M16") {
++		return "unsupported construct"
++	}
++	return what
++}
+diff --git a/internal/oracle/audit_mutant.go b/internal/oracle/audit_mutant.go
+new file mode 100644
+index 00000000..41b16f33
+--- /dev/null
++++ b/internal/oracle/audit_mutant.go
+@@ -0,0 +1,5 @@
++package oracle
++
++import "os"
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }

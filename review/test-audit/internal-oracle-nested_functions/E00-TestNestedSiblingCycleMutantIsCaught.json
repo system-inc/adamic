@@ -1,0 +1,33 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNestedSiblingCycleMutantIsCaught$"
+  ],
+  "wall_seconds": 2.029224706000605,
+  "exit": 1,
+  "binary_seconds": 0.048,
+  "failed": [
+    "TestNestedSiblingCycleMutantIsCaught"
+  ],
+  "passed": [],
+  "outputs": {
+    "TestNestedSiblingCycleMutantIsCaught": [
+      "=== RUN   TestNestedSiblingCycleMutantIsCaught\n",
+      "=== PAUSE TestNestedSiblingCycleMutantIsCaught\n",
+      "=== CONT  TestNestedSiblingCycleMutantIsCaught\n",
+      "    nested_functions_test.go:46: mutant requires two siblings\n",
+      "--- FAIL: TestNestedSiblingCycleMutantIsCaught (0.04s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.047s\n"
+    ]
+  }
+}

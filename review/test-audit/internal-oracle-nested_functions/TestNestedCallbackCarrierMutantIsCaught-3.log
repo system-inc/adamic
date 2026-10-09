@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T08:07:18.347966551Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T08:07:18.360390809Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught"}
+{"Time":"2026-10-09T08:07:18.360473597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"=== RUN   TestNestedCallbackCarrierMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:18.360508474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"=== PAUSE TestNestedCallbackCarrierMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:18.360511476Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught"}
+{"Time":"2026-10-09T08:07:18.360514143Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught"}
+{"Time":"2026-10-09T08:07:18.360515901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"=== CONT  TestNestedCallbackCarrierMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:18.760159221Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"    nested_functions_test.go:179: wrong carrier caught by Node: stdout differs\n"}
+{"Time":"2026-10-09T08:07:18.760531732Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Output":"--- PASS: TestNestedCallbackCarrierMutantIsCaught (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:18.760539842Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCallbackCarrierMutantIsCaught","Elapsed":0.4}
+{"Time":"2026-10-09T08:07:18.760566273Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:18.760570333Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T08:07:18.760575576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T08:07:18.760577667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T08:07:18.762084412Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.414s\n"}
+{"Time":"2026-10-09T08:07:18.762123615Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.414}

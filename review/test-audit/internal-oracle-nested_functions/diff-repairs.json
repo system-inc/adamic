@@ -1,0 +1,10 @@
+[
+  {
+    "id": "M14",
+    "reason": "Dropping only the body statement leaves an unused Go range variable. Drop its single-statement loop for the same production effect."
+  },
+  {
+    "id": "M15",
+    "reason": "Dropping only the body statement leaves an unused Go range variable. Drop its single-statement loop for the same production effect."
+  }
+]

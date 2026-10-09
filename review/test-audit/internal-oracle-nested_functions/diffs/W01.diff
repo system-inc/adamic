@@ -1,0 +1,11 @@
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -709,7 +709,7 @@
+ 	if report.exitCode == 0 {
+ 		return ""
+ 	}
+-	return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
++	return ""
+ }
+ 
+ // disagreement says how two runs differ, or "" when they don't.

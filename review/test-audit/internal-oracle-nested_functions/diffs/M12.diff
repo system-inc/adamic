@@ -1,0 +1,11 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -53,7 +53,7 @@
+ 	if len(declarations) == 0 {
+ 		return nil, nil
+ 	}
+-	l.function.NestedFrame = true
++	l.function.NestedFrame = false
+ 	owner := l.functionIndex
+ 	prologue := []ir.Statement{}
+ 	// Captures of a declaration later in the source must already have a cell when

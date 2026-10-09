@@ -1,0 +1,35 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNewExpressionCacheCaptureRemainsNotYet$"
+  ],
+  "wall_seconds": 2.0229898229990795,
+  "exit": 0,
+  "binary_seconds": 0.267,
+  "failed": [],
+  "passed": [
+    "TestNewExpressionCacheCaptureRemainsNotYet"
+  ],
+  "outputs": {
+    "TestNewExpressionCacheCaptureRemainsNotYet": [
+      "=== RUN   TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== PAUSE TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== CONT  TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "--- PASS: TestNewExpressionCacheCaptureRemainsNotYet (0.26s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=1\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.266s\n"
+    ]
+  }
+}

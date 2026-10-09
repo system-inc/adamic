@@ -1,0 +1,501 @@
+{
+  "ViewOrigins": null,
+  "ViewContracts": null,
+  "ViewContractTypes": null,
+  "UninitializedFields": {},
+  "PredicateChecks": {
+    "Proven": 0,
+    "Checked": 0,
+    "Unobservable": 0,
+    "Sites": null
+  },
+  "CheckedFields": {},
+  "NonNullChecks": {
+    "Proven": 0,
+    "Checked": 0,
+    "Sites": null
+  },
+  "Source": "nested_mutual.a",
+  "Strings": [
+    " "
+  ],
+  "Regexps": null,
+  "Locals": [
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "start",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "calls",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": true,
+      "Preallocated": true,
+      "EnvironmentCell": true,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "even",
+      "Type": 8,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 2,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "n",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 1,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "odd",
+      "Type": 8,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 0,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 3,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    },
+    {
+      "Uninitialized": false,
+      "InitializerExpression": "",
+      "Hoisted": false,
+      "Name": "n",
+      "Type": 1,
+      "Global": false,
+      "NamespaceState": false,
+      "NamespaceVar": false,
+      "Function": 2,
+      "Captured": false,
+      "Preallocated": false,
+      "EnvironmentCell": false,
+      "NestedFunction": 0,
+      "Ready": 0,
+      "ExpressionAssigned": false,
+      "Borrowed": false,
+      "ConstantClosure": 0,
+      "Counter": false
+    }
+  ],
+  "Functions": [
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "parity",
+      "MethodName": "",
+      "Parameters": [
+        0
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 3,
+      "Body": [
+        {
+          "Cells": [
+            1
+          ]
+        },
+        {
+          "Uninitialized": true,
+          "Local": 1,
+          "Value": null
+        },
+        {
+          "Uninitialized": false,
+          "Local": 2,
+          "Value": {
+            "Function": 1
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 4,
+          "Value": {
+            "Function": 2
+          }
+        },
+        {
+          "Uninitialized": false,
+          "Local": 1,
+          "Value": {
+            "Value": 0
+          }
+        },
+        {
+          "Value": {
+            "Parts": [
+              {
+                "Value": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Local": 2,
+                    "Of": 8,
+                    "Checked": false,
+                    "Readiness": ""
+                  },
+                  "Arguments": [
+                    {
+                      "Local": 0,
+                      "Of": 1,
+                      "Checked": false,
+                      "Readiness": ""
+                    }
+                  ],
+                  "Spread": null,
+                  "FunctionType": 3805,
+                  "Returns": 2
+                }
+              },
+              {
+                "Index": 0
+              },
+              {
+                "Value": {
+                  "Direct": 0,
+                  "Closure": {
+                    "Local": 4,
+                    "Of": 8,
+                    "Checked": false,
+                    "Readiness": ""
+                  },
+                  "Arguments": [
+                    {
+                      "Local": 0,
+                      "Of": 1,
+                      "Checked": false,
+                      "Readiness": ""
+                    }
+                  ],
+                  "Spread": null,
+                  "FunctionType": 3804,
+                  "Returns": 2
+                }
+              },
+              {
+                "Index": 0
+              },
+              {
+                "Value": {
+                  "Local": 1,
+                  "Of": 1,
+                  "Checked": true,
+                  "Readiness": ""
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "Closure": false,
+      "Environment": null,
+      "NestedParent": 0,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": [
+        1
+      ],
+      "NestedFrame": true,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "even",
+      "MethodName": "",
+      "Parameters": [
+        3
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 2,
+      "Body": [
+        {
+          "Local": 1,
+          "Value": {
+            "Operator": 1,
+            "Left": {
+              "Local": 1,
+              "Of": 1,
+              "Checked": true,
+              "Readiness": ""
+            },
+            "Right": {
+              "Value": 1
+            }
+          },
+          "Checked": true
+        },
+        {
+          "Value": {
+            "Condition": {
+              "Operator": 11,
+              "Left": {
+                "Local": 3,
+                "Of": 1,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Right": {
+                "Value": 0
+              }
+            },
+            "WhenTrue": {
+              "Value": true
+            },
+            "WhenNot": {
+              "Direct": 3,
+              "Closure": {},
+              "Arguments": [
+                {
+                  "Operator": 2,
+                  "Left": {
+                    "Local": 3,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  },
+                  "Right": {
+                    "Value": 1
+                  }
+                }
+              ],
+              "Spread": null,
+              "FunctionType": 0,
+              "Returns": 2
+            },
+            "Of": 0
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        1
+      ],
+      "NestedParent": 1,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    },
+    {
+      "CheckedUnionNarrow": false,
+      "Name": "odd",
+      "MethodName": "",
+      "Parameters": [
+        5
+      ],
+      "ArgumentsCount": 0,
+      "ReadsArguments": false,
+      "ForwardsArguments": 0,
+      "Receiver": false,
+      "OptionalParameters": {},
+      "RestElement": 0,
+      "Returns": 2,
+      "Body": [
+        {
+          "Local": 1,
+          "Value": {
+            "Operator": 1,
+            "Left": {
+              "Local": 1,
+              "Of": 1,
+              "Checked": true,
+              "Readiness": ""
+            },
+            "Right": {
+              "Value": 1
+            }
+          },
+          "Checked": true
+        },
+        {
+          "Value": {
+            "Condition": {
+              "Operator": 11,
+              "Left": {
+                "Local": 5,
+                "Of": 1,
+                "Checked": false,
+                "Readiness": ""
+              },
+              "Right": {
+                "Value": 0
+              }
+            },
+            "WhenTrue": {
+              "Value": false
+            },
+            "WhenNot": {
+              "Direct": 2,
+              "Closure": {},
+              "Arguments": [
+                {
+                  "Operator": 2,
+                  "Left": {
+                    "Local": 5,
+                    "Of": 1,
+                    "Checked": false,
+                    "Readiness": ""
+                  },
+                  "Right": {
+                    "Value": 1
+                  }
+                }
+              ],
+              "Spread": null,
+              "FunctionType": 0,
+              "Returns": 2
+            },
+            "Of": 0
+          }
+        }
+      ],
+      "Closure": true,
+      "Environment": [
+        1
+      ],
+      "NestedParent": 1,
+      "ForwardedNestedParent": 0,
+      "FrameEnvironment": null,
+      "NestedFrame": false,
+      "FrameIdentity": 0,
+      "ReferenceParents": null,
+      "MayThrow": false
+    }
+  ],
+  "Classes": null,
+  "MethodTargets": {},
+  "StructuralMethodThunks": {},
+  "FunctionTypeTargets": {
+    "15": [],
+    "3804": [
+      1,
+      2
+    ],
+    "3805": [
+      1,
+      2
+    ],
+    "3808": [],
+    "3809": [
+      0
+    ]
+  },
+  "FixedArgumentSlots": 1,
+  "RestArgumentSlots": {},
+  "Main": [
+    {
+      "Stream": 1,
+      "Value": {
+        "Function": 0,
+        "Arguments": [
+          {
+            "Value": 10
+          }
+        ],
+        "Spread": null,
+        "ArgumentCount": null,
+        "RestPacked": false,
+        "ForwardCount": false,
+        "Returns": 3,
+        "Virtual": 0,
+        "Accessor": "",
+        "Setter": false
+      }
+    },
+    {
+      "Stream": 1,
+      "Value": {
+        "Function": 0,
+        "Arguments": [
+          {
+            "Value": 11
+          }
+        ],
+        "Spread": null,
+        "ArgumentCount": null,
+        "RestPacked": false,
+        "ForwardCount": false,
+        "Returns": 3,
+        "Virtual": 0,
+        "Accessor": "",
+        "Setter": false
+      }
+    }
+  ],
+  "ClosuresMayThrow": false
+}

@@ -1,0 +1,13 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -187,9 +187,7 @@
+ 			return -1
+ 		}
+ 	}
+-	for _, function := range l.closures[boundary+1:] {
+-		l.result.Functions[function].ForwardedNestedParent = parent
+-	}
++	// Single-statement registration loop dropped.
+ 	// Known slots propagate now; slots discovered by later sibling bodies are
+ 	// added to every forwarding closure when the enclosing frame is completed.
+ 	for _, captured := range l.result.Functions[index].Environment {

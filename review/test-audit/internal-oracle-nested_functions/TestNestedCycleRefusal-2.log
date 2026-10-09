@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T08:07:03.758351643Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T08:07:03.767669048Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal"}
+{"Time":"2026-10-09T08:07:03.767745814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal","Output":"=== RUN   TestNestedCycleRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:03.767772705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal","Output":"=== PAUSE TestNestedCycleRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:03.767775276Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal"}
+{"Time":"2026-10-09T08:07:03.767777695Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal"}
+{"Time":"2026-10-09T08:07:03.767779514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal","Output":"=== CONT  TestNestedCycleRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:03.80572189Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal","Output":"--- PASS: TestNestedCycleRefusal (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:03.805769914Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNestedCycleRefusal","Elapsed":0.04}
+{"Time":"2026-10-09T08:07:03.805811347Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:07:03.807194615Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.048s\n"}
+{"Time":"2026-10-09T08:07:03.80726669Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.049}

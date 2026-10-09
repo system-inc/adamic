@@ -1,0 +1,11 @@
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -17,7 +17,7 @@
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+-func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) { return &ir.Program{}, nil;
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))

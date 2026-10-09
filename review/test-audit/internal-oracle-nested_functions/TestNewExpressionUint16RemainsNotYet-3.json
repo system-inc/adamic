@@ -1,0 +1,35 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^TestNewExpressionUint16RemainsNotYet$"
+  ],
+  "wall_seconds": 1.9765323209994676,
+  "exit": 0,
+  "binary_seconds": 0.214,
+  "failed": [],
+  "passed": [
+    "TestNewExpressionUint16RemainsNotYet"
+  ],
+  "outputs": {
+    "TestNewExpressionUint16RemainsNotYet": [
+      "=== RUN   TestNewExpressionUint16RemainsNotYet\n",
+      "=== PAUSE TestNewExpressionUint16RemainsNotYet\n",
+      "=== CONT  TestNewExpressionUint16RemainsNotYet\n",
+      "--- PASS: TestNewExpressionUint16RemainsNotYet (0.20s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=1\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.214s\n"
+    ]
+  }
+}

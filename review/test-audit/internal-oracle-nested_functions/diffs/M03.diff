@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -252,7 +252,7 @@
+ 	if message == "" {
+ 		message = diagnostic.Localize(english)
+ 	}
+-	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
++	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code()+1, message)
+ 	writeChain(&builder, diagnostic.MessageChain(), 1)
+ 	return builder.String()
+ }

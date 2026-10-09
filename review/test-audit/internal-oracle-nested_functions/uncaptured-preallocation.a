@@ -1,0 +1,1 @@
+function outer(): number { let n = 1; function inner(): number { return 2; } return n + inner(); } console.log(String(outer()));

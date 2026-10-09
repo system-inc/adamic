@@ -1,0 +1,87 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestNestedRebindingCheckerRefusal|TestNestedCallbackCarrierMutantIsCaught|TestNewExpressionUint16RemainsNotYet|TestNewExpressionCacheCaptureRemainsNotYet)$"
+  ],
+  "wall_seconds": 2.785765218999586,
+  "exit": 0,
+  "binary_seconds": 0.584,
+  "failed": [],
+  "passed": [
+    "TestNestedRebindingCheckerRefusal",
+    "TestNestedCycleRefusal",
+    "TestNewExpressionUint16RemainsNotYet",
+    "TestNewExpressionCacheCaptureRemainsNotYet",
+    "TestNestedCallbackCarrierMutantIsCaught",
+    "TestNestedSiblingCycleMutantIsCaught"
+  ],
+  "outputs": {
+    "TestNestedSiblingCycleMutantIsCaught": [
+      "=== RUN   TestNestedSiblingCycleMutantIsCaught\n",
+      "=== PAUSE TestNestedSiblingCycleMutantIsCaught\n",
+      "=== CONT  TestNestedSiblingCycleMutantIsCaught\n",
+      "    nested_functions_test.go:92: sibling capture mutant caught only by the leak check:\n",
+      "        exit 1\n",
+      "        \n",
+      "        =================================================================\n",
+      "        ==60763==ERROR: LeakSanitizer: detected memory leaks\n",
+      "        \n",
+      "        Indirect leak of 232 byte(s) in 3 object(s) allocated from:\n",
+      "            #0 0x55c8031d3274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x55c80322a73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "            #2 0x55c80321692a in main /tmp/adamic-gate/adamic-build-2841022537/main.c:140:40\n",
+      "        \n",
+      "        Indirect leak of 80 byte(s) in 2 object(s) allocated from:\n",
+      "            #0 0x55c8031d3274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n",
+      "            #1 0x55c80322a73f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1949590558/heap.c:196:10\n",
+      "        \n",
+      "        SUMMARY: AddressSanitizer: 312 byte(s) leaked in 5 allocation(s).\n",
+      "--- PASS: TestNestedSiblingCycleMutantIsCaught (0.57s)\n"
+    ],
+    "TestNestedCycleRefusal": [
+      "=== RUN   TestNestedCycleRefusal\n",
+      "=== PAUSE TestNestedCycleRefusal\n",
+      "=== CONT  TestNestedCycleRefusal\n",
+      "--- PASS: TestNestedCycleRefusal (0.12s)\n"
+    ],
+    "TestNestedRebindingCheckerRefusal": [
+      "=== RUN   TestNestedRebindingCheckerRefusal\n",
+      "=== PAUSE TestNestedRebindingCheckerRefusal\n",
+      "=== CONT  TestNestedRebindingCheckerRefusal\n",
+      "--- PASS: TestNestedRebindingCheckerRefusal (0.12s)\n"
+    ],
+    "TestNestedCallbackCarrierMutantIsCaught": [
+      "=== RUN   TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== PAUSE TestNestedCallbackCarrierMutantIsCaught\n",
+      "=== CONT  TestNestedCallbackCarrierMutantIsCaught\n",
+      "    nested_functions_test.go:179: wrong carrier caught by Node: stdout differs\n",
+      "--- PASS: TestNestedCallbackCarrierMutantIsCaught (0.55s)\n"
+    ],
+    "TestNewExpressionUint16RemainsNotYet": [
+      "=== RUN   TestNewExpressionUint16RemainsNotYet\n",
+      "=== PAUSE TestNewExpressionUint16RemainsNotYet\n",
+      "=== CONT  TestNewExpressionUint16RemainsNotYet\n",
+      "--- PASS: TestNewExpressionUint16RemainsNotYet (0.38s)\n"
+    ],
+    "TestNewExpressionCacheCaptureRemainsNotYet": [
+      "=== RUN   TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== PAUSE TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "=== CONT  TestNewExpressionCacheCaptureRemainsNotYet\n",
+      "--- PASS: TestNewExpressionCacheCaptureRemainsNotYet (0.41s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "gate cache: native hits=0 misses=0\n",
+      "gate cache: node hits=0 misses=4\n",
+      "gate cache: probe hits=0 misses=0\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.583s\n"
+    ]
+  }
+}
