@@ -6,7 +6,7 @@ import (
 )
 
 // A field keeps its declared union even when flow analysis narrows a read to a
-// scalar. Evaluate that stored value once and verify its tag before unboxing.
+// primitive. Evaluate that stored value once and verify its tag before unboxing.
 func (l *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expression, narrowed ir.Type) ir.Expression {
 	parent := node.Parent
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
@@ -26,6 +26,8 @@ func (l *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expression, n
 	name := "number"
 	if narrowed.Present() == ir.Boolean {
 		name = "boolean"
+	} else if narrowed == ir.String {
+		name = "string"
 	}
 	b := l.libraryArrayBuilder([]ir.Expression{read})
 	held := b.read(b.parameters[0])
@@ -38,4 +40,17 @@ func (l *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expression, n
 	result := b.finish("narrowed_boxed_scalar_field", ir.Narrow{Value: held, To: narrowed})
 	l.result.Functions[b.function].CheckedUnionNarrow = true
 	return result
+}
+
+// Strict equality compares the actual tags; it never consumes a narrowed slot.
+func unionEqualityObservation(node *ast.Node) bool {
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent == nil || parent.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	operator := parent.AsBinaryExpression().OperatorToken.Kind
+	return operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken
 }
