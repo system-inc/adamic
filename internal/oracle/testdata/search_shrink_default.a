@@ -1,0 +1,7 @@
+const list = [1, 2, 3];
+const found = list.findIndex((item: number = 9) => {
+	console.log(`${item}`);
+	list.pop();
+	return false;
+});
+console.log(`${found}`);

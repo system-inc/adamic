@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -37,9 +38,37 @@ func (l *lowering) numberPrototype(node *ast.Node) bool {
 	return node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "prototype" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Number")
 }
 
+// An immediate Number construction is used only for its intrinsic internal slot. No object
+// identity escapes, no prototype can be changed, and its argument is evaluated exactly once.
+func (l *lowering) libraryNumberConstruction(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindNewExpression && l.isLibraryGlobal(node.AsNewExpression().Expression, "Number")
+}
+
+func (l *lowering) libraryNumberSlot(node *ast.Node) (ir.Expression, error) {
+	if l.numberPrototype(node) {
+		return ir.NumberConstant{}, nil
+	}
+	node = ast.SkipParentheses(node)
+	arguments := node.AsNewExpression().Arguments
+	if arguments == nil || len(arguments.Nodes) == 0 {
+		return ir.NumberConstant{}, nil
+	}
+	if len(arguments.Nodes) != 1 || arguments.Nodes[0].Kind == ast.KindSpreadElement {
+		return nil, l.notYet(node, "immediate Number construction with spread or extra arguments")
+	}
+	return l.libraryNumber(arguments.Nodes[0])
+}
+
+// libraryNumber converts only proven primitives. Objects can run arbitrary valueOf/toString code,
+// so they stay NotYet rather than being guessed at. The runtime handles missing primitive values.
 // libraryNumber implements primitive ToNumber and delegates represented conversion methods.
 // Dynamic object protocols stay explicit rather than guessing away user code.
 func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") {
+		value, err := l.expression(node)
+		return ir.NodeFSFile{Operation: "date_time", Arguments: []ir.Expression{value}, Of: ir.Number}, err
+	}
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.NumberConstant{}, nil
 	}
@@ -49,6 +78,19 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	}
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.NumberConstant{Value: math.NaN()}, nil
+	}
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		constant := ir.NumberConstant{Value: math.NaN()}
+		if proven.Flags()&checker.TypeFlagsNull != 0 {
+			constant.Value = 0
+		}
+		return l.nullableObservation("number_empty", value, constant, func(ir.Expression) ir.Expression { return constant }), nil
+	}
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return l.nullableObservation("number", value, ir.NumberConstant{}, func(read ir.Expression) ir.Expression {
+			return ir.NumberCall{Function: "convert", Arguments: []ir.Expression{read}}
+		}), nil
 	}
 	switch value.Type() {
 	case ir.Number:
@@ -69,6 +111,20 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	written := node.AsCallExpression().Arguments.Nodes
+	if l.isLibraryGlobal(callee, "isNaN") || l.isLibraryGlobal(callee, "isFinite") {
+		name := callee.Text()
+		if len(written) != 1 || hasSpread(node) {
+			return nil, true, l.notYet(node, name+" with spread or other than one argument")
+		}
+		value, err := l.expression(written[0])
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.Number {
+			return nil, true, l.notYet(node, name+" without a proven number argument")
+		}
+		return ir.NumberCall{Function: name, Arguments: []ir.Expression{value}}, true, nil
+	}
 	if l.isLibraryGlobal(callee, "Number") {
 		if len(written) == 0 {
 			return ir.NumberConstant{}, true, nil
@@ -124,8 +180,12 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 	// Number.prototype carries [[NumberData]] +0. Its methods may also be called with a primitive
 	// number as this; no prototype object is represented as a plain object with invented fields.
 	var value ir.Expression
-	if l.numberPrototype(receiver) {
-		value = ir.NumberConstant{}
+	if l.numberPrototype(receiver) || l.libraryNumberConstruction(receiver) {
+		var err error
+		value, err = l.libraryNumberSlot(receiver)
+		if err != nil {
+			return nil, true, err
+		}
 	} else if name == "call" && ast.SkipParentheses(receiver).Kind == ast.KindPropertyAccessExpression {
 		method := ast.SkipParentheses(receiver)
 		if !l.numberPrototype(method.AsPropertyAccessExpression().Expression) {
@@ -136,8 +196,11 @@ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, e
 			return nil, true, l.notYet(node, "Number prototype method without a numeric receiver")
 		}
 		var err error
-		if l.numberPrototype(written[0]) {
-			value = ir.NumberConstant{}
+		if l.numberPrototype(written[0]) || l.libraryNumberConstruction(written[0]) {
+			value, err = l.libraryNumberSlot(written[0])
+			if err != nil {
+				return nil, true, err
+			}
 		} else {
 			value, err = l.expression(written[0])
 			if err != nil {

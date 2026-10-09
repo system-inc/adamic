@@ -1,0 +1,5 @@
+// Reduced from core.ts:384
+const value = { kind: 1 };
+const result: { kind: number }[] = [];
+result.push(value);
+console.log(`${result[0]?.kind}`);

@@ -1,0 +1,51 @@
+interface Shape { readonly label: string; }
+class Item { readonly label: string; constructor(label: string) { this.label = label; } name(): string { return this.label; } }
+function observe<T>(value: T): string { return `${value === null} ${value === undefined} ${typeof value}`; }
+function showNull(value: Map<string, string> | null): void {
+ console.log(observe<Map<string, string> | null>(value));
+ console.log(`${value === null} ${value === undefined} ${typeof value} ${(value ?? new Map<string, string>()).size}`);
+ const fallback: Map<string, string> = new Map<string, string>([["key", `built${7}`]]);
+ console.log(observe(value ?? fallback));
+}
+function slotsNull(first: Map<string, string> | null, second: Map<string, string> | null): void {
+ const field: { value: Map<string, string> | null } = {value: first};
+ showNull(field.value);
+ field.value = second;
+ showNull(field.value);
+ const values: (Map<string, string> | null)[] = [first];
+ values.push(second);
+ values[0] = second;
+ for (const value of values) { showNull(value); }
+ const table = new Map<string, Map<string, string> | null>();
+ table.set('first', first);
+ table.set('second', second);
+ table.set('first', second);
+ for (const value of table.values()) { showNull(value); }
+}
+slotsNull(null, new Map<string, string>([["key", `built${7}`]]));
+slotsNull(new Map<string, string>([["key", `built${7}`]]), null);
+function showUndefined(value: Map<string, string> | undefined): void {
+ console.log(observe<Map<string, string> | undefined>(value));
+ console.log(`${value === null} ${value === undefined} ${typeof value} ${(value ?? new Map<string, string>()).size}`);
+ const fallback: Map<string, string> = new Map<string, string>([["key", `built${7}`]]);
+ console.log(observe(value ?? fallback));
+}
+function slotsUndefined(first: Map<string, string> | undefined, second: Map<string, string> | undefined): void {
+ const field: { value: Map<string, string> | undefined } = {value: first};
+ showUndefined(field.value);
+ field.value = second;
+ showUndefined(field.value);
+ const values: (Map<string, string> | undefined)[] = [first];
+ values.push(second);
+ values[0] = second;
+ for (const value of values) { showUndefined(value); }
+ const table = new Map<string, Map<string, string> | undefined>();
+ table.set('first', first);
+ table.set('second', second);
+ table.set('first', second);
+ for (const value of table.values()) { showUndefined(value); }
+ showUndefined(table.get('missing'));
+ showUndefined(values[20]);
+}
+slotsUndefined(undefined, new Map<string, string>([["key", `built${7}`]]));
+slotsUndefined(new Map<string, string>([["key", `built${7}`]]), undefined);

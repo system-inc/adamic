@@ -1,10 +1,8 @@
 package oracle
 
 import (
-	"bufio"
 	"bytes"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -16,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -60,10 +59,7 @@ func withStreams(t *testing.T, stdout *os.File, stderr *os.File, name string, ar
 	if runtime.GOOS == "linux" {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
-	if err := command.Start(); err != nil {
-		t.Fatal(err)
-	}
-	command.Wait()
+	checkChild(t, runChildWith(command, childguard.Options{KeepFiles: true}))
 	return command.ProcessState.ExitCode()
 }
 
@@ -191,9 +187,7 @@ func onePipe(t *testing.T, name string, arguments ...string) (int, []byte) {
 	if runtime.GOOS == "linux" {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
-	if err := command.Run(); err != nil && command.ProcessState == nil {
-		t.Fatal(err)
-	}
+	checkChild(t, runChild(command))
 	rememberRun(t, run{stdout: both.Bytes(), exitCode: command.ProcessState.ExitCode()})
 	return command.ProcessState.ExitCode(), both.Bytes()
 }
@@ -230,7 +224,7 @@ func TestFileWritesLandInNodesOrder(t *testing.T) {
 
 // A prompt, then a read of stdin: a driver waits to see the prompt before it answers, so the prompt
 // has to be out before the read waits. Each run is answered only once its first line has come, or
-// after ten seconds without it, which is the failure.
+// the shared guard reports a stall, which is the failure.
 func TestAPromptComesBeforeTheRead(t *testing.T) {
 	t.Parallel()
 	cacheProbe(t, "internal/oracle/testdata/prompt_then_read.a", nil, "", func() {
@@ -246,35 +240,27 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			stdout, err := command.StdoutPipe()
-			if err != nil {
-				t.Fatal(err)
-			}
-			if err := command.Start(); err != nil {
-				t.Fatal(err)
-			}
-			reader := bufio.NewReader(stdout)
-			first := make(chan string, 1)
-			go func() {
-				line, _ := reader.ReadString('\n')
-				first <- line
-			}()
+			var output promptOutput
+			output.ready = make(chan struct{})
+			command.Stdout = &output
+			done := startChild(t, command, childguard.Options{})
 			prompted := false
-			var prompt string
 			select {
-			case prompt = <-first:
+			case <-output.ready:
 				prompted = true
-			case <-time.After(10 * time.Second):
+			case err := <-done:
+				checkChild(t, err)
 			}
-			stdin.Write([]byte("yes\n"))
-			stdin.Close()
-			if !prompted {
-				prompt = <-first
+			if prompted {
+				if _, err := stdin.Write([]byte("yes\n")); err != nil {
+					t.Fatal(err)
+				}
+				stdin.Close()
+				checkChild(t, <-done)
 			}
-			rest, _ := io.ReadAll(reader)
-			command.Wait()
-			rememberRun(t, run{stdout: []byte(prompt + string(rest)), exitCode: command.ProcessState.ExitCode()})
-			return prompted, prompt + string(rest)
+			said := output.text.String()
+			rememberRun(t, run{stdout: []byte(said), exitCode: command.ProcessState.ExitCode()})
+			return prompted, said
 		}
 		nodePrompted, node := converse("node", "--disable-warning=ExperimentalWarning", runner, path)
 		if !nodePrompted || node != "ready\ngot yes\n" {
@@ -325,22 +311,23 @@ func TestASignalLeavesWhatWasPrinted(t *testing.T) {
 						}
 						var stdout, stderr lockedBuffer
 						command.Stdout, command.Stderr = &stdout, &stderr
-						if err := command.Start(); err != nil {
-							t.Fatal(err)
-						}
+						done := startChild(t, command, childguard.Options{})
 						ready := func() bool {
 							if onNode {
 								return bytes.Contains(stdout.Bytes(), []byte("\n"))
 							}
 							return cpuSeconds(t, command.Process.Pid) >= 0.5
 						}
-						for deadline := time.Now().Add(30 * time.Second); !ready(); time.Sleep(10 * time.Millisecond) {
-							if time.Now().After(deadline) {
-								t.Fatalf("%s never reached its spin in 30 s; stdout %q, stderr %q", label, stdout.Bytes(), stderr.String())
+						for !ready() {
+							select {
+							case err := <-done:
+								checkChild(t, err)
+								t.Fatalf("%s exited before reaching its spin", label)
+							case <-time.After(10 * time.Millisecond):
 							}
 						}
 						command.Process.Signal(stop)
-						command.Wait()
+						checkChild(t, <-done)
 						status := command.ProcessState.Sys().(syscall.WaitStatus)
 						ended := fmt.Sprintf("exit %d", status.ExitStatus())
 						if status.Signaled() {
@@ -402,7 +389,7 @@ func cpuSeconds(t *testing.T, pid int) float64 {
 		system, _ := strconv.ParseFloat(fields[12], 64)
 		return (user + system) / 100
 	}
-	output, err := exec.Command("ps", "-o", "time=", "-p", strconv.Itoa(pid)).Output()
+	output, err := combinedChildOutput(exec.Command("ps", "-o", "time=", "-p", strconv.Itoa(pid)))
 	if err != nil {
 		return 0
 	}
@@ -411,4 +398,20 @@ func cpuSeconds(t *testing.T, pid int) float64 {
 	whole, _ := strconv.ParseFloat(minutes, 64)
 	part, _ := strconv.ParseFloat(seconds, 64)
 	return whole*60 + part
+}
+
+// Output is read by os/exec's sole guarded reader; seeing the first newline
+// releases the driver without mixing buffered readers with Wait.
+type promptOutput struct {
+	text  lockedBuffer
+	ready chan struct{}
+	once  sync.Once
+}
+
+func (p *promptOutput) Write(data []byte) (int, error) {
+	n, err := p.text.Write(data)
+	if bytes.Contains(p.text.Bytes(), []byte("\n")) {
+		p.once.Do(func() { close(p.ready) })
+	}
+	return n, err
 }

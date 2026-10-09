@@ -1,0 +1,7 @@
+import { join } from 'node:path';
+import { existsSync } from 'node:fs';
+const joined: string = join('alpha', '', 'beta', '..', 'gamma');
+const exists: boolean = existsSync('missing-embedded-node-types-file');
+console.log('project');
+console.log(joined);
+console.log(`exists=${exists}`);

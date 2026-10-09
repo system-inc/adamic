@@ -1,0 +1,21 @@
+// Invalid code points throw after evaluation, through named calls and callbacks, with cleanup.
+function make(points: readonly number[]): string {
+	return String.fromCodePoint(...points);
+}
+function attempt(run: () => string): void {
+	try {
+		const held = `held${String.fromCharCode(65)}`;
+		console.log(`${held}:${run()}`);
+	} catch (error) {
+		console.log(error instanceof Error ? `${error.name}: ${error.message}` : 'not an Error');
+	} finally {
+		console.log('finally');
+	}
+}
+attempt(() => String.fromCodePoint(-1));
+attempt(() => make([65, -1]));
+attempt(() => make([1114112]));
+attempt(() => make([Infinity]));
+attempt(() => make([NaN]));
+attempt(() => make([1.5]));
+attempt(() => make([0, 0x10ffff]));
