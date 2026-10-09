@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewIntersectionSelectedArms
+=== PAUSE TestCheckedViewIntersectionSelectedArms
+=== CONT  TestCheckedViewIntersectionSelectedArms
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-wrong
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-wrong.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionSelectedArms (0.08s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-wrong (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.112s
+FAIL

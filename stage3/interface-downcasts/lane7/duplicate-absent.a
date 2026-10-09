@@ -1,0 +1,8 @@
+interface A { readonly child: { readonly text: string }; readonly maybe?: 1 }
+interface B { readonly child: { readonly count: number } }
+interface Box { readonly value: object }
+interface Target extends Box { readonly value: A & B }
+const actual = { child: { text: 'name', count: 42 } };
+const box: Box = { value: actual };
+const view = box as Target;
+console.log(`${view.value.child.text}:${view.value.child.count}:${view.value.maybe ?? 0}`);

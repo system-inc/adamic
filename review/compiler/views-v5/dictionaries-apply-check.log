@@ -1,0 +1,32 @@
+error: patch failed: internal/flow/infer.go:419
+error: internal/flow/infer.go: patch does not apply
+error: patch failed: internal/ir/ir.go:10
+error: internal/ir/ir.go: patch does not apply
+error: patch failed: internal/ir/views.go:14
+error: internal/ir/views.go: patch does not apply
+error: patch failed: internal/javascript/javascript.go:44
+error: internal/javascript/javascript.go: patch does not apply
+error: patch failed: internal/javascript/readiness.go:5
+error: internal/javascript/readiness.go: patch does not apply
+error: internal/lower/cast_proof.go: already exists in working directory
+error: patch failed: internal/lower/generic.go:14
+error: internal/lower/generic.go: patch does not apply
+error: patch failed: internal/lower/library_object.go:9
+error: internal/lower/library_object.go: patch does not apply
+error: patch failed: internal/lower/library_string.go:71
+error: internal/lower/library_string.go: patch does not apply
+error: patch failed: internal/lower/object.go:84
+error: internal/lower/object.go: patch does not apply
+error: patch failed: internal/lower/readiness.go:15
+error: internal/lower/readiness.go: patch does not apply
+error: patch failed: internal/lower/refusals.go:22
+error: internal/lower/refusals.go: patch does not apply
+error: internal/lower/view_lazy.go: already exists in working directory
+error: patch failed: internal/lower/view_objects.go:30
+error: internal/lower/view_objects.go: patch does not apply
+error: patch failed: internal/native/emit_expressions.go:12
+error: internal/native/emit_expressions.go: patch does not apply
+error: patch failed: internal/native/runtime/adamic.h:28
+error: internal/native/runtime/adamic.h: patch does not apply
+error: patch failed: internal/native/runtime/object.c:1
+error: internal/native/runtime/object.c: patch does not apply

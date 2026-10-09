@@ -1,0 +1,22 @@
+=== RUN   TestCheckedViewIntersectionDeferredMember
+=== PAUSE TestCheckedViewIntersectionDeferredMember
+=== CONT  TestCheckedViewIntersectionDeferredMember
+=== RUN   TestCheckedViewIntersectionDeferredMember/unread
+    checked_views_intersections_deferred_test.go:23: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-unread.a:7:35: stage 0 can't lower an array of never yet
+=== RUN   TestCheckedViewIntersectionDeferredMember/read
+    checked_views_intersections_deferred_test.go:23: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-read.a:7:35: stage 0 can't lower an array of never yet
+=== RUN   TestCheckedViewIntersectionDeferredMember/helper
+    checked_views_intersections_deferred_test.go:23: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-helper.a:7:35: stage 0 can't lower an array of never yet
+=== RUN   TestCheckedViewIntersectionDeferredMember/callback
+    checked_views_intersections_deferred_test.go:23: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-callback.a:7:35: stage 0 can't lower an array of never yet
+=== RUN   TestCheckedViewIntersectionDeferredMember/destructure
+    checked_views_intersections_deferred_test.go:23: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-destructure.a:7:35: stage 0 can't lower an array of never yet
+--- FAIL: TestCheckedViewIntersectionDeferredMember (0.25s)
+    --- FAIL: TestCheckedViewIntersectionDeferredMember/unread (0.08s)
+    --- FAIL: TestCheckedViewIntersectionDeferredMember/read (0.04s)
+    --- FAIL: TestCheckedViewIntersectionDeferredMember/helper (0.05s)
+    --- FAIL: TestCheckedViewIntersectionDeferredMember/callback (0.04s)
+    --- FAIL: TestCheckedViewIntersectionDeferredMember/destructure (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.271s
+FAIL

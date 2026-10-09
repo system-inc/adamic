@@ -1,0 +1,37 @@
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier
+=== PAUSE TestCheckedViewIntersectionOriginalIdentifier
+=== CONT  TestCheckedViewIntersectionOriginalIdentifier
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/good
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-good.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/internal
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-internal.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/undefined
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-undefined.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/wrong
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-wrong.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/null
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-null.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/missing
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-missing.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/direct
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-wrong.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/alias-write
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-wrong.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/helper-only
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-wrong.a: no such file or directory
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/helper-only-good
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-good.a: no such file or directory
+--- FAIL: TestCheckedViewIntersectionOriginalIdentifier (0.01s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/good (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/internal (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/undefined (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/wrong (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/null (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/missing (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/direct (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/alias-write (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/helper-only (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/helper-only-good (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.039s
+FAIL

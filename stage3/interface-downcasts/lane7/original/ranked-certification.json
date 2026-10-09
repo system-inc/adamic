@@ -1,0 +1,174 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "inventory_sha256": "729efae4f2e2dae64328ec30bce4908eee50e063f22e201f1bc99aea94044615",
+  "sites_sha256": "d8de3367aa75639e6596f16116d843a9a9943f31aaab22cab65c7ba1bd3218c7",
+  "type_id": 9245,
+  "type": "LiteralImportTypeNode",
+  "field": "argument",
+  "read_count": 14,
+  "sites": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "start": 169232,
+      "end": 169245,
+      "text": "node.argument",
+      "line": 4369,
+      "column": 52,
+      "source_sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "start": 171481,
+      "end": 171494,
+      "text": "node.argument",
+      "line": 4416,
+      "column": 52,
+      "source_sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "start": 501539,
+      "end": 501552,
+      "text": "node.argument",
+      "line": 12189,
+      "column": 121,
+      "source_sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 1169538,
+      "end": 1169551,
+      "text": "node.argument",
+      "line": 20007,
+      "column": 71,
+      "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 1172578,
+      "end": 1172591,
+      "text": "node.argument",
+      "line": 20048,
+      "column": 47,
+      "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 2925325,
+      "end": 2925352,
+      "text": "node.parent.parent.argument",
+      "line": 50294,
+      "column": 103,
+      "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 2926705,
+      "end": 2926718,
+      "text": "node.argument",
+      "line": 50318,
+      "column": 76,
+      "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "start": 61474,
+      "end": 61488,
+      "text": "input.argument",
+      "line": 1252,
+      "column": 55,
+      "source_sha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "start": 61520,
+      "end": 61534,
+      "text": "input.argument",
+      "line": 1252,
+      "column": 101,
+      "source_sha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "start": 19581,
+      "end": 19594,
+      "text": "node.argument",
+      "line": 438,
+      "column": 64,
+      "source_sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "start": 19652,
+      "end": 19665,
+      "text": "node.argument",
+      "line": 439,
+      "column": 47,
+      "source_sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "start": 19695,
+      "end": 19708,
+      "text": "node.argument",
+      "line": 439,
+      "column": 90,
+      "source_sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "start": 19845,
+      "end": 19858,
+      "text": "node.argument",
+      "line": 442,
+      "column": 33,
+      "source_sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "start": 19888,
+      "end": 19901,
+      "text": "node.argument",
+      "line": 442,
+      "column": 76,
+      "source_sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+    }
+  ],
+  "receiver_fields": [
+    "_typeNodeBrand",
+    "argument",
+    "assertions",
+    "attributes",
+    "emitNode",
+    "end",
+    "flags",
+    "id",
+    "isTypeOf",
+    "kind",
+    "modifierFlagsCache",
+    "original",
+    "parent",
+    "pos",
+    "qualifier",
+    "transformFlags",
+    "typeArguments"
+  ],
+  "present_fields": [
+    "_typeNodeBrand",
+    "emitNode",
+    "end",
+    "flags",
+    "id",
+    "kind",
+    "literal",
+    "modifierFlagsCache",
+    "original",
+    "parent",
+    "pos",
+    "transformFlags"
+  ],
+  "status": "certified",
+  "scope": "Supplemental original frozen 198-row queue; outside the 17-row lazy lane7 inventory",
+  "proof": "Node first; complete original receiver and member fields; sanitized native, release native and JavaScript; successful leak check; helper member contract omission prints true with exit 0 and fails all three refusal assertions",
+  "mutant": "ADAMIC_INTERSECTION_RANKED_MUTANT=1"
+}

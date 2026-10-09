@@ -22,5 +22,12 @@ func (e *emitter) checkedViewField(property ir.Property) string {
 	if expected == "" {
 		expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[property.Of]
 	}
-	return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(property.Object), quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed))
+	value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(property.Object), quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed))
+	if property.Of == ir.Object && property.ViewContract != 0 {
+		contract := e.program.ViewContracts[property.ViewContract-1]
+		if contract.Intersection || contract.IntersectionTag != "" {
+			return e.viewObjectUnion(property, value)
+		}
+	}
+	return value
 }

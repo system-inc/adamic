@@ -1,0 +1,8 @@
+=== RUN   TestViewIntersectionUnsupportedAtCreation
+=== PAUSE TestViewIntersectionUnsupportedAtCreation
+=== CONT  TestViewIntersectionUnsupportedAtCreation
+    view_intersections_test.go:131: unread unsupported member must refuse at creation with its path: <nil>
+--- FAIL: TestViewIntersectionUnsupportedAtCreation (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.045s
+FAIL

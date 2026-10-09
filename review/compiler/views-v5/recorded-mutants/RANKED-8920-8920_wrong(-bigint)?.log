@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands
+=== PAUSE TestCheckedViewIntersectionOriginalRankedOperands
+=== CONT  TestCheckedViewIntersectionOriginalRankedOperands
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands/8920
+    checked_views_intersections_ranked_test.go:30: open ../../stage3/interface-downcasts/lane4/read-demand-pairs.json.gz: no such file or directory
+--- FAIL: TestCheckedViewIntersectionOriginalRankedOperands (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalRankedOperands/8920 (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.011s
+FAIL

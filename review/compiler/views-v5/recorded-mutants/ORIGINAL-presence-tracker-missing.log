@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewIntersectionOriginalPairs
+=== PAUSE TestCheckedViewIntersectionOriginalPairs
+=== CONT  TestCheckedViewIntersectionOriginalPairs
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-missing
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-missing2355506631/001/tracker-missing.a:17:21: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+--- FAIL: TestCheckedViewIntersectionOriginalPairs (0.83s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-missing (0.82s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.880s
+FAIL

@@ -1,0 +1,42 @@
+=== RUN   TestCheckedViewIntersectionOriginalPairs
+=== PAUSE TestCheckedViewIntersectionOriginalPairs
+=== CONT  TestCheckedViewIntersectionOriginalPairs
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-good
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-good2713926695/001/tracker-good.a:17:21: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-helpers-good
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-helpers-good3244603098/001/tracker-helpers-good.a:18:24: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-absent
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-absent4271041806/001/tracker-absent.a:16:20: Adamic 0.1 refuses optional property moduleResolverHost in Base absent from structural source {}, which can hide fields; declare moduleResolverHost on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-undefined
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-undefined120448475/001/tracker-undefined.a:17:14: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-wrong
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-wrong418691796/001/tracker-wrong.a:17:21: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-helpers-wrong
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-helpers-wrong1103714314/001/tracker-helpers-wrong.a:18:24: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-missing
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-missing1843489102/001/tracker-missing.a:17:21: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-root-wrong
+    checked_views_intersections_original_test.go:143: gate cache node miss
+    checked_views_intersections_original_test.go:143: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-root-wrong3270047777/001/tracker-root-wrong.a:17:21: Adamic 0.1 refuses a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+--- FAIL: TestCheckedViewIntersectionOriginalPairs (5.71s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-good (0.94s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-helpers-good (0.72s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-absent (0.67s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-undefined (0.75s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-wrong (0.67s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-helpers-wrong (0.65s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-missing (0.80s)
+    --- FAIL: TestCheckedViewIntersectionOriginalPairs/tracker-root-wrong (0.50s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.739s
+FAIL

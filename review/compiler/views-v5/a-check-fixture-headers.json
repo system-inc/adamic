@@ -1,0 +1,382 @@
+[
+  {
+    "path": "stage3/interface-downcasts/lane7/compound-read.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/compound-unread.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/compound-untagged-read.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/leading-access-element.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member BindableStaticAccessExpression.expressio"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/leading-access-identifier.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member BindableStaticAccessExpression.expres"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/leading-access-missing.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member BindableStaticAccessExpression.expressio"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/leading-access-property.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member BindableStaticAccessExpression.expressi"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/leading-access-unknown-tag.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member BindableStaticAccessExpression.expre"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/leading-access-wrong.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member BindableStaticAccessExpression.expression "
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-chain-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-expression-this.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-expression-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-left-kind.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-left-symbol.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-access-left-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-element-argument-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-element-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-chain-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-expression-this.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-expression-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-helpers-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-helpers-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-left-kind.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/bindable-static-left-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-augments-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-augments-kind.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-augments-name.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-augments-symbol.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-implements-arguments.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-implements-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-implements-kind.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/class-implements-symbol.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/emit-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/emit-original-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/emit-original-missing.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/emit-original-range-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/emit-original-ranges-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/emit-original-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-parent-function-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-parent-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-parent-kind.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-parent-parameters.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-parent-symbol.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-root-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-root-kind.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/jsdoc-root-symbol.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/literal-import-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/numeric-operand-40931-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/numeric-operand-8920-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/numeric-operand-8923-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-absent.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-helpers-good.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-helpers-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-missing.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-root-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-undefined.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/original/tracker-wrong.a",
+    "observed": "type error",
+    "expectation": "type error TS2307"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-absent.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-boolean-literal.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-deep-wrong.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-good.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-literal-good.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-literal-wrong.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-missing.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-null-root-absent.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-null-root-wrong.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-number-literal.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-object-wrong.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-optional-absent.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-optional-root.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-read.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  },
+  {
+    "path": "stage3/interface-downcasts/lane7/recursive-unread.a",
+    "observed": "refused",
+    "expectation": "refused checked intersection view with unsupported member Target.value.next"
+  }
+]

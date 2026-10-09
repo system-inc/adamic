@@ -18,7 +18,13 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	}
 	family := l.unsupportedViewFamily(target)
 	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
-		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+		id, err := viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+		if err == nil && id != 0 {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
+		}
+		return id, err
 	}
 	// The owning adapter supplies complete standalone array contracts. V2's
 	// placeholder remains only for unavailable adapters and union-arm dispatch.
@@ -43,6 +49,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
 			return id, nil
 		}
 		family = "representation conversion"
@@ -78,6 +87,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
 		return "intersection"
 	case flags&checker.TypeFlagsNull != 0:
 		return ""
@@ -101,6 +113,7 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 func (l *lowering) checkLazyViewReads() error {
 	l.certifyUntaggedCallableProducers()
 	l.completeUntaggedRecursiveContracts()
+	l.finishBoundedIntersections()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		for _, function := range program.Functions {

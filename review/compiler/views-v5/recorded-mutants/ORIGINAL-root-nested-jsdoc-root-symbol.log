@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-symbol4069264672/001/jsdoc-root-symbol.a:12:17: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionOriginalNodes (1.25s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol (1.24s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.359s
+FAIL

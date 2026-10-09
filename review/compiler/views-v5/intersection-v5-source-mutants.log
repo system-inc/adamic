@@ -1,0 +1,38 @@
+=== RUN   TestV5IntersectionSourceSkip
+=== PAUSE TestV5IntersectionSourceSkip
+=== RUN   TestV5IntersectionSourceShape
+=== PAUSE TestV5IntersectionSourceShape
+=== RUN   TestV5IntersectionSourceNested
+=== PAUSE TestV5IntersectionSourceNested
+=== CONT  TestV5IntersectionSourceSkip
+=== CONT  TestV5IntersectionSourceNested
+=== CONT  TestV5IntersectionSourceShape
+    checked_views_intersections_v5_test.go:34: gate cache node miss
+=== NAME  TestV5IntersectionSourceNested
+    checked_views_intersections_v5_test.go:38: gate cache node miss
+=== NAME  TestV5IntersectionSourceSkip
+    checked_views_intersections_v5_test.go:30: gate cache node hit
+    checked_views_intersections_v5_test.go:30: gate cache node miss
+=== NAME  TestV5IntersectionSourceNested
+    checked_views_intersections_v5_test.go:38: gate cache node miss
+=== NAME  TestV5IntersectionSourceShape
+    checked_views_intersections_v5_test.go:34: gate cache node hit
+=== NAME  TestV5IntersectionSourceSkip
+    checked_views_intersections_v5_test.go:30: gate cache node miss
+=== NAME  TestV5IntersectionSourceShape
+    checked_views_intersections_v5_test.go:34: gate cache node miss
+=== NAME  TestV5IntersectionSourceNested
+    checked_views_intersections_v5_test.go:38: gate cache node miss
+    checked_views_intersections_v5_test.go:38: nested mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceNested (0.39s)
+=== NAME  TestV5IntersectionSourceShape
+    checked_views_intersections_v5_test.go:34: shape mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceShape (0.39s)
+=== NAME  TestV5IntersectionSourceSkip
+    checked_views_intersections_v5_test.go:30: skip mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceSkip (0.39s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.399s

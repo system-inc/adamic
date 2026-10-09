@@ -69,6 +69,16 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		if l.structuralViewIntersection(proven) {
+			// Keep V4's generic intersection shape boundary; the V5 view hook
+			// cannot provide ordinary generic producer storage certificates.
+			for _, part := range proven.Types() {
+				if part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0 && !l.clockGenericReturnsT01Shape(proven, map[*checker.Type]bool{}) {
+					return l.objectIntersection(proven)
+				}
+			}
+			return ir.Object, true
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {

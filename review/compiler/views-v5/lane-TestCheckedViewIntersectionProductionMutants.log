@@ -1,0 +1,16 @@
+=== RUN   TestCheckedViewIntersectionProductionMutants
+=== PAUSE TestCheckedViewIntersectionProductionMutants
+=== CONT  TestCheckedViewIntersectionProductionMutants
+=== RUN   TestCheckedViewIntersectionProductionMutants/skip
+    checked_views_intersections_test.go:211: /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:6:68: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== RUN   TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:211: /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:6:68: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== RUN   TestCheckedViewIntersectionProductionMutants/nested
+    checked_views_intersections_test.go:211: /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-nested.a:6:68: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+--- FAIL: TestCheckedViewIntersectionProductionMutants (0.09s)
+    --- FAIL: TestCheckedViewIntersectionProductionMutants/skip (0.03s)
+    --- FAIL: TestCheckedViewIntersectionProductionMutants/shape (0.03s)
+    --- FAIL: TestCheckedViewIntersectionProductionMutants/nested (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.113s
+FAIL

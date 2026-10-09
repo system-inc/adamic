@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-kind1355653455/001/class-augments-kind.a:16:27: Adamic 0.1 refuses checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionOriginalNodes (1.46s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-augments-kind (1.44s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.499s
+FAIL

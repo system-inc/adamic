@@ -1,0 +1,18 @@
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption
+=== PAUSE TestCheckedViewIntersectionOriginalAbsorption
+=== CONT  TestCheckedViewIntersectionOriginalAbsorption
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/good
+    checked_views_intersections_absorption_test.go:33: gate cache node miss
+    checked_views_intersections_absorption_test.go:38: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalAbsorptiongood1567154285/001/jsdoc-union-parent-good.a:13:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/wrong
+    checked_views_intersections_absorption_test.go:33: gate cache node miss
+    checked_views_intersections_absorption_test.go:38: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalAbsorptionwrong3491623988/001/jsdoc-union-parent-wrong.a:13:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionOriginalAbsorption (1.01s)
+    --- FAIL: TestCheckedViewIntersectionOriginalAbsorption/good (0.55s)
+    --- FAIL: TestCheckedViewIntersectionOriginalAbsorption/wrong (0.45s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.024s
+FAIL

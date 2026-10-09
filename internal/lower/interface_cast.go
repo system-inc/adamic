@@ -37,6 +37,12 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // More precise view propagation and erasure can reduce that set without trusting casts.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		if l.viewTypeContainsIntersection(target, map[*checker.Type]bool{}) {
+			if _, err := l.viewSchema(node, target); err != nil {
+				return nil, err
+			}
+			return nil, &Refused{Where: l.program.Where(node), What: "checked intersection view with unsupported member " + l.checker.TypeToString(target) + " (root union handoff)", Fix: "prove the complete selected intersection contract before creating this view"}
+		}
 		return l.legacyView(node, value, target)
 	}
 	fields, err := l.viewSchema(node, target)
@@ -309,6 +315,12 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 	id, err := l.viewContract(node, target)
 	if err != nil {
 		return nil, err
+	}
+	if l.viewContractContainsIntersection(id, map[ir.ViewContractID]bool{}) || l.viewTypeContainsIntersection(target, map[*checker.Type]bool{}) {
+		l.finishBoundedIntersections()
+		if err := l.checkCompleteIntersectionView(node, id, l.checker.TypeToString(target), map[ir.ViewContractID]bool{}); err != nil {
+			return nil, err
+		}
 	}
 	fields := map[string]bool{}
 	seen := map[ir.ViewContractID]bool{}

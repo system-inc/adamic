@@ -1,0 +1,20 @@
+[
+  {
+    "lane": "dictionaries",
+    "command": "git apply --check",
+    "exit": 1,
+    "changes_applied": false
+  },
+  {
+    "lane": "intersections",
+    "command": "git apply --check",
+    "exit": 1,
+    "changes_applied": false
+  },
+  {
+    "lane": "dictionary-joint",
+    "command": "git apply --check",
+    "exit": 1,
+    "changes_applied": false
+  }
+]

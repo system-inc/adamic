@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-wrong2879299035/001/emit-original-wrong.a:11:24: Adamic 0.1 refuses checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionOriginalNodes (0.44s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-wrong (0.43s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.459s
+FAIL

@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewIntersectionSource
+=== PAUSE TestCheckedViewIntersectionSource
+=== CONT  TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionSource/emit-root-nested
+    checked_views_intersections_test.go:142: /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-nested.a:6:68: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+--- FAIL: TestCheckedViewIntersectionSource (0.11s)
+    --- FAIL: TestCheckedViewIntersectionSource/emit-root-nested (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.120s
+FAIL

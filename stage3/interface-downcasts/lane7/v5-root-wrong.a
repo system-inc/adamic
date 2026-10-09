@@ -1,0 +1,9 @@
+interface Core { readonly flags: number; readonly autoGenerate: { readonly id: number } }
+interface Extra { readonly text: string }
+interface Box { readonly value: object }
+interface Target extends Box { readonly value: Core & Extra }
+const actual = { flags: true, autoGenerate: { id: 1 }, text: "name" };
+const box: Box = { value: actual };
+const view = box as Target;
+const root = view.value;
+console.log(`${root === root}`);

@@ -1,0 +1,6 @@
+=== RUN   TestCheckedViewIntersectionDeferredCounts
+    checked_views_intersections_deferred_test.go:79: Lower: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-unread.a:7:35: stage 0 can't lower an array of never yet
+--- FAIL: TestCheckedViewIntersectionDeferredCounts (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.078s
+FAIL

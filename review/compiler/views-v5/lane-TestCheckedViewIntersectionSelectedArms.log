@@ -1,0 +1,28 @@
+=== RUN   TestCheckedViewIntersectionSelectedArms
+=== PAUSE TestCheckedViewIntersectionSelectedArms
+=== CONT  TestCheckedViewIntersectionSelectedArms
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-identifier
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-identifier.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-element
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-element.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-property
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-property.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-wrong
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-wrong.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-unknown-tag
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-unknown-tag.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-missing
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-missing.a:28:29: Adamic 0.1 refuses checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionSelectedArms/compound-read
+    checked_views_intersections_test.go:322: /workspace/adamic/stage3/interface-downcasts/lane7/compound-read.a:8:14: Adamic 0.1 refuses checked intersection view with unsupported member Target.value (object union intersection handoff); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionSelectedArms (0.39s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-identifier (0.05s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-element (0.04s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-property (0.03s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-wrong (0.04s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-unknown-tag (0.03s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-missing (0.11s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/compound-read (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.401s
+FAIL

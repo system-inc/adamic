@@ -1,0 +1,18 @@
+Base: 97c69648f71a76492897b22cd3cb63f85947e964
+Required record APIs searched on base:
+recordElement: absent
+finitePartialRecordElement: absent
+recordSlot: absent
+RecordCall: absent
+
+dictionary-builder (48d166cf:internal/lower/view_dictionaries.go)
+29: element = l.finitePartialRecordElement(target)
+43: if l.recordElement(target) != nil {
+179: if initializer != nil && initializer.Kind == ast.KindAsExpression && l.recordElement(l.checker.GetTypeAtLocation(initializer.AsAsExpression().Expression)) == nil && l.recordElement(l.checker.GetTypeAtLocation(initializer)) != nil {
+185: if l.recordElement(l.checker.GetTypeAtLocation(receiver)) != nil {
+214: if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && contextual.Flags()&checker.TypeFlagsObject != 0 && enumObjectSymbol(contextual) == nil && len(l.checker.GetIndexInfosOfType(contextual)) != 0 && l.recordElement(contextual) == nil {
+237: !isClassInstance(source) && !isClassInstance(target) && l.recordElement(source) == nil &&
+238: (l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil) &&
+
+joint-conversion (9a917fc5:internal/lower/view_dictionary_conversion.go)
+66: case ir.RecordCall:

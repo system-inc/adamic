@@ -1,0 +1,8 @@
+=== RUN   TestCheckedViewIntersectionRecursiveDemand
+=== PAUSE TestCheckedViewIntersectionRecursiveDemand
+=== CONT  TestCheckedViewIntersectionRecursiveDemand
+    checked_views_intersections_test.go:265: /workspace/adamic/stage3/interface-downcasts/lane7/recursive-unread.a:7:14: Adamic 0.1 refuses checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionRecursiveDemand (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.061s
+FAIL

@@ -1,0 +1,34 @@
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers
+=== PAUSE TestCheckedViewIntersectionOriginalArrayBlockers
+=== CONT  TestCheckedViewIntersectionOriginalArrayBlockers
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/string
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/string
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+--- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers (2.18s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/97923/string (0.54s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object (0.43s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object (0.31s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/98493/string (0.29s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object (0.29s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object (0.32s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.192s
+FAIL

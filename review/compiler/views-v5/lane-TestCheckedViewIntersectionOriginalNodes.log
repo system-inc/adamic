@@ -1,0 +1,94 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-good3129853926/001/emit-original-good.a:11:24: Adamic 0.1 refuses checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-ranges-go1029802436/001/emit-original-ranges-good.a:11:24: Adamic 0.1 refuses checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-missing
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-missing2999449127/001/emit-original-missing.a:11:24: Adamic 0.1 refuses checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-wrong2892847197/001/emit-original-wrong.a:11:24: Adamic 0.1 refuses checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-range-wro2756991817/001/emit-original-range-wrong.a:11:24: Adamic 0.1 refuses checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-good2874511427/001/class-augments-good.a:21:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-good1979010633/001/class-implements-good.a:20:23: Adamic 0.1 refuses checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-kind2109898679/001/class-augments-kind.a:16:27: Adamic 0.1 refuses checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-name
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-name614996424/001/class-augments-name.a:16:27: Adamic 0.1 refuses checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-symbol
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-symbol3490667490/001/class-augments-symbol.a:16:27: Adamic 0.1 refuses checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-kind
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-kind875274897/001/class-implements-kind.a:16:28: Adamic 0.1 refuses checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-symbol
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-symbol2180580630/001/class-implements-symbol.a:16:28: Adamic 0.1 refuses checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-good546094721/001/jsdoc-parent-good.a:13:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-function-g2405056903/001/jsdoc-parent-function-good.a:14:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-kind1387203434/001/jsdoc-parent-kind.a:13:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-parameters954016736/001/jsdoc-parent-parameters.a:14:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-symbol3837685908/001/jsdoc-parent-symbol.a:14:21: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-good364143039/001/jsdoc-root-good.a:10:17: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-symbol668380169/001/jsdoc-root-symbol.a:12:17: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-kind3811172521/001/jsdoc-root-kind.a:11:17: Adamic 0.1 refuses checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-arguments
+    checked_views_intersections_original_test.go:413: gate cache node miss
+    checked_views_intersections_original_test.go:413: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-argume1457398672/001/class-implements-arguments.a:16:28: Adamic 0.1 refuses checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+--- FAIL: TestCheckedViewIntersectionOriginalNodes (15.43s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-good (0.76s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good (0.72s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-missing (0.78s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-wrong (0.90s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong (0.89s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-augments-good (0.76s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-implements-good (0.72s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-augments-kind (0.75s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-augments-name (0.59s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-augments-symbol (0.70s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-implements-kind (0.79s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-implements-symbol (0.67s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good (0.60s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good (0.63s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind (0.67s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters (0.68s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol (0.82s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good (0.73s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol (0.75s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind (0.76s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/class-implements-arguments (0.69s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=21
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	15.440s
+FAIL

@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier
+=== PAUSE TestCheckedViewIntersectionOriginalIdentifier
+=== CONT  TestCheckedViewIntersectionOriginalIdentifier
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier/helper-only
+    checked_views_intersections_identifier_test.go:31: open ../../stage3/interface-downcasts/lane4/original/lefthandsideexpression & identifier-wrong.a: no such file or directory
+--- FAIL: TestCheckedViewIntersectionOriginalIdentifier (0.00s)
+    --- FAIL: TestCheckedViewIntersectionOriginalIdentifier/helper-only (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.012s
+FAIL

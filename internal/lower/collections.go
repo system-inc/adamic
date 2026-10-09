@@ -355,6 +355,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		value.ViewReceiverTypeID = int(destructured.Id())
 		value.ViewWhere = l.program.Where(binding)
 		l.prepareViewCallableProperty(binding, fieldType, &value)
+		l.viewIntersectionBindingRead(binding, destructured, fieldType, &value)
 		value.ViewAllowed = l.viewLiterals(fieldType)
 		statements = append(statements, l.initializeLocal(local, value)...)
 	}
