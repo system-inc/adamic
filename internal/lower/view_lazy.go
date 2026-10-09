@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// Unsupported contracts are descriptors, never certificates. Their users must
-// refuse at a demanded read. Cast admission does not inspect their payloads.
+// Unsupported contracts are descriptors, never certificates. View admission
+// rejects them before a partial view can be formed.
 func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
 	if l.result.ViewContractTypes == nil {
 		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
@@ -222,4 +222,64 @@ func viewAggregate(value ir.Expression) bool {
 
 func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
 	return &Refused{Where: l.program.Where(node), What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
+}
+
+// Every member must have a complete checked lowering, even if it is never read.
+func (l *lowering) checkViewMembers(node *ast.Node, target *checker.Type) error {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if err := l.checkViewMembers(node, member); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		declared := l.checker.GetTypeOfSymbol(property)
+		id, err := l.viewContract(node, declared)
+		if err != nil || l.unsupportedViewContract(id, map[ir.ViewContractID]bool{}) {
+			return &Refused{Where: l.program.Where(node), What: "view type has an unsupported member: " + property.Name, Fix: "use a supported, checked type for " + property.Name + " (currently " + l.checker.TypeToString(declared) + ") before creating this view"}
+		}
+	}
+	return nil
+}
+
+func (l *lowering) unsupportedViewContract(id ir.ViewContractID, seen map[ir.ViewContractID]bool) bool {
+	if id == 0 || int(id) > len(l.result.ViewContracts) {
+		return true
+	}
+	if seen[id] {
+		return false
+	}
+	seen[id] = true
+	contract := l.result.ViewContracts[id-1]
+	if contract.Unsupported != "" || contract.Kind == ir.ViewUnknown {
+		return true
+	}
+	for _, field := range contract.Fields {
+		if l.unsupportedViewContract(field.Contract, seen) {
+			return true
+		}
+	}
+	for _, member := range contract.Members {
+		if l.unsupportedViewContract(member, seen) {
+			return true
+		}
+	}
+	for _, element := range contract.Tuple {
+		if l.unsupportedViewContract(element, seen) {
+			return true
+		}
+	}
+	for _, parameter := range contract.Parameters {
+		if l.unsupportedViewContract(parameter, seen) {
+			return true
+		}
+	}
+	for _, child := range []ir.ViewContractID{contract.Element, contract.Key, contract.Result, contract.Payload, contract.TupleRest, contract.ObjectPresent} {
+		if child != 0 && l.unsupportedViewContract(child, seen) {
+			return true
+		}
+	}
+	return false
 }

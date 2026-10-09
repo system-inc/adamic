@@ -36,6 +36,9 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // conservative: aliases and function boundaries cannot lose a checked read.
 // More precise view propagation and erasure can reduce that set without trusting casts.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+	if err := l.checkViewMembers(node, target); err != nil {
+		return nil, err
+	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}
