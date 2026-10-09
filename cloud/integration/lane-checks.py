@@ -10,14 +10,33 @@ stands, no tests run here; these refuse a violator at its own landing, with the 
   changed test file's top-level test either calls Parallel() first or says why not.
 - go vet on the changed test packages, when it finishes inside 10 s; past that it's skipped and said so.
 
-usage: lane-checks.py <old main> <tree> <commit holding the tree>
-Prints one summary line and exits 0, or prints each violation and exits 1. Run from the merge tree.
+usage: lane-checks.py <old main> <tree> <commit holding the tree>   (push-main, from the merge tree)
+Prints one summary line and exits 0, or prints each violation and exits 1.
+
+A worker runs the same checks on its own committed branch before pushing, from the repository's root (in
+its own checkout, nothing moved), so a change never travels just to be refused (@system_adamic, Oct 9):
+  git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
 """
 import os, re, subprocess, sys, tempfile, time
 
-old, tree, commit = sys.argv[1:4]
+
+def run(*arguments, **options):
+    return subprocess.run(arguments, capture_output=True, text=True, **options)
+
+
 started = time.monotonic()
-laneTree = os.path.expanduser(os.environ.get("ADAMIC_LANE_TREE", "~/.adamic-lane-tree"))
+# With no arguments it checks the worker's HEAD against main, in place.
+inPlace = len(sys.argv) < 4
+if inPlace:
+    commit = run("git", "rev-parse", "HEAD").stdout.strip()
+    old = run("git", "merge-base", commit, "origin/main").stdout.strip()
+    tree = run("git", "rev-parse", f"{commit}^{{tree}}").stdout.strip()
+    laneTree = run("git", "rev-parse", "--show-toplevel").stdout.strip()
+    if not old:
+        sys.exit("lane-checks: no merge base with origin/main; fetch it first")
+else:
+    old, tree, commit = sys.argv[1:4]
+    laneTree = os.path.expanduser(os.environ.get("ADAMIC_LANE_TREE", "~/.adamic-lane-tree"))
 toolLiteral = re.compile(r'exec\.(?:Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"([^"]+)"')
 vetSeconds = 10
 # The submodules (cohere, and its TypeScript) come from a local checkout's module store when it holds the
@@ -25,10 +44,6 @@ vetSeconds = 10
 # miss even a compile error (Oct 9: stage1/cohere/json's missing sync import reached main this way).
 modules = os.path.expanduser(os.environ.get("ADAMIC_LANE_MODULES", "~/Projects/system/adamic/.git/modules"))
 toolsRef = os.environ.get("ADAMIC_LANE_TOOLS_REF", "origin/devtools/fast-gate")
-
-
-def run(*arguments, **options):
-    return subprocess.run(arguments, capture_output=True, text=True, **options)
 
 
 def packageOf(finding):
@@ -63,14 +78,14 @@ for path in goFiles:
 # The analyzer and vet need the tree on disk: the lane's own worktree, moved to this commit.
 testPackages = sorted({"./" + os.path.dirname(path) for path in goFiles if path.endswith("_test.go")})
 if testPackages and not problems:
-    if not os.path.isdir(laneTree):
+    if not inPlace and not os.path.isdir(laneTree):
         run("git", "worktree", "add", "-q", "--detach", laneTree, commit)
-    checkedOut = run("git", "-C", laneTree, "checkout", "-q", "--detach", "--force", commit)
+    checkedOut = run("true") if inPlace else run("git", "-C", laneTree, "checkout", "-q", "--detach", "--force", commit)
     if checkedOut.returncode != 0:
         problems.append(f"the lane's worktree couldn't check out {commit[:8]}: {checkedOut.stderr.strip()[:200]}")
     else:
-        for directory, name, store in ((laneTree, "cohere", os.path.join(modules, "cohere")),
-                                       (os.path.join(laneTree, "cohere"), "TypeScript", os.path.join(modules, "cohere/modules/TypeScript"))):
+        for directory, name, store in (() if inPlace else ((laneTree, "cohere", os.path.join(modules, "cohere")),
+                                       (os.path.join(laneTree, "cohere"), "TypeScript", os.path.join(modules, "cohere/modules/TypeScript")))):
             if not os.path.exists(os.path.join(directory, ".gitmodules")):
                 break
             local = run("git", "-c", "protocol.file.allow=always", "-c", f"submodule.{name}.url={store}", "submodule", "update", "--init", name, cwd=directory, timeout=300) if os.path.isdir(store) else None
@@ -100,7 +115,9 @@ if testPackages and not problems:
             # submodule, say) is the gate's to vet, not a reason to refuse.
             loading = re.compile(r"replacement directory|no required module|cannot find module|does not exist|no such file or directory|go\.mod|missing go\.sum|is not in std|cannot load")
             findings = [line for line in (vetted.stdout + vetted.stderr).splitlines() if re.search(r"\.go:\d+:\d+: ", line) and not loading.search(line)]
-            if findings:
+            if findings and inPlace:
+                notes.append("if main already fails vet in one of these packages, the lane won't refuse it there")
+            if findings and not inPlace:
                 # vet stops at a package's first type error, so a package main already breaks can't be judged
                 # here: only packages that vet clean on main refuse, or a fix into a broken package never lands.
                 broken = sorted({packageOf(line) for line in findings})
@@ -123,6 +140,6 @@ if testPackages and not problems:
 
 seconds = time.monotonic() - started
 if problems:
-    print("\n".join(problems))
+    print("\n".join(problems + notes))
     sys.exit(1)
 print(f"lane checks {seconds:.1f} s: gofmt and tools on {len(goFiles)} Go files, t.Parallel on {len(testPackages)} test packages" + ("; " + "; ".join(notes) if notes else ""))
