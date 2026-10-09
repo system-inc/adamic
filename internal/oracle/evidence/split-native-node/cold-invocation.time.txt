@@ -1,0 +1,5 @@
+/bin/bash: line 3:  1259 Killed                  timeout --signal=KILL 75s go test ./internal/oracle -run '^TestNativeShardColdSetupMeasurement$' -count=1 -parallel=4 -timeout=75s -v > /workspace/oracle-setup.log
+
+real	1m15.006s
+user	0m0.000s
+sys	0m0.002s

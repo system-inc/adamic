@@ -132,3 +132,43 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 		t.Fatal("corrupt log accepted")
 	}
 }
+
+// Not parallel: t.Chdir moves the process to the repository root, where children reads internal/oracle.
+func TestNativeOracleGateShardCoverage(t *testing.T) {
+	t.Chdir("../..")
+	pkg := "github.com/system-inc/adamic/internal/oracle"
+	names, err := children(pkg, "TestNativeAgreesWithNode")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(names) != 34 {
+		t.Fatalf("discovered %d shard names, want 34", len(names))
+	}
+	expected := plan{Count: 1}
+	for i, name := range names {
+		want := []string{"shard-000", "shard-001", "shard-002", "shard-003-0", "shard-003-1", "shard-004", "shard-005", "shard-006", "shard-007", "shard-008", "shard-009", "shard-010", "shard-011", "shard-012", "shard-013", "shard-014", "shard-015", "shard-016", "shard-017", "shard-018", "shard-019-0", "shard-019-1", "shard-020", "shard-021", "shard-022", "shard-023", "shard-024", "shard-025", "shard-026", "shard-027", "shard-028", "shard-029", "shard-030", "shard-031"}[i]
+		if name != want {
+			t.Fatalf("child %d: %q, want %q", i, name, want)
+		}
+		expected.Units = append(expected.Units, unit{Package: pkg, Test: "TestNativeAgreesWithNode/" + name, Shard: 0})
+	}
+	// A parent PASS plus all other shards cannot green the shard that did not run.
+	records := []result{{Package: pkg, Test: "TestNativeAgreesWithNode", Action: "pass"}}
+	for _, u := range expected.Units[1:] {
+		records = append(records, result{Package: pkg, Test: u.Test, Action: "pass"})
+	}
+	produced := map[string]bool{}
+	if problems := validateResults(expected, 0, records, produced, map[string]int{}); len(problems) != 0 {
+		t.Fatal(problems)
+	}
+	missing := []string{}
+	for _, u := range expected.Units {
+		if !produced[u.key()] {
+			missing = append(missing, u.Test)
+		}
+	}
+	if len(missing) != 1 || missing[0] != "TestNativeAgreesWithNode/shard-000" {
+		t.Fatalf("missing shard accepted: %v", missing)
+	}
+	t.Logf("missing evidence: %s; parent pass cannot satisfy it", missing[0])
+}
