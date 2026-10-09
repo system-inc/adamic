@@ -1,0 +1,10 @@
+--- a/internal/native/array_reads.go
++++ b/internal/native/array_reads.go
+@@ -32,5 +32,6 @@
+ 	if position < len(layout.Fixed) {
+ 		of = layout.Fixed[position]
+ 	}
+-	return e.arrayReadSlot(array, slot, of)
++	_ = of
++	return slot // mutant: use narrowed representation on stored union slots
+ }

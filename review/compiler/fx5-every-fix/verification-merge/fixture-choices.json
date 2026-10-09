@@ -1,0 +1,8 @@
+{
+  "cat": "[1, 2, { name: 'discard' }] then pop: boxed Cat | number storage before every.",
+  "forward": "[1, 2, 'discard'] then pop: union storage forwarded to a number[] reducer after every.",
+  "inferred": "[1, 2, 'discard'] then pop: inferred predicate narrows existing union storage.",
+  "property": "obj.items initialized with [1, 2, 'discard'] then obj.items.pop(): narrowing a property binding.",
+  "readonly": "Mutable built array initialized mixed, popped, then exposed as readonly union array: readonly narrowing path.",
+  "some_negated": "['a', 'b', 1] then pop: negated some narrows stored union values to strings."
+}

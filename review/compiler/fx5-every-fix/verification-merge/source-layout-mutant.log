@@ -1,0 +1,5 @@
+--- FAIL: TestFX5NumberLiteralAgrees (0.72s)
+    fx5_literal_test.go:15: Native backend stdout = "", source Node = "number 1\nnumber 2\nnumber 1\nnumber 2\nstring a\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.730s
+FAIL

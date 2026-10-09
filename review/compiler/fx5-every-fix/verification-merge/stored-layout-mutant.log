@@ -1,0 +1,5 @@
+--- FAIL: TestArrayNarrowingEveryAgrees (0.93s)
+    array_narrowing_test.go:23: Native backend stdout = "total 9.3079274943955e-310\n", source Node = "total 3\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.945s
+FAIL
