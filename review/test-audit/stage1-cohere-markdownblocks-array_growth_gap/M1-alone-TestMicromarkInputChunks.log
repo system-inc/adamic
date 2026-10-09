@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:12:42.561534369Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:12:42.573668641Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks"}
+{"Time":"2026-10-09T13:12:42.573787507Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"=== RUN   TestMicromarkInputChunks\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:42.573815572Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)\n"}
+{"Time":"2026-10-09T13:12:42.573825386Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"=== PAUSE TestMicromarkInputChunks\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:42.573827678Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks"}
+{"Time":"2026-10-09T13:12:42.573832877Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks"}
+{"Time":"2026-10-09T13:12:42.573834862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"=== CONT  TestMicromarkInputChunks\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:42.600127862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"    chunks_test.go:23: corpus-files: repository /tmp/u126/clean-source root stage1/cohere/markdownblocks pin ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2 count 3\n"}
+{"Time":"2026-10-09T13:12:45.376208743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"    chunks_test.go:129: native first byte difference at 0 (lengths 333319/1606518)\n","OutputType":"error"}
+{"Time":"2026-10-09T13:12:45.376700677Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"--- FAIL: TestMicromarkInputChunks (2.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:45.376722945Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Elapsed":2.8}
+{"Time":"2026-10-09T13:12:45.376737286Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:45.382139027Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":2.8209999999999997}

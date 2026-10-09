@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:01:26.965910306Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:01:26.978975512Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement"}
+{"Time":"2026-10-09T13:01:26.979046825Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement","Output":"=== RUN   TestTokenizerEventShardPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.979074715Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement","Output":"=== PAUSE TestTokenizerEventShardPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.979076834Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement"}
+{"Time":"2026-10-09T13:01:26.97907899Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement"}
+{"Time":"2026-10-09T13:01:26.979080477Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement","Output":"=== CONT  TestTokenizerEventShardPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.987823494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement","Output":"    tokenizer_events_union_test.go:148: caught by shard-008: shard-008: planted oracle disagreement in case id 2345\n"}
+{"Time":"2026-10-09T13:01:26.98806295Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement","Output":"--- PASS: TestTokenizerEventShardPlantedDisagreement (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.988101775Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardPlantedDisagreement","Elapsed":0.01}
+{"Time":"2026-10-09T13:01:26.988110858Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.988289856Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.022}

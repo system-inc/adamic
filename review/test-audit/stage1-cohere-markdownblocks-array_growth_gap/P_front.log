@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T13:08:50.642528517Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:08:50.652633441Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage"}
+{"Time":"2026-10-09T13:08:50.652747336Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"=== RUN   TestFrontMatterStage\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:08:50.65278101Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)\n"}
+{"Time":"2026-10-09T13:08:50.652786857Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"=== PAUSE TestFrontMatterStage\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:08:50.652789588Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage"}
+{"Time":"2026-10-09T13:08:50.652792645Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage"}
+{"Time":"2026-10-09T13:08:50.652794826Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"=== CONT  TestFrontMatterStage\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:08:50.718843904Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"    frontmatter_test.go:23: corpus-files: repository /workspace/adamic root stage1/cohere/markdownblocks pin ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2 count 3\n"}
+{"Time":"2026-10-09T13:08:51.617680603Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"    frontmatter_test.go:104: native front matter first byte difference at 2 (lengths 9588/655456)\n","OutputType":"error"}
+{"Time":"2026-10-09T13:08:51.618044273Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"--- FAIL: TestFrontMatterStage (0.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:08:51.618101637Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Elapsed":0.97}
+{"Time":"2026-10-09T13:08:51.618171638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:08:51.621533282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.979s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:08:51.621563757Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.979}

@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:06:27.667134225Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:06:27.678931015Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth"}
+{"Time":"2026-10-09T13:06:27.679184955Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Output":"=== RUN   TestTokenizerEventShardGrowth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:27.679314772Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Output":"=== PAUSE TestTokenizerEventShardGrowth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:27.679317338Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth"}
+{"Time":"2026-10-09T13:06:27.679320032Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth"}
+{"Time":"2026-10-09T13:06:27.679321713Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Output":"=== CONT  TestTokenizerEventShardGrowth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:27.679338248Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Output":"    tokenizer_events_union_test.go:178: union: 7/7 cases; exact id set; no repeats; 512 shards\n"}
+{"Time":"2026-10-09T13:06:27.679389029Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Output":"    tokenizer_events_union_test.go:190: existing case moved: \"a.md\\x00case=0\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:06:27.679405234Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Output":"--- FAIL: TestTokenizerEventShardGrowth (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:27.67940742Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardGrowth","Elapsed":0}
+{"Time":"2026-10-09T13:06:27.679430494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:27.679515376Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.012s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:27.679531907Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.013}

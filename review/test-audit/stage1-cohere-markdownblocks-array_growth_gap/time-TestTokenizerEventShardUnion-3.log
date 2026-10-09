@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:01:26.779342675Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:01:26.790275367Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion"}
+{"Time":"2026-10-09T13:01:26.790337602Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion","Output":"=== RUN   TestTokenizerEventShardUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.790375781Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion","Output":"=== PAUSE TestTokenizerEventShardUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.790379178Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion"}
+{"Time":"2026-10-09T13:01:26.790382479Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion"}
+{"Time":"2026-10-09T13:01:26.790384779Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion","Output":"=== CONT  TestTokenizerEventShardUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.795095955Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion","Output":"    tokenizer_events_union_test.go:112: union: 5000/5000 cases; exact id set; no repeats; 512 shards\n"}
+{"Time":"2026-10-09T13:01:26.795290739Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion","Output":"--- PASS: TestTokenizerEventShardUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.795295495Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEventShardUnion","Elapsed":0}
+{"Time":"2026-10-09T13:01:26.795302062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:01:26.795337235Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.016}
