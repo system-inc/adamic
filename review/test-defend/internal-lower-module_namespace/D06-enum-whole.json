@@ -1,0 +1,20 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/lower/",
+    "-run",
+    "^TestEnumInitializationReach$"
+  ],
+  "env": {
+    "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-module-namespace/cache/D06"
+  },
+  "exit": 0,
+  "wall_seconds": 65.34192932500082
+}
