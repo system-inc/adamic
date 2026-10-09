@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -254,7 +254,7 @@
+ func (l *lowering) certifyUntaggedCallableProducers() {
+ 	for id, target := range l.untaggedCallableTargets {
+ 		contract := &l.result.ViewContracts[id-1]
+-		contract.ProducerCertified = true
++		contract.ProducerCertified = false
+ 		contract.Functions = nil
+ 		for _, producer := range l.closureRecords {
+ 			if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {

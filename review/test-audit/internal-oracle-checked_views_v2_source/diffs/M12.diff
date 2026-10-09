@@ -1,0 +1,11 @@
+--- a/internal/lower/class_static.go
++++ b/internal/lower/class_static.go
+@@ -513,7 +513,7 @@
+ 				symbol := l.checker.GetSymbolAtLocation(node.Name())
+ 				if symbol != nil && len(symbol.Declarations) > 0 {
+ 					target := symbol.Declarations[0]
+-					if target.Parent == declaration && !ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
++					if target.Parent == declaration && ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
+ 						failure = &Refused{Where: l.program.Where(node), What: "instance private storage reached from a static member: " + declaration.Name().Text() + "." + node.Name().Text() + " (adamic/private-instance-from-static)", Fix: "move the private access into an instance method; call that instance method from the static member"}
+ 						return true
+ 					}

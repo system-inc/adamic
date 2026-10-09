@@ -1,0 +1,42 @@
+{"Time":"2026-10-09T11:06:27.784181444Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:06:27.797445535Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103"}
+{"Time":"2026-10-09T11:06:27.798276708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103","Output":"=== RUN   TestClassWrongOutput103\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798419917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103","Output":"=== PAUSE TestClassWrongOutput103\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798442846Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103"}
+{"Time":"2026-10-09T11:06:27.798464195Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103"}
+{"Time":"2026-10-09T11:06:27.798469318Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103","Output":"=== CONT  TestClassWrongOutput103\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798492022Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number"}
+{"Time":"2026-10-09T11:06:27.798496702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number","Output":"=== RUN   TestClassWrongOutput103/init_super_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798501509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number","Output":"=== PAUSE TestClassWrongOutput103/init_super_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.79850438Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number"}
+{"Time":"2026-10-09T11:06:27.798508111Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter"}
+{"Time":"2026-10-09T11:06:27.798510496Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter","Output":"=== RUN   TestClassWrongOutput103/init_super_getter\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798514967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter","Output":"=== PAUSE TestClassWrongOutput103/init_super_getter\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798517577Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter"}
+{"Time":"2026-10-09T11:06:27.79852151Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super"}
+{"Time":"2026-10-09T11:06:27.798524034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super","Output":"=== RUN   TestClassWrongOutput103/init_super\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798528485Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super","Output":"=== PAUSE TestClassWrongOutput103/init_super\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.79853099Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super"}
+{"Time":"2026-10-09T11:06:27.798533899Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number"}
+{"Time":"2026-10-09T11:06:27.798536575Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number","Output":"=== CONT  TestClassWrongOutput103/init_super_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798546868Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super"}
+{"Time":"2026-10-09T11:06:27.79854957Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super","Output":"=== CONT  TestClassWrongOutput103/init_super\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:27.798552844Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter"}
+{"Time":"2026-10-09T11:06:27.798555611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter","Output":"=== CONT  TestClassWrongOutput103/init_super_getter\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.147257823Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super","Output":"    class_wrong_output_test.go:31: want path and repair, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:06:28.147469272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super","Output":"--- FAIL: TestClassWrongOutput103/init_super (0.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.151995982Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super","Elapsed":0.34}
+{"Time":"2026-10-09T11:06:28.15207048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number","Output":"    class_wrong_output_test.go:31: want path and repair, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:06:28.152117037Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number","Output":"--- FAIL: TestClassWrongOutput103/init_super_number (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.173896333Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_number","Elapsed":0.35}
+{"Time":"2026-10-09T11:06:28.173934378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter","Output":"    class_wrong_output_test.go:31: want path and repair, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:06:28.17394361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter","Output":"--- FAIL: TestClassWrongOutput103/init_super_getter (0.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.17394775Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103/init_super_getter","Elapsed":0.38}
+{"Time":"2026-10-09T11:06:28.173950283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103","Output":"--- FAIL: TestClassWrongOutput103 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.173953441Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput103","Elapsed":0}
+{"Time":"2026-10-09T11:06:28.173956425Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.17395863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:06:28.173961041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=3\n"}
+{"Time":"2026-10-09T11:06:28.173963041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:06:28.178004938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.393s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:28.17804975Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.394}

@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_callable_members.go
++++ b/internal/lower/view_unions_callable_members.go
+@@ -10,7 +10,7 @@
+ // adapter supplies stronger proofs. A physical object tag is never that proof.
+ func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
+ 	signatures := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+-	if len(signatures) != 1 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
++	if len(signatures) != 2 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
+ 		return false
+ 	}
+ 	signature := signatures[0]

@@ -1,0 +1,11 @@
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -194,7 +194,7 @@
+ 			demanded = demanded || viewed[site]
+ 		}
+ 		if demanded {
+-			if strings.Contains(family, "views-v3: array element kind") {
++			if !strings.Contains(family, "views-v3: array element kind") {
+ 				refused = &NotYet{Where: where, What: "checked view union arm awaits views-v3: array element kind"}
+ 				return false
+ 			}

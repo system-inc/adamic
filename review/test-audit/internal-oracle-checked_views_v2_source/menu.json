@@ -1,0 +1,177 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/view_unions_untagged.go",
+    "line": 51,
+    "old": "if field.Optional {",
+    "new": "if !field.Optional {",
+    "switch": "if field.Optional != u058Mutant(\"M1\") {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M2",
+    "file": "internal/lower/view_unions_untagged.go",
+    "line": 88,
+    "old": "contract.Of == ir.Boolean || contract.Of == ir.MaybeNumber",
+    "new": "contract.Of == ir.Array || contract.Of == ir.MaybeNumber",
+    "switch": "((contract.Of == ir.Boolean && !u058Mutant(\"M2\")) || (contract.Of == ir.Array && u058Mutant(\"M2\"))) || contract.Of == ir.MaybeNumber",
+    "kind": "mutant"
+  },
+  {
+    "id": "M3",
+    "file": "internal/lower/view_unions_untagged.go",
+    "line": 182,
+    "old": "for index, contract := range l.result.ViewContracts {\n\t\tif contract.Unsupported == \"untagged object union\" && l.supportsUntaggedRead(contract) {\n\t\t\tl.result.ViewContracts[index].Unsupported = \"\"\n\t\t}\n\t}",
+    "new": "",
+    "switch": "if !u058Mutant(\"M3\") { for index, contract := range l.result.ViewContracts {\n\t\tif contract.Unsupported == \"untagged object union\" && l.supportsUntaggedRead(contract) {\n\t\t\tl.result.ViewContracts[index].Unsupported = \"\"\n\t\t}\n\t} }",
+    "kind": "mutant"
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/view_unions_untagged.go",
+    "line": 257,
+    "old": "contract.ProducerCertified = true",
+    "new": "contract.ProducerCertified = false",
+    "switch": "contract.ProducerCertified = !u058Mutant(\"M4\")",
+    "kind": "mutant"
+  },
+  {
+    "id": "M5",
+    "file": "internal/lower/view_unions_untagged.go",
+    "line": 96,
+    "old": "if seen[id] {\n\t\t\treturn true",
+    "new": "if seen[id] {\n\t\t\treturn false",
+    "switch": "if seen[id] {\n\t\t\treturn !u058Mutant(\"M5\")",
+    "kind": "mutant"
+  },
+  {
+    "id": "M6",
+    "file": "internal/lower/view_unions_dispatch.go",
+    "line": 25,
+    "old": "if child.Kind == ir.ViewArray {",
+    "new": "if child.Kind == ir.ViewObject {",
+    "switch": "if (child.Kind == ir.ViewArray && !u058Mutant(\"M6\")) || (child.Kind == ir.ViewObject && u058Mutant(\"M6\")) {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M7",
+    "file": "internal/lower/view_unions_callable_members.go",
+    "line": 13,
+    "old": "len(signatures) != 1",
+    "new": "len(signatures) != 2",
+    "switch": "len(signatures) != u058Number(\"M7\",1,2)",
+    "kind": "mutant"
+  },
+  {
+    "id": "M8",
+    "file": "internal/native/view_unions_untagged.go",
+    "line": 59,
+    "old": "field.Contract, field.Optional)",
+    "new": "field.Contract, !field.Optional)",
+    "switch": "field.Contract, field.Optional != u058Mutant(\"M8\"))",
+    "kind": "mutant"
+  },
+  {
+    "id": "M9",
+    "file": "internal/javascript/view_unions_untagged.go",
+    "line": 65,
+    "old": "if(depth>128) return false;",
+    "new": "if(depth>0) return false;",
+    "switch": "if(depth>(process.env.ADAMIC_MUTANT === \"M9\" ? 0 : 128)) return false;",
+    "kind": "mutant"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 646,
+    "old": "&& !available[l.fieldName(child.Name())] {",
+    "new": "&& available[l.fieldName(child.Name())] {",
+    "switch": "&& (available[l.fieldName(child.Name())] == u058Mutant(\"M10\")) {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/iteration.go",
+    "line": 229,
+    "old": "if !l.iterationOrigin(where, members, &presence, 0) {",
+    "new": "if l.iterationOrigin(where, members, &presence, 0) {",
+    "switch": "if l.iterationOrigin(where, members, &presence, 0) == u058Mutant(\"M11\") {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/class_static.go",
+    "line": 516,
+    "old": "target.Parent == declaration && !ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic)",
+    "new": "target.Parent == declaration && ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic)",
+    "switch": "target.Parent == declaration && (ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) == u058Mutant(\"M12\"))",
+    "kind": "mutant"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/class_features.go",
+    "line": 89,
+    "old": "if !fresh && !isClassInstance(proven)",
+    "new": "if fresh && !isClassInstance(proven)",
+    "switch": "if (fresh == u058Mutant(\"M13\")) && !isClassInstance(proven)",
+    "kind": "mutant"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/locals.go",
+    "line": 13,
+    "old": "list.Flags&ast.NodeFlagsBlockScoped == 0",
+    "new": "list.Flags&ast.NodeFlagsBlockScoped != 0",
+    "switch": "(list.Flags&ast.NodeFlagsBlockScoped == 0) != u058Mutant(\"M14\")",
+    "kind": "mutant"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/view_lazy.go",
+    "line": 197,
+    "old": "if strings.Contains(family, \"views-v3: array element kind\") {",
+    "new": "if !strings.Contains(family, \"views-v3: array element kind\") {",
+    "switch": "if strings.Contains(family, \"views-v3: array element kind\") != u058Mutant(\"M15\") {",
+    "kind": "mutant"
+  },
+  {
+    "id": "P1",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}\n",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n}\n",
+    "switch": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif u058Mutant(\"P1\") { return nil, nil }\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}\n",
+    "kind": "probe",
+    "extra_remove": [
+      "\n\t\"fmt\"",
+      "\n\t\"path/filepath\""
+    ]
+  },
+  {
+    "id": "P2",
+    "file": "internal/native/emit.go",
+    "line": 22,
+    "old": "func C(program *ir.Program) string {\n\treturn cProgram(program, -1)\n}\n",
+    "new": "func C(program *ir.Program) string {\n\treturn \"\"\n}\n",
+    "switch": "func C(program *ir.Program) string {\n\tif u058Mutant(\"P2\") { return \"\" }\n\treturn cProgram(program, -1)\n}\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P3",
+    "file": "internal/javascript/javascript.go",
+    "line": 24,
+    "old": "func JavaScript(program *ir.Program) string {\n\treturn JavaScriptWith(program, Options{})\n}\n",
+    "new": "func JavaScript(program *ir.Program) string {\n\treturn \"\"\n}\n",
+    "switch": "func JavaScript(program *ir.Program) string {\n\tif u058Mutant(\"P3\") { return \"\" }\n\treturn JavaScriptWith(program, Options{})\n}\n",
+    "kind": "probe"
+  },
+  {
+    "id": "W1",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "old": "func disagreement(oracle run, native run) string {\n\tswitch {\n\tcase oracle.exitCode != native.exitCode:\n\t\treturn \"exit codes differ\"\n\tcase !bytes.Equal(oracle.stdout, native.stdout):\n\t\treturn \"stdout differs\"\n\tcase !bytes.Equal(oracle.stderr, native.stderr):\n\t\treturn \"stderr differs\"\n\t}\n\treturn \"\"\n}\n",
+    "new": "func disagreement(oracle run, native run) string {\n\treturn \"\"\n}\n",
+    "switch": "func disagreement(oracle run, native run) string {\n\treturn \"\"\n}\n",
+    "kind": "witness"
+  }
+]

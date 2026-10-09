@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -85,7 +85,7 @@
+ 			return false
+ 		}
+ 		if contract.Kind == ir.ViewScalar {
+-			return contract.Of == ir.Number || contract.Of == ir.String || contract.Of == ir.Boolean || contract.Of == ir.MaybeNumber || contract.Of == ir.MaybeBoolean
++			return contract.Of == ir.Number || contract.Of == ir.String || contract.Of == ir.Array || contract.Of == ir.MaybeNumber || contract.Of == ir.MaybeBoolean
+ 		}
+ 		if contract.Kind == ir.ViewCallable {
+ 			return contract.Result != 0 || contract.DiscardResult

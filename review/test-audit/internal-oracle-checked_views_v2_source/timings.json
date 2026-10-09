@@ -1,0 +1,106 @@
+{
+  "TestCheckedViewUntaggedSourceDispatch": {
+    "runs": [
+      3.254,
+      2.256,
+      2.596
+    ],
+    "median": 2.596
+  },
+  "TestCheckedViewUntaggedCallableUnion": {
+    "runs": [
+      1.228,
+      1.009,
+      0.981
+    ],
+    "median": 1.009
+  },
+  "TestCheckedViewUntaggedOptionalCallableControl": {
+    "runs": [
+      0.815,
+      0.684,
+      0.608
+    ],
+    "median": 0.684
+  },
+  "TestCheckedViewUntaggedSourceFlows": {
+    "runs": [
+      1.991,
+      1.421,
+      1.449
+    ],
+    "median": 1.449
+  },
+  "TestCheckedViewUntaggedOwnClassData": {
+    "runs": [
+      1.256,
+      0.581,
+      0.622
+    ],
+    "median": 0.622
+  },
+  "TestCheckedViewUntaggedRecursive": {
+    "runs": [
+      1.02,
+      0.842,
+      0.76
+    ],
+    "median": 0.842
+  },
+  "TestCheckedViewUntaggedArrayPending": {
+    "runs": [
+      0.222,
+      0.23,
+      0.234
+    ],
+    "median": 0.23
+  },
+  "TestClassWrongOutput103": {
+    "runs": [
+      0.421,
+      0.317,
+      0.279
+    ],
+    "median": 0.317
+  },
+  "TestClassWrongOutput107": {
+    "runs": [
+      0.379,
+      0.221,
+      0.189
+    ],
+    "median": 0.221
+  },
+  "TestClassWrongOutput108": {
+    "runs": [
+      0.279,
+      0.19,
+      0.166
+    ],
+    "median": 0.19
+  },
+  "TestClassWrongOutput106": {
+    "runs": [
+      0.322,
+      0.208,
+      0.243
+    ],
+    "median": 0.243
+  },
+  "TestClockGenericReturnsT01Mutant": {
+    "runs": [
+      0.534,
+      0.221,
+      0.402
+    ],
+    "median": 0.402
+  },
+  "TestClosureMergeRefusals": {
+    "runs": [
+      4.034,
+      3.996,
+      3.42
+    ],
+    "median": 3.996
+  }
+}

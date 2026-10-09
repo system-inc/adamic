@@ -1,0 +1,7 @@
+u058: all 13 names exist at c0a7667baadaf161d6bb9066e0838b32774caa6c; none moved or vanished.
+Whole oracle timed out at 90.309 s without an earlier test failure; scoped baseline passed in 11.347 s; nproc 5.
+14 eligible production mutants, M1 supplemental, three entry probes and one witness check.
+Bounded verdicts: 7 subsumed, 5 sacred, 1 witness.
+Evidence: test-audit/internal-oracle-checked_views_v2_source, review/test-audit/internal-oracle-checked_views_v2_source/.
+Unknown production results: []
+{'isolated_timing_wall': 143.35606850000067, 'production_matrix_wall': 223.955219726, 'probe_wall_with_abort_reruns': 64.63566964900019, 'build_validation_wall': 36.43679748399882}

@@ -1,0 +1,11 @@
+--- a/internal/lower/class_features.go
++++ b/internal/lower/class_features.go
+@@ -86,7 +86,7 @@
+ 			fresh = fresh && property.Kind != ast.KindSpreadAssignment
+ 		}
+ 	}
+-	if !fresh && !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
++	if fresh && !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
+ 		modules, err := l.moduleOrder(l.program.Files()[0])
+ 		if err != nil {
+ 			return nil, true, err

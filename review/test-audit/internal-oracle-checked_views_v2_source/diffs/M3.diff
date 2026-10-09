@@ -1,0 +1,15 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -179,11 +179,7 @@
+ 		}
+ 	}
+ 
+-	for index, contract := range l.result.ViewContracts {
+-		if contract.Unsupported == "untagged object union" && l.supportsUntaggedRead(contract) {
+-			l.result.ViewContracts[index].Unsupported = ""
+-		}
+-	}
++
+ }
+ 
+ // Callable union membership uses each producer-certified member signature;

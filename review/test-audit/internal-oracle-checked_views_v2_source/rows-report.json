@@ -1,0 +1,597 @@
+[
+  {
+    "test": "TestCheckedViewUntaggedSourceDispatch",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 2.596,
+    "oracle": "Node exit/stdout/stderr comparisons for good controls; self-written source-refusals.json pins for wrong/nested. Absent cases only require a diagnostic substring and clean Node exit.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M6",
+      "M8",
+      "M9",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:23: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a:16:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedRecursive"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.842,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:23: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a:16:1: Adamic 0.1 refuses var; use const or let",
+    "subsumption_mutants": 4,
+    "vacuous_subcases": [
+      "initial binding-name-source-good admission control: P1 returns nil,nil and reaches the subtests"
+    ]
+  },
+  {
+    "test": "TestCheckedViewUntaggedCallableUnion",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 1.009,
+    "oracle": "Node must print true; successful backends compare to Node, wrong/nested cases use self-written exact panic pins.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M7",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:84: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a:4:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedOptionalCallableControl"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.684,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:84: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a:4:1: Adamic 0.1 refuses var; use const or let",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestCheckedViewUntaggedOptionalCallableControl",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 0.684,
+    "oracle": "Node executes and backends compare exit/stdout/stderr; self-written true output also checks Node.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M7",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:114: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a:4:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedCallableUnion"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 1.009,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:114: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a:4:1: Adamic 0.1 refuses var; use const or let",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestCheckedViewUntaggedSourceFlows",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 1.449,
+    "oracle": "Node controls must print true; self-written exact output and panic expectations decide each backend result.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M6",
+      "M8",
+      "M9",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:132: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a:17:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedRecursive"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.842,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:132: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a:17:1: Adamic 0.1 refuses var; use const or let",
+    "subsumption_mutants": 4
+  },
+  {
+    "test": "TestCheckedViewUntaggedOwnClassData",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 0.622,
+    "oracle": "Node executes and good backend output agrees; wrong case uses a self-written panic pin.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M6",
+      "M9",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:156: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/class-data-good.a:6:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedRecursive"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.842,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:156: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/class-data-good.a:6:1: Adamic 0.1 refuses var; use const or let",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestCheckedViewUntaggedRecursive",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 0.842,
+    "oracle": "Node executes and good/absent backend output agrees; wrong/nested use self-written panic pins.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M5",
+      "M6",
+      "M8",
+      "M9",
+      "M14"
+    ],
+    "unique_kills": [
+      "M5"
+    ],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:180: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/recursive-good.a:6:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:180: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/recursive-good.a:6:1: Adamic 0.1 refuses var; use const or let"
+  },
+  {
+    "test": "TestCheckedViewUntaggedArrayPending",
+    "package": "internal/oracle",
+    "file": "internal/oracle/checked_views_v2_source_test.go",
+    "seconds": 0.23,
+    "oracle": "Self: Lower must return NotYet with an array-element or never-array reason. All five execution subcases then skip. No Node run in this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M6",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: checked_views_v2_source_test.go:211: array admission must stay NotYet: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-good.a:6:1: Adamic 0.1 refuses var; use const or let",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedOwnClassData"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.622,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; checked_views_v2_source_test.go:211: array admission must stay NotYet: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-good.a:6:1: Adamic 0.1 refuses var; use const or let",
+    "subsumption_mutants": 2,
+    "skipped_subcases": [
+      "good",
+      "wrong",
+      "nested",
+      "empty",
+      "mixed"
+    ]
+  },
+  {
+    "test": "TestClassWrongOutput103",
+    "package": "internal/oracle",
+    "file": "internal/oracle/class_wrong_output_test.go",
+    "seconds": 0.317,
+    "oracle": "Node executes and self-written stdout control plus exact refusal path and repair are checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M10",
+      "M14"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "M14: class_wrong_output_test.go:31: want path and repair, got /workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super.a:3:7: Adamic 0.1 refuses var; use const or let",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; class_wrong_output_test.go:31: want path and repair, got /workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super.a:3:7: Adamic 0.1 refuses var; use const or let"
+  },
+  {
+    "test": "TestClassWrongOutput107",
+    "package": "internal/oracle",
+    "file": "internal/oracle/class_wrong_output_test.go",
+    "seconds": 0.221,
+    "oracle": "Node executes and self-written stdout control plus exact iterator-origin refusal and repair are checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M11"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11: class_wrong_output_test.go:56: want pinned receiver-origin refusal, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; class_wrong_output_test.go:56: want pinned receiver-origin refusal, got <nil>"
+  },
+  {
+    "test": "TestClassWrongOutput108",
+    "package": "internal/oracle",
+    "file": "internal/oracle/class_wrong_output_test.go",
+    "seconds": 0.19,
+    "oracle": "Node executes and self-written stdout control plus exact symbol-key-view refusal and repair are checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M13"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M13: class_wrong_output_test.go:75: want pinned symbol-key-view refusal, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; class_wrong_output_test.go:75: want pinned symbol-key-view refusal, got <nil>"
+  },
+  {
+    "test": "TestClassWrongOutput106",
+    "package": "internal/oracle",
+    "file": "internal/oracle/class_wrong_output_test.go",
+    "seconds": 0.243,
+    "oracle": "Node executes and self-written stdout control plus exact private-storage refusal and repair are checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M12"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M12: class_wrong_output_test.go:98: want pinned private-instance-from-static refusal, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; class_wrong_output_test.go:98: want pinned private-instance-from-static refusal, got <nil>"
+  },
+  {
+    "test": "TestClockGenericReturnsT01Mutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/clock_generic_returns_t_01_test.go",
+    "seconds": 0.402,
+    "oracle": "Witness: Node output, clean planted-mutant execution, exact stdout difference and leak check. Only W1 weakening disagreement decides its verdict.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: clock_generic_returns_t_01_test.go:58: native mutant: want stdout disagreement, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestClockGenericReturnsT01Mutant$'; clock_generic_returns_t_01_test.go:58: native mutant: want stdout disagreement, got \"\""
+  },
+  {
+    "test": "TestClosureMergeRefusals",
+    "package": "internal/oracle",
+    "file": "internal/oracle/closure_merge_refusals_test.go",
+    "seconds": 3.996,
+    "oracle": "Node checks only zero exit and empty stderr, not stdout. Self-written .refused snapshots pin the complete lowering diagnostic.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: closure_merge_refusals_test.go:50: diagnostic: got \"stage3/fixtures/nested-functions/refused/01_scanner_frame.a:49:5: Adamic 0.1 refuses var; use const or let\", want \"stage3/fixtures/nested-functions/refused/01_scanner_frame.a:69:5: Adamic 0.1 refuses var; use const or let\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewUntaggedArrayPending"
+    ],
+    "mutants_in_matrix": 14,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.23,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClassWrongOutput106",
+      "TestClockGenericReturnsT01Mutant",
+      "TestClosureMergeRefusals"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestClockGenericReturnsT01Mutant|TestClosureMergeRefusals)$'; closure_merge_refusals_test.go:50: diagnostic: got \"stage3/fixtures/nested-functions/refused/01_scanner_frame.a:49:5: Adamic 0.1 refuses var; use const or let\", want \"stage3/fixtures/nested-functions/refused/01_scanner_frame.a:69:5: Adamic 0.1 refuses var; use const or let\"",
+    "subsumption_mutants": 1
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -226,7 +226,7 @@
+ 			members = append(members, close)
+ 		}
+ 		presence := close != nil
+-		if !l.iterationOrigin(where, members, &presence, 0) {
++		if l.iterationOrigin(where, members, &presence, 0) {
+ 			return nil, &Refused{Where: l.program.Where(where), What: "an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin)", Fix: "return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+ 		}
+ 	}

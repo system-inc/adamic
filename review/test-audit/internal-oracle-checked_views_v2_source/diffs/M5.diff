@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -94,7 +94,7 @@
+ 			return true
+ 		}
+ 		if seen[id] {
+-			return true
++			return false
+ 		}
+ 		seen[id] = true
+ 		defer delete(seen, id)

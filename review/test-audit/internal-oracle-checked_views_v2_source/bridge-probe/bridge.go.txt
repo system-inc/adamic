@@ -1,0 +1,14 @@
+package lower
+import "github.com/system-inc/adamic/internal/ir"
+func U058AuditBridge(which string) string {
+ p:=&ir.Program{ViewContracts:[]ir.ViewContract{{Kind:ir.ViewUnion,Of:ir.Object,Name:"Root",Unsupported:"untagged object union",Members:[]ir.ViewContractID{2}},{Kind:ir.ViewObject,Of:ir.Object,Name:"Member",Fields:[]ir.ViewFieldContract{{Name:"flag",Contract:3}}},{Kind:ir.ViewScalar,Of:ir.Boolean,Name:"boolean"}}}
+ l:=&lowering{result:p}
+ if which=="supported" {if l.supportsUntaggedRead(p.ViewContracts[0]) {return "true"};return "false"}
+ if which=="complete" {l.completeUntaggedRecursiveContracts();return p.ViewContracts[0].Unsupported}
+ read:=ir.Read{Local:0,Of:ir.Object}
+ p.Locals=[]ir.Local{{Type:ir.Object,Global:true}}
+ p.ViewOrigins=[]ir.Expression{read};p.CheckedFields=map[string]bool{"value":true};p.ViewContractTypes=map[int]ir.ViewContractID{1:1}
+ p.ViewContracts=[]ir.ViewContract{{Kind:ir.ViewArray,Of:ir.Array,Unsupported:"views-v3: array element kind"}}
+ p.Main=[]ir.Statement{ir.Evaluate{Value:ir.Property{Object:read,Name:"value",Of:ir.Array,ViewTypeID:1,ViewWhere:"synthetic:1:1"}}}
+ if err:=l.checkLazyViewReads();err!=nil {return err.Error()};return "nil"
+}

@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:06:34.622320154Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:06:34.634979404Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108"}
+{"Time":"2026-10-09T11:06:34.635058733Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108","Output":"=== RUN   TestClassWrongOutput108\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:34.635439567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108","Output":"=== PAUSE TestClassWrongOutput108\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:34.635453572Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108"}
+{"Time":"2026-10-09T11:06:34.635461926Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108"}
+{"Time":"2026-10-09T11:06:34.635465168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108","Output":"=== CONT  TestClassWrongOutput108\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:34.928726382Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108","Output":"    class_wrong_output_test.go:75: want pinned symbol-key-view refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:06:34.928824019Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108","Output":"--- FAIL: TestClassWrongOutput108 (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:34.928837382Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestClassWrongOutput108","Elapsed":0.29}
+{"Time":"2026-10-09T11:06:34.928858944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:34.928862305Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:06:34.928864357Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:06:34.928866486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:06:34.932962136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.310s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:06:34.93301574Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.311}

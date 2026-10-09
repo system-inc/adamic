@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_dispatch.go
++++ b/internal/lower/view_unions_dispatch.go
+@@ -22,7 +22,7 @@
+ 	contract.Null = l.includesNull(target)
+ 	for _, member := range contract.Members {
+ 		child := l.result.ViewContracts[member-1]
+-		if child.Kind == ir.ViewArray {
++		if child.Kind == ir.ViewObject {
+ 			contract.Unsupported = "views-v3: array element kind: " + child.Name
+ 		}
+ 	}
