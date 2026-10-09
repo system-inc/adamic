@@ -16,6 +16,7 @@ import (
 )
 
 func TestStrongAstParentGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/1_strong_ast_parent.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -40,6 +41,7 @@ func TestStrongAstParentGap(t *testing.T) {
 }
 
 func TestPushSpreadGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/2_push_spread.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -64,6 +66,7 @@ func TestPushSpreadGap(t *testing.T) {
 }
 
 func TestClassMethodInterfaceGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/4_class_interface_method.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -88,6 +91,7 @@ func TestClassMethodInterfaceGap(t *testing.T) {
 	t.Logf("Node prints 1; Adamic reports: %v", notYet)
 }
 
+// Not parallel: ASAN_OPTIONS process environment via t.Setenv; native.Build runtime archive cache.
 func TestClosedOptionalFunctionValueGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/5_optional_function_value.ts")
 	if err != nil {
@@ -133,6 +137,7 @@ func TestClosedOptionalFunctionValueGap(t *testing.T) {
 // TestClosedConditionalEmptyArrayGap: the untyped [] branch of a conditional lowers on
 // compiler/area-stack (views slice 1, Oct 8), held to Node on native ASan/UBSan/LSan and the
 // JavaScript backend. The driver's number[] annotation still stands.
+// Not parallel: ASAN_OPTIONS process environment via t.Setenv; native.Build runtime archive cache.
 func TestClosedConditionalEmptyArrayGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/6_conditional_empty_array.ts")
 	if err != nil {

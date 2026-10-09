@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestEveryTypeNodeKindAgrees(t *testing.T) {
 	oracle := goOracle(t)
 	expected := execute(t, "", oracle, "--type-kinds").output

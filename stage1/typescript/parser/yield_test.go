@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestYieldLookaheadAgrees(t *testing.T) {
 	cases := []string{
 		"yield 0;", "yield 1n;", "yield 'x';", "yield true;", "yield null;", "yield this;", "yield value;",

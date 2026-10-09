@@ -139,6 +139,7 @@ func performance(t *testing.T, whole bool) {
 
 // This mutant leaves every printed AST byte unchanged. Only the node-count
 // check used by the benchmark can catch it, not the ordinary tree comparison.
+// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestNodeCountCheckCatchesMutant(t *testing.T) {
 	directory := t.TempDir()
 	source := filepath.Join(directory, "expressions.ts")

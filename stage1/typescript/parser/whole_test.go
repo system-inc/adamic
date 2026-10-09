@@ -20,6 +20,7 @@ func wholeNode(t *testing.T, directory, manifest string, count bool) execution {
 	}
 	return execute(t, "", "node", args...)
 }
+// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestWholeCompilerAgrees(t *testing.T) {
 	manifest, files := compilerManifest(t)
 	oracle := goOracle(t)

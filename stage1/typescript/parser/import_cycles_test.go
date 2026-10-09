@@ -13,6 +13,7 @@ import (
 
 // Import-cycles 779ff9d closed the type-only import cycle gap. Keep Node and
 // sanitized native output as the positive witness of that ruling.
+// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestTypeOnlyImportCycleCompiles(t *testing.T) {
 	path, err := filepath.Abs("testdata/type_import_cycle/entry.a")
 	if err != nil {
