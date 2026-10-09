@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts
++++ b/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts
+@@ -10,7 +10,7 @@
+     let atLineStart = true;
+     for(let position = 0; position < raw.length; position++) {
+         const character = raw.slice(position, position + 1);
+-        if(character === '\n') {
++        if(character === '\r') {
+             atLineStart = true;
+             continue;
+         }

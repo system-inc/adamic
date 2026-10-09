@@ -1,0 +1,44 @@
+Command: git grep -n -E jsxTextnodes(Shard|Products|Lowered|Native)|copyPort\(|nativeCanaryRule -- stage1/cohere/lint/*_test.go
+stage1/cohere/lint/bv61ffb_decoded_options_test.go:350:		directory := copyPort(t, filepath.Join(output, "port"), from, to, "main.ts")
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:121:	copyPort(t, directory, "", "")
+stage1/cohere/lint/factory_hooks_shards_test.go:119:	directory := copyPort(t, factoryHooksDirectory(t), "", "")
+stage1/cohere/lint/grain_dot_a_rename_test.go:81:		copyPort(t, dir, "", "")
+stage1/cohere/lint/lint_test.go:477:	return copyPort(t, t.TempDir(), from, to, targets...)
+stage1/cohere/lint/lint_test.go:479:func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
+stage1/cohere/lint/lint_test.go:688:const nativeCanaryRule = "react/jsx-no-comment-textnodes"
+stage1/cohere/lint/lint_test.go:698:		hasCanary = hasCanary || descriptor.Name == nativeCanaryRule
+stage1/cohere/lint/lint_test.go:701:		t.Fatalf("native canary rule %s is missing", nativeCanaryRule)
+stage1/cohere/lint/lint_test.go:749:			if descriptor.Name == nativeCanaryRule {
+stage1/cohere/lint/profile_compilation_main_test.go:369:	copyPort(t, directory, "", "")
+stage1/cohere/lint/profile_test.go:33:	copyPort(t, directory, "", "")
+stage1/cohere/lint/suggestion_alongside_shards_test.go:54:	copyPort(t, directory, "", "")
+stage1/cohere/lint/witness_script_kind_products_test.go:41:		source := copyPort(t, filepath.Join(out, "source"), "", "")
+stage1/cohere/lint/witness_script_kind_shards_test.go:54:		s.Directory = copyPort(t, directory, "", "")
+stage1/cohere/lint/yepesta_build_test.go:20:func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
+stage1/cohere/lint/yepesta_build_test.go:41:		port := copyPort(t, filepath.Join(out, "port"), change.From, change.To, filepath.Join("rules", d.Slug, change.File))
+stage1/cohere/lint/yepesta_build_test.go:68:func jsxTextnodesNative(t *testing.T) string {
+stage1/cohere/lint/yepesta_build_test.go:70:	lowered, inputs := jsxTextnodesLowered(t)
+stage1/cohere/lint/yepesta_build_test.go:71:	return jsxTextnodesNativeFrom(t, lowered, inputs)
+stage1/cohere/lint/yepesta_build_test.go:74:func jsxTextnodesNativeFrom(t *testing.T, lowered string, inputs buildcache.Inputs) string {
+stage1/cohere/lint/yepesta_build_test.go:90:func jsxTextnodesProducts(t *testing.T) (string, string, string) {
+stage1/cohere/lint/yepesta_build_test.go:92:	lowered, inputs := jsxTextnodesLowered(t)
+stage1/cohere/lint/yepesta_build_test.go:93:	return filepath.Join(lowered, "port"), filepath.Join(lowered, "lint.mjs"), jsxTextnodesNativeFrom(t, lowered, inputs)
+stage1/cohere/lint/yepesta_independent_shards_test.go:31:		if d.Name == nativeCanaryRule {
+stage1/cohere/lint/yepesta_independent_shards_test.go:82:func jsxTextnodesShard(t *testing.T, shard int) {
+stage1/cohere/lint/yepesta_independent_shards_test.go:231:func TestMutantsReactJsxNoCommentTextnodes_000(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 0) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:232:func TestMutantsReactJsxNoCommentTextnodes_001(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 1) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:233:func TestMutantsReactJsxNoCommentTextnodes_002(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 2) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:234:func TestMutantsReactJsxNoCommentTextnodes_003(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 3) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:235:func TestMutantsReactJsxNoCommentTextnodes_004(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 4) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:236:func TestMutantsReactJsxNoCommentTextnodes_005(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 5) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:237:func TestMutantsReactJsxNoCommentTextnodes_006(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 6) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:238:func TestMutantsReactJsxNoCommentTextnodes_007(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 7) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:239:func TestMutantsReactJsxNoCommentTextnodes_008(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 8) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:240:func TestMutantsReactJsxNoCommentTextnodes_009(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 9) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:241:func TestMutantsReactJsxNoCommentTextnodes_010(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 10) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:242:func TestMutantsReactJsxNoCommentTextnodes_011(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 11) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:243:func TestMutantsReactJsxNoCommentTextnodes_012(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 12) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:244:func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 13) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:245:func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 14) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:246:func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 15) }
+stage1/cohere/lint/yepesta_independent_shards_test.go:283:		port, js, binary := jsxTextnodesProducts(t)

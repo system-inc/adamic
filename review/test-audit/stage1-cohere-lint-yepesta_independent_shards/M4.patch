@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -101,7 +101,7 @@
+         for(const finding of context.findings) {
+             this.findings.push(finding);
+         }
+-        this.findings.sort(compareFindings);
++
+     }
+     ancestry(index: number, parent: number): void {
+         this.parents[index] = parent;

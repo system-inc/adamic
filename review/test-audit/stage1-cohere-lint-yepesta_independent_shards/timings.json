@@ -1,0 +1,20 @@
+{
+  "nproc": 5,
+  "setup_skipped": true,
+  "warm_tools_seconds": 0.045725176998530515,
+  "npm_ci_seconds": 0.7061744540005748,
+  "registry_seconds": 0.38813403400126845,
+  "list_seconds": 8.863889277999988,
+  "recorded_run_wall_seconds": 683.7741138940219,
+  "recorded_binary_seconds": 658.074,
+  "M1_shell_wall_unknown_after_coordinator_restart": true,
+  "successful_product_miss_seconds": 311.25,
+  "unrecorded_cancelled_probe": "P1-isolated-comparison cancelled after two emission timeouts; no assertion result",
+  "generated_at_utc": "2026-10-09T12:47:06.668723+00:00",
+  "initial_baseline_binary_seconds": {
+    "whole_package_cooked": 90.382,
+    "named_slice_cooked": 90.049,
+    "named_slice_passed": 26.918
+  },
+  "all_completed_logged_binary_seconds_including_initial_baselines": 865.423
+}

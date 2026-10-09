@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/yepesta_independent_shards_test.go
++++ b/stage1/cohere/lint/yepesta_independent_shards_test.go
+@@ -179,7 +179,7 @@
+ 		name   string
+ 		output []byte
+ 	}{{"Node", yepestaJavaScript(t, filepath.Join(port, "main.ts"), path, false).output}, {"emitted JavaScript", yepestaJavaScript(t, js, path, false).output}} {
+-		if bytes.Equal(side.output, want) {
++		if true {
+ 			t.Fatalf("JSX textnode mutant survived on %s", side.name)
+ 		}
+ 		t.Logf("mutant caught on %s: %s", side.name, difference(side.output, want))

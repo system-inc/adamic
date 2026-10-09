@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts
++++ b/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts
+@@ -2,7 +2,7 @@
+ import { messageJsxNoCommentTextnodes } from './messages.ts';
+ // Visit real JsxText nodes produced by the stage1 parser.
+ export function jsxNoCommentTextnodes(context: RuleContext, index: number): void {
+-    if(context.kind(index) !== 'JsxText') {
++    if(context.kind(index) === 'JsxText') {
+         return;
+     }
+     const node = context.node(index);

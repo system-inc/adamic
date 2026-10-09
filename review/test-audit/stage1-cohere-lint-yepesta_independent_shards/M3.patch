@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts
++++ b/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts
+@@ -6,7 +6,7 @@
+         return;
+     }
+     const node = context.node(index);
+-    const raw = context.source.slice(node.pos, node.end);
++    const raw = context.source.slice(node.pos, node.end - 1);
+     let atLineStart = true;
+     for(let position = 0; position < raw.length; position++) {
+         const character = raw.slice(position, position + 1);

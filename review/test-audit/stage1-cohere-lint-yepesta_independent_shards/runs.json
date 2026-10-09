@@ -1,0 +1,688 @@
+[
+  {
+    "name": "timing-comparison-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(Union|_[0-9]{3})$",
+    "wall": 12.908509652999783,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_001"
+    ],
+    "elapsed": [
+      7.37
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-comparison-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(Union|_[0-9]{3})$",
+    "wall": 9.23048230600034,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_014"
+    ],
+    "elapsed": [
+      6.574
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-comparison-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(Union|_[0-9]{3})$",
+    "wall": 7.7001998990017455,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_000"
+    ],
+    "elapsed": [
+      5.655
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-killed-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesMutantKilled$",
+    "wall": 3.813955645000533,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled"
+    ],
+    "elapsed": [
+      1.9020000000000001
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-killed-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesMutantKilled$",
+    "wall": 3.6427327490018797,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled"
+    ],
+    "elapsed": [
+      1.8
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-killed-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesMutantKilled$",
+    "wall": 3.628155209000397,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled"
+    ],
+    "elapsed": [
+      1.7469999999999999
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-planted-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesPlantedFailure$",
+    "wall": 3.4709351130004507,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure"
+    ],
+    "elapsed": [
+      1.651
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-planted-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesPlantedFailure$",
+    "wall": 3.714775569998892,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure"
+    ],
+    "elapsed": [
+      1.686
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-planted-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesPlantedFailure$",
+    "wall": 3.5122763100007433,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure"
+    ],
+    "elapsed": [
+      1.6360000000000001
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-setup-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$",
+    "wall": 3.228958217001491,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup"
+    ],
+    "elapsed": [
+      1.384
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-setup-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$",
+    "wall": 3.3222760030002974,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup"
+    ],
+    "elapsed": [
+      1.423
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-setup-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$",
+    "wall": 3.294692131999909,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup"
+    ],
+    "elapsed": [
+      1.426
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-product-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_YepestaOracle$",
+    "wall": 3.267081877998862,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      1.427
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-product-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_YepestaOracle$",
+    "wall": 3.3048254499990435,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      1.464
+    ],
+    "cooked": false
+  },
+  {
+    "name": "timing-product-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_YepestaOracle$",
+    "wall": 3.2866884079994634,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      1.428
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$'",
+    "wall": null,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      88.767
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 92.78141851500186,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle",
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_004"
+    ],
+    "elapsed": [
+      86.799
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 87.44788539000001,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_004"
+    ],
+    "elapsed": [
+      85.232
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 96.09900581599868,
+    "exit": 1,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      90.042
+    ],
+    "cooked": true
+  },
+  {
+    "name": "M4-warm-lowered",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 27.93309815900284,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_009"
+    ],
+    "elapsed": [
+      23.344
+    ],
+    "cooked": false
+  },
+  {
+    "name": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 12.128821815000265,
+    "exit": 1,
+    "fails": [
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_005"
+    ],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      7.873
+    ],
+    "cooked": false
+  },
+  {
+    "name": "W1-vet",
+    "command": "timeout 120 go vet ./stage1/cohere/lint/",
+    "wall": 0.5785737720034376,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false
+  },
+  {
+    "name": "W1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesPlantedFailure$",
+    "wall": 15.222459521002747,
+    "exit": 1,
+    "fails": [
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure"
+    ],
+    "passes": [],
+    "elapsed": [
+      8.017
+    ],
+    "cooked": false
+  },
+  {
+    "name": "W2-vet",
+    "command": "timeout 120 go vet ./stage1/cohere/lint/",
+    "wall": 0.44174431999999797,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false
+  },
+  {
+    "name": "W2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesMutantKilled$",
+    "wall": 15.116917183000623,
+    "exit": 1,
+    "fails": [
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled"
+    ],
+    "passes": [],
+    "elapsed": [
+      8.053
+    ],
+    "cooked": false
+  },
+  {
+    "name": "S1-vet",
+    "command": "timeout 120 go vet ./stage1/cohere/lint/",
+    "wall": 0.47557994299859274,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false
+  },
+  {
+    "name": "S1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_YepestaOracle$|^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$",
+    "wall": 10.629920559000311,
+    "exit": 1,
+    "fails": [
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup"
+    ],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      3.3449999999999998
+    ],
+    "cooked": false
+  },
+  {
+    "name": "S2-vet",
+    "command": "timeout 120 go vet ./stage1/cohere/lint/",
+    "wall": 0.4988830879992747,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false
+  },
+  {
+    "name": "S2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$",
+    "wall": 22.956471546000103,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup"
+    ],
+    "elapsed": [
+      14.092
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M4-isolated-comparison",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(Union|_[0-9]{3})$",
+    "wall": 14.955190504999337,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_015",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_000"
+    ],
+    "elapsed": [
+      12.136
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M4-isolated-killed",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesMutantKilled$",
+    "wall": 6.638224140002421,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled"
+    ],
+    "elapsed": [
+      3.468
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M4-isolated-planted",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodesPlantedFailure$",
+    "wall": 5.625149095001689,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure"
+    ],
+    "elapsed": [
+      2.5949999999999998
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M4-isolated-setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$",
+    "wall": 5.737127692002105,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup",
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup"
+    ],
+    "elapsed": [
+      2.697
+    ],
+    "cooked": false
+  },
+  {
+    "name": "M4-isolated-product",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_YepestaOracle$",
+    "wall": 4.924751967002521,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      2.82
+    ],
+    "cooked": false
+  },
+  {
+    "name": "P1-valid",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 93.03279175300122,
+    "exit": 1,
+    "fails": [],
+    "passes": [
+      "TestProduct_YepestaOracle"
+    ],
+    "elapsed": [
+      90.164
+    ],
+    "cooked": true
+  },
+  {
+    "name": "P1-valid-warm-lowered",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$",
+    "wall": 99.223554573,
+    "exit": 1,
+    "fails": [],
+    "passes": [],
+    "elapsed": [
+      90.057
+    ],
+    "cooked": true
+  }
+]

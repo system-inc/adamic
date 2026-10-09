@@ -1,0 +1,58 @@
+[
+  {
+    "run": "M1",
+    "product": "jsx-textnodes-mutant-lowered",
+    "key_prefix": "e08af08659f6",
+    "seconds": 71.71,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-lowered e08af08659f6 miss 71.71"
+  },
+  {
+    "run": "M1",
+    "product": "jsx-textnodes-mutant-native",
+    "key_prefix": "098ed23a8750",
+    "seconds": 4.79,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-native 098ed23a8750 miss 4.79"
+  },
+  {
+    "run": "M2",
+    "product": "jsx-textnodes-mutant-lowered",
+    "key_prefix": "aaf9dd3bcd20",
+    "seconds": 72.54,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-lowered aaf9dd3bcd20 miss 72.54"
+  },
+  {
+    "run": "M2",
+    "product": "jsx-textnodes-mutant-native",
+    "key_prefix": "fc8958ce748c",
+    "seconds": 3.53,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-native fc8958ce748c miss 3.53"
+  },
+  {
+    "run": "M3",
+    "product": "jsx-textnodes-mutant-lowered",
+    "key_prefix": "8bf24dce1be1",
+    "seconds": 70.03,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-lowered 8bf24dce1be1 miss 70.03"
+  },
+  {
+    "run": "M3",
+    "product": "jsx-textnodes-mutant-native",
+    "key_prefix": "a14f9524a329",
+    "seconds": 5.39,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-native a14f9524a329 miss 5.39"
+  },
+  {
+    "run": "M4",
+    "product": "jsx-textnodes-mutant-lowered",
+    "key_prefix": "0185987a1dfa",
+    "seconds": 70.58,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-lowered 0185987a1dfa miss 70.58"
+  },
+  {
+    "run": "M4-warm-lowered",
+    "product": "jsx-textnodes-mutant-native",
+    "key_prefix": "2cafe02c370c",
+    "seconds": 12.68,
+    "evidence": "yepesta_independent_shards_test.go:283: build jsx-textnodes-mutant-native 2cafe02c370c miss 12.68"
+  }
+]
