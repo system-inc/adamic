@@ -24,8 +24,7 @@ func TestMarkdownListLayout(t *testing.T) {
 }
 
 func TestMarkdownQuoteLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "quotes")
+	quoteLayoutSetup(t)
 }
 
 func TestMarkdownTableLayout(t *testing.T) {
