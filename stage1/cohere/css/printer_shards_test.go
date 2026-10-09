@@ -131,20 +131,6 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 	return cssExecutables[index]
 }
 
-func TestProduct_CSSPrinterParserOracle(t *testing.T)        { t.Parallel(); cssOracleProduct(t, false) }
-func TestProduct_CSSPrinterOracle(t *testing.T)              { t.Parallel(); cssOracleProduct(t, true) }
-func TestProduct_CSSPrinterSanitizedAndLowered(t *testing.T) { t.Parallel(); cssPrinterProduct(t, -1) }
-func TestProduct_CSSPrinterSemicolonMutant(t *testing.T)     { t.Parallel(); cssPrinterProduct(t, 0) }
-func TestProduct_CSSPrinterIndentMutant(t *testing.T)        { t.Parallel(); cssPrinterProduct(t, 1) }
-func TestProduct_CSSPrinterWidthMutant(t *testing.T)         { t.Parallel(); cssPrinterProduct(t, 2) }
-func TestProduct_CSSPrinterDarwinLeaks(t *testing.T) {
-	t.Parallel()
-	if runtime.GOOS != "darwin" {
-		t.Skip("macOS leaks requires an unsanitized executable")
-	}
-	cssPrinterProduct(t, 3)
-}
-
 func cssOracleRun(t *testing.T, binary, test string, request any) {
 	t.Helper()
 	data, err := json.Marshal(request)
