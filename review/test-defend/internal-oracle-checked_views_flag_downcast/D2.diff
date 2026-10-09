@@ -1,0 +1,11 @@
+--- a/internal/native/view_unions_read.go
++++ b/internal/native/view_unions_read.go
+@@ -34,7 +34,7 @@
+ 	e.line("adamic_heap *%s;", boxed)
+ 	e.line("if (%s.kind == adamic_view_union_number) %s = adamic_box_number(%s.payload.number);", snapshot, boxed, snapshot)
+ 	e.line("else if (%s.kind == adamic_view_union_boolean) %s = %s.payload.boolean ? (adamic_heap *)&adamic_box_true : (adamic_heap *)&adamic_box_false;", snapshot, boxed, snapshot)
+-	e.line("else if (%s.kind == adamic_view_union_null) %s = &adamic_null;", snapshot, boxed)
++	e.line("else if (%s.kind == adamic_view_union_null) %s = NULL;", snapshot, boxed)
+ 	e.line("else %s = adamic_retain(%s.payload.reference);", boxed, snapshot)
+ 	value := e.own(ir.Union, boxed)
+ 	if contract.Of == ir.Closure {

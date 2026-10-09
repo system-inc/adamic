@@ -1,0 +1,37 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/interface_cast.go:70",
+    "change": "a checked field alias requiring an optional, accessor, or representation conversion -> a checked field alias requiring an optional, accessor, or representation conversion pending"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/native/view_unions_read.go:37",
+    "change": "%s = &adamic_null; -> %s = NULL;"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/lower/view_unions_dispatch.go:25",
+    "change": "if child.Kind == ir.ViewArray { -> if child.Kind == ir.ViewObject {"
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/lower/view_unions_dispatch.go:26",
+    "change": "contract.Unsupported = \"views-v3: array element kind: \" + child.Name -> (drop statement)"
+  },
+  {
+    "mutant": "D5",
+    "file_line": "internal/lower/view_unions_dispatch.go:73",
+    "change": "contract.Kind = ir.ViewArray -> contract.Kind = ir.ViewUnknown"
+  },
+  {
+    "mutant": "D6",
+    "file_line": "internal/javascript/view_unions_read.go:35",
+    "change": "if contract.Null && property.Of == contract.Of { -> if !contract.Null && property.Of == contract.Of {"
+  },
+  {
+    "mutant": "D7",
+    "file_line": "internal/javascript/view_unions_untagged.go:83",
+    "change": "if(contract.Kind===6) return value===null; -> if(contract.Kind===6) return value!==null;"
+  }
+]

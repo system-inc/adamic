@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_read.go
++++ b/internal/javascript/view_unions_read.go
+@@ -32,7 +32,7 @@
+ 		if contract.FixedTuple {
+ 			test = "Array.isArray(v)"
+ 		}
+-		if contract.Null && property.Of == contract.Of {
++		if !contract.Null && property.Of == contract.Of {
+ 			test = "v===null || (" + test + ")"
+ 		}
+ 		if contract.Undefined && property.Of == contract.Of {
