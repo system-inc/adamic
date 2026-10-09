@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess
+root = Path.cwd()
+evidence = root / 'review/compiler/agree-typed-arrays'
+source = root / 'internal/lower/typed_arrays.go'
+original = source.read_bytes()
+for mutant, test in [('M01', 'TestTypedArrayFromEmptyArray'), ('M02', 'TestTypedArrayFromArray')]:
+    try:
+        subprocess.run(['git', 'apply', str(evidence / (mutant + '.patch'))], check=True)
+        with (evidence / (mutant + '.log')).open('w') as log:
+            result = subprocess.run(['timeout', '120', 'go', 'test', './internal/lower', '-run', '^' + test + '$', '-count=1', '-timeout', '90s', '-v'], stdout=log, stderr=subprocess.STDOUT)
+        output = (evidence / (mutant + '.log')).read_text()
+        assert result.returncode == 1 and 'lost native array constructor dispatch' in output, (mutant, result.returncode, output)
+        print(mutant + ': caught by ' + test)
+    finally:
+        source.write_bytes(original)
