@@ -1351,6 +1351,21 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(w.read('starts').count('canary/main '), 1)
         self.assertIn('with tools tools-zero', w.read('output'))
 
+    def test_main_s_half_hourly_canary_waits_while_a_stage_canary_waits_for_its_box(self):
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'}, mainCanary=1800)
+        self.addCleanup(w.close)
+        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'staging tools tools-two' in w.read('output'))
+        w.put('clock', '2900')
+        time.sleep(1)
+        self.assertNotIn('half-hourly canary', w.read('output'))
+        self.assertNotIn('canary/main ', w.read('starts') + w.read('good-starts'))
+        # The box empties: the stage canary takes it whole, and the half-hourly one waits for it to end.
+        w.put('mode', 'pass')
+        w.wait(lambda: 'with staged tools tools-two' in w.read('output'))
+        self.assertNotIn('half-hourly canary', w.read('output'))
+
     def test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary(self):
         # Staged tools: good is tools-zero, head tools-one, but tools-one changes only the Mac side.
         w = Watcher(2, canaryBox='box1', mode='hold', boxSides={'tools-one': 'tools-zero'})

@@ -1404,7 +1404,9 @@ while true; do
   # Main's canary every half hour with the good tools (#aptcka1, @system_adamic, Oct 9 10:21Z), so drift (disk, workers,
   # cache) shows on main first. Ahead of the queue, on a box, one canary at a time, never in a storm (the storm has its
   # own probe). Its clock survives restarts and starts a full interval after the first watcher, so a deploy is no page.
-  if [ ! -f "${state}/storm" ] && ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
+  # A stage canary waiting for its whole box goes first: it is main's canary too, and at 16:08Z the half-hourly one took
+  # a slot on the draining box and would have held the stage canary off for its hour.
+  if [ ! -f "${state}/storm" ] && ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null && ! stageCanaryWaiting &&
      [ "$(( $(date -u +%s) - $(cat "${state}/main-canary-started") ))" -ge "${mainCanarySeconds}" ]; then
     now=$(date -u +%s)
     free=$(freeSlots) draining=$(drainingBoxes)
