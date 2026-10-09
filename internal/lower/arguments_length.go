@@ -125,7 +125,14 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if node.Kind == ast.KindCallExpression {
-				proven := l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression))
+				callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+				// Console writes are intrinsics, not callable values. Node's console
+				// declaration can merge with the prelude in different source orders;
+				// its broad signature must not group unrelated runtime callbacks.
+				if _, err := l.consoleStream(callee); err == nil {
+					return node.ForEachChild(visit)
+				}
+				proven := l.concrete(l.checker.GetTypeAtLocation(callee))
 				types[int(proven.Id())] = proven
 				for _, argument := range node.AsCallExpression().Arguments.Nodes {
 					callback := l.concrete(l.checker.GetTypeAtLocation(argument))

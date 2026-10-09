@@ -3,6 +3,8 @@ package oracle
 import (
 	"errors"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -15,7 +17,6 @@ func TestStatementsSmallRulings(t *testing.T) {
 		name, stdout, reason string
 		refused              bool
 	}{
-		{"template", ">=1.2.3\n", "a template interpolating an object, an array, a map, a function or undefined", false},
 		{"nonnull", "2\n", "the non-null assertion !", true},
 		{"structural_error", "false\n", "throwing an Error that isn't made where it's thrown or caught by the catch around it", false},
 		{"capture", "7\n", "a function value that captures the variable its own initializer declares", false},
@@ -46,4 +47,49 @@ func TestStatementsSmallRulings(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Proven ToPrimitive lowering closed this template gap; the actual bytes, not
+// admission alone, must match Node on every backend.
+func TestStatementsSmallTemplateAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/statements_small_stopped/template.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != ">=1.2.3\n" {
+		t.Fatalf("source Node: %+v", truth)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	actual, binary := natively(t, program)
+	if difference := disagreement(truth, actual); difference != "" {
+		t.Fatalf("native: %s", difference)
+	}
+	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatalf("JavaScript: %s", difference)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+		if difference := disagreement(truth, onWASI(t, native.C(program))); difference != "" {
+			t.Fatalf("WASI: %s", difference)
+		}
+	}
+	t.Logf("Node and compiled template agree: %q", truth.stdout)
+	changed := false
+	for index, text := range program.Strings {
+		if text == ">=" {
+			program.Strings[index] = "<="
+			changed = true
+		}
+	}
+	if !changed {
+		t.Fatal("template mutant changed no input")
+	}
+	scout22MutantMatchesOnlyNode(t, path, program)
 }

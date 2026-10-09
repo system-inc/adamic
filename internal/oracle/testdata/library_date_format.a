@@ -1,0 +1,13 @@
+function format(date: Date): void {
+ console.log(date.toISOString());
+ console.log(date.toUTCString());
+}
+format(new Date(0));
+format(new Date(-1));
+format(new Date(951827696789));
+format(new Date(-62167219200000));
+format(new Date(-62198755200000));
+format(new Date(253402300800000));
+format(new Date(-8640000000000000));
+format(new Date(8640000000000000));
+console.log(new Date(NaN).toUTCString());

@@ -189,6 +189,17 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 				derived(allowed)
 			}
 			return derived(expression.Value)
+		case ir.ObjectCall:
+			if expression.Method == "create" || expression.Method == "setPrototypeOf" {
+				// Both operands participate in the receiver's ordinary ownership graph.
+				// Until region graphs can merge here, mark both as escaping the call.
+				for _, argument := range expression.Arguments {
+					if derived(argument) {
+						escaped = true
+					}
+				}
+				return false
+			}
 		case ir.Call:
 			for position, argument := range expression.Arguments {
 				if derived(argument) && plan.callEscapes(expression, position) {

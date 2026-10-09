@@ -1,0 +1,14 @@
+const expression = new RegExp('a', 'g');
+console.log(String(Object.isExtensible(expression)));
+console.log(String(Object.isSealed(expression)));
+console.log(String(Object.isFrozen(expression)));
+console.log(String(Object.preventExtensions(expression) === expression));
+console.log(String(Object.isExtensible(expression)));
+console.log(String(Object.isSealed(expression)));
+console.log(String(Object.isFrozen(expression)));
+console.log(String(Object.seal(expression) === expression));
+expression.lastIndex = 0;
+console.log(String(expression.test('a')));
+console.log(String(expression.lastIndex));
+console.log(String(Object.isSealed(expression)));
+console.log(String(Object.isFrozen(expression)));

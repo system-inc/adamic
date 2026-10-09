@@ -147,7 +147,28 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 			limit = declaration.initializer
 		}
 		// Generated declarators are a single identifier, followed by an array or argument list.
+		// An attribute's parentheses name nothing: regexp's compiled programs are declared
+		// `static const adamic_regex_program name __attribute__((aligned(64))) = {...}`.
+		beforeAttribute := ""
 		for j := 1; j < limit; j++ {
+			if declaration.tokens[j].text == "__attribute__" {
+				if beforeAttribute == "" {
+					beforeAttribute = declaration.tokens[j-1].text
+				}
+				nesting := 0
+				for j+1 < limit {
+					j++
+					if declaration.tokens[j].text == "(" {
+						nesting++
+					} else if declaration.tokens[j].text == ")" {
+						nesting--
+						if nesting == 0 {
+							break
+						}
+					}
+				}
+				continue
+			}
 			if declaration.tokens[j].text == "(" {
 				declaration.name = declaration.tokens[j-1].text
 				break
@@ -156,6 +177,9 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 				declaration.name = declaration.tokens[j-1].text
 				break
 			}
+		}
+		if declaration.name == "" && beforeAttribute != "" {
+			declaration.name = beforeAttribute
 		}
 		if declaration.name == "" && limit >= 2 {
 			declaration.name = declaration.tokens[limit-1].text

@@ -1,0 +1,82 @@
+Built: unwrap node host arguments while finding their call site, including nested parentheses.
+SHAs: main base f4efdd2369311d1420aa53fdf5c1a55bdda811d4; isolated library dependency 23ea5d929cd08b36363f8cd366e074ac6814c514; pushed commit reported externally.
+Validated: main lower package, 22 ordinary relation cases, Node sources, vet, formatting, and isolated library-backed uncached oracle with Linux counts.
+Mutant: removing ast.SkipParentheses(argument) independently makes both node variants fail with the optional bigint refusal; no build failure or skip counted.
+Not covered: full repository gate, WASI, or a merge of the library integration stack into this main-based branch.
+
+The refusal visits the identifier inside a parenthesized argument separately.
+Climb through its enclosing parentheses to find the argument's call, and compare
+ast.SkipParentheses(argument) with that identifier before asking the existing
+nodeHostConsumesArgument(call, index). Direct arguments and non-node relations
+retain their existing behavior. No library predicate or lowerer was modified.
+
+Other relation positions
+viewSite and impliedTarget already climb enclosing parentheses. optionalValue
+already unwraps values, spread handling explicitly unwraps its operand, and the
+cast/satisfies relation proof unwraps its origin. Shorthand properties cannot
+parenthesize their shorthand name. Tests check both fresh literals accepted and
+structural views refused with double parentheses at eleven sites: initializer,
+assignment, argument, return, explicit arrow return, property, array, default,
+class field, cast and satisfies. No additional production changes were needed.
+
+Fixture dependency and scope
+Main still has the false node hook and no node library loader/lowerers. The
+23ea5d92 branch includes a large integration stack. Conservative scope choice:
+keep the delivered branch based only on main, and validate the requested node
+fixtures with the real library predicate in a separate detached worktree at
+/workspace/adamic-optional-parens-library. Only this patch and its tests were
+copied into that worktree. No code was copied from cohere.
+Both fixture variants print directory followed by absent=true, exit 0, with
+empty stderr on source Node. The standalone regression always checks those
+source observations, then explicitly skips backend checks when main lacks
+node:fs declarations. Once library is present, the same test requires successful
+lowering, JavaScript, sanitized native, release native, leak checks and counts.
+Missing installed Node dependencies are failures rather than skips.
+The dependency-specific Linux rows are recorded in
+internal/oracle/optional_widening_parens_counts.txt and compared by this test.
+This keeps main's central table from claiming compilation through its false
+placeholder hook. Each row is allocations/frees/retains/releases/peak/regions
+6/6/2/10/6/0. The primary counts.md is unchanged.
+
+Commands and observed output
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh
+source /workspace/adamic-tools/env.sh
+Setup exit 0: Node 0.034s, Go 0.042s, markdown 0.106s, submodules 0.112s,
+clang 0.314s, build 45.152s, warm cache 45.309s, done 45.347s.
+nproc 5, cgroup cpu.max 400000 100000. Go 1.27.1, clang 20.1.8, Node 24.19.0.
+
+go test ./internal/lower -count=1 -timeout 30m
+exit 0, 66.640s.
+go test ./internal/lower -run TestOptionalWidening -count=1 -timeout 10m
+final exit 0, 0.889s, including the 22 parenthesized relation checks.
+go test ./internal/oracle -run TestOptionalWideningNodeParentheses -v -count=1 -timeout 10m
+main: both source Node variants pass; backend tests explicitly skip because
+node declarations are staged separately; package exit 0, 0.410s.
+go vet ./...
+exit 0, empty output.
+go vet ./internal/lower ./internal/oracle
+final exit 0, empty output.
+gofmt -l cmd internal; git diff --check
+both exit 0 with empty output.
+
+Isolated library worktree
+npm ci --ignore-scripts in stage3/api installs the pinned lockfile dependencies.
+The initial oracle correctly failed for absent @types/node 25.3.3; installing
+that declared dependency fixed it. No declaration stubs or predicate changes
+were used. From the worktree root:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestOptionalWideningNodeParentheses -count=1 -timeout 10m -args -update-counts
+exit 0, 17.789s, Linux count rows generated.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestOptionalWideningNodeParentheses -v -count=1 -timeout 10m
+exit 0, 3.405s; both variants pass all comparisons, leak checks and recorded rows.
+
+python3 docs/optional-widening/parens-mutant.py /workspace/adamic-optional-parens-library
+exit 0. The Go overlay replaces ast.SkipParentheses(argument) == node with
+argument == node. Each variant is run independently and exits 1 due to the
+missing optional bigint refusal: argument at 3:32, nested at 3:34. Both failures
+contain adamic/no-optional-widening. Source Node still passes. The runner rejects
+build errors, skipped tests and failures lacking the intended refusal message.
+The overlay changes no production source file on disk.
+
+Raw logs remain local under /tmp/optional-parens-*.log. This report records
+reviewable commands, results, dependency limitations and the exact mutant.

@@ -23,7 +23,6 @@ func TestJSONStringifyRefusals(t *testing.T) {
 		{"toJSON", `JSON.stringify({ toJSON: () => 7 });`, "toJSON semantics"},
 		{"replacer_function", `JSON.stringify(7, (key: string, value: number) => value);`, "callback must have a proven type"},
 		{"prototype", `JSON.stringify({ __proto__: null });`, "__proto__ semantics"},
-		{"duplicate", `JSON.stringify({ x: 1, x: 2 });`, "JSON.stringify duplicate literal keys"},
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
@@ -33,10 +32,6 @@ func TestJSONStringifyRefusals(t *testing.T) {
 			}
 			program, err := load.Load([]string{path})
 			if err != nil {
-				// The checker itself refuses duplicate keys before lowering.
-				if test.name == "duplicate" && strings.Contains(err.Error(), "TS1117") {
-					return
-				}
 				t.Fatal(err)
 			}
 			_, err = lower.Lower(context.Background(), program)

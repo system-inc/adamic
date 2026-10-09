@@ -1,0 +1,86 @@
+{
+  "task": "p286ycm",
+  "branch": "codex/concurrency-moves",
+  "approval": "@system_adamic approved inferred moves, Kirk briefed; no ownership or lifetime annotations; refusal only at task boundaries",
+  "scope": "All 27 original refusal fixtures now assert an exact approved fix. Nested object, array and Map graphs remain explicitly refused at their nested path. Added nested array, Map and shared-child race fixtures: 30 refusals total.",
+  "refusals": {
+    "command": "go test ./internal/oracle -run '^TestMovesRefusals$' -count=1 -v",
+    "exit": 0,
+    "output": "ok github.com/system-inc/adamic/internal/oracle 0.414s",
+    "log": "/tmp/concurrency-moves-refusals-followup.log"
+  },
+  "mutants": [
+    {
+      "name": "aliased element",
+      "changed": "accept identifier element provenance",
+      "caught": "TSan data race in adamic_retain, exit 66",
+      "log": "/tmp/adamic-gate/adamic-move-mutants-q0_84uws/alias-race.log"
+    },
+    {
+      "name": "nested graph treated as flat",
+      "changed": "bypass only scalar literal field graph guard",
+      "caught": "TSan data race in shared descendant adamic_retain, exit 66",
+      "control": "ADAMIC_THREADS=1 matches source Node: 1024 37869",
+      "log": "/tmp/adamic-gate/adamic-move-mutants-q0_84uws/nested-race.log"
+    },
+    {
+      "name": "use after move",
+      "changed": "allow later source references",
+      "caught": "after.a refusal expected, got <nil>; go test exit 1",
+      "log": "/tmp/adamic-gate/adamic-move-mutants-q0_84uws/after-test.log"
+    },
+    {
+      "name": "mark moved graph shared",
+      "changed": "use shared map ABI",
+      "caught": "graph headers change from 2050 plain / 0 shared to 1 plain / 2049 shared at threads 1 and default; detector passes",
+      "log": "/tmp/adamic-gate/adamic-move-mutants-q0_84uws/shared-count-test.log"
+    },
+    {
+      "name": "unapproved fix",
+      "changed": "replace approved fix with use the returned values",
+      "caught": "alias.a exact approved-fix assertion; go test exit 1",
+      "log": "/tmp/adamic-gate/adamic-move-mutants-q0_84uws/fix-test.log"
+    },
+    {
+      "name": "omit nested path",
+      "changed": "report parent path instead of child path",
+      "caught": "nested.a exact diagnostic assertion; go test exit 1",
+      "log": "/tmp/adamic-gate/adamic-move-mutants-q0_84uws/path-test.log"
+    }
+  ],
+  "mutant_replay": "python3 internal/oracle/testdata/moves/prove.py",
+  "mutant_run_logs": [
+    "/tmp/concurrency-moves-mutants-followup.log",
+    "/tmp/concurrency-moves-diagnostic-mutants.log"
+  ],
+  "format": {
+    "command": "gofmt -l cmd internal",
+    "output": "",
+    "exit": 0
+  },
+  "vet": {
+    "command": "go vet ./...",
+    "output": "",
+    "exit": 0,
+    "log": "/tmp/concurrency-moves-vet-followup.log"
+  },
+  "full_gate": {
+    "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...",
+    "log": "/tmp/concurrency-moves-full-gate.log",
+    "status": "passed",
+    "exit": 0,
+    "output": "?   \tgithub.com/system-inc/adamic/bench\t[no test files]\n?   \tgithub.com/system-inc/adamic/bench/regex\t[no test files]\n?   \tgithub.com/system-inc/adamic/cmd/adamic\t[no test files]\n?   \tgithub.com/system-inc/adamic/cmd/adamic-fuzz\t[no test files]\nok  \tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.797s\nok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t98.070s\nok  \tgithub.com/system-inc/adamic/internal/flow\t111.621s\nok  \tgithub.com/system-inc/adamic/internal/fresh\t41.878s\nok  \tgithub.com/system-inc/adamic/internal/fuzz\t19.886s\n?   \tgithub.com/system-inc/adamic/internal/ir\t[no test files]\n?   \tgithub.com/system-inc/adamic/internal/javascript\t[no test files]\nok  \tgithub.com/system-inc/adamic/internal/load\t2.503s\nok  \tgithub.com/system-inc/adamic/internal/lower\t26.117s\nok  \tgithub.com/system-inc/adamic/internal/native\t269.866s\nok  \tgithub.com/system-inc/adamic/internal/oracle\t765.961s\nok  \tgithub.com/system-inc/adamic/internal/regexp\t9.897s\nok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t957.988s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/cssnumbers\t174.797s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/cssstrings\t24.256s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/formatfiles\t81.016s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/gitignore\t75.600s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql\t135.873s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t785.267s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t487.428s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/mediaquery\t39.823s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/selector\t59.529s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/suppression\t79.010s\nok  \tgithub.com/system-inc/adamic/stage1/cohere/values\t73.517s\nok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t327.778s\nok  \tgithub.com/system-inc/adamic/stage1/typescript/scanner\t45.392s\n"
+  },
+  "limitations": [
+    "No nested ownership inference: nested objects, arrays and Maps are conservatively refused.",
+    "General flow/fresh ownership summaries, dead-alias groups and mixed shared/moved descendants remain unimplemented.",
+    "No Darwin run: Kirk runs macOS.",
+    "Measurements are the initial prototype observations; emitted C for the accepted fixture is unchanged.",
+    "Conservative syntax restrictions do not each have a separate mutant."
+  ],
+  "accepted_artifact": {
+    "sha256": "44fc1105cec03d2b48be19349cf7e3bfcdf64edb927dd9daf04acdb484334c27",
+    "unchanged": true,
+    "comparison": "sha256sum /tmp/concurrency-moves-followup-objects.c /tmp/concurrency-moves-final.c"
+  }
+}

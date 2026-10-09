@@ -1,0 +1,9 @@
+function probe(pattern: string, flags: string): string {
+ try { const result = new RegExp(pattern, flags); return result.flags.length >= 0 ? 'accepted' : 'unexpected'; }
+ catch (error) { if (error instanceof Error) return `${error.name}: ${error.message}`; return 'not an Error'; }
+}
+console.log(probe('[\\q{a}]', 'iv'));
+console.log(probe('(?i:a)[b]', 'v'));
+console.log(probe('[\\q{ab|a|}]', 'v'));
+console.log(probe('a{9223372036854775808,9223372036854775807}', ''));
+console.log(probe('a{18446744073709551616}', ''));

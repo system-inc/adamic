@@ -1,0 +1,2645 @@
+{
+  "typescript": "6.0.3",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "root": "cohere/TypeScript/tsc/testdata/fixtures/compiler",
+  "sites": [
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 1154,
+      "column": 34,
+      "kind": "literal",
+      "expression": "/^\".+\"$/",
+      "pattern": "^\".+\"$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 7877,
+      "column": 120,
+      "kind": "replaceOther",
+      "expression": "commentText.replace(/\\n/g, \"\\n * \")",
+      "argument": "\"\\n * \"",
+      "argumentType": "\"\\n * \"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 7877,
+      "column": 120,
+      "kind": "regexUse",
+      "expression": "commentText.replace(/\\n/g, \"\\n * \")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 7877,
+      "column": 140,
+      "kind": "literal",
+      "expression": "/\\n/g",
+      "pattern": "\\n",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8062,
+      "column": 33,
+      "kind": "regexUse",
+      "expression": "getTextOfNode(signature.declaration.parent.parent, /*includeTrivia*/ true).slice(2, -2).split(/\\r\\n|\\n|\\r/)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8062,
+      "column": 127,
+      "kind": "literal",
+      "expression": "/\\r\\n|\\n|\\r/",
+      "pattern": "\\r\\n|\\n|\\r",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8062,
+      "column": 153,
+      "kind": "replaceOther",
+      "expression": "line.replace(/^\\s+/, \" \")",
+      "argument": "\" \"",
+      "argumentType": "\" \"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8062,
+      "column": 153,
+      "kind": "regexUse",
+      "expression": "line.replace(/^\\s+/, \" \")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8062,
+      "column": 166,
+      "kind": "literal",
+      "expression": "/^\\s+/",
+      "pattern": "^\\s+",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8610,
+      "column": 21,
+      "kind": "regexUse",
+      "expression": "ambientModuleSymbolRegex.test(symbol.escapedName as string)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8616,
+      "column": 21,
+      "kind": "regexUse",
+      "expression": "ambientModuleSymbolRegex.test(symbol.escapedName as string)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8943,
+      "column": 45,
+      "kind": "replaceCallback",
+      "expression": "stripQuotes(symbolName).replace(/\\\\./g, s => s.substring(1))",
+      "argument": "s => s.substring(1)",
+      "argumentType": "(s: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8943,
+      "column": 45,
+      "kind": "regexUse",
+      "expression": "stripQuotes(symbolName).replace(/\\\\./g, s => s.substring(1))",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 8943,
+      "column": 77,
+      "kind": "literal",
+      "expression": "/\\\\./g",
+      "pattern": "\\\\.",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 9919,
+      "column": 106,
+      "kind": "replaceOther",
+      "expression": "commentText.replace(/\\n/g, \"\\n * \")",
+      "argument": "\"\\n * \"",
+      "argumentType": "\"\\n * \"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 9919,
+      "column": 106,
+      "kind": "regexUse",
+      "expression": "commentText.replace(/\\n/g, \"\\n * \")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 9919,
+      "column": 126,
+      "kind": "literal",
+      "expression": "/\\n/g",
+      "pattern": "\\n",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 11133,
+      "column": 139,
+      "kind": "replaceOther",
+      "expression": "localName.replace(/[^a-z0-9]/gi, \"_\")",
+      "argument": "\"_\"",
+      "argumentType": "\"_\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 11133,
+      "column": 139,
+      "kind": "regexUse",
+      "expression": "localName.replace(/[^a-z0-9]/gi, \"_\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 11133,
+      "column": 157,
+      "kind": "literal",
+      "expression": "/[^a-z0-9]/gi",
+      "pattern": "[^a-z0-9]",
+      "flags": "gi"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 35211,
+      "column": 71,
+      "kind": "regexUse",
+      "expression": "/^(?:EventTarget|Node|(?:HTML[a-zA-Z]*)?Element)$/.test(unescapeLeadingUnderscores(type.symbol.escapedName))",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 35211,
+      "column": 71,
+      "kind": "literal",
+      "expression": "/^(?:EventTarget|Node|(?:HTML[a-zA-Z]*)?Element)$/",
+      "pattern": "^(?:EventTarget|Node|(?:HTML[a-zA-Z]*)?Element)$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "line": 53584,
+      "column": 21,
+      "kind": "regexUse",
+      "expression": "ambientModuleSymbolRegex.test(sym as string)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 2728,
+      "column": 50,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(patterns.excludePattern, host.useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 2729,
+      "column": 54,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(patterns.includeFilePattern, host.useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 2732,
+      "column": 30,
+      "kind": "regexUse",
+      "expression": "includeRe.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 2732,
+      "column": 55,
+      "kind": "regexUse",
+      "expression": "excludeRe.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 2734,
+      "column": 25,
+      "kind": "regexUse",
+      "expression": "includeRe.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 2737,
+      "column": 24,
+      "kind": "regexUse",
+      "expression": "excludeRe.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 3305,
+      "column": 38,
+      "kind": "replaceOther",
+      "expression": "value.replace(configDirTemplate, \"./\")",
+      "argument": "\"./\"",
+      "argumentType": "\"./\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 3901,
+      "column": 41,
+      "kind": "literal",
+      "expression": "/(?:^|\\/)\\*\\*\\/?$/",
+      "pattern": "(?:^|\\/)\\*\\*\\/?$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 3915,
+      "column": 34,
+      "kind": "literal",
+      "expression": "/^[^*?]*(?=\\/[^/]*[*?])/",
+      "pattern": "^[^*?]*(?=\\/[^/]*[*?])",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 3976,
+      "column": 53,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionsForWildcards(includes, basePath, \"files\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 3977,
+      "column": 103,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(pattern, host.useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 3979,
+      "column": 78,
+      "kind": "regexUse",
+      "expression": "re.test(file)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4077,
+      "column": 28,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionForWildcard(excludeSpecs, combinePaths(normalizePath(currentDirectory), basePath), \"exclude\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4078,
+      "column": 44,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(excludePattern, useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4080,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "excludeRegex.test(pathToCheck)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4081,
+      "column": 42,
+      "kind": "regexUse",
+      "expression": "excludeRegex.test(ensureTrailingDirectorySeparator(pathToCheck))",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4102,
+      "column": 38,
+      "kind": "regexUse",
+      "expression": "invalidTrailingRecursionPattern.test(spec)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4126,
+      "column": 29,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionForWildcard(exclude, basePath, \"exclude\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4127,
+      "column": 45,
+      "kind": "constructor",
+      "expression": "new RegExp(rawExcludeRegex, useCaseSensitiveFileNames ? \"\" : \"i\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4134,
+      "column": 33,
+      "kind": "regexUse",
+      "expression": "excludeRegex.test(spec)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4175,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "wildcardDirectoryPattern.exec(spec)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts",
+      "line": 1861,
+      "column": 33,
+      "kind": "literal",
+      "expression": "/[^\\u0130\\u0131\\u00DFa-z0-9\\\\/:\\-_. ]+/g",
+      "pattern": "[^\\u0130\\u0131\\u00DFa-z0-9\\\\/:\\-_. ]+",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts",
+      "line": 1876,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "fileNameLowerCaseRegExp.test(x)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts",
+      "line": 1877,
+      "column": 9,
+      "kind": "replaceCallback",
+      "expression": "x.replace(fileNameLowerCaseRegExp, toLowerCase)",
+      "argument": "toLowerCase",
+      "argumentType": "(x: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts",
+      "line": 1877,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "x.replace(fileNameLowerCaseRegExp, toLowerCase)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+      "line": 377,
+      "column": 27,
+      "kind": "regexUse",
+      "expression": "/^function\\s+([\\w$]+)\\s*\\(/.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+      "line": 377,
+      "column": 27,
+      "kind": "literal",
+      "expression": "/^function\\s+([\\w$]+)\\s*\\(/",
+      "pattern": "^function\\s+([\\w$]+)\\s*\\(",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+      "line": 584,
+      "column": 40,
+      "kind": "replaceOther",
+      "expression": "String(defaultValue).replace(/(?:,[\\s\\w]+:[^,]+)+\\]$/, \"]\")",
+      "argument": "\"]\"",
+      "argumentType": "\"]\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+      "line": 584,
+      "column": 40,
+      "kind": "regexUse",
+      "expression": "String(defaultValue).replace(/(?:,[\\s\\w]+:[^,]+)+\\]$/, \"]\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+      "line": 584,
+      "column": 69,
+      "kind": "literal",
+      "expression": "/(?:,[\\s\\w]+:[^,]+)+\\]$/",
+      "pattern": "(?:,[\\s\\w]+:[^,]+)+\\]$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+      "line": 4105,
+      "column": 31,
+      "kind": "regexUse",
+      "expression": "text.split(/\\r\\n?|\\n/)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+      "line": 4105,
+      "column": 42,
+      "kind": "literal",
+      "expression": "/\\r\\n?|\\n/",
+      "pattern": "\\r\\n?|\\n",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+      "line": 4976,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "text.split(/\\r\\n?|\\n/)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+      "line": 4976,
+      "column": 34,
+      "kind": "literal",
+      "expression": "/\\r\\n?|\\n/",
+      "pattern": "\\r\\n?|\\n",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/executeCommandLine.ts",
+      "line": 1134,
+      "column": 16,
+      "kind": "replaceOther",
+      "expression": "name.replace(\"SolutionBuilder::\", \"\")",
+      "argument": "\"\"",
+      "argumentType": "\"\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2763,
+      "column": 54,
+      "kind": "replaceOther",
+      "expression": "target.replace(/\\*/g, subpath)",
+      "argument": "subpath",
+      "argumentType": "string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2763,
+      "column": 54,
+      "kind": "regexUse",
+      "expression": "target.replace(/\\*/g, subpath)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2763,
+      "column": 69,
+      "kind": "literal",
+      "expression": "/\\*/g",
+      "pattern": "\\*",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2807,
+      "column": 130,
+      "kind": "replaceOther",
+      "expression": "target.replace(/\\*/g, subpath)",
+      "argument": "subpath",
+      "argumentType": "string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2807,
+      "column": 130,
+      "kind": "regexUse",
+      "expression": "target.replace(/\\*/g, subpath)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2807,
+      "column": 145,
+      "kind": "literal",
+      "expression": "/\\*/g",
+      "pattern": "\\*",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2809,
+      "column": 56,
+      "kind": "replaceOther",
+      "expression": "resolvedTarget.replace(/\\*/g, subpath)",
+      "argument": "subpath",
+      "argumentType": "string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2809,
+      "column": 56,
+      "kind": "regexUse",
+      "expression": "resolvedTarget.replace(/\\*/g, subpath)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 2809,
+      "column": 79,
+      "kind": "literal",
+      "expression": "/\\*/g",
+      "pattern": "\\*",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 3218,
+      "column": 30,
+      "kind": "replaceOther",
+      "expression": "packageName.replace(directorySeparator, mangledScopedPackageSeparator)",
+      "argument": "mangledScopedPackageSeparator",
+      "argumentType": "\"__\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "line": 3238,
+      "column": 15,
+      "kind": "replaceOther",
+      "expression": "typesPackageName.replace(mangledScopedPackageSeparator, directorySeparator)",
+      "argument": "directorySeparator",
+      "argumentType": "\"/\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 138,
+      "column": 20,
+      "kind": "constructor",
+      "expression": "new RegExp(pattern)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 143,
+      "column": 20,
+      "kind": "constructor",
+      "expression": "new RegExp(pattern)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 148,
+      "column": 24,
+      "kind": "constructor",
+      "expression": "new RegExp(pattern)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 152,
+      "column": 23,
+      "kind": "replaceOther",
+      "expression": "pattern.substring(lastSlash + 1).replace(/[^iu]/g, \"\")",
+      "argument": "\"\"",
+      "argumentType": "\"\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 152,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "pattern.substring(lastSlash + 1).replace(/[^iu]/g, \"\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 152,
+      "column": 64,
+      "kind": "literal",
+      "expression": "/[^iu]/g",
+      "pattern": "[^iu]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 154,
+      "column": 16,
+      "kind": "constructor",
+      "expression": "new RegExp(pattern, flags)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 559,
+      "column": 46,
+      "kind": "regexUse",
+      "expression": "stringToRegex(pattern)?.test(moduleSpecifier)",
+      "method": "test",
+      "receiverType": "RegExp | undefined",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10707,
+      "column": 20,
+      "kind": "constructor",
+      "expression": "new RegExp(`(\\\\s${name}\\\\s*=\\\\s*)(?:(?:'([^']*)')|(?:\"([^\"]*)\"))`, \"im\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10712,
+      "column": 41,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<(\\S+)\\s.*?\\/>/m",
+      "pattern": "^\\/\\/\\/\\s*<(\\S+)\\s.*?\\/>",
+      "flags": "m"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10713,
+      "column": 31,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/?\\s*@([^\\s:]+)((?:[^\\S\\r\\n]|:).*)?$/m",
+      "pattern": "^\\/\\/\\/?\\s*@([^\\s:]+)((?:[^\\S\\r\\n]|:).*)?$",
+      "flags": "m"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10715,
+      "column": 78,
+      "kind": "regexUse",
+      "expression": "tripleSlashXMLCommentStartRegEx.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10726,
+      "column": 37,
+      "kind": "regexUse",
+      "expression": "matcher.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10753,
+      "column": 77,
+      "kind": "regexUse",
+      "expression": "singleLinePragmaRegEx.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10759,
+      "column": 38,
+      "kind": "literal",
+      "expression": "/@(\\S+)(\\s+(?:\\S.*)?)?$/gm",
+      "pattern": "@(\\S+)(\\s+(?:\\S.*)?)?$",
+      "flags": "gm"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10761,
+      "column": 33,
+      "kind": "regexUse",
+      "expression": "multiLinePragmaRegEx.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10784,
+      "column": 18,
+      "kind": "regexUse",
+      "expression": "text.trim().split(/\\s+/)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10784,
+      "column": 36,
+      "kind": "literal",
+      "expression": "/\\s+/",
+      "pattern": "\\s+",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 32,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/\\\\/g",
+      "pattern": "\\\\",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 101,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "/^\\.\\.?(?:$|[\\\\/])/.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 101,
+      "column": 12,
+      "kind": "literal",
+      "expression": "/^\\.\\.?(?:$|[\\\\/])/",
+      "pattern": "^\\.\\.?(?:$|[\\\\/])",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 528,
+      "column": 11,
+      "kind": "replaceOther",
+      "expression": "path.replace(backslashRegExp, directorySeparator)",
+      "argument": "directorySeparator",
+      "argumentType": "\"/\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 528,
+      "column": 11,
+      "kind": "regexUse",
+      "expression": "path.replace(backslashRegExp, directorySeparator)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 734,
+      "column": 10,
+      "kind": "regexUse",
+      "expression": "relativePathSegmentRegExp.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 738,
+      "column": 22,
+      "kind": "replaceOther",
+      "expression": "path.replace(/\\/\\.\\//g, \"/\")",
+      "argument": "\"/\"",
+      "argumentType": "\"/\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 738,
+      "column": 22,
+      "kind": "regexUse",
+      "expression": "path.replace(/\\/\\.\\//g, \"/\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 738,
+      "column": 35,
+      "kind": "literal",
+      "expression": "/\\/\\.\\//g",
+      "pattern": "\\/\\.\\/",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 744,
+      "column": 14,
+      "kind": "regexUse",
+      "expression": "relativePathSegmentRegExp.test(path)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 882,
+      "column": 35,
+      "kind": "literal",
+      "expression": "/\\/\\/|(?:^|\\/)\\.\\.?(?:$|\\/)/",
+      "pattern": "\\/\\/|(?:^|\\/)\\.\\.?(?:$|\\/)",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 902,
+      "column": 10,
+      "kind": "regexUse",
+      "expression": "relativePathSegmentRegExp.test(aRest)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "line": 902,
+      "column": 52,
+      "kind": "regexUse",
+      "expression": "relativePathSegmentRegExp.test(bRest)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 736,
+      "column": 23,
+      "kind": "replaceOther",
+      "expression": "lineContent.replace(/\\t/g, \" \")",
+      "argument": "\" \"",
+      "argumentType": "\" \"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 736,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "lineContent.replace(/\\t/g, \" \")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 736,
+      "column": 43,
+      "kind": "literal",
+      "expression": "/\\t/g",
+      "pattern": "\\t",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 750,
+      "column": 24,
+      "kind": "replaceOther",
+      "expression": "lineContent.slice(0, firstLineChar).replace(/\\S/g, \" \")",
+      "argument": "\" \"",
+      "argumentType": "\" \"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 750,
+      "column": 24,
+      "kind": "regexUse",
+      "expression": "lineContent.slice(0, firstLineChar).replace(/\\S/g, \" \")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 750,
+      "column": 68,
+      "kind": "literal",
+      "expression": "/\\S/g",
+      "pattern": "\\S",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 751,
+      "column": 24,
+      "kind": "replaceOther",
+      "expression": "lineContent.slice(firstLineChar, lastCharForLine).replace(/./g, \"~\")",
+      "argument": "\"~\"",
+      "argumentType": "\"~\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 751,
+      "column": 24,
+      "kind": "regexUse",
+      "expression": "lineContent.slice(firstLineChar, lastCharForLine).replace(/./g, \"~\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 751,
+      "column": 82,
+      "kind": "literal",
+      "expression": "/./g",
+      "pattern": ".",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 754,
+      "column": 24,
+      "kind": "replaceOther",
+      "expression": "lineContent.slice(0, lastLineChar).replace(/./g, \"~\")",
+      "argument": "\"~\"",
+      "argumentType": "\"~\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 754,
+      "column": 24,
+      "kind": "regexUse",
+      "expression": "lineContent.slice(0, lastLineChar).replace(/./g, \"~\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 754,
+      "column": 67,
+      "kind": "literal",
+      "expression": "/./g",
+      "pattern": ".",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 758,
+      "column": 24,
+      "kind": "replaceOther",
+      "expression": "lineContent.replace(/./g, \"~\")",
+      "argument": "\"~\"",
+      "argumentType": "\"~\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 758,
+      "column": 24,
+      "kind": "regexUse",
+      "expression": "lineContent.replace(/./g, \"~\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 758,
+      "column": 44,
+      "kind": "literal",
+      "expression": "/./g",
+      "pattern": ".",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 2982,
+      "column": 37,
+      "kind": "regexUse",
+      "expression": "/^\\s*\\/\\/.*$/.test(lineText)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 2982,
+      "column": 37,
+      "kind": "literal",
+      "expression": "/^\\s*\\/\\/.*$/",
+      "pattern": "^\\s*\\/\\/.*$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 5040,
+      "column": 65,
+      "kind": "replaceOther",
+      "expression": "fileOrDirectoryPath.replace(directoryPath, symlinkedDirectory.realPath)",
+      "argument": "symlinkedDirectory.realPath",
+      "argumentType": "Path",
+      "receiverType": "Path"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 5046,
+      "column": 54,
+      "kind": "replaceOther",
+      "expression": "absolutePath.replace(new RegExp(directoryPath, \"i\"), \"\")",
+      "argument": "\"\"",
+      "argumentType": "\"\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 5046,
+      "column": 54,
+      "kind": "regexUse",
+      "expression": "absolutePath.replace(new RegExp(directoryPath, \"i\"), \"\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 5046,
+      "column": 75,
+      "kind": "constructor",
+      "expression": "new RegExp(directoryPath, \"i\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 273,
+      "column": 22,
+      "kind": "regexUse",
+      "expression": "pathComponents[0].search(/[a-z]:/i)",
+      "method": "search",
+      "receiverType": "Path",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 273,
+      "column": 47,
+      "kind": "literal",
+      "expression": "/[a-z]:/i",
+      "pattern": "[a-z]:",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 277,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "pathComponents[1].search(/[a-z]\\$$/i)",
+      "method": "search",
+      "receiverType": "Path",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 277,
+      "column": 34,
+      "kind": "literal",
+      "expression": "/[a-z]\\$$/i",
+      "pattern": "[a-z]\\$$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 287,
+      "column": 10,
+      "kind": "regexUse",
+      "expression": "pathComponents[indexAfterOsRoot].match(/^users$/i)",
+      "method": "match",
+      "receiverType": "Path",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 287,
+      "column": 49,
+      "kind": "literal",
+      "expression": "/^users$/i",
+      "pattern": "^users$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 293,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "pathComponents[indexAfterOsRoot].match(/^workspaces$/i)",
+      "method": "match",
+      "receiverType": "Path",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "line": 293,
+      "column": 48,
+      "kind": "literal",
+      "expression": "/^workspaces$/i",
+      "pattern": "^workspaces$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 349,
+      "column": 41,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/?\\s*@(ts-expect-error|ts-ignore)/",
+      "pattern": "^\\/\\/\\/?\\s*@(ts-expect-error|ts-ignore)",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 354,
+      "column": 40,
+      "kind": "literal",
+      "expression": "/^(?:\\/|\\*)*\\s*@(ts-expect-error|ts-ignore)/",
+      "pattern": "^(?:\\/|\\*)*\\s*@(ts-expect-error|ts-ignore)",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 356,
+      "column": 24,
+      "kind": "literal",
+      "expression": "/@(?:see|link)/i",
+      "pattern": "@(?:see|link)",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 792,
+      "column": 28,
+      "kind": "literal",
+      "expression": "/^#!.*/",
+      "pattern": "^#!.*",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 797,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "shebangTriviaRegex.test(text)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 801,
+      "column": 21,
+      "kind": "regexUse",
+      "expression": "shebangTriviaRegex.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 967,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "shebangTriviaRegex.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 2409,
+      "column": 16,
+      "kind": "regexUse",
+      "expression": "jsDocSeeOrLink.test(text.slice(fullStartPos, pos))",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "line": 3639,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "commentDirectiveRegEx.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 20,
+      "column": 23,
+      "kind": "literal",
+      "expression": "/^(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$/i",
+      "pattern": "^(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 27,
+      "column": 26,
+      "kind": "literal",
+      "expression": "/^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)(?:\\.(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*))*$/i",
+      "pattern": "^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)(?:\\.(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*))*$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 28,
+      "column": 30,
+      "kind": "literal",
+      "expression": "/^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)$/i",
+      "pattern": "^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 34,
+      "column": 21,
+      "kind": "literal",
+      "expression": "/^[a-z0-9-]+(?:\\.[a-z0-9-]+)*$/i",
+      "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)*$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 35,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/^[a-z0-9-]+$/i",
+      "pattern": "^[a-z0-9-]+$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 39,
+      "column": 33,
+      "kind": "literal",
+      "expression": "/^(?:0|[1-9]\\d*)$/",
+      "pattern": "^(?:0|[1-9]\\d*)$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 70,
+      "column": 50,
+      "kind": "regexUse",
+      "expression": "prereleasePartRegExp.test(s)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 71,
+      "column": 45,
+      "kind": "regexUse",
+      "expression": "buildPartRegExp.test(s)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 142,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "versionRegExp.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 146,
+      "column": 24,
+      "kind": "regexUse",
+      "expression": "prereleaseRegExp.test(prerelease)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 147,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "buildRegExp.test(build)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 175,
+      "column": 31,
+      "kind": "regexUse",
+      "expression": "numericIdentifierRegExp.test(leftIdentifier)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 176,
+      "column": 32,
+      "kind": "regexUse",
+      "expression": "numericIdentifierRegExp.test(rightIdentifier)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 247,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/\\|\\|/",
+      "pattern": "\\|\\|",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 248,
+      "column": 26,
+      "kind": "literal",
+      "expression": "/\\s+/",
+      "pattern": "\\s+",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 260,
+      "column": 23,
+      "kind": "literal",
+      "expression": "/^([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$/i",
+      "pattern": "^([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 265,
+      "column": 22,
+      "kind": "literal",
+      "expression": "/^\\s*([a-z0-9-+.*]+)\\s+-\\s+([a-z0-9-+.*]+)\\s*$/i",
+      "pattern": "^\\s*([a-z0-9-+.*]+)\\s+-\\s+([a-z0-9-+.*]+)\\s*$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 273,
+      "column": 21,
+      "kind": "literal",
+      "expression": "/^([~^<>=]|<=|>=)?\\s*([a-z0-9-+.*]+)$/i",
+      "pattern": "^([~^<>=]|<=|>=)?\\s*([a-z0-9-+.*]+)$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 277,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "text.trim().split(logicalOrRegExp)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 281,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "hyphenRegExp.exec(range)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 286,
+      "column": 34,
+      "kind": "regexUse",
+      "expression": "range.split(whitespaceRegExp)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 287,
+      "column": 31,
+      "kind": "regexUse",
+      "expression": "rangeRegExp.exec(simple.trim())",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "line": 297,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "partialRegExp.exec(text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+      "line": 363,
+      "column": 64,
+      "kind": "literal",
+      "expression": "/\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$/",
+      "pattern": "\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+      "line": 365,
+      "column": 47,
+      "kind": "literal",
+      "expression": "/^\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$/",
+      "pattern": "^\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+      "line": 368,
+      "column": 53,
+      "kind": "literal",
+      "expression": "/^\\s*(\\/\\/[@#] .*)?$/",
+      "pattern": "^\\s*(\\/\\/[@#] .*)?$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+      "line": 392,
+      "column": 25,
+      "kind": "regexUse",
+      "expression": "sourceMapCommentRegExp.exec(line)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+      "line": 397,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "line.match(whitespaceOrMapCommentRegExp)",
+      "method": "match",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1469,
+      "column": 31,
+      "kind": "literal",
+      "expression": "/^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/",
+      "pattern": "^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1594,
+      "column": 132,
+      "kind": "regexUse",
+      "expression": "/^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "unknown"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1594,
+      "column": 132,
+      "kind": "literal",
+      "expression": "/^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i",
+      "pattern": "^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1684,
+      "column": 31,
+      "kind": "regexUse",
+      "expression": "nativePattern.test(url)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1699,
+      "column": 70,
+      "kind": "replaceOther",
+      "expression": "(new Date()).toISOString().replace(/:/g, \"-\")",
+      "argument": "\"-\"",
+      "argumentType": "\"-\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1699,
+      "column": 70,
+      "kind": "regexUse",
+      "expression": "(new Date()).toISOString().replace(/:/g, \"-\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1699,
+      "column": 105,
+      "kind": "literal",
+      "expression": "/:/g",
+      "pattern": ":",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1733,
+      "column": 20,
+      "kind": "replaceCallback",
+      "expression": "s.replace(/\\w/g, ch => {\r\n                const up = ch.toUpperCase();\r\n                return ch === up ? ch.toLowerCase() : up;\r\n            })",
+      "argument": "ch => {\r\n                const up = ch.toUpperCase();\r\n                return ch === up ? ch.toLowerCase() : up;\r\n            }",
+      "argumentType": "(ch: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1733,
+      "column": 20,
+      "kind": "regexUse",
+      "expression": "s.replace(/\\w/g, ch => {\r\n                const up = ch.toUpperCase();\r\n                return ch === up ? ch.toLowerCase() : up;\r\n            })",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1733,
+      "column": 30,
+      "kind": "literal",
+      "expression": "/\\w/g",
+      "pattern": "\\w",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1974,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "/^development$/i.test(sys.getEnvironmentVariable(\"NODE_ENV\"))",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "line": 1974,
+      "column": 9,
+      "kind": "literal",
+      "expression": "/^development$/i",
+      "pattern": "^development$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 16,
+      "kind": "replaceCallback",
+      "expression": "text.replace(/&((#((\\d+)|x([\\da-fA-F]+)))|(\\w+));/g, (match, _all, _number, _digits, decimal, hex, word) => {\r\n            if (decimal) {\r\n                return utf16EncodeAsString(parseInt(decimal, 10));\r\n            }\r\n            else if (hex) {\r\n                return utf16EncodeAsString(parseInt(hex, 16));\r\n            }\r\n            else {\r\n                const ch = entities.get(word);\r\n                // If this is not a valid entity, then just use `match` (replace it with itself, i.e. don't replace)\r\n                return ch ? utf16EncodeAsString(ch) : match;\r\n            }\r\n        })",
+      "argument": "(match, _all, _number, _digits, decimal, hex, word) => {\r\n            if (decimal) {\r\n                return utf16EncodeAsString(parseInt(decimal, 10));\r\n            }\r\n            else if (hex) {\r\n                return utf16EncodeAsString(parseInt(hex, 16));\r\n            }\r\n            else {\r\n                const ch = entities.get(word);\r\n                // If this is not a valid entity, then just use `match` (replace it with itself, i.e. don't replace)\r\n                return ch ? utf16EncodeAsString(ch) : match;\r\n            }\r\n        }",
+      "argumentType": "(match: string, _all: any, _number: any, _digits: any, decimal: any, hex: any, word: any) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 16,
+      "kind": "regexUse",
+      "expression": "text.replace(/&((#((\\d+)|x([\\da-fA-F]+)))|(\\w+));/g, (match, _all, _number, _digits, decimal, hex, word) => {\r\n            if (decimal) {\r\n                return utf16EncodeAsString(parseInt(decimal, 10));\r\n            }\r\n            else if (hex) {\r\n                return utf16EncodeAsString(parseInt(hex, 16));\r\n            }\r\n            else {\r\n                const ch = entities.get(word);\r\n                // If this is not a valid entity, then just use `match` (replace it with itself, i.e. don't replace)\r\n                return ch ? utf16EncodeAsString(ch) : match;\r\n            }\r\n        })",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 29,
+      "kind": "literal",
+      "expression": "/&((#((\\d+)|x([\\da-fA-F]+)))|(\\w+));/g",
+      "pattern": "&((#((\\d+)|x([\\da-fA-F]+)))|(\\w+));",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+      "line": 672,
+      "column": 21,
+      "kind": "regexUse",
+      "expression": "/^[A-Z_]\\w*$/i.test(text)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+      "line": 672,
+      "column": 21,
+      "kind": "literal",
+      "expression": "/^[A-Z_]\\w*$/i",
+      "pattern": "^[A-Z_]\\w*$",
+      "flags": "i"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/taggedTemplate.ts",
+      "line": 130,
+      "column": 12,
+      "kind": "replaceOther",
+      "expression": "text.replace(/\\r\\n?/g, \"\\n\")",
+      "argument": "\"\\n\"",
+      "argumentType": "\"\\n\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/taggedTemplate.ts",
+      "line": 130,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "text.replace(/\\r\\n?/g, \"\\n\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/taggedTemplate.ts",
+      "line": 130,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/\\r\\n?/g",
+      "pattern": "\\r\\n?",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/ts.ts",
+      "line": 2718,
+      "column": 16,
+      "kind": "replaceOther",
+      "expression": "value.replace(/\\*\\//g, \"*_/\")",
+      "argument": "\"*_/\"",
+      "argumentType": "\"*_/\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/ts.ts",
+      "line": 2718,
+      "column": 16,
+      "kind": "regexUse",
+      "expression": "value.replace(/\\*\\//g, \"*_/\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/ts.ts",
+      "line": 2718,
+      "column": 30,
+      "kind": "literal",
+      "expression": "/\\*\\//g",
+      "pattern": "\\*\\/",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1191,
+      "column": 16,
+      "kind": "regexUse",
+      "expression": "fullTripleSlashReferencePathRegEx.test(textSubStr)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1192,
+      "column": 17,
+      "kind": "regexUse",
+      "expression": "fullTripleSlashAMDReferencePathRegEx.test(textSubStr)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1193,
+      "column": 17,
+      "kind": "regexUse",
+      "expression": "fullTripleSlashAMDModuleRegEx.test(textSubStr)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1194,
+      "column": 17,
+      "kind": "regexUse",
+      "expression": "fullTripleSlashReferenceTypeReferenceDirectiveRegEx.test(textSubStr)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1195,
+      "column": 17,
+      "kind": "regexUse",
+      "expression": "fullTripleSlashLibReferenceRegEx.test(textSubStr)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1196,
+      "column": 17,
+      "kind": "regexUse",
+      "expression": "defaultLibReferenceRegEx.test(textSubStr)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1330,
+      "column": 16,
+      "kind": "regexUse",
+      "expression": "text.split(/\\r\\n|\\n|\\r/)",
+      "method": "split",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1330,
+      "column": 27,
+      "kind": "literal",
+      "expression": "/\\r\\n|\\n|\\r/",
+      "pattern": "\\r\\n|\\n|\\r",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1330,
+      "column": 53,
+      "kind": "replaceOther",
+      "expression": "line.replace(/^\\s*\\*/, \"\")",
+      "argument": "\"\"",
+      "argumentType": "\"\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1330,
+      "column": 53,
+      "kind": "regexUse",
+      "expression": "line.replace(/^\\s*\\*/, \"\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 1330,
+      "column": 66,
+      "kind": "literal",
+      "expression": "/^\\s*\\*/",
+      "pattern": "^\\s*\\*",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2062,
+      "column": 12,
+      "kind": "replaceOther",
+      "expression": "getBaseFileName(moduleName).replace(/^(\\d)/, \"_$1\").replace(/\\W/g, \"_\")",
+      "argument": "\"_\"",
+      "argumentType": "\"_\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2062,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "getBaseFileName(moduleName).replace(/^(\\d)/, \"_$1\").replace(/\\W/g, \"_\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2062,
+      "column": 12,
+      "kind": "replaceOther",
+      "expression": "getBaseFileName(moduleName).replace(/^(\\d)/, \"_$1\")",
+      "argument": "\"_$1\"",
+      "argumentType": "\"_$1\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2062,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "getBaseFileName(moduleName).replace(/^(\\d)/, \"_$1\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2062,
+      "column": 48,
+      "kind": "literal",
+      "expression": "/^(\\d)/",
+      "pattern": "^(\\d)",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2062,
+      "column": 72,
+      "kind": "literal",
+      "expression": "/\\W/g",
+      "pattern": "\\W",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2781,
+      "column": 43,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<reference\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>/",
+      "pattern": "^\\/\\/\\/\\s*<reference\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2782,
+      "column": 61,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<reference\\s+types\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>/",
+      "pattern": "^\\/\\/\\/\\s*<reference\\s+types\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2783,
+      "column": 42,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<reference\\s+lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>/",
+      "pattern": "^\\/\\/\\/\\s*<reference\\s+lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2784,
+      "column": 46,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<amd-dependency\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>/",
+      "pattern": "^\\/\\/\\/\\s*<amd-dependency\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2785,
+      "column": 39,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<amd-module\\s+(?:\\S.*?)??\\/>/",
+      "pattern": "^\\/\\/\\/\\s*<amd-module\\s+(?:\\S.*?)??\\/>",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 2786,
+      "column": 34,
+      "kind": "literal",
+      "expression": "/^\\/\\/\\/\\s*<reference\\s+no-default-lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\")\\s*\\/>/",
+      "pattern": "^\\/\\/\\/\\s*<reference\\s+no-default-lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\")\\s*\\/>",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6138,
+      "column": 36,
+      "kind": "literal",
+      "expression": "/\\$\\{/g",
+      "pattern": "\\$\\{",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6141,
+      "column": 12,
+      "kind": "replaceOther",
+      "expression": "str.replace(templateSubstitutionRegExp, \"\\\\${\")",
+      "argument": "\"\\\\${\"",
+      "argumentType": "\"\\\\${\"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6141,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "str.replace(templateSubstitutionRegExp, \"\\\\${\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6160,
+      "column": 39,
+      "kind": "literal",
+      "expression": "/[\\\\\"\\u0000-\\u001f\\u2028\\u2029\\u0085]/g",
+      "pattern": "[\\\\\"\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6161,
+      "column": 39,
+      "kind": "literal",
+      "expression": "/[\\\\'\\u0000-\\u001f\\u2028\\u2029\\u0085]/g",
+      "pattern": "[\\\\'\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6163,
+      "column": 41,
+      "kind": "literal",
+      "expression": "/\\r\\n|[\\\\`\\u0000-\\u0009\\u000b-\\u001f\\u2028\\u2029\\u0085]/g",
+      "pattern": "\\r\\n|[\\\\`\\u0000-\\u0009\\u000b-\\u001f\\u2028\\u2029\\u0085]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6211,
+      "column": 12,
+      "kind": "replaceCallback",
+      "expression": "s.replace(escapedCharsRegExp, getReplacement)",
+      "argument": "getReplacement",
+      "argumentType": "(c: string, offset: number, input: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6211,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "s.replace(escapedCharsRegExp, getReplacement)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6214,
+      "column": 28,
+      "kind": "literal",
+      "expression": "/[^\\u0000-\\u007F]/g",
+      "pattern": "[^\\u0000-\\u007F]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6220,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "nonAsciiCharacters.test(s)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6221,
+      "column": 9,
+      "kind": "replaceCallback",
+      "expression": "s.replace(nonAsciiCharacters, c => encodeUtf16EscapeSequence(c.charCodeAt(0)))",
+      "argument": "c => encodeUtf16EscapeSequence(c.charCodeAt(0))",
+      "argumentType": "(c: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6221,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "s.replace(nonAsciiCharacters, c => encodeUtf16EscapeSequence(c.charCodeAt(0)))",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6229,
+      "column": 42,
+      "kind": "literal",
+      "expression": "/[\"\\u0000-\\u001f\\u2028\\u2029\\u0085]/g",
+      "pattern": "[\"\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6230,
+      "column": 42,
+      "kind": "literal",
+      "expression": "/['\\u0000-\\u001f\\u2028\\u2029\\u0085]/g",
+      "pattern": "['\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6252,
+      "column": 12,
+      "kind": "replaceCallback",
+      "expression": "s.replace(escapedCharsRegExp, getJsxAttributeStringReplacement)",
+      "argument": "getJsxAttributeStringReplacement",
+      "argumentType": "(c: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 6252,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "s.replace(escapedCharsRegExp, getJsxAttributeStringReplacement)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 8584,
+      "column": 12,
+      "kind": "replaceCallback",
+      "expression": "text.replace(/\\{(\\d+)\\}/g, (_match, index: string) => \"\" + Debug.checkDefined(args[+index]))",
+      "argument": "(_match, index: string) => \"\" + Debug.checkDefined(args[+index])",
+      "argumentType": "(_match: string, index: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 8584,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "text.replace(/\\{(\\d+)\\}/g, (_match, index: string) => \"\" + Debug.checkDefined(args[+index]))",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 8584,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/\\{(\\d+)\\}/g",
+      "pattern": "\\{(\\d+)\\}",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9594,
+      "column": 34,
+      "kind": "literal",
+      "expression": "/[^\\w\\s/]/g",
+      "pattern": "[^\\w\\s/]",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9598,
+      "column": 12,
+      "kind": "replaceCallback",
+      "expression": "text.replace(reservedCharacterPattern, escapeRegExpCharacter)",
+      "argument": "escapeRegExpCharacter",
+      "argumentType": "(match: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9598,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "text.replace(reservedCharacterPattern, escapeRegExpCharacter)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9658,
+      "column": 22,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionsForWildcards(specs, basePath, usage)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9675,
+      "column": 43,
+      "kind": "patternCall",
+      "expression": "getSubPatternFromSpec(spec, basePath, usage, wildcardMatchers[usage])"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9685,
+      "column": 13,
+      "kind": "regexUse",
+      "expression": "/[.*?]/.test(lastPathComponent)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9685,
+      "column": 13,
+      "kind": "literal",
+      "expression": "/[.*?]/",
+      "pattern": "[.*?]",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9690,
+      "column": 29,
+      "kind": "patternCall",
+      "expression": "getSubPatternFromSpec(spec, basePath, usage, wildcardMatchers[usage])"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9746,
+      "column": 37,
+      "kind": "replaceCallback",
+      "expression": "component.replace(reservedCharacterPattern, replaceWildcardCharacter)",
+      "argument": "replaceWildcardCharacter",
+      "argumentType": "(match: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9746,
+      "column": 37,
+      "kind": "regexUse",
+      "expression": "component.replace(reservedCharacterPattern, replaceWildcardCharacter)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9761,
+      "column": 31,
+      "kind": "replaceCallback",
+      "expression": "component.replace(reservedCharacterPattern, replaceWildcardCharacter)",
+      "argument": "replaceWildcardCharacter",
+      "argumentType": "(match: string) => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9761,
+      "column": 31,
+      "kind": "regexUse",
+      "expression": "component.replace(reservedCharacterPattern, replaceWildcardCharacter)",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9808,
+      "column": 34,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionsForWildcards(includes, absolutePath, \"files\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9809,
+      "column": 29,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionForWildcard(includes, absolutePath, \"files\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9810,
+      "column": 34,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionForWildcard(includes, absolutePath, \"directories\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9811,
+      "column": 25,
+      "kind": "patternCall",
+      "expression": "getRegularExpressionForWildcard(excludes, absolutePath, \"exclude\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9818,
+      "column": 12,
+      "kind": "constructor",
+      "expression": "new RegExp(pattern, useCaseSensitiveFileNames ? \"\" : \"i\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9832,
+      "column": 108,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(pattern, useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9833,
+      "column": 71,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(patterns.includeDirectoryPattern, useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9834,
+      "column": 53,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(patterns.excludePattern, useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9857,
+      "column": 33,
+      "kind": "regexUse",
+      "expression": "excludeRegex.test(absoluteName)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9862,
+      "column": 74,
+      "kind": "regexUse",
+      "expression": "re.test(absoluteName)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9880,
+      "column": 44,
+      "kind": "regexUse",
+      "expression": "includeDirectoryRegex.test(absoluteName)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9881,
+      "column": 36,
+      "kind": "regexUse",
+      "expression": "excludeRegex.test(absoluteName)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 10158,
+      "column": 19,
+      "kind": "regexUse",
+      "expression": "str.match(/\\//g)",
+      "method": "match",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 10158,
+      "column": 29,
+      "kind": "literal",
+      "expression": "/\\//g",
+      "pattern": "\\/",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 10916,
+      "column": 12,
+      "kind": "replaceCallback",
+      "expression": "text.replace(/\\$/g, () => \"\\\\$\")",
+      "argument": "() => \"\\\\$\"",
+      "argumentType": "() => string",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 10916,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "text.replace(/\\$/g, () => \"\\\\$\")",
+      "method": "replace",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 10916,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/\\$/g",
+      "pattern": "\\$",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 12179,
+      "column": 15,
+      "kind": "literal",
+      "expression": "/import|require/g",
+      "pattern": "import|require",
+      "flags": "g"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 12180,
+      "column": 12,
+      "kind": "regexUse",
+      "expression": "r.exec(file.text)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 12181,
+      "column": 46,
+      "kind": "lastIndex",
+      "expression": "r.lastIndex"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilitiesPublic.ts",
+      "line": 699,
+      "column": 25,
+      "kind": "regexUse",
+      "expression": "/^([a-z]+)(?:[_-]([a-z]+))?$/.exec(lowerCaseLocale)",
+      "method": "exec",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilitiesPublic.ts",
+      "line": 699,
+      "column": 25,
+      "kind": "literal",
+      "expression": "/^([a-z]+)(?:[_-]([a-z]+))?$/",
+      "pattern": "^([a-z]+)(?:[_-]([a-z]+))?$",
+      "flags": ""
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 185,
+      "column": 9,
+      "kind": "replaceOther",
+      "expression": "system.now().toLocaleTimeString(\"en-US\", { timeZone: \"UTC\" }).replace(\"\\u202f\", \" \")",
+      "argument": "\" \"",
+      "argumentType": "\" \"",
+      "receiverType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 439,
+      "column": 25,
+      "kind": "patternCall",
+      "expression": "getPatternFromSpec(includeSpec, basePath, \"files\")"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 440,
+      "column": 29,
+      "kind": "regexUse",
+      "expression": "getRegexFromPattern(`(?:${pattern})$`, useCaseSensitiveFileNames).test(fileName)",
+      "method": "test",
+      "receiverType": "RegExp",
+      "argumentType": "string"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 440,
+      "column": 29,
+      "kind": "patternCall",
+      "expression": "getRegexFromPattern(`(?:${pattern})$`, useCaseSensitiveFileNames)"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 790,
+      "column": 9,
+      "kind": "regexUse",
+      "expression": "text.match(sourceMapCommentRegExpDontCareLineStart)",
+      "method": "match",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 812,
+      "column": 17,
+      "kind": "regexUse",
+      "expression": "line.match(sourceMapCommentRegExp)",
+      "method": "match",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "line": 817,
+      "column": 23,
+      "kind": "regexUse",
+      "expression": "line.match(whitespaceOrMapCommentRegExp)",
+      "method": "match",
+      "receiverType": "string",
+      "argumentType": "RegExp"
+    }
+  ],
+  "files": [
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+      "sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "sha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+      "sha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+      "sha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/executeCommandLine.ts",
+      "sha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+      "sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "sha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+      "sha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+      "sha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+      "sha256": "edeb7827fbdf692c7c06a176425104be3a3d2b161752522901e7c32d74d9d553"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+      "sha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+      "sha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+      "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+      "sha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/taggedTemplate.ts",
+      "sha256": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/ts.ts",
+      "sha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilitiesPublic.ts",
+      "sha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/watch.ts",
+      "sha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e"
+    }
+  ]
+}

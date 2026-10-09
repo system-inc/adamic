@@ -1,0 +1,54 @@
+let order = '';
+function position(): number { order = order + 'p'; return 0; }
+function first<T extends string | undefined>(value: T): string {
+    return String.prototype.charAt.call(value, position());
+}
+function trim<T extends string | null>(value: T): string {
+    return String.prototype.trim.call(value);
+}
+try { console.log(first<string | undefined>(undefined)); } catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error instanceof TypeError}`);
+        console.log(`${error.name}: ${error.message}`);
+    }
+}
+console.log(order);
+try { console.log(trim<string | null>(null)); } catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error instanceof TypeError}`);
+        console.log(`${error.name}: ${error.message}`);
+    }
+}
+console.log(first<string>('undefined'));
+console.log(trim<string>(' null '));
+function fill<T extends string | undefined>(value: T): string {
+    return 'ab'.padEnd(5, value) + '|' + String.prototype.padStart.call('ab', 5, value);
+}
+console.log(fill<string | undefined>(undefined));
+console.log(fill<string>(''));
+console.log(fill<string>('xy'));
+console.log(fill<string>('undefined'));
+console.log('ab'.padStart(5, undefined));
+console.log(String.prototype.padEnd.call('ab', 5, undefined));
+function own<T extends string | null>(value: T): string {
+    return String.prototype.toString.call(value);
+}
+try { own<string | null>(null); } catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error instanceof TypeError}`);
+        console.log(`${error.name}: ${error.message}`);
+    }
+}
+function failPosition(): number { throw new Error('argument first'); }
+try { String.prototype.charAt.call(undefined, failPosition()); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+function trimStart<T extends string | undefined>(value: T): string {
+    return String.prototype.trimStart.call(value);
+}
+try { trimStart<string | undefined>(undefined); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+try { String.prototype.trimEnd.call(null); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}

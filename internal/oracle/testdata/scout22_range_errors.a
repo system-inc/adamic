@@ -1,0 +1,21 @@
+function report(operation: () => string): void {
+ try { console.log(operation()); } catch(error) {
+  if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+ console.log(`${error instanceof TypeError}/${error instanceof RangeError}`);
+ }
+}
+const built = 'ab'.repeat(2);
+report(() => built.repeat(-1.5));
+report(() => built.repeat(Infinity));
+report(() => built.repeat(2**30));
+report(() => built.padStart(2**30, 'x'));
+report(() => built.normalize('wrong'));
+report(() => (1).toFixed(-1));
+report(() => (1).toFixed(101));
+report(() => (1).toExponential(-1));
+report(() => (1).toPrecision(0));
+report(() => (1).toString(1));
+report(() => (NaN).toString(1));
+report(() => (NaN).toExponential(-1));
+report(() => (Infinity).toPrecision(0));
+console.log('after range');

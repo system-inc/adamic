@@ -1,0 +1,17 @@
+// a-check: checked
+// compiler/transformers/classFields.ts:422,425,1104,1433,3180: original-node identity caches.
+interface Node { readonly kind: number }
+interface LexicalEnv { readonly name: string }
+const lexicalEnvironmentMap = new Map<Node, LexicalEnv>();
+const noSubstitution = new Set<Node>();
+const original: Node = { kind: 1 };
+const equalShape: Node = { kind: 1 };
+const alias = original;
+lexicalEnvironmentMap.set(original, { name: 'lex'.repeat(2) });
+noSubstitution.add(original);
+noSubstitution.add(alias);
+noSubstitution.add(equalShape);
+console.log(`${noSubstitution.size} ${noSubstitution.has(alias)}`);
+console.log(`${lexicalEnvironmentMap.has(equalShape)}`);
+console.log(lexicalEnvironmentMap.get(alias)?.name ?? 'missing');
+for (const node of noSubstitution) console.log(`${node === original}`);

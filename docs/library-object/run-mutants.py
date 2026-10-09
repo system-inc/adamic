@@ -17,7 +17,7 @@ mutants = [
  ('has-own-always-false', runtime, 'memcmp(name, key->bytes, key->length) == 0) return true;', 'memcmp(name, key->bytes, key->length) == 0) return false;', 'has_own'),
  ('freeze-no-flag', runtime, 'object->frozen = true;', 'object->frozen = false;', 'freeze'),
  ('freeze-write-ignored', runtime, "if (!object->frozen || name[0] == '#') return;", "if (object->shape != NULL) return;", 'freeze_write'),
- ('spread-reuses-frozen', 'internal/native/reuse.go', 'held := fmt.Sprintf("(%s && !%s->frozen)", uniquelyHeld(source), source)', 'held := uniquelyHeld(source)', 'freeze'),
+ ('spread-reuses-frozen', 'internal/native/reuse.go', 'held := fmt.Sprintf("(%s && !%s->frozen && !%s->nonextensible)", uniquelyHeld(source), source, source)', 'held := uniquelyHeld(source)', 'freeze'),
 ]
 log_dir = Path(os.environ.get('OBJECT_MUTANT_LOGS', '/tmp/object-mutants'))
 log_dir.mkdir(parents=True, exist_ok=True)

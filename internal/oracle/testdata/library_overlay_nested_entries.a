@@ -1,0 +1,10 @@
+function arrayFrom<T>(items: MapIterator<T>): T[] { return [...items]; }
+function transform<T, U>(items: MapIterator<T>, callback: (item: T) => U): U[] {
+    const result: U[] = [];
+    for (const item of items) { result.push(callback(item)); }
+    return result;
+}
+const inner = new Map<string, { name: string }>([['first', { name: 'alpha' }], ['second', { name: 'beta' }]]);
+for (const [key, values] of arrayFrom(new Map<string, Map<string, { name: string }>>([['group', inner]]).entries())) {
+    console.log(`${key}: ${transform(values.values(), item => item.name).join('|')}`);
+}

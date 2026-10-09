@@ -39,3 +39,6 @@ Thumbs.db
 
 # Static lint dispatch is regenerated before builds and tests.
 /stage1/cohere/lint/.generated/
+
+# Local run output from fixture and gate tools.
+/logs/

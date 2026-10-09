@@ -6,10 +6,10 @@
 #include <string.h>
 #include <time.h>
 
-static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
-static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
-static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
-static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL, false};
+static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL, false};
+static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL, false};
+static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL, false};
 static adamic_string *text(const char *bytes) {
 	size_t length = strlen(bytes);
 	adamic_string *result = adamic_string_allocate(length);
@@ -41,7 +41,7 @@ static void snapshot(adamic_record *record) {
 	for (size_t index = 0; index < keys->length; index++) {
 		fields[index] = (adamic_json_field){keys->elements[index].reference, index, &number_schema};
 	}
-	const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+	const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields, false};
 	// A borrowed object view for JSON only, never counted or freed as a heap object.
 	adamic_object *view = calloc(1, sizeof *view + keys->length * sizeof *view->slots);
 	if (view == NULL) abort();

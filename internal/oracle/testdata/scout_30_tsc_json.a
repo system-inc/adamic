@@ -1,0 +1,5 @@
+// debug.ts:721: debugger display quotes a string with JSON escaping.
+function display(text: string): string | undefined {
+    return JSON.stringify(text.length < 10 ? text : text.slice(10) + '...');
+}
+for (const text of ['short', 'a"b', '\uD800', 'line\nend', '0123456789tail']) console.log(`${display(text)}`);

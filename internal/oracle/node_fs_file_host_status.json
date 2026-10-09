@@ -55,12 +55,12 @@
     "file": "05_writeFile.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:13:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:13:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
     },
     "nodeMutantCaught": true
   },
@@ -69,11 +69,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet\n"
     },
     "nodeMutantCaught": true
   },
@@ -82,11 +82,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet\n"
     },
     "nodeMutantCaught": true
   },
@@ -94,12 +94,14 @@
     "file": "11_setModifiedTime.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/11_setModifiedTime.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/11_setModifiedTime.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "nodeMutantCaught": true
   },
@@ -108,11 +110,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet\n"
     },
     "javascript": {
       "stage": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet\n"
     },
     "nodeMutantCaught": true
   },

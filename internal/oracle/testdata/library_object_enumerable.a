@@ -1,0 +1,5 @@
+const object = {text: 'built'.repeat(2)};
+Error.captureStackTrace(object);
+console.log(`${object.propertyIsEnumerable('text')}`);
+console.log(`${object.propertyIsEnumerable('stack')}`);
+console.log(`${object.hasOwnProperty('stack')}`);

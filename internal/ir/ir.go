@@ -10,6 +10,7 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Async             *AsyncProgram
 	ViewOrigins       []Expression
 	ViewContracts     []ViewContract
 	ViewContractTypes map[int]ViewContractID
@@ -745,17 +746,22 @@ type (
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
-	// element, its index and the array: forEach, filter, some, every, find and findIndex. The length
-	// is read once, before the first call, and an index the array no longer has when its turn comes
-	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
+	// element, its index and the array. The length is read once before the first call.
+	// Searches Get removed indices as undefined; the other visits skip them.
+	// Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
 		CallbackType int
-		Method       string
-		Array        Expression
-		Callback     Expression
-		Element      Type
-		Returns      Type
+		// SearchFirst and SearchUndefined preserve the callback's declared value contract.
+		// SearchElementName names the checker type in a failed search call.
+		SearchFirst       Type
+		SearchUndefined   bool
+		SearchElementName string
+		Method            string
+		Array             Expression
+		Callback          Expression
+		Element           Type
+		Returns           Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
@@ -883,6 +889,19 @@ type (
 		Depth     int
 	}
 
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
+	}
+
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
 	// Node's readFileSync(path, 'utf8') decodes them, in { kind: 'Ok', text }, or what went wrong in
 	// { kind: 'Error', message }, a message in Adamic's own words.
@@ -911,6 +930,9 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -1044,7 +1066,7 @@ func (c StringCall) Type() Type {
 		return MaybeNumber
 	case "indexOf", "lastIndexOf":
 		return Number
-	case "includes", "startsWith", "endsWith":
+	case "includes", "startsWith", "endsWith", "isWellFormed":
 		return Boolean
 	case "split":
 		return Array
@@ -1058,6 +1080,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
@@ -1322,3 +1345,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

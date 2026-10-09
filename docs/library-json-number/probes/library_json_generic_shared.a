@@ -1,0 +1,6 @@
+// a-check: checked
+function scalar(flag: boolean): string | number { return flag ? 'x'.repeat(2) : 3; }
+function pick(flag: boolean): string | number[] { return flag ? 'x'.repeat(2) : [1, 2]; }
+function show<T>(value: T): string | undefined { return JSON.stringify(value); }
+console.log(show(scalar(false)) ?? 'u');
+console.log(show(pick(false)) ?? 'u');

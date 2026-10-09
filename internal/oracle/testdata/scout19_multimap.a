@@ -1,0 +1,10 @@
+// a-check: checked
+// compiler/core.ts:1548-1557: existing buckets are extended through the same array alias.
+import { multiMapAdd } from '../../../stage1/typescript/collections/core.a';
+const map = new Map<string, number[]>();
+const held = multiMapAdd(map, 'first', 1);
+multiMapAdd(map, 'second', 9);
+multiMapAdd(map, 'first', 2);
+console.log(`${held.join(',')} ${map.size}`);
+console.log(`${map.get('first') === held}`);
+for (const [key, values] of map) console.log(`${key} ${values.join(',')}`);

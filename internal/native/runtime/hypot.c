@@ -16,7 +16,9 @@
 #include <math.h>
 
 // Fused multiply-adds would change the compensated sum's bits; see ieee754.c.
+#ifndef ADAMIC_FUSED_RUNTIME
 #pragma STDC FP_CONTRACT OFF
+#endif
 
 double adamic_math_hypot(size_t count, const double *values) {
 	// An infinity wins over NaN (Math.hypot(NaN, Infinity) is Infinity), and NaN over the rest.

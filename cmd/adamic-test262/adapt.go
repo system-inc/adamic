@@ -415,16 +415,17 @@ func arrayOf(elem *jtype) *jtype {
 }
 
 type texpr struct {
-	op        string
-	name      string
-	prop      string
-	scope     *scope
-	fn        *fnInfo
-	left      *texpr
-	right     *texpr
-	elems     []*texpr
-	fields    []namedExpr
-	arrayCtor bool
+	op             string
+	name           string
+	prop           string
+	scope          *scope
+	fn             *fnInfo
+	left           *texpr
+	right          *texpr
+	elems          []*texpr
+	fields         []namedExpr
+	arrayCtor      bool
+	constructorEnd int
 }
 
 type namedExpr struct {
@@ -532,6 +533,7 @@ type parser struct {
 	counts            map[string]int
 	refs              []reference
 	varStmts          []*varStmt
+	collectionCalls   []callNote
 	calls             []callNote
 	cmps              []cmpNote
 	throws            []throwNote
@@ -1312,6 +1314,7 @@ func (p *parser) finishCall(callee *texpr) []*texpr {
 }
 
 func (p *parser) noteCall(callee *texpr, args []*texpr) {
+	p.noteCollectionCall(callee, args)
 	if callee == nil || callee.op != "member" {
 		return
 	}
@@ -1387,7 +1390,11 @@ func (p *parser) parsePrimary() *texpr {
 
 func (p *parser) parseNew() *texpr {
 	p.next()
+	constructor := p.peek()
 	expr := p.parsePostfix()
+	if expr != nil && expr.op == "call" && expr.left != nil && expr.left.op == "name" && constructor.text == expr.left.name && (expr.left.name == "Map" || expr.left.name == "Set") && len(expr.elems) == 0 {
+		return &texpr{op: "emptyCollection", name: expr.left.name, scope: expr.left.scope, constructorEnd: constructor.end}
+	}
 	if expr != nil && expr.arrayCtor {
 		return expr
 	}
@@ -1657,6 +1664,7 @@ func (p *parser) finish() {
 	if !p.unsafeVars {
 		p.rewriteVars()
 	}
+	p.annotateCollections()
 	p.annotateCallbacks()
 	p.rewriteEquals()
 	p.rewriteThrows()

@@ -1,0 +1,11 @@
+
+// This file must be refused as .a. The dedicated oracle copies it to .ts.
+const first = {};
+const second = {};
+const fresh: {} = Object.create(first);
+console.log(`${Object.is(Object.getPrototypeOf(fresh),first)}`);
+Object.setPrototypeOf(first,second);
+console.log(`${Object.is(Object.getPrototypeOf(first),second)}`);
+try { Object.setPrototypeOf(second,first); console.log('cycle accepted'); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(`${Object.is(Object.getPrototypeOf(fresh),first)}`);

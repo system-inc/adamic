@@ -1,0 +1,28 @@
+/// <reference lib="es2025.iterator" />
+const values = [1, 2, 3].values();
+console.log(`${values.next().value}`);
+const remaining = values.toArray();
+console.log(`${remaining.join(',')} ${values.next().done} ${values.toArray().length}`);
+const empty = [1].keys();
+empty.next();
+console.log(`${empty.toArray().length}`);
+const map = new Map<number, string>([
+    [1, 'one'],
+    [2, 'two'],
+]);
+console.log(map.keys().toArray().join(','));
+console.log(map.values().toArray().join(','));
+const entries = map.entries().toArray();
+for(const entry of entries) {
+    console.log(`${entry[0]} ${entry[1]}`);
+}
+console.log(new Set<string>(['one', 'two']).values().toArray().join(','));
+const points = 'A😀\ud800Z'[Symbol.iterator]().toArray();
+for(const point of points) {
+    console.log(`${point.length} ${point.charCodeAt(0)}`);
+}
+const dynamic: string[] = [];
+dynamic.push(`item${map.size}`);
+const collected = dynamic.values().toArray();
+dynamic.pop();
+console.log(collected.join(','));

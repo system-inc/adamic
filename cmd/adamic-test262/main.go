@@ -12,7 +12,9 @@
 // natively and with Node. An explicit -root or -compiler-subprocess uses `adamic c`. pass
 // means both succeeded and their output matches. fail means they disagree, or native failed where
 // Node passed. refused means stage 0 or the checker said no, the reason normalized the way a meter
-// groups them (cmd/adamic-meter is not on main; see reason.go). crashed means a signal, a
+// groups them (cmd/adamic-meter is not on main; see reason.go). not-typescript means the
+// checker refused and stock tsc rejected the exact adapted source with the same TS code.
+// Stock TypeScript must be installed with tsc on PATH. crashed means a signal, a
 // sanitizer, a timeout, or the compiler itself failing. The crash record names the test file.
 //
 // --adapt rewrites test262's spelling in memory only, and counts each rewrite: var to let where
@@ -34,6 +36,7 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -53,6 +56,7 @@ func run(arguments []string) (exit int) {
 	subprocess := flags.Bool("compiler-subprocess", false, "start adamic c for each test (reference path; also used with an explicit -root)")
 	jobs := flags.Int("jobs", runtime.GOMAXPROCS(0), "number of concurrent tests")
 	limit := flags.Int("limit", 0, "run at most this many attempted tests per filter (0 is all)")
+	executionTimeout := flags.Duration("timeout", 15*time.Second, "wall limit for each native or Node execution")
 	flags.Usage = func() {
 		fmt.Fprintf(os.Stderr, "usage: adamic-test262 [flags] <filter>...\n\n")
 		fmt.Fprintf(os.Stderr, "  filter is a directory under test262's test/, like built-ins/String/prototype/padStart\n\n")
@@ -105,9 +109,17 @@ func run(arguments []string) (exit int) {
 	} else {
 		prepared = &engine{test262: *test262, log: os.Stderr, adapt: *adapt}
 	}
+	if prepared.oracle != nil {
+		defer prepared.oracle.close()
+	}
 	prepared.adapt = *adapt
 	prepared.jobs = *jobs
 	prepared.inProcess = inProcess
+	if *executionTimeout <= 0 {
+		fmt.Fprintln(os.Stderr, "timeout must be positive")
+		return 2
+	}
+	prepared.timeout = *executionTimeout
 	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
 		report, err := prepared.runFilter(filter, *limit, *classifyOnly)
@@ -116,6 +128,9 @@ func run(arguments []string) (exit int) {
 			return 1
 		}
 		document.Filters = append(document.Filters, report)
+	}
+	if prepared.oracle != nil {
+		document.Oracle = prepared.oracle.stats
 	}
 	if *asJSON {
 		printTables(os.Stderr, document)
@@ -138,15 +153,16 @@ func printTables(writer io.Writer, document reportDocument) {
 	} else {
 		fmt.Fprintf(writer, "adapt off\n")
 	}
+	fmt.Fprintf(writer, "tsc %s checks=%d cache-hits=%d cost=%dms\n", document.Oracle.Version, document.Oracle.Checks, document.Oracle.Hits, document.Oracle.Milliseconds)
 	fmt.Fprintln(writer)
 	for _, filter := range document.Filters {
 		fmt.Fprintf(writer, "%s\n", filter.Path)
 		if filter.Unrun > 0 {
-			fmt.Fprintf(writer, "pass %d   fail %d   refused %d   crashed %d   skipped %d   not run %d   total %d\n\n",
-				filter.Pass, filter.Fail, filter.Refused, filter.Crashed, filter.Skipped, filter.Unrun, filter.Total)
+			fmt.Fprintf(writer, "pass %d   fail %d   refused %d   not-typescript %d   crashed %d   skipped %d   not run %d   total %d\n\n",
+				filter.Pass, filter.Fail, filter.Refused, filter.NotTypescript, filter.Crashed, filter.Skipped, filter.Unrun, filter.Total)
 		} else {
-			fmt.Fprintf(writer, "pass %d   fail %d   refused %d   crashed %d   skipped %d   total %d\n\n",
-				filter.Pass, filter.Fail, filter.Refused, filter.Crashed, filter.Skipped, filter.Total)
+			fmt.Fprintf(writer, "pass %d   fail %d   refused %d   not-typescript %d   crashed %d   skipped %d   total %d\n\n",
+				filter.Pass, filter.Fail, filter.Refused, filter.NotTypescript, filter.Crashed, filter.Skipped, filter.Total)
 		}
 		width := len("directory")
 		for _, directory := range filter.Directories {
@@ -154,11 +170,12 @@ func printTables(writer io.Writer, document reportDocument) {
 				width = len(directory.Path)
 			}
 		}
-		fmt.Fprintf(writer, "%-*s  %6s  %6s  %8s  %8s  %8s\n", width, "directory", "pass", "fail", "refused", "crashed", "skipped")
+		fmt.Fprintf(writer, "%-*s  %6s  %6s  %8s  %14s  %8s  %8s\n", width, "directory", "pass", "fail", "refused", "not-typescript", "crashed", "skipped")
 		for _, directory := range filter.Directories {
-			fmt.Fprintf(writer, "%-*s  %6d  %6d  %8d  %8d  %8d\n", width, directory.Path, directory.Pass, directory.Fail, directory.Refused, directory.Crashed, directory.Skipped)
+			fmt.Fprintf(writer, "%-*s  %6d  %6d  %8d  %14d  %8d  %8d\n", width, directory.Path, directory.Pass, directory.Fail, directory.Refused, directory.NotTypescript, directory.Crashed, directory.Skipped)
 		}
 		fmt.Fprintln(writer)
+		printReasons(writer, "not-typescript reasons", filter.NotTypescriptReasons)
 		printReasons(writer, "refusal reasons", filter.RefusalReasons)
 		printReasons(writer, "skip reasons", filter.SkipReasons)
 		printReasons(writer, "fail reasons", filter.FailReasons)

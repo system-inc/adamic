@@ -1,0 +1,18 @@
+const scratch = process.argv[2] ?? "";
+const child = process.argv[3] ?? "";
+const missing = process.argv[4] ?? "";
+process.cwd();
+process.chdir(scratch);
+console.log(String(process.cwd() === scratch));
+const memoized = process.cwd();
+process.chdir(child);
+console.log(String(process.cwd() === child));
+console.log(String(memoized === scratch));
+try {
+    process.chdir(missing);
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message.split(":")[0] ?? "");
+        console.log(error.message);
+    }
+}

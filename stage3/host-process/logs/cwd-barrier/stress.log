@@ -1,0 +1,20 @@
+=== RUN   TestNodeProcessCwdBarrier
+=== PAUSE TestNodeProcessCwdBarrier
+=== CONT  TestNodeProcessCwdBarrier
+=== RUN   TestNodeProcessCwdBarrier/plain_Node
+    node_process_barrier_test.go:74: 24 concurrent observations compared with independent plain Node
+=== RUN   TestNodeProcessCwdBarrier/source_Node
+    node_process_barrier_test.go:74: 24 concurrent observations compared with independent plain Node
+=== RUN   TestNodeProcessCwdBarrier/native
+    node_process_barrier_test.go:74: 24 concurrent observations compared with independent plain Node
+=== RUN   TestNodeProcessCwdBarrier/JavaScript
+    node_process_barrier_test.go:74: 24 concurrent observations compared with independent plain Node
+=== NAME  TestNodeProcessCwdBarrier
+    node_process_barrier_test.go:95: clean driver truncation mutant caught only by Node stdout on source and both backends
+--- PASS: TestNodeProcessCwdBarrier (2.56s)
+    --- PASS: TestNodeProcessCwdBarrier/plain_Node (0.46s)
+    --- PASS: TestNodeProcessCwdBarrier/source_Node (0.72s)
+    --- PASS: TestNodeProcessCwdBarrier/native (0.22s)
+    --- PASS: TestNodeProcessCwdBarrier/JavaScript (0.46s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	2.570s

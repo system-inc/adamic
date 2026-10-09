@@ -1,0 +1,3 @@
+process.exitCode = 4;
+try { throw new Error('exitCode cannot swallow an uncaught throw'); }
+finally { console.log('uncaught finally'); }

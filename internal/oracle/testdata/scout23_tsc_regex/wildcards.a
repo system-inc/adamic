@@ -1,0 +1,122 @@
+// utilities.ts:9657-9666,9817-9819; subjects use tsc's documented wildcard boundaries.
+function getRegexFromPattern(pattern: string, useCaseSensitiveFileNames: boolean): RegExp {
+    return new RegExp(pattern, useCaseSensitiveFileNames ? "" : "i");
+}
+// Patterns below are constructed by getRegularExpressionForWildcard at the pinned API.
+const rows = [
+    {
+        "spec": "src/**/*.ts",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^/.][^/]*)*?/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./](?:[^./]|(?:\\.(?!min\\.js$))?)*)?\\.ts))$"
+    },
+    {
+        "spec": "src/**/*.ts",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^/.][^/]*)*?(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./][^/]*)?\\.ts)?)?)?)?))$"
+    },
+    {
+        "spec": "src/**/*.ts",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/src(?:/.+?)?/[^/]*\\.ts))(?:$|/)"
+    },
+    {
+        "spec": "src/*.js",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/src/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./](?:[^./]|(?:\\.(?!min\\.js$))?)*)?\\.js))$"
+    },
+    {
+        "spec": "src/*.js",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./][^/]*)?\\.js)?)?)?)?))$"
+    },
+    {
+        "spec": "src/*.js",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/src/[^/]*\\.js))(?:$|/)"
+    },
+    {
+        "spec": "src/?.ts",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/src/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^./]\\.ts))$"
+    },
+    {
+        "spec": "src/?.ts",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^./]\\.ts)?)?)?)?))$"
+    },
+    {
+        "spec": "src/?.ts",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/src/[^/]\\.ts))(?:$|/)"
+    },
+    {
+        "spec": "src",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^/.][^/]*)*?/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./](?:[^./]|(?:\\.(?!min\\.js$))?)*)?))$"
+    },
+    {
+        "spec": "src",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^/.][^/]*)*?(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./][^/]*)?)?)?)?)?))$"
+    },
+    {
+        "spec": "src",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/src(?:/.+?)?/[^/]*))(?:$|/)"
+    },
+    {
+        "spec": "src/.hidden/*.ts",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/src/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))\\.hidden/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./](?:[^./]|(?:\\.(?!min\\.js$))?)*)?\\.ts))$"
+    },
+    {
+        "spec": "src/.hidden/*.ts",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))\\.hidden(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./][^/]*)?\\.ts)?)?)?)?)?))$"
+    },
+    {
+        "spec": "src/.hidden/*.ts",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/src/\\.hidden/[^/]*\\.ts))(?:$|/)"
+    },
+    {
+        "spec": "node_modules/**/*.ts",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/node_modules(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^/.][^/]*)*?/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./](?:[^./]|(?:\\.(?!min\\.js$))?)*)?\\.ts))$"
+    },
+    {
+        "spec": "node_modules/**/*.ts",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/node_modules(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))[^/.][^/]*)*?(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))(?:[^./][^/]*)?\\.ts)?)?)?)?))$"
+    },
+    {
+        "spec": "node_modules/**/*.ts",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/node_modules(?:/.+?)?/[^/]*\\.ts))(?:$|/)"
+    },
+    {
+        "spec": "src/a+b[1].ts",
+        "usage": "files",
+        "pattern": "^(?:(?:/p/src/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))a\\+b\\[1\\]\\.ts))$"
+    },
+    {
+        "spec": "src/a+b[1].ts",
+        "usage": "directories",
+        "pattern": "^(?:(?:(?:(?:/p(?:/src(?:/(?!(?:node_modules|bower_components|jspm_packages)(?:/|$))a\\+b\\[1\\]\\.ts)?)?)?)?))$"
+    },
+    {
+        "spec": "src/a+b[1].ts",
+        "usage": "exclude",
+        "pattern": "^(?:(?:/p/src/a\\+b\\[1\\]\\.ts))(?:$|/)"
+    }
+];
+for (const row of rows) {
+    for (const sensitive of [true, false]) {
+        const expression = getRegexFromPattern(row.pattern, sensitive);
+        console.log(expression.source);
+        console.log(expression.flags);
+        for (const subject of ['/p/src/a.ts', '/p/SRC/A.TS', '/p/src/deep/a.ts', '/p/src/.hidden/a.ts', '/p/src/node_modules/a.ts', '/p/src/a.min.js', '/p/src/😀.ts', '/p/src/a+b[1].ts', '/p/node_modules/pkg/a.ts', '/p/src']) {
+            console.log(`${expression.test(subject)}`);
+        }
+    }
+}

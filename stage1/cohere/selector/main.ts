@@ -30,11 +30,10 @@ function unescape(line: string): string {
         if(line[index] !== '\\') {
             continue;
         }
-        // gap 1: push one value at a time.
-        parts.push(line.slice(start, index));
+        const prefix = line.slice(start, index);
         index++;
         const letter = line[index];
-        parts.push(unescapeLetter(letter));
+        parts.push(prefix, unescapeLetter(letter));
         start = index + 1;
     }
     parts.push(line.slice(start));

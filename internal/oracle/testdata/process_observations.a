@@ -1,0 +1,6 @@
+console.log(`stdout ${process.stdout.isTTY}, stderr ${process.stderr.isTTY}`);
+console.error(`stderr sees stdout ${process.stdout.isTTY}, stderr ${process.stderr.isTTY}`);
+for (const key of ['ADAMIC_PROCESS_TEST', 'NO_COLOR', 'FORCE_COLOR', 'ADAMIC_PROCESS_TEST\0ignored', 'ADAMIC_PROCESS_TEST_MISSING', 'ADAMIC_PROCESS_\ud800']) {
+	console.log(`${key.length}: ${process.env[key] ?? '<missing>'}`);
+}
+console.log(`property ${process.env.ADAMIC_PROCESS_TEST ?? '<missing>'}`);

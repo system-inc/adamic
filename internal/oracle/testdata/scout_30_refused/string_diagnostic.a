@@ -1,0 +1,5 @@
+// executeCommandLine.ts:317: message arguments include DiagnosticMessage objects.
+function argument(value: string | number | boolean | {message: string} | undefined): string {
+    return String(value);
+}
+console.log(argument({message:'diagnostic'}));

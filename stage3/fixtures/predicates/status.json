@@ -12,7 +12,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "02_module_name.a",
@@ -27,7 +30,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "03_void_zero.a",
@@ -42,7 +48,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles"}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "04_literal_or.a",
@@ -91,7 +100,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/predicates/06_signed_numeric.a:31:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/predicates/06_signed_numeric.a:31:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+    }
   },
   {
     "file": "07_typeof.a",
@@ -105,7 +117,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/predicates/07_typeof.a:12:31: stage 0 can't lower .fileName on a string yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/predicates/07_typeof.a:12:31: stage 0 can't lower .fileName on a string yet"
+    }
   },
   {
     "file": "08_flags.a",
@@ -168,6 +183,9 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/predicates/11_empty_assert.a:6:1: stage 0 can't lower checked predicate overload target { links: string; } yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/predicates/11_empty_assert.a:6:1: stage 0 can't lower checked predicate overload target { links: string; } yet"
+    }
   }
 ]

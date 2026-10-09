@@ -1,0 +1,16 @@
+command: go build -o /tmp/object-binding-mutant/adamic ./cmd/adamic exit: 0
+
+command: /tmp/object-binding-mutant/adamic c /workspace/adamic/internal/oracle/testdata/library_object_replaced.a exit: 1
+ adamic: /workspace/adamic/internal/oracle/testdata/library_object_replaced.a:5:27: stage 0 can't lower Object.values on a shape not proven by a plain literal or its const binding yet
+
+command: node --disable-warning=ExperimentalWarning /tmp/object-binding-mutant/source.mts exit: 0
+2|built-wrong
+
+command: go build -o /tmp/object-binding-mutant/adamic ./cmd/adamic exit: 0
+
+command: /tmp/object-binding-mutant/adamic build /workspace/adamic/internal/oracle/testdata/library_object_replaced.a -o /tmp/object-binding-mutant/mutant.bin exit: 0
+
+command: /tmp/object-binding-mutant/mutant.bin exit: 0
+2|4.64724167041843e-310
+
+replaced-binding-trusted: caught only by Node stdout comparison

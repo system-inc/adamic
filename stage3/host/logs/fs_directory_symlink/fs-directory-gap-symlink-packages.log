@@ -1,0 +1,9 @@
+--- FAIL: TestNodeFSDirectorySymlinkSignatures (6.87s)
+    library_node_fs_directory_test.go:27: want named NotYet, got /tmp/adamic-gate/TestNodeFSDirectorySymlinkSignatures1514100646/006/main.a:1:44: stage 0 can't lower a value of type void yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	114.783s
+ok  	github.com/system-inc/adamic/internal/native	384.136s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/flow	336.771s
+ok  	github.com/system-inc/adamic/internal/fresh	110.493s
+FAIL

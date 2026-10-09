@@ -1,0 +1,18 @@
+function parts(date: Date): void {
+ console.log(String(date.getUTCFullYear()));
+ console.log(String(date.getUTCMonth()));
+ console.log(String(date.getUTCDate()));
+ console.log(String(date.getUTCDay()));
+ console.log(String(date.getUTCHours()));
+ console.log(String(date.getUTCMinutes()));
+ console.log(String(date.getUTCSeconds()));
+ console.log(String(date.getUTCMilliseconds()));
+}
+parts(new Date(-1));
+parts(new Date(0));
+parts(new Date(951827696789));
+parts(new Date(-8640000000000000));
+parts(new Date(8640000000000000));
+parts(new Date(NaN));
+console.log(String(Date.prototype.getUTCFullYear.call(new Date(0))));
+console.log(String(Date.prototype.getTime.call(new Date(-1))));

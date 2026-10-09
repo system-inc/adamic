@@ -302,6 +302,8 @@ The last three were caught only once `mutations.a` existed. Before it, no progra
 
 ## Cycles: found by the compiler, broken by Weak
 
+Compiler-generated async protocol layouts have one narrow exception: the canonical, unexported provenance identities in `internal/ir/async.go`, accepted by `fresh.RuntimeBreaksCycles` and checked at `lowering.findCycles` in `internal/lower/cycles.go`. These are IR/runtime types, not source checker declarations. Their internal frame -> waiting Promise -> reaction -> frame edges are broken by settlement, pending-subscription cancellation and normal-exit registry teardown in `runtime/async.c`; reference counting alone is insufficient. The [async design](concurrency-async.md#promise-representation-counts-and-cycles) specifies the order. Names, structural shape, annotations and user brands never confer this exemption. A user class named exactly `adamic_generated_frame_0`, `adamic_async_promise` or `adamic_async_reaction` still goes through the ordinary slot/write checks; the spoof tests and name-based mutants hold that boundary. User payloads and captures do not inherit it. The first async lowering admits only primitive payloads and bypasses synchronous lifetime proofs across suspension; additional reference payloads need the normal cycle/fresh-write analysis, without asking callers to put Weak on runtime-owned protocol edges.
+
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:
 
 - **Immutable data is acyclic.** A value built from `readonly` parts can only point at values that already existed when it was made, so no `readonly` structure can ever reach itself. Immutable by default is the first answer.

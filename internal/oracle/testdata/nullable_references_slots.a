@@ -1,0 +1,51 @@
+function observe<T>(v: T): string { return `${v === null} ${v === undefined} ${typeof v}`; }
+class Item {
+ readonly label: string;
+ constructor(label: string) { this.label = label; }
+ name(): string { return this.label; }
+}
+class Slot<T> {
+ readonly value: T;
+ constructor(value: T) { this.value = value; }
+ read(): T { return this.value; }
+}
+interface Strings { readonly n: string | null; readonly u: string | undefined; }
+function strings(v: Strings): void {
+ console.log(v.n);
+ console.log(v.u);
+ console.log(`${v.n} ${v.u}`);
+ console.log(`${Number(v.n)} ${Number(v.u)}`);
+ console.log(`${typeof v.n} ${typeof v.u}`);
+ console.log(JSON.stringify({n: v.n, u: v.u}));
+ console.log(JSON.stringify([v.n, v.u]));
+}
+strings({n: null, u: undefined});
+strings({n: `owned${1}`, u: `owned${2}`});
+const ns: readonly (string | null)[] = [null, '', `element${3}`];
+const us: readonly (string | undefined)[] = [undefined, '', `element${4}`];
+for (const v of ns) { console.log(v); console.log(observe<string|null>(v)); }
+for (const v of us) { console.log(v); console.log(observe<string|undefined>(v)); }
+console.log(JSON.stringify(ns));
+console.log(JSON.stringify(us));
+const objects: readonly ({readonly label: string} | null)[] = [null, {label: `object${5}`}];
+for (const v of objects) { console.log(observe<{readonly label:string}|null>(v)); }
+const classes: readonly (Item | null)[] = [null, new Item(`class${6}`)];
+for (const v of classes) { console.log(observe<Item|null>(v)); console.log(v?.name() ?? 'none'); }
+const optionalClasses: readonly (Item | undefined)[] = [undefined, new Item(`class${7}`)];
+for (const v of optionalClasses) { console.log(observe<Item|undefined>(v)); console.log(v?.name() ?? 'none'); }
+const maps: readonly (Map<string,string> | null)[] = [null, new Map([['a', `map${8}`]])];
+for (const v of maps) { console.log(observe<Map<string,string>|null>(v)); }
+const values = new Map<string, string|null>([['a', null], ['b', `mapvalue${9}`]]);
+for (const [key, value] of values) { console.log(key); console.log(value); }
+const nullSlot = new Slot<string|null>(null);
+const undefinedSlot = new Slot<string|undefined>(undefined);
+console.log(nullSlot.read());
+console.log(undefinedSlot.read());
+function closures(n: string|null, u: string|undefined): void {
+ const readNull = (): string|null => n;
+ const readUndefined = (): string|undefined => u;
+ console.log(readNull());
+ console.log(readUndefined());
+}
+closures(null, undefined);
+closures(`capture${10}`, `capture${11}`);

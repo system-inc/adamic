@@ -1,0 +1,7 @@
+// program.ts:5046; preserve its regexp interpretation of directoryPath.
+function realPath(directoryPath: string, absolutePath: string, real: string): string {
+    return `${real}${absolutePath.replace(new RegExp(directoryPath, "i"), "")}`;
+}
+console.log(realPath('/p/src/', '/P/SRC/a.ts', '/actual/'));
+console.log(realPath('/p/a.b/', '/p/aXb/a.ts', '/actual/'));
+console.log(realPath('/p/[src]/', '/p/src/a.ts', '/actual/'));

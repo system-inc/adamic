@@ -1,0 +1,35 @@
+class Key {
+    id: number;
+    constructor(id: number) {
+        this.id = id;
+    }
+}
+const first = new Key(1);
+const second = new Key(1);
+const map = new Map<Key, string>([
+    [first, 'first'],
+    [second, 'second'],
+]);
+const set = new Set<Key>([first, second, first]);
+console.log(`${map.size} ${map.get(first)} ${map.get(new Key(1))} ${set.size} ${set.has(new Key(1))}`);
+map.delete(first);
+map.set(first, 'last');
+set.delete(first);
+set.add(first);
+let order = '';
+map.forEach(function(value, key) {
+    order += `${key.id}:${value}|`;
+});
+console.log(order);
+order = '';
+for(const key of set) {
+    order += `${key === first}|`;
+}
+console.log(order);
+for(let index = 2; index < 14; index++) {
+    const key = new Key(index);
+    map.set(key, `${index}`);
+    set.add(key);
+    console.log(`${map.has(key)} ${set.has(key)}`);
+}
+console.log(`${map.has(first)} ${map.has(second)} ${set.has(first)} ${set.has(second)}`);

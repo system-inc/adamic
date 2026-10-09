@@ -1,0 +1,8 @@
+// checker.ts:47946-47952: the two predicates select enum diagnostics.
+function classify(value: number): string {
+    if (!isFinite(value)) {
+        return isNaN(value) ? 'NaN' : 'non-finite';
+    }
+    return 'finite';
+}
+for (const value of [0, -0, 1, NaN, Infinity, -Infinity]) console.log(classify(value));

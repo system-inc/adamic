@@ -37,22 +37,27 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	if len(program.Regexps) != 0 || recordStorage {
 		return map[string]int{}
 	}
-	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),
+	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message, code),
 	// and input/directory results (kind, text/names/message/type, size, symbolicLink). Including
 	// them unconditionally is conservative when the program does not use that runtime API.
 	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
 	offsets := map[string]int{
 		"0": 0, "1": 1, "name": 0, "message": 1, "kind": 0, "text": 1,
-		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
+		"names": 1, "type": 1, "size": 2, "symbolicLink": 3, "#compiler": 12,
 	}
 	for _, names := range [][]string{
 		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
-		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
+		// The Node directory host and the existing realPath result are created in C.
+		{"kind", "path"}, {"name", "message", "code"}, {"name", "type"},
+		{"__adamic_iterator_state"}, {"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
-		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"},
+		{"value", "writable", "enumerable", "configurable"},
+		// Process host layouts are part of the same whole-program proof.
+		{"name", "message", "code"}, {"heapUsed"},
+		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {
 		for index, name := range names {

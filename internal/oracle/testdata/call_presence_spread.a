@@ -1,0 +1,8 @@
+function measure(value: number = 9, ...extra: (number | undefined)[]): string { return `${arguments.length}:${value}`; }
+const none: (number | undefined)[] = [];
+const absent: (number | undefined)[] = [undefined];
+const zero: (number | undefined)[] = [0];
+const read = measure;
+console.log(read(...none));
+console.log(read(...absent));
+console.log(read(...zero));

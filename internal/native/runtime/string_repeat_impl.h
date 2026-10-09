@@ -10,20 +10,26 @@ static adamic_string *repeat_unchecked(const adamic_string *string, double count
 }
 
 adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
+	double original_count = count;
 	count = isnan(count) ? 0 : trunc(count);
 	if (count < 0 || isinf(count)) {
 		char message[96];
 		char number[ADAMIC_NUMBER_FORMAT_MAX];
-		size_t length = adamic_number_format(count, number);
-		int written = snprintf(message, sizeof message, "RangeError: Invalid count value: %.*s", (int)length, number);
-		adamic_panic(message, (size_t)written);
+		size_t length = adamic_number_format(original_count, number);
+		int written = snprintf(message, sizeof message, "Invalid count value: %.*s", (int)length, number);
+		adamic_library_throw("RangeError",message,(size_t)written);
+		return NULL;
 	}
 	// Checked before any of it is built, as V8 does: an empty string repeats to itself however many
 	// times, and anything longer than V8's longest string is refused.
 	if (string->length == 0 || count == 0) {
 		return adamic_retain((adamic_string *)&adamic_string_empty);
 	}
-	adamic_string_check_length(adamic_string_length(string) * count);
+	if(adamic_string_length(string) * count > ADAMIC_STRING_MAX_UNITS) {
+		const char message[]="Invalid string length";
+		adamic_library_throw("RangeError",message,sizeof message-1);
+		return NULL;
+	}
 	return repeat_unchecked(string, count);
 }
 
@@ -33,7 +39,11 @@ adamic_string *adamic_string_pad(const adamic_string *string, double target, con
 	if (target <= length || fill->length == 0) {
 		return adamic_retain((adamic_string *)string);
 	}
-	adamic_string_check_length(target);
+	if(target > ADAMIC_STRING_MAX_UNITS) {
+		const char message[]="Invalid string length";
+		adamic_library_throw("RangeError",message,sizeof message-1);
+		return NULL;
+	}
 	// The fill, repeated and cut to exactly the missing number of UTF-16 units: whole fills, then the
 	// start of one more, so nothing on the way is longer than the result.
 	double missing = target - length;
