@@ -159,7 +159,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
 	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", "", true) }
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/suite.ts")
+	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts")
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "suite-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "suite", entry, normal(h), false) }
 	oracle := filepath.Join(directory, "oracle")

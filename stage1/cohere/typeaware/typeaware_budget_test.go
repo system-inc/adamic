@@ -89,8 +89,22 @@ func typeAwareProduct(h *harness, name string, command *exec.Cmd) string {
 	return typeAwareSetup(h, name, func() string { return h.sixBuildProduct(name, command) })
 }
 func typeAwareMutant(h *harness, stage0, archive, entry, name, relative, from, to string, imports ...string) string {
-	return typeAwareSetup(h, name, func() string { return suiteTSMutant(h, stage0, archive, entry, name, relative, from, to, imports...) })
+	return typeAwareSetup(h, name, func() string {
+		if filepath.Base(entry) == "sharded_suite.ts" {
+			data, err := os.ReadFile(entry)
+			if err != nil {
+				h.t.Fatal(err)
+			}
+			driver := strings.ReplaceAll(string(data), "../../../typescript", filepath.Join(h.repository, "stage1/typescript"))
+			for _, file := range []string{"facts.ts", "diagnostic.ts", "unary_minus.ts", "rules.ts", "flags.ts", "frames.ts", "types.ts", "type_fact.ts", "parameters.ts"} {
+				driver = strings.ReplaceAll(driver, "../"+file, "./"+file)
+			}
+			entry = h.write(name+"-driver.ts", driver)
+		}
+		return suiteTSMutant(h, stage0, archive, entry, name, relative, from, to, imports...)
+	})
 }
+
 func typeAwareRunShards(t *testing.T, h *harness, expected []string, shards []sixShard, value string, required int) {
 	t.Helper()
 	// Keep the original scheduler, static declarations and both live union checks.
