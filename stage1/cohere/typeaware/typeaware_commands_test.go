@@ -43,6 +43,15 @@ func typeAwareContextCommand(ctx context.Context, name string, args ...string) *
 func typeAwareRunCommand(original *exec.Cmd) error {
 	ctx, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
 	defer cancel()
+	return typeAwareRunCommandContext(ctx, original)
+}
+
+// Build-cache misses belong to shared setup; the outer unit limit bounds them.
+func typeAwareRunBuildCommand(original *exec.Cmd) error {
+	return typeAwareRunCommandContext(context.Background(), original)
+}
+
+func typeAwareRunCommandContext(ctx context.Context, original *exec.Cmd) error {
 	command := typeAwareContextCommand(ctx, original.Path, original.Args[1:]...)
 	command.Args = append([]string(nil), original.Args...)
 	command.Dir, command.Env = original.Dir, original.Env
@@ -89,7 +98,7 @@ func typeAwareNativeBuild(source, output, archive string, sanitize bool) error {
 	command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_NATIVE_REQUEST="+path)
 	var outputText bytes.Buffer
 	command.Stdout, command.Stderr = &outputText, &outputText
-	if err := typeAwareRunCommand(command); err != nil {
+	if err := typeAwareRunBuildCommand(command); err != nil {
 		return fmt.Errorf("native build: %w\n%s", err, outputText.String())
 	}
 	return nil

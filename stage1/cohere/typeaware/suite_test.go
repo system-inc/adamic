@@ -13,6 +13,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -154,7 +155,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 			t.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
+	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, sharedSetup: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
@@ -163,13 +164,22 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "suite-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "suite", entry, normal(h), false) }
 	// Common products are ready before any case deadline starts.
-	typeAwareStage0(h)
-	readyBinary, readyOptimized := binary(h), optimized(h)
-	binary = func(*harness) string { return readyBinary }
-	optimized = func(*harness) string { return readyOptimized }
-	readyNormal, readySanitized := normal(h), sanitized(h)
+	var readyNormal, readySanitized string
+	var builds sync.WaitGroup
+	builds.Add(3)
+	go func() { defer builds.Done(); typeAwareStage0(h) }()
+	go func() { defer builds.Done(); readyNormal = normal(h) }()
+	go func() { defer builds.Done(); readySanitized = sanitized(h) }()
+	builds.Wait()
 	normal = func(*harness) string { return readyNormal }
 	sanitized = func(*harness) string { return readySanitized }
+	var readyBinary, readyOptimized string
+	builds.Add(2)
+	go func() { defer builds.Done(); readyBinary = binary(h) }()
+	go func() { defer builds.Done(); readyOptimized = optimized(h) }()
+	builds.Wait()
+	binary = func(*harness) string { return readyBinary }
+	optimized = func(*harness) string { return readyOptimized }
 	oracle := filepath.Join(directory, "oracle")
 	virtual := filepath.Join(repository, "cohere/adamic_six_oracle.go")
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_six.go")}})
