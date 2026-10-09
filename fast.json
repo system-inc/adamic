@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T094601-d7b83157",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "194c5f000ac8e8d519354ee840af54cc35407295",
+  "branch": "devtools/buildcache-on-main",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "194c5f000ac8e8d519354ee840af54cc35407295",
+  "gated": "c9327264ed4b6aede22a5704499a1640ea9019bf",
+  "unplanned_packages_not_run": 41
+}
