@@ -88,11 +88,18 @@ case "$(cat "$TEST_ROOT/pool-mode")" in
   void) echo "void: $sha the pool gave no verdict in 5400 s" ;;
 esac
 ''')
+        # The pulse's sizing (cloud/canary-select.py, #psh61tb): the selection file's lines, or by default every depth
+        # selecting one package of a minute, which fits a slot at main~10.
+        self.put('select', ''.join(f'{n}\t.\t0\t0\n{n}\tinternal/native\t60\t60\n' for n in range(10, 0, -1)))
+        self.script(cloud / 'canary-select.py', '''import os, sys
+sys.stdout.write(open(os.path.join(os.environ["TEST_ROOT"], "select")).read())
+''')
         self.script(cloud / 'auto-area-merge.sh', '''printf '%s\\n' "$*" >> "$TEST_ROOT/merges"
 ''')
         (self.state / 'auto-area-merge').touch()
         self.script(cloud / 'fast-gate.sh', '''sha=$1; branch=$3
 printf '%s %s %s %s\\n' "$branch" "$sha" "$5" "$ADAMIC_FAST_GATE_BOX" >> "$TEST_ROOT/starts"
+printf '%s %s\\n' "$branch" "${ADAMIC_FAST_GATE_CANARY_DEPTH:-}" >> "$TEST_ROOT/depths"
 [ "${6:-}" = --whole-box ] && printf '%s\\n' "$branch" >> "$TEST_ROOT/whole"
 if [[ $branch == gate-mutant/* ]]; then
   # A mutant answers from its own file, a gate log with SHA for its sha; hold until a test writes it.
@@ -1401,6 +1408,95 @@ class WatchTests(unittest.TestCase):
         self.assertIn('canary/main ', w.read('good-starts'))
         self.assertEqual(w.read('starts').count('canary/main '), 1)
         self.assertIn('with tools tools-zero', w.read('output'))
+
+    # Slot-sized pulses (#psh61tb, @system_adamic, Oct 9 19:01Z): main~10 selects json and lint, about five CPU-hours, so
+    # every half-hourly canary on a 12-CPU slot voided at its hour. Here main~4 and up select json, which can't fit a slot
+    # in 20 minutes, and main~3 selects one package of 600 s, about 2 minutes over six test processes.
+    slotSized = ''.join(f'{n}\t.\t0\t0\n{n}\tinternal/native\t600\t60\n' + (f'{n}\tstage1/cohere/json\t50000\t90\n' if n >= 4 else '') +
+                        (f'{n}\tstage1/cohere/lint\t9000\t530\n' if n >= 6 else '') for n in range(10, 0, -1))
+
+    def pulses(self, select, pulses=None):
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox1 S\n', mainCanary=1800)
+        self.addCleanup(w.close)
+        w.put('select', select)
+        if pulses is not None:
+            # Pulses counted by an earlier watcher: the count survives a restart.
+            (w.state / 'main-canary-pulses').write_text(pulses)
+        w.wait(lambda: 'canary/main ' in w.read('starts'))
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        return w
+
+    def test_a_pulse_gates_against_the_most_landings_back_that_fit_a_slot_and_names_what_it_leaves_out(self):
+        w = self.pulses(self.slotSized)
+        w.put('canary', 'pass')
+        w.put('clock', '2800')
+        w.wait(lambda: 'main canary green' in w.read('output'))
+        self.assertIn("with the good tools, the half-hourly canary, pulse 1 against main~3 (about 2 min of a 12-CPU slot's 20; "
+                      "leaves out 2 of main~10's packages: stage1/cohere/json stage1/cohere/lint) (S on box0, log", w.read('output'))
+        self.assertEqual(w.read('depths').splitlines()[-1], 'canary/main 3')
+        self.assertIn('main canary green: %s against main~3 on box0 with tools tools-one' % MAIN, w.read('output'))
+        # On a slot, not whole: only the stage canary held a box whole.
+        self.assertEqual(w.read('whole').splitlines(), ['canary/main'])
+        self.assertEqual((w.state / 'main-canary-pulses').read_text().strip(), '1')
+
+    def test_every_fourth_pulse_takes_a_whole_box_and_keeps_main_ten(self):
+        w = self.pulses(self.slotSized, pulses='3\n')
+        w.put('canary', 'pass')
+        w.put('clock', '2800')
+        w.wait(lambda: 'main canary green' in w.read('output'))
+        self.assertIn('the half-hourly canary, pulse 4 against main~10 on a whole box (box1 whole, log', w.read('output'))
+        self.assertEqual(w.read('whole').splitlines(), ['canary/main', 'canary/main'])
+        self.assertEqual(w.read('depths').splitlines()[-1], 'canary/main 10')
+        self.assertIn('main canary green: %s against main~10 on a whole box on box1' % MAIN, w.read('output'))
+        # The fifth is slot-sized again.
+        w.put('clock', '4600')
+        w.wait(lambda: w.read('output').count('main canary green') == 2)
+        self.assertIn('pulse 5 against main~3 (', w.read('output'))
+        self.assertEqual(len(w.read('whole').splitlines()), 2)
+
+    def test_a_fourth_pulse_with_no_empty_box_drains_the_canary_box_and_takes_it_whole(self):
+        w = self.pulses(self.slotSized, pulses='3\n')
+        (w.state / 'slots').write_text('box1 S\nbox1 S\n')
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old ' + 'c' * 40 + ' S box1 S x ' + str(w.state / 'logs/old.log') + '\n')
+        w.put('clock', '2800')
+        w.tips = [('codex/late', 'b' * 40)]
+        w.put('tips', f'{"b" * 40}\trefs/heads/codex/late\n')
+        w.wait(lambda: 'queued codex/late ' in w.read('output'))
+        time.sleep(.5)
+        # box1 drains for the pulse: the late tip doesn't take its free slot, and the pulse waits for the box to empty.
+        self.assertNotIn('codex/late ', w.read('starts'))
+        self.assertNotIn('pulse 4', w.read('output'))
+        holder.kill()
+        holder.wait()
+        w.wait(lambda: 'pulse 4 against main~10 on a whole box (box1 whole' in w.read('output'))
+        time.sleep(.3)
+        self.assertNotIn('codex/late ', w.read('starts'))
+
+    def test_a_thin_slot_sized_pulse_reads_void_never_green(self):
+        w = self.pulses(self.slotSized)
+        w.put('passes', '12')
+        w.put('canary', 'pass')
+        w.put('clock', '2800')
+        w.wait(lambda: 'main canary not green' in w.read('output'))
+        self.assertIn("main canary not green: %s against main~3 on box0 with tools tools-one: void (ran 12 tests, under the canary's 500)" % MAIN,
+                      w.read('output'))
+        self.assertNotIn('main canary green', w.read('output'))
+        w.wait(lambda: w.read('messages').count('canary is not green') == 2)
+        self.assertIn('against main~3', w.read('messages'))
+
+    def test_a_pulse_even_main_one_doesn_t_fit_still_runs_main_one_and_says_so(self):
+        heavy = ''.join(f'{n}\t.\t0\t0\n{n}\tstage1/cohere/json\t50000\t90\n' for n in range(10, 0, -1))
+        w = self.pulses(heavy)
+        w.put('canary', 'pass')
+        w.put('clock', '2800')
+        w.wait(lambda: 'main canary green' in w.read('output'))
+        self.assertIn("pulse 1 against main~1, though even main~1 needs about 139 min of a 12-CPU slot's 20 "
+                      "(leaves out none of main~10's packages) (S on box0", w.read('output'))
+        self.assertEqual(w.read('depths').splitlines()[-1], 'canary/main 1')
+        self.assertIn("against main~1, which needs about 139 min of a 12-CPU slot's 20 on box0", w.read('output'))
 
     def test_main_s_half_hourly_canary_waits_while_a_stage_canary_waits_for_its_box(self):
         # A short interval, not a clock jump: a jump past 1800 s also trips test0's box ceiling and empties the box.

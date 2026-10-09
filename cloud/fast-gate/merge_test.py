@@ -73,9 +73,9 @@ fi
         git(self.here, 'checkout', '-q', '--detach', self.main)
         return sha
 
-    def gate(self, sha, branch):
+    def gate(self, sha, branch, **extra):
         env = dict(os.environ, PATH='%s:%s' % (self.bin, os.environ['PATH']), TEST_ROOT=str(self.root), TEST_HERE=str(self.here),
-                   ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN='1', ADAMIC_AI_DATABASE=str(self.root / 'none.db'), ADAMIC_FAST_GATE_BOX='box')
+                   ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN='1', ADAMIC_AI_DATABASE=str(self.root / 'none.db'), ADAMIC_FAST_GATE_BOX='box', **extra)
         return subprocess.run(['bash', str(self.here / 'cloud' / 'fast-gate.sh'), sha, '--branch', branch, '--class', 'S'],
                               env=env, capture_output=True, text=True, timeout=60)
 
@@ -147,6 +147,23 @@ fi
         self.assertIn('against main~10 %s' % landings[0], result.stdout)
         self.assertEqual((self.root / 'gated').read_text().strip(), tip, 'main holds its own base: no merge')
         self.assertEqual(self.read_call().split()[5], landings[0])
+
+    def test_a_half_hourly_pulse_gates_main_against_the_landings_back_the_watcher_sized(self):
+        # Slot-sized pulses (#psh61tb, @system_adamic, Oct 9 19:01Z): the watcher names main~N, and anything else is ten.
+        git(self.here, 'checkout', '-q', '--detach', self.main)
+        landings = []
+        for number in range(11):
+            (self.here / 'feature.go').write_text('package feature // landing %d\n' % number)
+            landings.append(self.commit('Landing %d' % number))
+        git(self.here, 'push', '-q', 'origin', 'HEAD:refs/heads/main')
+        tip = landings[-1]
+        result = self.gate(tip, 'canary/main', ADAMIC_FAST_GATE_CANARY_DEPTH='3')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('against main~3 %s' % landings[7], result.stdout)
+        self.assertEqual(self.read_call().split()[5], landings[7])
+        for depth in ('', '0', '11', 'x'):
+            result = self.gate(tip, 'canary/main', ADAMIC_FAST_GATE_CANARY_DEPTH=depth)
+            self.assertIn('against main~10 %s' % landings[0], result.stdout, depth)
 
     def read_call(self):
         return (self.root / 'ssh-calls').read_text().splitlines()[-1]

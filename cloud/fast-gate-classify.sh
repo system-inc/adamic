@@ -29,9 +29,13 @@ gateBase() {
   # selection whose answer main already holds.
   # A canary-shaped gate mutant (gate-mutants/canary-*, #fyvmsy8 hole 5) is gated the same way, so the suite can plant a
   # canary input whose ten landings select nothing.
+  # The watcher's half-hourly pulse names fewer (#psh61tb, @system_adamic, Oct 9 19:01Z): ADAMIC_FAST_GATE_CANARY_DEPTH,
+  # 1 to 10, the most landings back whose selection fits a 12-CPU slot in 20 minutes. Anything else is ten.
   if [ "${branch}" = canary/main ] || [[ ${branch} == gate-mutant/canary-* ]]; then
+    local depth=${ADAMIC_FAST_GATE_CANARY_DEPTH:-10}
+    [[ ${depth} =~ ^([1-9]|10)$ ]] || depth=10
     haveCommits "${sha}" || git -C "${here}" fetch -q --no-write-fetch-head origin "${sha}" 2> /dev/null
-    echo "main~10 $(git -C "${here}" rev-parse "${sha}~10")"
+    echo "main~${depth} $(git -C "${here}" rev-parse "${sha}~${depth}")"
     return
   fi
   if [[ ${branch} != codex/* && ${branch} != devtools/* ]]; then

@@ -217,15 +217,17 @@ countVoid() {
 }
 # Worker and canary gates share slot selection and launch. Canary logs are separate
 # even when a queued worker has main's sha, and carry the tools version they test. A seventh argument "staged" runs
-# the staged tools: only the stage canary passes it. "main" marks main's half-hourly canary, run with the good tools.
+# the staged tools: only the stage canary passes it. "main" marks main's half-hourly canary, run with the good tools; its
+# pulse passes an eighth, the landings back it gates against (#psh61tb), and a ninth "whole" for its every fourth.
 dispatch() {
-  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 tools=${7:-} started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
+  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 tools=${7:-} depth=${8:-} started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
   started=$(date -u +%s)
   lastDispatch=${started} stallAlarmed=""
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
   # The stage canary runs on a whole box (@system_adamic, Oct 9 15:44Z): main~10 selects json and lint, about five
   # CPU-hours, and on a 12-CPU slot it voided at its hour's ceiling (bb34ce2e, 3421 s of tests), so no tools promoted.
-  [ "${branch}" = canary/main ] && [ "${tools}" = staged ] && whole=--whole-box
+  # So does every fourth half-hourly pulse (#psh61tb, Oct 9 19:01Z), which keeps main~10.
+  [ "${branch}" = canary/main ] && { [ "${tools}" = staged ] || [ "${9:-}" = whole ]; } && whole=--whole-box
   # Staged tools never gate a candidate (#9n4p27j, @system_adamic, Oct 9 10:21Z): while new tools are staged, every
   # box, the canary box included, gates with the last good tools, and the staged tools run main's canary only.
   if staging && [ "${tools}" != staged ]; then
@@ -241,7 +243,8 @@ dispatch() {
     token="$(cat "${state}/tools-good"):pool"
     bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" --priority "$(poolTier "${branch}" "${sha}")" > "${log}" 2>&1 &
   else
-    ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
+    # Empty for every gate but a pulse: gateBase reads it as ten.
+    ADAMIC_FAST_GATE_CANARY_DEPTH=${depth} ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   fi
   local pid=$!
   dispatchedPid=${pid}
@@ -1055,20 +1058,95 @@ drainingBoxes() {
     isFront "${branch}" && starOnPool "${branch}" "${sha}" && continue
     matchesReservation "${branch}" && reservedBoxes "${branch}" "${class}"
   done < "${state}/queue" | sort -u
-  # A stage canary waiting for an empty box drains the canary box, so the box empties instead of refilling.
-  stageCanaryWaiting && cat "${state}/canary-box"
+  # A stage canary or a whole-box pulse waiting for an empty box drains the canary box (else the table's first box), so
+  # the box empties instead of refilling.
+  if stageCanaryWaiting || wholePulseWaiting; then
+    cat "${state}/canary-box" 2> /dev/null | grep . || awk '$1 != "pool" {print $1; exit}' "${state}/slots"
+  fi
 }
 # Staged tools whose canary hasn't started and isn't held: it waits for a box to empty.
 stageCanaryWaiting() {
   staging && [ ! -f "${state}/storm" ] && [ "$(cat "${state}/stage-held" 2>/dev/null)" != "${canaryToken}:staged" ] &&
     ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null
 }
-# A box with nothing running on it, for the stage canary: the canary box first, then the slot table's order. Prints the
-# box and its first slot's class, or nothing. Never a box a whole-gate loop lends (${state}/whole-gate-boxes, one per
-# line): its loop reclaims the box by killing side work, and at 16:25Z main's whole gate on home killed d97a443a's first
-# whole-box canary 80 s in.
-emptyBoxForStageCanary() {
-  awk -v canary="$(cat "${state}/canary-box")" '
+# Main's half-hourly canary is a slot-sized pulse (#psh61tb, @system_adamic, Oct 9 19:01Z): main~10 selects json and lint,
+# about five CPU-hours, so on a 12-CPU slot every half-hourly canary voided at its hour or was stopped, and held off the
+# whole-box stage canary while it ran. A pulse gates main's tip against main~N, N the most landings back, from ten down,
+# whose selection fits ${pulseCpus} CPUs in ${pulseSeconds} s; one that even main~1 doesn't fit still runs main~1 and
+# says so. Every fourth pulse (${state}/main-canary-pulses counts them, across restarts) takes a whole box, as the stage
+# canary does, and keeps main~10.
+pulseCpus=${ADAMIC_FAST_GATE_PULSE_CPUS:-12}
+pulseSeconds=${ADAMIC_FAST_GATE_PULSE_SECONDS:-1200}
+mainCanaryDue() {
+  [ ! -f "${state}/storm" ] && ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
+    [ "$(( $(date -u +%s) - $(cat "${state}/main-canary-started") ))" -ge "${mainCanarySeconds}" ]
+}
+nextPulse() {
+  local count
+  count=$(cat "${state}/main-canary-pulses" 2> /dev/null)
+  [[ ${count} =~ ^[0-9]+$ ]] || count=0
+  echo $((count + 1))
+}
+# A due pulse that is a fourth waits for an empty box, draining the canary box like a waiting stage canary.
+wholePulseWaiting() {
+  mainCanaryDue && [ $(( $(nextPulse) % 4 )) = 0 ]
+}
+# Sizes the next pulse in the background, since cloud/canary-select.py takes seconds, and minutes the first time, while it
+# checks out main's submodules: ${state}/canary-pick is "<unix time> <sha>", then its lines. It runs the selection of the
+# tools that will run the pulse, the good ones while new ones are staged, with every box's test times.
+startCanaryPick() {
+  local sha=$1 tools=${here}
+  [ -s "${state}/canary-pick.pid" ] && kill -0 "$(cat "${state}/canary-pick.pid")" 2> /dev/null && return 0
+  staging && tools=${goodTree}
+  (
+    { echo "$(date -u +%s) ${sha}"
+      python3 -I "${here}/cloud/canary-select.py" --repo "${here}" --tools "${tools}" --sha "${sha}" --cache "${state}/canary-select" \
+        $(awk '$1 != "pool" && !seen[$1]++ {print "--box " $1}' "${state}/slots")
+    } > "${state}/canary-pick.partial" 2> "${state}/logs/canary-select.log"
+    mv "${state}/canary-pick.partial" "${state}/canary-pick"
+  ) &
+  echo $! > "${state}/canary-pick.pid"
+}
+# The pick as "<N>\t<what the gating line says>\t<what its verdict line says>". A selection's time is its units' seconds
+# over the test processes run.py starts on the slot (half its CPUs), or its longest unit if that is longer. What the pulse
+# leaves out is main~10's packages that main~N doesn't select. Sized at no depth (cloud/canary-select.py failed, or every
+# selection did), it runs main~1 and names why.
+pickDepth() {
+  awk -F'\t' -v cpus="${pulseCpus}" -v budget="${pulseSeconds}" -v logged="$(tail -1 "${state}/logs/canary-select.log" 2> /dev/null)" '
+    NR == 1 { next }
+    $2 == "!" { why[$1] = $3; next }
+    $2 == "." { sized[$1] = 1; next }
+    { total[$1] += $3; if ($4 + 0 > longest[$1]) longest[$1] = $4 + 0; list[$1] = list[$1] " " $2; has[$1, $2] = 1 }
+    function minutes(seconds) { return int((seconds + 59) / 60) }
+    END {
+      workers = int(cpus / 2); if (workers < 1) workers = 1
+      chosen = 0
+      for (n = 10; n >= 1; n--) {
+        if (!(n in sized)) continue
+        need[n] = total[n] / workers; if (longest[n] > need[n]) need[n] = longest[n]
+        if (!chosen && need[n] <= budget) chosen = n
+      }
+      slot = sprintf("a %d-CPU slot\047s %d", cpus, budget / 60)
+      depth = chosen ? chosen : 1
+      if (10 in sized) {
+        count = split(substr(list[10], 2), names, " "); out = ""; left = 0
+        for (i = 1; i <= count; i++) if (!((depth, names[i]) in has)) { out = out " " names[i]; left++ }
+        leaves = left ? sprintf("leaves out %d of main~10\047s packages:%s", left, out) : "leaves out none of main~10\047s packages"
+      } else leaves = "main~10 unsized: " (10 in why ? why[10] : "no selection")
+      if (chosen) printf "%d\tagainst main~%d (about %d min of %s; %s)\tmain~%d\n", chosen, chosen, minutes(need[chosen]), slot, leaves, chosen
+      else if (1 in sized) printf "1\tagainst main~1, though even main~1 needs about %d min of %s (%s)\tmain~1, which needs about %d min of %s\n", minutes(need[1]), slot, leaves, minutes(need[1]), slot
+      else {
+        reason = (1 in why) ? why[1] : (logged != "" ? logged : "no selection")
+        printf "1\tagainst main~1, unsized: %s\tmain~1, unsized (%s)\n", reason, reason
+      }
+    }' "${state}/canary-pick"
+}
+# A box with nothing running on it, for the stage canary or a whole-box pulse: the canary box first, then the slot table's
+# order. Prints the box and its first slot's class, or nothing. Never a box a whole-gate loop lends
+# (${state}/whole-gate-boxes, one per line): its loop reclaims the box by killing side work, and at 16:25Z main's whole
+# gate on home killed d97a443a's first whole-box canary 80 s in.
+emptyBoxForWholeCanary() {
+  awk -v canary="$(cat "${state}/canary-box" 2> /dev/null)" '
     FILENAME == ARGV[1] { lender[$1] = 1; next }
     FILENAME == ARGV[2] { busy[$4 == "" ? "threadripper" : $4] = 1; next }
     $1 in lender { next }
@@ -1123,7 +1201,7 @@ clearStaleSlotLock start
 watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost" "${state}/mutant-running" "${state}/mutant-results" "${state}/ceiling"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost" "${state}/mutant-running" "${state}/mutant-results" "${state}/ceiling" "${state}/canary-depth"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -1209,7 +1287,9 @@ while true; do
     # A ceiling stop is the gate's fault, not a choice: it reads void and goes back to the queue, outside the storm count.
     overCeiling=no
     [ -f "${state}/ceiling/$(basename "${file}")" ] && { overCeiling=yes stoppedOnPurpose=no; rm -f "${state}/ceiling/$(basename "${file}")"; }
-    rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")" "${state}/preempted/$(basename "${file}")"
+    # What a half-hourly pulse gated against, which its verdict line names (#psh61tb).
+    against=$(cat "${state}/canary-depth/$(basename "${file}")" 2> /dev/null)
+    rm -f "${state}/canary-depth/$(basename "${file}")" "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")" "${state}/preempted/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     if [ -f "${state}/race-lost/$(basename "${file}")" ]; then
       rm -f "${state}/race-lost/$(basename "${file}")" "${file}"
@@ -1273,7 +1353,7 @@ while true; do
       verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1) thin=""
       [ -z "${cause}" ] && [[ ${verdict} == "green: ${sha} "* ]] && thin=$(thinCanary "${gateLog}")
       if [ -z "${cause}" ] && [ -z "${thin}" ] && [[ ${verdict} == "green: ${sha} "* ]]; then
-        echo "$(date -u +%H:%M:%S) main canary green: ${sha} on ${box} with tools ${testedHead%%:*}"
+        echo "$(date -u +%H:%M:%S) main canary green: ${sha}${against:+ against ${against}} on ${box} with tools ${testedHead%%:*}"
         rm -f "${state}/main-canary-paged"
         continue
       fi
@@ -1281,12 +1361,12 @@ while true; do
       said=${cause:+void (${cause})}
       said=${said:-${thin:+void (${thin})}}
       said=${said:-${verdict}}
-      echo "$(date -u +%H:%M:%S) main canary not green: ${sha} on ${box} with tools ${testedHead%%:*}: ${said}"
+      echo "$(date -u +%H:%M:%S) main canary not green: ${sha}${against:+ against ${against}} on ${box} with tools ${testedHead%%:*}: ${said}"
       # One page per failure, whatever main's sha or the seconds it took.
       key=$(printf '%s\n' "${said#* ${sha} }" | sed -E 's/[0-9]+(\.[0-9]+)? s//g')
       if [ "$(cat "${state}/main-canary-paged" 2>/dev/null)" != "${key}" ]; then
         echo "${key}" > "${state}/main-canary-paged"
-        notifyStorm "main's canary is not green, so the gate itself is suspect: main ${sha:0:12} on ${box} with box tools ${testedHead%%:*}: ${said}. Log: ${gateLog}"
+        notifyStorm "main's canary is not green, so the gate itself is suspect: main ${sha:0:12}${against:+ against ${against}} on ${box} with box tools ${testedHead%%:*}: ${said}. Log: ${gateLog}"
       fi
       continue
     fi
@@ -1413,7 +1493,7 @@ while true; do
     last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
     if [ "$((now - last))" -ge 600 ]; then
       free=$(freeSlots)
-      read -r box canarySlot <<< "$(emptyBoxForStageCanary)"
+      read -r box canarySlot <<< "$(emptyBoxForWholeCanary)"
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
         log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
@@ -1428,19 +1508,39 @@ while true; do
   # own probe). Its clock survives restarts and starts a full interval after the first watcher, so a deploy is no page.
   # A stage canary waiting for its whole box goes first: it is main's canary too, and at 16:08Z the half-hourly one took
   # a slot on the draining box and would have held the stage canary off for its hour.
-  if [ ! -f "${state}/storm" ] && ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null && ! stageCanaryWaiting &&
-     [ "$(( $(date -u +%s) - $(cat "${state}/main-canary-started") ))" -ge "${mainCanarySeconds}" ]; then
+  # Each is a pulse (#psh61tb): sized to a slot by the pick, or every fourth main~10 on an empty box, whole.
+  if mainCanaryDue && ! stageCanaryWaiting; then
     now=$(date -u +%s)
+    pulse=$(nextPulse) box="" canarySlot="" sha="" depth="" whole="" pulseLine="" pulseVerdict=""
     free=$(freeSlots) draining=$(drainingBoxes)
-    read -r box canarySlot <<< "$(usableSlots canary/main | awk '$1 == "pool" {next} $2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
-    sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
+    if [ $((pulse % 4)) = 0 ]; then
+      read -r box canarySlot <<< "$(emptyBoxForWholeCanary)"
+      sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
+      depth=10 whole=whole pulseLine="against main~10 on a whole box" pulseVerdict="main~10 on a whole box"
+    else
+      # A pick an interval old sized a main long gone (a watcher restarted mid-pick, say).
+      picked=$(head -1 "${state}/canary-pick" 2> /dev/null | cut -d' ' -f1)
+      [ -n "${picked}" ] && { ! [[ ${picked} =~ ^[0-9]+$ ]] || [ $((now - picked)) -ge "${mainCanarySeconds}" ]; } && rm -f "${state}/canary-pick"
+      if [ -f "${state}/canary-pick" ]; then
+        sha=$(head -1 "${state}/canary-pick" | cut -d' ' -f2)
+        IFS=$'\t' read -r depth pulseLine pulseVerdict <<< "$(pickDepth)"
+        read -r box canarySlot <<< "$(usableSlots canary/main | awk '$1 == "pool" {next} $2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
+      else
+        # Main's tip as it is now is the one the pulse gates, once sized.
+        picked=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
+        [ -n "${picked}" ] && startCanaryPick "${picked}"
+      fi
+    fi
     if [ -n "${box}" ] && [ -n "${sha}" ]; then
       log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
-      dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" main
+      dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" main "${depth}" "${whole}"
+      echo "${pulseVerdict}" > "${state}/canary-depth/${dispatchedPid}"
+      echo "${pulse}" > "${state}/main-canary-pulses"
+      rm -f "${state}/canary-pick"
       echo "${now}" > "${state}/main-canary-started"
       echo "$(suiteKey "$(cat "${state}/tools-good"):main:${now}")" > "${state}/main-mutants"
-      echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with the good tools, the half-hourly canary (${canarySlot} on ${box}, log ${log})"
-    elif [ -z "${box}" ]; then
+      echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with the good tools, the half-hourly canary, pulse ${pulse} ${pulseLine} ($([ -n "${whole}" ] && echo "${box} whole" || echo "${canarySlot} on ${box}"), log ${log})"
+    elif [ -z "${box}" ] && [ -z "${whole}" ] && [ -n "${sha}" ]; then
       yieldRaceForCanary
     fi
   fi
