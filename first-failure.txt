@@ -1,0 +1,13 @@
+github.com/system-inc/adamic/internal/native TestDecodeASCIIUnit43
+=== RUN   TestDecodeASCIIUnit43
+=== PAUSE TestDecodeASCIIUnit43
+=== CONT  TestDecodeASCIIUnit43
+    decode_ascii_cache_test.go:74: cache lock decode-node-corpus wait 39.409s
+    decode_ascii_test.go:352: corpus phase 39.411s (including cache wait)
+    decode_ascii_cache_test.go:74: cache lock decode-parallel-native wait 4.719s
+    decode_ascii_test.go:352: compile phase 4.722s (including cache wait)
+    decode_ascii_test.go:352: /home/ahra/.cache/adamic-build/8de94640d072e44c4de7924aadd51519a75e4cf21c9555f6b248d566c88cef51/decode-native [/home/ahra/.cache/adamic-build/8ac3d49e3cae80533eb62dda414e6ef0fa63acbacc4ad5ca83bef80cdb12fa42/cases_088064_090112.bin]: signal: killed
+    split_units_test.go:293: unit elapsed 55.266s
+--- FAIL: TestDecodeASCIIUnit43 (55.27s)
+
+(box load 74.8 on 64 cores at first failure)

@@ -1,0 +1,8 @@
+target 955e3eb92b9cd04aca420974d1006048b4615d51
+logs /home/ahra/full-gate/out/955e3eb92b9c-20261009T154438Z/catalog-units/09-4ym6e3uy/adamic-catalog-logs-q_jc5oa6
+build flags: commit=955e3eb92b9cd04aca420974d1006048b4615d51; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)
+10 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+10 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=17.16 16.07 22.03 60/962 4109575 -> 17.16 16.07 22.03 58/959 4109582
+total wall=0.059s load=17.16 16.07 22.03 65/944 4109426 -> 17.16 16.07 22.03 57/957 4109585
