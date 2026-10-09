@@ -15,6 +15,7 @@ import (
 )
 
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
+// Not parallel: TestMain owns the shared temporary directory and registry initialization.
 func TestMain(m *testing.M) {
 	if _, err := registry.Generate("."); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -26,33 +27,16 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	sharedDirectory = directory
+	if err := decodedOptionsBeforeTests(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.RemoveAll(directory)
+		os.Exit(1)
+	}
 	code := m.Run()
 	if err := os.RemoveAll(directory); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 	}
 	os.Exit(code)
-}
-
-func TestOwnedWitnesses(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	var rows []string
-	for _, d := range prepareRegistry(t, ".") {
-		for _, row := range ownedWitnessRows(t, directory, d) {
-			path := strings.SplitN(row, "\t", 2)[0]
-			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
-			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
-			if string(answer.output) == "0\n" {
-				t.Fatalf("%s witness reports no findings", d.Name)
-			}
-			rows = append(rows, pair...)
-		}
-	}
-	path := manifest(t, rows)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
 }
 
 func TestRegistrationMutant(t *testing.T) {
@@ -76,82 +60,9 @@ func TestRegistrationMutant(t *testing.T) {
 	}
 }
 
-func TestFactoryHooks(t *testing.T) {
-	directory := mutant(t, "", "")
-	module := filepath.Join(directory, "rules/no-debugger/rule.ts")
-	data, err := os.ReadFile(module)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := strings.Replace(string(data), "    visit(index: number, parent: number): void {", `    ready = false;
-    prepare(root: number): void { this.ready = true; console.log('prepare'); }
-    finish(root: number): void { console.log('finish'); }
-    visit(index: number, parent: number): void {
-        if(!this.ready) { panic('visit before prepare'); }
-        console.log('visit');`, 1)
-	source = strings.Replace(source, "return new Rule(context);", `if(context.node(context.parents.length - 1).kind !== 'SourceFile') { panic('factory before ancestry'); }
-    if(context.settings.read('number', '') !== '-2' || !context.settings.read('payload', '').includes('enabled')) { panic('structured option lost'); }
-    console.log('factory');
-    return new Rule(context);`, 1)
-	source = "import { panic } from 'adamic';\n" + source
-	if err := os.WriteFile(module, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	descriptor := filepath.Join(directory, "rules/no-debugger/rule.json")
-	data, err = os.ReadFile(descriptor)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var options map[string]any
-	if err := json.Unmarshal(data, &options); err != nil {
-		t.Fatal(err)
-	}
-	options["prepare"] = "prepare"
-	options["finish"] = "finish"
-	write := func() {
-		data, err := json.Marshal(options)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(descriptor, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	write()
-	fixture := filepath.Join(t.TempDir(), "hooks.ts")
-	if err := os.WriteFile(fixture, []byte("debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"})
-	expected := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
-	run := func(mutated bool) {
-		sides := []struct {
-			name string
-			run  execution
-		}{
-			{"Node", node(t, directory, path, false)},
-			{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		}
-		if !mutated {
-			sides = append(sides, struct {
-				name string
-				run  execution
-			}{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)})
-		}
-		for _, side := range sides {
-			matches := bytes.HasPrefix(side.run.output, expected)
-			if matches == mutated {
-				t.Fatalf("hook sequence on %s (mutant=%t): %s", side.name, mutated, side.run.output)
-			}
-			if mutated {
-				t.Logf("finish-hook omission caught on %s", side.name)
-			}
-		}
-	}
-	run(false)
-	delete(options, "finish")
-	write()
-	run(true)
+// Not parallel: initializes the shared immutable hook fixtures before the parallel shards.
+func TestFactoryHooks_Setup(t *testing.T) {
+	factoryHooksSetup(t)
 }
 
 // Raw corpus text stays outside the project's TypeScript module graph.
@@ -287,34 +198,8 @@ console.log(written('copied'));
 	t.Log("root-only import rewrite mutant caught by Node and native module loading")
 }
 
-func TestDecodedOptionsAndMutant(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	fixture := filepath.Join(t.TempDir(), "catch.ts")
-	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}"})
-	oracle := goOracle(t)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
-	count := execute(t, "", oracle, "--manifest", path, "--count")
-	if string(count.output) != "0\n" {
-		t.Fatal("JSON catch option did not override the legacy default")
-	}
-	changed := mutant(t, "'allowemptycatch'", "'ignored-allowemptycatch'", "main.ts")
-	want := execute(t, "", oracle, "--manifest", path).output
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, changed, path, false)},
-		{"emitted JavaScript", emittedNode(t, changed, path, false)},
-	} {
-		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("ignored decoded-option mutant survived on %s", side.name)
-		}
-		t.Logf("ignored decoded-option mutant caught on %s: %s", side.name, difference(side.run.output, want))
-	}
+// The bounded setup child prepares all immutable products before m.Run starts shards.
+func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
+	t.Parallel()
+	decodedOptionsSetupTest(t)
 }

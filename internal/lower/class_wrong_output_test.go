@@ -7,6 +7,7 @@ import (
 )
 
 func TestClassWrongOutputIteratorReceiver(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_override_this.a")
 	if err != nil {
 		t.Fatal(err)
@@ -34,6 +35,7 @@ func TestClassWrongOutputIteratorReceiver(t *testing.T) {
 }
 
 func TestClassWrongOutputKeysRepair(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a")
 	if err != nil {
 		t.Fatal(err)
@@ -45,6 +47,7 @@ func TestClassWrongOutputKeysRepair(t *testing.T) {
 }
 
 func TestClassWrongOutputPrivateRepair(t *testing.T) {
+	t.Parallel()
 	source := "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } reveal(): string { return this.#secret; } static peek(box: Box): string { return box.reveal(); } } console.log(Box.peek(new Box(`s${1}`)));"
 	if _, err := lowerSource(t, source); err != nil {
 		t.Fatalf("instance delegation refused: %v", err)

@@ -7,6 +7,7 @@ import (
 )
 
 func TestUntaggedViewMemberTags(t *testing.T) {
+	t.Parallel()
 	contracts := []ir.ViewContract{
 		{Kind: ir.ViewUnion, Name: "Left | Right", Of: ir.Object, Members: []ir.ViewContractID{2, 3}},
 		{Kind: ir.ViewObject, Name: "Left", Of: ir.Object, Fields: []ir.ViewFieldContract{{Name: "kind", Contract: 4}, {Name: "nested", Contract: 6}}},
@@ -40,6 +41,7 @@ func TestUntaggedViewMemberTags(t *testing.T) {
 }
 
 func TestUntaggedViewStructuralFallback(t *testing.T) {
+	t.Parallel()
 	contracts := []ir.ViewContract{
 		{Kind: ir.ViewUnion, Name: "Left | Right", Members: []ir.ViewContractID{2, 3}},
 		{Kind: ir.ViewObject, Of: ir.Object},

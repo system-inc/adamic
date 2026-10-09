@@ -109,7 +109,8 @@ func auditResults(t *testing.T, name string, result run) []auditOutput {
 	return answers
 }
 
-func TestWholeDocumentOraclePreflight(t *testing.T) {
+// Not parallel: prepares the shared oracle binaries and corpus before parallel leaves run.
+func TestWholeDocumentOraclePreflight_Setup(t *testing.T) {
 	started := time.Now()
 	fixture := wholeDocumentPreflight(t)
 	for shard, cases := range fixture.shards {
@@ -121,7 +122,7 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 			}
 		}
 	}
-	t.Logf("TestWholeDocumentOraclePreflight (setup) %.6fs", time.Since(started).Seconds())
+	t.Logf("TestWholeDocumentOraclePreflight_Setup %.6fs", time.Since(started).Seconds())
 }
 
 func firstDifference(a, b string) int {

@@ -15,6 +15,7 @@ import (
 )
 
 // The ruling explicitly requires this mutant to die in the C compiler.
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestClosureConventionDropCount(t *testing.T) {
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
 	if err != nil {
@@ -54,6 +55,7 @@ func TestClosureConventionDropCount(t *testing.T) {
 }
 
 // The runtime callback site must obey the same compiler-enforced arity.
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestClosureConventionRuntimeDropCount(t *testing.T) {
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "closure_convention_regexp_count.a")})
 	if err != nil {
@@ -81,6 +83,7 @@ func TestClosureConventionRuntimeDropCount(t *testing.T) {
 	t.Log("runtime callback drop-count mutant rejected by clang under -Werror: expected 3, have 2")
 }
 
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestClosureConventionRuntimeFeaturesIgnoreLiterals(t *testing.T) {
 	program := &ir.Program{Strings: []string{"adamic_regex_replace_callback", "adamic_fs_file_host_cwd"}}
 	library, err := RuntimeLibraryForSource("", C(program), Options{})
@@ -100,6 +103,7 @@ func TestClosureConventionRuntimeFeaturesIgnoreLiterals(t *testing.T) {
 
 // Definition order, call order and explicit signature-erasing casts each fail
 // independently. A constructor check alone misses a never-stored definition.
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestClosureConventionWrongOrder(t *testing.T) {
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
 	if err != nil {
@@ -115,6 +119,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 		t.Fatal("no counted definition")
 	}
 	swapped := strings.Replace(source, old, "size_t argument_count, adamic_value *arguments", 1)
+	// Not parallel: Build writes the shared adamic/runtime cache and package-level runtimeBuilds map.
 	t.Run("definition", func(t *testing.T) {
 		err := Build(swapped, filepath.Join(t.TempDir(), "mutant"), Options{})
 		if err == nil || !strings.Contains(err.Error(), "conflicting types") {
@@ -122,6 +127,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 		}
 		t.Log(err)
 	})
+	// Not parallel: Build writes the shared adamic/runtime cache and package-level runtimeBuilds map.
 	t.Run("call", func(t *testing.T) {
 		lines := strings.Split(source, "\n")
 		changed := false
@@ -153,6 +159,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 		{"function-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_counted_code erased = (adamic_counted_code)wrong;\n", "cast-function-type-strict"},
 		{"void-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }\n", "generic association"},
 	} {
+		// Not parallel: Build writes the shared adamic/runtime cache and package-level runtimeBuilds map.
 		t.Run(probe.name, func(t *testing.T) {
 			err := Build(strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.code, 1), filepath.Join(t.TempDir(), "mutant"), Options{})
 			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
@@ -164,6 +171,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 }
 
 func TestParserHasNoUnusedOptionalMethodThunks(t *testing.T) {
+	t.Parallel()
 	checked, err := load.Load([]string{filepath.Join("..", "..", "stage1", "typescript", "parser", "main.ts")})
 	if err != nil {
 		t.Fatal(err)
@@ -193,6 +201,7 @@ func TestParserHasNoUnusedOptionalMethodThunks(t *testing.T) {
 
 // Required optional methods keep their thunks; same-signature classes which
 // cannot inhabit the receiver view do not acquire a table entry from its closure.
+// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestOptionalMethodThunksMatchNode(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join("testdata", "optional_method_thunks.a"))
 	if err != nil {

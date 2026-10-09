@@ -3,7 +3,6 @@ package markdowninline
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -13,7 +12,6 @@ import (
 	"sort"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
@@ -51,13 +49,12 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded prepares a child for the shared output-based hang guard.
-// Silent builds and buffered children use its 30-minute first-output window.
-// With ten CPU burners, the longest output gap was 26.3s; the default
-// two-minute Stall leaves more than three times that gap as headroom.
+// bounded retains the output guard and adds a hard 90-second group deadline.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	return exec.Command(name, arguments...)
+	command, cancel := inlineCommand(name, arguments...)
+	t.Cleanup(cancel)
+	return command
 }
 
 func combinedOutput(command *exec.Cmd) ([]byte, error) {
@@ -151,18 +148,33 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	return ""
 }
 
-func TestMarkdownInline(t *testing.T) {
-	t.Parallel()
+type inlineCorpusData struct {
+	paths, texts        []string
+	files, generatedEnd int
+	selected            map[string]bool
+}
+
+func collectInlineCorpus(t *testing.T) inlineCorpusData {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	dir := t.TempDir()
 	var texts []string
 	patterns := []string{"*.md", "*.markdown", "*.mdown", "*.mkd"}
 	paths := corpusfiles.Repository(t, root, []string{"."}, patterns)
-	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)...)
-	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)...)
+	coherePaths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)
+	typeScriptPaths := corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)
+	if len(paths) == 0 {
+		t.Fatal("repository Markdown corpus is empty")
+	}
+	if len(coherePaths) != 786 {
+		t.Fatalf("cohere Markdown corpus at %s: %d files, want 786", corpusfiles.CohereCommit, len(coherePaths))
+	}
+	if len(typeScriptPaths) != 67 {
+		t.Fatalf("TypeScript-Go Markdown corpus at %s: %d files, want 67", corpusfiles.TypeScriptGoCommit, len(typeScriptPaths))
+	}
+	paths = append(paths, coherePaths...)
+	paths = append(paths, typeScriptPaths...)
 	sort.Strings(paths)
 	names := make([]string, len(paths))
 	for i, path := range paths {
@@ -176,11 +188,15 @@ func TestMarkdownInline(t *testing.T) {
 	if err != nil {
 		t.Fatalf("%s: %v", t.Name(), err)
 	}
+	selected := map[string]bool{}
 	if selection.Sample {
 		t.Log(selection.Log(t.Name()))
-		paths = make([]string, len(selection.Paths))
-		for i, name := range selection.Paths {
-			paths[i] = filepath.Join(root, filepath.FromSlash(name))
+		for _, name := range selection.Paths {
+			selected[filepath.Join(root, filepath.FromSlash(name))] = true
+		}
+	} else {
+		for _, path := range paths {
+			selected[path] = true
 		}
 	}
 	for _, path := range paths {
@@ -203,6 +219,7 @@ func TestMarkdownInline(t *testing.T) {
 	}
 	generate("", 4)
 	texts = append(texts, "===", "---", "\r\t\u2028\u2029", "\x00", " \n ", " ` ``, ``` ", "a|b\n", "'\"< >)[]\\", "\t\n\t x", strings.Repeat("\\\\**a _b_ `c` |d| 😀 ", 10000))
+	generatedEnd := len(texts)
 	// Every BMP scalar is examined on both sides of both delimiter kinds. Surrogate units are
 	// exercised by astral scalars; isolated surrogates cannot be represented by the UTF-8 file API.
 	var unicode strings.Builder
@@ -221,161 +238,7 @@ func TestMarkdownInline(t *testing.T) {
 	for _, code := range []rune{0x10100, 0x1039f, 0x1f600, 0x1e95f, 0x10ffff} {
 		texts = append(texts, string(code)+"_a a_"+string(code), string(code)+"*a a*"+string(code))
 	}
-	modes := "wefnspctrukvhijlboq"
-	var input strings.Builder
-	encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
-	for _, text := range texts {
-		for _, mode := range modes {
-			input.WriteString(string(mode) + encode.Replace(text) + "\n")
-		}
-	}
-	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, []byte(input.String()))
-	manifest, _ := json.MarshalIndent(paths, "", "  ")
-	if keep := os.Getenv("ADAMIC_MARKDOWNINLINE_KEEP"); keep != "" {
-		write(t, keep, []byte(input.String()))
-		write(t, keep+".files.json", manifest)
-	}
-	bridge, _ := filepath.Abs("testdata/bridge.go")
-	driver, _ := filepath.Abs("testdata/go_driver.go")
-	cohere := filepath.Join(root, "cohere")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{
-		filepath.Join(cohere, "internal/format/markdown/adamic_stage_one.go"): bridge,
-		filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):                 driver,
-	}})
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-printer")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-	command.Dir = cohere
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go bridge: %v\n%s", err, output)
-	}
-	want := execute(t, nil, goBinary, cases)
-	clean(t, "Go", want)
-	main, _ := filepath.Abs("main.ts")
-	program := lowered(t, main)
-	got, binary := natively(t, program, "--batch", cases)
-	for _, side := range []struct {
-		name   string
-		result run
-	}{{"native", got}, {"Node", onNode(t, main, "--batch", cases)}, {"JavaScript backend", onJavaScriptBackend(t, program, "--batch", cases)}} {
-		clean(t, side.name, side.result)
-		equalInlineBatch(t, side.name, side.result.stdout, want.stdout, paths, len(modes))
-	}
-	if report := leaks(t, program, binary, "--batch", cases); report != "" {
-		t.Fatal(report)
-	}
-	library := os.Getenv("ADAMIC_MARKDOWNINLINE_LIBRARY")
-	script, _ := filepath.Abs("testdata/library.mjs")
-	if library != "" {
-		answer := execute(t, nil, "node", script, library, cases)
-		clean(t, "Prettier", answer)
-		equalInlineBatch(t, "Prettier", answer.stdout, want.stdout, paths, len(modes))
-	} else {
-		t.Log("external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY")
-	}
-	t.Logf("Go/native/Node/JavaScript backend/Prettier batch byte parity passed (%d cases)", len(texts)*len(modes))
-	// Independently verify raw stdout preserves every repository text and terminal newlines.
-	rawTexts := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "😀*x*", "\\_")
-	for _, text := range rawTexts {
-		path := filepath.Join(dir, "raw.md")
-		write(t, path, []byte(text))
-		singleCase := filepath.Join(dir, "single.txt")
-		write(t, singleCase, []byte("w"+encode.Replace(text)+"\n"))
-		expected := execute(t, nil, goBinary, singleCase)
-		clean(t, "Go raw", expected)
-		decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
-		for _, r := range []run{execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, path, "w")} {
-			clean(t, "raw", r)
-			equal(t, "raw", r.stdout, []byte(decoded))
-		}
-	}
-	for _, mutation := range []struct{ name, from, to string }{
-		{"escaped delimiter parity", "(found.preceding - position) % 2 === 1", "(found.preceding - position) % 2 === 0"},
-		{"table pipe escaping", "if(table)", "if(!table)"},
-		{"minimum absent fence", "while(runs.includes(count))", "while(runs.includes(count) && count < 1)"},
-	} {
-		t.Run(mutation.name, func(t *testing.T) {
-			parent := t.TempDir()
-			scratch := filepath.Join(parent, "markdowninline")
-			if err := os.Mkdir(scratch, 0755); err != nil {
-				t.Fatal(err)
-			}
-			dependency, err := os.ReadFile("classes.ts")
-			if err != nil {
-				t.Fatal(err)
-			}
-			write(t, filepath.Join(scratch, "classes.ts"), dependency)
-			source, err := os.ReadFile("inline.ts")
-			if err != nil {
-				t.Fatal(err)
-			}
-			if strings.Count(string(source), mutation.from) != 1 {
-				t.Fatal("mutant must change one site")
-			}
-			write(t, filepath.Join(scratch, "inline.ts"), []byte(strings.Replace(string(source), mutation.from, mutation.to, 1)))
-			source, err = os.ReadFile("main.ts")
-			if err != nil {
-				t.Fatal(err)
-			}
-			mutatedMain := filepath.Join(scratch, "main.ts")
-			write(t, mutatedMain, source)
-			mutated := lowered(t, mutatedMain)
-			for _, r := range []run{nativelyRun(t, mutated, "--batch", cases), onNode(t, mutatedMain, "--batch", cases)} {
-				clean(t, "mutant", r)
-				if bytes.Equal(r.stdout, want.stdout) {
-					t.Fatal("mutant survived")
-				}
-				a, b := strings.Split(string(r.stdout), "\n"), strings.Split(string(want.stdout), "\n")
-				for i := range b {
-					if i >= len(a) {
-						t.Logf("caught by missing output case %d", i)
-						break
-					}
-					if a[i] != b[i] {
-						offset := 0
-						for offset < len(a[i]) && offset < len(b[i]) && a[i][offset] == b[i][offset] {
-							offset++
-						}
-						start := max(0, offset-20)
-						t.Logf("caught by output case %d, byte %d: got %q want %q", i, offset,
-							a[i][start:min(len(a[i]), offset+40)], b[i][start:min(len(b[i]), offset+40)])
-						break
-					}
-				}
-			}
-		})
-	}
-	fast := filepath.Join(dir, "native-fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	measurements := []struct {
-		name    string
-		command string
-		args    []string
-	}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{"--batch", cases}}, {"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, "--batch", cases}}}
-	if library != "" {
-		measurements = append(measurements, struct {
-			name    string
-			command string
-			args    []string
-		}{"Prettier", "node", []string{script, library, cases}})
-	}
-	for _, side := range measurements {
-		var elapsed time.Duration
-		for round := 0; round < 3; round++ {
-			start := time.Now()
-			answer := execute(t, nil, side.command, side.args...)
-			elapsed += time.Since(start)
-			clean(t, side.name, answer)
-			equalInlineBatch(t, side.name, answer.stdout, want.stdout, paths, len(modes))
-		}
-		t.Logf("throughput %s %.1f texts/s, 3 process runs %.6fs (startup, input, escaping, output included; build excluded)", side.name, float64(len(texts)*len(modes)*3)/elapsed.Seconds(), elapsed.Seconds())
-	}
-	t.Logf("corpus: %d repository/submodule files, %d generated texts, %d leaf/context cases; all byte-identical", files, len(texts)-files, len(texts)*len(modes))
+	return inlineCorpusData{paths, texts, files, generatedEnd, selected}
 }
 func write(t *testing.T, path string, b []byte) {
 	t.Helper()

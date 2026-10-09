@@ -8,6 +8,7 @@ import (
 )
 
 func TestCensusOverloadRelation(t *testing.T) {
+	t.Parallel()
 	probes := []struct{ name, source, diagnostic string }{
 		{"parameter contravariance", `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
@@ -36,6 +37,7 @@ function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
 	}
 	for _, probe := range probes {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.diagnostic) {
@@ -46,6 +48,7 @@ function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
 }
 
 func TestCensusSmallFiniteKeyRead(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `const wildcardMatchers = { files: 'file', directories: 'directory', exclude: 'excluded' };
 function pick(usage: 'files' | 'directories' | 'exclude'): string { return wildcardMatchers[usage]; }
 console.log(pick('files'));
@@ -56,6 +59,7 @@ console.log(pick('files'));
 }
 
 func TestCensusRestMutableElements(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
 interface House { pet: Animal; }
@@ -75,6 +79,7 @@ console.log(first.pet.bark);
 
 // Flow-narrowed never is not an executable arm that fails to return.
 func TestCensusBooleanDeadBranch(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/census_boolean_dead_branch.a")
 	if err != nil {
 		t.Fatal(err)
