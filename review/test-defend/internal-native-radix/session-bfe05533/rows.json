@@ -1,0 +1,187 @@
+[
+  {
+    "test": "TestRegExpSearchNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegExpLintPatternsNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/regexp.c:115",
+        "change": "if (frame->allocation_on_heap)\n\t\t\tfree(frame); -> if (frame->allocation_on_heap)\n\t\t\t(void)frame;",
+        "rows_failed": [
+          "TestRegExpBytecodeTest262",
+          "TestRegExpLintPatternsNode",
+          "TestRegExpSearchNode"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/regexp.c:464",
+        "change": "at--; -> (void)at;",
+        "rows_failed": [
+          "TestRegExpBytecodeRandomNode family",
+          "TestRegExpSearchNode"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/regexp/native_search.go:42",
+        "change": "if len(s) == 0 {\n\t\t\t\t\treturn bits, false -> if len(s) == 0 {\n\t\t\t\t\treturn bits, true",
+        "rows_failed": [
+          "TestRegExpBytecodeRandomNode family",
+          "TestRegExpSearchNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D3 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D3.log 2>&1; regexp_search_test.go:34: native regex oracle ([]): exit status 1; DISAGREEMENT case=17 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpSearchNode"
+    ],
+    "code_under_test": "internal/regexp parsing, bytecode compilation and native declarations; internal/native C regexp VM, UTF-16 search and result construction, with runtime ownership.",
+    "oracle": "Live Node 24 RegExp.exec with d flag supplies exact capture indices, named groups and lastIndex. C test and exec are compared under ASan/UBSan in limited and unlimited modes."
+  },
+  {
+    "test": "TestRegExpLintPatternsNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegExpSearchNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D4",
+        "file_line": "internal/regexp/parser.go:452",
+        "change": "'t': 9 -> 't': 10",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/regexp/native_search.go:75",
+        "change": "i.direction != 1 || i.flags.IgnoreCase || len(i.set.strings) != 0 || len(i.set.ranges) != 1 -> i.direction != 1 || false || len(i.set.strings) != 0 || len(i.set.ranges) != 1",
+        "rows_failed": [
+          "TestRegExpBytecodeRandomNode family",
+          "TestRegExpBytecodeTest262",
+          "TestRegExpLintPatternsNode",
+          "TestRegExpSearchNode"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/native/runtime/regexp.c:291",
+        "change": "failed = ok == i->negative; -> failed = ok == false;",
+        "rows_failed": [
+          "TestRegExpBytecodeRandomNode family",
+          "TestRegExpBytecodeTest262",
+          "TestRegExpLintPatternsNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D6 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D6.log 2>&1; regexp_search_test.go:76: native regex oracle ([]): exit status 1; DISAGREEMENT case=881 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpSearchNode"
+    ],
+    "code_under_test": "internal/regexp parsing, bytecode compilation and native declarations; internal/native C regexp VM, UTF-16 search and result construction, with runtime ownership.",
+    "oracle": "Live Node 24 RegExp.exec with d flag supplies exact capture indices, named groups and lastIndex. C test and exec are compared under ASan/UBSan in limited and unlimited modes."
+  }
+]

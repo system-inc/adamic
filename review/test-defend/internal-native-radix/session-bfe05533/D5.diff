@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/native_search.go b/internal/regexp/native_search.go
+index 64b49741..05710776 100644
+--- a/internal/regexp/native_search.go
++++ b/internal/regexp/native_search.go
+@@ -72,7 +72,7 @@ func (p *Program) nativePrefix() []rune {
+ 		case opSave, opAssert, opLook:
+ 			continue
+ 		case opSet:
+-			if i.direction != 1 || i.flags.IgnoreCase || len(i.set.strings) != 0 || len(i.set.ranges) != 1 || i.set.ranges[0].From != i.set.ranges[0].To || i.set.ranges[0].To >= 128 {
++			if i.direction != 1 || false || len(i.set.strings) != 0 || len(i.set.ranges) != 1 || i.set.ranges[0].From != i.set.ranges[0].To || i.set.ranges[0].To >= 128 {
+ 				return prefix
+ 			}
+ 			prefix = append(prefix, i.set.ranges[0].From)

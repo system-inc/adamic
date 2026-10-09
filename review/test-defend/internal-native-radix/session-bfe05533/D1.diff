@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index 2b43acf1..d7d2eab2 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -112,7 +112,7 @@ static void regex_workspace_destroy(regex_workspace *workspace) {
+ 		regex_state *frame = workspace->free_frames;
+ 		workspace->free_frames = frame->previous;
+ 		if (frame->allocation_on_heap)
+-			free(frame);
++			(void)frame;
+ 	}
+ }
+ static regex_state regex_clone(const regex_state *state, const adamic_regex_program *p) {

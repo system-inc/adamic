@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "D01",
+    "file": "internal/regexp/matcher.go",
+    "file_line": "internal/regexp/matcher.go:219",
+    "old": "{0x2028, 0x2029}",
+    "new": "{0x2029, 0x2029}",
+    "target": "TestRegExpBytecodeTest262",
+    "change": "Off by one: stop excluding U+2028 from dot without dotAll."
+  },
+  {
+    "mutant": "D02",
+    "file": "internal/native/runtime/regexp.c",
+    "file_line": "internal/native/runtime/regexp.c:331",
+    "old": "i->unbounded || reg.count < i->maximum",
+    "new": "i->unbounded || i->maximum == 0 || reg.count < i->maximum",
+    "target": "TestRegExpBytecodeRandomNode family",
+    "change": "Flip repeat-body condition: interpret closed maximum zero as unbounded."
+  }
+]

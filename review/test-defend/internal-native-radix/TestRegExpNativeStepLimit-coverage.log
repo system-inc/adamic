@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:11:48.970532318Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T14:11:48.983681849Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit"}
+{"Time":"2026-10-09T14:11:48.983763102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit","Output":"=== RUN   TestRegExpNativeStepLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:48.983792752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit","Output":"=== PAUSE TestRegExpNativeStepLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:48.983795296Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit"}
+{"Time":"2026-10-09T14:11:48.983798093Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit"}
+{"Time":"2026-10-09T14:11:48.983800012Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit","Output":"=== CONT  TestRegExpNativeStepLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:49.168617456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit","Output":"--- PASS: TestRegExpNativeStepLimit (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:49.168686656Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpNativeStepLimit","Elapsed":0.18}
+{"Time":"2026-10-09T14:11:49.168717894Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:49.170574843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 7.3% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:49.176513781Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.205s\tcoverage: 7.3% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:49.176547941Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.206}
