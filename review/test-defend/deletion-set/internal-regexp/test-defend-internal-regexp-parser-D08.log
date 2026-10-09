@@ -1,0 +1,121 @@
+{"Time":"2026-10-09T17:26:52.999664142Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T17:26:53.009188111Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape"}
+{"Time":"2026-10-09T17:26:53.009259926Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape","Output":"=== RUN   TestUnicodeDecimalEscape\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009287461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape","Output":"=== PAUSE TestUnicodeDecimalEscape\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009290435Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape"}
+{"Time":"2026-10-09T17:26:53.00929561Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T17:26:53.009298336Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== RUN   TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009301688Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== PAUSE TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.00930427Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T17:26:53.009307101Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode"}
+{"Time":"2026-10-09T17:26:53.009312003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"=== RUN   TestMatcherRandomNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009315278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"=== PAUSE TestMatcherRandomNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009317263Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode"}
+{"Time":"2026-10-09T17:26:53.00932015Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions"}
+{"Time":"2026-10-09T17:26:53.009322624Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"=== RUN   TestMatcherTest262Executions\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009327461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"=== PAUSE TestMatcherTest262Executions\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009329732Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions"}
+{"Time":"2026-10-09T17:26:53.009334023Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode"}
+{"Time":"2026-10-09T17:26:53.009336269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"=== RUN   TestMatcherCanonicalizeNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009339228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"=== PAUSE TestMatcherCanonicalizeNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.00934184Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode"}
+{"Time":"2026-10-09T17:26:53.009344387Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherPropertyProviderStrings"}
+{"Time":"2026-10-09T17:26:53.009346719Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherPropertyProviderStrings","Output":"=== RUN   TestMatcherPropertyProviderStrings\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.00935696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherPropertyProviderStrings","Output":"=== PAUSE TestMatcherPropertyProviderStrings\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009359548Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherPropertyProviderStrings"}
+{"Time":"2026-10-09T17:26:53.009364536Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T17:26:53.009367241Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== RUN   TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009369984Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== PAUSE TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.00937215Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T17:26:53.009375972Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T17:26:53.009379074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== RUN   TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009382444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== PAUSE TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.00938468Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T17:26:53.009396094Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary"}
+{"Time":"2026-10-09T17:26:53.00939846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Output":"=== RUN   TestMatcherStepLimitBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009425434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Output":"=== PAUSE TestMatcherStepLimitBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009428779Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary"}
+{"Time":"2026-10-09T17:26:53.009431877Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants"}
+{"Time":"2026-10-09T17:26:53.009434115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"=== RUN   TestMatcherOct6Mutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009439969Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"=== PAUSE TestMatcherOct6Mutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009442591Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants"}
+{"Time":"2026-10-09T17:26:53.009453202Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node"}
+{"Time":"2026-10-09T17:26:53.009455723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"=== RUN   TestMatcherOct6Node\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009492066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"=== PAUSE TestMatcherOct6Node\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.00949529Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node"}
+{"Time":"2026-10-09T17:26:53.009501116Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6LoopsNode"}
+{"Time":"2026-10-09T17:26:53.009503644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6LoopsNode","Output":"=== RUN   TestMatcherOct6LoopsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009507843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6LoopsNode","Output":"=== PAUSE TestMatcherOct6LoopsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009510186Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6LoopsNode"}
+{"Time":"2026-10-09T17:26:53.009533213Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement"}
+{"Time":"2026-10-09T17:26:53.00953694Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"=== RUN   TestNodeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009541771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"=== PAUSE TestNodeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009544451Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement"}
+{"Time":"2026-10-09T17:26:53.009566164Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-09T17:26:53.009569427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== RUN   TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009573849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== PAUSE TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009576057Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-09T17:26:53.009628961Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T17:26:53.009632266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== RUN   TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009635291Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== PAUSE TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009637544Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T17:26:53.009641164Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape"}
+{"Time":"2026-10-09T17:26:53.009643805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape","Output":"=== CONT  TestUnicodeDecimalEscape\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009691426Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants"}
+{"Time":"2026-10-09T17:26:53.009694118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"=== CONT  TestMatcherOct6Mutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009906783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape","Output":"--- PASS: TestUnicodeDecimalEscape (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.009911715Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestUnicodeDecimalEscape","Elapsed":0}
+{"Time":"2026-10-09T17:26:53.009923637Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode"}
+{"Time":"2026-10-09T17:26:53.00992783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"=== CONT  TestMatcherCanonicalizeNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.01052673Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions"}
+{"Time":"2026-10-09T17:26:53.010539837Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"=== CONT  TestMatcherTest262Executions\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.010546489Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode"}
+{"Time":"2026-10-09T17:26:53.010549165Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"=== CONT  TestMatcherRandomNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.01096965Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T17:26:53.010976178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== CONT  TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.055096961Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants/keep_stale_nested_captures"}
+{"Time":"2026-10-09T17:26:53.055118704Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants/keep_stale_nested_captures","Output":"=== RUN   TestMatcherOct6Mutants/keep_stale_nested_captures\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.055131826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants/keep_stale_nested_captures","Output":"--- FAIL: TestMatcherOct6Mutants/keep_stale_nested_captures (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.055137213Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants/keep_stale_nested_captures","Elapsed":0}
+{"Time":"2026-10-09T17:26:53.055142895Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"--- FAIL: TestMatcherOct6Mutants (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.062611404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T17:26:53.062631347Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x10 pc=0x5eda30]\n"}
+{"Time":"2026-10-09T17:26:53.062636418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\n"}
+{"Time":"2026-10-09T17:26:53.062639147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"goroutine 22 [running]:\n"}
+{"Time":"2026-10-09T17:26:53.062641387Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"testing.tRunner.func1.2({0x803128, 0x87b3a0})\n"}
+{"Time":"2026-10-09T17:26:53.062646045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T17:26:53.062647979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T17:26:53.06265007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T17:26:53.062657201Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"panic({0x803128?, 0x87b3a0?})\n"}
+{"Time":"2026-10-09T17:26:53.062659946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T17:26:53.062661743Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"math/big.(*Int).Sign(...)\n"}
+{"Time":"2026-10-09T17:26:53.062664198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic-tools/go/src/math/big/int.go:48\n"}
+{"Time":"2026-10-09T17:26:53.062666348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII.func1(0x5, 0x3871d3199c50)\n"}
+{"Time":"2026-10-09T17:26:53.062668551Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:31 +0x410\n"}
+{"Time":"2026-10-09T17:26:53.062671344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII.func1(0x4, 0x3871d3199c50)\n"}
+{"Time":"2026-10-09T17:26:53.062673275Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:22 +0x371\n"}
+{"Time":"2026-10-09T17:26:53.062675366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII.func1(0x3, 0x3871d3199c50)\n"}
+{"Time":"2026-10-09T17:26:53.062677244Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:22 +0x371\n"}
+{"Time":"2026-10-09T17:26:53.062679997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII.func1(0x2, 0x3871d3199c50)\n"}
+{"Time":"2026-10-09T17:26:53.062682818Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:30 +0x3f5\n"}
+{"Time":"2026-10-09T17:26:53.062685291Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII.func1(0x1, 0x3871d3199c50)\n"}
+{"Time":"2026-10-09T17:26:53.062686919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:22 +0x371\n"}
+{"Time":"2026-10-09T17:26:53.062689149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII.func1(0x0, 0x3871d3199c50)\n"}
+{"Time":"2026-10-09T17:26:53.062690794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:22 +0x371\n"}
+{"Time":"2026-10-09T17:26:53.062692764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.(*Program).nativeFirstASCII(0x3871d2e88348?)\n"}
+{"Time":"2026-10-09T17:26:53.06269679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/native_search.go:66 +0xe7\n"}
+{"Time":"2026-10-09T17:26:53.062698655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.compilePattern(0x3871d2e9c090, {0x8288a0, 0x8cb180})\n"}
+{"Time":"2026-10-09T17:26:53.062700378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/matcher.go:127 +0x231\n"}
+{"Time":"2026-10-09T17:26:53.062702304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.CompileWithProperties({0x607620?, 0x38710000fdf0?}, {0x621628?, 0x514900?}, {0x8288a0, 0x8cb180})\n"}
+{"Time":"2026-10-09T17:26:53.062705157Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/matcher.go:80 +0x45\n"}
+{"Time":"2026-10-09T17:26:53.062706774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.Compile(...)\n"}
+{"Time":"2026-10-09T17:26:53.062708406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/matcher.go:71\n"}
+{"Time":"2026-10-09T17:26:53.062710176Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"github.com/system-inc/adamic/internal/regexp.TestMatcherOct6Mutants.func5(0x3871d2834488)\n"}
+{"Time":"2026-10-09T17:26:53.062712021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic/internal/regexp/oct6_mutant_test.go:53 +0xf5\n"}
+{"Time":"2026-10-09T17:26:53.062713637Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"testing.tRunner(0x3871d2834488, 0x3871d2e96600)\n"}
+{"Time":"2026-10-09T17:26:53.062715267Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T17:26:53.062717118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"created by testing.(*T).Run in goroutine 16\n"}
+{"Time":"2026-10-09T17:26:53.062718885Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T17:26:53.069195467Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Mutants","Elapsed":0.05}
+{"Time":"2026-10-09T17:26:53.069206348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.069s\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:53.069214448Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.07}

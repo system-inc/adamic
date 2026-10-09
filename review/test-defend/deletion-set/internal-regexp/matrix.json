@@ -1,0 +1,385 @@
+[
+  {
+    "mutant": "M11",
+    "file_line": "internal/regexp/canonicalize.go:13",
+    "branch": "test-audit/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-audit/internal-regexp-matcher_oracle/M11.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M11.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-matcher_oracle-M11",
+    "still_caught_by": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.760054387999844,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-audit-internal-regexp-matcher_oracle-M11 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M11.log 2>&1"
+  },
+  {
+    "mutant": "M14",
+    "file_line": "internal/regexp/sets.go:293",
+    "branch": "test-audit/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-audit/internal-regexp-matcher_oracle/M14.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M14.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-matcher_oracle-M14",
+    "still_caught_by": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "exit": 1,
+    "wall_seconds": 3.125215804000618,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-audit-internal-regexp-matcher_oracle-M14 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M14.log 2>&1"
+  },
+  {
+    "mutant": "M15",
+    "file_line": "internal/regexp/parser.go:110",
+    "branch": "test-audit/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-audit/internal-regexp-matcher_oracle/M15.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M15.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-matcher_oracle-M15",
+    "still_caught_by": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestUnicodeDecimalEscape"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.4871458900015568,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-audit-internal-regexp-matcher_oracle-M15 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M15.log 2>&1"
+  },
+  {
+    "mutant": "M1",
+    "file_line": "internal/regexp/parser.go:88",
+    "branch": "test-audit/internal-regexp-parser",
+    "source_diff": "review/test-audit/internal-regexp-parser/diffs/M1.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M1.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-parser-M1",
+    "still_caught_by": [
+      "TestNodeAgreement"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.7291420260007726,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-audit-internal-regexp-parser-M1 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M1.log 2>&1"
+  },
+  {
+    "mutant": "M2",
+    "file_line": "internal/regexp/parser.go:109",
+    "branch": "test-audit/internal-regexp-parser",
+    "source_diff": "review/test-audit/internal-regexp-parser/diffs/M2.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M2.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-parser-M2",
+    "still_caught_by": [
+      "TestNodeAgreement"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.5985750519976136,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-audit-internal-regexp-parser-M2 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M2.log 2>&1"
+  },
+  {
+    "mutant": "M4",
+    "file_line": "internal/regexp/parser.go:329",
+    "branch": "test-audit/internal-regexp-parser",
+    "source_diff": "review/test-audit/internal-regexp-parser/diffs/M4.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M4.diff",
+    "candidates_failed": [
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherAgreement family",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-parser-M4",
+    "still_caught_by": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.7171773959998973,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-audit-internal-regexp-parser-M4 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M4.log 2>&1"
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/regexp/matcher.go:485",
+    "branch": "test-defend/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-defend/internal-regexp-matcher_oracle/D4.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-matcher_oracle-D4.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-matcher_oracle-D4",
+    "still_caught_by": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.2788724829988496,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-matcher_oracle-D4 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-matcher_oracle-D4.log 2>&1"
+  },
+  {
+    "mutant": "D04",
+    "file_line": "internal/regexp/parser.go:88",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D04.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D04.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D04",
+    "still_caught_by": [
+      "TestNodeAgreement"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.3137032080012432,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-parser-D04 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D04.log 2>&1"
+  },
+  {
+    "mutant": "D05",
+    "file_line": "internal/regexp/parser.go:109",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D05.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D05.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D05",
+    "still_caught_by": [
+      "TestNodeAgreement"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.3019380410005397,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-parser-D05 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D05.log 2>&1"
+  },
+  {
+    "mutant": "D06",
+    "file_line": "internal/regexp/parser.go:107",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D06.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D06.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D06",
+    "still_caught_by": [
+      "TestNodeAgreement"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.4579959459988459,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-parser-D06 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D06.log 2>&1"
+  },
+  {
+    "mutant": "D07",
+    "file_line": "internal/regexp/parser.go:317",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D07.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D07.diff",
+    "candidates_failed": [
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D07",
+    "still_caught_by": [
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.4941450549995352,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-parser-D07 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D07.log 2>&1"
+  },
+  {
+    "mutant": "D08",
+    "file_line": "internal/regexp/parser.go:330",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D08.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D08.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit",
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D08",
+    "still_caught_by": [
+      "TestMatcherOct6Mutants"
+    ],
+    "exit": 1,
+    "wall_seconds": 0.4832924289985385,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-parser-D08 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D08.log 2>&1"
+  },
+  {
+    "mutant": "D09",
+    "file_line": "internal/regexp/parser.go:329",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D09.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D09.diff",
+    "candidates_failed": [
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D09",
+    "still_caught_by": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.3799160650014528,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-deletion/cache/test-defend-internal-regexp-parser-D09 go test -json -count=1 -timeout 30m ./internal/regexp/ -skip '^(TestFlags|TestMatcherStepLimit|TestQuantifierBounds)($|_|/)' > review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D09.log 2>&1"
+  }
+]

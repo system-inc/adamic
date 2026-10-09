@@ -1,0 +1,262 @@
+[
+  {
+    "mutant": "M11",
+    "file_line": "internal/regexp/canonicalize.go:13",
+    "branch": "test-audit/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-audit/internal-regexp-matcher_oracle/M11.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M11.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-matcher_oracle-M11"
+  },
+  {
+    "mutant": "M14",
+    "file_line": "internal/regexp/sets.go:293",
+    "branch": "test-audit/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-audit/internal-regexp-matcher_oracle/M14.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M14.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-matcher_oracle-M14"
+  },
+  {
+    "mutant": "M15",
+    "file_line": "internal/regexp/parser.go:110",
+    "branch": "test-audit/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-audit/internal-regexp-matcher_oracle/M15.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-matcher_oracle-M15.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-matcher_oracle-M15"
+  },
+  {
+    "mutant": "M1",
+    "file_line": "internal/regexp/parser.go:88",
+    "branch": "test-audit/internal-regexp-parser",
+    "source_diff": "review/test-audit/internal-regexp-parser/diffs/M1.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M1.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-parser-M1"
+  },
+  {
+    "mutant": "M2",
+    "file_line": "internal/regexp/parser.go:109",
+    "branch": "test-audit/internal-regexp-parser",
+    "source_diff": "review/test-audit/internal-regexp-parser/diffs/M2.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M2.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-parser-M2"
+  },
+  {
+    "mutant": "M4",
+    "file_line": "internal/regexp/parser.go:329",
+    "branch": "test-audit/internal-regexp-parser",
+    "source_diff": "review/test-audit/internal-regexp-parser/diffs/M4.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-audit-internal-regexp-parser-M4.diff",
+    "candidates_failed": [
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherAgreement family",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-audit-internal-regexp-parser-M4"
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/regexp/matcher.go:485",
+    "branch": "test-defend/internal-regexp-matcher_oracle",
+    "source_diff": "review/test-defend/internal-regexp-matcher_oracle/D4.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-matcher_oracle-D4.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-matcher_oracle-D4"
+  },
+  {
+    "mutant": "D04",
+    "file_line": "internal/regexp/parser.go:88",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D04.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D04.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D04"
+  },
+  {
+    "mutant": "D05",
+    "file_line": "internal/regexp/parser.go:109",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D05.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D05.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D05"
+  },
+  {
+    "mutant": "D06",
+    "file_line": "internal/regexp/parser.go:107",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D06.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D06.diff",
+    "candidates_failed": [
+      "TestFlags"
+    ],
+    "other_rows_failed": [
+      "TestNodeAgreement"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D06"
+  },
+  {
+    "mutant": "D07",
+    "file_line": "internal/regexp/parser.go:317",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D07.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D07.diff",
+    "candidates_failed": [
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestNodeAgreement",
+      "TestParse"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D07"
+  },
+  {
+    "mutant": "D08",
+    "file_line": "internal/regexp/parser.go:330",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D08.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D08.diff",
+    "candidates_failed": [
+      "TestMatcherStepLimit",
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D08"
+  },
+  {
+    "mutant": "D09",
+    "file_line": "internal/regexp/parser.go:329",
+    "branch": "test-defend/internal-regexp-parser",
+    "source_diff": "review/test-defend/internal-regexp-parser/D09.diff",
+    "diff": "review/test-defend/deletion-set/internal-regexp/test-defend-internal-regexp-parser-D09.diff",
+    "candidates_failed": [
+      "TestQuantifierBounds"
+    ],
+    "other_rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "label": "test-defend-internal-regexp-parser-D09"
+  }
+]
