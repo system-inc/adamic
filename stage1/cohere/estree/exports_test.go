@@ -47,18 +47,42 @@ func TestDecoratedExportsPlantedDisagreement(t *testing.T) {
 	})
 }
 
+const testDecoratedExportMutantShards = 6
+
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export mutant case.
 func TestDecoratedExportMutant(t *testing.T) {
-	list := manifest(t, decoratedExports())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	path := mutantPort(t, "convert.ts", "this.arena.node(wrapper).start = this.start(exported);", "this.arena.node(wrapper).start = this.start(id);")
-	binary, _ := build(t, path, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if d := firstDifference(want, got); d == "" {
-			t.Fatal(name + " mutant survived")
-		} else {
-			t.Log(name + ": " + d)
-		}
+	finishSetup := miscStart(t)
+	cases := decoratedExports()
+	if len(cases) != testDecoratedExportMutantShards {
+		t.Fatal("decorated export mutant enumeration changed")
 	}
+	ids := miscIDs("export-mutant", len(cases))
+	oracle := miscOracle(t)
+	path := mutantPort(t, "convert.ts", "this.arena.node(wrapper).start = this.start(exported);", "this.arena.node(wrapper).start = this.start(id);")
+	binary, _ := miscBuild(t, path)
+	finishSetup()
+	miscRunShards(t, testDecoratedExportMutantShards, ids, func(t *testing.T, i int) {
+		list := manifest(t, cases[i:i+1])
+		want := execute(t, "", oracle, "--manifest", list)
+		// A decorator before export changes the wrapper start; in cases 2 and 3
+		// export precedes the decorator, so the mutated start is already correct.
+		mustDisagree := i != 2 && i != 3
+		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+			if err := miscCompare(want, got, mustDisagree); err != nil {
+				t.Fatalf("%s %s: %v", ids[i], name, err)
+			}
+		}
+	})
+}
+
+func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
+	miscPlantedProof(t, testDecoratedExportMutantShards, miscIDs("export-mutant", len(decoratedExports())), func(planted bool) error {
+		got := []byte("disagree")
+		if planted {
+			got = []byte("agree")
+		}
+		return miscCompare([]byte("agree"), got, true)
+	})
 }
 
 func TestDecoratedExportLibraries(t *testing.T) { checkOriginalLibraries(t, decoratedExports(), 0) }
