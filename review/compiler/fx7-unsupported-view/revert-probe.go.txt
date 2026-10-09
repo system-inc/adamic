@@ -1,0 +1,33 @@
+package lower
+
+import (
+    "path/filepath"
+    "testing"
+    "github.com/system-inc/adamic/internal/native"
+)
+
+func TestFX7RevertNativeP37(t *testing.T) {
+    t.Parallel()
+    path, err := filepath.Abs("testdata/unsupported_view/p37.a")
+    if err != nil { t.Fatal(err) }
+    want := runAgreementNode(t, path)
+    t.Logf("source Node stdout=%q exit=%d stderr=%q", want.stdout, want.code, want.stderr)
+    program, err := lowerSource(t, unsupportedViewSource(t, "p37"))
+    if err != nil { t.Fatal(err) }
+    got := runAgreementNative(t, native.C(program))
+    t.Logf("native stdout=%q exit=%d stderr=%q", got.stdout, got.code, got.stderr)
+    compareNativeAgreement(t, got, want)
+}
+
+func TestFX7RevertNativeP21(t *testing.T) {
+    t.Parallel()
+    path, err := filepath.Abs("testdata/unsupported_view/p21.a")
+    if err != nil { t.Fatal(err) }
+    want := runAgreementNode(t, path)
+    t.Logf("source Node stdout=%q exit=%d stderr=%q", want.stdout, want.code, want.stderr)
+    program, err := lowerSource(t, unsupportedViewSource(t, "p21"))
+    if err != nil { t.Fatal(err) }
+    got := runAgreementNative(t, native.C(program))
+    t.Logf("native stdout=%q exit=%d stderr=%q", got.stdout, got.code, got.stderr)
+    compareNativeAgreement(t, got, want)
+}

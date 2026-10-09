@@ -2,13 +2,13 @@ package oracle
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
@@ -40,8 +40,9 @@ func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), loaded)
-	if unsupported, ok := err.(*lower.NotYet); !ok || !strings.Contains(unsupported.What, "views-v3: array element kind") {
-		t.Fatalf("expected named V3 arm, got %v", err)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || refused.What != "view type has an unsupported member: value" {
+		t.Fatalf("expected creation refusal for unsupported V3 arm, got %v", err)
 	}
 	if got := onNode(t, path); got.exitCode != 0 {
 		t.Fatalf("Node: %#v", got)

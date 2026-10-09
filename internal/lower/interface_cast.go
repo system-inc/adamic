@@ -36,6 +36,9 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // An unrelated receiver with the same member name does not become a view.
 // Each read syntax must carry the checked member boundary or be refused.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+	if err := l.checkViewMembers(node, target); err != nil {
+		return nil, err
+	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}
