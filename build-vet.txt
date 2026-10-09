@@ -1,0 +1,16 @@
+tar: ./select.json: Cannot write: No space left on device
+tar: ./changed-paths.txt: Cannot write: No space left on device
+tar: ./status.txt: Cannot write: No space left on device
+tar: Exiting with failure status due to previous errors
+loom-pilot: only 0 MB free on the instance after trimming its caches: Loom's fault
+Filesystem      Size  Used Avail Use% Mounted on
+none            8.8G  8.8G     0 100% /tmp
+none            8.8G  8.8G     0 100% /tmp
+4.0K	/tmp/codex-environment-executor.log
+16K	/tmp/codex-bwrap-synthetic-mount-targets-1000
+20K	/tmp/loom-select
+504K	/tmp/loom-serve.log
+2.8M	/tmp/node-compile-cache
+11M	/tmp/loom-runner-7f01c04925b5
+3.4G	/tmp/adamic
+5.4G	/tmp/loom-home
