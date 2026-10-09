@@ -1,0 +1,19 @@
+import pathlib,subprocess,json,os,time
+r=pathlib.Path('/tmp/defend-nonnull');np='internal/lower/non_null.go';ns=pathlib.Path(np).read_text();start=ns.index('\tif value.Type() == ir.Number || value.Type() == ir.Boolean {');end=ns.index('\n\tfile := ast.GetSourceFileOfNode(node)',start)
+plan=[('N1','internal/lower/refusals.go',"write ?? panic('why it can't be missing'), or narrow and handle the missing case","narrow and handle the missing case",'Change non-null refusal repair string','TestAdamicNullishAssertionsAreRefused'),('N2',np,ns[start:end],ns[start:end].replace('\t\treturn value, nil\n',''),'Drop the two present-value early-return statements','TestNonNullAssertionOnPresentTypeIsErased'),('N3','internal/lower/optional_widening.go','property.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(source)','property.Flags&ast.SymbolFlagsOptional == 0 && !isClassInstance(source)','Flip missing-field optional classification','TestOptionalWideningCensus'),('N4','internal/lower/optional_widening.go','property: property.Name, source: source, target: target','property: "", source: source, target: target','Change reported property name option to empty string','TestOptionalWideningCensus'),('N5','internal/lower/optional_widening.go','l.optionalWidened(l.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})','l.optionalWidened(target, l.checker.GetTypeAtLocation(node), nil, map[[2]*checker.Type]bool{})','Swap source and target relation arguments','TestOptionalWideningCensus'),('N6','internal/lower/refusals.go','{"the non-null assertion !",','{"a non-null assertion !",','Change non-null refusal description','TestAdamicNullishAssertionsAreRefused'),('N7',np,'), ".ts")','), ".a")','Change checked-assertion source extension ts to a','TestAdamicNullishAssertionsAreRefused')]
+(r/'plan.json').write_text(json.dumps([{'mutant':a,'file':b,'old':c,'new':d,'change':e,'target':f}for a,b,c,d,e,f in plan],indent=2));results=json.loads((r/'matrix.json').read_text()) if (r/'matrix.json').exists() else []
+for mid,p,old,new,change,target in plan:
+ if any(x['mutant']==mid for x in results):continue
+ f=pathlib.Path(p);base=f.read_text();assert base.count(old)==1,(mid,base.count(old));line=base[:base.index(old)].count('\n')+1
+ try:
+  f.write_text(base.replace(old,new));(r/(mid+'.diff')).write_bytes(subprocess.check_output(['git','diff','--',p]));t=time.monotonic()
+  with (r/(mid+'-vet.log')).open('w')as log:vet=subprocess.run(['go','vet','./internal/lower/'],stdout=log,stderr=subprocess.STDOUT)
+  assert vet.returncode==0,mid
+  env=dict(os.environ,ADAMIC_BUILD_CACHE_DIR=str(r/'cache'/mid),OPTIONAL_WIDENING_CONFIG=str(r/'census-project/tsconfig.json'),OPTIONAL_WIDENING_OUTPUT=str(r/(mid+'-census.json')));cmd=['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/lower/','-run','.']
+  with (r/(mid+'.log')).open('w')as log:run=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,env=env)
+  events=[]
+  for ln in (r/(mid+'.log')).read_text().splitlines():
+   try:events.append(json.loads(ln))
+   except:pass
+  result={'mutant':mid,'file_line':p+':'+str(line),'change':change,'target':target,'rows_failed':sorted({e['Test']for e in events if e.get('Action')=='fail'and'Test'in e and'/'not in e['Test']}),'rows_passed':sorted({e['Test']for e in events if e.get('Action')=='pass'and'Test'in e and'/'not in e['Test']}),'exit_code':run.returncode,'wall_seconds':time.monotonic()-t,'command':' '.join(k+'='+env[k]for k in ['ADAMIC_BUILD_CACHE_DIR','OPTIONAL_WIDENING_CONFIG','OPTIONAL_WIDENING_OUTPUT'])+' '+' '.join(cmd),'failures':[e for e in events if e.get('Action')=='output'and e.get('OutputType')=='error']};results.append(result);(r/'matrix.json').write_text(json.dumps(results,indent=2));print(mid,result['rows_failed'],run.returncode,flush=True)
+ finally:f.write_text(base)

@@ -1,0 +1,20 @@
+diff --git a/internal/lower/non_null.go b/internal/lower/non_null.go
+index 33415dc4..f945bcbb 100644
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -80,7 +80,6 @@ stored:
+ 	// has no nullish representation and must never receive a pointer test.
+ 	if value.Type() == ir.Number || value.Type() == ir.Boolean {
+ 		l.recordNonNullCheck(node, true)
+-		return value, nil
+ 	}
+ 	proven := l.checker.GetTypeAtLocation(operand)
+ 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
+@@ -89,7 +88,6 @@ stored:
+ 			return ir.Narrow{Value: value, To: of}, nil
+ 		}
+ 		l.recordNonNullCheck(node, true)
+-		return value, nil
+ 	}
+ 	file := ast.GetSourceFileOfNode(node)
+ 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]

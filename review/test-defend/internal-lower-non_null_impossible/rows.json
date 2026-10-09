@@ -1,0 +1,104 @@
+[
+  {
+    "test": "TestAdamicNullishAssertionsAreRefused",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNonNullAssertionOnPresentTypeIsErased"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "N1",
+        "file_line": "internal/lower/refusals.go:22",
+        "change": "Change non-null refusal repair string",
+        "rows_failed": [
+          "TestAdamicNullishAssertionsAreRefused",
+          "TestReadinessElisionRequiresDominatingAssignment",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix"
+        ]
+      },
+      {
+        "mutant": "N6",
+        "file_line": "internal/lower/refusals.go:22",
+        "change": "Change non-null refusal description",
+        "rows_failed": [
+          "TestAdamicNullishAssertionsAreRefused",
+          "TestReadinessElisionRequiresDominatingAssignment",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix"
+        ]
+      },
+      {
+        "mutant": "N7",
+        "file_line": "internal/lower/non_null.go:106",
+        "change": "Change checked-assertion source extension ts to a",
+        "rows_failed": [
+          "TestAdamicNullishAssertionsAreRefused",
+          "TestNonNullAssertionLowersToNullishPanic",
+          "TestNonNullAssertionOnPresentTypeIsErased",
+          "TestPredicateOverloadRuntime",
+          "TestReadinessElisionRequiresDominatingAssignment",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nonnull/cache/N7 OPTIONAL_WIDENING_CONFIG=/tmp/defend-nonnull/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/defend-nonnull/N7-census.json timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > N7.log 2>&1; non_null_impossible_test.go:53: want exactly-nullish Refused, got /tmp/adamic-gate/TestAdamicNullishAssertionsAreRefusedanullconst_values_=_nul3812105198/001/main.a:1:16: stage 0 can't lower an array of never yet"
+  },
+  {
+    "test": "TestNonNullAssertionOnPresentTypeIsErased",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNonNullAssertionLowersToNullishPanic"
+    ],
+    "defense": "defended",
+    "unique_mutant": "N2 internal/lower/non_null.go:83",
+    "attempts": [
+      {
+        "mutant": "N2",
+        "file_line": "internal/lower/non_null.go:83",
+        "change": "Drop the two present-value early-return statements",
+        "rows_failed": [
+          "TestNonNullAssertionOnPresentTypeIsErased"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nonnull/cache/N2 OPTIONAL_WIDENING_CONFIG=/tmp/defend-nonnull/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/defend-nonnull/N2-census.json timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > N2.log 2>&1; non_null_test.go:46: want a plain number, got ir.Declare{Uninitialized:false, Local:0, Value:ir.Coalesce{Value:ir.NumberConstant{Value:0}, Fallback:ir.Expression(nil), Panic:ir.StringConstant{Index:0}, Of:1}}"
+  },
+  {
+    "test": "TestOptionalWideningCensus",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "N3",
+        "file_line": "internal/lower/optional_widening.go:86",
+        "change": "Flip missing-field optional classification",
+        "rows_failed": [
+          "TestOptionalWideningRefused"
+        ]
+      },
+      {
+        "mutant": "N4",
+        "file_line": "internal/lower/optional_widening.go:87",
+        "change": "Change reported property name option to empty string",
+        "rows_failed": [
+          "TestOptionalWideningRefused"
+        ]
+      },
+      {
+        "mutant": "N5",
+        "file_line": "internal/lower/optional_widening.go:126",
+        "change": "Swap source and target relation arguments",
+        "rows_failed": [
+          "TestOptionalWideningRefused"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nonnull/cache/N5 OPTIONAL_WIDENING_CONFIG=/tmp/defend-nonnull/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/defend-nonnull/N5-census.json timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > N5.log 2>&1; TestOptionalWideningCensus passed; output has files=1 sites=0 (clean files=1 sites=1)"
+  }
+]

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/non_null.go b/internal/lower/non_null.go
+index 33415dc4..afd7af19 100644
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -103,7 +103,7 @@ stored:
+ }
+ 
+ func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+-	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
++	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a")
+ }
+ 
+ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
