@@ -56,36 +56,59 @@ func TestEmittedJavaScriptMismatch(t *testing.T) {
 	t.Logf("ordinary comparison rejected clean-running emitted JavaScript mutant:\n%s", data)
 }
 
-func TestDotARename(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
+const testDotARenameShards = 1
+
+// TestDotARename_000 is the gate's top-level unit. ADAMIC_TEST_SHARD=i/n
+// selects local seats; unset runs all. The one explicit regression case is
+// independent of corpus growth. Lowered and sanitized products are fetched by
+// hash; the Go oracle remains local because its overlay cannot be cached.
+func TestDotARename_000(t *testing.T) {
+	t.Parallel()
+	if !dotARenameSelected(t) {
+		t.Skip("local seat has no cases")
 	}
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := goOracle(t)
-	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
-	copied := mutant(t, "", "")
-	entry := filepath.Join(copied, "rules/no-var/rule.a")
-	before, err := os.ReadFile(entry)
-	if err != nil {
-		t.Fatal(err)
+	finishSetup := dotARenameSetup(t)
+	products, supplied := dotARenameSupplied(t)
+	if !supplied {
+		directory, err := filepath.Abs(".")
+		if err != nil {
+			t.Fatal(err)
+		}
+		products.Rows = []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"}
+		products.Oracle = goOracle(t)
+		products.Original = dotARenameBuild(t, directory)
+		copied := mutant(t, "", "")
+		entry := filepath.Join(copied, "rules/no-var/rule.a")
+		products.Before, err = os.ReadFile(entry)
+		if err != nil {
+			t.Fatal(err)
+		}
+		renamed := filepath.Join(copied, "rules/no-var/rule.ts")
+		if err := os.Rename(entry, renamed); err != nil {
+			t.Fatal(err)
+		}
+		products.After, err = os.ReadFile(renamed)
+		if err != nil {
+			t.Fatal(err)
+		}
+		products.Changed = dotARenameBuild(t, copied)
 	}
-	renamed := filepath.Join(copied, "rules/no-var/rule.ts")
-	if err := os.Rename(entry, renamed); err != nil {
-		t.Fatal(err)
-	}
-	after, err := os.ReadFile(renamed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(before, after) {
+	finishSetup()
+	dotARenameUnion(t)
+	t.Logf("case ids: %v", dotARenameCases())
+	if !bytes.Equal(products.Before, products.After) {
 		t.Fatal("rename changed module bytes")
 	}
-	got := compare(t, oracle, buildPort(t, copied, true), copied, path)
+	path := manifest(t, products.Rows)
+	want := compareWithJavaScript(t, products.Oracle, products.Original.Native, products.Original.Directory, path, products.Original.JavaScript)
+	got := compareWithJavaScript(t, products.Oracle, products.Changed.Native, products.Changed.Directory, path, products.Changed.JavaScript)
 	if !bytes.Equal(got, want) {
 		t.Fatal("rename changed results")
 	}
 	t.Logf("rename only: .ts and .a identical on all three runtimes against Go (%d bytes)", len(want))
+	if !supplied {
+		dotARenamePlanted(t, products)
+	}
 }
 
 func serializationPort(t *testing.T) string {
