@@ -1,0 +1,26 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T214219-a63b100e",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "b62f5d4ab697f4cb65057cd27b1338dde81c3732",
+  "branch": "devtools/grain-oracle-hook",
+  "base": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+  "unplanned_packages_not_run": 58,
+  "loom_tools": "03d9cf9de25ea90faa3d97a2bf8205b5ae0fc0cbf3519c9d8be0e56141237d44",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ],
+  "wall_seconds": 124.6,
+  "steps_seconds": {
+    "tests": 124.6
+  }
+}
