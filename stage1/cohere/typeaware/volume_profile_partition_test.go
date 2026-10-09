@@ -78,25 +78,39 @@ func TestVolumeProfilePartition(t *testing.T) {
 			t.Errorf("%s: %d top-level shards, want %d", slice.test, len(tops), slice.shards)
 		}
 		ast.Inspect(tree, func(node ast.Node) bool {
-			row, ok := node.(*ast.CompositeLit)
-			if !ok || row.Type != nil || len(row.Elts) == 0 {
+			table, ok := node.(*ast.CompositeLit)
+			if !ok {
 				return true
 			}
-			name, ok := row.Elts[0].(*ast.BasicLit)
-			if !ok || name.Kind != token.STRING {
+			array, ok := table.Type.(*ast.ArrayType)
+			if !ok {
 				return true
 			}
-			key, err := strconv.Unquote(name.Value)
-			if err != nil {
-				t.Fatal(err)
-			}
-			// These are build jobs, not original execution checks.
-			if strings.HasPrefix(key, "typeaware ") {
+			switch array.Elt.(type) {
+			case *ast.StructType, *ast.Ident:
+			default:
 				return true
 			}
-			owners[key] = append(owners[key], slice.test)
-			if slice.test == "TestVolumeProfileCorpora" {
-				owners[key+"-asan"] = append(owners[key+"-asan"], slice.test)
+			for _, element := range table.Elts {
+				row, ok := element.(*ast.CompositeLit)
+				if !ok || len(row.Elts) == 0 {
+					continue
+				}
+				name, ok := row.Elts[0].(*ast.BasicLit)
+				if !ok || name.Kind != token.STRING {
+					continue
+				}
+				key, err := strconv.Unquote(name.Value)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if strings.HasPrefix(key, "typeaware ") {
+					continue
+				}
+				owners[key] = append(owners[key], slice.test)
+				if slice.test == "TestVolumeProfileCorpora" {
+					owners[key+"-asan"] = append(owners[key+"-asan"], slice.test)
+				}
 			}
 			return true
 		})

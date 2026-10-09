@@ -1,6 +1,7 @@
 package typeaware
 
 import (
+	"context"
 	"crypto/sha256"
 	"fmt"
 	"io/fs"
@@ -13,6 +14,9 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 // Generated controls are copied from profile_test.go at 7a10c877. Each mode
@@ -54,7 +58,7 @@ func volumeProfileStage0(h *harness) string {
 	return stage0
 }
 
-func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name string, build func(*harness) string, variant ...string) string {
+func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool, name string, variant ...string) buildcache.Inputs {
 	h.t.Helper()
 	digest := func(path string) string {
 		data, err := os.ReadFile(path)
@@ -113,12 +117,47 @@ func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name
 		}
 	}
 	inputs.Flags = append(inputs.Flags, variant...)
+	return inputs
+}
+
+func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name string, build func(*harness) string, variant ...string) string {
+	inputs := volumeProfileNativeInputs(h, stage0, archive, sanitize, name, variant...)
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
 		local := &harness{t: h.t, repository: h.repository, directory: directory}
 		product := build(local)
 		return os.Rename(product, filepath.Join(directory, "volume"))
 	})
 	return filepath.Join(directory, "volume")
+}
+
+// This is compileLibrary + TSGoC from cmd/adamic, split before clang so each
+// cold build unit can finish under the deadline. Both sanitizer modes use the
+// exact same lowered C and the original BuildTSGo flags and runtime.
+func volumeProfileControlsLowered(h *harness, stage0 string) string {
+	inputs := volumeProfileNativeInputs(h, stage0, "", false, "typeaware volume lowered")
+	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+		program, err := load.Load([]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")})
+		if err != nil {
+			return err
+		}
+		program.EnableTSGo()
+		ir, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		source, err := native.TSGoC(ir)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "volume.c"), []byte(source), 0600)
+	})
+	return filepath.Join(directory, "volume.c")
+}
+
+func TestVolumeProfileControlsLower(t *testing.T) {
+	t.Parallel()
+	h := volumeProfileHarness(t)
+	volumeProfileControlsLowered(h, volumeProfileStage0(h))
 }
 
 type volumeProfileControlCase struct {
@@ -190,8 +229,17 @@ func runVolumeProfileControls(t *testing.T, index int) {
 	if c.sanitize {
 		name += " asan"
 	}
+	lowered := volumeProfileControlsLowered(h, stage0)
 	binary := volumeProfileNative(h, stage0, archive, c.sanitize, name, func(local *harness) string {
-		return local.build(stage0, "volume", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, c.sanitize)
+		source, err := os.ReadFile(lowered)
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(local.directory, "volume")
+		if err := native.BuildTSGo(string(source), path, archive, native.Options{Sanitize: c.sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		return path
 	})
 	checkStarted := time.Now()
 	h.compare(c.name, oracle, binary, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), volumeProfileControlsManifest(h))
