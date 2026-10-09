@@ -30,3 +30,21 @@ adamic_closure *adamic_view_callable_typed(const adamic_object *object, const ch
 adamic_closure *adamic_view_callable(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression) {
  return adamic_view_callable_typed(object,name,cache,method,expression,"function",false,false);
 }
+
+// Resolve the callee before evaluating arguments, without testing its signature
+// or kind. Missing and noncallable values fail only at the invocation boundary.
+adamic_view_union_value adamic_view_callable_candidate(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression, const char *expected) {
+    if (object != NULL) {
+        adamic_value *own = adamic_object_optional_field(object, name, cache);
+        if (own == NULL && object->shape->methods != NULL) {
+            const adamic_methods *methods = object->shape->methods;
+            for (size_t index = 0; index < methods->count; index++) {
+                if (strcmp(methods->names[index], name) == 0) {
+                    *method = methods->code[index];
+                    return (adamic_view_union_value){adamic_view_union_function, {.reference = NULL}};
+                }
+            }
+        }
+    }
+    return adamic_object_view_union_snapshot(object, name, cache, expression, expected, true);
+}

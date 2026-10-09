@@ -56,6 +56,14 @@ func (l *lowering) recordViewCallableRepresentations(index int, function *ir.Fun
 	}
 	masks[len(masks)-1] = l.viewCallableRepresentationMask(l.checker.GetReturnTypeOfSignature(signature))
 	function.CallableMasks = masks
+	function.CallableParameters = nil
+	for _, parameter := range signature.Parameters() {
+		function.CallableParameters = append(function.CallableParameters, l.viewCallableValueContract(declaration, l.censusCallableParameterType(parameter)))
+	}
+	resultType := l.checker.GetReturnTypeOfSignature(signature)
+	function.CallableResult = l.viewCallableValueContract(declaration, resultType)
+	function.CallableResultName = l.checker.TypeToString(resultType)
+	function.CallableResultNull = l.includesNull(resultType) && !l.includesUndefined(resultType)
 	l.recordViewCallableProducerPayloads(index, declaration, signature)
 }
 

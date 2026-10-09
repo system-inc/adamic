@@ -176,6 +176,20 @@ func (l *lowering) checkLazyViewReads() error {
 		if refused != nil {
 			return false
 		}
+
+		if call, ok := node.(ir.CallClosure); ok {
+			if property, ok := call.Closure.(ir.Property); ok && program.CheckedFields[property.Name] {
+				reaches := graph.ReachingAllocations(property.Object)
+				demanded := unknown || reaches.Unknown
+				for _, site := range reaches.Sites {
+					demanded = demanded || viewed[site]
+				}
+				if demanded && (call.CallContract == 0 || graph.viewCallableUncheckableProducer(property, reaches)) {
+					refused = &Refused{Where: call.CallWhere, What: "a checked view call to member " + property.Name + " with an unsupported value contract", Fix: "prove the callable relation or use a callable with runtime-checkable parameter and result types"}
+					return false
+				}
+			}
+		}
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
 		var field, where string

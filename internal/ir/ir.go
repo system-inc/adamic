@@ -125,7 +125,11 @@ type Accessor struct {
 // Function is a function declaration.
 type Function struct {
 	// CallableMasks records producer signature members independently of any view.
-	CallableMasks []uint16
+	CallableMasks      []uint16
+	CallableParameters []ViewContractID
+	CallableResult     ViewContractID
+	CallableResultName string
+	CallableResultNull bool
 
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
@@ -740,6 +744,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		CallWhere       string
+		CallContract    ViewContractID
 		CheckedDiscard  bool
 		DiscardContract ViewContractID
 		DiscardView     string

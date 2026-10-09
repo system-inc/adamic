@@ -1,28 +1,24 @@
-Built: initial callable metadata, lazy callable descriptors, aggregate payload demand and checked callable read wiring.
-Commits: first V4 subset on 2e10854ce0be8d4439c1664e1fdfe13523f4341f; see Git history for its SHA.
-Commands/results: focused lower 0.600s, native 13.279s and JavaScript 0.714s, all passed.
-Mutants: pending; this checkpoint certifies compilation and focused controls only.
-Uncovered: factory, Set domains, witness imports, ruled skips, counts and complete comparison sweep.
+Built V4 point (a): direct checked-view calls validate producer arguments and view results at invocation.
+Commit: this point is committed on compiler/views-v4 above 670a2939.
+Tests: direct oracle 2.476s; focused lower 0.756s, native 3.036s, JavaScript 0.831s; all pass.
+Mutants: scalar argument, result, object argument, array argument omissions; native/JavaScript early checks; unsupported view/producer guards all caught.
+Not covered: points (b)-(f), escaping adapters, identity/no stacking, function surface, both-site blame, generic relations, lane 5 negative rewrite.
 
-This is the compiling subset explicitly requested for the first push, not a completed V4 slice.
-Source is a callable-only net cut from lane 5 at 926a1d39. Shared historical merges are excluded.
-The callable scaffolding originates in 8346b28c and 9fc5c01a; deferred descriptor and read
-helpers in be6e4f33 and 9c4d0904; fixed scalar contracts in 37fa06d3; metadata and
-boxing in cb6adb25; aggregate payload demand in 3e1a7f6f, ebb1f8a6 and 164dac2c.
-These are source provenance, not whole cherry-picks. Marker helpers from b6e53fb4
-are present, but the two admission hunks excluded by judgment 10 are not applied.
+Commands (output in adjacent logs):
 
-Resolutions: preserve the V3 plain/count-aware typed closure and method convention,
-including actual argument count, receiver flags, optional/rest slot packing and
-argument-index guards. Producer identity uses the existing unionClosureCodeIdentity.
-Do not fabricate implementation metadata. The absent ClosureOperands historical
-helper is replaced at the aggregate-demand access by this base's CallClosure.Closure.
-Optional payload field names are recorded without admitting wider writes.
-The callable runtime consumes V3's existing readiness-aware union snapshot instead
-of importing historical broader optional-field read/write implementation.
-Judgment 10 retains stored never-rest call and marker result-erasure refusals.
-Judgment 14 preserves base null/undefined representation. Judgment 15 retains
-unproven intersection masks. Remaining ruled decisions apply in later V4 imports.
+```sh
+source /workspace/adamic-tools/env.sh
+timeout 90 go test ./internal/oracle -run '^TestV4Direct' -count=1 -v -timeout 90s
+timeout 90 go test ./internal/lower ./internal/native ./internal/javascript -run '^Test(ViewCallable.*|ViewCallables.*|PrepareViewCallableRead|CallableNamespace.*)$' -count=1 -v -timeout 90s
+timeout 90 python3 review/compiler/views-v4/run-order-mutants.py
+```
 
-Commands are recorded directly in hooks-fourth.log. Setup details remain in setup.log.
-No whole package comparison or language ruling is claimed at this checkpoint.
+Each direct oracle runs Node, native release, native ASan/UBSan, and JavaScript, with native finishing leak checks. Four IR omissions produce clean Node-equivalent execution instead of required exit 70 in all three compiler execution modes. Early-check source mutants lose argument output and fail the order oracle. Two source mutants disable recursive-domain refusals and fail the path-and-fix assertion. No sanitizer kill substitutes for a semantic kill. All 16 new top-level leaves pass in 0.20-1.14s; individual times appear in direct-final.log.
+
+Assumption: this point supports finite runtime-checkable parameter/result domains and refuses unsupported view contracts and known unsupported producer parameters. Recursive domains, callable payload domains, overloaded/generic/rest/spread calls are not widened silently. A nominal producer result can be checked structurally against the view result, retaining its original type name for blame.
+
+No lane 5 commits were cherry-picked: their read-time rejection conflicts with the new ruling. This point implements the direct-call replacement; escaping-read adaptation and rewriting lane 5 fixtures remain later points. No aggregate propagation or sweep was attempted. No persistent fixture inventory rows were added; probes are inline temporary .a sources, so counts.md is unchanged. No scope-ruling skips were added.
+
+Setup: the first setup run reached its outer 90s limit while warming the build; rerunning succeeded in 35.451s. Timing lines: clang 0.225s, go build 35.323s, cache warm 35.426s. nproc=5, cgroup CPU quota=4. GOPROXY used https://proxy.golang.org|direct. Setup log records the installed toolchain.
+
+Required integration lane checks run after the commit; their output is in lane-checks.log. Push is a fast-forward to compiler/views-v4 only.
