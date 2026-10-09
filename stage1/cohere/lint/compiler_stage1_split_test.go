@@ -163,18 +163,24 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS")}}
 }
 
-// Only the matching serial setup unit may create its one product. A filtered shard may read
-// products prepared by an earlier setup invocation, but never starts a build.
-var compilerAgreementBuilding string
+// Each process prepares a product once; Product shares the real build across
+// processes by content address. Every filtered shard can prepare its own needs.
+type compilerAgreementPreparedProduct struct {
+	once sync.Once
+	path string
+}
+
+var compilerAgreementPreparedProducts sync.Map
 
 func compilerAgreementProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
 	t.Helper()
-	return buildcache.Product(t, inputs, func(directory string) error {
-		if compilerAgreementBuilding != inputs.Name {
-			return fmt.Errorf("missing prepared product %s: run the matching TestCompilerAndStage1Agree_Setup product test first", inputs.Name)
-		}
-		return build(directory)
-	})
+	stored, _ := compilerAgreementPreparedProducts.LoadOrStore(inputs.Name, &compilerAgreementPreparedProduct{})
+	prepared := stored.(*compilerAgreementPreparedProduct)
+	prepared.once.Do(func() { prepared.path = buildcache.Product(t, inputs, build) })
+	if prepared.path == "" {
+		t.Fatalf("product %s failed preparation", inputs.Name)
+	}
+	return prepared.path
 }
 
 func compilerAgreementGoOracle(t *testing.T) string {
@@ -206,9 +212,9 @@ func compilerAgreementLowered(t *testing.T) string {
 
 func compilerAgreementNative(t *testing.T, sanitize bool) string {
 	t.Helper()
-	lowered := compilerAgreementLowered(t)
 	options := native.Options{Sanitize: sanitize, Jobs: 1}
 	product := compilerAgreementProduct(t, compilerAgreementInputs(t, fmt.Sprintf("compiler-agreement-native-%t", sanitize), append(native.Flags(options), "Split=false", "Jobs=1")), func(directory string) error {
+		lowered := compilerAgreementLowered(t)
 		c, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
 			return err
@@ -218,9 +224,9 @@ func compilerAgreementNative(t *testing.T, sanitize bool) string {
 	return filepath.Join(product, "lint")
 }
 
-// Not parallel: enumerates the immutable corpus before parallel shards run.
-// This unit validates the live union without building or running the corpus.
+// This optional unit validates the live union independently of other tests.
 func TestCompilerAndStage1Agree_Setup(t *testing.T) {
+	t.Parallel()
 	started := time.Now()
 	cases := compilerAgreementCases(t)
 	pairs, fixes := 0, 0
@@ -259,37 +265,34 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
 }
 
-// Each setup test grants permission to build exactly one named product. Native
-// setup may fetch lowering, but a lowering cache miss fails rather than adding
-// a second build to the native setup's deadline.
-func compilerAgreementSetupProduct(t *testing.T, name string, prepare func(*testing.T) string) {
+// Optional product measurements use the same independent preparation path as
+// shards. No top-level test publishes state that another test requires.
+func compilerAgreementSetupProduct(t *testing.T, prepare func(*testing.T) string) {
 	t.Helper()
-	compilerAgreementBuilding = name
-	defer func() { compilerAgreementBuilding = "" }()
 	started := time.Now()
 	_ = prepare(t)
 	elapsed := time.Since(started)
 	t.Logf("%s: %.3fs cooked=%t", t.Name(), elapsed.Seconds(), elapsed >= 60*time.Second)
 }
 
-// Not parallel: prepares the Go oracle before parallel comparison shards.
 func TestCompilerAndStage1Agree_SetupGoOracle(t *testing.T) {
-	compilerAgreementSetupProduct(t, "compiler-agreement-go-oracle", compilerAgreementGoOracle)
+	t.Parallel()
+	compilerAgreementSetupProduct(t, compilerAgreementGoOracle)
 }
 
-// Not parallel: prepares lowering before the native product setup tests.
 func TestCompilerAndStage1Agree_SetupLowering(t *testing.T) {
-	compilerAgreementSetupProduct(t, "compiler-agreement-lowered", compilerAgreementLowered)
+	t.Parallel()
+	compilerAgreementSetupProduct(t, compilerAgreementLowered)
 }
 
-// Not parallel: prepares only sanitized native; lowering must already be cached.
 func TestCompilerAndStage1Agree_SetupSanitizedNative(t *testing.T) {
-	compilerAgreementSetupProduct(t, "compiler-agreement-native-true", func(t *testing.T) string { return compilerAgreementNative(t, true) })
+	t.Parallel()
+	compilerAgreementSetupProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, true) })
 }
 
-// Not parallel: prepares only release native; lowering must already be cached.
 func TestCompilerAndStage1Agree_SetupReleaseNative(t *testing.T) {
-	compilerAgreementSetupProduct(t, "compiler-agreement-native-false", func(t *testing.T) string { return compilerAgreementNative(t, false) })
+	t.Parallel()
+	compilerAgreementSetupProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, false) })
 }
 
 type compilerAgreementOracleAnswer struct {
@@ -343,6 +346,22 @@ func compilerAgreementShard(t *testing.T, shard int) {
 		return
 	}
 	path := manifest(t, rows)
+	setupStarted := time.Now()
+	_ = compilerAgreementGoOracle(t)
+	var module, binary string
+	if side == 1 {
+		module = filepath.Join(compilerAgreementLowered(t), "lint.mjs")
+	}
+	if side == 3 || side == 4 {
+		binary = compilerAgreementNative(t, side == 4)
+	}
+	t.Logf("preparation: %.3fs", time.Since(setupStarted).Seconds())
+	// This deadline measures only work; go test/Loom's 90s ceiling also covers
+	// preparation and remains authoritative for the complete top-level unit.
+	workStarted := time.Now()
+	deadline := time.AfterFunc(90*time.Second, func() { panic(t.Name() + ": own work exceeded 90s") })
+	defer deadline.Stop()
+	defer func() { t.Logf("own work: %.3fs", time.Since(workStarted).Seconds()) }()
 	want := compilerAgreementOracle(t, owner, path)
 	if side == 0 {
 		t.Logf("Go: %s, %d cases", want.duration, len(rows))
@@ -355,7 +374,7 @@ func compilerAgreementShard(t *testing.T, shard int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		got = execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(compilerAgreementLowered(t), "lint.mjs"), "--manifest", path)
+		got = execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path)
 	case 2:
 		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 		if err != nil {
@@ -363,7 +382,7 @@ func compilerAgreementShard(t *testing.T, shard int) {
 		}
 		got = execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(packageDirectory, "main.ts"), "--manifest", path)
 	case 3, 4:
-		got = execute(t, "", compilerAgreementNative(t, side == 4), "--manifest", path)
+		got = execute(t, "", binary, "--manifest", path)
 	}
 	compilerAgreementCompare(t, got.output, want.output)
 	t.Logf("side %d: %s, oracle %s, %d cases", side, got.duration, want.duration, len(rows))
