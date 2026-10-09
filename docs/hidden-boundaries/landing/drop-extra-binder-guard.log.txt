@@ -1,0 +1,8 @@
+=== RUN   TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadBinderGuards/result
+    census_overload_binders_test.go:23: want "cannot be served by implementation result", got <nil>
+--- FAIL: TestCensusOverloadBinderGuards (0.04s)
+    --- FAIL: TestCensusOverloadBinderGuards/result (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL

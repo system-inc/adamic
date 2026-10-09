@@ -1,0 +1,9 @@
+// a-check: refused the non-null assertion !
+// From src/compiler/core.ts:1098 (TypeScript 6.0.3, main adaptations).
+
+const Debug = { assert(value: boolean): void { if (value === false) throw new Error('empty'); } };
+export function first<T>(array: readonly T[]): T {
+    Debug.assert(array.length !== 0);
+    return array[0]!;
+}
+console.log(`${first([7,9])}:${first(['a','b'])}`);

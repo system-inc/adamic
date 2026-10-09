@@ -1,0 +1,11 @@
+// a-check: refused visitor argument path
+interface Node { readonly kind: number; }
+interface Modifier extends Node { readonly text: string; }
+function visitNodes<TIn extends Node>(nodes: readonly TIn[], visitor: (node: TIn) => Node | undefined): readonly Node[];
+function visitNodes(nodes: readonly Node[], visitor: (node: Node) => Node | undefined): readonly Node[] {
+ for (const node of nodes) { visitor(node); }
+ return nodes;
+}
+const modifiers: readonly Modifier[] = [{ kind: 1, text: 'modifier' }];
+function visitor(node: Modifier): Node | undefined { console.log(node.text); return node; }
+console.log(`${visitNodes(modifiers, visitor).length}`);

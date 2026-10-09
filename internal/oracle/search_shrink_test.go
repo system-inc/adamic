@@ -70,7 +70,7 @@ func TestSearchShrink(t *testing.T) {
 			}
 			t.Logf("Node: exit=%d stdout=%q", truth.exitCode, truth.stdout)
 			if sanitized.exitCode == 0 {
-				if report := leakSanitizer(t, binary); report != "" {
+				if report := leaksUncached(t, program, binary); report != "" {
 					t.Fatal(report)
 				}
 			}
