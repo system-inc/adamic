@@ -1,0 +1,32 @@
+// a-check: type error TS2591
+// From TypeScript 6.0.3, src/compiler/sys.ts:1572
+// From TypeScript 6.0.3, src/compiler/sys.ts:1948
+// From TypeScript 6.0.3, src/compiler/sys.ts:59
+// Census reason: TS2591
+
+import * as _fs from "node:fs";
+import * as _path from "node:path";
+import { tmpdir } from "node:os";
+import process from "node:process";
+const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+import * as _crypto from "node:crypto";
+function createSHA256Hash(data: string): string {
+    const hash = _crypto.createHash("sha256");
+    hash.update(data);
+    return hash.digest("hex");
+}
+const createHash = _crypto ? createSHA256Hash : generateDjb2Hash;
+export function generateDjb2Hash(data: string): string {
+    let acc = 5381;
+    for (let i = 0; i < data.length; i++) {
+        acc = ((acc << 5) + acc) + data.charCodeAt(i);
+    }
+    return acc.toString();
+}
+
+try {
+    for (const text of ["", "abc", "héllo 🌍", "a\u0000b"]) { console.log(createHash(text)); }
+}
+finally {
+    _fs.rmSync(scratch, { recursive: true, force: true });
+}

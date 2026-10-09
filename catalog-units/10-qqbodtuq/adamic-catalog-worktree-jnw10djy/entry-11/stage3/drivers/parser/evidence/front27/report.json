@@ -1,0 +1,484 @@
+{
+  "status": "red: untouched slice stops before arguments.length; targeted feature witnesses green",
+  "scratch": "/workspace/scratch/parser-front26-scratch",
+  "scratch_head": "9d2696bbd8715c4c5bcc7ae426d019d4f95896b7",
+  "inputs": [
+    {
+      "sha": "1b382081ccd6df2eeb445b1e6432c714d3715326",
+      "ancestor": true
+    },
+    {
+      "sha": "0f722679dd7ddd16933c86d88880076cfc7a8418",
+      "ancestor": true
+    },
+    {
+      "sha": "37fa06d393b73779bef134229a50370c168b1943",
+      "ancestor": true
+    },
+    {
+      "sha": "7d2cbc895a1e690c18ceefa908da44618370b769",
+      "ancestor": true
+    },
+    {
+      "sha": "456c981b1c108abae5f2c8d6ae665cfd6b92e2fe",
+      "ancestor": true
+    }
+  ],
+  "arguments_length_excluded": true,
+  "quarantined_scratch_excluded": true,
+  "compiler_build_exit": 0,
+  "targeted_probes": [
+    {
+      "file": "native-predicate-callback-parameter.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a"
+        ],
+        "exit": 0,
+        "stdout": "callback declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a",
+          "-o",
+          "/workspace/scratch/parser-front27-probes/native-predicate-callback-parameter.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front27-probes/native-predicate-callback-parameter.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "callback declaration loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 451280,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-generic-assert-non-nullable.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a"
+        ],
+        "exit": 0,
+        "stdout": "assertion declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a",
+          "-o",
+          "/workspace/scratch/parser-front27-probes/native-generic-assert-non-nullable.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front27-probes/native-generic-assert-non-nullable.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "assertion declaration loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 451280,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-debugger-statement.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-debugger-statement.a"
+        ],
+        "exit": 0,
+        "stdout": "fail declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-debugger-statement.a",
+          "-o",
+          "/workspace/scratch/parser-front27-probes/native-debugger-statement.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front27-probes/native-debugger-statement.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "fail declaration loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 451280,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-partial-record-view.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a",
+          "-o",
+          "/workspace/scratch/parser-front27-probes/native-partial-record-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front27-probes/native-partial-record-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 451232,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-function-any-view-called-only.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-function-any-view-called-only.a"
+        ],
+        "exit": 0,
+        "stdout": "function view loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-function-any-view-called-only.a",
+          "-o",
+          "/workspace/scratch/parser-front27-callable-control/native-function-any-view-called-only.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front27-callable-control/native-function-any-view-called-only.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "function view loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 451568,
+      "native_byte_mutant_cmp": 1
+    }
+  ],
+  "targeted_passing": 5,
+  "targeted_total": 5,
+  "unchanged_probe_passing": 4,
+  "unchanged_probe_total": 5,
+  "namespace_probe": {
+    "file": "native-function-any-view.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/stage3/drivers/parser/native-function-any-view.a"
+      ],
+      "exit": 0,
+      "stdout": "function view loaded\n",
+      "stderr": ""
+    },
+    "build": {
+      "command": [
+        "/workspace/scratch/parser-front27-adamic",
+        "build",
+        "/workspace/adamic/stage3/drivers/parser/native-function-any-view.a",
+        "-o",
+        "/workspace/scratch/parser-front27-probes/native-function-any-view.a.bin"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-function-any-view.a:3:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports\n"
+    },
+    "pass": false
+  },
+  "slice_build": {
+    "jobs": 5,
+    "cache": "/workspace/scratch/parser-front27-build-modes-retry/cache",
+    "generated_c": null,
+    "attempts": [
+      {
+        "mode": "unsplit",
+        "exit": 1,
+        "timeout": false,
+        "attempt_wall_seconds": 0.823113906008075,
+        "generated_c": null,
+        "clang_wall_seconds": null,
+        "binary_bytes": null,
+        "clang_status": "unreached: checking/lowering failed before C emission",
+        "cache_files_after": 0
+      },
+      {
+        "mode": "split",
+        "exit": 1,
+        "timeout": false,
+        "attempt_wall_seconds": 0.8246987339953193,
+        "generated_c": null,
+        "clang_wall_seconds": null,
+        "binary_bytes": null,
+        "clang_status": "unreached: checking/lowering failed before C emission",
+        "cache_files_after": 0
+      },
+      {
+        "mode": "split-repeat",
+        "exit": 1,
+        "timeout": false,
+        "attempt_wall_seconds": 0.8234441819950007,
+        "generated_c": null,
+        "clang_wall_seconds": null,
+        "binary_bytes": null,
+        "clang_status": "unreached: checking/lowering failed before C emission",
+        "cache_files_after": 0
+      }
+    ],
+    "emit_exit": 1,
+    "emit_timeout": false,
+    "timeout_seconds": 60.0,
+    "split_repeat_is_warm": false
+  },
+  "first_real_stop": "adamic: /workspace/scratch/parser-front25-packaged-slice/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+  "ordered_stops": 11,
+  "behind_first_stop": 10,
+  "reach_525": "Not observed unchanged: earlier enum initialization refusal; reduceLeft stubbed only in discovery copy. No arguments probe run.",
+  "minimal_programs": [
+    {
+      "file": "native-call-before-enum.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-call-before-enum.a"
+        ],
+        "exit": 0,
+        "stdout": "0:0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-call-before-enum.a",
+          "-o",
+          "/workspace/scratch/parser-front27-call-minimal-retry/native-call-before-enum.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-call-before-enum.a:4:20: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-generic-empty-array.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a",
+          "-o",
+          "/workspace/scratch/parser-front27-minimals/native-generic-empty-array.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a:5:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-array-is-array-predicate.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-array-is-array-predicate.a"
+        ],
+        "exit": 0,
+        "stdout": "true\nfalse\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-array-is-array-predicate.a",
+          "-o",
+          "/workspace/scratch/parser-front27-minimals/native-array-is-array-predicate.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-array-is-array-predicate.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-process-next-tick-read.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a"
+        ],
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a",
+          "-o",
+          "/workspace/scratch/parser-front27-minimals/native-process-next-tick-read.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a:6:52: Adamic 0.1 refuses a method read as a value (nextTick would lose its object, and this with it); call it in an arrow that keeps the object: (callback, args) => process.nextTick(callback, args) (unbound-method)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-debug-namespace.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-debug-namespace.a"
+        ],
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-debug-namespace.a",
+          "-o",
+          "/workspace/scratch/parser-front27-minimals/native-debug-namespace.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-debug-namespace.a:2:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-enum-map.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-enum-map.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-enum-map.a",
+          "-o",
+          "/workspace/scratch/parser-front27-callable-control/native-enum-map.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-enum-map.a:3:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n"
+      },
+      "pass": false
+    }
+  ],
+  "coverage": "Existing predicate and assertion probes compile unused declarations and print loaded; no runtime predicate semantic claim. Callable control is the incoming branch namespace-free parser-cache reduction; original namespace-bearing probe is separately refused. No full gate, corpus run or native parser acceptance. Validated slice and Node references unchanged.",
+  "merge_conflicts": "Predicate merge: refusals.go and counts.md. Callable merge: docs/0.1.md, javascript.go, cast.go, cast_proof.go, expression.go, invariance.go, object.go, optional widening tests, refusals.go, statements.go, counts.md and field_access_paths.a. Debugger merge: docs/0.1.md, refusals.go, counts.md. Resolved in scratch only; record hooks preserved alongside incoming callable/predicate hooks; patch retained. Two incomplete record-hook returns caused an intermediate compiler build failure and were corrected.",
+  "infrastructure": "Disk-full callable checkout recovered after go clean -cache freed 21 GB; tracked scratch files restored to predicate-merge HEAD and only files present in incoming commit removed from incomplete untracked checkout before retry. Restore dropped local SDK module paths, which were reinstated. Pinned cohere 7945d102 and TypeScript d92d9bfee reused via absolute go.mod paths. Stock API dependency seat linked; initial probe cwd typo and missing Node dependency attempt retained. Scratch-only discovery false-read stub and inferred-return/variable annotation attempts introduced checker errors, retained and excluded from real stop count. Final stubs preserve relevant types.",
+  "assumption": "Use exactly the requested fresh scratch and three compiler merges; do not import the quarantined scratch or other historical compiler branches to force expected 525. Ten stops behind actual first refusal recorded."
+}

@@ -1,0 +1,223 @@
+{
+  "fields": [
+    "kind",
+    "pos",
+    "end",
+    "identifier/private-identifier text"
+  ],
+  "positions": "UTF-16 code units, directly from both node tables",
+  "kindNormalization": {
+    "stage1 EndOfFile": "EndOfFileToken"
+  },
+  "excluded": [
+    "node flags",
+    "parse diagnostics",
+    "literal text",
+    "three JSON corpus files"
+  ],
+  "filesCompared": 78,
+  "filesDifferent": 24,
+  "nodeCount": 915578,
+  "witnessNodeCount": 915578,
+  "differenceHunks": 639,
+  "files": [
+    {
+      "file": "builder.ts",
+      "hunks": 9,
+      "createSourceFileNodes": 11465,
+      "stage1Nodes": 11465,
+      "expectedUnequalRecords": 9,
+      "witnessUnequalRecords": 9
+    },
+    {
+      "file": "builderPublic.ts",
+      "hunks": 2,
+      "createSourceFileNodes": 745,
+      "stage1Nodes": 745,
+      "expectedUnequalRecords": 2,
+      "witnessUnequalRecords": 2
+    },
+    {
+      "file": "builderState.ts",
+      "hunks": 1,
+      "createSourceFileNodes": 2502,
+      "stage1Nodes": 2502,
+      "expectedUnequalRecords": 1,
+      "witnessUnequalRecords": 1
+    },
+    {
+      "file": "checker.ts",
+      "hunks": 4,
+      "createSourceFileNodes": 298054,
+      "stage1Nodes": 298054,
+      "expectedUnequalRecords": 4,
+      "witnessUnequalRecords": 4
+    },
+    {
+      "file": "commandLineParser.ts",
+      "hunks": 3,
+      "createSourceFileNodes": 16946,
+      "stage1Nodes": 16946,
+      "expectedUnequalRecords": 3,
+      "witnessUnequalRecords": 3
+    },
+    {
+      "file": "core.ts",
+      "hunks": 1,
+      "createSourceFileNodes": 13214,
+      "stage1Nodes": 13214,
+      "expectedUnequalRecords": 1,
+      "witnessUnequalRecords": 1
+    },
+    {
+      "file": "corePublic.ts",
+      "hunks": 2,
+      "createSourceFileNodes": 120,
+      "stage1Nodes": 120,
+      "expectedUnequalRecords": 2,
+      "witnessUnequalRecords": 2
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "hunks": 2,
+      "createSourceFileNodes": 6147,
+      "stage1Nodes": 6147,
+      "expectedUnequalRecords": 2,
+      "witnessUnequalRecords": 2
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "hunks": 1,
+      "createSourceFileNodes": 2180,
+      "stage1Nodes": 2180,
+      "expectedUnequalRecords": 1,
+      "witnessUnequalRecords": 1
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "hunks": 13,
+      "createSourceFileNodes": 17327,
+      "stage1Nodes": 17327,
+      "expectedUnequalRecords": 13,
+      "witnessUnequalRecords": 13
+    },
+    {
+      "file": "parser.ts",
+      "hunks": 1,
+      "createSourceFileNodes": 50764,
+      "stage1Nodes": 50764,
+      "expectedUnequalRecords": 1,
+      "witnessUnequalRecords": 1
+    },
+    {
+      "file": "performanceCore.ts",
+      "hunks": 1,
+      "createSourceFileNodes": 295,
+      "stage1Nodes": 295,
+      "expectedUnequalRecords": 1,
+      "witnessUnequalRecords": 1
+    },
+    {
+      "file": "resolutionCache.ts",
+      "hunks": 5,
+      "createSourceFileNodes": 7219,
+      "stage1Nodes": 7219,
+      "expectedUnequalRecords": 5,
+      "witnessUnequalRecords": 5
+    },
+    {
+      "file": "semver.ts",
+      "hunks": 2,
+      "createSourceFileNodes": 2016,
+      "stage1Nodes": 2016,
+      "expectedUnequalRecords": 2,
+      "witnessUnequalRecords": 2
+    },
+    {
+      "file": "sourcemap.ts",
+      "hunks": 3,
+      "createSourceFileNodes": 3689,
+      "stage1Nodes": 3689,
+      "expectedUnequalRecords": 3,
+      "witnessUnequalRecords": 3
+    },
+    {
+      "file": "sys.ts",
+      "hunks": 6,
+      "createSourceFileNodes": 8281,
+      "stage1Nodes": 8281,
+      "expectedUnequalRecords": 6,
+      "witnessUnequalRecords": 6
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "hunks": 4,
+      "createSourceFileNodes": 12070,
+      "stage1Nodes": 12070,
+      "expectedUnequalRecords": 4,
+      "witnessUnequalRecords": 4
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "hunks": 3,
+      "createSourceFileNodes": 17413,
+      "stage1Nodes": 17413,
+      "expectedUnequalRecords": 3,
+      "witnessUnequalRecords": 3
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "hunks": 7,
+      "createSourceFileNodes": 11943,
+      "stage1Nodes": 11943,
+      "expectedUnequalRecords": 7,
+      "witnessUnequalRecords": 7
+    },
+    {
+      "file": "types.ts",
+      "hunks": 550,
+      "createSourceFileNodes": 43270,
+      "stage1Nodes": 43270,
+      "expectedUnequalRecords": 550,
+      "witnessUnequalRecords": 550
+    },
+    {
+      "file": "utilities.ts",
+      "hunks": 6,
+      "createSourceFileNodes": 54312,
+      "stage1Nodes": 54312,
+      "expectedUnequalRecords": 6,
+      "witnessUnequalRecords": 6
+    },
+    {
+      "file": "watch.ts",
+      "hunks": 3,
+      "createSourceFileNodes": 4967,
+      "stage1Nodes": 4967,
+      "expectedUnequalRecords": 3,
+      "witnessUnequalRecords": 3
+    },
+    {
+      "file": "watchPublic.ts",
+      "hunks": 8,
+      "createSourceFileNodes": 5236,
+      "stage1Nodes": 5236,
+      "expectedUnequalRecords": 8,
+      "witnessUnequalRecords": 8
+    },
+    {
+      "file": "watchUtilities.ts",
+      "hunks": 2,
+      "createSourceFileNodes": 3616,
+      "stage1Nodes": 3616,
+      "expectedUnequalRecords": 2,
+      "witnessUnequalRecords": 2
+    }
+  ],
+  "nodeProjectionBytes": 30994150,
+  "nodeProjectionSha256": "a73bb1b65b6e65c2683fc7694e3e0f6903b831e57b510c569d2b0401940945a2",
+  "witnessBytes": 30985248,
+  "witnessSha256": "728a99397c2b1edf271a12544b6edfa744eac88f0f918953b864dca4bb405988",
+  "differencesUncompressedBytes": 200391,
+  "differencesSha256": "282e6dd1b58849454fcb69df0bbdd1b83eb94457689d08aea73aebf4d15f61d0"
+}

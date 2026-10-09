@@ -1,0 +1,23 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:7597
+// Census reason: type assertion sites
+// Support types and driver are reduced scaffolding; the upstream function is unchanged.
+
+const SyntaxKind = { ObjectLiteralExpression: 211, ArrayLiteralExpression: 210, ParenthesizedExpression: 218, ThisKeyword: 110, SuperKeyword: 108, PropertyAccessExpression: 212, ElementAccessExpression: 213 } as const;
+type SyntaxKind = number;
+interface Node { readonly kind: SyntaxKind; }
+interface ObjectLiteralExpression extends Node { readonly kind: 211; readonly properties: readonly number[]; }
+interface ArrayLiteralExpression extends Node { readonly kind: 210; readonly elements: readonly number[]; }
+interface ParenthesizedExpression extends Node { readonly kind: 218; readonly expression: Expression; }
+type Expression = Node;
+
+export function isEmptyObjectLiteral(expression: Node): boolean {
+    return expression.kind === SyntaxKind.ObjectLiteralExpression &&
+        (expression as ObjectLiteralExpression).properties.length === 0;
+}
+
+const empty: ObjectLiteralExpression = { kind: 211, properties: [] };
+const full: ObjectLiteralExpression = { kind: 211, properties: [1] };
+const array: ArrayLiteralExpression = { kind: 210, elements: [] };
+console.log(String(isEmptyObjectLiteral(empty)));
+console.log(String(isEmptyObjectLiteral(full)));
+console.log(String(isEmptyObjectLiteral(array)));

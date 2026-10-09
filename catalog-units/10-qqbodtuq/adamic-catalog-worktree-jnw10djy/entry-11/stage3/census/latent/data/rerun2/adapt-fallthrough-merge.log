@@ -1,0 +1,33 @@
+Trying simple merge with origin/codex/stage3-optional-declarations
+Trying simple merge with origin/codex/stage3-indexed-reads
+Trying simple merge with origin/codex/stage3-regex-captures
+Trying simple merge with origin/codex/fallthrough-and-implicit-returns
+Simple merge did not work, trying automatic merge.
+Auto-merging docs/0.1.md
+ERROR: content conflict in docs/0.1.md
+Auto-merging internal/flow/build.go
+ERROR: content conflict in internal/flow/build.go
+Auto-merging internal/ir/ir.go
+ERROR: content conflict in internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+ERROR: content conflict in internal/javascript/javascript.go
+Auto-merging internal/load/load.go
+ERROR: content conflict in internal/load/load.go
+Auto-merging internal/load/load_test.go
+ERROR: content conflict in internal/load/load_test.go
+Auto-merging internal/lower/functions.go
+Auto-merging internal/lower/object.go
+Auto-merging internal/lower/refusals.go
+ERROR: content conflict in internal/lower/refusals.go
+Auto-merging internal/lower/statements.go
+ERROR: content conflict in internal/lower/statements.go
+Auto-merging internal/native/emit.go
+Auto-merging internal/native/emit_functions.go
+Auto-merging internal/native/emit_statements.go
+ERROR: content conflict in internal/native/emit_statements.go
+Auto-merging internal/oracle/counts.md
+ERROR: content conflict in internal/oracle/counts.md
+Auto-merging tsconfig.json
+ERROR: content conflict in tsconfig.json
+fatal: merge program failed
+Automatic merge failed; fix conflicts and then commit the result.

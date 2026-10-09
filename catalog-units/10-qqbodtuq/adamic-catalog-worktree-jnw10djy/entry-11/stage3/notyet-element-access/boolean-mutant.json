@@ -1,0 +1,9 @@
+{
+  "mutation": [
+    "Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0",
+    "Absent: false"
+  ],
+  "command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestNativeAgreesWithNode/internal/oracle/testdata/element_access_boolean -count=1 -timeout 10m",
+  "exit": 1,
+  "log": "--- FAIL: TestNativeAgreesWithNode (0.02s)\n    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/element_access_boolean.a (0.47s)\n        oracle_test.go:761: exit codes differ\n            node:   exit 0, stdout \"noImplicitAny undefined true false true false true false\\nnoImplicitThis undefined true false true false true false\\nstrictNullChecks undefined true false true false true false\\nstrictFunctionTypes undefined true false true false true false\\nstrictBindCallApply undefined true false true false true false\\nstrictPropertyInitialization undefined true false true false true false\\nstrictBuiltinIteratorReturn undefined true false true false true false\\nuseUnknownInCatchVariables undefined true false true false true false\\nundefined undefined\\n\", stderr \"\"\n            native: exit 70, stdout \"\", stderr \"adamic: panic: compiler bug: a field the checker proved is there is missing\\n\"\n        oracle_test.go:774: leaks:\n            exit 70\n            adamic: panic: compiler bug: a field the checker proved is there is missing\nFAIL\ngate cache: native hits=0 misses=3\ngate cache: node hits=0 misses=2\ngate cache: probe hits=0 misses=0\nFAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.494s\nFAIL\n"
+}

@@ -1,0 +1,18 @@
+// From TypeScript 6.0.3, src/compiler/builderState.ts:62
+// From TypeScript 6.0.3, src/compiler/builderState.ts:100
+// From TypeScript 6.0.3, src/compiler/builderState.ts:349
+// Census reason: a namespace
+// Minimal support contract represents the undefined values releaseCache writes.
+export interface BuilderState {
+    allFilesExcludingDefaultLibraryFile: readonly string[] | undefined;
+    allFileNames: readonly string[] | undefined;
+}
+export namespace BuilderState {
+    export function releaseCache(state: BuilderState): void {
+        state.allFilesExcludingDefaultLibraryFile = undefined;
+        state.allFileNames = undefined;
+    }
+}
+const state: BuilderState = { allFilesExcludingDefaultLibraryFile: ["index.ts"], allFileNames: ["index.ts"] };
+BuilderState.releaseCache(state);
+console.log(`${state.allFilesExcludingDefaultLibraryFile === undefined} ${state.allFileNames === undefined}`);

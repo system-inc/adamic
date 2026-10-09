@@ -1,0 +1,32 @@
+01_paths-missing_constructor correct exit=2 "main.ts(1,23): error TS2307: Cannot find module 'constructor' or its corresponding type declarations.\n"
+02_paths-missing_toString correct exit=2 "main.ts(1,23): error TS2307: Cannot find module 'toString' or its corresponding type declarations.\n"
+03_paths-missing_hasOwnProperty correct exit=2 "main.ts(1,23): error TS2307: Cannot find module 'hasOwnProperty' or its corresponding type declarations.\n"
+04_paths-missing___proto__ correct exit=2 "main.ts(1,23): error TS2307: Cannot find module '__proto__' or its corresponding type declarations.\n"
+05_paths-own_constructor correct exit=0 ''
+06_paths-own_toString correct exit=0 ''
+07_paths-own_hasOwnProperty correct exit=0 ''
+08_paths-own___proto__ wrong diagnostic exit=2 "main.ts(1,23): error TS2307: Cannot find module '__proto__' or its corresponding type declarations.\n"
+09_exports-missing_constructor correct exit=0 ''
+10_exports-missing_toString correct exit=0 ''
+11_exports-missing_hasOwnProperty correct exit=0 ''
+12_exports-missing___proto__ correct exit=0 ''
+13_exports-own_constructor correct exit=0 ''
+14_exports-own_toString correct exit=0 ''
+15_exports-own_hasOwnProperty correct exit=0 ''
+16_exports-own___proto__ correct exit=0 ''
+17_typesVersions-own_constructor correct exit=0 ''
+18_typesVersions-own_toString correct exit=0 ''
+19_typesVersions-own_hasOwnProperty correct exit=0 ''
+20_typesVersions-own___proto__ correct exit=0 ''
+21_config-unknown_constructor correct exit=2 "tsconfig.json(7,5): error TS5023: Unknown compiler option 'constructor'.\n"
+22_config-unknown_toString correct exit=2 "tsconfig.json(7,5): error TS5023: Unknown compiler option 'toString'.\n"
+23_config-unknown_hasOwnProperty correct exit=2 "tsconfig.json(7,5): error TS5023: Unknown compiler option 'hasOwnProperty'.\n"
+24_config-unknown___proto__ correct exit=2 "tsconfig.json(7,5): error TS5023: Unknown compiler option '__proto__'.\n"
+25_cli-unknown_constructor correct exit=1 "error TS5023: Unknown compiler option '--constructor'.\n"
+26_cli-unknown_toString correct exit=1 "error TS5023: Unknown compiler option '--toString'.\n"
+27_cli-unknown_hasOwnProperty correct exit=1 "error TS5023: Unknown compiler option '--hasOwnProperty'.\n"
+28_cli-unknown___proto__ correct exit=1 "error TS5023: Unknown compiler option '--__proto__'.\n"
+29_compare-old correct exit=2 "tsconfig.json(6,22): error TS5066: Substitutions for pattern 'constructor' shouldn't be an empty array.\n"
+30_compare-new correct exit=2 "tsconfig.json(6,16): error TS5066: Substitutions for pattern 'other' shouldn't be an empty array.\n"
+CAUGHT by stock CLI output: replace lost own __proto__ path with ordinary own constructor path
+PASS: 30 exact stock CLI observations
