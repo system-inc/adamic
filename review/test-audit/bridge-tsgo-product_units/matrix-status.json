@@ -1,0 +1,162 @@
+[
+  {
+    "id": "control",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "control",
+    "cache": "/tmp/u003/cache/control",
+    "exit": 0,
+    "seconds": 34.34953225500067
+  },
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "M1",
+    "cache": "/tmp/u003/cache/M1",
+    "exit": 1,
+    "seconds": 5.18985339199935
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "M2",
+    "cache": "/tmp/u003/cache/M2",
+    "exit": 0,
+    "seconds": 26.835545221998473
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "M3",
+    "cache": "/tmp/u003/cache/M3",
+    "exit": 0,
+    "seconds": 31.661578159000783
+  },
+  {
+    "id": "M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "M4",
+    "cache": "/tmp/u003/cache/M4",
+    "exit": 0,
+    "seconds": 30.183502028001385
+  },
+  {
+    "id": "M5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "M5",
+    "cache": "/tmp/u003/cache/M5",
+    "exit": 1,
+    "seconds": 5.426852631997463
+  },
+  {
+    "id": "M6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "M6",
+    "cache": "/tmp/u003/cache/M6",
+    "exit": 1,
+    "seconds": 5.473849944002723
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_"
+    ],
+    "selector": "P1",
+    "cache": "/tmp/u003/cache/P1",
+    "exit": 1,
+    "seconds": 5.548198532000242
+  }
+]

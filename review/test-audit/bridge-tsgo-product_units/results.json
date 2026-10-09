@@ -1,0 +1,914 @@
+[
+  {
+    "test": "TestProduct_TsgoArchive",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:46",
+    "seconds": 0.479,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:48: build bridge-test-tsgo.a: open /tmp/u003/cache/M6/5eb25adc02fbbeed20ed780c1e82ec45db3a143d2e37b795f38553b4523af147.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:48: build bridge-test-tsgo.a: open /tmp/u003/cache/M6/5eb25adc02fbbeed20ed780c1e82ec45db3a143d2e37b795f38553b4523af147.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_TsgoSanitizedArchive",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:51",
+    "seconds": 0.482,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:53: build bridge-test-tsgo-asan.a: open /tmp/u003/cache/M6/4ac5a7a4dcc2506e5bd266dc708f0efc149d003d60288d0ae4a637f0ccf823f2.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:53: build bridge-test-tsgo-asan.a: open /tmp/u003/cache/M6/4ac5a7a4dcc2506e5bd266dc708f0efc149d003d60288d0ae4a637f0ccf823f2.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_LengthArchive",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:56",
+    "seconds": 0.502,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:58: build bridge-test-length.a: open /tmp/u003/cache/M6/01511a20b268942ec4d5a651f3fe9281301b7dd56fa7437e543b0fa0abd66536.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:58: build bridge-test-length.a: open /tmp/u003/cache/M6/01511a20b268942ec4d5a651f3fe9281301b7dd56fa7437e543b0fa0abd66536.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_StaleArchive",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:61",
+    "seconds": 0.489,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:63: build bridge-test-stale.a: open /tmp/u003/cache/M6/1b5304dbe841e0c724471d98be7625c9b72edf871bd0416d7d13853963448ee5.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:63: build bridge-test-stale.a: open /tmp/u003/cache/M6/1b5304dbe841e0c724471d98be7625c9b72edf871bd0416d7d13853963448ee5.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_WrongArchive",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:66",
+    "seconds": 0.478,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:68: build bridge-test-wrong.a: open /tmp/u003/cache/M6/b31124603c377d1786a69e1a6cdc37d069aaea987ceb1b3336d7debdba205831.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:68: build bridge-test-wrong.a: open /tmp/u003/cache/M6/b31124603c377d1786a69e1a6cdc37d069aaea987ceb1b3336d7debdba205831.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_LeakArchive",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:71",
+    "seconds": 0.497,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:73: build bridge-test-leak.a: open /tmp/u003/cache/M6/d6839651df2beb728ee831199d673d490d035d17bdfbe23f4ec84db4594c65e4.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:73: build bridge-test-leak.a: open /tmp/u003/cache/M6/d6839651df2beb728ee831199d673d490d035d17bdfbe23f4ec84db4594c65e4.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_Stage0",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:76",
+    "seconds": 0.482,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:78: build bridge-test-stage0: open /tmp/u003/cache/M6/cf445bbdd693b5a7678bb5e7a4519901ffb40f3efe5b909f79a15155f703cd54.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:78: build bridge-test-stage0: open /tmp/u003/cache/M6/cf445bbdd693b5a7678bb5e7a4519901ffb40f3efe5b909f79a15155f703cd54.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_Oracle",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:81",
+    "seconds": 0.436,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:83: build bridge-test-oracle: open /tmp/u003/cache/M6/5e765e1b0c528051906323fb2be19400a23cbcae9850b770683ccd2535c9ba67.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:83: build bridge-test-oracle: open /tmp/u003/cache/M6/5e765e1b0c528051906323fb2be19400a23cbcae9850b770683ccd2535c9ba67.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_ApiDriver",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:86",
+    "seconds": 0.46,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:88: build bridge-test-api: open /tmp/u003/cache/M6/596b13d2b3e30bb09d6b716ae53084e5df9383de45f91302d8ec5dee6360eaeb.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:88: build bridge-test-api: open /tmp/u003/cache/M6/596b13d2b3e30bb09d6b716ae53084e5df9383de45f91302d8ec5dee6360eaeb.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_LengthDriver",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:91",
+    "seconds": 0.468,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:93: build bridge-test-length-driver: open /tmp/u003/cache/M6/6615e68fae2009e4b4f158cef1bd58adae4f71e17c73f487df448573faf634a0.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:93: build bridge-test-length-driver: open /tmp/u003/cache/M6/6615e68fae2009e4b4f158cef1bd58adae4f71e17c73f487df448573faf634a0.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_StaleDriver",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:96",
+    "seconds": 0.459,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:98: build bridge-test-stale-driver: open /tmp/u003/cache/M6/84149997cbf4c22d76496ae191d2fa42ad9e0ed0fd23f18573b74502f378508e.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:98: build bridge-test-stale-driver: open /tmp/u003/cache/M6/84149997cbf4c22d76496ae191d2fa42ad9e0ed0fd23f18573b74502f378508e.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_LeakDriver",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:101",
+    "seconds": 0.493,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:103: build bridge-test-leak-driver: open /tmp/u003/cache/M6/6d5ce04357783165ca934a98fc2ec7e751311ab272adef0e7302f17ba478c224.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:103: build bridge-test-leak-driver: open /tmp/u003/cache/M6/6d5ce04357783165ca934a98fc2ec7e751311ab272adef0e7302f17ba478c224.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_SanitizedNative",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:106",
+    "seconds": 0.495,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:108: build bridge-test-native-asan: open /tmp/u003/cache/M6/cf93fa7fb13f45b2965b81ff9ddcccadcbc9aa0507584e82ff332bc0ab114fd7.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:108: build bridge-test-native-asan: open /tmp/u003/cache/M6/cf93fa7fb13f45b2965b81ff9ddcccadcbc9aa0507584e82ff332bc0ab114fd7.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_Native",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:111",
+    "seconds": 0.47,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:113: build bridge-test-native: open /tmp/u003/cache/M6/f2ecc6258f4edbfd16b77ab7de5a605c6d5d09b5445b0faacaec9afd876fa0cf.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:113: build bridge-test-native: open /tmp/u003/cache/M6/f2ecc6258f4edbfd16b77ab7de5a605c6d5d09b5445b0faacaec9afd876fa0cf.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_WrongNative",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:116",
+    "seconds": 0.453,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:118: build bridge-test-wrong-native: open /tmp/u003/cache/M6/ff5dcd3e782ece0adbd78e81ad680cc6d85b0ad7d568ba51aedb2eb9b5a7b759.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:118: build bridge-test-wrong-native: open /tmp/u003/cache/M6/ff5dcd3e782ece0adbd78e81ad680cc6d85b0ad7d568ba51aedb2eb9b5a7b759.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_HealthyRegion",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:121",
+    "seconds": 0.44,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:123: build bridge-test-healthy-region: open /tmp/u003/cache/M6/e84e561b6fe90ae6fbafe44541184aff6e521da5f42f91d02acdcb941cf2b9ac.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:123: build bridge-test-healthy-region: open /tmp/u003/cache/M6/e84e561b6fe90ae6fbafe44541184aff6e521da5f42f91d02acdcb941cf2b9ac.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_RegionStage0",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:126",
+    "seconds": 0.449,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:128: build bridge-test-region-stage0: open /tmp/u003/cache/M6/a4492eff26b752cdbbdc24d0b10d6b661aa159ee9a8427efa60ce23a8e940777.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:128: build bridge-test-region-stage0: open /tmp/u003/cache/M6/a4492eff26b752cdbbdc24d0b10d6b661aa159ee9a8427efa60ce23a8e940777.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_RegionNative",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:131",
+    "seconds": 0.425,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:133: build bridge-test-region-native: open /tmp/u003/cache/M6/406b96cfdbd725d54f1671ca5d2eba3d16159d7dd37a8696e09b2050bbe06b3b.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_LinkageTest"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.435,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:133: build bridge-test-region-native: open /tmp/u003/cache/M6/406b96cfdbd725d54f1671ca5d2eba3d16159d7dd37a8696e09b2050bbe06b3b.lock: no such file or directory"
+  },
+  {
+    "test": "TestProduct_LinkageTest",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/product_units_test.go:136",
+    "seconds": 0.435,
+    "oracle": "Self-derived SHA-256 of the built artifact plus successful build-tool exit. Product is not executed, so output semantics and build-cache invalidation are not compared. M2/M3/M4 key-collision witnesses passed this row.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M6: product_units_test.go:138: build bridge-test-linkage.test: open /tmp/u003/cache/M6/36d3c3398b0ea37445dbc2155336ba27ecf3d191c16ab6ec876867bca09be4e6.lock: no such file or directory",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProduct_RegionNative"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.425,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_TsgoArchive",
+      "TestProduct_TsgoSanitizedArchive",
+      "TestProduct_LengthArchive",
+      "TestProduct_StaleArchive",
+      "TestProduct_WrongArchive",
+      "TestProduct_LeakArchive",
+      "TestProduct_Stage0",
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_LengthDriver",
+      "TestProduct_StaleDriver",
+      "TestProduct_LeakDriver",
+      "TestProduct_SanitizedNative",
+      "TestProduct_Native",
+      "TestProduct_WrongNative",
+      "TestProduct_HealthyRegion",
+      "TestProduct_RegionStage0",
+      "TestProduct_RegionNative",
+      "TestProduct_LinkageTest"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u003/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^TestProduct_ > review/test-audit/bridge-tsgo-product_units/M6.log 2>&1; product_units_test.go:138: build bridge-test-linkage.test: open /tmp/u003/cache/M6/36d3c3398b0ea37445dbc2155336ba27ecf3d191c16ab6ec876867bca09be4e6.lock: no such file or directory"
+  }
+]

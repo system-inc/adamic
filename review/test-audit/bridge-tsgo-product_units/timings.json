@@ -1,0 +1,1085 @@
+[
+  {
+    "test": "TestProduct_TsgoArchive",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.445,
+    "wall": 2.531636478001019,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_TsgoArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_TsgoArchive",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.479,
+    "wall": 2.3837537729996257,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_TsgoArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_TsgoArchive",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.49,
+    "wall": 2.556968377000885,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_TsgoArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_TsgoSanitizedArchive",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.485,
+    "wall": 2.5029115280012775,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_TsgoSanitizedArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_TsgoSanitizedArchive",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.46,
+    "wall": 2.3817751220012724,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_TsgoSanitizedArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_TsgoSanitizedArchive",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.482,
+    "wall": 2.372279000999697,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_TsgoSanitizedArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_LengthArchive",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.648,
+    "wall": 2.7469205929992313,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LengthArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_LengthArchive",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.491,
+    "wall": 2.565691178999259,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LengthArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_LengthArchive",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.502,
+    "wall": 2.448767591999058,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LengthArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_StaleArchive",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.489,
+    "wall": 2.4246408850012813,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_StaleArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_StaleArchive",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.505,
+    "wall": 2.4790381579987297,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_StaleArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_StaleArchive",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.486,
+    "wall": 2.525817529000051,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_StaleArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_WrongArchive",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.478,
+    "wall": 2.594524938001996,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_WrongArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_WrongArchive",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.472,
+    "wall": 2.556994915001269,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_WrongArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_WrongArchive",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.495,
+    "wall": 2.591938567999023,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_WrongArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_LeakArchive",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.497,
+    "wall": 2.4379568670010485,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LeakArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_LeakArchive",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.436,
+    "wall": 2.32141746400157,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LeakArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_LeakArchive",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.501,
+    "wall": 2.4185273710027104,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LeakArchive$"
+    ]
+  },
+  {
+    "test": "TestProduct_Stage0",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.526,
+    "wall": 2.4397187790018506,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Stage0$"
+    ]
+  },
+  {
+    "test": "TestProduct_Stage0",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.461,
+    "wall": 2.525291357997048,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Stage0$"
+    ]
+  },
+  {
+    "test": "TestProduct_Stage0",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.482,
+    "wall": 2.470881436001946,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Stage0$"
+    ]
+  },
+  {
+    "test": "TestProduct_Oracle",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.473,
+    "wall": 2.4928843380002945,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Oracle$"
+    ]
+  },
+  {
+    "test": "TestProduct_Oracle",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.425,
+    "wall": 2.5355761320024612,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Oracle$"
+    ]
+  },
+  {
+    "test": "TestProduct_Oracle",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.436,
+    "wall": 2.4357563679986924,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Oracle$"
+    ]
+  },
+  {
+    "test": "TestProduct_ApiDriver",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.46,
+    "wall": 2.4439776180006447,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_ApiDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_ApiDriver",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.469,
+    "wall": 2.4869748139972216,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_ApiDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_ApiDriver",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.434,
+    "wall": 2.4062433219987724,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_ApiDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_LengthDriver",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.468,
+    "wall": 2.4755362100004277,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LengthDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_LengthDriver",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.481,
+    "wall": 2.523856439998781,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LengthDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_LengthDriver",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.457,
+    "wall": 2.554075505999208,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LengthDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_StaleDriver",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.531,
+    "wall": 2.49930132100053,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_StaleDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_StaleDriver",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.434,
+    "wall": 2.4925388359988574,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_StaleDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_StaleDriver",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.459,
+    "wall": 2.408901438000612,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_StaleDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_LeakDriver",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.437,
+    "wall": 2.3576060560008045,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LeakDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_LeakDriver",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.606,
+    "wall": 2.6417793500004336,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LeakDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_LeakDriver",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.493,
+    "wall": 2.3480324109987123,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LeakDriver$"
+    ]
+  },
+  {
+    "test": "TestProduct_SanitizedNative",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.499,
+    "wall": 2.6896619660001306,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_SanitizedNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_SanitizedNative",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.495,
+    "wall": 2.6732174520002445,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_SanitizedNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_SanitizedNative",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.454,
+    "wall": 2.4332890680016135,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_SanitizedNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_Native",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.47,
+    "wall": 2.3275207320002664,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Native$"
+    ]
+  },
+  {
+    "test": "TestProduct_Native",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.486,
+    "wall": 2.3237877979991026,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Native$"
+    ]
+  },
+  {
+    "test": "TestProduct_Native",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.431,
+    "wall": 2.3957896790016093,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_Native$"
+    ]
+  },
+  {
+    "test": "TestProduct_WrongNative",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.437,
+    "wall": 2.3968450730026234,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_WrongNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_WrongNative",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.453,
+    "wall": 2.38164301100187,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_WrongNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_WrongNative",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.475,
+    "wall": 2.314327855998272,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_WrongNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_HealthyRegion",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.44,
+    "wall": 2.373889456001052,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_HealthyRegion$"
+    ]
+  },
+  {
+    "test": "TestProduct_HealthyRegion",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.404,
+    "wall": 2.303947093001625,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_HealthyRegion$"
+    ]
+  },
+  {
+    "test": "TestProduct_HealthyRegion",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.461,
+    "wall": 2.2823724129993934,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_HealthyRegion$"
+    ]
+  },
+  {
+    "test": "TestProduct_RegionStage0",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.476,
+    "wall": 2.3438854420019197,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_RegionStage0$"
+    ]
+  },
+  {
+    "test": "TestProduct_RegionStage0",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.449,
+    "wall": 2.5477835040001082,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_RegionStage0$"
+    ]
+  },
+  {
+    "test": "TestProduct_RegionStage0",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.421,
+    "wall": 2.4350586459986516,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_RegionStage0$"
+    ]
+  },
+  {
+    "test": "TestProduct_RegionNative",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.425,
+    "wall": 2.3148904140034574,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_RegionNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_RegionNative",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.422,
+    "wall": 2.213283009001316,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_RegionNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_RegionNative",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.425,
+    "wall": 2.3953286500000104,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_RegionNative$"
+    ]
+  },
+  {
+    "test": "TestProduct_LinkageTest",
+    "trial": 1,
+    "exit": 0,
+    "seconds": 0.418,
+    "wall": 2.2589118699979736,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LinkageTest$"
+    ]
+  },
+  {
+    "test": "TestProduct_LinkageTest",
+    "trial": 2,
+    "exit": 0,
+    "seconds": 0.518,
+    "wall": 2.4358431789987662,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LinkageTest$"
+    ]
+  },
+  {
+    "test": "TestProduct_LinkageTest",
+    "trial": 3,
+    "exit": 0,
+    "seconds": 0.435,
+    "wall": 2.533064840001316,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestProduct_LinkageTest$"
+    ]
+  }
+]

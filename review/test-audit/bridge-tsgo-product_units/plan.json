@@ -1,0 +1,58 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 84,
+    "old": "if _, err = os.Stat(product); err == nil {",
+    "new": "if _, err = os.Stat(product); err != nil {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M2",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 132,
+    "old": "\tfor _, flag := range inputs.Flags {\n\t\tfield(\"flag\", flag)\n\t}\n",
+    "new": "",
+    "kind": "drop whole flag loop"
+  },
+  {
+    "id": "M3",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 135,
+    "old": "\tfor _, tool := range inputs.Toolchain {\n\t\tfield(\"tool\", tool)\n\t}\n",
+    "new": "",
+    "kind": "drop whole toolchain loop"
+  },
+  {
+    "id": "M4",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 127,
+    "old": "\tfor _, name := range inputs.Files {\n\t\tif err := hashPath(hash, root, name, field); err != nil {\n\t\t\treturn \"\", err\n\t\t}\n\t}\n",
+    "new": "",
+    "kind": "drop whole source-file loop"
+  },
+  {
+    "id": "M5",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 142,
+    "old": "if filepath.IsAbs(name) ||",
+    "new": "if !filepath.IsAbs(name) ||",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M6",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 88,
+    "old": "os.OpenFile(product+\".lock\", os.O_CREATE|os.O_RDWR,",
+    "new": "os.OpenFile(product+\".lock\", os.O_RDWR,",
+    "kind": "change option"
+  },
+  {
+    "id": "P1",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 40,
+    "old": "func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {\n",
+    "new": "func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {\n\treturn \"\"\n",
+    "kind": "empty-answer probe; remove unreachable original body"
+  }
+]

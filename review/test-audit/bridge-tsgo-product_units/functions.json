@@ -1,0 +1,61 @@
+{
+  "production": [
+    {
+      "function": "Product",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 41
+    },
+    {
+      "function": "get",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 59
+    },
+    {
+      "function": "Key",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 120
+    },
+    {
+      "function": "hashPath",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 141
+    },
+    {
+      "function": "Tool",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 189
+    },
+    {
+      "function": "cacheDirectory",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 203
+    },
+    {
+      "function": "repositoryRoot",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 222
+    },
+    {
+      "function": "describe",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 246
+    },
+    {
+      "function": "record",
+      "file": "internal/buildcache/buildcache.go",
+      "line": 262
+    }
+  ],
+  "construction_callers": [
+    "bridgeRepository",
+    "bridgeProductInputs",
+    "bridgeProduct",
+    "buildBridgeProduct"
+  ],
+  "closures": [
+    "Key.field",
+    "hashPath.WalkDir visitor",
+    "repositoryRoot.once callback"
+  ],
+  "evidence": "Static call graph in products_test.go and buildcache.go; clean bounded baseline miss/hit records prove both build and retrieval paths. No mutation of test recipes, fixtures, overlays or digest assertions."
+}

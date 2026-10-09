@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -85,7 +85,7 @@
+ 		return product, record(inputs.Name, key, "hit", started), nil
+ 	}
+ 	// One builder per key across every process on the machine: the rest wait, then find it built.
+-	lock, err := os.OpenFile(product+".lock", os.O_CREATE|os.O_RDWR, 0o644)
++	lock, err := os.OpenFile(product+".lock", os.O_RDWR, 0o644)
+ 	if err != nil {
+ 		return "", "", err
+ 	}

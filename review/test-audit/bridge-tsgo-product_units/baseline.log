@@ -1,0 +1,692 @@
+{"Time":"2026-10-09T09:22:57.975640262Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T09:22:57.982980124Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestTSGoRequiresLink"}
+{"Time":"2026-10-09T09:22:57.983078669Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestTSGoRequiresLink","Output":"=== RUN   TestTSGoRequiresLink\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.983104898Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestTSGoRequiresLink","Output":"=== PAUSE TestTSGoRequiresLink\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.983107081Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestTSGoRequiresLink"}
+{"Time":"2026-10-09T09:22:57.983113231Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece"}
+{"Time":"2026-10-09T09:22:57.983115574Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"=== RUN   TestBridgeUnitsCoverEveryPiece\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991313781Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"    coverage_test.go:112: coverage: 16 active pieces, 162 query positions, 5 query analyses; each piece has one owner for 1..40 shards\n"}
+{"Time":"2026-10-09T09:22:57.991358097Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"--- PASS: TestBridgeUnitsCoverEveryPiece (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991366329Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Elapsed":0.01}
+{"Time":"2026-10-09T09:22:57.99138739Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified"}
+{"Time":"2026-10-09T09:22:57.991390725Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"=== RUN   TestBridgeProductCacheIsVerified\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991394651Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"    coverage_test.go:173: same hash built once; corrupt bytes and extra product refused\n"}
+{"Time":"2026-10-09T09:22:57.991399258Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"--- PASS: TestBridgeProductCacheIsVerified (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991402382Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Elapsed":0}
+{"Time":"2026-10-09T09:22:57.991405176Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductUnitsCoverEveryProduct"}
+{"Time":"2026-10-09T09:22:57.99140743Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductUnitsCoverEveryProduct","Output":"=== RUN   TestBridgeProductUnitsCoverEveryProduct\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991410704Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductUnitsCoverEveryProduct","Output":"=== PAUSE TestBridgeProductUnitsCoverEveryProduct\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991413268Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductUnitsCoverEveryProduct"}
+{"Time":"2026-10-09T09:22:57.991416092Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoArchive"}
+{"Time":"2026-10-09T09:22:57.991418877Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoArchive","Output":"=== RUN   TestBridgeProductInput_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991428561Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoArchive","Output":"=== PAUSE TestBridgeProductInput_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991431335Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoArchive"}
+{"Time":"2026-10-09T09:22:57.991433749Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T09:22:57.991435581Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoSanitizedArchive","Output":"=== RUN   TestBridgeProductInput_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991437845Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoSanitizedArchive","Output":"=== PAUSE TestBridgeProductInput_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991439527Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T09:22:57.99144155Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthArchive"}
+{"Time":"2026-10-09T09:22:57.991443032Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthArchive","Output":"=== RUN   TestBridgeProductInput_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991445356Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthArchive","Output":"=== PAUSE TestBridgeProductInput_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991447018Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthArchive"}
+{"Time":"2026-10-09T09:22:57.991450143Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleArchive"}
+{"Time":"2026-10-09T09:22:57.991451665Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleArchive","Output":"=== RUN   TestBridgeProductInput_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991453638Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleArchive","Output":"=== PAUSE TestBridgeProductInput_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.99145534Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleArchive"}
+{"Time":"2026-10-09T09:22:57.991457103Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongArchive"}
+{"Time":"2026-10-09T09:22:57.991458675Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongArchive","Output":"=== RUN   TestBridgeProductInput_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991460618Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongArchive","Output":"=== PAUSE TestBridgeProductInput_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991462171Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongArchive"}
+{"Time":"2026-10-09T09:22:57.991463833Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakArchive"}
+{"Time":"2026-10-09T09:22:57.991465325Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakArchive","Output":"=== RUN   TestBridgeProductInput_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991467388Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakArchive","Output":"=== PAUSE TestBridgeProductInput_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991470222Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakArchive"}
+{"Time":"2026-10-09T09:22:57.991472135Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Stage0"}
+{"Time":"2026-10-09T09:22:57.991473477Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Stage0","Output":"=== RUN   TestBridgeProductInput_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.99147548Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Stage0","Output":"=== PAUSE TestBridgeProductInput_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991478635Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Stage0"}
+{"Time":"2026-10-09T09:22:57.991480167Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Oracle"}
+{"Time":"2026-10-09T09:22:57.991481669Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Oracle","Output":"=== RUN   TestBridgeProductInput_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991484504Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Oracle","Output":"=== PAUSE TestBridgeProductInput_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991486026Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Oracle"}
+{"Time":"2026-10-09T09:22:57.991487859Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_ApiDriver"}
+{"Time":"2026-10-09T09:22:57.991489371Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_ApiDriver","Output":"=== RUN   TestBridgeProductInput_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991491444Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_ApiDriver","Output":"=== PAUSE TestBridgeProductInput_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991493106Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_ApiDriver"}
+{"Time":"2026-10-09T09:22:57.991494759Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver"}
+{"Time":"2026-10-09T09:22:57.991496341Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"=== RUN   TestBridgeProductInput_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991498434Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"=== PAUSE TestBridgeProductInput_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991500137Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver"}
+{"Time":"2026-10-09T09:22:57.991501929Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleDriver"}
+{"Time":"2026-10-09T09:22:57.991503482Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleDriver","Output":"=== RUN   TestBridgeProductInput_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991505364Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleDriver","Output":"=== PAUSE TestBridgeProductInput_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991506987Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_StaleDriver"}
+{"Time":"2026-10-09T09:22:57.991509891Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver"}
+{"Time":"2026-10-09T09:22:57.991511443Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Output":"=== RUN   TestBridgeProductInput_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991513557Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Output":"=== PAUSE TestBridgeProductInput_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991515089Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver"}
+{"Time":"2026-10-09T09:22:57.991516721Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_SanitizedNative"}
+{"Time":"2026-10-09T09:22:57.991518223Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_SanitizedNative","Output":"=== RUN   TestBridgeProductInput_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991523191Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_SanitizedNative","Output":"=== PAUSE TestBridgeProductInput_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991524893Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_SanitizedNative"}
+{"Time":"2026-10-09T09:22:57.991547276Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Native"}
+{"Time":"2026-10-09T09:22:57.991549089Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Native","Output":"=== RUN   TestBridgeProductInput_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.99159018Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Native","Output":"=== PAUSE TestBridgeProductInput_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991595818Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_Native"}
+{"Time":"2026-10-09T09:22:57.991626484Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongNative"}
+{"Time":"2026-10-09T09:22:57.991629598Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongNative","Output":"=== RUN   TestBridgeProductInput_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991652793Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongNative","Output":"=== PAUSE TestBridgeProductInput_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991655857Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_WrongNative"}
+{"Time":"2026-10-09T09:22:57.991690298Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_HealthyRegion"}
+{"Time":"2026-10-09T09:22:57.991693623Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_HealthyRegion","Output":"=== RUN   TestBridgeProductInput_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991715025Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_HealthyRegion","Output":"=== PAUSE TestBridgeProductInput_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991717929Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_HealthyRegion"}
+{"Time":"2026-10-09T09:22:57.991744068Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionStage0"}
+{"Time":"2026-10-09T09:22:57.991750016Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionStage0","Output":"=== RUN   TestBridgeProductInput_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991776876Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionStage0","Output":"=== PAUSE TestBridgeProductInput_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991780161Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionStage0"}
+{"Time":"2026-10-09T09:22:57.9918063Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionNative"}
+{"Time":"2026-10-09T09:22:57.991809354Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionNative","Output":"=== RUN   TestBridgeProductInput_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991842313Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionNative","Output":"=== PAUSE TestBridgeProductInput_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991845668Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_RegionNative"}
+{"Time":"2026-10-09T09:22:57.991880269Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LinkageTest"}
+{"Time":"2026-10-09T09:22:57.991883354Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LinkageTest","Output":"=== RUN   TestBridgeProductInput_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.99190808Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LinkageTest","Output":"=== PAUSE TestBridgeProductInput_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991910994Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LinkageTest"}
+{"Time":"2026-10-09T09:22:57.991937293Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T09:22:57.991941339Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== RUN   TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991973096Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== PAUSE TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.991976261Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T09:22:57.992001869Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T09:22:57.992004783Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== RUN   TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992025784Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== PAUSE TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992028578Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T09:22:57.992060486Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T09:22:57.99206364Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== RUN   TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992084571Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== PAUSE TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992090159Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T09:22:57.992115928Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T09:22:57.992118852Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== RUN   TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992140183Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== PAUSE TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992143118Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T09:22:57.992167444Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T09:22:57.992170278Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== RUN   TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992190538Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== PAUSE TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992193412Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T09:22:57.992224849Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T09:22:57.992228494Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== RUN   TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992279399Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== PAUSE TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992284867Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T09:22:57.992319499Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T09:22:57.992322954Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== RUN   TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992358657Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== PAUSE TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992361541Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T09:22:57.99239477Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T09:22:57.992398706Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== RUN   TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992420758Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== PAUSE TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992423703Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T09:22:57.992449Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T09:22:57.992451864Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== RUN   TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992477202Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== PAUSE TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992480617Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T09:22:57.992505954Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T09:22:57.99250997Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== RUN   TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992532484Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== PAUSE TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992535438Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T09:22:57.992566003Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T09:22:57.992568988Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== RUN   TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992590159Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== PAUSE TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992592973Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T09:22:57.992655145Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T09:22:57.992658981Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== RUN   TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992691038Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== PAUSE TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992694383Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T09:22:57.992730467Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T09:22:57.992734342Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== RUN   TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992762614Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== PAUSE TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992765809Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T09:22:57.992794942Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T09:22:57.992797946Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== RUN   TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992819038Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== PAUSE TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992821862Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T09:22:57.992846218Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T09:22:57.992852157Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== RUN   TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992890543Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== PAUSE TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992893938Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T09:22:57.992923212Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T09:22:57.992926436Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== RUN   TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992947548Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== PAUSE TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.992950402Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T09:22:57.992986686Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T09:22:57.99298972Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== RUN   TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.99300977Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== PAUSE TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.993012634Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T09:22:57.993036549Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T09:22:57.993039514Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== RUN   TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.993064971Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== PAUSE TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.993067946Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T09:22:57.993102938Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T09:22:57.993106122Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== RUN   TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.993130769Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== PAUSE TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:22:57.993133703Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T09:22:57.993164779Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI"}
+{"Time":"2026-10-09T09:22:57.993167533Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"=== RUN   TestBridgeABI\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:24:28.074957716Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"panic: test timed out after 1m30s\n"}
+{"Time":"2026-10-09T09:24:28.075013468Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\trunning tests:\n"}
+{"Time":"2026-10-09T09:24:28.075025666Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t\tTestBridgeABI (1m30s)\n"}
+{"Time":"2026-10-09T09:24:28.075027699Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075030413Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 87 [running]:\n"}
+{"Time":"2026-10-09T09:24:28.075032536Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*M).startAlarm.func1()\n"}
+{"Time":"2026-10-09T09:24:28.075034479Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a\n"}
+{"Time":"2026-10-09T09:24:28.075039947Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by time.goFunc\n"}
+{"Time":"2026-10-09T09:24:28.07504194Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d\n"}
+{"Time":"2026-10-09T09:24:28.075044434Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075046187Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 1 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.07504822Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Run(0x3c362d6a4b48, {0xc57de7?, 0x3c362d645aa0?}, 0x1be85a8)\n"}
+{"Time":"2026-10-09T09:24:28.075054268Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2266 +0x4f2\n"}
+{"Time":"2026-10-09T09:24:28.075056141Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.runTests.func1(0x3c362d6a4b48)\n"}
+{"Time":"2026-10-09T09:24:28.075058094Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2742 +0x37\n"}
+{"Time":"2026-10-09T09:24:28.075060157Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d6a4b48, 0x3c362d645bc8)\n"}
+{"Time":"2026-10-09T09:24:28.075067298Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075071474Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.runTests({0xc6c570, 0x1c}, {0xc7d1c7, 0x28}, 0x3c362d441740, {0x1c7b188, 0x4e, 0x4e}, {0xc2aa4a92fa955963, 0x14f4ace312, ...})\n"}
+{"Time":"2026-10-09T09:24:28.075074569Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510\n"}
+{"Time":"2026-10-09T09:24:28.075076411Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*M).Run(0x3c362d72d220)\n"}
+{"Time":"2026-10-09T09:24:28.075078174Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af\n"}
+{"Time":"2026-10-09T09:24:28.075079766Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"main.main()\n"}
+{"Time":"2026-10-09T09:24:28.07508213Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t_testmain.go:202 +0x9b\n"}
+{"Time":"2026-10-09T09:24:28.075085795Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075087568Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 21 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.07508942Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d6a4d88)\n"}
+{"Time":"2026-10-09T09:24:28.075091233Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075093056Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestTSGoRequiresLink(0x3c362d6a4d88)\n"}
+{"Time":"2026-10-09T09:24:28.075095219Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/bridge_test.go:23 +0x1f\n"}
+{"Time":"2026-10-09T09:24:28.075097022Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d6a4d88, 0x1be8810)\n"}
+{"Time":"2026-10-09T09:24:28.075098935Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075100687Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.07510254Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075104212Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075105895Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 35 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075107657Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47c6c8)\n"}
+{"Time":"2026-10-09T09:24:28.0751095Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075111663Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductUnitsCoverEveryProduct(0x3c362d47c6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075114307Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:69 +0x27\n"}
+{"Time":"2026-10-09T09:24:28.07511613Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47c6c8, 0x1be8698)\n"}
+{"Time":"2026-10-09T09:24:28.075117983Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075119876Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075121768Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075124763Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075126605Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 36 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075128308Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47c908)\n"}
+{"Time":"2026-10-09T09:24:28.075130111Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075132043Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_TsgoArchive(0x3c362d47c908)\n"}
+{"Time":"2026-10-09T09:24:28.075133966Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:110 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075135749Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47c908, 0x1be8678)\n"}
+{"Time":"2026-10-09T09:24:28.075137532Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075139244Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075141037Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075142579Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075144222Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 37 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075145944Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47cb48)\n"}
+{"Time":"2026-10-09T09:24:28.075147667Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075149619Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_TsgoSanitizedArchive(0x3c362d47cb48)\n"}
+{"Time":"2026-10-09T09:24:28.075151542Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:115 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075153265Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47cb48, 0x1be8680)\n"}
+{"Time":"2026-10-09T09:24:28.075155078Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.07515678Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075158873Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075160395Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.0751633Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 38 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075165914Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47cd88)\n"}
+{"Time":"2026-10-09T09:24:28.075167756Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.07517001Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_LengthArchive(0x3c362d47cd88)\n"}
+{"Time":"2026-10-09T09:24:28.075171922Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:120 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075173655Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47cd88, 0x1be8620)\n"}
+{"Time":"2026-10-09T09:24:28.075175488Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.07517733Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075179123Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075180665Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075182448Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 39 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075184121Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47cfc8)\n"}
+{"Time":"2026-10-09T09:24:28.075185843Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075187826Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_StaleArchive(0x3c362d47cfc8)\n"}
+{"Time":"2026-10-09T09:24:28.075189739Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:125 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075191471Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47cfc8, 0x1be8668)\n"}
+{"Time":"2026-10-09T09:24:28.075193314Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075195067Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075196899Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075198322Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075202087Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 40 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.07520392Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47d208)\n"}
+{"Time":"2026-10-09T09:24:28.075205712Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075207645Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_WrongArchive(0x3c362d47d208)\n"}
+{"Time":"2026-10-09T09:24:28.075209548Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:130 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075211251Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47d208, 0x1be8688)\n"}
+{"Time":"2026-10-09T09:24:28.075218031Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075220034Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075221856Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075223409Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075225251Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 41 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075226964Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47d448)\n"}
+{"Time":"2026-10-09T09:24:28.075228666Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.07523082Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_LeakArchive(0x3c362d47d448)\n"}
+{"Time":"2026-10-09T09:24:28.07527199Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:135 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075274154Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47d448, 0x1be8610)\n"}
+{"Time":"2026-10-09T09:24:28.075275976Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075277699Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075279522Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075281054Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075282826Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 42 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075286141Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47d688)\n"}
+{"Time":"2026-10-09T09:24:28.075287994Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075289907Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_Stage0(0x3c362d47d688)\n"}
+{"Time":"2026-10-09T09:24:28.075292541Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:140 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075294303Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47d688, 0x1be8660)\n"}
+{"Time":"2026-10-09T09:24:28.075296066Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.0752985Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075300362Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075301945Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075304258Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 43 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075312751Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47d8c8)\n"}
+{"Time":"2026-10-09T09:24:28.075314804Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075316787Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_Oracle(0x3c362d47d8c8)\n"}
+{"Time":"2026-10-09T09:24:28.0753188Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:145 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075320622Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47d8c8, 0x1be8640)\n"}
+{"Time":"2026-10-09T09:24:28.075322495Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075324208Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075326151Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075327823Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075329516Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 44 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.07533256Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47db08)\n"}
+{"Time":"2026-10-09T09:24:28.075334723Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075336676Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_ApiDriver(0x3c362d47db08)\n"}
+{"Time":"2026-10-09T09:24:28.075338649Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:150 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075340281Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47db08, 0x1be8600)\n"}
+{"Time":"2026-10-09T09:24:28.075342214Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075344037Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.0753459Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075347422Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075349155Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 45 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075350987Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d47dd48)\n"}
+{"Time":"2026-10-09T09:24:28.07535278Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075354733Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_LengthDriver(0x3c362d47dd48)\n"}
+{"Time":"2026-10-09T09:24:28.075356646Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:155 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075358438Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d47dd48, 0x1be8628)\n"}
+{"Time":"2026-10-09T09:24:28.075360311Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075362034Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075363926Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075365499Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075367291Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 46 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075369024Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ac008)\n"}
+{"Time":"2026-10-09T09:24:28.075374202Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075376205Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_StaleDriver(0x3c362d5ac008)\n"}
+{"Time":"2026-10-09T09:24:28.075378067Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:160 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.07537983Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ac008, 0x1be8670)\n"}
+{"Time":"2026-10-09T09:24:28.075381633Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075383295Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075385378Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.07538694Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075388483Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 47 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075390275Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ac248)\n"}
+{"Time":"2026-10-09T09:24:28.075392068Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075394241Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_LeakDriver(0x3c362d5ac248)\n"}
+{"Time":"2026-10-09T09:24:28.075396224Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:165 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075398027Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ac248, 0x1be8618)\n"}
+{"Time":"2026-10-09T09:24:28.07539983Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075401562Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075403295Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075405838Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075407541Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 48 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075409213Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ac488)\n"}
+{"Time":"2026-10-09T09:24:28.075412578Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075414581Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_SanitizedNative(0x3c362d5ac488)\n"}
+{"Time":"2026-10-09T09:24:28.075416554Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:170 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075418637Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ac488, 0x1be8658)\n"}
+{"Time":"2026-10-09T09:24:28.07542058Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075422333Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075424416Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075426219Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075428161Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 49 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075429884Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ac6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075431717Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075433619Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_Native(0x3c362d5ac6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075435642Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:175 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075437365Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ac6c8, 0x1be8638)\n"}
+{"Time":"2026-10-09T09:24:28.075439168Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.07544095Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075442793Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075444285Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075445838Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 50 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.07544753Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ac908)\n"}
+{"Time":"2026-10-09T09:24:28.075449243Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075452477Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_WrongNative(0x3c362d5ac908)\n"}
+{"Time":"2026-10-09T09:24:28.075454751Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:180 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075456583Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ac908, 0x1be8690)\n"}
+{"Time":"2026-10-09T09:24:28.075458366Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075460059Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075461831Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075463353Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075464996Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 51 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075466588Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5acb48)\n"}
+{"Time":"2026-10-09T09:24:28.075468391Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075470184Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_HealthyRegion(0x3c362d5acb48)\n"}
+{"Time":"2026-10-09T09:24:28.075472066Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:185 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075473669Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5acb48, 0x1be8608)\n"}
+{"Time":"2026-10-09T09:24:28.075475451Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075477745Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075479487Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.07548104Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075482722Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 52 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075484385Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ad208)\n"}
+{"Time":"2026-10-09T09:24:28.075486157Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075489502Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_RegionStage0(0x3c362d5ad208)\n"}
+{"Time":"2026-10-09T09:24:28.075491465Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:190 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075493338Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ad208, 0x1be8650)\n"}
+{"Time":"2026-10-09T09:24:28.07549514Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075496983Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075499096Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075500779Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075502752Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 53 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075504544Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d5ad448)\n"}
+{"Time":"2026-10-09T09:24:28.075506367Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.07550847Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_RegionNative(0x3c362d5ad448)\n"}
+{"Time":"2026-10-09T09:24:28.075510353Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:195 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075512176Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d5ad448, 0x1be8648)\n"}
+{"Time":"2026-10-09T09:24:28.075514749Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075516502Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075518475Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075520017Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.07552175Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 54 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075523532Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ac008)\n"}
+{"Time":"2026-10-09T09:24:28.075525465Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.07552874Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeProductInput_LinkageTest(0x3c362d7ac008)\n"}
+{"Time":"2026-10-09T09:24:28.075530763Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_inputs_test.go:200 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075532436Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ac008, 0x1be8630)\n"}
+{"Time":"2026-10-09T09:24:28.075534298Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075535991Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075538064Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075539636Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075541289Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 55 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075543362Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ac248)\n"}
+{"Time":"2026-10-09T09:24:28.075545275Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075547137Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_TsgoArchive(0x3c362d7ac248)\n"}
+{"Time":"2026-10-09T09:24:28.07554911Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:47 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075550843Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ac248, 0x1be87f0)\n"}
+{"Time":"2026-10-09T09:24:28.075552766Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075554448Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075556361Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075557843Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075559405Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 56 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075561168Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ac488)\n"}
+{"Time":"2026-10-09T09:24:28.075562851Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075565044Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_TsgoSanitizedArchive(0x3c362d7ac488)\n"}
+{"Time":"2026-10-09T09:24:28.075568549Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:52 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075578704Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ac488, 0x1be87f8)\n"}
+{"Time":"2026-10-09T09:24:28.075580667Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075582369Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075584162Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075585845Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075587477Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 57 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.07558918Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ac6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075591243Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075633455Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_LengthArchive(0x3c362d7ac6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075635508Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:57 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075637431Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ac6c8, 0x1be8798)\n"}
+{"Time":"2026-10-09T09:24:28.075639193Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075641457Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.07564339Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075644962Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075646624Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 58 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075648597Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ac908)\n"}
+{"Time":"2026-10-09T09:24:28.0756505Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075652363Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_StaleArchive(0x3c362d7ac908)\n"}
+{"Time":"2026-10-09T09:24:28.075655708Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:62 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075658542Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ac908, 0x1be87e0)\n"}
+{"Time":"2026-10-09T09:24:28.075660445Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075662127Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.07566415Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075665683Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075667315Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 59 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075669208Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7acb48)\n"}
+{"Time":"2026-10-09T09:24:28.075671091Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075673094Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_WrongArchive(0x3c362d7acb48)\n"}
+{"Time":"2026-10-09T09:24:28.075675006Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:67 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075676779Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7acb48, 0x1be8800)\n"}
+{"Time":"2026-10-09T09:24:28.075678612Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075680465Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075682307Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.07568396Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075685873Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 60 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075687565Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7acd88)\n"}
+{"Time":"2026-10-09T09:24:28.075689508Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075691411Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_LeakArchive(0x3c362d7acd88)\n"}
+{"Time":"2026-10-09T09:24:28.075693644Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:72 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075696729Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7acd88, 0x1be8788)\n"}
+{"Time":"2026-10-09T09:24:28.075698531Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075700935Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075702717Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.07570423Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075705922Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 61 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075707535Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7acfc8)\n"}
+{"Time":"2026-10-09T09:24:28.075709287Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.07571133Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_Stage0(0x3c362d7acfc8)\n"}
+{"Time":"2026-10-09T09:24:28.075713253Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:77 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075715066Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7acfc8, 0x1be87d8)\n"}
+{"Time":"2026-10-09T09:24:28.075716828Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075718671Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075720484Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075722096Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075723789Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 62 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075725391Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ad208)\n"}
+{"Time":"2026-10-09T09:24:28.075727294Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075729257Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_Oracle(0x3c362d7ad208)\n"}
+{"Time":"2026-10-09T09:24:28.07573129Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:82 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075734534Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ad208, 0x1be87b8)\n"}
+{"Time":"2026-10-09T09:24:28.075736828Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075738661Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075740633Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075742176Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075743918Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 63 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075745631Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ad448)\n"}
+{"Time":"2026-10-09T09:24:28.075747434Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075749346Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_ApiDriver(0x3c362d7ad448)\n"}
+{"Time":"2026-10-09T09:24:28.075751249Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:87 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075752952Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ad448, 0x1be8778)\n"}
+{"Time":"2026-10-09T09:24:28.075754754Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075756477Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.07575826Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075759802Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075761474Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 64 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075763838Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ad688)\n"}
+{"Time":"2026-10-09T09:24:28.075765801Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075767724Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_LengthDriver(0x3c362d7ad688)\n"}
+{"Time":"2026-10-09T09:24:28.075769596Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:92 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075771339Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ad688, 0x1be87a0)\n"}
+{"Time":"2026-10-09T09:24:28.075775004Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075776787Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.07577861Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075780112Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075781794Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 65 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075783637Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ad8c8)\n"}
+{"Time":"2026-10-09T09:24:28.07578555Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075787573Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_StaleDriver(0x3c362d7ad8c8)\n"}
+{"Time":"2026-10-09T09:24:28.075789756Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:97 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075791509Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ad8c8, 0x1be87e8)\n"}
+{"Time":"2026-10-09T09:24:28.075793331Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075795024Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075796827Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075798389Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075800152Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 66 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075801854Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7adb08)\n"}
+{"Time":"2026-10-09T09:24:28.075803647Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075805529Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_LeakDriver(0x3c362d7adb08)\n"}
+{"Time":"2026-10-09T09:24:28.075807713Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:102 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075809485Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7adb08, 0x1be8790)\n"}
+{"Time":"2026-10-09T09:24:28.07581284Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075814603Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075816375Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075817848Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.07581958Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 67 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075821183Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7add48)\n"}
+{"Time":"2026-10-09T09:24:28.075822955Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075824848Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_SanitizedNative(0x3c362d7add48)\n"}
+{"Time":"2026-10-09T09:24:28.075826651Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:107 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075828934Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7add48, 0x1be87d0)\n"}
+{"Time":"2026-10-09T09:24:28.075830677Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075832389Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075834192Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075835764Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075837387Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 68 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075839109Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ba008)\n"}
+{"Time":"2026-10-09T09:24:28.075840882Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075842765Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_Native(0x3c362d7ba008)\n"}
+{"Time":"2026-10-09T09:24:28.075844637Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:112 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.0758464Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ba008, 0x1be87b0)\n"}
+{"Time":"2026-10-09T09:24:28.075848213Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075851047Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075852759Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075854312Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075855974Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 69 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075857586Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ba248)\n"}
+{"Time":"2026-10-09T09:24:28.075859569Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075862173Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_WrongNative(0x3c362d7ba248)\n"}
+{"Time":"2026-10-09T09:24:28.075864336Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:117 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075866149Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ba248, 0x1be8808)\n"}
+{"Time":"2026-10-09T09:24:28.075868042Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075870496Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075872408Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075874081Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075875883Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 70 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075877856Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ba488)\n"}
+{"Time":"2026-10-09T09:24:28.075879829Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075881752Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_HealthyRegion(0x3c362d7ba488)\n"}
+{"Time":"2026-10-09T09:24:28.075883655Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:122 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075885388Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ba488, 0x1be8780)\n"}
+{"Time":"2026-10-09T09:24:28.07588729Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075890245Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075892218Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.0758938Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075895462Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 71 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075897275Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ba6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075899168Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075901071Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_RegionStage0(0x3c362d7ba6c8)\n"}
+{"Time":"2026-10-09T09:24:28.075902934Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:127 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075904636Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ba6c8, 0x1be87c8)\n"}
+{"Time":"2026-10-09T09:24:28.075906449Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075908171Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075910004Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075911586Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075913239Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 72 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075914951Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7ba908)\n"}
+{"Time":"2026-10-09T09:24:28.075916744Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075918667Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_RegionNative(0x3c362d7ba908)\n"}
+{"Time":"2026-10-09T09:24:28.075921281Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:132 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075922983Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7ba908, 0x1be87c0)\n"}
+{"Time":"2026-10-09T09:24:28.075924666Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075926568Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075929893Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075931486Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075933128Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 73 [chan receive, 1 minutes]:\n"}
+{"Time":"2026-10-09T09:24:28.075934841Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.(*T).Parallel(0x3c362d7bab48)\n"}
+{"Time":"2026-10-09T09:24:28.075936603Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230\n"}
+{"Time":"2026-10-09T09:24:28.075938526Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestProduct_LinkageTest(0x3c362d7bab48)\n"}
+{"Time":"2026-10-09T09:24:28.075940469Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/product_units_test.go:137 +0x18\n"}
+{"Time":"2026-10-09T09:24:28.075942031Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7bab48, 0x1be87a8)\n"}
+{"Time":"2026-10-09T09:24:28.075943834Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.075945567Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.075947359Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.075948741Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.075950544Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 74 [syscall]:\n"}
+{"Time":"2026-10-09T09:24:28.075952557Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"syscall.Syscall6(0xf7, 0x3, 0xc, 0x3c362d2f7868, 0x4, 0x3c362d76e090, 0x0)\n"}
+{"Time":"2026-10-09T09:24:28.07595461Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39\n"}
+{"Time":"2026-10-09T09:24:28.075956723Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"internal/syscall/unix.Waitid(0x3c362d2f7896?, 0x3c362d2f79c0?, 0x5399eb?, 0x18?, 0x1b81e40?)\n"}
+{"Time":"2026-10-09T09:24:28.075958736Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39\n"}
+{"Time":"2026-10-09T09:24:28.075960839Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*Process).pidfdWait.func1(...)\n"}
+{"Time":"2026-10-09T09:24:28.075962662Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/pidfd_linux.go:108\n"}
+{"Time":"2026-10-09T09:24:28.075964685Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.ignoringEINTR(...)\n"}
+{"Time":"2026-10-09T09:24:28.07596812Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/file_posix.go:263\n"}
+{"Time":"2026-10-09T09:24:28.075970333Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*Process).pidfdWait(0x3c362d638fc0)\n"}
+{"Time":"2026-10-09T09:24:28.075972226Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf\n"}
+{"Time":"2026-10-09T09:24:28.075974039Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*Process).wait(0x7fc0ae7c1c08?)\n"}
+{"Time":"2026-10-09T09:24:28.075976252Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a\n"}
+{"Time":"2026-10-09T09:24:28.075977924Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*Process).Wait(...)\n"}
+{"Time":"2026-10-09T09:24:28.075979777Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec.go:347\n"}
+{"Time":"2026-10-09T09:24:28.07598145Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os/exec.(*Cmd).Wait(0x3c362d74c1a0)\n"}
+{"Time":"2026-10-09T09:24:28.075983322Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45\n"}
+{"Time":"2026-10-09T09:24:28.075984995Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os/exec.(*Cmd).Run(0x3c362d74c1a0)\n"}
+{"Time":"2026-10-09T09:24:28.075986828Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d\n"}
+{"Time":"2026-10-09T09:24:28.07598845Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os/exec.(*Cmd).CombinedOutput(0x3c362d74c1a0)\n"}
+{"Time":"2026-10-09T09:24:28.075990293Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f\n"}
+{"Time":"2026-10-09T09:24:28.075993257Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.buildBridgeProduct.func1(0x1bde1b0?)\n"}
+{"Time":"2026-10-09T09:24:28.07599521Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:166 +0x6c\n"}
+{"Time":"2026-10-09T09:24:28.075997453Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.buildBridgeProduct({0x1be7e90, 0x3c362d7bad88}, {0x3c362d2ee4e0, 0x11}, {0x3c362d37e780, 0x41}, {0xc56298, 0xb})\n"}
+{"Time":"2026-10-09T09:24:28.075999857Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:218 +0x1bde\n"}
+{"Time":"2026-10-09T09:24:28.076002Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.bridgeProduct.func1({0x3c362d37e780, 0x41})\n"}
+{"Time":"2026-10-09T09:24:28.076003923Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:138 +0x66\n"}
+{"Time":"2026-10-09T09:24:28.076006547Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/internal/buildcache.get({{0x3c362d6ded68, 0x17}, {0x3c362d75e008, 0x45f, 0x5ff}, {0x3c362d6ce008, 0xa0, 0xff}, {0x3c362d2bc0c0, 0x8, ...}}, ...)\n"}
+{"Time":"2026-10-09T09:24:28.076011494Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/internal/buildcache/buildcache.go:104 +0x4cb\n"}
+{"Time":"2026-10-09T09:24:28.076014709Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/internal/buildcache.Product({0x1be7e90, 0x3c362d7bad88}, {{0x3c362d6ded68, 0x17}, {0x3c362d75e008, 0x45f, 0x5ff}, {0x3c362d6ce008, 0xa0, 0xff}, ...}, ...)\n"}
+{"Time":"2026-10-09T09:24:28.076016752Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/internal/buildcache/buildcache.go:43 +0x8d\n"}
+{"Time":"2026-10-09T09:24:28.076018775Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.bridgeProduct({0x1be7e90, 0x3c362d7bad88}, {0x3c362d2ee4e0, 0x11}, {0xc56298, 0xb})\n"}
+{"Time":"2026-10-09T09:24:28.076020748Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:137 +0x186\n"}
+{"Time":"2026-10-09T09:24:28.076024303Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.buildBridgeProduct({0x1be7e90, 0x3c362d7bad88}, {0x3c362d2ee4e0, 0x11}, {0x3c362d523950, 0x41}, {0xc4c987, 0x3})\n"}
+{"Time":"2026-10-09T09:24:28.076026326Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:243 +0x11df\n"}
+{"Time":"2026-10-09T09:24:28.076028189Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.bridgeProduct.func1({0x3c362d523950, 0x41})\n"}
+{"Time":"2026-10-09T09:24:28.076030212Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:138 +0x66\n"}
+{"Time":"2026-10-09T09:24:28.076032565Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/internal/buildcache.get({{0x3c362d2d39f0, 0xf}, {0x3c362d558008, 0x45f, 0x5ff}, {0x3c362d6a9008, 0xa0, 0xff}, {0x3c362d2bc480, 0x8, ...}}, ...)\n"}
+{"Time":"2026-10-09T09:24:28.076034468Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/internal/buildcache/buildcache.go:104 +0x4cb\n"}
+{"Time":"2026-10-09T09:24:28.076036821Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/internal/buildcache.Product({0x1be7e90, 0x3c362d7bad88}, {{0x3c362d2d39f0, 0xf}, {0x3c362d558008, 0x45f, 0x5ff}, {0x3c362d6a9008, 0xa0, 0xff}, ...}, ...)\n"}
+{"Time":"2026-10-09T09:24:28.076038945Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/internal/buildcache/buildcache.go:43 +0x8d\n"}
+{"Time":"2026-10-09T09:24:28.076041098Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.bridgeProduct({0x1be7e90, 0x3c362d7bad88}, {0x3c362d2ee4e0, 0x11}, {0xc4c987, 0x3})\n"}
+{"Time":"2026-10-09T09:24:28.076043151Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/products_test.go:137 +0x186\n"}
+{"Time":"2026-10-09T09:24:28.076045234Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.(*bridgeRun).product(0x3c362d6fe180, {0xc4c987, 0x3})\n"}
+{"Time":"2026-10-09T09:24:28.076050081Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/units_test.go:98 +0x50\n"}
+{"Time":"2026-10-09T09:24:28.076052244Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.runBridgeCase(0x3c362d7bad88, 0x0)\n"}
+{"Time":"2026-10-09T09:24:28.076054207Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/units_test.go:71 +0x2b0\n"}
+{"Time":"2026-10-09T09:24:28.07605615Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"github.com/system-inc/adamic/bridge/tsgo_test.TestBridgeABI(0x3c362d7bad88?)\n"}
+{"Time":"2026-10-09T09:24:28.076058544Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic/bridge/tsgo/registered_units_test.go:85 +0x15\n"}
+{"Time":"2026-10-09T09:24:28.076060396Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"testing.tRunner(0x3c362d7bad88, 0x1be85a8)\n"}
+{"Time":"2026-10-09T09:24:28.076062349Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:24:28.076064122Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:24:28.076066235Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:24:28.076067978Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.07606974Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 86 [select]:\n"}
+{"Time":"2026-10-09T09:24:28.076071743Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os/exec.(*Cmd).watchCtx(0x3c362d74c1a0, 0x3c362d521030)\n"}
+{"Time":"2026-10-09T09:24:28.076073666Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:808 +0xb0\n"}
+{"Time":"2026-10-09T09:24:28.076075559Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by os/exec.(*Cmd).Start in goroutine 74\n"}
+{"Time":"2026-10-09T09:24:28.076077582Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:794 +0x8f3\n"}
+{"Time":"2026-10-09T09:24:28.076079384Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\n"}
+{"Time":"2026-10-09T09:24:28.076081087Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"goroutine 85 [IO wait]:\n"}
+{"Time":"2026-10-09T09:24:28.07608315Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"internal/poll.runtime_pollWait(0x7fc0ace0a000, 0x72)\n"}
+{"Time":"2026-10-09T09:24:28.076085093Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85\n"}
+{"Time":"2026-10-09T09:24:28.076086966Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"internal/poll.(*pollDesc).wait(0x3c362d543860?, 0x3c362d512000?, 0x1)\n"}
+{"Time":"2026-10-09T09:24:28.076093816Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27\n"}
+{"Time":"2026-10-09T09:24:28.076095618Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"internal/poll.(*pollDesc).waitRead(...)\n"}
+{"Time":"2026-10-09T09:24:28.076097511Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89\n"}
+{"Time":"2026-10-09T09:24:28.076099244Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"internal/poll.(*FD).Read(0x3c362d543860, {0x3c362d512000, 0x200, 0x200})\n"}
+{"Time":"2026-10-09T09:24:28.076101137Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8\n"}
+{"Time":"2026-10-09T09:24:28.07610353Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*File).read(...)\n"}
+{"Time":"2026-10-09T09:24:28.076105273Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/file_posix.go:30\n"}
+{"Time":"2026-10-09T09:24:28.076107276Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*File).Read(0x3c362d2c02b0, {0x3c362d512000?, 0x2c0?, 0x0?})\n"}
+{"Time":"2026-10-09T09:24:28.076109209Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/file.go:144 +0x4f\n"}
+{"Time":"2026-10-09T09:24:28.076111111Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"bytes.(*Buffer).ReadFrom(0x3c362d54c090, {0x1bdb2a0, 0x3c362d2c02b0})\n"}
+{"Time":"2026-10-09T09:24:28.076113255Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98\n"}
+{"Time":"2026-10-09T09:24:28.076115187Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"io.copyBuffer({0x1bdb3e0, 0x3c362d54c090}, {0x1bdb2a0, 0x3c362d2c02b0}, {0x0, 0x0, 0x0})\n"}
+{"Time":"2026-10-09T09:24:28.07611715Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/io/io.go:415 +0x151\n"}
+{"Time":"2026-10-09T09:24:28.076118883Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"io.Copy(...)\n"}
+{"Time":"2026-10-09T09:24:28.076120736Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/io/io.go:388\n"}
+{"Time":"2026-10-09T09:24:28.076122739Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.genericWriteTo(0x3c362d2c02b0?, {0x1bdb3e0?, 0x3c362d54c090?})\n"}
+{"Time":"2026-10-09T09:24:28.076124732Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/file.go:295 +0x35\n"}
+{"Time":"2026-10-09T09:24:28.076126855Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os.(*File).WriteTo(0x3c362d2c02b0, {0x1bdb3e0, 0x3c362d54c090})\n"}
+{"Time":"2026-10-09T09:24:28.076129028Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/file.go:273 +0x9c\n"}
+{"Time":"2026-10-09T09:24:28.076131161Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"io.copyBuffer({0x1bdb3e0, 0x3c362d54c090}, {0x1bdb320, 0x3c362d2c02b0}, {0x0, 0x0, 0x0})\n"}
+{"Time":"2026-10-09T09:24:28.076134496Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/io/io.go:411 +0x9d\n"}
+{"Time":"2026-10-09T09:24:28.076136269Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"io.Copy(...)\n"}
+{"Time":"2026-10-09T09:24:28.076138332Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/io/io.go:388\n"}
+{"Time":"2026-10-09T09:24:28.076143239Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os/exec.(*Cmd).writerDescriptor.func1()\n"}
+{"Time":"2026-10-09T09:24:28.076145442Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34\n"}
+{"Time":"2026-10-09T09:24:28.076147225Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"os/exec.(*Cmd).Start.func2(0x3e8?)\n"}
+{"Time":"2026-10-09T09:24:28.076149218Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c\n"}
+{"Time":"2026-10-09T09:24:28.07615103Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"created by os/exec.(*Cmd).Start in goroutine 74\n"}
+{"Time":"2026-10-09T09:24:28.076154295Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"\t/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b\n"}
+{"Time":"2026-10-09T09:24:28.080768378Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t90.105s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:24:28.080819614Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":90.105}

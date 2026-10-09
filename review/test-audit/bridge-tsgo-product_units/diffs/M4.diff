@@ -1,0 +1,14 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -124,11 +124,6 @@
+ 	}
+ 	field("buildcache", "v1")
+ 	field("name", inputs.Name)
+-	for _, name := range inputs.Files {
+-		if err := hashPath(hash, root, name, field); err != nil {
+-			return "", err
+-		}
+-	}
+ 	for _, flag := range inputs.Flags {
+ 		field("flag", flag)
+ 	}
