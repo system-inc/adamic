@@ -476,8 +476,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
-	if value, handled, err := l.borrowedOwnCall(node); handled { return value, err }
-	if value, handled, err := l.borrowedOwnValue(node); handled { return value, err }
+	if value, handled, err := l.borrowedOwnCall(node); handled {
+		return value, err
+	}
+	if value, handled, err := l.borrowedOwnValue(node); handled {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
@@ -810,7 +814,9 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
-	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) { return l.objectStringAddition(node, left, right) }
+	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) {
+		return l.objectStringAddition(node, left, right)
+	}
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		spell := func(value ir.Expression) ir.Expression {
 			switch value.Type() {
@@ -948,7 +954,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
-		if err != nil { return nil, err }
+		if err != nil {
+			return nil, err
+		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
 			parts = append(parts, ir.StringConstant{Index: l.constant(literal)})

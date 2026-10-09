@@ -77,9 +77,9 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	if node.Parent != nil && node.Parent.Kind == ast.KindTemplateSpan {
-		proven := l.concrete(l.checker.GetTypeAtLocation(node))
-		scalar := value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber || value.Type() == ir.MaybeBoolean || value.Type() == ir.Union
-		if value.Type() == ir.String || (!scalar && proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0) { return l.spelled(node, value), nil }
+		if value.Type() == ir.String {
+			return l.spelled(node, value), nil
+		}
 	}
 	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
 		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
@@ -94,14 +94,37 @@ func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (i
 	case ir.String:
 		return l.spelled(node, value), nil
 	case ir.Union:
-		if l.writable(l.checker.GetTypeAtLocation(node)) || l.dynamicScalarProperty(node) {
+		if l.writable(l.arrayPredicateObservedType(node)) || l.dynamicScalarProperty(node) {
 			return ir.UnionToString{Value: value}, nil
 		}
 	}
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.StringConstant{Index: l.constant("undefined")}, nil
 	}
-	if value.Type() == ir.Object && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.includesNull(l.checker.GetTypeAtLocation(node)) { return l.stringObjectConversion(node, value) }
+	if value.Type() == ir.Array && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		layer := l.checker.GetTypeAtLocation(node)
+		for depth := 0; depth <= 32; depth++ {
+			elementType := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(layer))
+			if elementType == nil {
+				break
+			}
+			element, known := l.kept(elementType)
+			if !known {
+				break
+			}
+			if element == ir.Array {
+				layer = elementType
+				continue
+			}
+			if element == ir.Number || element == ir.MaybeNumber || element == ir.String || element == ir.Boolean {
+				return ir.ArrayJoin{Array: value, Separator: ir.StringConstant{Index: l.constant(",")}, Element: element, Depth: depth}, nil
+			}
+			break
+		}
+	}
+	if value.Type() == ir.Object && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return l.stringObjectConversion(node, value)
+	}
 	return nil, l.notYet(node, "String conversion of an object, array, map or function (ToPrimitive is not lowered)")
 }
 

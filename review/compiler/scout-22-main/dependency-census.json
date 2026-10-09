@@ -1,0 +1,11 @@
+{
+  "result": "pass",
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "compiler_dependency_map": {
+    "root": "/tmp/scout22-tools",
+    "path": "cloud/fast-gate/compiler-dependencies.json"
+  }
+}

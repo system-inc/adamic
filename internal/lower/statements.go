@@ -119,7 +119,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
 	if value, handled, err := l.borrowedOwnCall(expression); handled {
-		if err != nil { return nil, err }; return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err

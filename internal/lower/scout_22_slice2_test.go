@@ -14,6 +14,7 @@ import (
 // prototype mutation into Adamic's sound .a subset. Gap closure is intentional:
 // a compiler landing must replace the corresponding refusal assertion.
 func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
+	t.Parallel()
 	paths, err := filepath.Glob("../../stage3/scout/22-slice2/gaps/*.a")
 	if err != nil {
 		t.Fatal(err)
@@ -36,6 +37,13 @@ func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
 				t.Fatal(loadErr)
 			}
 			_, err = Lower(context.Background(), program)
+			if filepath.Base(path) == "compiler-cached-intrinsic.a" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				t.Log("main proves the cached intrinsic signature from provenance")
+				return
+			}
 			var refused *Refused
 			var notYet *NotYet
 			if !errors.As(err, &refused) && !errors.As(err, &notYet) {
@@ -53,5 +61,24 @@ func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
 			}
 			t.Log(err)
 		})
+	}
+}
+
+func TestScout22PrototypeRuntimeBoundary(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{`const prototype = {}; const child: {} = Object.create(prototype);`, `const value = {}; Object.getPrototypeOf(value);`} {
+		_, err := lowerSource(t, source)
+		var gap *NotYet
+		if !errors.As(err, &gap) || !strings.Contains(err.Error(), "awaits runtime/step22-prototype-links") || !strings.Contains(err.Error(), "use a declared object or class with composition") {
+			t.Fatalf("want runtime boundary with fix, got %v", err)
+		}
+	}
+}
+func TestScout22NullConversionResultStaysRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `const value = { toString: (): string | null => null }; console.log(String(value));`)
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "distinct null and undefined tags") {
+		t.Fatalf("want null-result refusal, got %v", err)
 	}
 }

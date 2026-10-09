@@ -96,7 +96,7 @@ func (l *lowering) borrowedOwnValue(node *ast.Node) (ir.Expression, bool, error)
 		outer = outer.Parent
 	}
 	if outer.Parent == nil || outer.Parent.Kind != ast.KindVariableDeclaration || l.borrowedOwnAlias(outer.Parent.Name()) == nil {
-		return nil, true, l.notYet(node, "Object.prototype.hasOwnProperty value without a const (this: object, key: string) => boolean signature")
+		return nil, false, nil
 	}
 	if err := l.borrowedOwnUses(outer.Parent); err != nil {
 		return nil, true, err
@@ -129,17 +129,17 @@ func (l *lowering) borrowedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 		return nil, true, l.notYet(node, "Object.prototype.hasOwnProperty.call with a key requiring ToPropertyKey")
 	}
 	var closure ir.Expression
-	var err error
 	if direct {
 		closure = l.borrowedOwnClosure()
 	} else {
 		if err := l.borrowedOwnUses(alias); err != nil {
 			return nil, true, err
 		}
-		closure, err = l.expression(receiver)
-		if err != nil {
-			return nil, true, err
+		local, known := l.local(receiver)
+		if !known {
+			return nil, true, l.notYet(receiver, "borrowed own-property alias without a local binding")
 		}
+		closure = ir.Read{Local: local, Of: ir.Closure, Checked: l.checked(local)}
 	}
 	arguments := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {

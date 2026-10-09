@@ -2,7 +2,6 @@ package native
 
 import (
 	"fmt"
- "strings"
 	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -14,14 +13,17 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
- case "intrinsicObjectPrototype":
- e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
- return e.own(ir.Object, "adamic_object_intrinsic_prototype()")
- case "create", "setPrototypeOf", "getPrototypeOf":
- e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
- function := map[string]string{"create":"create", "setPrototypeOf":"set", "getPrototypeOf":"get"}[call.Method]
- value := e.own(ir.Object, fmt.Sprintf("adamic_object_%s_prototype(%s)", function, strings.Join(arguments, ", ")))
- if call.Method == "setPrototypeOf" { e.checkThrown() }; return value
+	case "intrinsicObjectPrototype":
+		e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
+		return e.own(ir.Object, "adamic_object_intrinsic_prototype()")
+	case "create", "setPrototypeOf", "getPrototypeOf":
+		e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
+		function := map[string]string{"create": "create", "setPrototypeOf": "set", "getPrototypeOf": "get"}[call.Method]
+		value := e.own(ir.Object, fmt.Sprintf("adamic_object_%s_prototype(%s)", function, strings.Join(arguments, ", ")))
+		if call.Method == "setPrototypeOf" {
+			e.checkThrown()
+		}
+		return value
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
 	case "isFrozen":

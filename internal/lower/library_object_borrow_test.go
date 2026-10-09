@@ -47,10 +47,10 @@ func TestBorrowedObjectOwnPropertyRefusesUnprovenUses(t *testing.T) {
 	}
 }
 
-func TestBorrowedObjectOwnPropertyDoesNotInferAnyOrTrustAnnotations(t *testing.T) {
+func TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const own = Object.prototype.hasOwnProperty; console.log(String(own.call({n:1},'n')));`,
+		`const own = Object.prototype.hasOwnProperty; console.log(typeof own);`,
 		`let own: (this: object, key: string) => boolean = Object.prototype.hasOwnProperty; console.log(String(own.call({n:1},'n')));`,
 		`const Object = { prototype: { hasOwnProperty: (key: string): boolean => false } }; console.log(String(Object.prototype.hasOwnProperty.call({},'n')));`,
 	} {

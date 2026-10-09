@@ -22,6 +22,7 @@ func init() {
 // Treating Object.prototype.constructor as own is safe and leak-clean. Only
 // source Node distinguishes an inherited property from the receiver's own keys.
 func TestScout22OwnPropertyMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_22_tsc_own_keys.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -69,6 +70,7 @@ func TestScout22OwnPropertyMutant(t *testing.T) {
 }
 
 func TestScout22KeywordOrderMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_22_tsc_keyword_entries.a"))
 	if err != nil {
 		t.Fatal(err)

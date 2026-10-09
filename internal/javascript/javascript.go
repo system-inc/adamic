@@ -946,7 +946,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
-		if expression.Method == "intrinsicObjectPrototype" { return "Object.prototype" }
+		if expression.Method == "intrinsicObjectPrototype" {
+			return "Object.prototype"
+		}
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
 		}

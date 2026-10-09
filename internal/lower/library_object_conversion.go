@@ -41,6 +41,9 @@ func (l *lowering) objectStringByHint(node *ast.Node, value ir.Expression, hint 
 			return nil, l.notYet(node, "String ToPrimitive with an optional, noncallable or parameterized "+name)
 		}
 		returned := l.checker.GetReturnTypeOfSignature(signatures[0])
+		if l.includesNull(returned) {
+			return nil, l.notYet(node, "String ToPrimitive with a null result needs distinct null and undefined tags; return a present string, number or boolean")
+		}
 		of, known := l.representation(returned)
 		never := returned.Flags()&checker.TypeFlagsNever != 0
 		if never {

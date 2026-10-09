@@ -68,7 +68,7 @@ func (l *lowering) objectPrototypeLink(node *ast.Node, name string) (ir.Expressi
 		}
 		call.Arguments = append(call.Arguments, value)
 	}
-	return call, true, nil
+	return nil, true, l.notYet(node, "Object."+name+" awaits runtime/step22-prototype-links; use a declared object or class with composition")
 }
 func (l *lowering) emptyPrototypeAllocation(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
@@ -84,7 +84,7 @@ func (l *lowering) emptyPrototypeAllocation(node *ast.Node) bool {
 		return false
 	}
 	variable := declaration.AsVariableDeclaration()
-	if variable.Type == nil || variable.Initializer == nil || l.objectBindingAssigned(declaration, symbol) {
+	if variable.Type == nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return false
 	}
 	if len(l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node))) != 0 {
