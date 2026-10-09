@@ -6,9 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
-	"time"
 
-	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -19,33 +17,10 @@ func TestWASIAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
 	}
-	shards := wasiFixtureShards()
-	if err := wasiFixtureUnion(shards); err != nil {
-		t.Fatal(err)
-	}
-	for ordinal, rows := range shards {
-		t.Run(wasiShardName(ordinal), func(t *testing.T) {
-			t.Parallel()
-			runWASIFixtures(t, rows, nil)
-		})
-	}
-}
-
-// Setup belongs inside the selected shard, including the Node helper's native
-// runtime identity. No result-cache bypass or runtime-cache policy changes here.
-func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program)) {
-	t.Helper()
-	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
-	}
-	started := time.Now()
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	identity(t)
-	t.Logf("WASI shard setup (Node identity, three native runtime archives): %.3fs", time.Since(started).Seconds())
-	for _, fixtureIndex := range rows {
-		fixture := fixtures[fixtureIndex]
+	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
@@ -67,12 +42,9 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 			if fixture.checked {
 				expected = onJavaScriptBackend(t, program)
 			}
-			if mutate != nil {
-				mutate(fixture.path, program)
-			}
 			actual := onWASI(t, native.C(program))
-			if err := wasiFixtureDifference(t.Name(), expected, actual); err != nil {
-				t.Error(err)
+			if difference := disagreement(expected, actual); difference != "" {
+				t.Errorf("%s\nnode: exit %d, stdout %q, stderr %q\nwasi: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
 		})
 	}
