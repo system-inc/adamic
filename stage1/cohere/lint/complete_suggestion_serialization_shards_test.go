@@ -425,7 +425,7 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 	if command.Process != nil {
 		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	if err != nil || stderr.Len() != 0 {
+	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
 		return fmt.Errorf("Go oracle build: %v\n%s\n%s", err, &output, &stderr)
 	}
 	return nil
