@@ -178,7 +178,7 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	}
 	{
 		// These are ir.Type's scalar representations, written by the emitter.
-		switch (object->dynamic_shape ? object->dynamic_types[index] : adamic_shape_type(object->shape, index)) {
+		switch (object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[index] : adamic_shape_type(object->shape, index)) {
 		case 1: return adamic_box_number(slot.number);
 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 		case 7: {

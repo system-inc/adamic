@@ -261,6 +261,12 @@ typedef struct adamic_shape {
 	const adamic_methods *methods;
 } adamic_shape;
 
+// Reserving copies own this descriptor inside their allocation.
+struct adamic_dynamic_shape {
+	adamic_shape shape;
+	const int *types;
+};
+
 typedef struct adamic_object adamic_object;
 typedef struct adamic_accessor {
 	const char *name;
@@ -291,7 +297,6 @@ typedef struct adamic_object {
 	bool frozen;
 	bool tuple;
 	bool dynamic_shape;
-	const int *dynamic_types;
 	// NULL for a complete shape; SIZE_MAX means reserved but not own.
 	size_t *write_order;
 	adamic_value slots[];

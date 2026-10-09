@@ -41,6 +41,12 @@ int main(void) {
     adamic_object_initialized(source)[0] = 0;
     for (int dynamic = 0; dynamic < 2; dynamic++) {
         adamic_object *copy = dynamic ? adamic_object_copy_reserving_checked(source, &extra, NULL) : adamic_object_copy_checked(source, NULL);
+        if (dynamic) {
+            adamic_object *again = adamic_object_copy_reserving_checked(copy, NULL, NULL);
+            adamic_release(copy);
+            copy = again;
+            if (((const struct adamic_dynamic_shape *)(const void *)copy->shape)->types[1] != 7) { adamic_release(copy); adamic_release(source); return 71; }
+        }
         printf("types %u %u %u\n", adamic_object_field_types(copy)[0], adamic_object_field_types(copy)[1], adamic_object_field_types(copy)[2]);
         adamic_heap *pending = adamic_dynamic_property(&copy->heap, "pending");
         printf("%d %d %d %d\n", adamic_has_property(&copy->heap, "slot"), adamic_object_initialized(copy)[0], adamic_has_property(&copy->heap, "pending"), pending == NULL);
@@ -51,6 +57,12 @@ int main(void) {
     adamic_object_absent(source, 0);
     for (int dynamic = 0; dynamic < 2; dynamic++) {
         adamic_object *copy = dynamic ? adamic_object_copy_reserving_checked(source, &extra, "copy") : adamic_object_copy_checked(source, "copy");
+        if (dynamic) {
+            adamic_object *again = adamic_object_copy_reserving_checked(copy, NULL, NULL);
+            adamic_release(copy);
+            copy = again;
+            if (((const struct adamic_dynamic_shape *)(const void *)copy->shape)->types[1] != 7) { adamic_release(copy); adamic_release(source); return 71; }
+        }
         printf("types %u %u %u\n", adamic_object_field_types(copy)[0], adamic_object_field_types(copy)[1], adamic_object_field_types(copy)[2]);
         printf("%d %d %d\n", adamic_has_property(&copy->heap, "slot"), adamic_object_initialized(copy)[0], adamic_has_property(&copy->heap, "pending"));
         adamic_slot_cache cache = {NULL, 0};
@@ -78,6 +90,7 @@ int main(void) {
 		name, from, to string
 	}{
 		{"baseline", "", ""},
+		{"dynamic types from wrong place", "((const struct adamic_dynamic_shape *)(const void *)base)->types[index]", "adamic_shape_type(base, index)"},
 		{"drop presence on checked copy", "if (source->write_order != NULL) object->write_order[index] = source->write_order[cache.index];", "if (source->write_order != NULL) (void)source;"},
 		{"drop readiness on checked copy", "adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];", "(void)source;"},
 		{"drop representation on checked copy", "adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];", "(void)source;"},
@@ -100,6 +113,10 @@ int main(void) {
 				got := execute(t, binary)
 				if mutation.name == "overlap presence and readiness" && got.exitCode == 70 && strings.Contains(string(got.stderr), "read before assignment: field 'ready' in copy") {
 					t.Logf("caught by checked read, sanitize=%t: %s", sanitize, got.stderr)
+					continue
+				}
+				if mutation.name == "dynamic types from wrong place" && got.exitCode == 71 && len(got.stderr) == 0 {
+					t.Logf("caught by reserving-copy descriptor assertion, sanitize=%t: %s", sanitize, got.stderr)
 					continue
 				}
 				if got.exitCode != 0 || len(got.stderr) != 0 {

@@ -15,7 +15,6 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->frozen = false;
 	object->tuple = false;
 	object->dynamic_shape = false;
-	object->dynamic_types = NULL;
 	object->write_order = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
@@ -270,16 +269,17 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
 	// The byte tail must not misalign the descriptor or its pointer/int arrays.
 	size_t alignment = _Alignof(adamic_shape);
 	size = (size + alignment - 1) / alignment * alignment;
-	adamic_object *object = adamic_allocate(size + sizeof(adamic_shape) + capacity * (sizeof(const char *) + sizeof(int) + sizeof(bool)), adamic_kind_object);
+	adamic_object *object = adamic_allocate(size + sizeof(struct adamic_dynamic_shape) + capacity * (sizeof(const char *) + sizeof(int) + sizeof(bool)), adamic_kind_object);
 	// Reserve capacity for values and orders before the descriptor and its arrays.
-	adamic_shape *shape = (adamic_shape *)(void *)((unsigned char *)object + size);
-	const char **names = (const char **)(void *)(shape + 1);
+	struct adamic_dynamic_shape *descriptor = (struct adamic_dynamic_shape *)(void *)((unsigned char *)object + size);
+	adamic_shape *shape = &descriptor->shape;
+	const char **names = (const char **)(void *)(descriptor + 1);
 	int *types = (int *)(void *)(names + capacity);
 	bool *references = (bool *)(void *)(types + capacity);
 	for (size_t index = 0; index < count; index++) {
 		names[index] = base->names[index];
 		references[index] = base->references[index];
-		types[index] = source->dynamic_shape ? source->dynamic_types[index] : adamic_shape_type(base, index);
+		types[index] = source->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)base)->types[index] : adamic_shape_type(base, index);
 	}
 	for (size_t index = 0; index < extra; index++) {
 		bool found = false;
@@ -298,7 +298,7 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
 	object->frozen = false;
 	object->tuple = false;
 	object->dynamic_shape = true;
-	object->dynamic_types = types;
+	descriptor->types = types;
 	memset(object->slots, 0, count * sizeof(adamic_value));
 	size_t order_offset = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
 	order_offset = (order_offset + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);

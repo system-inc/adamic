@@ -32,3 +32,19 @@ The chain already implements presence queries, SIZE_MAX absence, publication, ke
 
 - `internal/native/runtime/union.c`, hunk 2, `@@ -169,10 +176,9 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {`: Expose registered scalar shape types to reserving copies and consult owned descriptor metadata for dynamic scalar reads. Retain the chain presence/readiness and physical-number/boolean checks.
 
+
+## Runtime clearance amendment
+
+The object header no longer holds dynamic_types. dynamic_shape remains in padding.
+The reserving-copy allocation holds struct adamic_dynamic_shape, with the shape
+first and its type pointer next. Its name/type/reference arrays begin after the
+complete descriptor. Dynamic copy and unknown reads recover types through shape.
+Ordinary, construction and region allocators remove the obsolete pointer reset;
+region.c retains both readiness and representation bitmap initializers.
+Ordinary object header size falls from 56 to 48 bytes on this target; reserving
+copies move the same eight bytes into their existing descriptor allocation.
+All seven affected recorded optional-field count rows are unchanged, including
+peak live. Counts measure live values, not object bytes.
+The descriptor mutant reads dynamic types from static registration instead of the
+owned descriptor. A second reserving copy observes wrong types and exits 71 after
+releasing its allocations; both release and ASan/UBSan probes catch it.

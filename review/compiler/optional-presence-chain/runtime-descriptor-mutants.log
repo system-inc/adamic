@@ -1,0 +1,28 @@
+=== RUN   TestOptionalFieldCopyState
+=== PAUSE TestOptionalFieldCopyState
+=== CONT  TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldCopyState/baseline
+=== RUN   TestOptionalFieldCopyState/dynamic_types_from_wrong_place
+    optional_field_layout_test.go:119: caught by reserving-copy descriptor assertion, sanitize=false: 
+    optional_field_layout_test.go:119: caught by reserving-copy descriptor assertion, sanitize=true: 
+=== RUN   TestOptionalFieldCopyState/drop_presence_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 0 0\n1 1\n"
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 0 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 1 1 0\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 1 0\n1 1\n"
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 1 1 0\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 1 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/drop_representation_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 0\n1 1\ntypes 0 0 0\n0 0 0\n1 1\n"
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 0\n1 1\ntypes 0 0 0\n0 0 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/overlap_presence_and_readiness
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 255 0\n3 1\ntypes 1 7 1\n0 255 0\n3 1\n"
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 0 1 0\ntypes 1 7 1\n0 255 0\n3 1\ntypes 1 7 1\n0 255 0\n3 1\n"
+--- PASS: TestOptionalFieldCopyState (3.62s)
+    --- PASS: TestOptionalFieldCopyState/baseline (0.62s)
+    --- PASS: TestOptionalFieldCopyState/dynamic_types_from_wrong_place (0.61s)
+    --- PASS: TestOptionalFieldCopyState/drop_presence_on_checked_copy (0.59s)
+    --- PASS: TestOptionalFieldCopyState/drop_readiness_on_checked_copy (0.61s)
+    --- PASS: TestOptionalFieldCopyState/drop_representation_on_checked_copy (0.59s)
+    --- PASS: TestOptionalFieldCopyState/overlap_presence_and_readiness (0.60s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	3.625s
