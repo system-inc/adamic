@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T101434-3f3a7289",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "7c165ed8a6ec9f6f5fe9fa24718a2d93897bae86",
+  "branch": "devtools/split-fuzz",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "7c165ed8a6ec9f6f5fe9fa24718a2d93897bae86",
+  "gated": "8a39be0dbd4bdd18d47c185bd279d212e829c550",
+  "unplanned_packages_not_run": 55
+}
