@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/load/load.go",
+    "line": 185,
+    "old": "scanner.GetTokenPosOfNode(node, sourceFile, false)",
+    "new": "scanner.GetTokenPosOfNode(node, sourceFile, false) + func() int { if node.Kind == ast.KindNonNullExpression && strings.HasSuffix(p.FileName(sourceFile), \".a\") { return 1 }; return 0 }()",
+    "menu": "off by one token-position bound for Adamic non-null assertions"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/lower/non_null.go",
+    "line": 106,
+    "old": "strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\")",
+    "new": "strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\") || (node.Kind == ast.KindNonNullExpression && l.checker.GetTypeAtLocation(node.AsNonNullExpression().Expression).Flags()&checker.TypeFlagsNumberLiteral != 0)",
+    "menu": "flip refusal decision for statically proven numeric literals"
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/lower/non_null.go",
+    "line": 106,
+    "old": "strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\")",
+    "new": "strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\") || (node.Kind == ast.KindNonNullExpression && ast.SkipParentheses(node.AsNonNullExpression().Expression).Kind == ast.KindCallExpression)",
+    "menu": "flip refusal decision for call-result assertions"
+  }
+]

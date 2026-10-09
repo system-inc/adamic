@@ -1,0 +1,35 @@
+[
+  {
+    "mutant": "D1",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/nonnull-defense/D1-overlay.json",
+      "./internal/load/"
+    ],
+    "exit": 0,
+    "seconds": 0.3626425369948265
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/nonnull-defense/D2-overlay.json",
+      "./internal/lower/"
+    ],
+    "exit": 0,
+    "seconds": 0.8462840339998365
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/nonnull-defense/D3-overlay.json",
+      "./internal/lower/"
+    ],
+    "exit": 0,
+    "seconds": 0.9951930009992793
+  }
+]

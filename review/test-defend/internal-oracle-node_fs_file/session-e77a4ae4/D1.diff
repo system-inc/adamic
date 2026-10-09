@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -182,7 +182,7 @@
+ // Where is a node's position as people write it: file:line:column, the file named as written.
+ func (p *Program) Where(node *ast.Node) string {
+ 	sourceFile := ast.GetSourceFileOfNode(node)
+-	line, column := p.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(node, sourceFile, false))
++	line, column := p.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(node, sourceFile, false) + func() int { if node.Kind == ast.KindNonNullExpression && strings.HasSuffix(p.FileName(sourceFile), ".a") { return 1 }; return 0 }())
+ 	return fmt.Sprintf("%s:%d:%d", p.fs.displayName(sourceFile.FileName()), line, column)
+ }
+ 

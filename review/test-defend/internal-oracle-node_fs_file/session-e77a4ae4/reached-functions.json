@@ -1,0 +1,1562 @@
+[
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:57:",
+    "function": "compilerOptions",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:80:",
+    "function": "Load",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:91:",
+    "function": "load",
+    "percent": "67.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:167:",
+    "function": "Files",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:172:",
+    "function": "Checker",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:178:",
+    "function": "FileName",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:183:",
+    "function": "Where",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:202:",
+    "function": "IsLibrary",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:207:",
+    "function": "rootFileName",
+    "percent": "37.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:231:",
+    "function": "diagnostics",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:278:",
+    "function": "lineAndColumn",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/node_library.go:56:",
+    "function": "usesNodeModules",
+    "percent": "62.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/node_library.go:72:",
+    "function": "IsNodeLibrary",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/regexp_library.go:14:",
+    "function": "ReadFile",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:39:",
+    "function": "adamicFile",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:48:",
+    "function": "displayName",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:55:",
+    "function": "FileExists",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:68:",
+    "function": "ReadFile",
+    "percent": "63.6%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:87:",
+    "function": "DirectoryExists",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class.go:570:",
+    "function": "noteOmittedOptionals",
+    "percent": "87.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_accessors.go:408:",
+    "function": "noteAccessorNames",
+    "percent": "87.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:527:",
+    "function": "noteInheritance",
+    "percent": "70.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:546:",
+    "function": "classViewRefusal",
+    "percent": "55.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:690:",
+    "function": "nominalMismatch",
+    "percent": "15.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_static.go:337:",
+    "function": "isStaticType",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/entries_records.go:152:",
+    "function": "enumerationDescriptorRefusal",
+    "percent": "22.2%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/entries_records.go:198:",
+    "function": "enumerationIndexedWriteRefusal",
+    "percent": "18.2%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:80:",
+    "function": "flagTarget",
+    "percent": "44.4%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:213:",
+    "function": "flagMemberWidened",
+    "percent": "37.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:228:",
+    "function": "flagValueSymbol",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_initialization.go:9:",
+    "function": "enumInitialization",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:15:",
+    "function": "enumAssignable",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:43:",
+    "function": "openNumericEnumType",
+    "percent": "23.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:70:",
+    "function": "numericEnum",
+    "percent": "28.6%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:85:",
+    "function": "enumObjectSymbol",
+    "percent": "40.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:95:",
+    "function": "enumObjectView",
+    "percent": "76.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:115:",
+    "function": "enumIdentity",
+    "percent": "62.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:141:",
+    "function": "enumObject",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:353:",
+    "function": "enumRefusal",
+    "percent": "38.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/expression.go:159:",
+    "function": "isLibraryType",
+    "percent": "42.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/expression.go:445:",
+    "function": "weakTarget",
+    "percent": "15.4%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:45:",
+    "function": "widened",
+    "percent": "19.1%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:320:",
+    "function": "structured",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:326:",
+    "function": "withoutUndefined",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:334:",
+    "function": "definedMembers",
+    "percent": "33.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:351:",
+    "function": "isClassInstance",
+    "percent": "40.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:365:",
+    "function": "viewSite",
+    "percent": "50.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:404:",
+    "function": "refuseWidening",
+    "percent": "34.6%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:524:",
+    "function": "freshOrWidened",
+    "percent": "40.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:576:",
+    "function": "freshValue",
+    "percent": "61.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:601:",
+    "function": "isExpression",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:608:",
+    "function": "impliedTarget",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:651:",
+    "function": "destructuringTarget",
+    "percent": "42.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:694:",
+    "function": "genericFunction",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:15:",
+    "function": "RegisterNodeLibraryMembers",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:21:",
+    "function": "nodeLibraryMember",
+    "percent": "46.4%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:63:",
+    "function": "nodeLibraryRefusal",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_buffer.go:11:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:442:",
+    "function": "nodeFSFileReadOnlyArgument",
+    "percent": "45.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:477:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_host.go:57:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_regex_callback_shape.go:69:",
+    "function": "regexCallbackIntrinsicView",
+    "percent": "26.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_regexp_replace.go:70:",
+    "function": "regexReplacementArgument",
+    "percent": "53.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_string.go:371:",
+    "function": "stringReadOnlyArgument",
+    "percent": "90.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_string.go:388:",
+    "function": "refuseStringWidening",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/literal_callable_branch.go:10:",
+    "function": "literalCallableBranch",
+    "percent": "28.6%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/locals.go:165:",
+    "function": "symbol",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/lower.go:20:",
+    "function": "Lower",
+    "percent": "55.9%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/module_namespace.go:10:",
+    "function": "moduleNamespace",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/module_namespace.go:23:",
+    "function": "moduleNamespaceRefusal",
+    "percent": "23.1%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/modules.go:14:",
+    "function": "moduleOrder",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/modules.go:27:",
+    "function": "esmModuleOrder",
+    "percent": "48.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:41:",
+    "function": "namespaceDeclarations",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:53:",
+    "function": "namespaceDeclaration",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:66:",
+    "function": "namespaceMember",
+    "percent": "93.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:117:",
+    "function": "namespaceValueNode",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:135:",
+    "function": "namespaceRefusal",
+    "percent": "9.4%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:245:",
+    "function": "namespaceInitialization",
+    "percent": "47.5%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:344:",
+    "function": "namespaceCallable",
+    "percent": "53.8%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:147:",
+    "function": "namespaceRuntimeEnum",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/non_null.go:106:",
+    "function": "checkedAssertionSource",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/object.go:646:",
+    "function": "isLibraryGlobal",
+    "percent": "60.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:17:",
+    "function": "optionalWidened",
+    "percent": "22.4%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:111:",
+    "function": "optionalValue",
+    "percent": "33.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:131:",
+    "function": "optionalAtSite",
+    "percent": "41.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:189:",
+    "function": "refuseOptionalWidening",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:200:",
+    "function": "optionalNodeHostCall",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/predicates.go:475:",
+    "function": "predicateArguments",
+    "percent": "19.4%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/refusals.go:39:",
+    "function": "refuse",
+    "percent": "38.6%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/refusals.go:240:",
+    "function": "called",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:9:",
+    "function": "typedArrayName",
+    "percent": "80.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:21:",
+    "function": "typedArrayKind",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:31:",
+    "function": "typedArrayUnsupported",
+    "percent": "48.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/view_adapters.go:9:",
+    "function": "unavailableViewFamily",
+    "percent": "50.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "github.com/system-inc/adamic/internal/lower/view_adapters.go:17:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "file_line": "total:",
+    "function": "(statements)",
+    "percent": "3.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:57:",
+    "function": "compilerOptions",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:80:",
+    "function": "Load",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:91:",
+    "function": "load",
+    "percent": "67.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:167:",
+    "function": "Files",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:172:",
+    "function": "Checker",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:178:",
+    "function": "FileName",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:183:",
+    "function": "Where",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:202:",
+    "function": "IsLibrary",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:207:",
+    "function": "rootFileName",
+    "percent": "37.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:231:",
+    "function": "diagnostics",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:278:",
+    "function": "lineAndColumn",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/node_library.go:56:",
+    "function": "usesNodeModules",
+    "percent": "62.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/node_library.go:72:",
+    "function": "IsNodeLibrary",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/regexp_library.go:14:",
+    "function": "ReadFile",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:39:",
+    "function": "adamicFile",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:48:",
+    "function": "displayName",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:55:",
+    "function": "FileExists",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:68:",
+    "function": "ReadFile",
+    "percent": "63.6%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:87:",
+    "function": "DirectoryExists",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class.go:570:",
+    "function": "noteOmittedOptionals",
+    "percent": "87.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_accessors.go:408:",
+    "function": "noteAccessorNames",
+    "percent": "87.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:527:",
+    "function": "noteInheritance",
+    "percent": "70.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:546:",
+    "function": "classViewRefusal",
+    "percent": "55.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:690:",
+    "function": "nominalMismatch",
+    "percent": "2.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/entries_records.go:152:",
+    "function": "enumerationDescriptorRefusal",
+    "percent": "22.2%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/entries_records.go:198:",
+    "function": "enumerationIndexedWriteRefusal",
+    "percent": "18.2%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:80:",
+    "function": "flagTarget",
+    "percent": "44.4%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:213:",
+    "function": "flagMemberWidened",
+    "percent": "37.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:228:",
+    "function": "flagValueSymbol",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_initialization.go:9:",
+    "function": "enumInitialization",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:70:",
+    "function": "numericEnum",
+    "percent": "28.6%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:85:",
+    "function": "enumObjectSymbol",
+    "percent": "40.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:95:",
+    "function": "enumObjectView",
+    "percent": "76.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:115:",
+    "function": "enumIdentity",
+    "percent": "62.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:141:",
+    "function": "enumObject",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:353:",
+    "function": "enumRefusal",
+    "percent": "38.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/expression.go:159:",
+    "function": "isLibraryType",
+    "percent": "42.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/expression.go:445:",
+    "function": "weakTarget",
+    "percent": "15.4%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:45:",
+    "function": "widened",
+    "percent": "4.4%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:326:",
+    "function": "withoutUndefined",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:334:",
+    "function": "definedMembers",
+    "percent": "33.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:365:",
+    "function": "viewSite",
+    "percent": "45.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:404:",
+    "function": "refuseWidening",
+    "percent": "34.6%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:524:",
+    "function": "freshOrWidened",
+    "percent": "40.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:576:",
+    "function": "freshValue",
+    "percent": "30.8%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:601:",
+    "function": "isExpression",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:608:",
+    "function": "impliedTarget",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:651:",
+    "function": "destructuringTarget",
+    "percent": "42.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:694:",
+    "function": "genericFunction",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:15:",
+    "function": "RegisterNodeLibraryMembers",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:21:",
+    "function": "nodeLibraryMember",
+    "percent": "42.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:63:",
+    "function": "nodeLibraryRefusal",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_buffer.go:11:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:442:",
+    "function": "nodeFSFileReadOnlyArgument",
+    "percent": "45.5%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:477:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_host.go:57:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_regex_callback_shape.go:69:",
+    "function": "regexCallbackIntrinsicView",
+    "percent": "26.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_regexp_replace.go:70:",
+    "function": "regexReplacementArgument",
+    "percent": "53.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_string.go:371:",
+    "function": "stringReadOnlyArgument",
+    "percent": "90.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_string.go:388:",
+    "function": "refuseStringWidening",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/literal_callable_branch.go:10:",
+    "function": "literalCallableBranch",
+    "percent": "28.6%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/locals.go:165:",
+    "function": "symbol",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/lower.go:20:",
+    "function": "Lower",
+    "percent": "55.9%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/module_namespace.go:10:",
+    "function": "moduleNamespace",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/module_namespace.go:23:",
+    "function": "moduleNamespaceRefusal",
+    "percent": "23.1%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/modules.go:14:",
+    "function": "moduleOrder",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/modules.go:27:",
+    "function": "esmModuleOrder",
+    "percent": "48.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:41:",
+    "function": "namespaceDeclarations",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:53:",
+    "function": "namespaceDeclaration",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:66:",
+    "function": "namespaceMember",
+    "percent": "93.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:117:",
+    "function": "namespaceValueNode",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:135:",
+    "function": "namespaceRefusal",
+    "percent": "9.4%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:245:",
+    "function": "namespaceInitialization",
+    "percent": "45.8%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:344:",
+    "function": "namespaceCallable",
+    "percent": "53.8%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:147:",
+    "function": "namespaceRuntimeEnum",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/non_null.go:106:",
+    "function": "checkedAssertionSource",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:17:",
+    "function": "optionalWidened",
+    "percent": "10.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:111:",
+    "function": "optionalValue",
+    "percent": "33.3%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:131:",
+    "function": "optionalAtSite",
+    "percent": "41.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:189:",
+    "function": "refuseOptionalWidening",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:200:",
+    "function": "optionalNodeHostCall",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/predicates.go:475:",
+    "function": "predicateArguments",
+    "percent": "17.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/refusals.go:39:",
+    "function": "refuse",
+    "percent": "38.6%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/refusals.go:240:",
+    "function": "called",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:9:",
+    "function": "typedArrayName",
+    "percent": "80.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:21:",
+    "function": "typedArrayKind",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:31:",
+    "function": "typedArrayUnsupported",
+    "percent": "24.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/view_adapters.go:9:",
+    "function": "unavailableViewFamily",
+    "percent": "50.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/view_adapters.go:17:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestCheckedNonNullAdamicRefusal",
+    "file_line": "total:",
+    "function": "(statements)",
+    "percent": "3.4%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:57:",
+    "function": "compilerOptions",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:80:",
+    "function": "Load",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:91:",
+    "function": "load",
+    "percent": "67.9%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:167:",
+    "function": "Files",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:172:",
+    "function": "Checker",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:178:",
+    "function": "FileName",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:183:",
+    "function": "Where",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:202:",
+    "function": "IsLibrary",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:207:",
+    "function": "rootFileName",
+    "percent": "37.5%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:231:",
+    "function": "diagnostics",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/load.go:278:",
+    "function": "lineAndColumn",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/node_library.go:56:",
+    "function": "usesNodeModules",
+    "percent": "62.5%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/regexp_library.go:14:",
+    "function": "ReadFile",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:39:",
+    "function": "adamicFile",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:48:",
+    "function": "displayName",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:55:",
+    "function": "FileExists",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:68:",
+    "function": "ReadFile",
+    "percent": "63.6%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/load/source_fs.go:87:",
+    "function": "DirectoryExists",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class.go:570:",
+    "function": "noteOmittedOptionals",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class.go:584:",
+    "function": "noteOmittedOptionalsOf",
+    "percent": "61.5%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class.go:702:",
+    "function": "nodesOf",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_accessors.go:408:",
+    "function": "noteAccessorNames",
+    "percent": "87.5%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:527:",
+    "function": "noteInheritance",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:546:",
+    "function": "classViewRefusal",
+    "percent": "10.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/diagnostics.go:28:",
+    "function": "Error",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/entries_records.go:152:",
+    "function": "enumerationDescriptorRefusal",
+    "percent": "22.2%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/entries_records.go:198:",
+    "function": "enumerationIndexedWriteRefusal",
+    "percent": "18.2%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_flags.go:228:",
+    "function": "flagValueSymbol",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enum_initialization.go:9:",
+    "function": "enumInitialization",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:95:",
+    "function": "enumObjectView",
+    "percent": "53.8%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:141:",
+    "function": "enumObject",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/enums.go:353:",
+    "function": "enumRefusal",
+    "percent": "32.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:365:",
+    "function": "viewSite",
+    "percent": "45.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:404:",
+    "function": "refuseWidening",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:601:",
+    "function": "isExpression",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:608:",
+    "function": "impliedTarget",
+    "percent": "25.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:651:",
+    "function": "destructuringTarget",
+    "percent": "42.9%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/invariance.go:694:",
+    "function": "genericFunction",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:15:",
+    "function": "RegisterNodeLibraryMembers",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:21:",
+    "function": "nodeLibraryMember",
+    "percent": "21.4%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node.go:63:",
+    "function": "nodeLibraryRefusal",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_buffer.go:11:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:442:",
+    "function": "nodeFSFileReadOnlyArgument",
+    "percent": "18.2%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:477:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_node_host.go:57:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_regex_callback_shape.go:69:",
+    "function": "regexCallbackIntrinsicView",
+    "percent": "15.4%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_regexp_replace.go:70:",
+    "function": "regexReplacementArgument",
+    "percent": "33.3%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_string.go:371:",
+    "function": "stringReadOnlyArgument",
+    "percent": "45.5%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/library_string.go:388:",
+    "function": "refuseStringWidening",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/literal_callable_branch.go:10:",
+    "function": "literalCallableBranch",
+    "percent": "28.6%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/locals.go:165:",
+    "function": "symbol",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/lower.go:20:",
+    "function": "Lower",
+    "percent": "55.9%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/module_namespace.go:23:",
+    "function": "moduleNamespaceRefusal",
+    "percent": "23.1%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/modules.go:14:",
+    "function": "moduleOrder",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/modules.go:27:",
+    "function": "esmModuleOrder",
+    "percent": "48.3%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:41:",
+    "function": "namespaceDeclarations",
+    "percent": "83.3%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:53:",
+    "function": "namespaceDeclaration",
+    "percent": "85.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:66:",
+    "function": "namespaceMember",
+    "percent": "66.7%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:117:",
+    "function": "namespaceValueNode",
+    "percent": "90.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:135:",
+    "function": "namespaceRefusal",
+    "percent": "9.4%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:245:",
+    "function": "namespaceInitialization",
+    "percent": "61.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces.go:344:",
+    "function": "namespaceCallable",
+    "percent": "73.1%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:24:",
+    "function": "reach",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:28:",
+    "function": "discover",
+    "percent": "71.8%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:147:",
+    "function": "namespaceRuntimeEnum",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/non_null.go:106:",
+    "function": "checkedAssertionSource",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:131:",
+    "function": "optionalAtSite",
+    "percent": "33.3%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/optional_widening.go:189:",
+    "function": "refuseOptionalWidening",
+    "percent": "75.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/predicates.go:475:",
+    "function": "predicateArguments",
+    "percent": "19.4%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/refusals.go:39:",
+    "function": "refuse",
+    "percent": "38.6%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:31:",
+    "function": "typedArrayUnsupported",
+    "percent": "16.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/view_adapters.go:9:",
+    "function": "unavailableViewFamily",
+    "percent": "50.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "github.com/system-inc/adamic/internal/lower/view_adapters.go:17:",
+    "function": "init",
+    "percent": "100.0%"
+  },
+  {
+    "row": "TestNonNullAdamicRefusal",
+    "file_line": "total:",
+    "function": "(statements)",
+    "percent": "3.2%"
+  }
+]

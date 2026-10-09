@@ -1,0 +1,19 @@
+internal/lower/non_null.go:106:func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+internal/lower/readiness.go:21:	if node == nil || l.checkedAssertionSource(node) {
+internal/lower/readiness.go:390:	return assertionInitializer(node) && !l.checkedAssertionSource(node)
+internal/lower/refusals.go:104:		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+internal/oracle/node_fs_file_report.md:15:System.readFile uses the Buffer worker's decoder for UTF-8 and UTF-16LE, and sys.ts's byte-pair swap for UTF-16BE. Its owned wrapper uses explicit ?? panic checks where Adamic forbids non-null assertions; real upstream acceptance fixtures remain unchanged. The eight System helpers are readFile, writeFile, fileExists, getFileSize, getModifiedTime, setModifiedTime, deleteFile and createDirectory. write cleanup, BOMs, missing-file suppression, file-only size and EEXIST race handling are covered.
+internal/oracle/non_null_checked_test.go:70:				want = run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed at " + path + suffix + ": value! is null or undefined\n"), exitCode: 70}
+internal/oracle/non_null_checked_test.go:146:	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+internal/oracle/non_null_impossible_test.go:54:				want := run{stderr: []byte("adamic: panic: non-null assertion failed at " + path + ":1:13: " + expression + " is null or undefined\n"), exitCode: 70}
+internal/oracle/non_null_impossible_test.go:67:			if refused.What != "the non-null assertion !" {
+internal/oracle/non_null_impossible_test.go:90:			if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+internal/oracle/non_null_migration_test.go:93:	if native.exitCode != 70 || string(native.stdout) != stdout || !strings.HasPrefix(string(native.stderr), "adamic: panic: non-null assertion failed at "+path+":") || !strings.HasSuffix(string(native.stderr), ": "+expression+" is null or undefined\n") {
+internal/oracle/non_null_policy_test.go:24:	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+internal/oracle/non_null_refusal_test.go:26:			want := path + fixture.position + ": Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+internal/oracle/readiness_test.go:35:		{"weak-generic-message", "weak", "before\n", "non-null assertion failed: holder.value! is null or undefined"},
+internal/oracle/readiness_test.go:117:	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed at " + path + ":9:17: holder.value! is null or undefined\n"), exitCode: 70}
+internal/oracle/statements_small_rulings_test.go:19:		{"nonnull", "2\n", "the non-null assertion !", true},
+internal/oracle/statements_small_typescript_test.go:73:				want = run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed at " + site.Where + ": state.index! is null or undefined\n"), exitCode: 70}
+internal/oracle/testdata/non_null_refused/initialized.a:1:// a-check: refused the non-null assertion !
+internal/oracle/testdata/run-statements-small-mutants.py:23:    ("nonnull-refusal", "internal/lower/refusals.go", 'ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic(\'why it can\'t be missing\'), or narrow and handle the missing case"},', '', "TestStatementsSmallRulings/nonnull", "want preserved stop"),

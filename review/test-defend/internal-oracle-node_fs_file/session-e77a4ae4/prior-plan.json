@@ -1,0 +1,74 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/non_null.go",
+    "line": 106,
+    "old": "strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\")",
+    "new": "strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".a\")",
+    "menu": "change source-extension constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/non_null.go",
+    "line": 114,
+    "old": "counts.Checked++",
+    "new": "counts.Checked += 2",
+    "menu": "change increment constant"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/non_null.go",
+    "line": 96,
+    "old": "\"non-null assertion failed at \"",
+    "new": "\"non-null assertion missing at \"",
+    "menu": "change diagnostic constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 171,
+    "old": "strcmp(name, \"a\") == 0) { value = O_WRONLY | O_CREAT | O_APPEND;",
+    "new": "strcmp(name, \"a\") == 0) { value = O_WRONLY | O_CREAT | O_TRUNC;",
+    "menu": "change open option"
+  },
+  {
+    "id": "W01",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "old": "func disagreement(oracle run, native run) string {\n\tswitch {\n\tcase oracle.exitCode != native.exitCode:\n\t\treturn \"exit codes differ\"\n\tcase !bytes.Equal(oracle.stdout, native.stdout):\n\t\treturn \"stdout differs\"\n\tcase !bytes.Equal(oracle.stderr, native.stderr):\n\t\treturn \"stderr differs\"\n\t}\n\treturn \"\"\n}",
+    "new": "func disagreement(oracle run, native run) string { return \"\" }",
+    "menu": "witness: comparison always agrees"
+  },
+  {
+    "id": "W02",
+    "file": "internal/oracle/node_fs_file_test.go",
+    "line": 223,
+    "old": "bytes.Equal(got.stdout, truth.stdout)",
+    "new": "bytes.Equal(got.stdout, got.stdout)",
+    "menu": "witness: stdout comparison always agrees"
+  },
+  {
+    "id": "W03",
+    "file": "internal/oracle/non_null_migration_test.go",
+    "line": 139,
+    "old": "string(got.stdout) == string(native.stdout)",
+    "new": "string(got.stdout) == string(got.stdout)",
+    "menu": "witness: stdout comparison always agrees"
+  },
+  {
+    "id": "W04",
+    "file": "internal/oracle/non_null_checked_test.go",
+    "line": 122,
+    "old": "returned.Value.Type() != function.Returns",
+    "new": "returned.Value.Type() != returned.Value.Type()",
+    "menu": "witness: disable return representation comparison"
+  },
+  {
+    "id": "S01",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 50,
+    "old": "{\"internal/oracle/testdata/non_null.ts\", true, false}",
+    "new": "{\"internal/oracle/testdata/non_null.ts\", false, false}",
+    "menu": "setup: unregister runnable migrated fixture"
+  }
+]

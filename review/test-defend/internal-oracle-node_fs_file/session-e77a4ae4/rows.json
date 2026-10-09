@@ -1,0 +1,125 @@
+[
+  {
+    "test": "TestCheckedNonNullAdamicRefusal",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNonNullAdamicRefusal",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/non_null.go:106",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/non_null.go:106",
+        "change": "flip refusal decision for statically proven numeric literals; strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\") || (node.Kind == ast.KindNonNullExpression && l.checker.GetTypeAtLocation(node.AsNonNullExpression().Expression).Flags()&checker.TypeFlagsNumberLiteral != 0)",
+        "rows_failed": [
+          "TestCheckedNonNullAdamicRefusal"
+        ]
+      }
+    ],
+    "code_under_test": "Adamic non-null refusal policy and source-position reporting",
+    "oracle": "self: hand-written Refused kind, What/Fix text",
+    "evidence": "ADAMIC_DEFENSE_MUTANT=D2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/nonnull-defense/cache/D2-expanded timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^Test(CheckedNonNull.*|ImpossibleNonNull.*|PossibleNonNull.*|MigratedNonNull.*|NonNull.*|ParserNonNull.*|StatementsSmallRulings|FractionalPowersReachRuntime|ReviewPrograms.*)$' > D2-expanded.log 2>&1; non_null_checked_test.go:147: wrong .a refusal: <nil>",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedNonNullAdamicRefusal",
+      "TestCheckedNonNullCounts",
+      "TestCheckedNonNullTypeScript",
+      "TestFractionalPowersReachRuntime",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestNonNullAdamicRefusal",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestParserNonNullSourceExtension",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest",
+      "TestStatementsSmallRulings"
+    ],
+    "outside_matrix": "Unknown; whole package exceeded 90 seconds."
+  },
+  {
+    "test": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCheckedNonNullAdamicRefusal",
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/non_null.go:106",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/non_null.go:106",
+        "change": "flip refusal decision for call-result assertions; strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\") || (node.Kind == ast.KindNonNullExpression && ast.SkipParentheses(node.AsNonNullExpression().Expression).Kind == ast.KindCallExpression)",
+        "rows_failed": [
+          "TestPossibleNonNullAdamicAssertionsAreRefused"
+        ]
+      }
+    ],
+    "code_under_test": "Adamic non-null refusal policy and source-position reporting",
+    "oracle": "self: hand-written Refused kind, What/Fix text",
+    "evidence": "ADAMIC_DEFENSE_MUTANT=D3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/nonnull-defense/cache/D3-expanded timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^Test(CheckedNonNull.*|ImpossibleNonNull.*|PossibleNonNull.*|MigratedNonNull.*|NonNull.*|ParserNonNull.*|StatementsSmallRulings|FractionalPowersReachRuntime|ReviewPrograms.*)$' > D3-expanded.log 2>&1; non_null_impossible_test.go:91: wrong .a refusal: <nil>; non_null_impossible_test.go:91: wrong .a refusal: <nil>",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedNonNullAdamicRefusal",
+      "TestCheckedNonNullCounts",
+      "TestCheckedNonNullTypeScript",
+      "TestFractionalPowersReachRuntime",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestNonNullAdamicRefusal",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestParserNonNullSourceExtension",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest",
+      "TestStatementsSmallRulings"
+    ],
+    "outside_matrix": "Unknown; whole package exceeded 90 seconds."
+  },
+  {
+    "test": "TestNonNullAdamicRefusal",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCheckedNonNullAdamicRefusal",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/load/load.go:185",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/load/load.go:185",
+        "change": "off by one token-position bound for Adamic non-null assertions; scanner.GetTokenPosOfNode(node, sourceFile, false) + func() int { if node.Kind == ast.KindNonNullExpression && strings.HasSuffix(p.FileName(sourceFile), \".a\") { return 1 }; return 0 }()",
+        "rows_failed": [
+          "TestNonNullAdamicRefusal"
+        ]
+      }
+    ],
+    "code_under_test": "Adamic non-null refusal policy and source-position reporting",
+    "oracle": "self: hand-written Refused kind, What/Fix text and exact diagnostic positions",
+    "evidence": "ADAMIC_DEFENSE_MUTANT=D1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/nonnull-defense/cache/D1-expanded timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^Test(CheckedNonNull.*|ImpossibleNonNull.*|PossibleNonNull.*|MigratedNonNull.*|NonNull.*|ParserNonNull.*|StatementsSmallRulings|FractionalPowersReachRuntime|ReviewPrograms.*)$' > D1-expanded.log 2>&1; non_null_refusal_test.go:28: got /workspace/adamic/stage3/census/repro/r05/main.a:2:60: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case, want \"/workspace/adamic/stage3/census/repro/r05/main.a:2:59: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\"; non_null_refusal_test.go:28: got /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case, want \"/workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckedNonNullAdamicRefusal",
+      "TestCheckedNonNullCounts",
+      "TestCheckedNonNullTypeScript",
+      "TestFractionalPowersReachRuntime",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestNonNullAdamicRefusal",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestParserNonNullSourceExtension",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest",
+      "TestStatementsSmallRulings"
+    ],
+    "outside_matrix": "Unknown; whole package exceeded 90 seconds."
+  }
+]

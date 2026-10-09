@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T16:29:08.548646833Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T16:29:08.580518756Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal"}
+{"Time":"2026-10-09T16:29:08.581329497Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal","Output":"=== RUN   TestCheckedNonNullAdamicRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:29:08.581474972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal","Output":"=== PAUSE TestCheckedNonNullAdamicRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:29:08.581479053Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal"}
+{"Time":"2026-10-09T16:29:08.581502806Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal"}
+{"Time":"2026-10-09T16:29:08.581506601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal","Output":"=== CONT  TestCheckedNonNullAdamicRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:29:08.635193257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal","Output":"--- PASS: TestCheckedNonNullAdamicRefusal (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:29:08.63526593Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullAdamicRefusal","Elapsed":0.05}
+{"Time":"2026-10-09T16:29:08.635305639Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:29:08.640204948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"coverage: 3.4% of statements in ./internal/lower, ./internal/load\n"}
+{"Time":"2026-10-09T16:29:08.660725018Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.107s\tcoverage: 3.4% of statements in ./internal/lower, ./internal/load\n"}
+{"Time":"2026-10-09T16:29:08.660844218Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.112}

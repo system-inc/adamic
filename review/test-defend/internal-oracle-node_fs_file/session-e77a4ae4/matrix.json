@@ -1,0 +1,85 @@
+{
+  "D1": {
+    "passed": [
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestCheckedNonNullAdamicRefusal",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestParserNonNullSourceExtension",
+      "TestStatementsSmallRulings",
+      "TestReviewProgramsNoLooseFiles",
+      "TestCheckedNonNullCounts",
+      "TestNonNullLiteralUnionInitializers",
+      "TestFractionalPowersReachRuntime",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestReviewProgramsSelfTest",
+      "TestCheckedNonNullTypeScript",
+      "TestReviewProgramsRefuse",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "failed": [
+      "TestNonNullAdamicRefusal"
+    ],
+    "skipped": [],
+    "errors": [
+      "non_null_refusal_test.go:28: got /workspace/adamic/stage3/census/repro/r05/main.a:2:60: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case, want \"/workspace/adamic/stage3/census/repro/r05/main.a:2:59: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\"",
+      "non_null_refusal_test.go:28: got /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case, want \"/workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\""
+    ],
+    "seconds": 75.226
+  },
+  "D2": {
+    "passed": [
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestStatementsSmallRulings",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestCheckedNonNullTypeScript",
+      "TestReviewProgramsNoLooseFiles",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestCheckedNonNullCounts",
+      "TestParserNonNullSourceExtension",
+      "TestNonNullAdamicRefusal",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "failed": [
+      "TestCheckedNonNullAdamicRefusal"
+    ],
+    "skipped": [],
+    "errors": [
+      "non_null_checked_test.go:147: wrong .a refusal: <nil>"
+    ],
+    "seconds": 74.057
+  },
+  "D3": {
+    "passed": [
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestCheckedNonNullAdamicRefusal",
+      "TestReviewProgramsNoLooseFiles",
+      "TestStatementsSmallRulings",
+      "TestFractionalPowersReachRuntime",
+      "TestReviewProgramsSelfTest",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestParserNonNullSourceExtension",
+      "TestCheckedNonNullTypeScript",
+      "TestReviewProgramsRefuse",
+      "TestCheckedNonNullCounts",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestNonNullAdamicRefusal",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "failed": [
+      "TestPossibleNonNullAdamicAssertionsAreRefused"
+    ],
+    "skipped": [],
+    "errors": [
+      "non_null_impossible_test.go:91: wrong .a refusal: <nil>",
+      "non_null_impossible_test.go:91: wrong .a refusal: <nil>"
+    ],
+    "seconds": 63.238
+  }
+}

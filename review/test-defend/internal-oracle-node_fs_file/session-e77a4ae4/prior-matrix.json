@@ -1,0 +1,578 @@
+{
+  "rows": [
+    "TestNodeFSFileAgreesWithNode",
+    "TestNodeFSFileMutants",
+    "TestCheckedNonNullTypeScript",
+    "TestCheckedNonNullAdamicRefusal",
+    "TestCheckedNonNullCounts",
+    "TestImpossibleNonNullFixturesAreRefused",
+    "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "TestMigratedNonNullFixturesRemainCovered",
+    "TestNonNullLiteralUnionInitializers",
+    "TestParserNonNullSourceExtension",
+    "TestNonNullAdamicRefusal",
+    "TestNotYetLibraryObjectEntriesConstMutant",
+    "TestNotYetLibraryRegex family",
+    "TestNotYetLibraryStringBoundsMutants"
+  ],
+  "members": [
+    [
+      "TestNodeFSFileAgreesWithNode"
+    ],
+    [
+      "TestNodeFSFileMutants"
+    ],
+    [
+      "TestCheckedNonNullTypeScript"
+    ],
+    [
+      "TestCheckedNonNullAdamicRefusal"
+    ],
+    [
+      "TestCheckedNonNullCounts"
+    ],
+    [
+      "TestImpossibleNonNullFixturesAreRefused"
+    ],
+    [
+      "TestPossibleNonNullAdamicAssertionsAreRefused"
+    ],
+    [
+      "TestMigratedNonNullFixturesRemainCovered"
+    ],
+    [
+      "TestNonNullLiteralUnionInitializers"
+    ],
+    [
+      "TestParserNonNullSourceExtension"
+    ],
+    [
+      "TestNonNullAdamicRefusal"
+    ],
+    [
+      "TestNotYetLibraryObjectEntriesConstMutant"
+    ],
+    [
+      "TestNotYetLibraryRegexCallbackMutants",
+      "TestNotYetLibraryRegexOffsetMutants"
+    ],
+    [
+      "TestNotYetLibraryStringBoundsMutants"
+    ]
+  ],
+  "cells": {
+    "M01": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "fail",
+      "TestCheckedNonNullAdamicRefusal": "fail",
+      "TestCheckedNonNullCounts": "fail",
+      "TestImpossibleNonNullFixturesAreRefused": "fail",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "fail",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "fail",
+      "TestParserNonNullSourceExtension": "fail",
+      "TestNonNullAdamicRefusal": "fail",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "M02": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "fail",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "fail",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "pass",
+      "TestParserNonNullSourceExtension": "fail",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "M03": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "fail",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "fail",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "fail",
+      "TestParserNonNullSourceExtension": "pass",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "M04": {
+      "TestNodeFSFileAgreesWithNode": "fail",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "pass",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "pass",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "pass",
+      "TestParserNonNullSourceExtension": "pass",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "W01": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "fail",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "pass",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "pass",
+      "TestParserNonNullSourceExtension": "fail",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "fail",
+      "TestNotYetLibraryRegex family": "fail",
+      "TestNotYetLibraryStringBoundsMutants": "fail"
+    },
+    "W02": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "fail",
+      "TestCheckedNonNullTypeScript": "pass",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "pass",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "pass",
+      "TestParserNonNullSourceExtension": "pass",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "W03": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "pass",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "pass",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "fail",
+      "TestParserNonNullSourceExtension": "pass",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "W04": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "fail",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "pass",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "pass",
+      "TestNonNullLiteralUnionInitializers": "pass",
+      "TestParserNonNullSourceExtension": "pass",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    },
+    "S01": {
+      "TestNodeFSFileAgreesWithNode": "pass",
+      "TestNodeFSFileMutants": "pass",
+      "TestCheckedNonNullTypeScript": "pass",
+      "TestCheckedNonNullAdamicRefusal": "pass",
+      "TestCheckedNonNullCounts": "pass",
+      "TestImpossibleNonNullFixturesAreRefused": "pass",
+      "TestPossibleNonNullAdamicAssertionsAreRefused": "pass",
+      "TestMigratedNonNullFixturesRemainCovered": "fail",
+      "TestNonNullLiteralUnionInitializers": "pass",
+      "TestParserNonNullSourceExtension": "pass",
+      "TestNonNullAdamicRefusal": "pass",
+      "TestNotYetLibraryObjectEntriesConstMutant": "pass",
+      "TestNotYetLibraryRegex family": "pass",
+      "TestNotYetLibraryStringBoundsMutants": "pass"
+    }
+  },
+  "observed_failures": {
+    "M01": {
+      "fails": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "passed": [
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants"
+      ],
+      "messages": {
+        "TestCheckedNonNullAdamicRefusal": [
+          "non_null_checked_test.go:147: wrong .a refusal: <nil>"
+        ],
+        "TestCheckedNonNullCounts": [
+          "non_null_checked_test.go:160: Lower: /workspace/adamic/internal/oracle/testdata/non_null_checked_narrowed.ts:2:43: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+        ],
+        "TestNonNullLiteralUnionInitializers": [
+          "non_null_migration_test.go:72: /tmp/adamic-gate/TestNonNullLiteralUnionInitializersundefined907732573/001/main.ts:1:30: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_migration_test.go:72: /tmp/adamic-gate/TestNonNullLiteralUnionInitializersnull3561835870/001/main.ts:1:30: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+        ],
+        "TestParserNonNullSourceExtension": [
+          "non_null_parser_test.go:15: want .a non-null refusal with its unchanged fix, got <nil>"
+        ],
+        "TestNonNullAdamicRefusal": [
+          "non_null_refusal_test.go:28: got <nil>, want \"/workspace/adamic/stage3/census/repro/r05/main.a:2:59: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\"",
+          "non_null_refusal_test.go:28: got <nil>, want \"/workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\""
+        ],
+        "TestPossibleNonNullAdamicAssertionsAreRefused": [
+          "non_null_impossible_test.go:91: wrong .a refusal: <nil>",
+          "non_null_impossible_test.go:91: wrong .a refusal: <nil>"
+        ],
+        "TestCheckedNonNullTypeScript": [
+          "non_null_checked_test.go:35: /workspace/adamic/internal/oracle/testdata/non_null_checked_narrowed.ts:2:43: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_checked_test.go:35: /workspace/adamic/internal/oracle/testdata/non_null_checked_let_initializer.ts:3:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_checked_test.go:35: /workspace/adamic/internal/oracle/testdata/non_null_checked_initializer.ts:3:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_checked_test.go:35: /workspace/adamic/internal/oracle/testdata/non_null_checked_null.ts:3:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_checked_test.go:35: /workspace/adamic/internal/oracle/testdata/non_null_checked_undefined.ts:3:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_checked_test.go:35: /workspace/adamic/internal/oracle/testdata/non_null_checked_present.ts:1:69: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+        ],
+        "TestImpossibleNonNullFixturesAreRefused": [
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got /workspace/adamic/internal/oracle/testdata/non_null_refuse_expression.a:2:9: stage 0 can't lower a BinaryExpression with a value and a number yet",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got /workspace/adamic/internal/oracle/testdata/non_null_refuse_element.a:1:16: stage 0 can't lower an array of never yet",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got /workspace/adamic/internal/oracle/testdata/non_null_refuse_spread.a:1:16: stage 0 can't lower an array of never yet",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:42: /workspace/adamic/internal/oracle/testdata/non_null_refuse_null.ts:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:65: want impossible assertion Refused, got <nil>",
+          "non_null_impossible_test.go:42: /workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.ts:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+        ]
+      },
+      "skips": [],
+      "seconds": 26.238,
+      "panic": false
+    },
+    "M02": {
+      "fails": [
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestParserNonNullSourceExtension"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestParserNonNullSourceExtension": [
+          "non_null_parser_test.go:29: indexed assertion must remain checked: {Proven:0 Checked:2 Sites:[{Where:/tmp/adamic-gate/TestParserNonNullSourceExtension1368741499/001/parser_index.ts:5:16 Expression:array[index]! Proven:false}]}"
+        ],
+        "TestCheckedNonNullTypeScript": [
+          "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_let_initializer.ts:3:26\", Expression:\"value!\", Proven:false}}}",
+          "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_initializer.ts:3:26\", Expression:\"value!\", Proven:false}}}",
+          "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_undefined.ts:3:24\", Expression:\"value!\", Proven:false}}}",
+          "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_null.ts:3:24\", Expression:\"value!\", Proven:false}}}",
+          "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_present.ts:1:69\", Expression:\"value!\", Proven:false}}}"
+        ],
+        "TestImpossibleNonNullFixturesAreRefused": [
+          "non_null_impossible_test.go:45: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_refuse_null.ts:1:13\", Expression:\"null!\", Proven:false}}}",
+          "non_null_impossible_test.go:45: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:2, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.ts:1:13\", Expression:\"undefined!\", Proven:false}}}"
+        ]
+      },
+      "skips": [],
+      "seconds": 7.643,
+      "panic": false
+    },
+    "M03": {
+      "fails": [
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestNonNullLiteralUnionInitializers"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestNonNullLiteralUnionInitializers": [
+          "non_null_migration_test.go:72: want eager checked undefined! with stdout \"\", got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x74, 0x6d, 0x70, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2d, 0x67, 0x61, 0x74, 0x65, 0x2f, 0x54, 0x65, 0x73, 0x74, 0x4e, 0x6f, 0x6e, 0x4e, 0x75, 0x6c, 0x6c, 0x4c, 0x69, 0x74, 0x65, 0x72, 0x61, 0x6c, 0x55, 0x6e, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x72, 0x73, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x32, 0x30, 0x39, 0x37, 0x39, 0x34, 0x38, 0x31, 0x30, 0x30, 0x2f, 0x30, 0x30, 0x31, 0x2f, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x74, 0x73, 0x3a, 0x31, 0x3a, 0x33, 0x30, 0x3a, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x21, 0x20, 0x69, 0x73, 0x20,",
+          "non_null_migration_test.go:72: want eager checked null! with stdout \"\", got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x74, 0x6d, 0x70, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2d, 0x67, 0x61, 0x74, 0x65, 0x2f, 0x54, 0x65, 0x73, 0x74, 0x4e, 0x6f, 0x6e, 0x4e, 0x75, 0x6c, 0x6c, 0x4c, 0x69, 0x74, 0x65, 0x72, 0x61, 0x6c, 0x55, 0x6e, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x72, 0x73, 0x6e, 0x75, 0x6c, 0x6c, 0x32, 0x36, 0x32, 0x35, 0x39, 0x33, 0x34, 0x38, 0x37, 0x31, 0x2f, 0x30, 0x30, 0x31, 0x2f, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x74, 0x73, 0x3a, 0x31, 0x3a, 0x33, 0x30, 0x3a, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20, 0x75, 0x6e, 0x64,"
+        ],
+        "TestImpossibleNonNullFixturesAreRefused": [
+          "non_null_impossible_test.go:58: stderr differs: oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x2f, 0x6e, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x5f, 0x72, 0x65, 0x66, 0x75, 0x73, 0x65, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x2e, 0x74, 0x73, 0x3a, 0x31, 0x3a, 0x31, 0x33, 0x3a, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, exitCode:70}",
+          "non_null_impossible_test.go:58: stderr differs: oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x2f, 0x6e, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x5f, 0x72, 0x65, 0x66, 0x75, 0x73, 0x65, 0x5f, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x2e, 0x74, 0x73, 0x3a, 0x31, 0x3a, 0x31, 0x33, 0x3a, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa"
+        ],
+        "TestCheckedNonNullTypeScript": [
+          "non_null_checked_test.go:75: stderr differs: got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x2f, 0x6e, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x5f, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x65, 0x64, 0x5f, 0x6c, 0x65, 0x74, 0x5f, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x33, 0x3a, 0x32, 0x36, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20,",
+          "non_null_checked_test.go:75: stderr differs: got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x2f, 0x6e, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x5f, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x33, 0x3a, 0x32, 0x36, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20, 0x75, 0x6e, 0x64, 0x65,",
+          "non_null_checked_test.go:75: stderr differs: got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x2f, 0x6e, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x5f, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x65, 0x64, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x2e, 0x74, 0x73, 0x3a, 0x33, 0x3a, 0x32, 0x34, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, exitC",
+          "non_null_checked_test.go:75: stderr differs: got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x6e, 0x6f, 0x6e, 0x2d, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x61, 0x74, 0x20, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x2f, 0x6e, 0x6f, 0x6e, 0x5f, 0x6e, 0x75, 0x6c, 0x6c, 0x5f, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x65, 0x64, 0x5f, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x2e, 0x74, 0x73, 0x3a, 0x33, 0x3a, 0x32, 0x34, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x21, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x20, 0x6f, 0x72, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69,"
+        ]
+      },
+      "skips": [],
+      "seconds": 8.198,
+      "panic": false
+    },
+    "M04": {
+      "fails": [
+        "TestNodeFSFileAgreesWithNode"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestNodeFSFileAgreesWithNode": [
+          "node_fs_file_test.go:133: native: stdout differs",
+          "node_fs_file_test.go:145: Node bytes, effects, ASan/UBSan and leak check passed",
+          "node_fs_file_test.go:133: native: stdout differs",
+          "node_fs_file_test.go:139: native filesystem: out: want file -rw------- \"reset-fd\", got file -rw------- \"-fd\"",
+          "node_fs_file_test.go:145: Node bytes, effects, ASan/UBSan and leak check passed"
+        ]
+      },
+      "skips": [],
+      "seconds": 8.475999999999999,
+      "panic": false
+    },
+    "W01": {
+      "fails": [
+        "TestCheckedNonNullTypeScript",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestNotYetLibraryObjectEntriesConstMutant": [
+          "notyet_library_object_entries_const_test.go:45: want stdout mismatch, got \"\""
+        ],
+        "TestParserNonNullSourceExtension": [
+          "non_null_parser_test.go:56: parser indexed-value mutant escaped Node: \"\""
+        ],
+        "TestCheckedNonNullTypeScript": [
+          "non_null_checked_test.go:95: no-check mutant escaped: oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0xa, 0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}"
+        ],
+        "TestNotYetLibraryRegexCallbackMutants": [
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_callback_test.go:20: want Node stdout mismatch, got \"\""
+        ],
+        "TestNotYetLibraryStringBoundsMutants": [
+          "notyet_library_string_bounds_test.go:94: want stdout mismatch, got \"\"",
+          "notyet_library_string_bounds_test.go:94: want stdout mismatch, got \"\"",
+          "notyet_library_string_bounds_test.go:94: want stdout mismatch, got \"\""
+        ],
+        "TestNotYetLibraryRegexOffsetMutants": [
+          "notyet_library_regex_offset_test.go:19: want Node stdout mismatch, got \"\"",
+          "notyet_library_regex_offset_test.go:19: want Node stdout mismatch, got \"\""
+        ]
+      },
+      "skips": [],
+      "seconds": 8.881,
+      "panic": false
+    },
+    "W02": {
+      "fails": [
+        "TestNodeFSFileMutants"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestNodeFSFileMutants": [
+          "node_fs_file_test.go:224: Node stdout did not catch the mutant",
+          "node_fs_file_test.go:224: Node stdout did not catch the mutant",
+          "node_fs_file_test.go:224: Node stdout did not catch the mutant",
+          "node_fs_file_test.go:224: Node stdout did not catch the mutant",
+          "node_fs_file_test.go:224: Node stdout did not catch the mutant",
+          "node_fs_file_test.go:224: Node stdout did not catch the mutant"
+        ]
+      },
+      "skips": [],
+      "seconds": 8.478,
+      "panic": false
+    },
+    "W03": {
+      "fails": [
+        "TestNonNullLiteralUnionInitializers"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestNonNullLiteralUnionInitializers": [
+          "non_null_migration_test.go:72: drop-check mutant was not caught by harmless output: oracle.run{stdout:[]uint8{0x31, 0xa}, stderr:[]uint8{}, exitCode:0}",
+          "non_null_migration_test.go:72: drop-check mutant was not caught by harmless output: oracle.run{stdout:[]uint8{0x31, 0xa}, stderr:[]uint8{}, exitCode:0}"
+        ]
+      },
+      "skips": [],
+      "seconds": 8.791,
+      "panic": false
+    },
+    "W04": {
+      "fails": [
+        "TestCheckedNonNullTypeScript"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestMigratedNonNullFixturesRemainCovered",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestCheckedNonNullTypeScript": [
+          "non_null_checked_test.go:130: representation-changing narrowing escaped the return representation assertion"
+        ]
+      },
+      "skips": [],
+      "seconds": 9.894,
+      "panic": false
+    },
+    "S01": {
+      "fails": [
+        "TestMigratedNonNullFixturesRemainCovered"
+      ],
+      "passed": [
+        "TestCheckedNonNullAdamicRefusal",
+        "TestCheckedNonNullCounts",
+        "TestCheckedNonNullTypeScript",
+        "TestImpossibleNonNullFixturesAreRefused",
+        "TestNodeFSFileAgreesWithNode",
+        "TestNodeFSFileMutants",
+        "TestNonNullAdamicRefusal",
+        "TestNonNullLiteralUnionInitializers",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestNotYetLibraryRegexCallbackMutants",
+        "TestNotYetLibraryRegexOffsetMutants",
+        "TestNotYetLibraryStringBoundsMutants",
+        "TestParserNonNullSourceExtension",
+        "TestPossibleNonNullAdamicAssertionsAreRefused"
+      ],
+      "messages": {
+        "TestMigratedNonNullFixturesRemainCovered": [
+          "non_null_migration_test.go:56: original runnable fixture lost its registration"
+        ]
+      },
+      "skips": [],
+      "seconds": 8.817,
+      "panic": false
+    }
+  },
+  "production_verdict_rows": [
+    "TestCheckedNonNullAdamicRefusal",
+    "TestCheckedNonNullCounts",
+    "TestImpossibleNonNullFixturesAreRefused",
+    "TestNodeFSFileAgreesWithNode",
+    "TestNonNullAdamicRefusal",
+    "TestPossibleNonNullAdamicAssertionsAreRefused"
+  ],
+  "outside_slice": "unknown for every mutant"
+}
