@@ -21,6 +21,11 @@ import (
 // process groups work on both Linux and macOS without an external timeout tool.
 func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	return typeSymbolExecContext(ctx, name, args...), cancel
+}
+
+// Both setup and check commands retain cancellation of compiler descendants.
+func typeSymbolExecContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -31,11 +36,13 @@ func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd
 		return err
 	}
 	command.WaitDelay = time.Second
-	return command, cancel
+	return command
 }
 
 func typeSymbolCommand(directory string, name string, args ...string) error {
-	command, cancel := typeSymbolExec(90*time.Second, name, args...)
+	// Building shared products has no test deadline; Loom bounds the unit.
+	ctx, cancel := context.WithCancel(context.Background())
+	command := typeSymbolExecContext(ctx, name, args...)
 	defer cancel()
 	command.Dir = directory
 	output, err := command.CombinedOutput()
