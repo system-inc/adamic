@@ -122,3 +122,9 @@ Merged main 0942c516 as d99dadcd without conflicts. Only landed stage1 tests cha
 | TestNativeAgreesWithNode/internal/oracle/testdata/census_unary_numeric.a | 0.57 |
 | TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a | 4.24 |
 | TestNativeAgreesWithNode | 0.14 |
+
+## Lane checks
+
+```text
+lane checks 1.8 s: gofmt and tools on 44 Go files, t.Parallel on 3 test packages; vet 3 packages
+```
