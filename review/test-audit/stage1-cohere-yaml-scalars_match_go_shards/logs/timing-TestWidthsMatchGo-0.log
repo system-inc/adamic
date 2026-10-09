@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:30:30.526570486Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:30:30.547092007Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo"}
+{"Time":"2026-10-09T13:30:30.547185976Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"=== RUN   TestWidthsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:30:46.271971715Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"    width_test.go:111: 1112320 width cases: every Unicode scalar and 256 emoji/context sequences; 2224684 exact Go answer bytes\n"}
+{"Time":"2026-10-09T13:30:46.272823091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"--- PASS: TestWidthsMatchGo (15.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:30:46.272833737Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Elapsed":15.73}
+{"Time":"2026-10-09T13:30:46.272856911Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:30:46.276560584Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t15.750s\n"}
+{"Time":"2026-10-09T13:30:46.276604779Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":15.75}

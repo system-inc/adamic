@@ -1,0 +1,65 @@
+[
+  {
+    "id": "W1",
+    "status": 1,
+    "wall": 7.099145183001383,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarsMatchGoPlantedFailure$",
+    "selector": "W1"
+  },
+  {
+    "id": "W2",
+    "status": 1,
+    "wall": 5.567984047998834,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSchemaMutants$",
+    "selector": "W2"
+  },
+  {
+    "id": "W3",
+    "status": 1,
+    "wall": 56.64296901600028,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestUnistMutants$",
+    "selector": "W3"
+  },
+  {
+    "id": "P1",
+    "status": 0,
+    "wall": 2.0718243819992495,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsLowered$",
+    "selector": "P1"
+  },
+  {
+    "id": "P2",
+    "status": 0,
+    "wall": 2.3249231390000205,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsNative$",
+    "selector": "P2"
+  },
+  {
+    "id": "P3",
+    "status": 0,
+    "wall": 2.192954321000798,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsGo$",
+    "selector": "P3"
+  },
+  {
+    "id": "S1",
+    "status": 1,
+    "wall": 2.081547561998377,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsLowered$",
+    "selector": "S1"
+  },
+  {
+    "id": "S2",
+    "status": 1,
+    "wall": 4.232563650999509,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsNative$",
+    "selector": "S2"
+  },
+  {
+    "id": "S3",
+    "status": 1,
+    "wall": 2.187013642000238,
+    "command": "timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsGo$",
+    "selector": "S3"
+  }
+]

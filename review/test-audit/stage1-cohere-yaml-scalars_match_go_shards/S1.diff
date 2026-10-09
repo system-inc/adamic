@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/scalars_match_go_shards_test.go
++++ b/stage1/cohere/yaml/scalars_match_go_shards_test.go
+@@ -113,7 +113,7 @@
+ 		inputs := scalarsMatchGoInputs(t, "yaml-scalars-lowered")
+ 		inputs.Flags = append(inputs.Flags, "scalar_main.ts: lower+native.C+javascript.JavaScript")
+ 		scalarsMatchGoLowered.directory = buildcache.Product(t, inputs, func(directory string) error {
+-			entry, err := filepath.Abs("scalar_main.ts")
++			entry, err := filepath.Abs("missing.ts")
+ 			if err != nil {
+ 				return err
+ 			}

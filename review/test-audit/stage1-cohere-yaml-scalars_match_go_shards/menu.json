@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/yaml/scalar.ts",
+    "line": 221,
+    "old": "result.type = mode === '>' ? 'BLOCK_FOLDED' : 'BLOCK_LITERAL';",
+    "new": "result.type = mode === '|' ? 'BLOCK_FOLDED' : 'BLOCK_LITERAL';",
+    "kind": "change constant"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/yaml/schemaPattern.ts",
+    "line": 125,
+    "old": "minimum = quantifier === '+' ? 1 : 0;",
+    "new": "minimum = quantifier === '+' ? 0 : 0;",
+    "kind": "change constant"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/yaml/unistContext.ts",
+    "line": 58,
+    "old": "        let line = 0;",
+    "new": "        let line = 1;",
+    "kind": "change constant"
+  },
+  {
+    "id": "M4",
+    "file": "internal/native/runtime/adamic.h",
+    "line": 742,
+    "old": "string->units == string->length + 1 && position >= 0",
+    "new": "string->units != string->length + 1 && position >= 0",
+    "kind": "flip condition"
+  }
+]

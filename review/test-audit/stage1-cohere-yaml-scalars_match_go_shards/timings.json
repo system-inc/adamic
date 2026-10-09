@@ -1,0 +1,266 @@
+[
+  {
+    "test": "TestProduct_YamlScalarsLowered",
+    "trial": 0,
+    "seconds": 2.229,
+    "wall": 4.43700896900009,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsLowered-0.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsLowered",
+    "trial": 1,
+    "seconds": 0.115,
+    "wall": 2.4501633279996895,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsLowered-1.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsLowered",
+    "trial": 2,
+    "seconds": 0.105,
+    "wall": 2.2286604159999115,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsLowered-2.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsNative",
+    "trial": 0,
+    "seconds": 3.337,
+    "wall": 5.4154049690005195,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsNative-0.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsNative",
+    "trial": 1,
+    "seconds": 0.213,
+    "wall": 2.152218511000683,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsNative-1.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsNative",
+    "trial": 2,
+    "seconds": 0.207,
+    "wall": 2.3475699099999474,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsNative-2.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsGo",
+    "trial": 0,
+    "seconds": 0.65,
+    "wall": 2.627962217999084,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsGo-0.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsGo",
+    "trial": 1,
+    "seconds": 0.118,
+    "wall": 2.217971848000161,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsGo-1.log"
+  },
+  {
+    "test": "TestProduct_YamlScalarsGo",
+    "trial": 2,
+    "seconds": 0.111,
+    "wall": 2.111825146999763,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestProduct_YamlScalarsGo-2.log"
+  },
+  {
+    "test": "TestScalarsMatchGo family",
+    "trial": 0,
+    "seconds": 5.501,
+    "wall": 7.6023852880007325,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestScalarsMatchGo-family-0.log"
+  },
+  {
+    "test": "TestScalarsMatchGo family",
+    "trial": 1,
+    "seconds": 5.348,
+    "wall": 7.225068634999843,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestScalarsMatchGo-family-1.log"
+  },
+  {
+    "test": "TestScalarsMatchGo family",
+    "trial": 2,
+    "seconds": 5.158,
+    "wall": 7.195039006001025,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestScalarsMatchGo-family-2.log"
+  },
+  {
+    "test": "TestScalarsMatchGoPlantedFailure",
+    "trial": 0,
+    "seconds": 0.766,
+    "wall": 2.9069434819994058,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestScalarsMatchGoPlantedFailure-0.log"
+  },
+  {
+    "test": "TestScalarsMatchGoPlantedFailure",
+    "trial": 1,
+    "seconds": 0.687,
+    "wall": 3.1402348449992132,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestScalarsMatchGoPlantedFailure-1.log"
+  },
+  {
+    "test": "TestScalarsMatchGoPlantedFailure",
+    "trial": 2,
+    "seconds": 0.833,
+    "wall": 2.980275193000125,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestScalarsMatchGoPlantedFailure-2.log"
+  },
+  {
+    "test": "TestSchemaMatchesGo",
+    "trial": 0,
+    "seconds": 3.015,
+    "wall": 5.3821699140007695,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSchemaMatchesGo-0.log"
+  },
+  {
+    "test": "TestSchemaMatchesGo",
+    "trial": 1,
+    "seconds": 2.4939999999999998,
+    "wall": 4.661594531000446,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSchemaMatchesGo-1.log"
+  },
+  {
+    "test": "TestSchemaMatchesGo",
+    "trial": 2,
+    "seconds": 2.6470000000000002,
+    "wall": 4.869426184999611,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSchemaMatchesGo-2.log"
+  },
+  {
+    "test": "TestSchemaMutants",
+    "trial": 0,
+    "seconds": 3.067,
+    "wall": 4.9431640790007805,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSchemaMutants-0.log"
+  },
+  {
+    "test": "TestSchemaMutants",
+    "trial": 1,
+    "seconds": 3.251,
+    "wall": 5.173798434998389,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSchemaMutants-1.log"
+  },
+  {
+    "test": "TestSchemaMutants",
+    "trial": 2,
+    "seconds": 2.99,
+    "wall": 4.972332744000596,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSchemaMutants-2.log"
+  },
+  {
+    "test": "TestSpeedCostProbes",
+    "trial": 0,
+    "seconds": 2.592,
+    "wall": 4.613050489999296,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSpeedCostProbes-0.log"
+  },
+  {
+    "test": "TestSpeedCostProbes",
+    "trial": 1,
+    "seconds": 2.615,
+    "wall": 4.842111492998811,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSpeedCostProbes-1.log"
+  },
+  {
+    "test": "TestSpeedCostProbes",
+    "trial": 2,
+    "seconds": 2.846,
+    "wall": 4.855685493999772,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestSpeedCostProbes-2.log"
+  },
+  {
+    "test": "TestUnistMatchesGo",
+    "trial": 0,
+    "seconds": 36.717,
+    "wall": 38.8215659969992,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestUnistMatchesGo-0.log"
+  },
+  {
+    "test": "TestUnistMatchesGo",
+    "trial": 1,
+    "seconds": 33.605,
+    "wall": 35.724162815000454,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestUnistMatchesGo-1.log"
+  },
+  {
+    "test": "TestUnistMatchesGo",
+    "trial": 2,
+    "seconds": 33.568,
+    "wall": 35.68401180199908,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestUnistMatchesGo-2.log"
+  },
+  {
+    "test": "TestUnistMutants",
+    "trial": 0,
+    "seconds": 53.948,
+    "wall": 56.1588489679998,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestUnistMutants-0.log"
+  },
+  {
+    "test": "TestUnistMutants",
+    "trial": 1,
+    "seconds": 53.664,
+    "wall": 55.88969838799858,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestUnistMutants-1.log"
+  },
+  {
+    "test": "TestUnistMutants",
+    "trial": 2,
+    "seconds": 54.446,
+    "wall": 56.47582525799953,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestUnistMutants-2.log"
+  },
+  {
+    "test": "TestWidthsMatchGo",
+    "trial": 0,
+    "seconds": 15.75,
+    "wall": 18.043613674999506,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestWidthsMatchGo-0.log"
+  },
+  {
+    "test": "TestWidthsMatchGo",
+    "trial": 1,
+    "seconds": 15.555,
+    "wall": 17.758512904998497,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestWidthsMatchGo-1.log"
+  },
+  {
+    "test": "TestWidthsMatchGo",
+    "trial": 2,
+    "seconds": 14.486,
+    "wall": 16.62703378600054,
+    "status": 0,
+    "path": "/tmp/u153/timing-TestWidthsMatchGo-2.log"
+  }
+]

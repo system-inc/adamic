@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:24:31.879128521Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:24:31.887571032Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo"}
+{"Time":"2026-10-09T13:24:31.887646724Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"=== RUN   TestProduct_YamlScalarsGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:31.887672482Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"=== PAUSE TestProduct_YamlScalarsGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:31.887674916Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo"}
+{"Time":"2026-10-09T13:24:31.887677099Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo"}
+{"Time":"2026-10-09T13:24:31.887678741Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"=== CONT  TestProduct_YamlScalarsGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:31.996099567Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"    scalars_match_go_shards_test.go:175: build yaml-scalars-go 8d6d661eacbf hit 0.09\n"}
+{"Time":"2026-10-09T13:24:31.996167197Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"--- PASS: TestProduct_YamlScalarsGo (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:31.996174057Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Elapsed":0.11}
+{"Time":"2026-10-09T13:24:31.996195228Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:31.997424062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.118s\n"}
+{"Time":"2026-10-09T13:24:31.997463951Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.118}

@@ -1,0 +1,38 @@
+--- a/stage1/cohere/yaml/schema_main.ts
++++ b/stage1/cohere/yaml/schema_main.ts
+@@ -1,33 +1,2 @@
+-// Compare fixed YAML tag tests. The input is trimmed to remove regex end-anchor differences.
+-import { panic, programArguments, readTextFile } from 'adamic';
+-import { schemaTags } from './schemaTags.ts';
+-function unescaped(text: string): string {
+-    const parts: string[] = [];
+-    let start = 0;
+-    for(let index = 0; index < text.length; index++) {
+-        if(text.slice(index, index + 1) !== '\\') continue;
+-        parts.push(text.slice(start, index));
+-        index++;
+-        const character = text.slice(index, index + 1);
+-        parts.push(character === 'n' ? '\n' : character === 'r' ? '\r' : character === 't' ? '\t' : character);
+-        start = index + 1;
+-    }
+-    parts.push(text.slice(start));
+-    return parts.join('');
+-}
+-const path = programArguments()[0] ?? panic('usage: schema_main.ts <cases>');
+-const read = readTextFile(path);
+-if(read.kind === 'Error') panic(read.message);
+-const core = schemaTags('1.2');
+-const legacy = schemaTags('1.1');
+-let number = 0;
+-for(const line of read.text.split('\n')) {
+-    if(line === '') continue;
+-    const tab = line.indexOf('\t');
+-    const text = unescaped(line.slice(tab + 1)).trim();
+-    const answers: string[] = [];
+-    for(const tag of core) answers.push(tag.pattern.test(text) ? '1' : '0');
+-    for(const tag of legacy) answers.push(tag.pattern.test(text) ? '1' : '0');
+-    console.log(`${number}|${answers.join('')}`);
+-    number++;
+-}
++import { programArguments } from 'adamic';
++programArguments();

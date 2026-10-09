@@ -1,0 +1,83 @@
+[
+  {
+    "id": "P1",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "func scalarsMatchGoLoweredProduct(t *testing.T) string {",
+    "new": "func scalarsMatchGoLoweredProduct(t *testing.T) string {\n\tif os.Getenv(\"ADAMIC_AUDIT_SELECTOR\") == \"P1\" { return \"\" }",
+    "kind": "empty product entry probe",
+    "line": 110,
+    "standalone_new": "func scalarsMatchGoLoweredProduct(t *testing.T) string {\n\tif true { return \"\" }"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "func scalarsMatchGoNativeProduct(t *testing.T) string {",
+    "new": "func scalarsMatchGoNativeProduct(t *testing.T) string {\n\tif os.Getenv(\"ADAMIC_AUDIT_SELECTOR\") == \"P2\" { return \"\" }",
+    "kind": "empty product entry probe",
+    "line": 142,
+    "standalone_new": "func scalarsMatchGoNativeProduct(t *testing.T) string {\n\tif true { return \"\" }"
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "func scalarsMatchGoGoProduct(t *testing.T) string {",
+    "new": "func scalarsMatchGoGoProduct(t *testing.T) string {\n\tif os.Getenv(\"ADAMIC_AUDIT_SELECTOR\") == \"P3\" { return \"\" }",
+    "kind": "empty product entry probe",
+    "line": 168,
+    "standalone_new": "func scalarsMatchGoGoProduct(t *testing.T) string {\n\tif true { return \"\" }"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "func scalarsMatchGoDisagrees(actual, expected []byte) bool { return !bytes.Equal(actual, expected) }",
+    "new": "func scalarsMatchGoDisagrees(actual, expected []byte) bool { if os.Getenv(\"ADAMIC_AUDIT_SELECTOR\") == \"W1\" { return false }; return !bytes.Equal(actual, expected) }",
+    "kind": "weaken witnessed disagreement",
+    "line": 245,
+    "standalone_new": "func scalarsMatchGoDisagrees(actual, expected []byte) bool { return false }"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "filepath.Abs(\"scalar_main.ts\")",
+    "new": "filepath.Abs(auditOption(\"scalar_main.ts\", \"missing.ts\", \"S1\"))",
+    "kind": "construction option change",
+    "line": 116,
+    "standalone_new": "filepath.Abs(\"missing.ts\")"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "os.ReadFile(filepath.Join(lowered, \"scalars.c\"))",
+    "new": "os.ReadFile(filepath.Join(lowered, auditOption(\"scalars.c\", \"missing.c\", \"S2\")))",
+    "kind": "construction option change",
+    "line": 153,
+    "standalone_new": "os.ReadFile(filepath.Join(lowered, \"missing.c\"))"
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "old": "\"-o\", filepath.Join(directory, \"go-scalars\")",
+    "new": "auditOption(\"-o\", \"-invalid\", \"S3\"), filepath.Join(directory, \"go-scalars\")",
+    "kind": "construction option change",
+    "line": 208,
+    "standalone_new": "\"-invalid\", filepath.Join(directory, \"go-scalars\")"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/yaml/schema_test.go",
+    "old": "if bytes.Equal(side.out, expected) {",
+    "new": "if bytes.Equal(side.out, expected) || os.Getenv(\"ADAMIC_AUDIT_SELECTOR\") == \"W2\" {",
+    "kind": "weaken witnessed equality",
+    "line": 167,
+    "standalone_new": "if true {"
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/yaml/unist_test.go",
+    "old": "if bytes.Equal(side.out, expected) {",
+    "new": "if bytes.Equal(side.out, expected) || os.Getenv(\"ADAMIC_AUDIT_SELECTOR\") == \"W3\" {",
+    "kind": "weaken witnessed equality",
+    "line": 148,
+    "standalone_new": "if true {"
+  }
+]

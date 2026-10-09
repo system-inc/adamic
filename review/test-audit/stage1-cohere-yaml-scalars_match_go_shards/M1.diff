@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/scalar.ts
++++ b/stage1/cohere/yaml/scalar.ts
+@@ -218,7 +218,7 @@
+             }
+             length += property.source.length;
+         }
+-        result.type = mode === '>' ? 'BLOCK_FOLDED' : 'BLOCK_LITERAL';
++        result.type = mode === '|' ? 'BLOCK_FOLDED' : 'BLOCK_LITERAL';
+         const lines: BlockLine[] = [];
+         if(token.source !== '') for(const line of token.source.split('\n')) lines.push(new BlockLine(line));
+         let chompStart = lines.length;

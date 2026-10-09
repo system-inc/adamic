@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T13:29:32.324722911Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:29:32.332559557Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo"}
+{"Time":"2026-10-09T13:29:32.332633727Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"=== RUN   TestProduct_YamlScalarsGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:32.332666045Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"=== PAUSE TestProduct_YamlScalarsGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:32.332668498Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo"}
+{"Time":"2026-10-09T13:29:32.332671493Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo"}
+{"Time":"2026-10-09T13:29:32.332673275Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"=== CONT  TestProduct_YamlScalarsGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:32.437361025Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"    scalars_match_go_shards_test.go:178: build yaml-scalars-go: Go scalar build: exit status 2\n","OutputType":"error"}
+{"Time":"2026-10-09T13:29:32.437411419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"        flag provided but not defined: -invalid\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:29:32.437415345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"        usage: go build [-o output] [build flags] [packages]\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:29:32.437421263Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"        Run 'go help build' for details.\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:29:32.437438369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Output":"--- FAIL: TestProduct_YamlScalarsGo (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:32.437441503Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsGo","Elapsed":0.1}
+{"Time":"2026-10-09T13:29:32.437462815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:32.43849942Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.113s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:32.438545358Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.114}

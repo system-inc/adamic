@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:24:24.590156571Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:24:24.599744365Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative"}
+{"Time":"2026-10-09T13:24:24.599811084Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"=== RUN   TestProduct_YamlScalarsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:24.599833226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"=== PAUSE TestProduct_YamlScalarsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:24.59983566Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative"}
+{"Time":"2026-10-09T13:24:24.599837853Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative"}
+{"Time":"2026-10-09T13:24:24.59985628Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"=== CONT  TestProduct_YamlScalarsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:24.694643547Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"    scalars_match_go_shards_test.go:115: build yaml-scalars-lowered 51de8eea2ef4 hit 0.08\n"}
+{"Time":"2026-10-09T13:24:24.802135564Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"    scalars_match_go_shards_test.go:152: build yaml-scalars-native b4b6ab0dec68 hit 0.08\n"}
+{"Time":"2026-10-09T13:24:24.802202974Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"--- PASS: TestProduct_YamlScalarsNative (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:24.802220279Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Elapsed":0.2}
+{"Time":"2026-10-09T13:24:24.802244595Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:24.803354298Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.213s\n"}
+{"Time":"2026-10-09T13:24:24.803376471Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.213}

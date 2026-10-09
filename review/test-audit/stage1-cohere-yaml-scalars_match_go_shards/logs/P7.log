@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:39:58.338135351Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:39:58.34525236Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo"}
+{"Time":"2026-10-09T13:39:58.345352067Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"=== RUN   TestWidthsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:00.70914079Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"    width_test.go:108: native ASan/UBSan/LSan: lengths 0 and 2224684\n","OutputType":"error"}
+{"Time":"2026-10-09T13:40:00.710587295Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Output":"--- FAIL: TestWidthsMatchGo (2.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:00.710605021Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestWidthsMatchGo","Elapsed":2.37}
+{"Time":"2026-10-09T13:40:00.710630298Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:00.713008083Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/yaml\t2.375s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:00.713024538Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":2.375}

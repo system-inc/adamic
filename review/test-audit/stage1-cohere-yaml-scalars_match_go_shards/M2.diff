@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/schemaPattern.ts
++++ b/stage1/cohere/yaml/schemaPattern.ts
+@@ -122,7 +122,7 @@
+             this.offset++;
+             const repeated = this.make('repeat');
+             this.node(repeated).children.push(result);
+-            this.node(repeated).minimum = quantifier === '+' ? 1 : 0;
++            this.node(repeated).minimum = quantifier === '+' ? 0 : 0;
+             this.node(repeated).maximum = quantifier === '?' ? 1 : -1;
+             if(quantifier === '{') {
+                 const start = this.offset;

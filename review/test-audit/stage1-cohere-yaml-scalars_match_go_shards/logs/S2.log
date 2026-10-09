@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:29:27.999741792Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:29:28.007758646Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative"}
+{"Time":"2026-10-09T13:29:28.007820998Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"=== RUN   TestProduct_YamlScalarsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:28.007844172Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"=== PAUSE TestProduct_YamlScalarsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:28.007846626Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative"}
+{"Time":"2026-10-09T13:29:28.007849109Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative"}
+{"Time":"2026-10-09T13:29:28.007850601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"=== CONT  TestProduct_YamlScalarsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:30.117745925Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"    scalars_match_go_shards_test.go:116: build yaml-scalars-lowered 51de8eea2ef4 miss 2.10\n"}
+{"Time":"2026-10-09T13:29:30.253011444Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"    scalars_match_go_shards_test.go:154: build yaml-scalars-native: open /tmp/u153/cache/S2/51de8eea2ef43418018d3550824b4eb66fb8aa363d72096501c6f9a4b55fc80e/missing.c: no such file or directory\n","OutputType":"error"}
+{"Time":"2026-10-09T13:29:30.253081037Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Output":"--- FAIL: TestProduct_YamlScalarsNative (2.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:30.253092604Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YamlScalarsNative","Elapsed":2.24}
+{"Time":"2026-10-09T13:29:30.253115568Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:30.253175766Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/yaml\t2.253s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:29:30.253185651Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":2.253}

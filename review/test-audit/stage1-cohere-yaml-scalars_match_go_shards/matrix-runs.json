@@ -1,0 +1,106 @@
+[
+  {
+    "id": "M1",
+    "regex": "^(TestScalarsMatchGo(Union|_[0-9]{3})|TestUnistMatchesGo)$",
+    "status": 1,
+    "wall": 48.31557762199918,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestScalarsMatchGo(Union|_[0-9]{3})|TestUnistMatchesGo)$",
+    "cache": "/tmp/u153/cache/M1"
+  },
+  {
+    "id": "M2",
+    "regex": "^(TestSchemaMatchesGo|TestUnistMatchesGo)$",
+    "status": 1,
+    "wall": 41.18182417400021,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestSchemaMatchesGo|TestUnistMatchesGo)$",
+    "cache": "/tmp/u153/cache/M2"
+  },
+  {
+    "id": "M3",
+    "regex": "^TestUnistMatchesGo$",
+    "status": 0,
+    "wall": 36.44853012400017,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestUnistMatchesGo$",
+    "cache": "/tmp/u153/cache/M3"
+  },
+  {
+    "id": "M4",
+    "regex": "^(TestScalarsMatchGo(Union|_[0-9]{3})|TestSchemaMatchesGo|TestSpeedCostProbes|TestUnistMatchesGo|TestWidthsMatchGo)$",
+    "status": 124,
+    "wall": 95.00885625900082,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestScalarsMatchGo(Union|_[0-9]{3})|TestSchemaMatchesGo|TestSpeedCostProbes|TestUnistMatchesGo|TestWidthsMatchGo)$",
+    "cache": "/tmp/u153/cache/M4"
+  },
+  {
+    "id": "M4-TestScalarsMatchGo",
+    "regex": "^TestScalarsMatchGo(Union|_[0-9]{3})$",
+    "status": 1,
+    "wall": 92.2900742010006,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarsMatchGo(Union|_[0-9]{3})$",
+    "cache": "/tmp/u153/cache/M4"
+  },
+  {
+    "id": "M4-TestSchemaMatchesGo",
+    "regex": "^TestSchemaMatchesGo$",
+    "status": 0,
+    "wall": 9.494907451000472,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSchemaMatchesGo$",
+    "cache": "/tmp/u153/cache/M4"
+  },
+  {
+    "id": "M4-TestSpeedCostProbes",
+    "regex": "^TestSpeedCostProbes$",
+    "status": 1,
+    "wall": 8.14784705600141,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSpeedCostProbes$",
+    "cache": "/tmp/u153/cache/M4"
+  },
+  {
+    "id": "M4-TestUnistMatchesGo",
+    "regex": "^TestUnistMatchesGo$",
+    "status": 1,
+    "wall": 93.14703450199886,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestUnistMatchesGo$",
+    "cache": "/tmp/u153/cache/M4"
+  },
+  {
+    "id": "M4-TestWidthsMatchGo",
+    "regex": "^TestWidthsMatchGo$",
+    "status": 1,
+    "wall": 18.321762387999115,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestWidthsMatchGo$",
+    "cache": "/tmp/u153/cache/M4"
+  },
+  {
+    "id": "P4",
+    "regex": "^TestScalarsMatchGo(Union|_[0-9]{3})$",
+    "status": 1,
+    "wall": 4.764996004998466,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarsMatchGo(Union|_[0-9]{3})$",
+    "cache": "/tmp/u153/cache/P4"
+  },
+  {
+    "id": "P5",
+    "regex": "^TestSchemaMatchesGo$",
+    "status": 1,
+    "wall": 3.238628139000866,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSchemaMatchesGo$",
+    "cache": "/tmp/u153/cache/P5"
+  },
+  {
+    "id": "P6",
+    "regex": "^TestUnistMatchesGo$",
+    "status": 1,
+    "wall": 5.502539237999372,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestUnistMatchesGo$",
+    "cache": "/tmp/u153/cache/P6"
+  },
+  {
+    "id": "P7",
+    "regex": "^TestWidthsMatchGo$",
+    "status": 1,
+    "wall": 4.872269535999294,
+    "command": "timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestWidthsMatchGo$",
+    "cache": "/tmp/u153/cache/P7"
+  }
+]

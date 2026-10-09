@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/scalars_match_go_shards_test.go
++++ b/stage1/cohere/yaml/scalars_match_go_shards_test.go
+@@ -150,7 +150,7 @@
+ 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"))
+ 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+ 		scalarsMatchGoNative.directory = buildcache.Product(t, inputs, func(directory string) error {
+-			source, err := os.ReadFile(filepath.Join(lowered, "scalars.c"))
++			source, err := os.ReadFile(filepath.Join(lowered, "missing.c"))
+ 			if err != nil {
+ 				return err
+ 			}

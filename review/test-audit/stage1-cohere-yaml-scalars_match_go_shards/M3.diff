@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/unistContext.ts
++++ b/stage1/cohere/yaml/unistContext.ts
+@@ -55,7 +55,7 @@
+         this.errorMessage = `Cannot read properties of ${receiver} (reading '${field}')`;
+     }
+     offset(offset: number): number {
+-        let line = 0;
++        let line = 1;
+         for(let index = 0; index < this.parser.lineStarts.length; index++) {
+             if((this.parser.lineStarts[index] ?? 0) > offset) break;
+             line = index + 1;
