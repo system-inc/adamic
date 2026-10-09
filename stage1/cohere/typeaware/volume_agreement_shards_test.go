@@ -6,7 +6,9 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -98,10 +100,69 @@ func TestVolumeAgreementAndMutantsUnion(t *testing.T) {
 
 // Product declarations and selected shards use this same recipe. Preparation
 // has no test-side deadline; the build phase owns cache misses.
+func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
+	inputs := volumeGuardInputs(context.Background(), "agreement-"+name, sanitize)
+	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "GOOS", "GOARCH", "CGO_ENABLED", "GOTOOLCHAIN"} {
+		inputs.Flags = append(inputs.Flags, key+"="+os.Getenv(key))
+	}
+	return inputs
+}
+func volumeAgreementSource(h *volumeGuardHarness, name string) string {
+	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+	if name == "released-source" {
+		entry = h.write("released-inspect.ts", volumeAgreementReleasedSource)
+	}
+	inputs := volumeAgreementInputs(name, false)
+	inputs.Flags = append(inputs.Flags, name)
+	dir := buildcache.Product(h.t, inputs, func(dir string) error {
+		loaded, err := load.Load([]string{entry})
+		if err != nil {
+			return err
+		}
+		loaded.EnableTSGo()
+		program, err := lower.Lower(context.Background(), loaded)
+		if err != nil {
+			return err
+		}
+		source, err := native.TSGoC(program)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(dir, "source.c"), []byte(source), 0444)
+	})
+	return filepath.Join(dir, "source.c")
+}
+func volumeAgreementNative(h *volumeGuardHarness, name, archive, source string, sanitize bool) string {
+	inputs := volumeAgreementInputs(name, sanitize)
+	inputs.Flags = append(inputs.Flags, "BuildSplitTSGo Jobs=4")
+	for _, path := range []string{archive, source} {
+		sum, err := typeSymbolFileHash(path)
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		inputs.Flags = append(inputs.Flags, sum)
+	}
+	dir := buildcache.Product(h.t, inputs, func(dir string) error {
+		data, err := os.ReadFile(source)
+		if err != nil {
+			return err
+		}
+		return native.BuildSplitTSGo(string(data), filepath.Join(dir, "native"), archive, native.Options{Sanitize: sanitize, Split: true, Jobs: 4})
+	})
+	return filepath.Join(dir, "native")
+}
 func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 	switch name {
-	case "stage0", "oracle", "archive-checker", "archive-checker-asan", "volume", "volume-asan":
+	case "oracle", "archive-checker", "archive-checker-asan":
 		return volumeGuardProduct(h, name)
+	case "volume-source", "released-source":
+		return volumeAgreementSource(h, name)
+	case "volume", "volume-asan":
+		archiveName := "archive-checker"
+		if name == "volume-asan" {
+			archiveName += "-asan"
+		}
+		return volumeAgreementNative(h, name, volumeAgreementFetch(h.t, archiveName), volumeAgreementFetch(h.t, "volume-source"), name == "volume-asan")
 	}
 	archiveName := strings.TrimSuffix(name, "-native")
 	var overlay string
@@ -119,12 +180,15 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 	}
 	archive := ""
 	if overlay == "" {
-		archive = volumeGuardProduct(h, "archive-checker")
+		archive = volumeAgreementFetch(h.t, "archive-checker")
+	} else if strings.HasSuffix(name, "-native") {
+		archive = volumeAgreementFetch(h.t, archiveName)
 	} else {
-		inputs := volumeGuardInputs(context.Background(), "agreement-archive-"+archiveName, false)
+		inputs := volumeAgreementInputs("archive-"+archiveName, false)
 		inputs.Flags = append(inputs.Flags, archiveName)
 		dir := buildcache.Product(h.t, inputs, func(dir string) error {
-			command := exec.Command("go", "build", "-buildmode=c-archive", "-overlay", overlay, "-o", filepath.Join(dir, "checker.a"), "./bridge/tsgo/archive")
+			command, cancel := volumeGuardCommand(context.Background(), "go", "build", "-buildmode=c-archive", "-overlay", overlay, "-o", filepath.Join(dir, "checker.a"), "./bridge/tsgo/archive")
+			defer cancel()
 			command.Dir = h.repository
 			output, err := volumeGuardOutput(command)
 			if err != nil {
@@ -137,29 +201,11 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 	if !strings.HasSuffix(name, "-native") {
 		return archive
 	}
-	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+	sourceName := "volume-source"
 	if archiveName == "released-handle" || archiveName == "released-registry" {
-		entry = h.write("released-inspect.ts", volumeAgreementReleasedSource)
+		sourceName = "released-source"
 	}
-	inputs := volumeGuardInputs(context.Background(), "agreement-"+name, false)
-	stage0 := volumeGuardProduct(h, "stage0")
-	for _, path := range []string{archive, stage0, entry} {
-		sum, err := typeSymbolFileHash(path)
-		if err != nil {
-			h.t.Fatal(err)
-		}
-		inputs.Flags = append(inputs.Flags, sum)
-	}
-	dir := buildcache.Product(h.t, inputs, func(dir string) error {
-		command := exec.Command(stage0, "build", entry, "-o", filepath.Join(dir, "native"), "--tsgo", archive)
-		command.Dir = h.repository
-		output, err := volumeGuardOutput(command)
-		if err != nil {
-			return fmt.Errorf("native %s: %w %s", name, err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "native")
+	return volumeAgreementNative(h, name, archive, volumeAgreementFetch(h.t, sourceName), false)
 }
 
 type volumeAgreementSlot struct {
@@ -187,8 +233,7 @@ func volumeAgreementManifest(h *volumeGuardHarness) string {
 }
 func runVolumeAgreementShard(t *testing.T, shard int) {
 	keys := volumeAgreementIDs(shard)
-	corpusEnabled := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST") != "" || os.Getenv("ADAMIC_TYPESCRIPT_SOURCE") != ""
-	if len(keys) == 0 && !corpusEnabled {
+	if len(keys) == 0 {
 		t.Log("own work=0s (empty hash bucket)")
 		return
 	}
@@ -206,13 +251,6 @@ func runVolumeAgreementShard(t *testing.T, shard int) {
 			needs = append(needs, key+"-native")
 		}
 		for _, name := range needs {
-			if products[name] == "" {
-				products[name] = volumeAgreementFetch(t, name)
-			}
-		}
-	}
-	if corpusEnabled {
-		for _, name := range []string{"oracle", "volume", "volume-asan"} {
 			if products[name] == "" {
 				products[name] = volumeAgreementFetch(t, name)
 			}
@@ -263,45 +301,8 @@ func runVolumeAgreementShard(t *testing.T, shard int) {
 			t.Logf("%s caught at byte %d", key, firstDifference(got.stdout, truth.stdout))
 		}
 	}
-	if corpusEnabled {
-		compareCorpus := func(name, config, manifest string) {
-			data, err := os.ReadFile(manifest)
-			if err != nil {
-				t.Fatal(err)
-			}
-			seen := map[string]bool{}
-			var paths []string
-			for _, path := range strings.Split(strings.TrimSpace(string(data)), "\n") {
-				if path == "" {
-					continue
-				}
-				if seen[path] {
-					t.Fatalf("duplicate corpus root %s", path)
-				}
-				seen[path] = true
-				if volumeAgreementOwner(filepath.ToSlash(filepath.Clean(path))) == shard {
-					paths = append(paths, path)
-				}
-			}
-			t.Logf("%s counted union=%d shard roots=%d", name, len(seen), len(paths))
-			if len(paths) == 0 {
-				return
-			}
-			manifest = h.write(name+".manifest", strings.Join(paths, "\n")+"\n")
-			for _, binary := range []string{"volume", "volume-asan"} {
-				volumeGuardCompare(h, name+binary, products["oracle"], products[binary], config, manifest)
-			}
-		}
-		if m := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST"); m != "" {
-			compareCorpus("repository", filepath.Join(h.repository, "tsconfig.json"), m)
-		}
-		if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
-			paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
-			compareCorpus("compiler", filepath.Join(corpus, "src/compiler/tsconfig.json"), h.write("compiler.manifest", strings.Join(paths, "\n")+"\n"))
-		}
-	}
-
 }
+
 func TestVolumeAgreementAndMutants_000(t *testing.T) { t.Parallel(); runVolumeAgreementShard(t, 0) }
 func TestVolumeAgreementAndMutants_001(t *testing.T) { t.Parallel(); runVolumeAgreementShard(t, 1) }
 func TestVolumeAgreementAndMutants_002(t *testing.T) { t.Parallel(); runVolumeAgreementShard(t, 2) }

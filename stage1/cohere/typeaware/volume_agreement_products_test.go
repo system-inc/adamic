@@ -5,12 +5,6 @@ import (
 	"time"
 )
 
-func TestProduct_volume_agreement_stage0(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	volumeAgreementFetch(t, "stage0")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
-}
 func TestProduct_volume_agreement_oracle(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
@@ -225,5 +219,18 @@ func TestProduct_volume_agreement_released_registry_native(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	volumeAgreementFetch(t, "released-registry-native")
+	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+}
+
+func TestProduct_volume_agreement_volume_source(t *testing.T) {
+	t.Parallel()
+	started := time.Now()
+	volumeAgreementFetch(t, "volume-source")
+	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+}
+func TestProduct_volume_agreement_released_source(t *testing.T) {
+	t.Parallel()
+	started := time.Now()
+	volumeAgreementFetch(t, "released-source")
 	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
