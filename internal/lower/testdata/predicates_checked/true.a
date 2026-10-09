@@ -1,0 +1,3 @@
+function isNumber(value: number | string): value is number { return true; }
+function use(value: number | string): void { if (isNumber(value)) console.log("claimed"); }
+use("text");

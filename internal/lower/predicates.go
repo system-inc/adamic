@@ -346,9 +346,10 @@ func predicateTrueType(c *checker.Checker) *checker.Type {
 // verified helpers and truthiness assertions; tag-only facts use checked views.
 func (l *lowering) predicateRefusal(node *ast.Node) error {
 	if node.Parent.Kind == ast.KindFunctionDeclaration && node.Parent.Body() == nil && l.censusImplementation(node.Parent) != nil {
-		// TODO: .a refusal mode must prove the overload through its implementation
-		// here and refuse an over-promising declaration. .ts keeps call-site checks.
-		return nil
+		if l.checkedAssertionSource(node) || l.predicateOverloadProven(l.censusImplementation(node.Parent), node.Parent) {
+			return nil
+		}
+		return predicateFailure(l, node, "the overload implementation does not prove both directions")
 	}
 	if l.predicateParameter(node) != nil {
 		return nil
@@ -359,6 +360,9 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 	}
 	proof, err := l.provePredicate(node)
 	if err != nil {
+		if l.checkedAssertionSource(node) && node.Parent.Kind == ast.KindFunctionDeclaration && node.Parent.Body() != nil {
+			return nil // Every direct call validates this claim; other calls stay refused.
+		}
 		return original
 	}
 	if proof.TaggedView {
@@ -483,6 +487,12 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			return l.notYet(node, "an indirect call of a checked predicate overload")
 		}
 	}
+	if declaration := signature.Declaration(); declaration != nil && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate && (declaration.Body() != nil || l.censusImplementation(declaration) != nil) && l.checkedAssertionSource(declaration) && !l.checkedPredicateBodyProven(declaration.Type()) {
+		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+		if declaration.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(callee) || l.symbol(callee) != l.symbol(declaration.Name()) {
+			return l.notYet(node, "an indirect call of a checked predicate")
+		}
+	}
 	for index, parameter := range signature.Parameters() {
 		if index >= len(node.AsCallExpression().Arguments.Nodes) {
 			continue
@@ -557,7 +567,7 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			if annotation.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
 				return failure()
 			}
-			if err := l.predicateRefusal(implementation.Type()); err != nil {
+			if !l.checkedPredicateArgumentProven(implementation.Type()) {
 				return failure()
 			}
 		}

@@ -31,16 +31,16 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"overload_some_false_valid", "undefined\n", "", "", false},
 		{"overload_some_false_read", "array\n", "", "overload 1 of some result: predicate array is false", true},
 		{"overload_some_objects", "1\n", "", "", false},
-		{"overload_some_true_only", "absent\n", "", "", false},
+		{"overload_some_true_only", "absent\n", "", "false", true},
 		{"overload_callback", "true\n", "", "", false},
 		{"overload_erased", "true:false\n", "", "", false},
 		{"overload_checked", "called\ntext\n", "called\n", "overload 1 of lie result: predicate value is false", true},
 		{"overload_false", "called\n1\n", "called\n", "overload 1 of lie result: predicate value is false", true},
-		{"overload_once", "argument\ncalled\ntrue\n", "", "", false},
+		{"overload_once", "argument\ncalled\ntrue\n", "argument\ncalled\n", "true", true},
 		{"overload_every", "name\ntrue\n", "", "", false},
 		{"overload_array_alias", "called\n1\n", "called\n", "overload 1 of corrupt result: predicate array is false", true},
 		{"overload_assertion", "called\ntext\n", "called\n", "overload 1 of lie result: predicate value is false", true},
-		{"overload_nominal", "called\ntrue\n", "", "", false},
+		{"overload_nominal", "called\ntrue\n", "called\n", "true", true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			extension := ".a"
@@ -74,20 +74,17 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			lowerInput := lowerSource
-			if extension == ".ts" {
-				lowerInput = lowerTypeScriptAssertionSource
-			}
+			lowerInput := lowerTypeScriptAssertionSource // Checked witnesses opt into .ts; .a now requires a body proof.
 			program, err := lowerInput(t, string(source))
 			if err != nil {
 				t.Fatal(err)
 			}
 			if counts, ok := map[string][3]int{
-				"overload_some_empty":      {2, 0, 2},
-				"overload_some_false_read": {1, 1, 1},
-				"overload_some_true_only":  {1, 1, 1},
-				"overload_checked":         {1, 1, 1},
-				"overload_false":           {1, 1, 1},
+				"overload_some_empty":      {0, 1, 1},
+				"overload_some_false_read": {0, 2, 0},
+				"overload_some_true_only":  {0, 2, 0},
+				"overload_checked":         {0, 2, 0},
+				"overload_false":           {0, 2, 0},
 				"overload_assertion":       {0, 1, 0},
 			}[probe.name]; ok {
 				got := program.PredicateChecks
@@ -105,7 +102,17 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			stdout, stderr, code := probe.nodeOut, "", 0
 			if probe.checked {
 				stdout = probe.checkedOut
-				stderr = "adamic: panic: " + probe.message + "\n"
+				site := program.PredicateChecks.Sites[0]
+				branch := "true"
+				if probe.name == "overload_false" || (probe.name == "overload_some_false_read" || probe.name == "overload_some_true_only") {
+					branch = "false"
+				}
+				if probe.name == "overload_assertion" {
+					branch = "asserts"
+				}
+				reason := site.Directions[0].Reason
+				types := strings.Split(reason, " -> ")
+				stderr = "adamic: panic: predicate " + site.Function + " at " + site.Where + " " + branch + " branch: source " + types[0] + ", target " + types[1] + "\n"
 				code = 70
 			}
 			binary := filepath.Join(t.TempDir(), "native")

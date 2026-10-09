@@ -12,10 +12,12 @@ import (
 const predicateCountsHeader = `
 ## Predicate direction counts
 
-Each emitted overload predicate call reports its true and false directions (assertions
-have only a true direction). Unobservable directions have no narrowed read in their
-flow region; they are included in Proven and also reported separately. These are
-compiler proof counts, independent of the runtime allocation counts above.
+Each overload witness is loaded from a temporary .ts copy: checked admission is
+explicit, while its stored .a source remains a Node witness. True directions are
+checked once; false directions are checked where the checker excludes part of the
+incoming type. Assertions have an asserts direction. Unobservable directions are
+reported separately and are not body proofs. These are compiler proof counts,
+independent of the runtime allocation counts above.
 
 | Fixture | Call sites | Proven | Checked | Unobservable |
 |---|---:|---:|---:|---:|
@@ -37,7 +39,15 @@ func predicateCountsTable(t *testing.T) string {
 	table.WriteString(predicateCountsHeader)
 	for _, path := range paths {
 
-		program, err := lowered(t, path)
+		source, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		checkedPath := filepath.Join(t.TempDir(), "main.ts")
+		if err = os.WriteFile(checkedPath, source, 0644); err != nil {
+			t.Fatal(err)
+		}
+		program, err := lowered(t, checkedPath)
 		if err != nil {
 			t.Fatalf("%s: %v", path, err)
 		}
@@ -49,7 +59,7 @@ func predicateCountsTable(t *testing.T) string {
 			}
 			seen := map[string]bool{}
 			for _, direction := range site.Directions {
-				if (direction.Direction != "true" && direction.Direction != "false") || seen[direction.Direction] || direction.Reason == "" {
+				if (direction.Direction != "true" && direction.Direction != "false" && direction.Direction != "asserts") || seen[direction.Direction] || direction.Reason == "" {
 					t.Fatalf("invalid direction: %+v", direction)
 				}
 				seen[direction.Direction] = true
@@ -59,7 +69,6 @@ func predicateCountsTable(t *testing.T) string {
 				case "checked":
 					checked++
 				case "unobservable":
-					proven++
 					unobservable++
 				default:
 					t.Fatalf("unknown predicate status: %+v", direction)

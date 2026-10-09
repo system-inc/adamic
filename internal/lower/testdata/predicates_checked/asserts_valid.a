@@ -1,0 +1,3 @@
+function assertNumber(value: number | string, enabled: boolean): asserts value is number { if (enabled) console.log("called"); }
+function use(value: number | string): void { assertNumber(value,true); console.log(`${value}`); }
+use(7);

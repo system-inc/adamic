@@ -1,0 +1,3 @@
+function isOne(value: number): value is 1 { return false; }
+function use(value: number): void { if (isOne(value)) {} else {} console.log("continued"); }
+use(1);
