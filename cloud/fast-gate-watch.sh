@@ -409,7 +409,6 @@ requests=${ADAMIC_FULL_GATE_REQUESTS:-${HOME}/.adamic-full-gate/requests}
 assignStarBoxes() {
   local starRunning count sha branch box
   starSeconds=""
-  [ -s "${requests}" ] || return 0
   starRunning=$(cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
     isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
   done | sort -u)
@@ -426,7 +425,27 @@ assignStarBoxes() {
     starRunning="${starRunning}
 ${box}"
     count=$((count + 1))
-  done < "${requests}"
+  done < <(cat "${requests}" 2> /dev/null)
+  # Then queued front tips the requests don't name, in the front file's order (Oct 9 04:38Z: wave 0's floor1, ruled
+  # ahead of V3's train, waited behind V3 on Server because only the train's requests could take a second box).
+  local glob queuedBranch class queued
+  for glob in ${frontList[@]+"${frontList[@]}"}; do
+    [ "${count}" -ge 2 ] && break
+    queuedBranch=""
+    while read -r class queued branch sha; do
+      [[ ${branch} == ${glob} ]] && { queuedBranch=${branch}; break; }
+    done < "${state}/queue"
+    [ -n "${queuedBranch}" ] || continue
+    starSecondBoxOf "${queuedBranch}"
+    [ -z "${starSecond}" ] || continue
+    box=$(pickStarBox "${starRunning}")
+    [ -n "${box}" ] || break
+    starSeconds="${starSeconds}${queuedBranch} ${box}
+"
+    starRunning="${starRunning}
+${box}"
+    count=$((count + 1))
+  done
 }
 # The box with a big slot, not Server and not the star's already, that the star costs least: idle first, else the
 # one whose best-ranked running gate ranks lowest (position * 100 + kind, as the queue ranks).

@@ -628,6 +628,23 @@ class WatchTests(unittest.TestCase):
         self.assertNotIn('preempted cloud/land-lint', w.read('output'))
         self.assertNotIn('cloud/land-train-4-v3 ', w.read('starts'))
 
+    def test_a_front_tip_outside_the_requests_takes_a_second_box_when_server_is_the_star_s(self):
+        # Oct 9 04:38Z: wave 0's floor1, ruled ahead of V3's train, waited behind V3 on Server: only the train's
+        # requests could take a second star box.
+        w = self.reservation('server B\nworkshop B\nother B\n', [('cloud/land-train-3-v2', 'B'), ('codex/side', 'B'), ('cloud/land-lint', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-floor1-*\ncloud/land-train-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 3)
+        boxes = {x.split()[0]: x.split()[-1] for x in w.read('starts').splitlines()}
+        self.assertEqual(boxes['cloud/land-train-3-v2'], 'server')
+        w.tips.append(('cloud/land-floor1-x', 'd' * 40))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: 'preempted codex/side' in w.read('output'))
+        w.wait(lambda: any(x.startswith('cloud/land-floor1-x ') for x in w.read('starts').splitlines()))
+        start = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-floor1-x ')][0]
+        self.assertTrue(start.endswith(' B ' + boxes['codex/side']), start)
+        self.assertNotIn('preempted cloud/land-train-3-v2', w.read('output'))
+
     def test_the_train_runs_bottom_first_among_equal_keys(self):
         # Train-3 queued after train-2 would win a tie newest-first; the lower train number goes first.
         w = self.reservation('server B\n', [('cloud/land-train-2-v1', 'B'), ('cloud/land-train-3-v2', 'B')], release=False)
