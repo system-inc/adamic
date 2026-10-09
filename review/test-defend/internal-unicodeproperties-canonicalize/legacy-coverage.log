@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T16:10:49.524083864Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-09T16:10:49.526478574Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode"}
+{"Time":"2026-10-09T16:10:49.526545502Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Output":"=== RUN   TestCanonicalizeLegacyNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:49.57741601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Output":"legacy canonicalize values: 65536 code units against Node toUpperCase, disagreements 0\n"}
+{"Time":"2026-10-09T16:10:56.859967257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Output":"legacy canonicalize: 65536 patterns x 65536 code units = 4294967296, disagreements 0\n"}
+{"Time":"2026-10-09T16:10:56.860032473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Output":"--- PASS: TestCanonicalizeLegacyNode (7.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:56.86003726Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Elapsed":7.33}
+{"Time":"2026-10-09T16:10:56.860063368Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:56.860468294Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"coverage: 13.5% of statements in ./internal/unicodeproperties\n"}
+{"Time":"2026-10-09T16:10:56.86142297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t7.337s\tcoverage: 13.5% of statements in ./internal/unicodeproperties\n"}
+{"Time":"2026-10-09T16:10:56.86144365Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Elapsed":7.337}

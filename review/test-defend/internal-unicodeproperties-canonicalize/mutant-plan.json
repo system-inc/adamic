@@ -1,0 +1,30 @@
+[
+  {
+    "id": "D1",
+    "row": "TestCanonicalizeLegacyNode",
+    "file": "canonicalize.go",
+    "menu": "return early",
+    "change": "After canonicalization, return singleton {codeUnit} when canon != codeUnit; preserve canonical representatives and all tables."
+  },
+  {
+    "id": "D2",
+    "row": "TestCanonicalizeUnicodeNodeRange family",
+    "file": "canonicalize_tables.go",
+    "menu": "change constant and drop class-member constant",
+    "change": "Coherently split U+0042/U+0062: fold uppercase to itself and remove uppercase from lowercase class. Other entries unchanged."
+  },
+  {
+    "id": "D3",
+    "row": "TestCanonicalizeUnicodeNodeRange family",
+    "file": "canonicalize_tables.go",
+    "menu": "change constant and drop class-member constant",
+    "change": "Coherently split U+0043/U+0063: fold uppercase to itself and remove uppercase from lowercase class. Other entries unchanged."
+  },
+  {
+    "id": "D4",
+    "row": "TestCanonicalizeUnicodeNodeRange family",
+    "file": "canonicalize_tables.go",
+    "menu": "change constant and drop class-member constant",
+    "change": "Coherently split U+0044/U+0064: fold uppercase to itself and remove uppercase from lowercase class. Other entries unchanged."
+  }
+]

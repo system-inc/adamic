@@ -1,0 +1,22 @@
+diff --git a/internal/unicodeproperties/canonicalize_tables.go b/internal/unicodeproperties/canonicalize_tables.go
+index 2b93a5c1..ec48326b 100644
+--- a/internal/unicodeproperties/canonicalize_tables.go
++++ b/internal/unicodeproperties/canonicalize_tables.go
+@@ -19,7 +19,7 @@ package unicodeproperties
+ // unicodeFold is from, to. Only mappings that change the code point are stored.
+ var unicodeFold = [][2]uint32{
+ 	{0x0041, 0x0061},
+-	{0x0042, 0x0062},
++	{0x0042, 0x0042},
+ 	{0x0043, 0x0063},
+ 	{0x0044, 0x0064},
+ 	{0x0045, 0x0065},
+@@ -3020,7 +3020,7 @@ var unicodeClassCanon = []uint32{
+ 
+ var unicodeClass = [][]uint32{
+ 	{0x0041, 0x0061},
+-	{0x0042, 0x0062},
++	{0x0062},
+ 	{0x0043, 0x0063},
+ 	{0x0044, 0x0064},
+ 	{0x0045, 0x0065},

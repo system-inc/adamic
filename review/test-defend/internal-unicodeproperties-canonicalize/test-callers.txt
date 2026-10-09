@@ -1,0 +1,113 @@
+internal/unicodeproperties/canonicalize_test.go:37:		if got := CanonicalizeUnicode(pair.from); got != pair.to {
+internal/unicodeproperties/canonicalize_test.go:38:			t.Errorf("CanonicalizeUnicode(U+%04X) = U+%04X, want U+%04X", pair.from, got, pair.to)
+internal/unicodeproperties/canonicalize_test.go:62:		if got := CanonicalizeLegacy(pair.from); got != pair.to {
+internal/unicodeproperties/canonicalize_test.go:63:			t.Errorf("CanonicalizeLegacy(U+%04X) = U+%04X, want U+%04X", pair.from, got, pair.to)
+internal/unicodeproperties/canonicalize_test.go:67:	if got, want := UnicodeEquivalents(0x212A), []rune{0x004B, 0x006B, 0x212A}; !sameRunes(got, want) {
+internal/unicodeproperties/canonicalize_test.go:68:		t.Errorf("UnicodeEquivalents(kelvin) = %s, want %s", formatRunes(got), formatRunes(want))
+internal/unicodeproperties/canonicalize_test.go:70:	if got, want := UnicodeEquivalents('K'), []rune{0x004B, 0x006B, 0x212A}; !sameRunes(got, want) {
+internal/unicodeproperties/canonicalize_test.go:71:		t.Errorf("UnicodeEquivalents(K) = %s, want %s", formatRunes(got), formatRunes(want))
+internal/unicodeproperties/canonicalize_test.go:73:	if got, want := LegacyEquivalents(0x212A), []uint16{0x212A}; !sameUnits(got, want) {
+internal/unicodeproperties/canonicalize_test.go:74:		t.Errorf("LegacyEquivalents(kelvin) = %s", formatUnits(got))
+internal/unicodeproperties/canonicalize_test.go:76:	if got, want := LegacyEquivalents(0x017F), []uint16{0x017F}; !sameUnits(got, want) {
+internal/unicodeproperties/canonicalize_test.go:77:		t.Errorf("LegacyEquivalents(long s) = %s", formatUnits(got))
+internal/unicodeproperties/canonicalize_test.go:79:	if got, want := LegacyEquivalents('S'), []uint16{'S', 's'}; !sameUnits(got, want) {
+internal/unicodeproperties/canonicalize_test.go:80:		t.Errorf("LegacyEquivalents(S) = %s", formatUnits(got))
+internal/unicodeproperties/canonicalize_test.go:82:	if got, want := UnicodeEquivalents('S'), []rune{'S', 's', 0x017F}; !sameRunes(got, want) {
+internal/unicodeproperties/canonicalize_test.go:83:		t.Errorf("UnicodeEquivalents(S) = %s", formatRunes(got))
+internal/unicodeproperties/canonicalize_test.go:85:	if CanonicalizeUnicode(-1) != -1 || CanonicalizeUnicode(0x110000) != 0x110000 {
+internal/unicodeproperties/canonicalize_test.go:86:		t.Error("CanonicalizeUnicode changed an argument that is not a code point")
+internal/unicodeproperties/canonicalize_test.go:88:	if UnicodeEquivalents(-1) != nil || UnicodeEquivalents(0x110000) != nil {
+internal/unicodeproperties/canonicalize_test.go:89:		t.Error("UnicodeEquivalents of a non-code-point is not nil")
+internal/unicodeproperties/canonicalize_test.go:91:	if got := UnicodeEquivalents(0x10FFFF); len(got) != 1 || got[0] != 0x10FFFF {
+internal/unicodeproperties/canonicalize_test.go:98:	if len(unicodeClass) != len(unicodeClassCanon) || len(legacyClass) != len(legacyClassCanon) {
+internal/unicodeproperties/canonicalize_test.go:100:			len(unicodeClass), len(unicodeClassCanon), len(legacyClass), len(legacyClassCanon))
+internal/unicodeproperties/canonicalize_test.go:107:	for index := 1; index < len(unicodeClassCanon); index++ {
+internal/unicodeproperties/canonicalize_test.go:108:		if unicodeClassCanon[index] <= unicodeClassCanon[index-1] {
+internal/unicodeproperties/canonicalize_test.go:109:			t.Fatalf("unicodeClassCanon not sorted at %d", index)
+internal/unicodeproperties/canonicalize_test.go:113:		canon := CanonicalizeUnicode(cp)
+internal/unicodeproperties/canonicalize_test.go:114:		if CanonicalizeUnicode(canon) != canon {
+internal/unicodeproperties/canonicalize_test.go:117:		equivalents := UnicodeEquivalents(cp)
+internal/unicodeproperties/canonicalize_test.go:127:			if CanonicalizeUnicode(member) != canon {
+internal/unicodeproperties/canonicalize_test.go:128:				t.Fatalf("U+%04X is listed with U+%04X but folds to U+%04X", member, cp, CanonicalizeUnicode(member))
+internal/unicodeproperties/canonicalize_test.go:134:		canon := CanonicalizeLegacy(codeUnit)
+internal/unicodeproperties/canonicalize_test.go:135:		if CanonicalizeLegacy(canon) != canon {
+internal/unicodeproperties/canonicalize_test.go:138:		equivalents := LegacyEquivalents(codeUnit)
+internal/unicodeproperties/canonicalize_test.go:148:			if CanonicalizeLegacy(member) != canon {
+internal/unicodeproperties/canonicalize_test.go:149:				t.Fatalf("legacy U+%04X is listed with U+%04X but maps to U+%04X", member, codeUnit, CanonicalizeLegacy(member))
+internal/unicodeproperties/canonicalize_test.go:160:func TestCanonicalizeLegacyNode(t *testing.T) {
+internal/unicodeproperties/canonicalize_test.go:180:			equivalents := LegacyEquivalents(uint16(cu))
+internal/unicodeproperties/canonicalize_test.go:203:func TestCanonicalizeUnicodeNodeRange0(t *testing.T) { runUnicodeCanonicalizeRange(t, 0) }
+internal/unicodeproperties/canonicalize_test.go:206:func TestCanonicalizeUnicodeNodeRange1(t *testing.T) { runUnicodeCanonicalizeRange(t, 1) }
+internal/unicodeproperties/canonicalize_test.go:209:func TestCanonicalizeUnicodeNodeRange2(t *testing.T) { runUnicodeCanonicalizeRange(t, 2) }
+internal/unicodeproperties/canonicalize_test.go:212:func TestCanonicalizeUnicodeNodeRange3(t *testing.T) { runUnicodeCanonicalizeRange(t, 3) }
+internal/unicodeproperties/canonicalize_test.go:215:func TestCanonicalizeUnicodeNodeRange4(t *testing.T) { runUnicodeCanonicalizeRange(t, 4) }
+internal/unicodeproperties/canonicalize_test.go:218:func TestCanonicalizeUnicodeNodeRange5(t *testing.T) { runUnicodeCanonicalizeRange(t, 5) }
+internal/unicodeproperties/canonicalize_test.go:221:func TestCanonicalizeUnicodeNodeRange6(t *testing.T) { runUnicodeCanonicalizeRange(t, 6) }
+internal/unicodeproperties/canonicalize_test.go:224:func TestCanonicalizeUnicodeNodeRange7(t *testing.T) { runUnicodeCanonicalizeRange(t, 7) }
+internal/unicodeproperties/canonicalize_test.go:227:func TestCanonicalizeUnicodeNodeRange8(t *testing.T) { runUnicodeCanonicalizeRange(t, 8) }
+internal/unicodeproperties/canonicalize_test.go:230:func TestCanonicalizeUnicodeNodeRange9(t *testing.T) { runUnicodeCanonicalizeRange(t, 9) }
+internal/unicodeproperties/canonicalize_test.go:233:func TestCanonicalizeUnicodeNodeRange10(t *testing.T) { runUnicodeCanonicalizeRange(t, 10) }
+internal/unicodeproperties/canonicalize_test.go:236:func TestCanonicalizeUnicodeNodeRange11(t *testing.T) { runUnicodeCanonicalizeRange(t, 11) }
+internal/unicodeproperties/canonicalize_test.go:239:func TestCanonicalizeUnicodeNodeRange12(t *testing.T) { runUnicodeCanonicalizeRange(t, 12) }
+internal/unicodeproperties/canonicalize_test.go:242:func TestCanonicalizeUnicodeNodeRange13(t *testing.T) { runUnicodeCanonicalizeRange(t, 13) }
+internal/unicodeproperties/canonicalize_test.go:245:func TestCanonicalizeUnicodeNodeRange14(t *testing.T) { runUnicodeCanonicalizeRange(t, 14) }
+internal/unicodeproperties/canonicalize_test.go:248:func TestCanonicalizeUnicodeNodeRange15(t *testing.T) { runUnicodeCanonicalizeRange(t, 15) }
+internal/unicodeproperties/canonicalize_test.go:251:func TestCanonicalizeUnicodeNodeRange16(t *testing.T) { runUnicodeCanonicalizeRange(t, 16) }
+internal/unicodeproperties/canonicalize_test.go:254:func TestCanonicalizeUnicodeNodeRange17(t *testing.T) { runUnicodeCanonicalizeRange(t, 17) }
+internal/unicodeproperties/canonicalize_test.go:257:func TestCanonicalizeUnicodeNodeRange18(t *testing.T) { runUnicodeCanonicalizeRange(t, 18) }
+internal/unicodeproperties/canonicalize_test.go:260:func TestCanonicalizeUnicodeNodeRange19(t *testing.T) { runUnicodeCanonicalizeRange(t, 19) }
+internal/unicodeproperties/canonicalize_test.go:263:func TestCanonicalizeUnicodeNodeRange20(t *testing.T) { runUnicodeCanonicalizeRange(t, 20) }
+internal/unicodeproperties/canonicalize_test.go:266:func TestCanonicalizeUnicodeNodeRange21(t *testing.T) { runUnicodeCanonicalizeRange(t, 21) }
+internal/unicodeproperties/canonicalize_test.go:269:func TestCanonicalizeUnicodeNodeRange22(t *testing.T) { runUnicodeCanonicalizeRange(t, 22) }
+internal/unicodeproperties/canonicalize_test.go:272:func TestCanonicalizeUnicodeNodeRange23(t *testing.T) { runUnicodeCanonicalizeRange(t, 23) }
+internal/unicodeproperties/canonicalize_test.go:275:func TestCanonicalizeUnicodeNodeRange24(t *testing.T) { runUnicodeCanonicalizeRange(t, 24) }
+internal/unicodeproperties/canonicalize_test.go:278:func TestCanonicalizeUnicodeNodeRange25(t *testing.T) { runUnicodeCanonicalizeRange(t, 25) }
+internal/unicodeproperties/canonicalize_test.go:281:func TestCanonicalizeUnicodeNodeRange26(t *testing.T) { runUnicodeCanonicalizeRange(t, 26) }
+internal/unicodeproperties/canonicalize_test.go:284:func TestCanonicalizeUnicodeNodeRange27(t *testing.T) { runUnicodeCanonicalizeRange(t, 27) }
+internal/unicodeproperties/canonicalize_test.go:287:func TestCanonicalizeUnicodeNodeRange28(t *testing.T) { runUnicodeCanonicalizeRange(t, 28) }
+internal/unicodeproperties/canonicalize_test.go:290:func TestCanonicalizeUnicodeNodeRange29(t *testing.T) { runUnicodeCanonicalizeRange(t, 29) }
+internal/unicodeproperties/canonicalize_test.go:293:func TestCanonicalizeUnicodeNodeRange30(t *testing.T) { runUnicodeCanonicalizeRange(t, 30) }
+internal/unicodeproperties/canonicalize_test.go:296:func TestCanonicalizeUnicodeNodeRange31(t *testing.T) { runUnicodeCanonicalizeRange(t, 31) }
+internal/unicodeproperties/canonicalize_test.go:299:func TestCanonicalizeUnicodeNodeRange32(t *testing.T) { runUnicodeCanonicalizeRange(t, 32) }
+internal/unicodeproperties/canonicalize_test.go:302:func TestCanonicalizeUnicodeNodeRange33(t *testing.T) { runUnicodeCanonicalizeRange(t, 33) }
+internal/unicodeproperties/canonicalize_test.go:334:	for index, canon := range unicodeClassCanon {
+internal/unicodeproperties/canonicalize_test.go:335:		members := unicodeClass[index]
+internal/unicodeproperties/canonicalize_test.go:470:	nontrivial := make(map[uint32]struct{}, len(unicodeClass)*2)
+internal/unicodeproperties/canonicalize_test.go:471:	for _, class := range unicodeClass {
+internal/unicodeproperties/shards_test.go:35:	{"TestCanonicalizeUnicodeNodeRange0", 0, 186},
+internal/unicodeproperties/shards_test.go:36:	{"TestCanonicalizeUnicodeNodeRange1", 186, 254},
+internal/unicodeproperties/shards_test.go:37:	{"TestCanonicalizeUnicodeNodeRange2", 254, 258},
+internal/unicodeproperties/shards_test.go:38:	{"TestCanonicalizeUnicodeNodeRange3", 258, 262},
+internal/unicodeproperties/shards_test.go:39:	{"TestCanonicalizeUnicodeNodeRange4", 262, 266},
+internal/unicodeproperties/shards_test.go:40:	{"TestCanonicalizeUnicodeNodeRange5", 266, 270},
+internal/unicodeproperties/shards_test.go:41:	{"TestCanonicalizeUnicodeNodeRange6", 270, 274},
+internal/unicodeproperties/shards_test.go:42:	{"TestCanonicalizeUnicodeNodeRange7", 274, 278},
+internal/unicodeproperties/shards_test.go:43:	{"TestCanonicalizeUnicodeNodeRange8", 278, 282},
+internal/unicodeproperties/shards_test.go:44:	{"TestCanonicalizeUnicodeNodeRange9", 282, 286},
+internal/unicodeproperties/shards_test.go:45:	{"TestCanonicalizeUnicodeNodeRange10", 286, 290},
+internal/unicodeproperties/shards_test.go:46:	{"TestCanonicalizeUnicodeNodeRange11", 290, 294},
+internal/unicodeproperties/shards_test.go:47:	{"TestCanonicalizeUnicodeNodeRange12", 294, 298},
+internal/unicodeproperties/shards_test.go:48:	{"TestCanonicalizeUnicodeNodeRange13", 298, 302},
+internal/unicodeproperties/shards_test.go:49:	{"TestCanonicalizeUnicodeNodeRange14", 302, 306},
+internal/unicodeproperties/shards_test.go:50:	{"TestCanonicalizeUnicodeNodeRange15", 306, 310},
+internal/unicodeproperties/shards_test.go:51:	{"TestCanonicalizeUnicodeNodeRange16", 310, 314},
+internal/unicodeproperties/shards_test.go:52:	{"TestCanonicalizeUnicodeNodeRange17", 314, 318},
+internal/unicodeproperties/shards_test.go:53:	{"TestCanonicalizeUnicodeNodeRange18", 318, 322},
+internal/unicodeproperties/shards_test.go:54:	{"TestCanonicalizeUnicodeNodeRange19", 322, 326},
+internal/unicodeproperties/shards_test.go:55:	{"TestCanonicalizeUnicodeNodeRange20", 326, 330},
+internal/unicodeproperties/shards_test.go:56:	{"TestCanonicalizeUnicodeNodeRange21", 330, 334},
+internal/unicodeproperties/shards_test.go:57:	{"TestCanonicalizeUnicodeNodeRange22", 334, 338},
+internal/unicodeproperties/shards_test.go:58:	{"TestCanonicalizeUnicodeNodeRange23", 338, 342},
+internal/unicodeproperties/shards_test.go:59:	{"TestCanonicalizeUnicodeNodeRange24", 342, 346},
+internal/unicodeproperties/shards_test.go:60:	{"TestCanonicalizeUnicodeNodeRange25", 346, 350},
+internal/unicodeproperties/shards_test.go:61:	{"TestCanonicalizeUnicodeNodeRange26", 350, 354},
+internal/unicodeproperties/shards_test.go:62:	{"TestCanonicalizeUnicodeNodeRange27", 354, 358},
+internal/unicodeproperties/shards_test.go:63:	{"TestCanonicalizeUnicodeNodeRange28", 358, 362},
+internal/unicodeproperties/shards_test.go:64:	{"TestCanonicalizeUnicodeNodeRange29", 362, 366},
+internal/unicodeproperties/shards_test.go:65:	{"TestCanonicalizeUnicodeNodeRange30", 366, 370},
+internal/unicodeproperties/shards_test.go:66:	{"TestCanonicalizeUnicodeNodeRange31", 370, 374},
+internal/unicodeproperties/shards_test.go:67:	{"TestCanonicalizeUnicodeNodeRange32", 374, 378},
+internal/unicodeproperties/shards_test.go:68:	{"TestCanonicalizeUnicodeNodeRange33", 378, 382},
+internal/unicodeproperties/shards_test.go:226:		if fn, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(fn.Name.Name, "TestCanonicalizeUnicodeNode") {
+internal/unicodeproperties/shards_test.go:256:	runUnicodeShardPlant(t, changed, "^TestCanonicalizeUnicodeNodeRange[01]$", "BAD CLASS iu 61 EXTRA 41", "TestCanonicalizeUnicodeNodeRange0/0000-0016-", "TestCanonicalizeUnicodeNodeRange1")
+internal/unicodeproperties/shards_test.go:274:	runUnicodeShardPlant(t, changed, "^TestCanonicalizeUnicodeNodeRange[23]$", "BAD GROUP iu n", "TestCanonicalizeUnicodeNodeRange2/4050-4058-", "TestCanonicalizeUnicodeNodeRange3")

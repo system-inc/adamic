@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T16:10:57.078138627Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-09T16:10:57.080881624Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed"}
+{"Time":"2026-10-09T16:10:57.080933561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Output":"=== RUN   TestEquivalentsAreClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:57.080949905Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Output":"=== PAUSE TestEquivalentsAreClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:57.080952208Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed"}
+{"Time":"2026-10-09T16:10:57.080956925Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed"}
+{"Time":"2026-10-09T16:10:57.080958618Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Output":"=== CONT  TestEquivalentsAreClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:57.158270275Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Output":"--- PASS: TestEquivalentsAreClosed (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:57.159187805Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Elapsed":0.08}
+{"Time":"2026-10-09T16:10:57.159223848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:10:57.159227924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"coverage: 30.8% of statements in ./internal/unicodeproperties\n"}
+{"Time":"2026-10-09T16:10:57.160070169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.081s\tcoverage: 30.8% of statements in ./internal/unicodeproperties\n"}
+{"Time":"2026-10-09T16:10:57.160092212Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Elapsed":0.082}

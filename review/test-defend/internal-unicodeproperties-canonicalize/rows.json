@@ -1,0 +1,64 @@
+[
+  {
+    "test": "TestCanonicalizeLegacyNode",
+    "package": "internal/unicodeproperties",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/unicodeproperties/canonicalize.go:63",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/unicodeproperties/canonicalize.go:63",
+        "change": "After canonicalization, return singleton {codeUnit} when canon != codeUnit; preserve canonical representatives and all tables.",
+        "rows_failed": [
+          "TestCanonicalizeLegacyNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/unicode-defend/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"$(cat review/test-defend/internal-unicodeproperties-canonicalize/matrix-selector.txt)\" > D1.log 2>&1; canonicalize_test.go:196: BAD 0061 EXTRA 41 MISSING"
+  },
+  {
+    "test": "TestCanonicalizeUnicodeNodeRange family",
+    "package": "internal/unicodeproperties",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestUnicodeNodeShardCoverage"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:22; internal/unicodeproperties/canonicalize_tables.go:3023",
+        "change": "Coherently split U+0042/U+0062: fold uppercase to itself and remove uppercase from lowercase class. Other entries unchanged.",
+        "rows_failed": [
+          "TestCanonicalizeUnicodeNodeRange family",
+          "TestUnicodeNodeShardCoverage",
+          "TestUnicodeNodeShardPlantedFailure"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:23; internal/unicodeproperties/canonicalize_tables.go:3024",
+        "change": "Coherently split U+0043/U+0063: fold uppercase to itself and remove uppercase from lowercase class. Other entries unchanged.",
+        "rows_failed": [
+          "TestCanonicalizeUnicodeNodeRange family",
+          "TestUnicodeNodeShardCoverage",
+          "TestUnicodeNodeShardPlantedFailure"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:24; internal/unicodeproperties/canonicalize_tables.go:3025",
+        "change": "Coherently split U+0044/U+0064: fold uppercase to itself and remove uppercase from lowercase class. Other entries unchanged.",
+        "rows_failed": [
+          "TestCanonicalizeUnicodeNodeRange family",
+          "TestUnicodeNodeShardCoverage",
+          "TestUnicodeNodeShardPlantedFailure"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/unicode-defend/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"$(cat review/test-defend/internal-unicodeproperties-canonicalize/matrix-selector.txt)\" > D4.log 2>&1; canonicalize_test.go:327: BAD CLASS iu 64 EXTRA 44 MISSING; TestUnicodeNodeShardCoverage also failed its input pin"
+  }
+]
