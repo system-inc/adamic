@@ -1,0 +1,42 @@
+{
+ "github.com/system-inc/adamic/stage1/cohere/gitignore": [
+  "TestPathAnswersAsGosPathPackage"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/json": [
+  "TestAdditionalJSONBoundaries",
+  "TestCorpusPinBeforeSampling",
+  "TestDocumentedStageZeroGaps",
+  "TestExternalComparisonCatchesThreePrinterMutants",
+  "TestRepositoryCorpusMutants",
+  "TestSingleFileStdoutDriver",
+  "TestThreePortMutantsAreCaught",
+  "TestUpstreamRepositoryCorpusParity"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/markdowninline": [
+  "TestDelimiterExpressionMatchesNode",
+  "TestMarkdownInlineProductSourceInputs",
+  "TestMarkdownInlineShardAssignmentStable",
+  "TestMarkdownInlineShardSelector",
+  "TestMarkdownInlineShardUnion",
+  "TestProduct_MarkdownInlineFenceLowered",
+  "TestProduct_MarkdownInlineFenceNative",
+  "TestProduct_MarkdownInlineFenceNode",
+  "TestProduct_MarkdownInlineFenceSanitized",
+  "TestProduct_MarkdownInlineGoOverlay",
+  "TestProduct_MarkdownInlineNode",
+  "TestProduct_MarkdownInlineOriginalLowered",
+  "TestProduct_MarkdownInlineOriginalNative",
+  "TestProduct_MarkdownInlineOriginalSanitized",
+  "TestProduct_MarkdownInlineParityLowered",
+  "TestProduct_MarkdownInlineParityNative",
+  "TestProduct_MarkdownInlineParityNode",
+  "TestProduct_MarkdownInlineParitySanitized",
+  "TestProduct_MarkdownInlinePipeLowered",
+  "TestProduct_MarkdownInlinePipeNative",
+  "TestProduct_MarkdownInlinePipeNode",
+  "TestProduct_MarkdownInlinePipeSanitized",
+  "TestProduct_MarkdownInlinePlantedLowered",
+  "TestProduct_MarkdownInlinePlantedNative",
+  "TestProduct_MarkdownInlinePlantedSanitized"
+ ]
+}
