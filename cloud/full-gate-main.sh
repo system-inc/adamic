@@ -357,12 +357,12 @@ BOX
 }
 
 # A record-only main (@system_adamic, Oct 8 22:48Z: 031a1259 took Home for 40 minutes to confirm a csv row) is
-# confirmed by the green whole gate of the commit it differs from only in push-main's record paths, the same three
+# confirmed by the green whole gate of the commit it differs from only in push-main's record paths (the velocity csv left main at 85172588), the same
 # cloud/integration/push-main.sh and record-paths-test.py hold: it is logged as confirmed and never run.
 recordOnly() {
   local changed
   changed=$(git -C "${here}" diff --name-only "$1" "$2") || return 1
-  ! printf '%s\n' "${changed}" | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep -q .
+  ! printf '%s\n' "${changed}" | grep -v -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep -q .
 }
 # A commit's newest finished whole gate: green, red or void; running while one is unfinished; none without a record.
 # Whose records: box (a whole gate on a box, the default), pool (Loom's pool, full.json "runner": "pool"), or any.

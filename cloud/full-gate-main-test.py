@@ -31,7 +31,7 @@ class FullGateLoopTests(unittest.TestCase):
         self.state = root / 'state'
         self.state.mkdir()
         self.code = self.commit({'compiler.go': 'package compiler\n'})
-        self.records = self.commit({'documentation/velocity/landings.csv': 'row\n', 'stage3/progress.json': '{}\n'})
+        self.records = self.commit({'stage3/meter/runs/r.json': '{}\n', 'stage3/progress.json': '{}\n'})
         self.changed = self.commit({'compiler.go': 'package compiler // changed\n'})
         git(self.work, 'push', '-q', 'origin', 'HEAD:refs/heads/main')
 
