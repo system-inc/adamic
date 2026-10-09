@@ -430,6 +430,8 @@ class FailClosed(unittest.TestCase):
             gate, status, result = self.gate(extra={"phase": "census", "census": self.poolLog()})
         self.assertTrue(status.startswith("red:"), status)
         self.assertEqual(result["deferred_run_results"], {"p TestMissing": "missing"})
+        # The red line names what didn't run, not just "first failure at deferred" (trio 114a6439, Oct 9 10:50Z).
+        self.assertIn("first failure at deferred (1 requested deferred tests unproven: p TestMissing missing)", status)
 
     def test_several_fast_phases_complete_the_pool_landing_record(self):
         gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})

@@ -2435,6 +2435,12 @@ class Gate:
             cancelled = ", cancelled after first failure" if getattr(self, "cancelled", False) else ""
             # A red whose first failure ran above the box's core count says so itself, so a page reads it as load first.
             loaded = ", under load (%s at first failure)" % loadWords(self.result["box_load"]["first_failure"]) if self.failure.get("under_load") else ""
+            # A deferred red names the requested tests it lacked, so a page reads what didn't run (trio 114a6439, Oct 9
+            # 10:50Z: "first failure at deferred" with nothing named, and five internal/native tests behind it).
+            unproven = sorted(test.rsplit("/", 1)[-1] + " " + outcome for test, outcome in self.result.get("deferred_run_results", {}).items()
+                              if outcome not in ("pass", "fail")) if self.failure["step"] == "deferred" else []
+            if unproven:
+                crash += " (%d requested deferred tests unproven: %s%s)" % (len(unproven), ", ".join(unproven[:5]), ", ..." if len(unproven) > 5 else "")
             self.status("red: %s %s gate, first failure at %s%s after %.1f s%s%s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], loaded, cancelled, steps, self.counts["fail"], self.counts["pass"]))
         if getattr(self, "stopped", None) and self.failure is not None:
             with open(os.path.join(self.arguments.out, "status.txt"), "a") as handle:
