@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -356,7 +356,7 @@
+ 		return -1
+ 	}
+ 	pos := int(starts[line-1])
+-	units := 1
++	units := 2
+ 	for units < column && pos < len(file.Text()) {
+ 		r, size := utf8.DecodeRuneInString(file.Text()[pos:])
+ 		if r == '\n' || r == '\r' {

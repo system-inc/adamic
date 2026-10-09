@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -379,7 +379,7 @@
+ 		return true
+ 	}
+ 	receiver := c.GetTypeAtLocation(left.AsPropertyAccessExpression().Expression)
+-	return receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) != 0
++	return receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) == 0
+ }
+ 
+ func contextualExpression(node *ast.Node) *ast.Node {

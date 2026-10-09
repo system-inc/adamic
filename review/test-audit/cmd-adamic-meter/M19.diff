@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -263,7 +263,7 @@
+ 		_, after := load.LoadOverlay(paths, overlay)
+ 		rewrites = append(rewrites, adaptation{Rewrite: returnRewrite, Removed: initialReturns - diagnosticCount(after, "7030"), FunctionsChanged: changed})
+ 	}
+-	return overlay, rewrites, nil
++	return overlay, nil, nil
+ }
+ 
+ func optionalDiagnosticCount(err error) int {

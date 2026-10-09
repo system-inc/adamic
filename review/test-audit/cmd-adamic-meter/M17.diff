@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -252,7 +252,7 @@
+ 		// compose. At a shared end, insert the outer suffix first and the inner one before it.
+ 		sort.Slice(list, func(i, j int) bool {
+ 			if list[i].start != list[j].start {
+-				return list[i].start > list[j].start
++				return list[i].start < list[j].start
+ 			}
+ 			if list[i].end != list[j].end {
+ 				return list[i].end > list[j].end

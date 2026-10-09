@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -409,7 +409,7 @@
+ 	if node.Kind == ast.KindConditionalExpression {
+ 		conditional := node.AsConditionalExpression()
+ 		if c.GetTypeAtLocation(conditional.WhenTrue).Flags()&checker.TypeFlagsUndefined != 0 || c.GetTypeAtLocation(conditional.WhenFalse).Flags()&checker.TypeFlagsUndefined != 0 {
+-			return false
++			return true
+ 		}
+ 	}
+ 	return true

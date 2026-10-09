@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/u009/audit.py", line 76, in <module>
+    for f,text in sw.items():(root/'cmd/adamic-meter'/f).write_text(text)
+                                                                          
+AssertionError

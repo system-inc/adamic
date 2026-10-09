@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -267,7 +267,7 @@
+ }
+ 
+ func optionalDiagnosticCount(err error) int {
+-	return diagnosticCount(err, "2412") + diagnosticCount(err, "2375") + diagnosticCount(err, "2379")
++	return diagnosticCount(err, "2412") + diagnosticCount(err, "2375") + diagnosticCount(err, "2378")
+ }
+ 
+ func importAdaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {

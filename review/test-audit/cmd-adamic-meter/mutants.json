@@ -1,0 +1,202 @@
+[
+  {
+    "id": "M1",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 135,
+    "old": "existing.Count++",
+    "new": "existing.Count += 2",
+    "menu": "change constant"
+  },
+  {
+    "id": "M2",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 120,
+    "old": "result.FilesExamined++",
+    "new": "result.FilesExamined += 2",
+    "menu": "change constant"
+  },
+  {
+    "id": "M3",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 66,
+    "old": "if *asJSON {",
+    "new": "if !*asJSON {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M4",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 389,
+    "old": "location.ReplaceAllString(message, \"<location>\")",
+    "new": "location.ReplaceAllString(message, \"<place>\")",
+    "menu": "change constant"
+  },
+  {
+    "id": "M5",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 391,
+    "old": "typeText.ReplaceAllString(message, \"of type <type>\")",
+    "new": "typeText.ReplaceAllString(message, \"of type <other>\")",
+    "menu": "change constant"
+  },
+  {
+    "id": "M6",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 307,
+    "old": "line[:at] + \"type \" + line[at:]",
+    "new": "line[:at] + \"\" + line[at:]",
+    "menu": "change constant"
+  },
+  {
+    "id": "M7",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 372,
+    "old": "if text == \"1484\" {",
+    "new": "if text == \"1485\" {",
+    "menu": "change constant"
+  },
+  {
+    "id": "M8",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 270,
+    "old": "diagnosticCount(err, \"2379\")",
+    "new": "diagnosticCount(err, \"2378\")",
+    "menu": "change constant"
+  },
+  {
+    "id": "M9",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 359,
+    "old": "units := 1",
+    "new": "units := 2",
+    "menu": "change constant"
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 366,
+    "old": "if r > 0xffff {",
+    "new": "if r > 0x10ffff {",
+    "menu": "change constant"
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 299,
+    "old": "!owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()]",
+    "new": "owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()]",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 277,
+    "old": "symbol.Flags&ast.SymbolFlagsOptional == 0",
+    "new": "symbol.Flags&ast.SymbolFlagsOptional != 0",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M13",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 382,
+    "old": "return receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) != 0",
+    "new": "return receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) == 0",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M14",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 413,
+    "old": "if c.GetTypeAtLocation(conditional.WhenTrue).Flags()&checker.TypeFlagsUndefined != 0 || c.GetTypeAtLocation(conditional.WhenFalse).Flags()&checker.TypeFlagsUndefined != 0 {\n\t\t\treturn false",
+    "new": "if c.GetTypeAtLocation(conditional.WhenTrue).Flags()&checker.TypeFlagsUndefined != 0 || c.GetTypeAtLocation(conditional.WhenFalse).Flags()&checker.TypeFlagsUndefined != 0 {\n\t\t\treturn true",
+    "menu": "change constant"
+  },
+  {
+    "id": "M15",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 337,
+    "old": "if node.Kind == ast.KindElementAccessExpression {",
+    "new": "if node.Kind == ast.KindPropertyAccessExpression {",
+    "menu": "change constant"
+  },
+  {
+    "id": "M16",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 232,
+    "old": "\") | undefined\", ownerStart",
+    "new": "\") | null\", ownerStart",
+    "menu": "change constant"
+  },
+  {
+    "id": "M17",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 255,
+    "old": "return list[i].start > list[j].start",
+    "new": "return list[i].start < list[j].start",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M18",
+    "file": "cmd/adamic-meter/returns.go",
+    "line": 28,
+    "old": "diagnosticCount(before, \"7030\") == 0",
+    "new": "diagnosticCount(before, \"7030\") != 0",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M19",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 266,
+    "old": "return overlay, rewrites, nil\n}",
+    "new": "return overlay, nil, nil\n}",
+    "menu": "change returned value to nil"
+  },
+  {
+    "id": "M20",
+    "file": "cmd/adamic-meter/optional.go",
+    "line": 77,
+    "old": "NoUncheckedIndexedAccess: core.TSTrue",
+    "new": "NoUncheckedIndexedAccess: core.TSFalse",
+    "menu": "change option"
+  },
+  {
+    "id": "E_MEASURE",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 90,
+    "old": "func measure(root string, adapt bool) (*report, error) {",
+    "new": "func measure(root string, adapt bool) (*report, error) {\n if true { return nil, nil }",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "E_RUN",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 49,
+    "old": "func run(arguments []string, stdout, stderr io.Writer) int {",
+    "new": "func run(arguments []string, stdout, stderr io.Writer) int {\n if true { return 0 }",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "E_NORMALIZE",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 388,
+    "old": "func normalize(message string) string {",
+    "new": "func normalize(message string) string {\n if true { return \"\" }",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "E_ADAPT",
+    "file": "cmd/adamic-meter/main.go",
+    "line": 234,
+    "old": "func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {",
+    "new": "func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {\n if true { return nil, nil, nil }",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "E_RETURN",
+    "file": "cmd/adamic-meter/returns.go",
+    "line": 26,
+    "old": "func returnAdaptations(paths []string, overlay map[string]string, before error) (map[string]string, int, error) {",
+    "new": "func returnAdaptations(paths []string, overlay map[string]string, before error) (map[string]string, int, error) {\n if true { return nil, 0, nil }",
+    "menu": "empty-answer probe"
+  }
+]

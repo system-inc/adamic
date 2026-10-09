@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -117,7 +117,7 @@
+ 		if extension != ".ts" && extension != ".a" {
+ 			return nil
+ 		}
+-		result.FilesExamined++
++		result.FilesExamined += 2
+ 		paths = append(paths, path)
+ 		return nil
+ 	})

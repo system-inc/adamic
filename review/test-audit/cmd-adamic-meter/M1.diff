@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -132,7 +132,7 @@
+ 				existing = &finding{Kind: observation.Kind, Reason: observation.Reason, Example: relative(absolute, observation.Example), fileSeen: make(map[string]bool)}
+ 				byReason[key] = existing
+ 			}
+-			existing.Count++
++			existing.Count += 2
+ 			file := relative(absolute, path)
+ 			if !existing.fileSeen[file] {
+ 				existing.fileSeen[file] = true

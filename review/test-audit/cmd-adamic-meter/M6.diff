@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -304,7 +304,7 @@
+ 			}
+ 			line := lines[edit.line-1]
+ 			at := edit.column - 1
+-			line = line[:at] + "type " + line[at:]
++			line = line[:at] + "" + line[at:]
+ 			lines[edit.line-1] = line
+ 		}
+ 		overlay[path] = strings.Join(lines, "\n")

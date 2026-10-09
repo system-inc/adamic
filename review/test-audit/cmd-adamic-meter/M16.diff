@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -229,7 +229,7 @@
+ 		typ := declaration.Type()
+ 		start := scanner.GetTokenPosOfNode(typ, file, false)
+ 		ownerStart := declaration.Pos()
+-		edits[name] = append(edits[name], optionalEdit{typ.End(), typ.End(), ") | undefined", ownerStart})
++		edits[name] = append(edits[name], optionalEdit{typ.End(), typ.End(), ") | null", ownerStart})
+ 		if declaration.Kind == ast.KindMethodSignature {
+ 			start = declaration.AsMethodSignatureDeclaration().PostfixToken.End()
+ 			colon := typ.Pos() - 1

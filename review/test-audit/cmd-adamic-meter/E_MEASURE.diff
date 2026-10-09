@@ -1,0 +1,10 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -88,6 +88,7 @@
+ }
+ 
+ func measure(root string, adapt bool) (*report, error) {
++ if true { return nil, nil }
+ 	absolute, err := filepath.Abs(root)
+ 	if err != nil {
+ 		return nil, err

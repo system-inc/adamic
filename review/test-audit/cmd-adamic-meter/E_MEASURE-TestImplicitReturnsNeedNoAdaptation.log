@@ -1,0 +1,24 @@
+{"Time":"2026-10-09T09:37:24.743729931Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-meter"}
+{"Time":"2026-10-09T09:37:24.752222482Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation"}
+{"Time":"2026-10-09T09:37:24.752335898Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation","Output":"=== RUN   TestImplicitReturnsNeedNoAdaptation\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:24.754718327Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation","Output":"=== PAUSE TestImplicitReturnsNeedNoAdaptation\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:24.75472748Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation"}
+{"Time":"2026-10-09T09:37:24.754732678Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation"}
+{"Time":"2026-10-09T09:37:24.75473459Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation","Output":"=== CONT  TestImplicitReturnsNeedNoAdaptation\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:24.754736683Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.ts"}
+{"Time":"2026-10-09T09:37:24.754740078Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.ts","Output":"=== RUN   TestImplicitReturnsNeedNoAdaptation/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.051272176Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.ts","Output":"--- PASS: TestImplicitReturnsNeedNoAdaptation/.ts (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.051309802Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.ts","Elapsed":0.3}
+{"Time":"2026-10-09T09:37:25.05132945Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a"}
+{"Time":"2026-10-09T09:37:25.051332154Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a","Output":"=== RUN   TestImplicitReturnsNeedNoAdaptation/.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.287838431Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a","Output":"--- PASS: TestImplicitReturnsNeedNoAdaptation/.a (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.287923215Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a","Elapsed":0.24}
+{"Time":"2026-10-09T09:37:25.287992837Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a.ts"}
+{"Time":"2026-10-09T09:37:25.287996512Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a.ts","Output":"=== RUN   TestImplicitReturnsNeedNoAdaptation/.a.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.593609042Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a.ts","Output":"--- PASS: TestImplicitReturnsNeedNoAdaptation/.a.ts (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.593649812Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation/.a.ts","Elapsed":0.31}
+{"Time":"2026-10-09T09:37:25.593657844Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation","Output":"--- PASS: TestImplicitReturnsNeedNoAdaptation (0.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.593664994Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestImplicitReturnsNeedNoAdaptation","Elapsed":0.84}
+{"Time":"2026-10-09T09:37:25.593668639Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:25.600311092Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.856s\n"}
+{"Time":"2026-10-09T09:37:25.60034451Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Elapsed":0.857}

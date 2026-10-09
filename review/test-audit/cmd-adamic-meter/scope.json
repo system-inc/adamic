@@ -1,0 +1,28 @@
+{
+  "unit": "u009",
+  "base": "b955d3030e79e9f01d12a96ab1fb4b167fc91c0c",
+  "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+  "rows": [
+    "TestFixtureCorpusCountsEveryDiagnosticKind",
+    "TestAdaptRewritesTypeOnlyImportInMemory",
+    "TestJSONIsMachineReadable",
+    "TestNormalizeDropsIncidentalDetails",
+    "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+    "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+    "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "TestOptionalAdaptationContextualDeclarations",
+    "TestOptionalAdaptationOwnsOnlyNamedRoots",
+    "TestOptionalAdaptationPreservesLiveMethodPlacement",
+    "TestOptionalAdaptationUTF16AndAdamicExtension",
+    "TestImplicitReturnsNeedNoAdaptation",
+    "TestReturnAdaptationLeavesUnprovenContracts",
+    "TestReturnAdaptationOwnsOnlyRoots"
+  ],
+  "families": [],
+  "helpers": [],
+  "witnesses": [],
+  "skipped": [],
+  "nproc": 5,
+  "setup": "warm toolchain, skipped",
+  "npm": "stage3/api npm ci: added 3 packages in 395ms"
+}

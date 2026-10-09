@@ -1,0 +1,6 @@
+=== RUN   TestAuditObservation
+return rewrite count=1 error=<nil> output="function f(flag: boolean): number | undefined { if(flag) return 1; \nreturn void 0;\n}"
+resolver semantic diagnostics=0 codes=[]
+UTF16 column 20 byte offset=21
+--- PASS: TestAuditObservation (0.04s)
+PASS

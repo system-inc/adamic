@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -369,7 +369,7 @@
+ // to 17xxx). Later 1xxx codes include option-driven type diagnostics such as TS1484.
+ // Keeping the code in the reason makes the grouping exact even as TypeScript changes its wording.
+ func typescriptCategory(text string) string {
+-	if text == "1484" {
++	if text == "1485" {
+ 		return "mechanical"
+ 	}
+ 	code, _ := strconv.Atoi(text)

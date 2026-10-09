@@ -1,0 +1,15 @@
+package main
+import("testing";"fmt";"os";"path/filepath";"context";"github.com/system-inc/adamic/internal/load")
+func TestAuditObservation(t *testing.T) {
+ d:=t.TempDir();p:=filepath.Join(d,"main.ts")
+ src:="function f(flag: boolean): number | undefined { if(flag) return 1; }"
+ if err:=os.WriteFile(p,[]byte(src),0644);err!=nil{t.Fatal(err)}
+ before:=&load.CheckError{Diagnostics:[]string{fmt.Sprintf("%s:1:10: error TS7030: Not all code paths return a value.",p)}}
+ overlay,count,err:=returnAdaptations([]string{p},nil,before)
+ fmt.Printf("return rewrite count=%d error=%v output=%q\n",count,err,overlay[p])
+ src="const glyph='😀'; const items: string[]=[]; const item:string=items[0];"
+ if err:=os.WriteFile(p,[]byte(src),0644);err!=nil{t.Fatal(err)}
+ prog,_,err:=optionalProgram([]string{p},nil);if err!=nil{t.Fatal(err)}
+ diagnostics:=prog.GetSemanticDiagnostics(context.Background(),nil); codes:=[]int32{};for _,d:=range diagnostics {codes=append(codes,d.Code())}; fmt.Printf("resolver semantic diagnostics=%d codes=%v\n",len(diagnostics),codes)
+ for _,f:=range prog.GetSourceFiles(){if f.FileName().AsString()==filepath.ToSlash(p){fmt.Printf("UTF16 column 20 byte offset=%d\n",optionalPosition(f,1,20))}}
+}

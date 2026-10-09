@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -63,7 +63,7 @@
+ 		fmt.Fprintf(stderr, "adamic-meter: %v\n", err)
+ 		return 1
+ 	}
+-	if *asJSON {
++	if !*asJSON {
+ 		encoder := json.NewEncoder(stdout)
+ 		encoder.SetIndent("", "  ")
+ 		if err := encoder.Encode(r); err != nil {

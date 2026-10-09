@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:37:07.530070893Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-meter"}
+{"Time":"2026-10-09T09:37:07.549389914Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable"}
+{"Time":"2026-10-09T09:37:07.549499705Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable","Output":"=== RUN   TestJSONIsMachineReadable\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:07.549536438Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable","Output":"=== PAUSE TestJSONIsMachineReadable\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:07.549539202Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable"}
+{"Time":"2026-10-09T09:37:07.549541816Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable"}
+{"Time":"2026-10-09T09:37:07.549543879Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable","Output":"=== CONT  TestJSONIsMachineReadable\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:07.549546964Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable","Output":"    main_test.go:79: report = main.report{Root:\"\", FilesExamined:0, JavaScriptSkipped:0, FilesReachingLowering:0, Reasons:[]*main.finding(nil), Adaptations:[]main.adaptation(nil)}\n","OutputType":"error"}
+{"Time":"2026-10-09T09:37:07.549561795Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable","Output":"--- FAIL: TestJSONIsMachineReadable (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:07.54956499Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestJSONIsMachineReadable","Elapsed":0}
+{"Time":"2026-10-09T09:37:07.549579842Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:07.549864423Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.019s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:37:07.549886355Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Elapsed":0.02}

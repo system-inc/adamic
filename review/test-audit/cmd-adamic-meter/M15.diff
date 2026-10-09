@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -334,7 +334,7 @@
+ }
+ 
+ func hasIndexRead(node *ast.Node) bool {
+-	if node.Kind == ast.KindElementAccessExpression {
++	if node.Kind == ast.KindPropertyAccessExpression {
+ 		return true
+ 	}
+ 	return node.ForEachChild(hasIndexRead)

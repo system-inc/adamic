@@ -1,0 +1,6 @@
+=== RUN   TestAuditObservation
+return rewrite count=0 error=<nil> output=""
+resolver semantic diagnostics=1 codes=[2322]
+UTF16 column 20 byte offset=21
+--- PASS: TestAuditObservation (0.04s)
+PASS

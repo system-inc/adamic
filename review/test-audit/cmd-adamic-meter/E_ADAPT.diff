@@ -1,0 +1,10 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -232,6 +232,7 @@
+ }
+ 
+ func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
++ if true { return nil, nil, nil }
+ 	overlay, rewrites, err := importAdaptations(paths, baselineErr)
+ 	if err != nil {
+ 		return nil, nil, err

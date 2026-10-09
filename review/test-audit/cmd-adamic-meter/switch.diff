@@ -1,0 +1,272 @@
+diff --git a/cmd/adamic-meter/main.go b/cmd/adamic-meter/main.go
+index 80bcf6cc..fcea3e82 100644
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -47,6 +47,9 @@ type adaptation struct {
+ func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
+ 
+ func run(arguments []string, stdout, stderr io.Writer) int {
++	if os.Getenv("ADAMIC_MUTANT") == "E_RUN" {
++		return 0
++	}
+ 	flags := flag.NewFlagSet("adamic-meter", flag.ContinueOnError)
+ 	flags.SetOutput(stderr)
+ 	asJSON := flags.Bool("json", false, "write JSON")
+@@ -63,7 +66,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
+ 		fmt.Fprintf(stderr, "adamic-meter: %v\n", err)
+ 		return 1
+ 	}
+-	if *asJSON {
++	if ((os.Getenv("ADAMIC_MUTANT") == "M3") && (!*asJSON)) || (!(os.Getenv("ADAMIC_MUTANT") == "M3") && (*asJSON)) {
+ 		encoder := json.NewEncoder(stdout)
+ 		encoder.SetIndent("", "  ")
+ 		if err := encoder.Encode(r); err != nil {
+@@ -88,6 +91,9 @@ func run(arguments []string, stdout, stderr io.Writer) int {
+ }
+ 
+ func measure(root string, adapt bool) (*report, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_MEASURE" {
++		return nil, nil
++	}
+ 	absolute, err := filepath.Abs(root)
+ 	if err != nil {
+ 		return nil, err
+@@ -117,7 +123,11 @@ func measure(root string, adapt bool) (*report, error) {
+ 		if extension != ".ts" && extension != ".a" {
+ 			return nil
+ 		}
+-		result.FilesExamined++
++		if os.Getenv("ADAMIC_MUTANT") == "M2" {
++			result.FilesExamined += 2
++		} else {
++			result.FilesExamined++
++		}
+ 		paths = append(paths, path)
+ 		return nil
+ 	})
+@@ -132,7 +142,11 @@ func measure(root string, adapt bool) (*report, error) {
+ 				existing = &finding{Kind: observation.Kind, Reason: observation.Reason, Example: relative(absolute, observation.Example), fileSeen: make(map[string]bool)}
+ 				byReason[key] = existing
+ 			}
+-			existing.Count++
++			if os.Getenv("ADAMIC_MUTANT") == "M1" {
++				existing.Count += 2
++			} else {
++				existing.Count++
++			}
+ 			file := relative(absolute, path)
+ 			if !existing.fileSeen[file] {
+ 				existing.fileSeen[file] = true
+@@ -232,6 +246,9 @@ type sourceEdit struct {
+ }
+ 
+ func adaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_ADAPT" {
++		return nil, nil, nil
++	}
+ 	overlay, rewrites, err := importAdaptations(paths, baselineErr)
+ 	if err != nil {
+ 		return nil, nil, err
+@@ -263,11 +280,19 @@ func adaptations(paths []string, baselineErr error) (map[string]string, []adapta
+ 		_, after := load.LoadOverlay(paths, overlay)
+ 		rewrites = append(rewrites, adaptation{Rewrite: returnRewrite, Removed: initialReturns - diagnosticCount(after, "7030"), FunctionsChanged: changed})
+ 	}
++	if os.Getenv("ADAMIC_MUTANT") == "M19" {
++		return overlay, nil, nil
++	}
+ 	return overlay, rewrites, nil
+ }
+ 
+ func optionalDiagnosticCount(err error) int {
+-	return diagnosticCount(err, "2412") + diagnosticCount(err, "2375") + diagnosticCount(err, "2379")
++	return diagnosticCount(err, "2412") + diagnosticCount(err, "2375") + func() int {
++		if os.Getenv("ADAMIC_MUTANT") == "M8" {
++			return diagnosticCount(err, "2378")
++		}
++		return diagnosticCount(err, "2379")
++	}()
+ }
+ 
+ func importAdaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
+@@ -304,7 +329,12 @@ func importAdaptations(paths []string, baselineErr error) (map[string]string, []
+ 			}
+ 			line := lines[edit.line-1]
+ 			at := edit.column - 1
+-			line = line[:at] + "type " + line[at:]
++			line = func() string {
++				if os.Getenv("ADAMIC_MUTANT") == "M6" {
++					return line[:at] + "" + line[at:]
++				}
++				return line[:at] + "type " + line[at:]
++			}()
+ 			lines[edit.line-1] = line
+ 		}
+ 		overlay[path] = strings.Join(lines, "\n")
+@@ -369,7 +399,7 @@ func inspect(path string, overlay map[string]string) ([]observation, bool) {
+ // to 17xxx). Later 1xxx codes include option-driven type diagnostics such as TS1484.
+ // Keeping the code in the reason makes the grouping exact even as TypeScript changes its wording.
+ func typescriptCategory(text string) string {
+-	if text == "1484" {
++	if ((os.Getenv("ADAMIC_MUTANT") == "M7") && (text == "1485")) || (!(os.Getenv("ADAMIC_MUTANT") == "M7") && (text == "1484")) {
+ 		return "mechanical"
+ 	}
+ 	code, _ := strconv.Atoi(text)
+@@ -386,9 +416,22 @@ var (
+ )
+ 
+ func normalize(message string) string {
+-	message = location.ReplaceAllString(message, "<location>")
++	if os.Getenv("ADAMIC_MUTANT") == "E_NORMALIZE" {
++		return ""
++	}
++	message = func() string {
++		if os.Getenv("ADAMIC_MUTANT") == "M4" {
++			return location.ReplaceAllString(message, "<place>")
++		}
++		return location.ReplaceAllString(message, "<location>")
++	}()
+ 	message = quoted.ReplaceAllString(message, "<name>")
+-	message = typeText.ReplaceAllString(message, "of type <type>")
++	message = func() string {
++		if os.Getenv("ADAMIC_MUTANT") == "M5" {
++			return typeText.ReplaceAllString(message, "of type <other>")
++		}
++		return typeText.ReplaceAllString(message, "of type <type>")
++	}()
+ 	if index := strings.Index(message, "("); index >= 0 {
+ 		message = message[:index]
+ 	}
+diff --git a/cmd/adamic-meter/optional.go b/cmd/adamic-meter/optional.go
+index 79c22378..ebdbb77e 100644
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -74,7 +74,12 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
+ 		fs.source[name] = source
+ 	}
+ 	options := &core.CompilerOptions{
+-		Strict: core.TSTrue, NoUncheckedIndexedAccess: core.TSTrue, ExactOptionalPropertyTypes: core.TSTrue,
++		Strict: core.TSTrue, NoUncheckedIndexedAccess: func() core.Tristate {
++			if os.Getenv("ADAMIC_MUTANT") == "M20" {
++				return core.TSFalse
++			}
++			return core.TSTrue
++		}(), ExactOptionalPropertyTypes: core.TSTrue,
+ 		NoImplicitReturns: core.TSTrue, NoFallthroughCasesInSwitch: core.TSTrue, ErasableSyntaxOnly: core.TSTrue,
+ 		VerbatimModuleSyntax: core.TSTrue, AllowImportingTsExtensions: core.TSTrue, NoEmit: core.TSTrue,
+ 		Module: core.ModuleKindESNext, ModuleDetection: core.ModuleDetectionKindForce,
+@@ -229,7 +234,12 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
+ 		typ := declaration.Type()
+ 		start := scanner.GetTokenPosOfNode(typ, file, false)
+ 		ownerStart := declaration.Pos()
+-		edits[name] = append(edits[name], optionalEdit{typ.End(), typ.End(), ") | undefined", ownerStart})
++		edits[name] = append(edits[name], optionalEdit{typ.End(), typ.End(), func() string {
++			if os.Getenv("ADAMIC_MUTANT") == "M16" {
++				return ") | null"
++			}
++			return ") | undefined"
++		}(), ownerStart})
+ 		if declaration.Kind == ast.KindMethodSignature {
+ 			start = declaration.AsMethodSignatureDeclaration().PostfixToken.End()
+ 			colon := typ.Pos() - 1
+@@ -252,7 +262,12 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
+ 		// compose. At a shared end, insert the outer suffix first and the inner one before it.
+ 		sort.Slice(list, func(i, j int) bool {
+ 			if list[i].start != list[j].start {
+-				return list[i].start > list[j].start
++				return func() bool {
++					if os.Getenv("ADAMIC_MUTANT") == "M17" {
++						return list[i].start < list[j].start
++					}
++					return list[i].start > list[j].start
++				}()
+ 			}
+ 			if list[i].end != list[j].end {
+ 				return list[i].end > list[j].end
+@@ -274,7 +289,7 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
+ }
+ 
+ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type, owned map[string]bool, selected map[*ast.Node]bool) {
+-	if symbol == nil || symbol.Flags&ast.SymbolFlagsOptional == 0 || len(symbol.Declarations) == 0 || value == nil {
++	if symbol == nil || ((os.Getenv("ADAMIC_MUTANT") == "M12") != (symbol.Flags&ast.SymbolFlagsOptional == 0)) || len(symbol.Declarations) == 0 || value == nil {
+ 		return
+ 	}
+ 	parts := []*checker.Type{value}
+@@ -296,7 +311,7 @@ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type,
+ 		if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration && declaration.Kind != ast.KindMethodSignature {
+ 			return
+ 		}
+-		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || !owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()] {
++		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || ((os.Getenv("ADAMIC_MUTANT") == "M11") != (!owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()])) {
+ 			return
+ 		}
+ 		var target *checker.Type
+@@ -334,7 +349,7 @@ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type,
+ }
+ 
+ func hasIndexRead(node *ast.Node) bool {
+-	if node.Kind == ast.KindElementAccessExpression {
++	if ((os.Getenv("ADAMIC_MUTANT") == "M15") && (node.Kind == ast.KindPropertyAccessExpression)) || (!(os.Getenv("ADAMIC_MUTANT") == "M15") && (node.Kind == ast.KindElementAccessExpression)) {
+ 		return true
+ 	}
+ 	return node.ForEachChild(hasIndexRead)
+@@ -357,13 +372,16 @@ func optionalPosition(file *ast.SourceFile, line, column int) int {
+ 	}
+ 	pos := int(starts[line-1])
+ 	units := 1
++	if os.Getenv("ADAMIC_MUTANT") == "M9" {
++		units = 2
++	}
+ 	for units < column && pos < len(file.Text()) {
+ 		r, size := utf8.DecodeRuneInString(file.Text()[pos:])
+ 		if r == '\n' || r == '\r' {
+ 			return -1
+ 		}
+ 		units++
+-		if r > 0xffff {
++		if ((os.Getenv("ADAMIC_MUTANT") == "M10") && (r > 0x10ffff)) || (!(os.Getenv("ADAMIC_MUTANT") == "M10") && (r > 0xffff)) {
+ 			units++
+ 		}
+ 		pos += size
+@@ -379,7 +397,7 @@ func genericReceiver(c *checker.Checker, left *ast.Node) bool {
+ 		return true
+ 	}
+ 	receiver := c.GetTypeAtLocation(left.AsPropertyAccessExpression().Expression)
+-	return receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) != 0
++	return (os.Getenv("ADAMIC_MUTANT") == "M13" && (receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) == 0)) || (!(os.Getenv("ADAMIC_MUTANT") == "M13") && (receiver.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsAnyOrUnknown) != 0))
+ }
+ 
+ func contextualExpression(node *ast.Node) *ast.Node {
+@@ -409,7 +427,7 @@ func unprovenIndexRead(c *checker.Checker, node *ast.Node) bool {
+ 	if node.Kind == ast.KindConditionalExpression {
+ 		conditional := node.AsConditionalExpression()
+ 		if c.GetTypeAtLocation(conditional.WhenTrue).Flags()&checker.TypeFlagsUndefined != 0 || c.GetTypeAtLocation(conditional.WhenFalse).Flags()&checker.TypeFlagsUndefined != 0 {
+-			return false
++			return os.Getenv("ADAMIC_MUTANT") == "M14"
+ 		}
+ 	}
+ 	return true
+diff --git a/cmd/adamic-meter/returns.go b/cmd/adamic-meter/returns.go
+index c70c352a..6c8a644c 100644
+--- a/cmd/adamic-meter/returns.go
++++ b/cmd/adamic-meter/returns.go
+@@ -4,6 +4,7 @@ import (
+ 	"context"
+ 	"errors"
+ 	"fmt"
++	"os"
+ 	"path/filepath"
+ 	"regexp"
+ 	"sort"
+@@ -24,8 +25,11 @@ var returnDiagnostic = regexp.MustCompile(`^([^\n]+):([0-9]+):([0-9]+): error TS
+ // returns, void, any and unknown are not permission to change that contract.
+ // void 0 denotes undefined even when the identifier undefined is shadowed.
+ func returnAdaptations(paths []string, overlay map[string]string, before error) (map[string]string, int, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_RETURN" {
++		return nil, 0, nil
++	}
+ 	var diagnostics *load.CheckError
+-	if !errors.As(before, &diagnostics) || diagnosticCount(before, "7030") == 0 {
++	if !errors.As(before, &diagnostics) || ((os.Getenv("ADAMIC_MUTANT") == "M18" && (diagnosticCount(before, "7030") != 0)) || (!(os.Getenv("ADAMIC_MUTANT") == "M18") && (diagnosticCount(before, "7030") == 0))) {
+ 		return overlay, 0, nil
+ 	}
+ 	program, owned, err := optionalProgram(paths, overlay)

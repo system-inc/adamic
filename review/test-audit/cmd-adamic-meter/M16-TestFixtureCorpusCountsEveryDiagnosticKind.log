@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:35:19.750072066Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-meter"}
+{"Time":"2026-10-09T09:35:19.759550856Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind"}
+{"Time":"2026-10-09T09:35:19.759617734Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind","Output":"=== RUN   TestFixtureCorpusCountsEveryDiagnosticKind\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:35:19.759638965Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind","Output":"=== PAUSE TestFixtureCorpusCountsEveryDiagnosticKind\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:35:19.75964286Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind"}
+{"Time":"2026-10-09T09:35:19.759646195Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind"}
+{"Time":"2026-10-09T09:35:19.759648739Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind","Output":"=== CONT  TestFixtureCorpusCountsEveryDiagnosticKind\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:35:19.940379142Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind","Output":"--- PASS: TestFixtureCorpusCountsEveryDiagnosticKind (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:35:19.940411008Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestFixtureCorpusCountsEveryDiagnosticKind","Elapsed":0.18}
+{"Time":"2026-10-09T09:35:19.940427602Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:35:19.942742431Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.192s\n"}
+{"Time":"2026-10-09T09:35:19.942767989Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Elapsed":0.193}

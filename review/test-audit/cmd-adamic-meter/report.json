@@ -1,0 +1,535 @@
+[
+  {
+    "test": "TestFixtureCorpusCountsEveryDiagnosticKind",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/main_test.go",
+    "seconds": 0.12,
+    "oracle": "Self-written report counts and labels.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: main_test.go:24: counts = map[string]int{\"NotYet\":2, \"Refused\":2}, want one Refused and one NotYet",
+    "verdict": "subsumed",
+    "subsumed_by": "TestAdaptRewritesTypeOnlyImportInMemory",
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_MEASURE"
+    ],
+    "subsumer_seconds": 0.24,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M1-matrix.log 2>&1; main_test.go:24: counts = map[string]int{\"NotYet\":2, \"Refused\":2}, want one Refused and one NotYet",
+    "own_entry_probes": [
+      "E_MEASURE"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestAdaptRewritesTypeOnlyImportInMemory",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/main_test.go",
+    "seconds": 0.24,
+    "oracle": "Self-written mechanical-diagnostic and rewrite counts, plus disk equality. It checks counts, not which diagnostic was removed.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M6",
+      "M7",
+      "M19"
+    ],
+    "unique_kills": [
+      "M6",
+      "M7"
+    ],
+    "last_proven_fail": "M19: main_test.go:47: adapted report = &main.report{Root:\"/workspace/adamic/cmd/adamic-meter/testdata/adapt\", FilesExamined:2, JavaScriptSkipped:0, FilesReachingLowering:2, Reasons:[]*main.finding(nil), Adaptations:[]main.adaptation(nil)}",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_MEASURE",
+      "E_ADAPT",
+      "E_RETURN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M6 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M6-matrix.log 2>&1; main_test.go:47: adapted report = &main.report{Root:\"/workspace/adamic/cmd/adamic-meter/testdata/adapt\", FilesExamined:2, JavaScriptSkipped:0, FilesReachingLowering:1, Reasons:[]*main.finding{(*main.finding)(0x1a666e3ca360)}, Adaptations:[]main.adaptation{main.adaptation{Rewrite:\"type-only imports (TS1484)\", Removed:0, DeclarationsChanged:0, FunctionsChanged:0}}}",
+    "own_entry_probes": [
+      "E_MEASURE"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestJSONIsMachineReadable",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/main_test.go",
+    "seconds": 0.127,
+    "oracle": "Self-written report counts after JSON decoding; reason content is not checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: main_test.go:76: invalid JSON: invalid character 'C' looking for beginning of value",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_MEASURE",
+      "E_RUN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M2 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M2-matrix.log 2>&1; main_test.go:79: report = main.report{Root:\"/workspace/adamic/cmd/adamic-meter/testdata/corpus\", FilesExamined:4, JavaScriptSkipped:0, FilesReachingLowering:2, Reasons:[]*main.finding{(*main.finding)(0x154a1f05de60), (*main.finding)(0x154a1ca28000)}, Adaptations:[]main.adaptation(nil)}",
+    "own_entry_probes": [
+      "E_RUN"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestNormalizeDropsIncidentalDetails",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/main_test.go",
+    "seconds": 0.008,
+    "oracle": "Self-written normalized string.",
+    "oracle_kind": "self",
+    "kills": [
+      "M4",
+      "M5"
+    ],
+    "unique_kills": [
+      "M4",
+      "M5"
+    ],
+    "last_proven_fail": "M5: main_test.go:87: normalize = \"<location>: a value of type <other>\"",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_NORMALIZE"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M4 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M4-matrix.log 2>&1; main_test.go:87: normalize = \"<place>: a value of type <type>\"",
+    "own_entry_probes": [
+      "E_NORMALIZE"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.496,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity. Node runs the source and compares stdout to a self-written literal.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M8",
+      "M9",
+      "M11",
+      "M12",
+      "M13",
+      "M17",
+      "M19"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M19: optional_test.go:32: adaptations = []main.adaptation(nil)",
+    "verdict": "subsumed",
+    "subsumed_by": "TestOptionalAdaptationContextualDeclarations",
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_MEASURE",
+      "E_ADAPT",
+      "E_RETURN"
+    ],
+    "subsumer_seconds": 0.627,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M19-matrix.log 2>&1; optional_test.go:32: adaptations = []main.adaptation(nil)",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [
+      "M16"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.299,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M13",
+      "M15"
+    ],
+    "unique_kills": [
+      "M15"
+    ],
+    "last_proven_fail": "M15: optional_test.go:106: unsafe contract adapted: []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:1, DeclarationsChanged:1, FunctionsChanged:0}} map[string]string{\"/tmp/adamic-gate/TestOptionalAdaptationLeavesUnsafeContractsRejectedindexed_read3401187741/001/main.ts\":\"interface S { p?: (string) | undefined }; const s: S = {}; const a: string[] = []; s.p = a[0];\"}",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M15-matrix.log 2>&1; optional_test.go:106: unsafe contract adapted: []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:1, DeclarationsChanged:1, FunctionsChanged:0}} map[string]string{\"/tmp/adamic-gate/TestOptionalAdaptationLeavesUnsafeContractsRejectedindexed_read3401187741/001/main.ts\":\"interface S { p?: (string) | undefined }; const s: S = {}; const a: string[] = []; s.p = a[0];\"}",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.145,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M11",
+      "M12",
+      "M13",
+      "M17",
+      "M19"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M19: optional_test.go:129: adaptations = []main.adaptation(nil)",
+    "verdict": "subsumed",
+    "subsumed_by": "TestOptionalAdaptationUTF16AndAdamicExtension",
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_ADAPT",
+      "E_RETURN"
+    ],
+    "subsumer_seconds": 0.22,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M19-matrix.log 2>&1; optional_test.go:129: adaptations = []main.adaptation(nil)",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [
+      "M16"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestOptionalAdaptationContextualDeclarations",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.627,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M8",
+      "M9",
+      "M11",
+      "M12",
+      "M13",
+      "M14",
+      "M17",
+      "M19"
+    ],
+    "unique_kills": [
+      "M14"
+    ],
+    "last_proven_fail": "M19: optional_test.go:165: adaptations = []main.adaptation(nil)",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_ADAPT",
+      "E_RETURN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M14-matrix.log 2>&1; optional_test.go:165: adaptations = []main.adaptation(nil)",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [
+      "M16"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestOptionalAdaptationOwnsOnlyNamedRoots",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.117,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M11"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M11: optional_test.go:191: rewrote an external declaration: map[string]string{\"/tmp/adamic-gate/TestOptionalAdaptationOwnsOnlyNamedRoots3977213901/001/external.ts\":\"export interface S {p?: (string) | undefined}\"} []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:1, DeclarationsChanged:1, FunctionsChanged:0}}",
+    "verdict": "subsumed",
+    "subsumed_by": "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.145,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M11-matrix.log 2>&1; optional_test.go:191: rewrote an external declaration: map[string]string{\"/tmp/adamic-gate/TestOptionalAdaptationOwnsOnlyNamedRoots3977213901/001/external.ts\":\"export interface S {p?: (string) | undefined}\"} []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:1, DeclarationsChanged:1, FunctionsChanged:0}}",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestOptionalAdaptationPreservesLiveMethodPlacement",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.173,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity. Node runs the source and compares stdout to a self-written literal.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M18-matrix.log 2>&1; --- PASS: TestOptionalAdaptationPreservesLiveMethodPlacement (0.23s); no planted mutant made this row fail.",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestOptionalAdaptationUTF16AndAdamicExtension",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/optional_test.go",
+    "seconds": 0.22,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M11",
+      "M12",
+      "M13",
+      "M17",
+      "M19"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M19: optional_test.go:245: adaptations = []main.adaptation(nil); original=/tmp/adamic-gate/TestOptionalAdaptationUTF16AndAdamicExtension.ts2311875515/001/main.ts:1:64: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "verdict": "subsumed",
+    "subsumed_by": "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "E_ADAPT",
+      "E_RETURN"
+    ],
+    "subsumer_seconds": 0.145,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M19-matrix.log 2>&1; optional_test.go:245: adaptations = []main.adaptation(nil); original=/tmp/adamic-gate/TestOptionalAdaptationUTF16AndAdamicExtension.ts2311875515/001/main.ts:1:64: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "own_entry_probes": [
+      "E_ADAPT"
+    ],
+    "over_budget_mutants": [
+      "M16"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestImplicitReturnsNeedNoAdaptation",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/returns_test.go",
+    "seconds": 0.52,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity. Node runs the source and compares stdout to a self-written literal. Node runs the original source, not an adapted product; E_ADAPT and E_RETURN both pass.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M18-matrix.log 2>&1; --- PASS: TestImplicitReturnsNeedNoAdaptation (0.81s); no planted mutant made this row fail.",
+    "own_entry_probes": [
+      "E_ADAPT",
+      "E_RETURN"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestReturnAdaptationLeavesUnprovenContracts",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/returns_test.go",
+    "seconds": 0.051,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity. Current inputs have no TS7030 diagnostics; return adaptation exits at its initial guard.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M18-matrix.log 2>&1; --- PASS: TestReturnAdaptationLeavesUnprovenContracts (0.07s); no planted mutant made this row fail.",
+    "own_entry_probes": [
+      "E_RETURN"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestReturnAdaptationOwnsOnlyRoots",
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "file": "cmd/adamic-meter/returns_test.go",
+    "seconds": 0.04,
+    "oracle": "Linked TypeScript checker acceptance/diagnostic results plus self-written rewrite counts and no-change expectations; diagnostic-code counts do not verify full diagnostic identity. Current inputs have no TS7030 diagnostics; return adaptation exits at its initial guard.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > M18-matrix.log 2>&1; --- PASS: TestReturnAdaptationOwnsOnlyRoots (0.04s); no planted mutant made this row fail.",
+    "own_entry_probes": [
+      "E_RETURN"
+    ],
+    "over_budget_mutants": [],
+    "vacuous_subcases": []
+  }
+]

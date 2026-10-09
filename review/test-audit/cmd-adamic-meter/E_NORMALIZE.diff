@@ -1,0 +1,10 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -386,6 +386,7 @@
+ )
+ 
+ func normalize(message string) string {
++ if true { return "" }
+ 	message = location.ReplaceAllString(message, "<location>")
+ 	message = quoted.ReplaceAllString(message, "<name>")
+ 	message = typeText.ReplaceAllString(message, "of type <type>")

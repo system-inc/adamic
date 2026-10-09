@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -274,7 +274,7 @@
+ }
+ 
+ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type, owned map[string]bool, selected map[*ast.Node]bool) {
+-	if symbol == nil || symbol.Flags&ast.SymbolFlagsOptional == 0 || len(symbol.Declarations) == 0 || value == nil {
++	if symbol == nil || symbol.Flags&ast.SymbolFlagsOptional != 0 || len(symbol.Declarations) == 0 || value == nil {
+ 		return
+ 	}
+ 	parts := []*checker.Type{value}
