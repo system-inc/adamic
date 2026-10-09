@@ -65,6 +65,23 @@ func programRegionMapperStorage(t *testing.T, enabled bool) {
 	if err != nil || report != "" {
 		t.Fatalf("leak check: %v %s", err, report)
 	}
+	// LeakSanitizer is the Linux leak proof; counters independently account for
+	// every member, and must run here too rather than only on macOS.
+	countedBinary := filepath.Join(t.TempDir(), "storage-counts")
+	if err := native.Build(checked, countedBinary, native.Options{ProgramRegion: enabled, Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	command, args := pinnedStack(countedBinary)
+	counted := execute(t, command, args...)
+	observed := counted
+	observed.stderr = leakcheck.CountsLine.ReplaceAll(counted.stderr, nil)
+	if difference := disagreement(oracle, observed); difference != "" {
+		t.Fatalf("counted storage invariant: %s %s", difference, counted.stderr)
+	}
+	if report := leakcheck.Unbalanced(leakRun(counted)); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("flag=%t: %s", enabled, counted.stderr)
 	t.Logf("flag=%t: actual storage assertion, unchanged Node output, ASan/UBSan and leak check passed", enabled)
 	if !enabled {
 		return
