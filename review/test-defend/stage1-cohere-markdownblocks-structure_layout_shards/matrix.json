@@ -1,0 +1,1704 @@
+{
+  "D4-new-leaf-family.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownLeafComposition_005/reference_collapse",
+        "Action": "pass",
+        "Elapsed": 1.07
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_005",
+        "Action": "pass",
+        "Elapsed": 42.44
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006/footnote_indentation",
+        "Action": "pass",
+        "Elapsed": 1.36
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006",
+        "Action": "pass",
+        "Elapsed": 42.73
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004/strong_delimiter",
+        "Action": "pass",
+        "Elapsed": 1.37
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004",
+        "Action": "pass",
+        "Elapsed": 42.74
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_002",
+        "Action": "fail",
+        "Elapsed": 46.8
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_003",
+        "Action": "fail",
+        "Elapsed": 4.6
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_001",
+        "Action": "fail",
+        "Elapsed": 4.33
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_000",
+        "Action": "fail",
+        "Elapsed": 47.55
+      }
+    ],
+    "failures": [
+      "leaf_composition_independent_test.go:191: native lists case generated/table-layout/> - | a | b |",
+      "leaf_composition_independent_test.go:191: release block layout case generated/table-layout/| a | b |",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/table-layout/| a | b |",
+      "leaf_composition_independent_test.go:191: backend lists case generated/table-layout/- | a | b |"
+    ]
+  },
+  "D3-new-leaf-family.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownLeafComposition_004/strong_delimiter",
+        "Action": "pass",
+        "Elapsed": 1.09
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004",
+        "Action": "pass",
+        "Elapsed": 42.06
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_005/reference_collapse",
+        "Action": "pass",
+        "Elapsed": 1.13
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_005",
+        "Action": "pass",
+        "Elapsed": 42.1
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006/footnote_indentation",
+        "Action": "pass",
+        "Elapsed": 1.14
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006",
+        "Action": "pass",
+        "Elapsed": 42.12
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_002",
+        "Action": "fail",
+        "Elapsed": 45.24
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_001",
+        "Action": "fail",
+        "Elapsed": 3.8
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_003",
+        "Action": "fail",
+        "Elapsed": 4.01
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_000",
+        "Action": "fail",
+        "Elapsed": 46.58
+      }
+    ],
+    "failures": [
+      "leaf_composition_independent_test.go:191: source Node lists case generated/list/*/nnnnn differs: got \"- item _text_\\\\n    - item _text_\\\\n        - item _text_\\\\n            - item _text_\\\\n                - item _text_\\\\n\" want \"- item _text_ `x`\\\\n    - item _text_ `x`\\\\n        - item _text_ `x`\\\\n            - item _text_ `x`\\\\n                - item _text_ `x`\\\\n\"",
+      "leaf_composition_independent_test.go:191: release block layout case generated/list/*/nnnn differs: got \"- item _text_\\\\n    - item _text_\\\\n        - item _text_\\\\n            - item _text_\\\\n\" want \"- item _text_ `x`\\\\n    - item _text_ `x`\\\\n        - item _text_ `x`\\\\n            - item _text_ `x`\\\\n\"",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/list/*/nn differs: got \"- item _text_\\\\n    - item _text_\\\\n\" want \"- item _text_ `x`\\\\n    - item _text_ `x`\\\\n\"",
+      "leaf_composition_independent_test.go:191: source Node lists case stage1/cohere/markdownblocks/GAPS.md differs: got \"# Markdown parser and layout: embedding off\\\\n\\\\nThe contract is Markdown parsing and layout with `embeddedLanguageFormatting: off`\\\\n\\\\n## Seat compiler reconciliation, October 7, 2026\\\\n\\\\nOn seat `1cd00a262ed08e67c51c1bc368e07bc5a4ec0117`, with main\\\\n`71d7e491b3c9724f7a0e2ee754592149e7f9790b` already merged, gap 11 is closed:\\\\nthe unchanged function-expression probe now runs byte-identically on source\\\\nNode, native and the JavaScript backend, with leak detection. `AstPath.map`\\\\nnow calls `each`\\\\n\\\\n\\\\n\\\\nMain also closed gap 6: its unchanged probe prints `missing` on all three\\\\nbackends with leak detection, as main's positive test already asserts. The source\\\\ndecoder retains its explicit initialized match flag: it is how the decoder\\\\ntracks whether a reference matched, independently of optional-field initialization.\\\\nAll other representation probes retain their recorded diagnose"
+    ]
+  },
+  "D2-new-leaf-family.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownLeafComposition_005/reference_collapse",
+        "Action": "pass",
+        "Elapsed": 1.27
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_005",
+        "Action": "pass",
+        "Elapsed": 44.62
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004/strong_delimiter",
+        "Action": "pass",
+        "Elapsed": 1.29
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004",
+        "Action": "pass",
+        "Elapsed": 44.63
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006/footnote_indentation",
+        "Action": "pass",
+        "Elapsed": 1.61
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006",
+        "Action": "pass",
+        "Elapsed": 1.61
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_003",
+        "Action": "pass",
+        "Elapsed": 48.04
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_002",
+        "Action": "pass",
+        "Elapsed": 48.07
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_001",
+        "Action": "pass",
+        "Elapsed": 4.15
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_000",
+        "Action": "pass",
+        "Elapsed": 49.35
+      }
+    ],
+    "failures": []
+  },
+  "D1-remaining-1.log": {
+    "events": [
+      {
+        "Test": "TestProduct_MarkdownWhitespace_lowered",
+        "Action": "pass",
+        "Elapsed": 1.74
+      },
+      {
+        "Test": "TestProduct_MarkdownLeafGoLists",
+        "Action": "pass",
+        "Elapsed": 1.8
+      },
+      {
+        "Test": "TestProduct_MarkdownTable_lowered",
+        "Action": "pass",
+        "Elapsed": 1.97
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_lists",
+        "Action": "pass",
+        "Elapsed": 3.68
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_layout",
+        "Action": "pass",
+        "Elapsed": 4.01
+      },
+      {
+        "Test": "TestProduct_MarkdownTable_document",
+        "Action": "pass",
+        "Elapsed": 3.91
+      },
+      {
+        "Test": "TestProduct_MarkdownTable_list",
+        "Action": "pass",
+        "Elapsed": 3.89
+      },
+      {
+        "Test": "TestProduct_MarkdownTable_native_false",
+        "Action": "pass",
+        "Elapsed": 3.92
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_manifest",
+        "Action": "pass",
+        "Elapsed": 2
+      },
+      {
+        "Test": "TestProduct_MarkdownTable_native_true",
+        "Action": "pass",
+        "Elapsed": 3.78
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_policy_lowered",
+        "Action": "pass",
+        "Elapsed": 1.62
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_native_false",
+        "Action": "pass",
+        "Elapsed": 3.17
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_native_true",
+        "Action": "pass",
+        "Elapsed": 3.16
+      },
+      {
+        "Test": "TestProduct_MarkdownQuote_layout",
+        "Action": "pass",
+        "Elapsed": 3.36
+      },
+      {
+        "Test": "TestProduct_MarkdownStructure_lowered",
+        "Action": "pass",
+        "Elapsed": 1.58
+      },
+      {
+        "Test": "TestProduct_MarkdownStructure_adamic_markdown_doclayout",
+        "Action": "pass",
+        "Elapsed": 3.39
+      },
+      {
+        "Test": "TestProduct_MarkdownStructure_adamic_markdown_lists",
+        "Action": "pass",
+        "Elapsed": 3.27
+      },
+      {
+        "Test": "TestProduct_MarkdownStructure_native",
+        "Action": "pass",
+        "Elapsed": 3.31
+      },
+      {
+        "Test": "TestProduct_MarkdownWhitespace_policy_native",
+        "Action": "pass",
+        "Elapsed": 3.33
+      },
+      {
+        "Test": "TestProduct_MarkdownLeafNativeRelease",
+        "Action": "pass",
+        "Elapsed": 1.74
+      },
+      {
+        "Test": "TestProduct_MarkdownQuote_lowered",
+        "Action": "pass",
+        "Elapsed": 1.54
+      },
+      {
+        "Test": "TestProduct_MarkdownQuote_native_false",
+        "Action": "pass",
+        "Elapsed": 3.07
+      },
+      {
+        "Test": "TestProduct_MarkdownQuote_native_true",
+        "Action": "pass",
+        "Elapsed": 3.18
+      },
+      {
+        "Test": "TestProduct_MarkdownLeafNativeSanitized",
+        "Action": "pass",
+        "Elapsed": 1.55
+      },
+      {
+        "Test": "TestProduct_MarkdownLeafGoDocLayout",
+        "Action": "pass",
+        "Elapsed": 1.38
+      },
+      {
+        "Test": "TestProduct_MarkdownQuote_lists",
+        "Action": "pass",
+        "Elapsed": 2.95
+      },
+      {
+        "Test": "TestProduct_MarkdownLeafLowered",
+        "Action": "pass",
+        "Elapsed": 1.24
+      }
+    ],
+    "failures": []
+  },
+  "D1-remaining-0.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownListLayout_Setup",
+        "Action": "pass",
+        "Elapsed": 0.19
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout",
+        "Action": "pass",
+        "Elapsed": 3.21
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_Setup",
+        "Action": "pass",
+        "Elapsed": 4.35
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_Setup",
+        "Action": "pass",
+        "Elapsed": 1.58
+      },
+      {
+        "Test": "TestMarkdownListLayout",
+        "Action": "pass",
+        "Elapsed": 0
+      },
+      {
+        "Test": "TestMarkdownLeafCompositionPlantedDisagreement",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownQuoteLayoutNative",
+        "Action": "pass",
+        "Elapsed": 0
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_Setup",
+        "Action": "pass",
+        "Elapsed": 1.73
+      },
+      {
+        "Test": "TestMarkdownTableLayout_Setup",
+        "Action": "pass",
+        "Elapsed": 5.02
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayoutBuildWorker",
+        "Action": "pass",
+        "Elapsed": 0
+      },
+      {
+        "Test": "TestMarkdownTableLayout",
+        "Action": "pass",
+        "Elapsed": 5.02
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_Setup",
+        "Action": "pass",
+        "Elapsed": 8.18
+      },
+      {
+        "Test": "TestMarkdownLeafComposition",
+        "Action": "pass",
+        "Elapsed": 6.57
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayoutMutants/policy_CJ_spacing_tie",
+        "Action": "pass",
+        "Elapsed": 0.19
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayoutMutants/policy_Korean_pair",
+        "Action": "pass",
+        "Elapsed": 0.19
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayoutMutants/policy_single_line",
+        "Action": "pass",
+        "Elapsed": 0.19
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayoutMutants",
+        "Action": "pass",
+        "Elapsed": 7.56
+      }
+    ],
+    "failures": []
+  },
+  "D1-other-layouts.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownRootLayout/root_double_line",
+        "Action": "pass",
+        "Elapsed": 0.51
+      },
+      {
+        "Test": "TestMarkdownCodeBlockLayout/fence_minimum",
+        "Action": "pass",
+        "Elapsed": 0.54
+      },
+      {
+        "Test": "TestMarkdownCodeBlockLayout/fence_longest",
+        "Action": "pass",
+        "Elapsed": 0.43
+      },
+      {
+        "Test": "TestMarkdownRootLayout/ignored_source_span",
+        "Action": "pass",
+        "Elapsed": 0.46
+      },
+      {
+        "Test": "TestMarkdownRootLayout/ignore_range_closing_comment",
+        "Action": "pass",
+        "Elapsed": 0.48
+      },
+      {
+        "Test": "TestMarkdownRootLayout",
+        "Action": "pass",
+        "Elapsed": 40.29
+      },
+      {
+        "Test": "TestMarkdownCodeBlockLayout/code_indentation",
+        "Action": "pass",
+        "Elapsed": 0.5
+      },
+      {
+        "Test": "TestMarkdownCodeBlockLayout",
+        "Action": "pass",
+        "Elapsed": 40.3
+      },
+      {
+        "Test": "TestMarkdownHTMLBlockLayout/HTML_root_trim",
+        "Action": "pass",
+        "Elapsed": 0.4
+      },
+      {
+        "Test": "TestMarkdownHTMLBlockLayout/HTML_comment_line",
+        "Action": "pass",
+        "Elapsed": 0.33
+      },
+      {
+        "Test": "TestMarkdownHTMLBlockLayout/HTML_literal_root",
+        "Action": "pass",
+        "Elapsed": 0.38
+      },
+      {
+        "Test": "TestMarkdownHTMLBlockLayout",
+        "Action": "pass",
+        "Elapsed": 41.41
+      }
+    ],
+    "failures": []
+  },
+  "D1-Whitespace.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownWhitespaceLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_020",
+        "Action": "pass",
+        "Elapsed": 57.41
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_019",
+        "Action": "pass",
+        "Elapsed": 57.42
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_018",
+        "Action": "pass",
+        "Elapsed": 57.42
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_012",
+        "Action": "pass",
+        "Elapsed": 57.45
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_015",
+        "Action": "pass",
+        "Elapsed": 57.56
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_016",
+        "Action": "pass",
+        "Elapsed": 2.38
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_006",
+        "Action": "pass",
+        "Elapsed": 2.32
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_017",
+        "Action": "pass",
+        "Elapsed": 2.56
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_023",
+        "Action": "pass",
+        "Elapsed": 2.56
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_009",
+        "Action": "pass",
+        "Elapsed": 2.29
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_010",
+        "Action": "pass",
+        "Elapsed": 2.37
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_011",
+        "Action": "pass",
+        "Elapsed": 2.51
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_008",
+        "Action": "pass",
+        "Elapsed": 2.69
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_007",
+        "Action": "pass",
+        "Elapsed": 2.11
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_014",
+        "Action": "pass",
+        "Elapsed": 2.14
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_013",
+        "Action": "pass",
+        "Elapsed": 2.17
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_022",
+        "Action": "pass",
+        "Elapsed": 7.5
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_003",
+        "Action": "pass",
+        "Elapsed": 2.37
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_005",
+        "Action": "pass",
+        "Elapsed": 2.11
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_004",
+        "Action": "pass",
+        "Elapsed": 2.41
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_001",
+        "Action": "pass",
+        "Elapsed": 2.36
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_000",
+        "Action": "pass",
+        "Elapsed": 2.13
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_002",
+        "Action": "pass",
+        "Elapsed": 2.3
+      },
+      {
+        "Test": "TestMarkdownWhitespaceLayout_021",
+        "Action": "pass",
+        "Elapsed": 1.04
+      }
+    ],
+    "failures": []
+  },
+  "D1-List.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownListLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.02
+      },
+      {
+        "Test": "TestMarkdownListLayout_008",
+        "Action": "pass",
+        "Elapsed": 69.63
+      },
+      {
+        "Test": "TestMarkdownListLayout_006",
+        "Action": "pass",
+        "Elapsed": 69.63
+      },
+      {
+        "Test": "TestMarkdownListLayout_004",
+        "Action": "pass",
+        "Elapsed": 69.69
+      },
+      {
+        "Test": "TestMarkdownListLayout_012",
+        "Action": "pass",
+        "Elapsed": 69.77
+      },
+      {
+        "Test": "TestMarkdownListLayout_007",
+        "Action": "pass",
+        "Elapsed": 69.87
+      },
+      {
+        "Test": "TestMarkdownListLayout_005",
+        "Action": "pass",
+        "Elapsed": 3.24
+      },
+      {
+        "Test": "TestMarkdownListLayout_010",
+        "Action": "pass",
+        "Elapsed": 3.36
+      },
+      {
+        "Test": "TestMarkdownListLayout_015",
+        "Action": "pass",
+        "Elapsed": 3.6
+      },
+      {
+        "Test": "TestMarkdownListLayout_011",
+        "Action": "pass",
+        "Elapsed": 3.69
+      },
+      {
+        "Test": "TestMarkdownListLayout_014",
+        "Action": "pass",
+        "Elapsed": 4
+      },
+      {
+        "Test": "TestMarkdownListLayout_009",
+        "Action": "pass",
+        "Elapsed": 3.47
+      },
+      {
+        "Test": "TestMarkdownListLayout_013",
+        "Action": "pass",
+        "Elapsed": 3.31
+      },
+      {
+        "Test": "TestMarkdownListLayout_002",
+        "Action": "pass",
+        "Elapsed": 3.41
+      },
+      {
+        "Test": "TestMarkdownListLayout_001",
+        "Action": "pass",
+        "Elapsed": 3.29
+      },
+      {
+        "Test": "TestMarkdownListLayout_003",
+        "Action": "pass",
+        "Elapsed": 3.59
+      },
+      {
+        "Test": "TestMarkdownListLayout_000",
+        "Action": "pass",
+        "Elapsed": 2.84
+      }
+    ],
+    "failures": []
+  },
+  "D1-Quote.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownQuoteLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.02
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_007",
+        "Action": "pass",
+        "Elapsed": 46.05
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_009",
+        "Action": "pass",
+        "Elapsed": 46.09
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_006",
+        "Action": "pass",
+        "Elapsed": 46.15
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_008",
+        "Action": "pass",
+        "Elapsed": 46.18
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_011",
+        "Action": "pass",
+        "Elapsed": 46.22
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_005",
+        "Action": "pass",
+        "Elapsed": 4.88
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_004",
+        "Action": "pass",
+        "Elapsed": 4.87
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_001",
+        "Action": "pass",
+        "Elapsed": 4.95
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_003",
+        "Action": "pass",
+        "Elapsed": 5.11
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_010",
+        "Action": "pass",
+        "Elapsed": 7.28
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_000",
+        "Action": "pass",
+        "Elapsed": 2.42
+      },
+      {
+        "Test": "TestMarkdownQuoteLayout_002",
+        "Action": "pass",
+        "Elapsed": 2.47
+      }
+    ],
+    "failures": []
+  },
+  "remaining-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "D1-LeafComposition.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownLeafCompositionUnion",
+        "Action": "pass",
+        "Elapsed": 0.02
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_005/reference_collapse",
+        "Action": "pass",
+        "Elapsed": 1.02
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_005",
+        "Action": "pass",
+        "Elapsed": 42.96
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006/footnote_indentation",
+        "Action": "pass",
+        "Elapsed": 1.16
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_006",
+        "Action": "pass",
+        "Elapsed": 43.1
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004/strong_delimiter",
+        "Action": "pass",
+        "Elapsed": 1.6
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_004",
+        "Action": "pass",
+        "Elapsed": 1.6
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_001",
+        "Action": "pass",
+        "Elapsed": 46.73
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_002",
+        "Action": "pass",
+        "Elapsed": 46.75
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_003",
+        "Action": "pass",
+        "Elapsed": 46.83
+      },
+      {
+        "Test": "TestMarkdownLeafComposition_000",
+        "Action": "pass",
+        "Elapsed": 5.05
+      }
+    ],
+    "failures": []
+  },
+  "D1-Table.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownTableLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownTableLayout_004",
+        "Action": "pass",
+        "Elapsed": 44.12
+      },
+      {
+        "Test": "TestMarkdownTableLayout_005",
+        "Action": "pass",
+        "Elapsed": 44.12
+      },
+      {
+        "Test": "TestMarkdownTableLayout_007",
+        "Action": "pass",
+        "Elapsed": 44.19
+      },
+      {
+        "Test": "TestMarkdownTableLayout_002",
+        "Action": "pass",
+        "Elapsed": 44.2
+      },
+      {
+        "Test": "TestMarkdownTableLayout_006",
+        "Action": "pass",
+        "Elapsed": 47.16
+      },
+      {
+        "Test": "TestMarkdownTableLayout_000",
+        "Action": "pass",
+        "Elapsed": 3.45
+      },
+      {
+        "Test": "TestMarkdownTableLayout_001",
+        "Action": "pass",
+        "Elapsed": 3.55
+      },
+      {
+        "Test": "TestMarkdownTableLayout_003",
+        "Action": "pass",
+        "Elapsed": 3.66
+      }
+    ],
+    "failures": []
+  },
+  "D1-Structure.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownStructureLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.04
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_008",
+        "Action": "pass",
+        "Elapsed": 44.29
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_004",
+        "Action": "pass",
+        "Elapsed": 44.4
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_007",
+        "Action": "pass",
+        "Elapsed": 44.46
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_006",
+        "Action": "pass",
+        "Elapsed": 44.47
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_012",
+        "Action": "pass",
+        "Elapsed": 3.2
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_005",
+        "Action": "pass",
+        "Elapsed": 48.07
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_002",
+        "Action": "pass",
+        "Elapsed": 3.83
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_015",
+        "Action": "pass",
+        "Elapsed": 3.89
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_003",
+        "Action": "pass",
+        "Elapsed": 3.98
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_014",
+        "Action": "pass",
+        "Elapsed": 4.01
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_013",
+        "Action": "pass",
+        "Elapsed": 3.63
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_010",
+        "Action": "pass",
+        "Elapsed": 3.49
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_001",
+        "Action": "pass",
+        "Elapsed": 4.04
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_011",
+        "Action": "pass",
+        "Elapsed": 4.01
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_000",
+        "Action": "pass",
+        "Elapsed": 1.75
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_009",
+        "Action": "pass",
+        "Elapsed": 2.06
+      }
+    ],
+    "failures": []
+  },
+  "D1-width.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownUnicodeWidths",
+        "Action": "fail",
+        "Elapsed": 37.01
+      }
+    ],
+    "failures": [
+      "width_test.go:105: native mismatch \"U+00036F\" got \"1\" want \"0\""
+    ]
+  },
+  "D1-native-build.log": {
+    "events": [],
+    "failures": []
+  },
+  "width-clean-isolated.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownUnicodeWidths/East_Asian_width",
+        "Action": "pass",
+        "Elapsed": 2.34
+      },
+      {
+        "Test": "TestMarkdownUnicodeWidths/narrow_emoji",
+        "Action": "pass",
+        "Elapsed": 2.34
+      },
+      {
+        "Test": "TestMarkdownUnicodeWidths/ASCII_DEL_shortcut",
+        "Action": "pass",
+        "Elapsed": 2.48
+      },
+      {
+        "Test": "TestMarkdownUnicodeWidths",
+        "Action": "pass",
+        "Elapsed": 68.45
+      }
+    ],
+    "failures": []
+  },
+  "width-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "D4-Table.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownTableLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownTableLayout_004",
+        "Action": "fail",
+        "Elapsed": 42.33
+      },
+      {
+        "Test": "TestMarkdownTableLayout_007",
+        "Action": "fail",
+        "Elapsed": 42.36
+      },
+      {
+        "Test": "TestMarkdownTableLayout_003",
+        "Action": "fail",
+        "Elapsed": 42.52
+      },
+      {
+        "Test": "TestMarkdownTableLayout_002",
+        "Action": "fail",
+        "Elapsed": 42.67
+      },
+      {
+        "Test": "TestMarkdownTableLayout_005",
+        "Action": "fail",
+        "Elapsed": 2.11
+      },
+      {
+        "Test": "TestMarkdownTableLayout_006",
+        "Action": "fail",
+        "Elapsed": 44.65
+      },
+      {
+        "Test": "TestMarkdownTableLayout_001",
+        "Action": "fail",
+        "Elapsed": 2.33
+      },
+      {
+        "Test": "TestMarkdownTableLayout_000",
+        "Action": "fail",
+        "Elapsed": 2.27
+      }
+    ],
+    "failures": [
+      "table_layout_shards_test.go:450: source Node lists output byte 5871 in generated/table-layout/> - | a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 6420 in generated/table-layout/| a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 6451 in generated/table-layout/| a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 5915 in generated/table-layout/> | a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 4125 in generated/table-layout/- | a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 71085 in generated/table-layout/| a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 4841 in generated/table-layout/- | a | b |",
+      "table_layout_shards_test.go:450: source Node lists output byte 5662 in generated/table-layout/- | a | b |"
+    ]
+  },
+  "D4-Structure.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownStructureLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_004",
+        "Action": "fail",
+        "Elapsed": 64.11
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_008",
+        "Action": "fail",
+        "Elapsed": 64.12
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_007",
+        "Action": "fail",
+        "Elapsed": 64.15
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_006",
+        "Action": "fail",
+        "Elapsed": 64.38
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_001",
+        "Action": "fail",
+        "Elapsed": 1.77
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_002",
+        "Action": "fail",
+        "Elapsed": 1.97
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_003",
+        "Action": "fail",
+        "Elapsed": 2.29
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_005",
+        "Action": "fail",
+        "Elapsed": 66.55
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_012",
+        "Action": "fail",
+        "Elapsed": 2.24
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_014",
+        "Action": "fail",
+        "Elapsed": 1.8
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_015",
+        "Action": "fail",
+        "Elapsed": 2.26
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_000",
+        "Action": "fail",
+        "Elapsed": 1.96
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_013",
+        "Action": "fail",
+        "Elapsed": 2.27
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_010",
+        "Action": "fail",
+        "Elapsed": 2.12
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_011",
+        "Action": "fail",
+        "Elapsed": 1.4
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_009",
+        "Action": "fail",
+        "Elapsed": 1.21
+      }
+    ],
+    "failures": [
+      "structure_layout_shards_test.go:539: source Node lists output byte 3010 in generated/table-layout/> | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2689 in generated/table-layout/- | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 3114 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2977 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2961 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2443 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2918 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 67754 in generated/table-layout/> | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2703 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2860 in generated/table-layout/> - | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2693 in generated/table-layout/| a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 3142 in generated/table-layout/> | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2529 in generated/table-layout/- | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2677 in generated/table-layout/> | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 2685 in generated/table-layout/> - | a | b |",
+      "structure_layout_shards_test.go:539: source Node lists output byte 3420 in generated/table-layout/- | a | b |"
+    ]
+  },
+  "D2-witness.log": {
+    "events": [],
+    "failures": []
+  },
+  "D3-Table.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownTableLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownTableLayout_001",
+        "Action": "fail",
+        "Elapsed": 41.25
+      },
+      {
+        "Test": "TestMarkdownTableLayout_002",
+        "Action": "fail",
+        "Elapsed": 41.42
+      },
+      {
+        "Test": "TestMarkdownTableLayout_004",
+        "Action": "fail",
+        "Elapsed": 41.48
+      },
+      {
+        "Test": "TestMarkdownTableLayout_007",
+        "Action": "fail",
+        "Elapsed": 41.51
+      },
+      {
+        "Test": "TestMarkdownTableLayout_006",
+        "Action": "fail",
+        "Elapsed": 43.15
+      },
+      {
+        "Test": "TestMarkdownTableLayout_000",
+        "Action": "fail",
+        "Elapsed": 2.44
+      },
+      {
+        "Test": "TestMarkdownTableLayout_005",
+        "Action": "fail",
+        "Elapsed": 2.42
+      },
+      {
+        "Test": "TestMarkdownTableLayout_003",
+        "Action": "fail",
+        "Elapsed": 2.42
+      }
+    ],
+    "failures": [
+      "table_layout_shards_test.go:450: source Node lists output byte 186 in generated/list-layout/- [ ] a",
+      "table_layout_shards_test.go:450: source Node lists output byte 77 in generated/list/-/n",
+      "table_layout_shards_test.go:450: source Node lists output byte 13 in generated/list/-/nn",
+      "table_layout_shards_test.go:450: source Node lists output byte 13 in generated/list/*/n",
+      "table_layout_shards_test.go:450: source Node lists output byte 131 in stage1/cohere/markdownblocks/GAPS.md",
+      "table_layout_shards_test.go:450: source Node lists output byte 13 in generated/list/-/nnnn",
+      "table_layout_shards_test.go:450: source Node lists output byte 156 in generated/list-layout/- [ ]",
+      "table_layout_shards_test.go:450: source Node lists output byte 13 in generated/list/*/nn"
+    ]
+  },
+  "D3-Structure.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownStructureLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_004",
+        "Action": "fail",
+        "Elapsed": 43.85
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_008",
+        "Action": "fail",
+        "Elapsed": 43.97
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_006",
+        "Action": "fail",
+        "Elapsed": 44.16
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_007",
+        "Action": "fail",
+        "Elapsed": 44.18
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_002",
+        "Action": "fail",
+        "Elapsed": 1.93
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_003",
+        "Action": "fail",
+        "Elapsed": 2.26
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_001",
+        "Action": "fail",
+        "Elapsed": 2.24
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_000",
+        "Action": "fail",
+        "Elapsed": 2.23
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_005",
+        "Action": "fail",
+        "Elapsed": 46.67
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_014",
+        "Action": "fail",
+        "Elapsed": 2.4
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_015",
+        "Action": "fail",
+        "Elapsed": 2.41
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_013",
+        "Action": "fail",
+        "Elapsed": 2.3
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_010",
+        "Action": "fail",
+        "Elapsed": 2.35
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_011",
+        "Action": "fail",
+        "Elapsed": 2.15
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_009",
+        "Action": "fail",
+        "Elapsed": 1.15
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_012",
+        "Action": "fail",
+        "Elapsed": 0.98
+      }
+    ],
+    "failures": [
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/+/nnnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/+/nnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 47 in generated/list/-/nn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/*/nnnnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/-/nnnnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 14 in generated/list/1./nnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/+/n",
+      "structure_layout_shards_test.go:539: source Node lists output byte 16 in generated/block/- |a|b|",
+      "structure_layout_shards_test.go:539: source Node lists output byte 131 in stage1/cohere/markdownblocks/GAPS.md",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/-/n",
+      "structure_layout_shards_test.go:539: source Node lists output byte 77 in generated/list/*/n",
+      "structure_layout_shards_test.go:539: source Node lists output byte 14 in generated/list/1./nn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 22 in generated/list/999999999./nnnnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/*/nn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/*/nnnn",
+      "structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/-/nnn"
+    ]
+  },
+  "D2-Table.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownTableLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.02
+      },
+      {
+        "Test": "TestMarkdownTableLayout_005",
+        "Action": "pass",
+        "Elapsed": 44.66
+      },
+      {
+        "Test": "TestMarkdownTableLayout_004",
+        "Action": "pass",
+        "Elapsed": 44.79
+      },
+      {
+        "Test": "TestMarkdownTableLayout_007",
+        "Action": "pass",
+        "Elapsed": 44.86
+      },
+      {
+        "Test": "TestMarkdownTableLayout_002",
+        "Action": "pass",
+        "Elapsed": 44.91
+      },
+      {
+        "Test": "TestMarkdownTableLayout_006",
+        "Action": "pass",
+        "Elapsed": 47.76
+      },
+      {
+        "Test": "TestMarkdownTableLayout_001",
+        "Action": "pass",
+        "Elapsed": 3.57
+      },
+      {
+        "Test": "TestMarkdownTableLayout_000",
+        "Action": "pass",
+        "Elapsed": 3.63
+      },
+      {
+        "Test": "TestMarkdownTableLayout_003",
+        "Action": "pass",
+        "Elapsed": 3.78
+      }
+    ],
+    "failures": []
+  },
+  "D2-Structure-retry.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownStructureLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_008",
+        "Action": "pass",
+        "Elapsed": 7.74
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_012",
+        "Action": "pass",
+        "Elapsed": 7.74
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_015",
+        "Action": "pass",
+        "Elapsed": 7.8
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_013",
+        "Action": "pass",
+        "Elapsed": 7.83
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_014",
+        "Action": "pass",
+        "Elapsed": 7.97
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_011",
+        "Action": "pass",
+        "Elapsed": 3.46
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_010",
+        "Action": "pass",
+        "Elapsed": 3.71
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_009",
+        "Action": "pass",
+        "Elapsed": 3.72
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_004",
+        "Action": "pass",
+        "Elapsed": 3.69
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_007",
+        "Action": "pass",
+        "Elapsed": 3.6
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_001",
+        "Action": "pass",
+        "Elapsed": 3.52
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_003",
+        "Action": "pass",
+        "Elapsed": 3.61
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_002",
+        "Action": "pass",
+        "Elapsed": 3.66
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_006",
+        "Action": "pass",
+        "Elapsed": 4
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_000",
+        "Action": "pass",
+        "Elapsed": 1.3
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_005",
+        "Action": "pass",
+        "Elapsed": 5.12
+      }
+    ],
+    "failures": []
+  },
+  "D2-Structure.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownStructureLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.04
+      }
+    ],
+    "failures": [
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "layout-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "width-clean-retry.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownUnicodeWidths/East_Asian_width",
+        "Action": "pass",
+        "Elapsed": 2.74
+      },
+      {
+        "Test": "TestMarkdownUnicodeWidths/narrow_emoji",
+        "Action": "pass",
+        "Elapsed": 2.55
+      },
+      {
+        "Test": "TestMarkdownUnicodeWidths/ASCII_DEL_shortcut",
+        "Action": "pass",
+        "Elapsed": 2.39
+      }
+    ],
+    "failures": [
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "width-clean.log": {
+    "events": [],
+    "failures": [
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "table-clean.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownTableLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.02
+      },
+      {
+        "Test": "TestMarkdownTableLayout_004",
+        "Action": "pass",
+        "Elapsed": 47.41
+      },
+      {
+        "Test": "TestMarkdownTableLayout_002",
+        "Action": "pass",
+        "Elapsed": 47.44
+      },
+      {
+        "Test": "TestMarkdownTableLayout_003",
+        "Action": "pass",
+        "Elapsed": 47.47
+      },
+      {
+        "Test": "TestMarkdownTableLayout_007",
+        "Action": "pass",
+        "Elapsed": 47.6
+      },
+      {
+        "Test": "TestMarkdownTableLayout_006",
+        "Action": "pass",
+        "Elapsed": 52.28
+      },
+      {
+        "Test": "TestMarkdownTableLayout_000",
+        "Action": "pass",
+        "Elapsed": 5.4
+      },
+      {
+        "Test": "TestMarkdownTableLayout_001",
+        "Action": "pass",
+        "Elapsed": 5.56
+      },
+      {
+        "Test": "TestMarkdownTableLayout_005",
+        "Action": "pass",
+        "Elapsed": 5.61
+      }
+    ],
+    "failures": []
+  },
+  "structure-clean.log": {
+    "events": [
+      {
+        "Test": "TestMarkdownStructureLayoutUnion",
+        "Action": "pass",
+        "Elapsed": 0.03
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_004",
+        "Action": "pass",
+        "Elapsed": 70.32
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_015",
+        "Action": "pass",
+        "Elapsed": 70.34
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_008",
+        "Action": "pass",
+        "Elapsed": 70.4
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_014",
+        "Action": "pass",
+        "Elapsed": 70.42
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_007",
+        "Action": "pass",
+        "Elapsed": 70.74
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_013",
+        "Action": "pass",
+        "Elapsed": 4.28
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_011",
+        "Action": "pass",
+        "Elapsed": 4.31
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_012",
+        "Action": "pass",
+        "Elapsed": 4.41
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_010",
+        "Action": "pass",
+        "Elapsed": 4.49
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_009",
+        "Action": "pass",
+        "Elapsed": 4.87
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_002",
+        "Action": "pass",
+        "Elapsed": 4.78
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_006",
+        "Action": "pass",
+        "Elapsed": 5.14
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_003",
+        "Action": "pass",
+        "Elapsed": 5.06
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_001",
+        "Action": "pass",
+        "Elapsed": 4.42
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_005",
+        "Action": "pass",
+        "Elapsed": 6.53
+      },
+      {
+        "Test": "TestMarkdownStructureLayout_000",
+        "Action": "pass",
+        "Elapsed": 1.74
+      }
+    ],
+    "failures": []
+  },
+  "coverage-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "width-deps-install.log": {
+    "events": [],
+    "failures": []
+  },
+  "baseline.log": {
+    "events": [
+      {
+        "Test": "TestWholeDocumentOraclePreflight_Setup",
+        "Action": "pass",
+        "Elapsed": 1.17
+      },
+      {
+        "Test": "TestMarkdownListLayout_Setup",
+        "Action": "pass",
+        "Elapsed": 59.36
+      }
+    ],
+    "failures": [
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "list.log": {
+    "events": [],
+    "failures": []
+  },
+  "npm.log": {
+    "events": [],
+    "failures": []
+  }
+}

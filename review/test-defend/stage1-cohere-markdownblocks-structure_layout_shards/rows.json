@@ -1,0 +1,101 @@
+[
+  {
+    "test": "TestMarkdownStructureLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownTableLayout family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/markdownblocks/structure.ts:12",
+        "change": "arena.node(child.doc).kind !== 't' -> arena.node(child.doc).kind === 't'",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/markdownblocks/structure.ts:25",
+        "change": "while(stack.length > 0) -> while(stack.length > 1)",
+        "rows_failed": [
+          "TestMarkdownStructureLayout family",
+          "TestMarkdownTableLayout family",
+          "TestMarkdownLeafComposition family"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/cohere/markdownblocks/tables.ts:51",
+        "change": "const first = align === 'center' || align === 'left' ? ':' : '-'; -> const first = align === 'center' || align === 'right' ? ':' : '-';",
+        "rows_failed": [
+          "TestMarkdownStructureLayout family",
+          "TestMarkdownTableLayout family",
+          "TestMarkdownLeafComposition family"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownStructureLayout(Union|_[0-9]{3})$'; D3: structure_layout_shards_test.go:539: source Node lists output byte 13 in generated/list/+/nnnn; D4: structure_layout_shards_test.go:539: source Node lists output byte 3010 in generated/table-layout/> | a | b |; D2 completed run passed. Both other complete families share D3/D4 catches."
+  },
+  {
+    "test": "TestMarkdownTableLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownStructureLayout family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/markdownblocks/structure.ts:12",
+        "change": "arena.node(child.doc).kind !== 't' -> arena.node(child.doc).kind === 't'",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/markdownblocks/structure.ts:25",
+        "change": "while(stack.length > 0) -> while(stack.length > 1)",
+        "rows_failed": [
+          "TestMarkdownStructureLayout family",
+          "TestMarkdownTableLayout family",
+          "TestMarkdownLeafComposition family"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/cohere/markdownblocks/tables.ts:51",
+        "change": "const first = align === 'center' || align === 'left' ? ':' : '-'; -> const first = align === 'center' || align === 'right' ? ':' : '-';",
+        "rows_failed": [
+          "TestMarkdownStructureLayout family",
+          "TestMarkdownTableLayout family",
+          "TestMarkdownLeafComposition family"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownTableLayout(Union|_[0-9]{3})$'; D3: table_layout_shards_test.go:450: source Node lists output byte 186 in generated/list-layout/- [ ] a; D4: table_layout_shards_test.go:450: source Node lists output byte 5871 in generated/table-layout/> - | a | b |; D2 completed run passed. Both other complete families share D3/D4 catches."
+  },
+  {
+    "test": "TestMarkdownUnicodeWidths",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownTableLayout family"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/cohere/markdownblocks/width.ts:48",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/markdownblocks/width.ts:48",
+        "change": "Combining-mark upper bound 0x36f -> 0x36e.",
+        "rows_failed": [
+          "TestMarkdownUnicodeWidths"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownUnicodeWidths$'; width_test.go:105: native mismatch \"U+00036F\" got \"1\" want \"0\"; D1-complete-matrix.json lists all 133 passing competitors and zero unknown rows within the 134-row driver closure."
+  }
+]
