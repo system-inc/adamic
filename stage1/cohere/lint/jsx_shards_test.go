@@ -23,6 +23,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -471,16 +472,15 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	return filepath.Join(built, "native")
 }
 
-// Setup owns all capture, build, and inventory work. Shards only fetch this
-// immutable product; on a cold cache run TestJsxLintTrees_Setup first. With
-// ADAMIC_BUILD_CACHE=off select setup and shards in the same test process.
+// Every consumer prepares the immutable capture, build, and inventory product
+// once per process, before starting its own case deadline.
 type jsxTreeBundle struct {
 	Paths  []string
 	Shards [][]string
 }
 
 var jsxReadyDirectory string
-var jsxSetupContext = context.Background()
+var jsxPrepareOnce sync.Once
 
 func jsxSetupInputs() buildcache.Inputs {
 	return buildcache.Inputs{
@@ -491,13 +491,15 @@ func jsxSetupInputs() buildcache.Inputs {
 	}
 }
 
-// Not parallel: publishes the shared read-only setup before parallel leaves start.
 func TestJsxLintTrees_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_JSX_SETUP_CHILD") == "1" {
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
-		jsxSetupContext = ctx
-		directory := buildcache.Product(t, jsxSetupInputs(), func(directory string) error {
+	t.Parallel()
+	jsxPrepareTrees(t)
+}
+
+func jsxPrepareTrees(t *testing.T) string {
+	t.Helper()
+	jsxPrepareOnce.Do(func() {
+		jsxReadyDirectory = buildcache.Product(t, jsxSetupInputs(), func(directory string) error {
 			paths := jsxTreeSources(t)
 			shards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))
 			if err != nil {
@@ -558,43 +560,18 @@ func TestJsxLintTrees_Setup(t *testing.T) {
 			}
 			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0444)
 		})
-		if result := os.Getenv("ADAMIC_JSX_SETUP_RESULT"); result != "" {
-			if err := os.WriteFile(result, []byte(directory), 0600); err != nil {
-				t.Fatal(err)
-			}
-		}
-		return
+	})
+	// A failed builder may have called Fatal inside Once; do not let another
+	// parallel consumer mistake its empty result for a prepared product.
+	if jsxReadyDirectory == "" {
+		t.Fatal("shared JSX preparation failed")
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	result := filepath.Join(t.TempDir(), "setup-result")
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_Setup$", "-test.v", "-test.timeout=90s")
-	command.Env = append(os.Environ(), "ADAMIC_JSX_SETUP_CHILD=1", "ADAMIC_JSX_SETUP_RESULT="+result)
-	output, err := command.CombinedOutput()
-	t.Logf("shared setup child:\n%s", output)
-	if err != nil {
-		t.Fatalf("shared setup did not complete within its 90-second bound: %v", err)
-	}
-	data, err := os.ReadFile(result)
-	if err != nil {
-		t.Fatal(err)
-	}
-	jsxReadyDirectory = string(data)
-	// In cache-off mode the child Product directory is disposable, but it must
-	// remain alive until this process's parallel tests finish.
-	t.Logf("shared setup ready")
+	return jsxReadyDirectory
 }
 
 func jsxFetchTrees(t *testing.T) (jsxTreeBundle, string) {
 	t.Helper()
-	directory := jsxReadyDirectory
-	if directory == "" {
-		directory = buildcache.Product(t, jsxSetupInputs(), func(string) error {
-			return fmt.Errorf("shared JSX setup is absent; run TestJsxLintTrees_Setup before selecting a shard; shards never build setup")
-		})
-	}
+	directory := jsxPrepareTrees(t)
 	data, err := os.ReadFile(filepath.Join(directory, "bundle.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -773,7 +750,7 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 // This uses Go's context deadline and needs no external timeout executable.
 func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
-	return jsxContextCommand(t, jsxSetupContext, name, args...)
+	return jsxContextCommand(t, context.Background(), name, args...)
 }
 
 func jsxContextCommand(t *testing.T, parent context.Context, name string, args ...string) *exec.Cmd {
@@ -837,7 +814,7 @@ func jsxUpstream(t *testing.T) []string {
 }
 
 func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(jsxSetupContext, 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
@@ -998,25 +975,4 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	return rows, nil
-}
-
-// A standalone shard with no prepared product must refuse promptly, never
-// silently take responsibility for the shared capture and compiler work.
-func TestJsxLintTreesSetupIsolation(t *testing.T) {
-	t.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_000$", "-test.v", "-test.timeout=90s")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=", "ADAMIC_JSX_SETUP_CHILD=")
-	output, err := command.CombinedOutput()
-	if err == nil || !bytes.Contains(output, []byte("shards never build setup")) {
-		t.Fatalf("cold shard did not refuse setup: %v\n%s", err, output)
-	}
-	for _, build := range []string{"build jsx-parser cold wall", "build jsx-membership cold wall", "build jsx-tree-lowered", "build jsx-tree-native"} {
-		if bytes.Contains(output, []byte(build)) {
-			t.Fatalf("shard built shared input %s:\n%s", build, output)
-		}
-	}
 }
