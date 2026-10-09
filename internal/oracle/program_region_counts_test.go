@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var programRegionCountFixtures = []string{"cycles_graph_parent.a", "cycles_graph_relations.a", "cycles_graph_symbols.a", "cycles_weak_parent.a", "cycles_weak_relations.a", "cycles_weak_symbols.a", "million.a", "program_region_ownership.a", "program_region_map_storage.a", "optional.a", "constructor.a"}
+var programRegionCountFixtures = []string{"cycles_graph_parent.a", "cycles_graph_relations.a", "cycles_graph_symbols.a", "cycles_weak_parent.a", "cycles_weak_relations.a", "cycles_weak_symbols.a", "million.a", "program_region_ownership.a", "program_region_map_storage.a", "optional.a", "constructor.a", "tsc_node_membership.a"}
 
 func init() { additionalFixtureCounts = append(additionalFixtureCounts, programRegionCountRows) }
 func programRegionCountRows(t *testing.T) []string {

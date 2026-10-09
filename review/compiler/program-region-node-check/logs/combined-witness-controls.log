@@ -1,0 +1,45 @@
+=== RUN   TestProgramRegionHost14MemberSites
+=== PAUSE TestProgramRegionHost14MemberSites
+=== RUN   TestProgramRegionScoutParseSelectionEmpty
+=== PAUSE TestProgramRegionScoutParseSelectionEmpty
+=== RUN   TestProgramRegionTscNodeMemberSites
+=== PAUSE TestProgramRegionTscNodeMemberSites
+=== CONT  TestProgramRegionHost14MemberSites
+=== CONT  TestProgramRegionScoutParseSelectionEmpty
+=== CONT  TestProgramRegionTscNodeMemberSites
+    program_region_tsc_node_test.go:49: allocation BaseNode at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:34:12: selected=true
+    program_region_tsc_node_test.go:49: allocation never[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:40:43: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:44:41: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:46:41: selected=true
+    program_region_tsc_node_test.go:66: selector member NodeArray<Node>: NodeArray<Node>
+    program_region_tsc_node_test.go:66: selector member Node: Node
+--- PASS: TestProgramRegionTscNodeMemberSites (0.10s)
+=== NAME  TestProgramRegionHost14MemberSites
+    program_region_host_witness_test.go:78: cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28
+    program_region_host_witness_test.go:78: cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9
+    program_region_host_witness_test.go:78: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12
+    program_region_host_witness_test.go:78: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:23:37
+    program_region_host_witness_test.go:92: selector selected type identities: 6; fixture 14 has no Node or NodeArray declarations or allocations
+--- PASS: TestProgramRegionHost14MemberSites (0.46s)
+=== NAME  TestProgramRegionScoutParseSelectionEmpty
+    program_region_host_witness_test.go:164: parse.a selector member set empty: all parser allocations stay counted
+--- PASS: TestProgramRegionScoutParseSelectionEmpty (8.26s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	8.275s
+=== RUN   TestProgramRegionHost14AgreesWithNode
+=== PAUSE TestProgramRegionHost14AgreesWithNode
+=== RUN   TestProgramRegionTscNodesAgreeWithNode
+=== PAUSE TestProgramRegionTscNodesAgreeWithNode
+=== CONT  TestProgramRegionHost14AgreesWithNode
+=== CONT  TestProgramRegionTscNodesAgreeWithNode
+    program_region_tsc_node_test.go:7: adamic: counts: allocations 11 frees 4 retains 19 releases 26 peak 11 regions 7
+--- PASS: TestProgramRegionTscNodesAgreeWithNode (0.98s)
+=== NAME  TestProgramRegionHost14AgreesWithNode
+    program_region_host_witness_test.go:14: adamic: counts: allocations 11 frees 7 retains 18 releases 34 peak 8 regions 4
+    program_region_host_witness_test.go:18: host 14 matches Node in both backends with sanitizers and leak checks; it contains no parser Node or NodeArray
+--- PASS: TestProgramRegionHost14AgreesWithNode (1.41s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.430s

@@ -1,11 +1,13 @@
-=== RUN   TestProgramRegionHost14MemberSites
-=== PAUSE TestProgramRegionHost14MemberSites
-=== CONT  TestProgramRegionHost14MemberSites
-    program_region_host_witness_test.go:78: cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28
-    program_region_host_witness_test.go:78: cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9
-    program_region_host_witness_test.go:78: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12
-    program_region_host_witness_test.go:78: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:23:37
-    program_region_host_witness_test.go:92: selector selected type identities: 6; fixture 14 has no Node or NodeArray declarations or allocations
---- PASS: TestProgramRegionHost14MemberSites (0.26s)
-PASS
-ok  	github.com/system-inc/adamic/internal/lower	0.273s
+=== RUN   TestProgramRegionTscNodeMemberSites
+=== PAUSE TestProgramRegionTscNodeMemberSites
+=== CONT  TestProgramRegionTscNodeMemberSites
+    program_region_tsc_node_test.go:49: allocation BaseNode at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:34:12: selected=true
+    program_region_tsc_node_test.go:49: allocation never[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:40:43: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:44:41: selected=true
+    program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:46:41: selected=true
+    program_region_tsc_node_test.go:66: selector member Node: Node
+    program_region_tsc_node_test.go:64: selector left NodeArray<Node> (NodeArray<Node>) counted
+--- FAIL: TestProgramRegionTscNodeMemberSites (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.131s
+FAIL

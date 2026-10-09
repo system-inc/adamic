@@ -1,0 +1,27 @@
+// Source projection: cohere/TypeScript/tsc/testdata/fixtures/compiler/types.ts.
+// Full NodeArray metadata kept to expose this base's construction boundary.
+interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
+interface Node extends ReadonlyTextRange { readonly parent: Node | undefined; }
+interface Declaration extends Node { symbol: Symbol; }
+interface Symbol { declarations?: Declaration[]; }
+interface NodeArray<T extends Node> extends ReadonlyArray<T>, ReadonlyTextRange {
+    readonly hasTrailingComma: boolean;
+    transformFlags: number;
+}
+class BaseNode implements Declaration {
+    readonly pos: number;
+    readonly end: number;
+    parent: Node | undefined;
+    symbol: Symbol;
+    constructor(parent: Node | undefined, symbol: Symbol, pos: number) {
+        this.pos = pos;
+        this.end = pos + 1;
+        this.parent = parent;
+        this.symbol = symbol;
+    }
+}
+const symbol: Symbol = { declarations: [] };
+const root = new BaseNode(undefined, symbol, 0);
+const child = new BaseNode(root, symbol, 1);
+const nodes: NodeArray<Node> = Object.assign([root, child], {pos: 0, end: 2, hasTrailingComma: false, transformFlags: 0});
+console.log(`${nodes.length}`);

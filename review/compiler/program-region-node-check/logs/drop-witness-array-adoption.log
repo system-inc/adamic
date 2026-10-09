@@ -1,0 +1,12 @@
+=== RUN   TestProgramRegionTscNodesAgreeWithNode
+=== PAUSE TestProgramRegionTscNodesAgreeWithNode
+=== CONT  TestProgramRegionTscNodesAgreeWithNode
+    program_region_tsc_node_test.go:7: adamic: counts: allocations 11 frees 7 retains 19 releases 18 peak 10 regions 4
+    program_region_tsc_node_test.go:9: tsc Node graph regions 4, want symbol, three nodes and three arrays
+--- FAIL: TestProgramRegionTscNodesAgreeWithNode (0.90s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.913s
+FAIL
