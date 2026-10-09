@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T06:53:01.922999562Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:53:01.930785418Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample"}
+{"Time":"2026-10-09T06:53:01.930882221Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"=== RUN   TestBridgeOracleSample\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:53:02.30629594Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:71: build bridge-test-oracle c2591af0bb72 hit 0.04\n"}
+{"Time":"2026-10-09T06:53:02.663638917Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:71: build bridge-test-native-asan 2755fa2da08f hit 0.03\n"}
+{"Time":"2026-10-09T06:53:02.706418774Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n"}
+{"Time":"2026-10-09T06:53:03.012011809Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:238: build bridge-test-oracle c2591af0bb72 hit 0.03\n"}
+{"Time":"2026-10-09T06:53:03.097884054Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:238: go: tsgo: load_ns=31937923 query_ns=17203898 queries=162\n"}
+{"Time":"2026-10-09T06:53:03.437172262Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:239: build bridge-test-native-asan 2755fa2da08f hit 0.03\n"}
+{"Time":"2026-10-09T06:53:03.529555701Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:243: oracle: sample.ts, 3261 bytes identical under ASan/UBSan/LSan\n"}
+{"Time":"2026-10-09T06:53:03.529646675Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"--- PASS: TestBridgeOracleSample (1.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:53:03.529657501Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Elapsed":1.6}
+{"Time":"2026-10-09T06:53:03.529676259Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:53:03.533868149Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t1.610s\n"}
+{"Time":"2026-10-09T06:53:03.53389621Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":1.611}

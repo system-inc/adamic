@@ -57,6 +57,20 @@ func runBridgeCase(t *testing.T, index int) {
 	if !bridgeCaseActive(index) {
 		t.Skip("piece belongs to another corpus mode or shard")
 	}
+	// The subprocesses get a hang guard, not a budget: a loaded gate box can be far slower than
+	// the reference box, and only a stuck process should fail here.
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	defer cancel()
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	run := &bridgeRun{t: t, repository: repository, scratch: t.TempDir(), ctx: ctx}
+	unit := bridgeCases[index]
+	for _, name := range bridgeCaseProducts(unit.piece) {
+		run.product(name)
+	}
+
 	// A unit is held to the 60-second budget where it's measured: on the reference box (one Codex
 	// instance, 4 CPUs, cold), which sets ADAMIC_UNIT_BUDGET=1. Elsewhere a loaded machine only
 	// logs it, so the gate's correctness verdict never depends on its load.
@@ -70,16 +84,6 @@ func runBridgeCase(t *testing.T, index int) {
 			}
 		}
 	})
-	// The subprocesses get a hang guard, not a budget: a loaded gate box can be far slower than
-	// the reference box, and only a stuck process should fail here.
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-	defer cancel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	run := &bridgeRun{t: t, repository: repository, scratch: t.TempDir(), ctx: ctx}
-	unit := bridgeCases[index]
 	unit.check(run, unit.file, unit.round)
 }
 
@@ -91,11 +95,7 @@ type bridgeRun struct {
 
 func (r *bridgeRun) product(name string) string {
 	r.t.Helper()
-	path, err := bridgeProduct(r.repository, name)
-	if err != nil {
-		r.t.Fatal(err)
-	}
-	return path
+	return bridgeProduct(r.t, r.repository, name)
 }
 func (r *bridgeRun) sample() string {
 	return filepath.Join(r.repository, "bridge/tsgo/testdata/sample.ts")
