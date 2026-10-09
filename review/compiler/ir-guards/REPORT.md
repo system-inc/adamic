@@ -8,7 +8,7 @@ Task #j5j3vy6. Audit: test-audit/internal-ir d563034a, review/test-audit/interna
 
 M10 first:
 - The affected layout is ClosureArgumentLayout's fixed parameter slots, not object-field storage. M10 flips of.IsMaybe() to !of.IsMaybe() in internal/ir/argument_slots.go.
-- With M10 applied, TestNoReaderCallingConvention passed. The uncached TestNativeAgreesWithNode leaves for arguments_length_no_reader.a, closure_convention_plain.a, census_optional_values_padding.a and census_optional_values_receivers.a also passed, with source Node, JavaScript backend, release native, ASan/UBSan and leak checks. Package binary elapsed 10.115s. No outside catcher was observed in these selected tests; the entire native or oracle package was not run.
+- With M10 applied, TestNoReaderCallingConvention passed. The uncached TestNativeAgreesWithNode leaves for arguments_length_no_reader.a, closure_convention_plain.a, census_optional_values_padding.a and census_optional_values_receivers.a also passed, with source Node, JavaScript backend, release native, ASan/UBSan and leak checks. Package binary elapsed 10.115s. No outside catcher was observed in these selected tests; the entire native or oracle package was not run. M10-outside-confirmation.log repeats the same selection with the mutated source hash recorded before and after, to confirm it stayed applied throughout the runs.
 - TestMixedOptionalFixedLayoutPreservesMaybeNumber constructs the audit's Number/MaybeNumber callees sharing a function-type target set. It requires Fixed == []ir.Type{ir.MaybeNumber} in both target orders. Applying the exact M10 diff yields [1] for both orders, expected [7]. The assertion, not compilation, fails. After restoring M10, it passes.
 
 M07 second:
@@ -26,4 +26,4 @@ Every go test command used -count=1 -v -timeout 90s and an outer timeout 100:
 
 The new tests pin the IR contracts requested by the ruling: MaybeNumber preserves undefined, and unknown targets retain throwing effects. They do not claim new end-to-end Node coverage. Counts were not regenerated because no registered oracle fixture, allocation or runtime behavior changed.
 
-Setup: GOPROXY='https://proxy.golang.org|direct'; cloud/setup.sh passed. Go ready 0.021s, Node 0.024s, markdown dependencies 0.075s, submodules 0.081s, clang 0.177s, go build 36.133s, total 36.404s. nproc 5, CPU quota 4. Full output: setup.log.
+Setup: GOPROXY='https://proxy.golang.org|direct'; cloud/setup.sh passed. Go ready 0.021s, Node 0.021s, markdown dependencies 0.075s, submodules 0.081s, clang 0.177s, go build 36.133s, total 36.404s. nproc 5, CPU quota 4. Full output: setup.log.
