@@ -1,0 +1,9 @@
+FIRST FAILURE (products, at 88.3 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_lowered
+=== RUN   TestProduct_corpus_lowered
+=== PAUSE TestProduct_corpus_lowered
+=== CONT  TestProduct_corpus_lowered
+    volume_profile_Controls_test.go:185: build typeaware volume lowered: load: mixed .a and project .ts checking is not implemented: /home/ahra/fast-gate/tree-2/stage1/cohere/lint/suggestions.a
+--- FAIL: TestProduct_corpus_lowered (1.68s)
+
+(box load 48.1 on 64 cores at first failure)
