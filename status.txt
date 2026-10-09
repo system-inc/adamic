@@ -1,0 +1,2 @@
+red: f45b69dde0b9d375bf873340c5d2f065dcda5cd9 fast gate, first failure at tests after 1815.1 s (coverage=0.0s tools=0.2s smoke=82.6s determinism=99.4s build=109.4s vet=117.5s tests=1834.1s; 31 units over 30 s (11016 s, 30 on the burn-down, 1 drifted over); box load 90.6 on 64 cores at start, load 52.6 on 64 cores at first failure, load 52.3 on 64 cores at end; deferred to full gate: 0 tests; branch cloud/land-stack-batch1-f45b69dd, session none), 1 fail, 170 pass
+stopped: on the skip list (cloud/land-stack-batch1-*)
