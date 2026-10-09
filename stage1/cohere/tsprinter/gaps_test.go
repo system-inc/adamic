@@ -1,41 +1,33 @@
 package tsprinter
 
 import (
-	"context"
 	"path/filepath"
-	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 )
 
 func TestCompilerGaps(t *testing.T) {
 	t.Parallel()
-	for _, item := range []struct{ name, reason, output string }{
-		{"defaultSort", "Adamic 0.1 refuses sort without a comparator", "im\n"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs("gaps/" + item.name + ".ts")
-			if err != nil {
-				t.Fatal(err)
+	t.Run("defaultSort", func(t *testing.T) {
+		t.Parallel()
+		path, err := filepath.Abs("gaps/defaultSort.ts")
+		if err != nil {
+			t.Fatal(err)
+		}
+		expected := onNode(t, path)
+		if expected.exitCode != 0 || len(expected.stderr) != 0 || string(expected.stdout) != "im\n" {
+			t.Fatalf("Node: %+v", expected)
+		}
+		program := lowered(t, path)
+		actual, binary := natively(t, program)
+		for _, side := range []run{actual, onJavaScriptBackend(t, program)} {
+			if side.exitCode != 0 || len(side.stderr) != 0 || string(side.stdout) != string(expected.stdout) {
+				t.Fatalf("closed sort gap differs from Node: %+v", side)
 			}
-			node := onNode(t, path)
-			if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != item.output {
-				t.Fatalf("Node: %#v", node)
-			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
-			}
-			_, err = lower.Lower(context.Background(), program)
-			if err == nil || !strings.Contains(err.Error(), item.reason) {
-				t.Fatalf("expected recorded gap %q, got %v", item.reason, err)
-			}
-			t.Logf("Node %q; stage 0 %s", item.output, err)
-		})
-	}
+		}
+		if report := leaks(t, program, binary); report != "" {
+			t.Fatal(report)
+		}
+	})
 }
 
 // prefixUpdateValue.ts lowers on compiler/area-stack (views slice 1, Oct 8): a numeric

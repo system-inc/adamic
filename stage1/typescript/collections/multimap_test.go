@@ -33,6 +33,8 @@ func TestSlice2BodiesMatchPinnedTSC(t *testing.T) {
 		return normalize(text[first : first+last])
 	}
 	original := read("../../../stage3/scout/19-slice2/multimap-composition/original.a")
+	// The a-check expectation is harness metadata, not part of TypeScript's body.
+	original = strings.TrimPrefix(original, "// a-check: type error TS2304\n")
 	if normalize(original) != span(upstream, "export interface MultiMap<", "/** @internal */\r\nexport function createQueue") {
 		t.Fatal("original MultiMap adaptation input drifted")
 	}

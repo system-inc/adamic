@@ -1374,7 +1374,7 @@ export class Expressions {
             case 'RegularExpressionLiteral': {
                 const slash = raw.lastIndexOf('/');
                 const flags = raw.slice(slash + 1).split('');
-                flags.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+                flags.sort();
                 result = this.docs.text(raw.slice(0, slash + 1) + flags.join(''));
                 break;
             }

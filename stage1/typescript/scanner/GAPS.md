@@ -30,16 +30,14 @@ operations; they do not implement a parser's contextual choice. `jsx` drives
 `ScanJsxToken` over text. The driver also supports a tab-delimited
 `--manifest` of mode and path, and `--count` for timing without token output.
 
-## Gap 1: push accepts one argument
+## Gap 1: multi-value push: closed
 
-Observation: `gaps/1_push.ts` runs under Node and prints `ab`, but stage 0
-returns `NotYet: push with other than one value`. The gaps test requires
-that exact refusal and the Node answer, so a closed gap fails the test.
-
-Workaround: the UTF-16 byte-offset table uses two one-argument pushes for
-a supplementary character. It needs two entries where Go uses byte
-positions directly. See the byte-offset loop in `main.ts`. Splitting the pushes
-preserves their order and values. No stage 0 changes were made.
+Closed on library/area-on-main-4 (`d767edf5`). The unchanged
+`gaps/1_push.ts` prints `ab` on source Node, native ASan/UBSan/LeakSanitizer
+and emitted JavaScript. `TestGapStandsWhereGapsMdSays` requires those bytes
+instead of the former `NotYet: push with other than one value`.
+The UTF-16 byte-offset table now appends both entries for a supplementary
+character in one call, preserving their original order and byte offsets.
 
 ## Gap 2: arbitrary precision bigint values
 

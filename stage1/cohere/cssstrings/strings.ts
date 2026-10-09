@@ -20,19 +20,16 @@ export function printString(raw: string, singleQuote: boolean): string {
         const character = content.slice(index, index + 1);
         const next = content.slice(index + 1, index + 2);
         if(character === '\\' && (next === '"' || next === "'" || next === '\\')) {
-            parts.push(content.slice(start, index));
-            parts.push(next === other ? next : character + next);
+            parts.push(content.slice(start, index), next === other ? next : character + next);
             index++;
             start = index + 1;
         }
         else if(character === quote) {
-            parts.push(content.slice(start, index));
-            parts.push(`\\${character}`);
+            parts.push(content.slice(start, index), `\\${character}`);
             start = index + 1;
         }
     }
-    parts.push(content.slice(start));
-    parts.push(quote);
+    parts.push(content.slice(start), quote);
     return parts.join('');
 }
 
@@ -53,8 +50,7 @@ export function adjustStrings(value: string, singleQuote: boolean): string {
     for(let index = 0; index < value.length; index++) {
         const end = stringEnd(value, index);
         if(end < 0) continue;
-        parts.push(value.slice(start, index));
-        parts.push(printString(value.slice(index, end), singleQuote));
+        parts.push(value.slice(start, index), printString(value.slice(index, end), singleQuote));
         index = end - 1;
         start = end;
     }

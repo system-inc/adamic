@@ -86,15 +86,17 @@ comparison remains strict, with no exceptions. All 149,852 accepted fragments ag
 
 ## Stage-0 gaps encountered
 
-The following remaining gaps are rechecked against main b6b1538b. `TestCompilerGaps` executes each program on Node and requires stage 0's recorded diagnostic.
+The following programs retain their original sources. `TestCompilerGaps` now
+requires default sort to agree with Node on native and emitted JavaScript,
+with sanitizer and leak checks, on library/area-on-main-4 (`d767edf5`).
 
 | Program | Node output | Stage 0 | Port treatment |
 |---|---|---|---|
 | [prefixUpdateValue.ts](gaps/prefixUpdateValue.ts) | `2` | Closed by compiler/area-stack (views slice 1); `TestClosedPrefixUpdateValueGap` holds native and the JavaScript backend to Node | Decrement as its own statement, then read the resulting index |
-| [defaultSort.ts](gaps/defaultSort.ts) | `im` | `Refused`: sort without comparator | Supply an explicit lexical comparator for regex flags |
+| [defaultSort.ts](gaps/defaultSort.ts) | `im` | Closed on library/area-on-main-4 (`d767edf5`) | Default lexical sort restored for regex flags |
 
-The last is an intentional 0.1 rule, not a compiler gap to relax. Logical assignment is intentionally
-refused too; array classifiers write `false` when an element fails their predicate. Array `length`
+Default sort is now supported for this string-array witness. Logical assignment is intentionally
+refused; array classifiers write `false` when an element fails their predicate. Array `length`
 writes are intentionally forbidden; the suffix queue is cleared with `splice(0)`.
 
 The parser's existing `push` and indexed-node workarounds remain: appends use one value per call,
