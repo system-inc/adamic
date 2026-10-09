@@ -1,0 +1,75 @@
+run adamic-gate-pilot-again-20261009T134119-aa5af2ff: void, 2299 tests in 286 units, 3 failed, 16 units broken, 3 killed over budget
+BROKEN product-02: no results (exited true, last output "loom-pilot: checkout of 23a19b8b48662dfb6a19baa00b8efbb52ab5275e failed")
+BROKEN product-41: no results (exited true, last output "loom-pilot: checkout of 23a19b8b48662dfb6a19baa00b8efbb52ab5275e failed")
+BROKEN product-62: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-74: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-208: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-218: no results (exited true, last output "loom-pilot: checkout of 23a19b8b48662dfb6a19baa00b8efbb52ab5275e failed")
+BROKEN product-290: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-292: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-344: no results (exited true, last output "loom-pilot: checkout of 23a19b8b48662dfb6a19baa00b8efbb52ab5275e failed")
+BROKEN product-366: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-378: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-379: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-525: no results (exited true, last output "loom-pilot: checkout of 23a19b8b48662dfb6a19baa00b8efbb52ab5275e failed")
+BROKEN tests-940: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-1153: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-1856: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+PRODUCT OVER 60 S product-02 github.com/system-inc/adamic/bridge/tsgo TestProduct_LeakArchive: 128 s
+PRODUCT OVER 60 S product-11 github.com/system-inc/adamic/bridge/tsgo TestProduct_SanitizedNative: 256 s
+PRODUCT OVER 60 S product-15 github.com/system-inc/adamic/bridge/tsgo TestProduct_TsgoArchive: 290 s
+PRODUCT OVER 60 S product-16 github.com/system-inc/adamic/bridge/tsgo TestProduct_TsgoSanitizedArchive: 128 s
+PRODUCT OVER 60 S product-17 github.com/system-inc/adamic/bridge/tsgo TestProduct_WrongArchive: 122 s
+PRODUCT OVER 60 S product-22 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSCompositionNative: 190 s
+PRODUCT OVER 60 S product-41 github.com/system-inc/adamic/stage1/cohere/cssnumbers TestProduct_CSSNumbersFastNative: 120 s
+PRODUCT OVER 60 S product-43 github.com/system-inc/adamic/stage1/cohere/cssnumbers TestProduct_CSSNumbersGoOracle: 143 s
+PRODUCT OVER 60 S product-64 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceCatchNative: 78 s
+PRODUCT OVER 60 S product-65 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceClassLowered: 195 s
+PRODUCT OVER 60 S product-104 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortNative1: 83 s
+PRODUCT OVER 60 S product-132 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLMutantOracle: 61 s
+PRODUCT OVER 60 S product-161 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_DecodedOptionsGoOracle: 85 s
+PRODUCT OVER 60 S product-172 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableEmitted: 238 s
+PRODUCT OVER 60 S product-174 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableNative: 89 s
+PRODUCT OVER 60 S product-176 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationC: 81 s
+PRODUCT OVER 60 S product-177 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationCounted: 92 s
+PRODUCT OVER 60 S product-183 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationScanner: 120 s
+PRODUCT OVER 60 S product-186 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeLowered: 118 s
+PRODUCT OVER 60 S product-187 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeNative: 85 s
+PRODUCT OVER 60 S product-205 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownIdentifierNativeSanitized: 166 s
+PRODUCT OVER 60 S product-218 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownQuote_native_true: 123 s
+PRODUCT OVER 60 S product-227 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTable_native_true: 74 s
+PRODUCT OVER 60 S product-237 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_manifest: 75 s
+PRODUCT OVER 60 S product-266 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterExpressionsCorpus: 152 s
+PRODUCT OVER 60 S product-276 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_005: 203 s
+PRODUCT OVER 60 S product-289 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_018: 71 s
+PRODUCT OVER 60 S product-308 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantOracle_008: 191 s
+PRODUCT OVER 60 S product-344 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsEmbedded_014: 116 s
+PRODUCT OVER 60 S product-361 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsNPM_014: 148 s
+PRODUCT OVER 60 S product-365 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterTSCExpressionsCorpus: 65 s
+PRODUCT OVER 60 S product-370 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_checker: 112 s
+PRODUCT OVER 60 S product-389 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_query_cost_native: 113 s
+PRODUCT OVER 60 S product-400 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_typeaware_lowered: 148 s
+PRODUCT OVER 60 S product-404 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_apparent_shape: 245 s
+PRODUCT OVER 60 S product-405 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_apparent_shape_native: 62 s
+PRODUCT OVER 60 S product-406 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_archive_checker: 249 s
+PRODUCT OVER 60 S product-413 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_count_native: 146 s
+PRODUCT OVER 60 S product-431 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_scope_locals: 213 s
+PRODUCT OVER 60 S product-432 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_scope_locals_native: 323 s
+PRODUCT OVER 60 S product-440 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_widened_shape: 131 s
+PRODUCT OVER 60 S product-442 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_archive_checker: 106 s
+PRODUCT OVER 60 S product-444 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_archive_strict_this_checker: 69 s
+PRODUCT OVER 60 S product-449 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume_asan: 71 s
+PRODUCT OVER 60 S product-452 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_native_asan: 271 s
+PRODUCT OVER 60 S product-467 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YAMLFormatterMutant004Native: 100 s
+PRODUCT OVER 60 S product-482 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_ExpressionsNative000: 188 s
+PRODUCT OVER 60 S product-507 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_JsxMutantsNative_007: 213 s
+PRODUCT OVER 60 S product-525 github.com/system-inc/adamic/stage1/typescript/scanner TestProduct_ScannerRelease: 129 s
+KILLED product-04: over budget, P0
+KILLED product-437 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_volume: over budget, P0
+KILLED tests-1018: over budget, P0
+FAIL product-04 (killed at 600 s, over budget)
+    last output "Terminated"
+FAIL product-437 (killed at 600 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_volume
+FAIL tests-1018 (killed at 90 s, over budget)
+    last output "Terminated"

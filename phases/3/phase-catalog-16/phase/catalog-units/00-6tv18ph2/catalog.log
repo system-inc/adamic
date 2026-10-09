@@ -1,0 +1,8 @@
+target 23a19b8b48662dfb6a19baa00b8efbb52ab5275e
+logs /tmp/loom-units/loom-unit-1760014025/workspace/loom-out/phase/catalog-units/00-6tv18ph2/adamic-catalog-logs-wmf6g2ic
+build flags: commit=23a19b8b48662dfb6a19baa00b8efbb52ab5275e; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)
+16 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+16 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=0.49 1.48 1.85 4/284 136309 -> 0.49 1.48 1.85 3/284 136309
+total wall=0.018s load=0.49 1.48 1.85 3/283 136300 -> 0.49 1.48 1.85 3/283 136309

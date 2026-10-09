@@ -1,0 +1,3 @@
+run adamic-gate-phases-again-20261009T133925-455d463f: red, 0 tests in 15 units, 1 failed, 0 units broken, 0 killed over budget
+FAIL phase-catalog-5 (stage)
+    red: 23a19b8b48662dfb6a19baa00b8efbb52ab5275e full gate, first failure at catalog/05 spread-method-reuse after 322.6 s, cancelled after first failure (catalog=322.6s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.4 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
