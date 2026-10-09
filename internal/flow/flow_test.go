@@ -28,6 +28,7 @@ func programs(t *testing.T) []string {
 		"../load/testdata/0.1/compile/*.ts",
 		"../load/testdata/0.1/compile/07_modules/main.ts",
 		"../oracle/testdata/*.a",
+		"../oracle/testdata/non_null*.ts",
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
 	} {
@@ -49,12 +50,21 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}
 	return paths
+}
+
+// Only deliberate .a refusal controls are excluded. Runtime assertions use .ts.
+func refusedNonNullFixture(path string) bool {
+	name := filepath.Base(path)
+	if filepath.Ext(path) != ".a" || !(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
+		return false
+	}
+	return true
 }
 
 func lowered(t *testing.T, path string) *ir.Program {
@@ -278,4 +288,13 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			}
 		}
 	}
+}
+
+// These constructor fixtures deliberately assert NotYet and never enter the oracle's runnable set.
+func refusedConstructorFixture(path string) bool {
+	switch filepath.Base(path) {
+	case "new_expression_uint16.a", "new_expression_uint16_notyet.a", "new_expression_class_cache_capture_notyet.a":
+		return true
+	}
+	return false
 }

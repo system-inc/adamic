@@ -1,0 +1,54 @@
+=== RUN   TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+--- PASS: TestNodeLibraryNamesUnimplementedMembers (4.58s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync (0.75s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.56s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath (0.49s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo (0.52s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID (0.62s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength (0.55s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.sep (0.56s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.52s)
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceAmbientContextsDoNotExecute
+=== PAUSE TestNamespaceAmbientContextsDoNotExecute
+=== RUN   TestNamespaceCallGraphLinearWork
+=== PAUSE TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphCycleUnion
+=== PAUSE TestNamespaceCallGraphCycleUnion
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== CONT  TestNamespaceAmbientHostInitialization
+=== CONT  TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+=== RUN   TestNamespaceCallGraphLinearWork/12
+=== CONT  TestNamespaceCallGraphCycleUnion
+=== CONT  TestNamespaceAmbientContextsDoNotExecute
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+=== RUN   TestNamespaceInitializationReachability/helper
+--- PASS: TestNamespaceAmbientContextsDoNotExecute (0.13s)
+--- PASS: TestNamespaceCallGraphCycleUnion (0.13s)
+=== RUN   TestNamespaceCallGraphLinearWork/24
+=== RUN   TestNamespaceInitializationReachability/cycle
+--- PASS: TestNamespaceCallGraphLinearWork (0.29s)
+    --- PASS: TestNamespaceCallGraphLinearWork/12 (0.16s)
+    --- PASS: TestNamespaceCallGraphLinearWork/24 (0.13s)
+--- PASS: TestNamespaceInitializationReachability (0.35s)
+    --- PASS: TestNamespaceInitializationReachability/direct (0.12s)
+    --- PASS: TestNamespaceInitializationReachability/helper (0.09s)
+    --- PASS: TestNamespaceInitializationReachability/cycle (0.14s)
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+--- PASS: TestNamespaceAmbientHostInitialization (2.32s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (1.24s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (1.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	6.943s

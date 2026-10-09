@@ -1,0 +1,43 @@
+[
+  {
+    "command": [
+      "/tmp/namespaces-graph-adamic",
+      "c",
+      "internal/oracle/testdata/namespaces_call_graph.a"
+    ],
+    "milliseconds": 281.2,
+    "exit": 0,
+    "bytes": 6819
+  },
+  {
+    "command": [
+      "/tmp/namespaces-graph-adamic",
+      "build",
+      "internal/oracle/testdata/namespaces_call_graph.a",
+      "-o",
+      "/tmp/namespaces-graph-witness"
+    ],
+    "milliseconds": 507.457,
+    "exit": 0,
+    "bytes": 0
+  },
+  {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/namespaces_call_graph.a"
+    ],
+    "stdout": "true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "command": [
+      "/tmp/namespaces-graph-witness"
+    ],
+    "stdout": "true\n",
+    "stderr": "",
+    "exit": 0
+  }
+]

@@ -199,9 +199,9 @@ existing ownership and method-origin choices described in gap 4.
 
 The whole-file driver initially used `const types = docTypes ? parser.docTypes() : []`.
 Stage 0 refused the empty branch with `an array of never`. The reduced
-`gaps/6_conditional_empty_array.ts` prints `1` on Node, while lowering returns
-`lower.NotYet` with precisely that `What`. `TestConditionalEmptyArrayGap`
-requires both observations. Workaround: annotate the conditional result as
+`gaps/6_conditional_empty_array.ts` prints `1` on Node. Closed by compiler/area-stack (views
+slice 1, Oct 8): it lowers, and `TestClosedConditionalEmptyArrayGap` holds native and the
+JavaScript backend to Node. The workaround still stands: annotate the conditional result as
 `number[]`; the empty branch then receives an element type.
 
 ## Whole-file continuation

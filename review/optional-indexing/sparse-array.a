@@ -1,0 +1,2 @@
+const values: (number | undefined)[] = [, 7];
+console.log(`${values?.[0]}`);
