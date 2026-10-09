@@ -257,6 +257,12 @@ func (l *lowering) certifyUntaggedCallableProducers() {
 		contract.ProducerCertified = true
 		contract.Functions = nil
 		for _, producer := range l.closureRecords {
+			function := l.result.Functions[producer.function]
+			// Named functions also have a direct-call record. Only their closure
+			// thunk has the code convention registered by the callable adapter.
+			if !function.Closure || function.Receiver {
+				continue
+			}
 			if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {
 				contract.Functions = append(contract.Functions, producer.function)
 			}

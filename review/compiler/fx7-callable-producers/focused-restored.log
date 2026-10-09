@@ -1,0 +1,22 @@
+=== RUN   TestCallableProducerP21
+=== PAUSE TestCallableProducerP21
+=== RUN   TestCallableProducerP60
+=== PAUSE TestCallableProducerP60
+=== RUN   TestCallableProducerP61
+=== PAUSE TestCallableProducerP61
+=== RUN   TestCallableProducerRegistryFiltersDirectFunctions
+=== PAUSE TestCallableProducerRegistryFiltersDirectFunctions
+=== RUN   TestCallableProducerCertificatesUseClosureThunks
+=== PAUSE TestCallableProducerCertificatesUseClosureThunks
+=== CONT  TestCallableProducerP21
+=== CONT  TestCallableProducerRegistryFiltersDirectFunctions
+=== CONT  TestCallableProducerP61
+=== CONT  TestCallableProducerP60
+=== CONT  TestCallableProducerCertificatesUseClosureThunks
+--- PASS: TestCallableProducerCertificatesUseClosureThunks (0.29s)
+--- PASS: TestCallableProducerP61 (0.36s)
+--- PASS: TestCallableProducerP60 (0.37s)
+--- PASS: TestCallableProducerRegistryFiltersDirectFunctions (0.40s)
+--- PASS: TestCallableProducerP21 (0.41s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.424s

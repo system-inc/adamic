@@ -1,0 +1,12 @@
+--- a/internal/native/view_unions_untagged.go
++++ b/internal/native/view_unions_untagged.go
+@@ -162,9 +162,6 @@
+ 		certified = certified || contract.ProducerCertified
+ 		for _, function := range contract.Functions {
+ 			// Match the producer registry before comparing code identities.
+-			if !e.program.Functions[function].Closure || e.program.Functions[function].Receiver {
+-				continue
+-			}
+ 			tests = append(tests, e.unionClosureCodeIdentity(value, function))
+ 		}
+ 	}
