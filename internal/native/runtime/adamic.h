@@ -231,6 +231,8 @@ typedef struct adamic_object {
 	const adamic_class *class;
 	// An ordinary counted graph edge; never exempt from ownership proofs.
 	adamic_object *prototype;
+	// NULL prototype pointer otherwise denotes the ordinary intrinsic prototype.
+	bool null_prototype;
 	bool frozen;
 	bool sealed;
 	bool nonextensible;

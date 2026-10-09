@@ -7,7 +7,7 @@ static const adamic_shape empty_shape = {0, NULL, NULL, NULL};
 static adamic_object object_prototype = {.heap = {.kind = adamic_kind_object}, .shape = &empty_shape};
 adamic_object *adamic_object_intrinsic_prototype(void) { return &object_prototype; }
 adamic_object *adamic_object_get_prototype(adamic_object *object) {
- return adamic_retain(object->prototype != NULL ? object->prototype : &object_prototype);
+ return adamic_retain(object->prototype != NULL ? object->prototype : (object->null_prototype ? NULL : &object_prototype));
 }
 adamic_object *adamic_object_create_prototype(adamic_object *prototype) {
  adamic_object *object = adamic_object_new(&empty_shape);
@@ -15,7 +15,7 @@ adamic_object *adamic_object_create_prototype(adamic_object *prototype) {
  return object;
 }
 adamic_object *adamic_object_set_prototype(adamic_object *object, adamic_object *prototype) {
- adamic_object *previous = object->prototype != NULL ? object->prototype : &object_prototype;
+ adamic_object *previous = object->prototype != NULL ? object->prototype : (object->null_prototype ? NULL : &object_prototype);
  if (previous == prototype) { return adamic_retain(object); }
  if (object->nonextensible) {
   adamic_library_throw("TypeError", "#<Object> is not extensible", sizeof "#<Object> is not extensible"-1);
@@ -30,5 +30,6 @@ adamic_object *adamic_object_set_prototype(adamic_object *object, adamic_object 
  adamic_retain(prototype);
  adamic_release(object->prototype);
  object->prototype=prototype;
+ object->null_prototype=prototype==NULL;
  return adamic_retain(object);
 }
