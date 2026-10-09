@@ -1,1 +1,18 @@
 idle preemption: 0 marked, 0 survivors in their sessions, 4 ms
+FIRST FAILURE (tests, at 538.1 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfileMutants_002
+=== RUN   TestVolumeProfileMutants_002
+=== PAUSE TestVolumeProfileMutants_002
+=== CONT  TestVolumeProfileMutants_002
+    volume_test.go:8: build typeaware_six_volume-oracle-build 340fc792dcaf miss 6.46
+    volume_profile_Mutants_test.go:74: phase command controls-go 0.063341s
+    volume_profile_Mutants_test.go:74: TestVolumeProfileMutants_002 (setup): 8.724555s; slice coverage: 1 source mutants, 54 controls
+    volume_profile_Mutants_test.go:141: phase command clang-version 0.018234s
+    volume_profile_Mutants_test.go:142: phase command go-version 0.008678s
+    volume_profile_Mutants_test.go:166: phase command first-binding 90.016181s
+    volume_profile_Mutants_test.go:166: first-binding: signal: killed
+        
+--- FAIL: TestVolumeProfileMutants_002 (99.27s)
+
+(box load 49.6 on 64 cores at first failure)
+red: 7b890befc8fc43fa57435c0959510d13349dd31c full gate, first failure at tests after 538.1 s, cancelled after first failure (coverage=0.0s build=8.8s products=145.3s tools=0.1s vet=16.3s determinism=65.8s wasi=66.7s catalog=162.9s stage3=381.6s tests=382.0s; 158 units over 30 s (10180 s, 7 on the burn-down, 135 drifted over); products over 30 s, listed not red: product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume_asan 78.5 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_type_symbol_native 55.7 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_apparent_shape_native 55.0 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_assignable_types_native 54.5 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_base_shapes_native 54.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_strict_this_native 53.5 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume 52.8 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_count_native 52.7 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_parameters_native 51.0 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_returns_native 50.4 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_contextual_shape_native 45.9 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_enum_types_native 45.1 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_info_native 44.3 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_shape_native 40.8 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_WitnessScriptKindNative 36.2 s; product github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_scope_locals_native 33.3 s; box load 3.4 on 64 cores at start, load 49.6 on 64 cores at first failure, load 49.6 on 64 cores at end), 1 fail, 12650 pass

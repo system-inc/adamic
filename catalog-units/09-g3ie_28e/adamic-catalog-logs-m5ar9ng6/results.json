@@ -1,0 +1,26 @@
+{
+  "target": "7b890befc8fc43fa57435c0959510d13349dd31c",
+  "jobs": 1,
+  "total_wall_seconds": 0.059422171994810924,
+  "load_before": "19.60 15.62 21.70 66/989 269351",
+  "load_after": "19.60 15.62 21.70 59/973 269520",
+  "entries": [
+    {
+      "number": 10,
+      "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "target": "7b890befc8fc43fa57435c0959510d13349dd31c",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 0.0018556180002633482,
+      "load_before": "19.60 15.62 21.70 59/972 269517",
+      "load_after": "19.60 15.62 21.70 58/973 269519",
+      "messages": [
+        "10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)",
+        "10 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+        "10 wall=0.002s setup=0.000s check=0.000s cleanup=0.000s load=19.60 15.62 21.70 59/972 269517 -> 19.60 15.62 21.70 58/973 269519"
+      ]
+    }
+  ]
+}
