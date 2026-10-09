@@ -15,7 +15,7 @@ import (
 
 // compiler/lower-agree had no pushed branch when this revision started.
 // Keep the local helper limited to the source and JavaScript observations.
-func lowersAndAgreesWithNode(t *testing.T, source string) {
+func enumLowersAndAgreesWithNode(t *testing.T, source string) {
 	t.Helper()
 	directory := t.TempDir()
 	path := filepath.Join(directory, "main.a")

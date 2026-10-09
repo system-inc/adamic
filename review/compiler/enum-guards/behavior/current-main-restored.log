@@ -1,0 +1,80 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestEnumMemberValuesAndReverseNameMatchNode
+=== PAUSE TestEnumMemberValuesAndReverseNameMatchNode
+=== RUN   TestEnumFlagProofsWithoutObservableLoweringEffect
+=== PAUSE TestEnumFlagProofsWithoutObservableLoweringEffect
+=== RUN   TestEnumReverseMappingUsesSingleSlot
+=== PAUSE TestEnumReverseMappingUsesSingleSlot
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestFlagEnumsDomain
+=== CONT  TestFlagEnumInlineIteration
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: bitwise_updates
+=== CONT  TestEnumNameEnumeration
+=== CONT  TestFlagEnumMemberAliases
+=== CONT  TestFlagEnumLiteralSpellings
+--- PASS: TestFlagEnumMemberAliases (0.24s)
+=== CONT  TestEnumNeverDefault
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: alias
+--- PASS: TestFlagEnumLiteralSpellings (0.24s)
+=== CONT  TestEnumReverseMappingUsesSingleSlot
+--- PASS: TestEnumNameEnumeration (0.25s)
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+--- PASS: TestFlagEnumInlineIteration (0.27s)
+=== CONT  TestEnumFlagProofsWithoutObservableLoweringEffect
+--- PASS: TestEnumReverseMappingUsesSingleSlot (0.08s)
+=== CONT  TestEnumMemberValuesAndReverseNameMatchNode
+--- PASS: TestEnumFlagProofsWithoutObservableLoweringEffect (0.15s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: or
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: member_tags
+--- PASS: TestEnumNeverDefault (0.23s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: xor
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: coalesce
+--- PASS: TestEnumMemberValuesAndReverseNameMatchNode (0.38s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: and_left
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: arithmetic
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: and_right
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: signed_flags
+    enums_open_test.go:23: cast
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: and_complement
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: containers
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: nested
+    enum_flags_test.go:70: field
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: optional_object
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: array
+--- PASS: TestNumericEnumsAreOpen (1.34s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:70: map
+    enum_flags_test.go:70: parameter
+    enum_flags_test.go:70: optional
+    enum_flags_test.go:70: switch
+--- PASS: TestFlagEnumsDomain (2.32s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.325s

@@ -1,0 +1,17 @@
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+internal/lower/fs_method_guards_test.go:50:6: lowersAndAgreesWithNode redeclared in this block
+	internal/lower/enum_agree_test.go:18:6: other declaration of lowersAndAgreesWithNode
+internal/lower/fs_method_guards_test.go:103:60: too many arguments in call to lowersAndAgreesWithNode
+	have (*testing.T, string, string, number)
+	want (*testing.T, string)
+internal/lower/fs_method_guards_test.go:110:84: too many arguments in call to lowersAndAgreesWithNode
+	have (*testing.T, string, string, number)
+	want (*testing.T, string)
+internal/lower/fs_method_guards_test.go:118:54: too many arguments in call to lowersAndAgreesWithNode
+	have (*testing.T, string, string, number)
+	want (*testing.T, string)
+internal/lower/fs_method_guards_test.go:127:54: too many arguments in call to lowersAndAgreesWithNode
+	have (*testing.T, string, string, number)
+	want (*testing.T, string)
+FAIL	github.com/system-inc/adamic/internal/lower [build failed]
+FAIL
