@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"syscall"
 	"testing"
@@ -140,10 +139,7 @@ func TestCSSStrings(t *testing.T) {
 	bridge, _ := filepath.Abs("testdata/bridge.go")
 	driver, _ := filepath.Abs("testdata/go_driver.go")
 	cohere := filepath.Join(root, "cohere")
-	oracleDir := stringsProduct(t, stringsInputs{
-		Name: "Go oracle", Files: []string{bridge, driver, filepath.Join(cohere, "go.mod"), filepath.Join(cohere, "go.sum"), filepath.Join(cohere, "internal/format/css")},
-		Flags: []string{"go build", "overlay"}, Toolchain: "go " + runtime.Version() + "; cohere " + corpusfiles.CohereCommit,
-	}, func(dir string) error {
+	oracleDir := stringsGoProduct(t, "Go oracle", func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
 			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
 			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
@@ -178,6 +174,11 @@ func TestCSSStrings(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY")
 	script, _ := filepath.Abs("testdata/library.mjs")
+	goIdentity := stringsOracleIdentity(t, goBinary)
+	libraryIdentity := ""
+	if library != "" {
+		libraryIdentity = stringsOracleIdentity(t, library)
+	}
 	if library == "" {
 		t.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
 	}
@@ -195,7 +196,7 @@ func TestCSSStrings(t *testing.T) {
 			case "batch":
 				path := filepath.Join(t.TempDir(), "cases.txt")
 				write(t, path, stringsInput(corpus.texts[unit.lo:unit.hi]))
-				want := execute(t, nil, goBinary, path)
+				want := stringsOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
 				clean(t, "Go", want)
 				for _, side := range []struct {
 					name   string
@@ -210,7 +211,7 @@ func TestCSSStrings(t *testing.T) {
 				}
 				stringsLeaks(t, sanitized, fast, "--batch", path)
 				if library != "" {
-					answer := execute(t, nil, "node", script, library, path)
+					answer := stringsOracleAnswers(t, "Prettier", "node", []string{script, library}, stringsInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
 					clean(t, "Prettier", answer)
 					checkStringsOutput(t, unit, "Prettier", answer.stdout, want.stdout)
 				}
@@ -227,7 +228,7 @@ func TestCSSStrings(t *testing.T) {
 					}
 					singleCase := filepath.Join(t.TempDir(), "single.txt")
 					write(t, singleCase, []byte(pref+stringsEncode.Replace(text)+"\n"))
-					expected := execute(t, nil, goBinary, singleCase)
+					expected := stringsOracleAnswers(t, "Go", goBinary, nil, []byte(pref+stringsEncode.Replace(text)+"\n"), goIdentity)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
 					for _, r := range []run{execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), onNode(t, main, args...)} {
@@ -236,7 +237,7 @@ func TestCSSStrings(t *testing.T) {
 					}
 				}
 			case "mutant":
-				want := execute(t, nil, goBinary, cases)
+				want := stringsOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts), goIdentity)
 				clean(t, "Go", want)
 				mutation := stringsMutations[unit.lo]
 				for _, r := range []run{
@@ -256,7 +257,7 @@ func TestCSSStrings(t *testing.T) {
 					}
 				}
 			case "throughput":
-				want := execute(t, nil, goBinary, cases)
+				want := stringsOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts), goIdentity)
 				clean(t, "Go", want)
 				side := unit.side
 				command := goBinary

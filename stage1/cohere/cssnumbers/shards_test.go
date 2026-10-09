@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -200,8 +201,8 @@ func selectedNumbersUnits(t *testing.T, units []numbersUnit) []numbersUnit {
 	return selected
 }
 
-// Normal products use the shared cache. Overlay oracles and temporary mutants
-// remain private builds, once per parent; published products are never modified.
+// Every non-Go product uses the shared cache, including temporary mutants.
+// Go overlay builds stay private until GoBuild supports them; products are immutable.
 type numbersInputs struct {
 	Name      string
 	Files     []string
@@ -211,21 +212,26 @@ type numbersInputs struct {
 
 func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) error) string {
 	t.Helper()
-	if keyed, ok := numbersCacheInputs(t, inputs); ok {
-		return buildcache.Product(t, keyed, build)
-	}
+	keyed := numbersCacheInputs(t, inputs)
+	return buildcache.Product(t, keyed, build)
+}
+
+// Go builds have no hand-listed key. Keep their private callback until GoBuild
+// supports these oracle overlays; it is invoked once per parent.
+func numbersGoProduct(t *testing.T, name string, build func(dir string) error) string {
+	t.Helper()
 	dir := t.TempDir()
 	start := time.Now()
 	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+		t.Fatalf("Go build %s: %v", name, err)
 	}
-	t.Logf("private build %s %.6fs; inputs=%+v", inputs.Name, time.Since(start).Seconds(), inputs)
+	t.Logf("Go build %s %.6fs (private, awaiting GoBuild)", name, time.Since(start).Seconds())
 	return dir
 }
 
-// Generated C is an input by content, not its temporary filename. Every other
-// cached file must be repository-relative; temporary source overlays stay local.
-func numbersCacheInputs(t *testing.T, inputs numbersInputs) (buildcache.Inputs, bool) {
+// Temporary generated inputs are keyed by content and logical filename. Their
+// directory names never enter a key; repository inputs stay repository-relative.
+func numbersCacheInputs(t *testing.T, inputs numbersInputs) buildcache.Inputs {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -234,11 +240,6 @@ func numbersCacheInputs(t *testing.T, inputs numbersInputs) (buildcache.Inputs, 
 	keyed := buildcache.Inputs{Name: "cssnumbers " + inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH}}
 	keyed.Files = append(keyed.Files, "stage1/cohere/cssnumbers/shards_test.go", "stage1/cohere/cssnumbers/port_test.go")
 	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	for _, flag := range inputs.Flags {
-		if flag == "overlay" {
-			return keyed, false
-		}
-	}
 
 	for _, name := range inputs.Files {
 		absolute, err := filepath.Abs(name)
@@ -250,14 +251,15 @@ func numbersCacheInputs(t *testing.T, inputs numbersInputs) (buildcache.Inputs, 
 			t.Fatal(err)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			if filepath.Base(name) != "program.c" {
-				return keyed, false
-			}
 			content, err := os.ReadFile(name)
 			if err != nil {
 				t.Fatal(err)
 			}
-			keyed.Flags = append(keyed.Flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256(content)))
+			logical := filepath.Base(name)
+			if filepath.Ext(name) == ".ts" {
+				logical = filepath.Base(filepath.Dir(name)) + "/" + logical
+			}
+			keyed.Flags = append(keyed.Flags, fmt.Sprintf("generated-input=%s:%x", logical, sha256.Sum256(content)))
 		} else {
 			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
 		}
@@ -273,7 +275,7 @@ func numbersCacheInputs(t *testing.T, inputs numbersInputs) (buildcache.Inputs, 
 		keyed.Flags = append(keyed.Flags, compiler.Flags...)
 		keyed.Toolchain = append(keyed.Toolchain, compiler.Toolchain...)
 	}
-	return keyed, true
+	return keyed
 }
 
 type numbersProgram struct{ dir, main, c, javascript string }
@@ -311,9 +313,6 @@ func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanit
 	t.Helper()
 	options := native.Options{Sanitize: sanitize}
 	flags := native.Flags(options)
-	if name != "sanitized" && name != "native-fast" {
-		flags = append(flags, "overlay")
-	}
 	dir := numbersProduct(t, numbersInputs{Name: name, Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: flags, Toolchain: numbersClangToolchain(t)}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
@@ -502,4 +501,57 @@ func TestCSSNumbersPlantedDisagreement(t *testing.T) {
 		t.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
 	}
 	t.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
+}
+
+// Oracle answers are immutable inputs; throughput still executes every original round.
+func numbersOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
+	t.Helper()
+	dir := numbersProduct(t, numbersInputs{Name: name + " oracle answers", Files: []string{"testdata/library.mjs"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
+		path := filepath.Join(dir, "input.txt")
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			return err
+		}
+		cmd := bounded(t, command, append(append([]string{}, arguments...), path)...)
+		var stdout, stderr bytes.Buffer
+		cmd.Stdout, cmd.Stderr = &stdout, &stderr
+		if err := childguard.Run(cmd, childguard.Options{}); err != nil || stderr.Len() != 0 {
+			return fmt.Errorf("%s oracle: %v; %s", name, err, &stderr)
+		}
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout.Bytes(), 0644)
+	})
+	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return run{stdout: answer}
+}
+
+func numbersOracleIdentity(t *testing.T, path string) string {
+	t.Helper()
+	hash := sha256.New()
+	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			if entry.Name() == ".git" {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		content, err := os.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(path, name)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }

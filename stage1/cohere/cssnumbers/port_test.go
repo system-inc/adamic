@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"syscall"
 	"testing"
@@ -153,10 +152,7 @@ func TestCSSNumbers(t *testing.T) {
 	bridge, _ := filepath.Abs("testdata/bridge.go")
 	driver, _ := filepath.Abs("testdata/go_driver.go")
 	cohere := filepath.Join(root, "cohere")
-	oracleDir := numbersProduct(t, numbersInputs{
-		Name: "Go oracle", Files: []string{bridge, driver, filepath.Join(cohere, "go.mod"), filepath.Join(cohere, "go.sum"), filepath.Join(cohere, "internal/format/css")},
-		Flags: []string{"go build", "overlay"}, Toolchain: "go " + runtime.Version() + "; cohere " + corpusfiles.CohereCommit,
-	}, func(dir string) error {
+	oracleDir := numbersGoProduct(t, "Go oracle", func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
 			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
 			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
@@ -191,6 +187,11 @@ func TestCSSNumbers(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
 	script, _ := filepath.Abs("testdata/library.mjs")
+	goIdentity := numbersOracleIdentity(t, goBinary)
+	libraryIdentity := ""
+	if library != "" {
+		libraryIdentity = numbersOracleIdentity(t, library)
+	}
 	if library == "" {
 		t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
 	}
@@ -208,7 +209,7 @@ func TestCSSNumbers(t *testing.T) {
 			case "batch":
 				path := filepath.Join(t.TempDir(), "cases.txt")
 				write(t, path, numbersInput(corpus.texts[unit.lo:unit.hi]))
-				want := execute(t, nil, goBinary, path)
+				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
 				clean(t, "Go", want)
 				for _, side := range []struct {
 					name   string
@@ -223,7 +224,7 @@ func TestCSSNumbers(t *testing.T) {
 				}
 				numbersLeaks(t, sanitized, fast, "--batch", path)
 				if library != "" {
-					answer := execute(t, nil, "node", script, library, path)
+					answer := numbersOracleAnswers(t, "Prettier", "node", []string{script, library}, numbersInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
 					clean(t, "Prettier", answer)
 					checkNumbersOutput(t, unit, "Prettier", answer.stdout, want.stdout)
 				}
@@ -240,7 +241,7 @@ func TestCSSNumbers(t *testing.T) {
 					}
 					singleCase := filepath.Join(t.TempDir(), "single.txt")
 					write(t, singleCase, []byte(pref+numbersEncode.Replace(text)+"\n"))
-					expected := execute(t, nil, goBinary, singleCase)
+					expected := numbersOracleAnswers(t, "Go", goBinary, nil, []byte(pref+numbersEncode.Replace(text)+"\n"), goIdentity)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
 					for _, r := range []run{execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), onNode(t, main, args...)} {
@@ -249,7 +250,7 @@ func TestCSSNumbers(t *testing.T) {
 					}
 				}
 			case "mutant":
-				want := execute(t, nil, goBinary, cases)
+				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
 				clean(t, "Go", want)
 				mutation := numbersMutations[unit.lo]
 				for _, r := range []run{
@@ -269,7 +270,7 @@ func TestCSSNumbers(t *testing.T) {
 					}
 				}
 			case "throughput":
-				want := execute(t, nil, goBinary, cases)
+				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
 				clean(t, "Go", want)
 				side := unit.side
 				command := goBinary

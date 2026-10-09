@@ -25,7 +25,7 @@ import (
 
 const repository = "../../.."
 
-const testThePortParsesAsGoCohereDoesShards = 100
+const testThePortParsesAsGoCohereDoesShards = 388
 
 // Loaded formatter output gaps reached 66.19 seconds; four minutes gives over 3x headroom.
 const childStall = 4 * time.Minute
@@ -83,6 +83,9 @@ func askedCases(t *testing.T) (string, string) {
 
 func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 	t.Helper()
+	if oracle != "" {
+		return cachedCSSParserOracleOutputs(t, oracle)
+	}
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
@@ -166,8 +169,12 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_CSS_LIBRARY")
 	script, _ := filepath.Abs("testdata/library.mjs")
+	libraryIdentity := ""
+	if library != "" {
+		libraryIdentity = cssParserOracleIdentity(t, library)
+	}
 	setupElapsed := time.Since(setupStarted)
-	t.Logf("setup before shards %.6fs, including cached normal products and private overlay builds", setupElapsed.Seconds())
+	t.Logf("setup before shards %.6fs, including cached non-Go products and a private Go oracle build", setupElapsed.Seconds())
 	if setupElapsed > 30*time.Second {
 		t.Fatalf("invalid test setup: wall %s exceeds 30s", setupElapsed)
 	}
@@ -202,27 +209,28 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 				if library == "" {
 					t.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
 				}
-				result := execute(t, nil, "node", script, library, shardCases)
-				if result.exitCode != 0 {
-					t.Fatalf("library: %s", result.stderr)
-				}
-				checkCSSParserPostCSS(t, unit, corpus.inputs[unit.lo:unit.hi], want, string(result.stdout))
+				postCSS := cachedCSSParserPostCSSAnswers(t, script, library, shardCases, libraryIdentity)
+				checkCSSParserPostCSS(t, unit, corpus.inputs[unit.lo:unit.hi], want, postCSS)
 			} else {
-				// Private overlay products belong only to this mutant unit. Build once
-				// and share the binary between its two original full-corpus checks.
+				// Fetch this mutant product once and share the immutable binary
+				// between its two original side checks for this complete case range.
 				mutantBinary := buildCSSParserBinaries(t, programs[unit.mutation+1:unit.mutation+2])[0]
+				shardCases, want := writeCSSParserRange(t, corpus, unit.lo, unit.hi)
+				witness := cssParserMutantWitness(unit.mutation)
 				for _, side := range []struct {
 					name   string
 					result run
 				}{
-					{"native", execute(t, cssParserASAN(false), mutantBinary, cases)},
-					{"Node", onNode(t, programs[unit.mutation+1].main, cases)},
+					{"native", execute(t, cssParserASAN(false), mutantBinary, shardCases)},
+					{"Node", onNode(t, programs[unit.mutation+1].main, shardCases)},
 				} {
 					if side.result.exitCode != 0 {
 						t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
 					}
-					if difference := firstDifference(string(side.result.stdout), answers); difference == "" {
-						t.Errorf("%s: mutant survived", side.name)
+					if difference := cssParserDifference(unit, string(side.result.stdout), want); difference == "" {
+						if unit.lo <= witness && witness < unit.hi {
+							t.Errorf("%s: mutant survived witness case %d in %s", side.name, witness, unit.name)
+						}
 					} else {
 						t.Logf("%s mutant %s caught by %s: %s", side.name, mutants[unit.mutation].name, unit.name, difference)
 					}
