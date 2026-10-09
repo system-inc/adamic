@@ -45725,5 +45725,645 @@
   "wave": "main",
   "brief": "v7",
   "base": "fc7df90278"
+ },
+ {
+  "test": "TestNoReaderCallingConvention",
+  "package": "internal/native",
+  "file": "internal/native/arguments_length_test.go:13",
+  "seconds": 0.072,
+  "oracle": "Self-written convention markers, forbidden strings and call counts.",
+  "oracle_kind": "self",
+  "kills": [
+   "M10"
+  ],
+  "unique_kills": [],
+  "last_proven_fail": "M10: arguments_length_test.go:38: counted convention: got true, want false",
+  "verdict": "subsumed",
+  "subsumed_by": [
+   "TestOptionalMethodThunksMatchNode"
+  ],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_C"
+  ],
+  "subsumer_seconds": 0.419,
+  "vacuous": false,
+  "vacuous_subcases": [
+   "closure_convention_plain.a passes empty C; counted fixtures fail it"
+  ],
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M10.log: arguments_length_test.go:38: counted convention: got true, want false",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestBorrowChainDeclarations",
+  "package": "internal/native",
+  "file": "internal/native/borrow_chain_test.go:12",
+  "seconds": 0.134,
+  "oracle": "Self-written safe/unsafe declaration expectations.",
+  "oracle_kind": "self",
+  "kills": [
+   "M02",
+   "M03",
+   "M05"
+  ],
+  "unique_kills": [
+   "M05"
+  ],
+  "last_proven_fail": "M05: borrow_chain_test.go:39: walk: parent did not borrow",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_ELEMENTS"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M05.log: borrow_chain_test.go:39: walk: parent did not borrow",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestBorrowChainTargets",
+  "package": "internal/native",
+  "file": "internal/native/borrow_chain_test.go:48",
+  "seconds": 0.01,
+  "oracle": "Self-written read-only, virtual-write and unknown-callback expectations.",
+  "oracle_kind": "self",
+  "kills": [
+   "M02",
+   "M03",
+   "M04"
+  ],
+  "unique_kills": [
+   "M04"
+  ],
+  "last_proven_fail": "M04: borrow_chain_test.go:62: unknown callback considered read-only",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_CHAIN"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M04.log: borrow_chain_test.go:62: unknown callback considered read-only",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestPassThroughsAreNotConsumers",
+  "package": "internal/native",
+  "file": "internal/native/borrow_consumes_test.go:19",
+  "seconds": 0.011,
+  "oracle": "Self-written consumer/pass-through table, checked against pureKind's source list.",
+  "oracle_kind": "self",
+  "kills": [
+   "M01"
+  ],
+  "unique_kills": [
+   "M01"
+  ],
+  "last_proven_fail": "M01: borrow_consumes_test.go:39: ir.Read hands an operand on as its own value, but consumes says it may lend it",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_CONSUMES"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M01.log: borrow_consumes_test.go:39: ir.Read hands an operand on as its own value, but consumes says it may lend it",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestCaseMappingMatchesNode",
+  "package": "internal/native",
+  "file": "internal/native/case_test.go:217",
+  "seconds": 13.276,
+  "oracle": "Executed Node lower/upper-case results compared byte-for-byte, with line counts and exits checked.",
+  "oracle_kind": "external-run",
+  "kills": [
+   "M15",
+   "M16"
+  ],
+  "unique_kills": [
+   "M15",
+   "M16"
+  ],
+  "last_proven_fail": "M16: case_test.go:234: native \"c39f c39f 53\"",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_BUILD"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M16.log: case_test.go:234: native \"c39f c39f 53\"",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestCaseTablesMatchNodesUnicode",
+  "package": "internal/native",
+  "file": "internal/native/case_test.go:314",
+  "seconds": 0.035,
+  "oracle": "Executed Node process.versions.unicode; compares header version labels, not table contents.",
+  "oracle_kind": "external-run",
+  "kills": [
+   "M14"
+  ],
+  "unique_kills": [
+   "M14"
+  ],
+  "last_proven_fail": "M14: case_test.go:335: case_tables.h is Unicode 16.0.0 and Node is Unicode 17.0",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [],
+  "subsumer_seconds": null,
+  "vacuous": null,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M14.log: case_test.go:335: case_tables.h is Unicode 16.0.0 and Node is Unicode 17.0: update case_generate.go and run go generate",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestInheritanceMemoryPlans",
+  "package": "internal/native",
+  "file": "internal/native/class_inheritance_test.go:27",
+  "seconds": 0.046,
+  "oracle": "Self-written freshness, escape and consumption assertions; region/spread nonempty counts missed M08's wrong eligibility.",
+  "oracle_kind": "self",
+  "kills": [
+   "M07",
+   "M09"
+  ],
+  "unique_kills": [
+   "M07",
+   "M09"
+  ],
+  "last_proven_fail": "M09: class_inheritance_test.go:41: class allocator lost its region variant",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_REGIONS",
+   "P_REUSE"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M09.log: class_inheritance_test.go:41: class allocator lost its region variant",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestClosureConventionDropCount",
+  "package": "internal/native",
+  "file": "internal/native/closure_convention_test.go:18",
+  "seconds": 0.196,
+  "oracle": "Actual clang rejection of invalid arity, with self-written diagnostic substrings.",
+  "oracle_kind": [
+   "external-run",
+   "self"
+  ],
+  "kills": [],
+  "unique_kills": [],
+  "last_proven_fail": "W_BUILD: closure_convention_test.go:52: drop-count mutant was not rejected for typed arity: <nil>",
+  "verdict": "witness",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_BUILD"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; W_BUILD.log: closure_convention_test.go:52: drop-count mutant was not rejected for typed arity: <nil>",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestClosureConventionRuntimeDropCount",
+  "package": "internal/native",
+  "file": "internal/native/closure_convention_test.go:58",
+  "seconds": 0.09,
+  "oracle": "Actual clang rejection of runtime callback arity, with self-written diagnostic substrings.",
+  "oracle_kind": [
+   "external-run",
+   "self"
+  ],
+  "kills": [],
+  "unique_kills": [],
+  "last_proven_fail": "W_BUILD: closure_convention_test.go:81: runtime drop-count mutant escaped the typed convention: <nil>",
+  "verdict": "witness",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_BUILD"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; W_BUILD.log: closure_convention_test.go:81: runtime drop-count mutant escaped the typed convention: <nil>",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+  "package": "internal/native",
+  "file": "internal/native/closure_convention_test.go:86",
+  "seconds": 0.027,
+  "oracle": "Self-written absence of feature defines in the cached header. Empty emitted C passes this check.",
+  "oracle_kind": "self",
+  "kills": [
+   "M17"
+  ],
+  "unique_kills": [],
+  "last_proven_fail": "M17: closure_convention_test.go:99: a source literal selected unused runtime support: #define ADAMIC_REGEXP_REPLACE_CALLBACK 1",
+  "verdict": "subsumed",
+  "subsumed_by": [
+   "TestOptionalMethodThunksMatchNode"
+  ],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_LIBRARY"
+  ],
+  "subsumer_seconds": 0.419,
+  "vacuous": true,
+  "probe_entries": {
+   "P_C": "passed",
+   "P_LIBRARY": "failed"
+  },
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M17.log: closure_convention_test.go:99: a source literal selected unused runtime support: #define ADAMIC_REGEXP_REPLACE_CALLBACK 1",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestClosureConventionWrongOrder",
+  "package": "internal/native",
+  "file": "internal/native/closure_convention_test.go:106",
+  "seconds": 0.109,
+  "oracle": "Actual clang rejection of reordered definitions/calls and erased signatures; self-written diagnostic substrings.",
+  "oracle_kind": [
+   "external-run",
+   "self"
+  ],
+  "kills": [],
+  "unique_kills": [],
+  "last_proven_fail": "W_BUILD: closure_convention_test.go:126: swapped definition escaped the header-derived declaration: <nil>",
+  "verdict": "witness",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_BUILD"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; W_BUILD.log: closure_convention_test.go:126: swapped definition escaped the header-derived declaration: <nil>",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestParserHasNoUnusedOptionalMethodThunks",
+  "package": "internal/native",
+  "file": "internal/native/closure_convention_test.go:173",
+  "seconds": 6.296,
+  "oracle": "Self-written absence checks for three method declarations, plus IR function-name and convention checks. No positive emitted-C assertion.",
+  "oracle_kind": "self",
+  "kills": [],
+  "unique_kills": [],
+  "last_proven_fail": null,
+  "verdict": "untrue",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [],
+  "subsumer_seconds": null,
+  "vacuous": true,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M01-M17 all passed this row; P_C also passed it. No proven failing line.",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestOptionalMethodThunksMatchNode",
+  "package": "internal/native",
+  "file": "internal/native/closure_convention_test.go:204",
+  "seconds": 0.419,
+  "oracle": "Executed Node stdout versus sanitized/unsanitized native stdout; self-written convention and unused-entry assertions; built-in missing-thunk witness.",
+  "oracle_kind": [
+   "external-run",
+   "self"
+  ],
+  "kills": [
+   "M10",
+   "M12",
+   "M17"
+  ],
+  "unique_kills": [
+   "M12"
+  ],
+  "last_proven_fail": "M12: closure_convention_test.go:239: valid: exit status 70",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_C"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M12.log: closure_convention_test.go:239: /tmp/adamic-gate/TestOptionalMethodThunksMatchNodesanitize=false963834493/001/valid: exit status 70",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
+ },
+ {
+  "test": "TestArithmeticIsNeverFused",
+  "package": "internal/native",
+  "file": "internal/native/contract_test.go:58",
+  "seconds": 0.287,
+  "oracle": "Self-written separately rounded arithmetic output; a contraction-enabled clang control proves the harness detects fusion.",
+  "oracle_kind": "self",
+  "kills": [
+   "M13"
+  ],
+  "unique_kills": [
+   "M13"
+  ],
+  "last_proven_fail": "M13: contract_test.go:86: sanitize false: got \"5.5511151231257827e-17 -5.5511151231257827e-17 0\\n\", want \"0 0 0\\n\"",
+  "verdict": "sacred",
+  "subsumed_by": [],
+  "mutants_in_matrix": 17,
+  "probe_kills": [
+   "P_BUILD"
+  ],
+  "subsumer_seconds": null,
+  "vacuous": false,
+  "bounded": true,
+  "matrix_rows": [
+   "TestNoReaderCallingConvention",
+   "TestBorrowChainDeclarations",
+   "TestBorrowChainTargets",
+   "TestPassThroughsAreNotConsumers",
+   "TestCaseMappingMatchesNode",
+   "TestCaseTablesMatchNodesUnicode",
+   "TestInheritanceMemoryPlans",
+   "TestClosureConventionDropCount",
+   "TestClosureConventionRuntimeDropCount",
+   "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+   "TestClosureConventionWrongOrder",
+   "TestParserHasNoUnusedOptionalMethodThunks",
+   "TestOptionalMethodThunksMatchNode",
+   "TestArithmeticIsNeverFused"
+  ],
+  "evidence": "python3 /tmp/u045-matrix.py; M13.log: contract_test.go:86: sanitize false: got \"5.5511151231257827e-17 -5.5511151231257827e-17 0\\n\", want \"0 0 0\\n\", as JavaScript computes it",
+  "unit": "u045",
+  "wave": "main",
+  "brief": "v7",
+  "base": "2b1be383"
  }
 ]

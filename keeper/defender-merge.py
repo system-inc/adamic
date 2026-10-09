@@ -5,7 +5,8 @@ S = sys.argv[1]
 path = S + "/defender-ledger.json"
 ledger = json.load(open(path)) if os.path.exists(path) else {}
 unreadable = []
-for reply in sorted(glob.glob(S + "/fanout/replies/du*.md")):
+# Oldest reply first, so a rerun of a row (a named chunk) replaces the run before it: file names don't sort by time.
+for reply in sorted(glob.glob(S + "/fanout/replies/du*.md"), key=os.path.getmtime):
     name = os.path.basename(reply)[:-3]
     unit = re.match(r"du(\d{3})", name)
     if not unit:
@@ -21,6 +22,12 @@ for reply in sorted(glob.glob(S + "/fanout/replies/du*.md")):
         row["unit"] = "u" + unit.group(1)
         row["defender_run"] = name
         ledger["%s %s" % (row["unit"], row["test"])] = row
+# A family's setup, numbered shard or product row (brief v8's family rule) is judged with its family, so a defender's
+# verdict on one alone never makes it a deletion candidate.
+for row in ledger.values():
+    if re.search(r"_(Setup|\d{2,3})$", row["test"].split()[0]) or row["test"].startswith("TestProduct_"):
+        row.setdefault("defender_defense", row.get("defense"))
+        row["defense"] = "family-part"
 # The keeper's own rulings on returned rows (keeper-overrides.json, {"<unit> <test>": {field: value}}) apply after every
 # merge, so a re-merge of the replies never undoes them.
 overrides = S + "/keeper-overrides.json"

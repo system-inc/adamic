@@ -14,6 +14,8 @@ __ROWS__
 4. For each mutant, run the whole package (or, for a big package, the rows that reach the mutated function, listed) under `timeout 120 go test -json -count=1 -timeout 90s`, with its own `ADAMIC_BUILD_CACHE_DIR`. Record which rows fail.
 Twins are not each other's cover. When two rows run one program through two executors (TestXNode runs the port under Node, TestXNative runs the natively compiled port, both against the same oracle), a port mutant fails both by construction, because both run the port. The Node row guards the port; the Native row also guards Adamic's compiler, which no port mutant touches. So never report either twin "not defended" against the other on port mutants alone: put `twin` in `defense`, name the sibling, and spend your attempts on the other rows. Only with budget left, try a compiler mutant that miscompiles this program (its own build cache) to defend the Native half.
 
+Cost rows guard cost. A row whose name or assertion is about speed, cost, throughput, performance or a budget is checking how much work the code does, not only its answer. Before you call it not defended, spend at least one attempt on a mutant that keeps every answer right and makes the work grow: drop a cache or fast path, turn a constant-time step into a scan, repeat a loop. A cost row that fails on that while the agreement rows pass is defended.
+
 5. Verdict:
    - defended: a mutant that this row fails on and no other row in the package does. Give the mutant's standalone diff, the failing line, and the list of rows that passed.
    - not defended: three honest attempts, each caught by another row too or by nobody. Say what each attempted and what it showed.

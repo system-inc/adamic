@@ -1,0 +1,11 @@
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -83,7 +83,7 @@
+ 		for index := range list {
+ 			switch statement := list[index].(type) {
+ 			case ir.Assign, ir.Declare, ir.Evaluate, ir.WriteLine:
+-				if plan.feedsRegion(statement) {
++				if !plan.feedsRegion(statement) {
+ 					plan.statements[&list[index]] = true
+ 				}
+ 			}

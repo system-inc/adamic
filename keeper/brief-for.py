@@ -9,7 +9,9 @@ if unitId.startswith("du"):
     notes = os.path.join(os.path.dirname(os.path.abspath(manifest)), "..", "fanout", "notes", "du" + unitId[2:].split(".")[0].split("=")[0] + ".md")
     if os.path.exists(notes):
         text += "\n\n## A note from the keeper for this unit\n" + open(notes).read()
-    sys.stdout.write(text)
+    # Warm clones keep every earlier unit's per-mutant build caches under /tmp; du110.1 died on a full disk (Oct 9).
+    disk = "Before anything else: your workspace is warm and keeps earlier units' build caches. Run `df -h /tmp /workspace`; if either has under 15 GB free, delete earlier units' scratch and per-mutant cache directories under /tmp (never /workspace/adamic or your tools), then check again. A baseline that fails on a full disk is the disk, not the code.\n\n"
+    sys.stdout.write(disk + text)
     sys.exit(0)
 units = {u['unit']: u for u in json.load(open(manifest))['units']}
 u = units[unitId]
