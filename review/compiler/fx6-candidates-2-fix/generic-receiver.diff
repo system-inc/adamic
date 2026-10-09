@@ -1,0 +1,13 @@
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -49,8 +49,8 @@
+ // uses its instantiated type, or its constraint when the binder remains rigid.
+ // Neither operation relates unrelated objects merely because their names match.
+ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+-	receiver = l.concrete(receiver)
+-	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
++	// mutant: leave the receiver binder rigid
++	if false {
+ 		if constraint := l.checker.GetBaseConstraintOfType(receiver); constraint != nil {
+ 			receiver = l.concrete(constraint)
+ 		}

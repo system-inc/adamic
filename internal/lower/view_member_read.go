@@ -1,0 +1,78 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// readViewMember is the checked own-member boundary. Syntax supplies its field
+// and receiver certificates before a read can expose the stored value.
+func (l *lowering) readViewMember(node *ast.Node, property ir.Property, field *ast.Symbol, receiver *checker.Type) ir.Expression {
+	property.Readiness = sourceExpression(node)
+	if property.View == "" {
+		property.View = sourceExpression(node)
+	}
+	property.ViewWhere = l.program.Where(node)
+	if receiver != nil {
+		property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+	}
+	if field != nil {
+		declared := l.checker.GetTypeOfSymbol(field)
+		property.ViewTypeID = int(declared.Id())
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+		property.ViewType = l.checker.TypeToString(declared)
+		property.ViewAllowed = l.viewLiterals(declared)
+	}
+	if field != nil {
+		for _, declaration := range field.Declarations {
+			if declaration.Kind == ast.KindPropertyDeclaration {
+				initializer := declaration.AsPropertyDeclaration().Initializer
+				if l.lazyAssertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+					property.Readiness = sourceExpression(initializer)
+				}
+			}
+		}
+	}
+	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
+		return property
+	}
+	property.Absent = true
+	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
+		property.Of = declared
+		return fit(property, declared.Present())
+	}
+	return property
+}
+
+// Nullable receivers read the present object's contract. A generic receiver
+// uses its instantiated type, or its constraint when the binder remains rigid.
+// Neither operation relates unrelated objects merely because their names match.
+func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+	receiver = l.concrete(receiver)
+	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(receiver); constraint != nil {
+			receiver = l.concrete(constraint)
+		}
+	}
+	return int(l.checker.GetNonNullableType(receiver).Id())
+}
+
+// A union receiver can carry a checked member's allocation. Preserve that
+// boundary for its common field without marking unrelated receiver types.
+func (l *lowering) checkedViewReceiverField(receiver *checker.Type, name string) bool {
+	id := l.viewReceiverTypeID(receiver)
+	if l.result.CheckedFields[checkedViewFieldKey(id, name)] {
+		return true
+	}
+	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
+	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range receiver.Types() {
+			if l.checkedViewReceiverField(member, name) {
+				l.result.CheckedFields[checkedViewFieldKey(id, name)] = true
+				return true
+			}
+		}
+	}
+	return false
+}

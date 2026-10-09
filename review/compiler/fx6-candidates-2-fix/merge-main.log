@@ -1,0 +1,22 @@
+Merge made by the 'ort' strategy.
+ internal/dry/mirrors_test.go                       | 593 +++++++++++++++++++++
+ internal/dry/testdata/cohere-mirrors.json          | 221 ++++++++
+ review/compiler/cohere-dry-guard/REPORT.md         |  47 ++
+ review/compiler/cohere-dry-guard/run-mutants.py    |  32 ++
+ .../compiler/cohere-dry-guard/stale-entry.go.txt   |   1 +
+ .../cohere-dry-guard/unlisted-header.go.txt        |   2 +
+ .../compiler/cohere-dry-guard/unlisted-rule.go.txt |   2 +
+ stage1/cohere/lint/lint_test.go                    |  13 +-
+ stage1/cohere/lint/oracle_product_test.go          |  99 ++++
+ stage1/cohere/lint/owned_witness_products_test.go  | 138 +++++
+ stage1/cohere/lint/owned_witness_units_test.go     | 119 +----
+ 11 files changed, 1155 insertions(+), 112 deletions(-)
+ create mode 100644 internal/dry/mirrors_test.go
+ create mode 100644 internal/dry/testdata/cohere-mirrors.json
+ create mode 100644 review/compiler/cohere-dry-guard/REPORT.md
+ create mode 100644 review/compiler/cohere-dry-guard/run-mutants.py
+ create mode 100644 review/compiler/cohere-dry-guard/stale-entry.go.txt
+ create mode 100644 review/compiler/cohere-dry-guard/unlisted-header.go.txt
+ create mode 100644 review/compiler/cohere-dry-guard/unlisted-rule.go.txt
+ create mode 100644 stage1/cohere/lint/oracle_product_test.go
+ create mode 100644 stage1/cohere/lint/owned_witness_products_test.go

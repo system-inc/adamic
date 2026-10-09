@@ -1,0 +1,29 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestReviewProgramsRefuse
+=== PAUSE TestReviewProgramsRefuse
+=== RUN   TestReviewProgramsNoLooseFiles
+=== PAUSE TestReviewProgramsNoLooseFiles
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestReviewProgramsNoLooseFiles
+=== CONT  TestReviewProgramsRefuse
+--- PASS: TestReviewProgramsNoLooseFiles (0.00s)
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p70_length_view_over_tuple.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/tuple_object_views/p70_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/tuple_object_views/p70_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/tuple_object_views/p70_copy.a
+--- PASS: TestReviewProgramsRefuse (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p70_length_view_over_tuple.a (0.10s)
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/tuple_object_views/p70_copy.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/tuple_object_views/p70_copy.a (0.77s)
+PASS
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.869s

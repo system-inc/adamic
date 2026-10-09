@@ -1,0 +1,32 @@
+element-bypass exit 1
+destructure-bypass exit 1
+revert-receiver exit 1
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== CONT  TestFX6P37
+    fx6_valid_test.go:29: JavaScript backend stdout = "3\n", source Node = "3\nnumber 5\n"
+--- FAIL: TestFX6P37 (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.168s
+FAIL
+
+revert-destructure-type-id exit 1
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== CONT  TestFX6P53
+    fx6_valid_test.go:44: JavaScript backend stdout = "", source Node = "n5\n"
+--- FAIL: TestFX6P53 (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.144s
+FAIL
+
+revert-p70 exit 1
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== CONT  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:33: want located tuple object refusal, got <nil>
+--- FAIL: TestTupleObjectViewRefused (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.115s
+FAIL
+

@@ -165,8 +165,12 @@ func (l *lowering) checkLazyViewReads() error {
 
 		switch read := node.(type) {
 		case ir.Property:
-			if !program.CheckedFields[read.Name] {
+			if !(program.CheckedFields[checkedViewFieldKey(read.ViewReceiverTypeID, read.Name)] || program.CheckedFields[read.Name]) {
 				return true
+			}
+			if err := tupleObjectViewRead(program, graph, index, read); err != nil {
+				refused = err
+				return false
 			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID

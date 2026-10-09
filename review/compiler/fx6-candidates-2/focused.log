@@ -1,0 +1,80 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P38Number
+=== PAUSE TestFX6P38Number
+=== RUN   TestViewStringElementReadControl
+=== PAUSE TestViewStringElementReadControl
+=== RUN   TestViewLiteralTypedElementReadControl
+=== PAUSE TestViewLiteralTypedElementReadControl
+=== RUN   TestViewElementFixAgreesWithNode
+=== PAUSE TestViewElementFixAgreesWithNode
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementP06CorrectControl
+=== PAUSE TestViewElementP06CorrectControl
+=== RUN   TestViewElementP01CorrectControl
+=== PAUSE TestViewElementP01CorrectControl
+=== RUN   TestViewElementP07CorrectControl
+=== PAUSE TestViewElementP07CorrectControl
+=== RUN   TestViewElementDestructuredControl
+=== PAUSE TestViewElementDestructuredControl
+=== RUN   TestViewElementDestructuredUnionControl
+=== PAUSE TestViewElementDestructuredUnionControl
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== RUN   TestTupleObjectViewCopiedLength
+=== PAUSE TestTupleObjectViewCopiedLength
+=== RUN   TestTupleObjectViewOrdinaryTuple
+=== PAUSE TestTupleObjectViewOrdinaryTuple
+=== CONT  TestFX6P35
+=== CONT  TestViewElementP05CorrectControl
+=== CONT  TestFX6P53
+=== CONT  TestViewElementDestructuredUnionControl
+=== CONT  TestTupleObjectViewOrdinaryTuple
+--- PASS: TestTupleObjectViewOrdinaryTuple (0.26s)
+=== CONT  TestViewElementDestructuredControl
+--- PASS: TestFX6P53 (0.27s)
+=== CONT  TestViewElementP07CorrectControl
+--- PASS: TestViewElementDestructuredUnionControl (0.29s)
+=== CONT  TestViewElementP01CorrectControl
+--- PASS: TestFX6P35 (0.30s)
+=== CONT  TestViewElementP06CorrectControl
+--- PASS: TestViewElementP05CorrectControl (0.30s)
+=== CONT  TestViewStringElementReadControl
+--- PASS: TestViewElementDestructuredControl (0.20s)
+=== CONT  TestViewElementFixAgreesWithNode
+--- PASS: TestViewElementP06CorrectControl (0.21s)
+=== CONT  TestViewLiteralTypedElementReadControl
+--- PASS: TestViewElementP07CorrectControl (0.25s)
+=== CONT  TestFX6P38
+--- PASS: TestViewElementP01CorrectControl (0.23s)
+=== CONT  TestFX6P51
+--- PASS: TestViewStringElementReadControl (0.28s)
+=== CONT  TestTupleObjectViewCopiedLength
+--- PASS: TestViewElementFixAgreesWithNode (0.26s)
+=== CONT  TestFX6P38Number
+--- PASS: TestFX6P38 (0.21s)
+=== CONT  TestTupleObjectViewRefused
+--- PASS: TestViewLiteralTypedElementReadControl (0.23s)
+=== CONT  TestFX6P37
+--- PASS: TestFX6P51 (0.24s)
+=== CONT  TestFX6P36
+=== NAME  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:38: /tmp/adamic-gate/TestTupleObjectViewRefused1596308092/001/main.a:9:15: stage 0 can't lower a tuple through an object view with a length field; expose a scalar length field on the view and copy pair.length into that field yet
+--- PASS: TestTupleObjectViewRefused (0.16s)
+--- PASS: TestTupleObjectViewCopiedLength (0.36s)
+--- PASS: TestFX6P38Number (0.22s)
+--- PASS: TestFX6P37 (0.21s)
+--- PASS: TestFX6P36 (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.992s

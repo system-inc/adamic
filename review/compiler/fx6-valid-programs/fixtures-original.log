@@ -1,0 +1,33 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P70
+=== PAUSE TestFX6P70
+=== CONT  TestFX6P35
+=== CONT  TestFX6P51
+=== CONT  TestFX6P70
+=== CONT  TestFX6P37
+=== CONT  TestFX6P53
+--- PASS: TestFX6P35 (0.23s)
+=== CONT  TestFX6P38
+--- PASS: TestFX6P37 (0.27s)
+=== CONT  TestFX6P36
+=== NAME  TestFX6P70
+    fx6_valid_test.go:49: JavaScript backend stdout = "", source Node = "2\n"
+--- FAIL: TestFX6P70 (0.29s)
+--- PASS: TestFX6P51 (0.31s)
+--- PASS: TestFX6P53 (0.31s)
+--- PASS: TestFX6P38 (0.16s)
+--- PASS: TestFX6P36 (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.418s
+FAIL
