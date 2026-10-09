@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/helpers/policy_message.ts
++++ b/stage1/cohere/lint/helpers/policy_message.ts
+@@ -43,7 +43,7 @@
+             chosen.add(choice.phrase); text = text.split(`<<${choice.phrase}>>`).join(this.catalog.node(option).text);
+         }
+         const count = options < 0 ? 0 : this.catalog.node(options).keys.length;
+-        if(chosen.size !== count) { panic(`policy/messages: ${rule} "${id}" picks from ${count} phrases, and was given ${chosen.size} options`); }
++        if(chosen.size !== count + 1) { panic(`policy/messages: ${rule} "${id}" picks from ${count} phrases, and was given ${chosen.size} options`); }
+         const needed = this.names(text);
+         if(values.size !== needed.length) { panic(`policy/messages: ${rule} "${id}" uses the values [${needed.join(' ')}], and was given ${values.size}`); }
+         for(const name of needed) {

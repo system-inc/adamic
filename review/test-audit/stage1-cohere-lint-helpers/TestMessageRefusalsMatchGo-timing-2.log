@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:30:21.425164758Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-09T12:30:21.433090418Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-09T12:30:21.433185612Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== RUN   TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:28.209780665Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"    helpers_test.go:240: 10 message refusal cases match Go on Node and sanitized native\n"}
+{"Time":"2026-10-09T12:30:28.211302733Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"--- PASS: TestMessageRefusalsMatchGo (6.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:28.211310585Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Elapsed":6.78}
+{"Time":"2026-10-09T12:30:28.211339078Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:28.212780955Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t6.787s\n"}
+{"Time":"2026-10-09T12:30:28.212800715Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":6.788}

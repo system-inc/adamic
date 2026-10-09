@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "line": 15159,
+    "got": "valid",
+    "want": "invalid",
+    "command": "ADAMIC_MUTANT=clean; /tmp/u114/M1 /tmp/u114/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json",
+    "log": "M1-native-output.log"
+  },
+  {
+    "id": "M2",
+    "line": 1,
+    "got": "NotYet: unsupported schema keyword type",
+    "want": "invalid",
+    "command": "ADAMIC_MUTANT=clean; /tmp/u114/M2 /tmp/u114/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json",
+    "log": "M2-native-output.log"
+  },
+  {
+    "id": "M3",
+    "line": 15171,
+    "got": "invalid",
+    "want": "valid",
+    "command": "ADAMIC_MUTANT=clean; /tmp/u114/M3 /tmp/u114/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json",
+    "log": "M3-native-output.log"
+  },
+  {
+    "id": "M4",
+    "line": 23350,
+    "got": "adamic: panic: policy/messages: adamic/no-definite-assignment \"definiteAssignment\" picks from 0 phrases, and was given 0 options",
+    "want": "`!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case.",
+    "command": "ADAMIC_MUTANT=clean; /tmp/u114/M4 /tmp/u114/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json",
+    "log": "M4-native-output.log"
+  }
+]

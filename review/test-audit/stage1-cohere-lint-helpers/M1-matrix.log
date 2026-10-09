@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T12:32:18.199952779Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-09T12:32:18.206827866Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere"}
+{"Time":"2026-10-09T12:32:18.206893966Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"=== RUN   TestHelpersMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:25.621347048Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"    helpers_test.go:99: output line 15159: got \"valid\", Go \"invalid\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:32:25.623267256Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"--- FAIL: TestHelpersMatchCohere (7.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:25.623288698Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Elapsed":7.42}
+{"Time":"2026-10-09T12:32:25.623320717Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-09T12:32:25.623326786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== RUN   TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:32.162371156Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"    helpers_test.go:240: 10 message refusal cases match Go on Node and sanitized native\n"}
+{"Time":"2026-10-09T12:32:32.16451267Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"--- PASS: TestMessageRefusalsMatchGo (6.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:32.164531438Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Elapsed":6.54}
+{"Time":"2026-10-09T12:32:32.164547041Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit"}
+{"Time":"2026-10-09T12:32:32.164549405Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"=== RUN   TestKnownGapsAreExplicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:33.985051914Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"--- PASS: TestKnownGapsAreExplicit (1.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:33.985103342Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Elapsed":1.82}
+{"Time":"2026-10-09T12:32:33.985110383Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:33.986635906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t15.786s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:33.986762808Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":15.787}

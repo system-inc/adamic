@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/helpers/option_schema.ts
++++ b/stage1/cohere/lint/helpers/option_schema.ts
+@@ -20,7 +20,7 @@
+         for(let i = 0; i < s.keys.length; i++) {
+             const key = s.keys[i] ?? panic('schema key'); const child = s.children[i] ?? panic('schema child');
+             if(key === '$ref' && this.reference(this.schema.node(child).text) < 0) { return; }
+-            if(!known.includes(key)) { this.unsupported = `unsupported schema keyword ${key}`; return; }
++            if(known.includes(key)) { this.unsupported = `unsupported schema keyword ${key}`; return; }
+             if(['properties', '$defs', 'definitions'].includes(key)) {
+                 for(const member of this.schema.node(child).children) { this.audit(member); }
+             } else if(['allOf', 'anyOf', 'oneOf'].includes(key) || (key === 'items' && this.schema.node(child).kind === 'array')) {

@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:27:44.551917673Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-09T12:27:44.561274309Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere"}
+{"Time":"2026-10-09T12:27:44.561405677Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"=== RUN   TestHelpersMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:57.314444664Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"    helpers_test.go:101: 23609 oracle output lines matched Go, Node and sanitized native\n"}
+{"Time":"2026-10-09T12:27:57.318901012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"--- PASS: TestHelpersMatchCohere (12.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:57.31893323Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Elapsed":12.76}
+{"Time":"2026-10-09T12:27:57.318955915Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:57.321647138Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t12.769s\n"}
+{"Time":"2026-10-09T12:27:57.321696533Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":12.77}

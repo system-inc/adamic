@@ -1,0 +1,604 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestHelpersMatchCohere-timing-1.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 16.523634698000023
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestHelpersMatchCohere-timing-2.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 14.358789171999888
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestHelpersMatchCohere-timing-3.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 14.787569836998955
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelperMutants)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestHelperMutants-timing-1.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": null,
+    "recovered_binary_elapsed": 27.225
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelperMutants)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestHelperMutants-timing-2.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 29.250134881000122
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelperMutants)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestHelperMutants-timing-3.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 29.10822441900018
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestMessageRefusalsMatchGo)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestMessageRefusalsMatchGo-timing-1.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 8.2125171100015
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestMessageRefusalsMatchGo)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestMessageRefusalsMatchGo-timing-2.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 8.759604953000235
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestMessageRefusalsMatchGo)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestMessageRefusalsMatchGo-timing-3.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 8.122500471999956
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestKnownGapsAreExplicit-timing-1.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.7917121759983274
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestKnownGapsAreExplicit-timing-2.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.8872934480004915
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "TestKnownGapsAreExplicit-timing-3.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.568356899999344
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-o",
+      "/tmp/u114/adamic",
+      "./cmd/adamic"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "compiler-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 5.995741160999387
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-overlay=/tmp/u114/overlay.json",
+      "-o",
+      "/tmp/u114/go-oracle",
+      "/workspace/adamic/cohere/adamic_helper_oracle.go",
+      "/workspace/adamic/cohere/adamic_helper_descriptors.go"
+    ],
+    "cwd": "/workspace/adamic/cohere",
+    "log": "oracle-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 2.835267462000047
+  },
+  {
+    "command": [
+      "/tmp/u114/go-oracle",
+      "/tmp/u114/cases.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "oracle-answers.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.9115673800006334
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u114/adamic",
+      "build",
+      "stage1/cohere/lint/helpers/main.ts",
+      "-o",
+      "/tmp/u114/M1",
+      "--sanitize"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M1-native-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 1.5497365510000236
+  },
+  {
+    "command": [
+      "/tmp/u114/M1",
+      "/tmp/u114/cases.json",
+      "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M1-native-output.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.695886835001147
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u114/adamic",
+      "build",
+      "stage1/cohere/lint/helpers/main.ts",
+      "-o",
+      "/tmp/u114/M2",
+      "--sanitize"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M2-native-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 1.6115707349999866
+  },
+  {
+    "command": [
+      "/tmp/u114/M2",
+      "/tmp/u114/cases.json",
+      "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M2-native-output.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.201490695000757
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u114/adamic",
+      "build",
+      "stage1/cohere/lint/helpers/main.ts",
+      "-o",
+      "/tmp/u114/M3",
+      "--sanitize"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M3-native-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 1.6279866530003346
+  },
+  {
+    "command": [
+      "/tmp/u114/M3",
+      "/tmp/u114/cases.json",
+      "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M3-native-output.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 3.711881828001424
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u114/adamic",
+      "build",
+      "stage1/cohere/lint/helpers/main.ts",
+      "-o",
+      "/tmp/u114/M4",
+      "--sanitize"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M4-native-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 1.6254646779998438
+  },
+  {
+    "command": [
+      "/tmp/u114/M4",
+      "/tmp/u114/cases.json",
+      "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M4-native-output.log",
+    "selector": "clean",
+    "exit": 70,
+    "wall": 3.291349294999236
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u114/adamic",
+      "build",
+      "stage1/cohere/lint/helpers/main.ts",
+      "-o",
+      "/tmp/u114/P",
+      "--sanitize"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "P-native-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.21102099000017915
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/lint/helpers/"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "W1-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.14839433599991025
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u114/test",
+      "./stage1/cohere/lint/helpers/"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "switch-build.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 6.129179143999863
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestHelperMutants|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "switch-baseline.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 49.110427031000654
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M1-matrix.log",
+    "selector": "M1",
+    "exit": 1,
+    "wall": 17.72380265799984
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M2-matrix.log",
+    "selector": "M2",
+    "exit": 1,
+    "wall": 15.04066074900038
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M3-matrix.log",
+    "selector": "M3",
+    "exit": 1,
+    "wall": 17.070061799999166
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "M4-matrix.log",
+    "selector": "M4",
+    "exit": 1,
+    "wall": 15.108178370999667
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelperMutants)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "W1.log",
+    "selector": "W1",
+    "exit": 1,
+    "wall": 29.618576593999023
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "P.log",
+    "selector": "P",
+    "exit": 1,
+    "wall": 10.964106598001308
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/lint/helpers/"
+    ],
+    "cwd": "/workspace/adamic",
+    "log": "final-vet.log",
+    "selector": "clean",
+    "exit": 0,
+    "wall": 0.1417083279993676
+  }
+]

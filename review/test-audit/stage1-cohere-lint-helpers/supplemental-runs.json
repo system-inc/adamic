@@ -1,0 +1,78 @@
+[
+  {
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/lint/helpers/"
+    ],
+    "log": "WShared-vet.log",
+    "selector": "WShared",
+    "exit": 0,
+    "wall": 0.15410605400029453
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestHelperMutants)$"
+    ],
+    "log": "WShared-M1.log",
+    "selector": "WShared+M1",
+    "exit": 0,
+    "wall": 45.8832786160001
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u114/adamic",
+      "build",
+      "stage1/cohere/lint/helpers/main.ts",
+      "-o",
+      "/tmp/u114/SOut",
+      "--sanitize"
+    ],
+    "log": "SOut-native-build.log",
+    "selector": "SOut",
+    "exit": 0,
+    "wall": 1.5535312749998411
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$"
+    ],
+    "log": "SOut-matrix.log",
+    "selector": "SOut",
+    "exit": 1,
+    "wall": 15.095986453001387
+  },
+  {
+    "command": [
+      "/tmp/u114/SOut",
+      "/tmp/u114/refusal.json",
+      "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+    ],
+    "log": "SOut-refusal-output.log",
+    "selector": "SOut",
+    "exit": 70,
+    "wall": 0.06740171699857456
+  }
+]

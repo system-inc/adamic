@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/helpers/strict_options.ts
++++ b/stage1/cohere/lint/helpers/strict_options.ts
+@@ -11,7 +11,7 @@
+         if(kind === 'unsupported') { this.unsupported = 'custom or unsupported Go option type'; return false; }
+         const value = values.node(index);
+         // encoding/json null leaves scalars/structs untouched and sets pointers/slices/maps to nil.
+-        if(value.kind === 'null') { return true; }
++        if(value.kind === 'null') { return false; }
+         if(kind !== value.kind) { return false; }
+         if(kind === 'array') {
+             const item = this.shapes.field(shape, 'item');

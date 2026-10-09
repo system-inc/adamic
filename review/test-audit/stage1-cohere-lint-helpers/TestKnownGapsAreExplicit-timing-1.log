@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T12:30:38.337866818Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-09T12:30:38.345962816Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit"}
+{"Time":"2026-10-09T12:30:38.346031019Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"=== RUN   TestKnownGapsAreExplicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:40.125263782Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"--- PASS: TestKnownGapsAreExplicit (1.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:40.125321959Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Elapsed":1.78}
+{"Time":"2026-10-09T12:30:40.125343272Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:40.126759689Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t1.788s\n"}
+{"Time":"2026-10-09T12:30:40.126836886Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":1.7890000000000001}

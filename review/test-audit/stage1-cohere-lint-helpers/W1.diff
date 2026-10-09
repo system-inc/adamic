@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/helpers/helpers_test.go
++++ b/stage1/cohere/lint/helpers/helpers_test.go
+@@ -138,7 +138,7 @@
+ 				}
+ 			}
+ 			got := run(t, "", build(t, directory), cases, catalog)
+-			if bytes.Equal(got, want) {
++			if bytes.Equal(got, got) {
+ 				t.Fatal("compiled mutant survived")
+ 			}
+ 			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")

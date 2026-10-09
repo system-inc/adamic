@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/u114-follow.py", line 8, in <module>
+    f='stage1/cohere/lint/helpers/helpers_test.go';old='\tif bytes.Equal(got, want) {';assert base[f].count(old)==1;(p/'WShared.diff').write_text(diff(f,base[f].replace(old,'\tif bytes.Equal(got, got) {',1)))
+                                                                                              ^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+WShared-vet.log 0
+WShared-M1.log 0
+SOut-native-build.log 0
+SOut-matrix.log 1
+SOut-refusal-output.log 70

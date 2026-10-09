@@ -1,0 +1,84 @@
+[
+  {
+    "id": "M1",
+    "rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "failed": [
+      "TestHelpersMatchCohere"
+    ],
+    "results": {
+      "TestHelpersMatchCohere": "fail",
+      "TestMessageRefusalsMatchGo": "pass",
+      "TestKnownGapsAreExplicit": "pass"
+    },
+    "unknown": [],
+    "command": "ADAMIC_MUTANT=M1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+    "log": "M1-matrix.log",
+    "bounded": true
+  },
+  {
+    "id": "M2",
+    "rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "failed": [
+      "TestHelpersMatchCohere",
+      "TestKnownGapsAreExplicit"
+    ],
+    "results": {
+      "TestHelpersMatchCohere": "fail",
+      "TestMessageRefusalsMatchGo": "pass",
+      "TestKnownGapsAreExplicit": "fail"
+    },
+    "unknown": [],
+    "command": "ADAMIC_MUTANT=M2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+    "log": "M2-matrix.log",
+    "bounded": true
+  },
+  {
+    "id": "M3",
+    "rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "failed": [
+      "TestHelpersMatchCohere"
+    ],
+    "results": {
+      "TestHelpersMatchCohere": "fail",
+      "TestMessageRefusalsMatchGo": "pass",
+      "TestKnownGapsAreExplicit": "pass"
+    },
+    "unknown": [],
+    "command": "ADAMIC_MUTANT=M3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+    "log": "M3-matrix.log",
+    "bounded": true
+  },
+  {
+    "id": "M4",
+    "rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "failed": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo"
+    ],
+    "results": {
+      "TestHelpersMatchCohere": "fail",
+      "TestMessageRefusalsMatchGo": "fail",
+      "TestKnownGapsAreExplicit": "pass"
+    },
+    "unknown": [],
+    "command": "ADAMIC_MUTANT=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+    "log": "M4-matrix.log",
+    "bounded": true
+  }
+]

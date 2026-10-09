@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T12:36:25.162150355Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-09T12:36:25.170863816Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere"}
+{"Time":"2026-10-09T12:36:25.170933641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"=== RUN   TestHelpersMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:32.133368175Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"    helpers_test.go:99: output line 1: got \"audit unexpected stdout\", Go \"invalid\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:36:32.133448186Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"--- FAIL: TestHelpersMatchCohere (6.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:32.133455858Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Elapsed":6.96}
+{"Time":"2026-10-09T12:36:32.133517591Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-09T12:36:32.133522829Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== RUN   TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:38.021549678Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"    helpers_test.go:240: 10 message refusal cases match Go on Node and sanitized native\n"}
+{"Time":"2026-10-09T12:36:38.021753265Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"--- PASS: TestMessageRefusalsMatchGo (5.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:38.021760426Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Elapsed":5.89}
+{"Time":"2026-10-09T12:36:38.0217765Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit"}
+{"Time":"2026-10-09T12:36:38.021779004Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"=== RUN   TestKnownGapsAreExplicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:38.129765266Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"    helpers_test.go:260: output line 1: got \"audit unexpected stdout\", Go \"NotYet: unsupported schema keyword pattern\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:36:38.129848712Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"--- FAIL: TestKnownGapsAreExplicit (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:38.129854431Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Elapsed":0.11}
+{"Time":"2026-10-09T12:36:38.129861702Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:38.13128376Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t12.969s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:38.131345463Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":12.969}

@@ -1,0 +1,78 @@
+[
+  {
+    "log": "W1.log",
+    "command": "ADAMIC_MUTANT=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelperMutants)$",
+    "results": {
+      "TestHelperMutants": "fail"
+    },
+    "errors": [
+      {
+        "test": "TestHelperMutants/options_json.ts",
+        "line": "helpers_test.go:142: compiled mutant survived"
+      },
+      {
+        "test": "TestHelperMutants/option_schema.ts",
+        "line": "helpers_test.go:142: compiled mutant survived"
+      },
+      {
+        "test": "TestHelperMutants/policy_message.ts",
+        "line": "helpers_test.go:142: compiled mutant survived"
+      },
+      {
+        "test": "TestHelperMutants/strict_options.ts",
+        "line": "helpers_test.go:142: compiled mutant survived"
+      }
+    ]
+  },
+  {
+    "log": "P.log",
+    "command": "ADAMIC_MUTANT=P; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+    "results": {
+      "TestHelpersMatchCohere": "fail",
+      "TestMessageRefusalsMatchGo": "fail",
+      "TestKnownGapsAreExplicit": "fail"
+    },
+    "errors": [
+      {
+        "test": "TestHelpersMatchCohere",
+        "line": "helpers_test.go:99: output line 1: got \"\", Go \"invalid\""
+      },
+      {
+        "test": "TestMessageRefusalsMatchGo",
+        "line": "helpers_test.go:236: guard 0 /tmp/adamic-gate/TestMessageRefusalsMatchGo2481035693/001/helpers: <nil> stderr \"\", Go \"adamic: panic: policy/messages: missing/rule has no message \\\"missing\\\"\\n\""
+      },
+      {
+        "test": "TestKnownGapsAreExplicit",
+        "line": "helpers_test.go:260: output line 1: got \"\", Go \"NotYet: unsupported schema keyword pattern\""
+      }
+    ]
+  },
+  {
+    "log": "WShared-M1.log",
+    "command": "ADAMIC_MUTANT=WShared+M1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestHelperMutants)$",
+    "results": {
+      "TestHelpersMatchCohere": "pass",
+      "TestHelperMutants": "pass"
+    },
+    "errors": []
+  },
+  {
+    "log": "SOut-matrix.log",
+    "command": "ADAMIC_MUTANT=SOut; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+    "results": {
+      "TestHelpersMatchCohere": "fail",
+      "TestMessageRefusalsMatchGo": "pass",
+      "TestKnownGapsAreExplicit": "fail"
+    },
+    "errors": [
+      {
+        "test": "TestHelpersMatchCohere",
+        "line": "helpers_test.go:99: output line 1: got \"audit unexpected stdout\", Go \"invalid\""
+      },
+      {
+        "test": "TestKnownGapsAreExplicit",
+        "line": "helpers_test.go:260: output line 1: got \"audit unexpected stdout\", Go \"NotYet: unsupported schema keyword pattern\""
+      }
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "case": {
+    "Kind": "schema",
+    "Rule": "@eslint-community/eslint-comments/require-description",
+    "Schema": "S0",
+    "Input": "[{}]",
+    "Expected": "valid"
+  },
+  "archived_sample": {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "elements": [
+      {}
+    ],
+    "eslint": "accepts"
+  },
+  "authority_versions": {
+    "@eslint-community/eslint-plugin-eslint-comments": "4.8.1",
+    "@next/eslint-plugin-next": "16.3.1",
+    "@typescript-eslint/eslint-plugin": "8.71.0",
+    "ajv": "6.15.0",
+    "eslint": "10.8.1",
+    "eslint-plugin-better-tailwindcss": "4.7.0",
+    "eslint-plugin-boundaries": "7.2.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.1.1"
+  },
+  "archive": "cohere/internal/lint/optionschema/testdata/samples.json:4",
+  "cohere_pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "fresh_eslint_run": false
+}

@@ -1,0 +1,63 @@
+Traceback (most recent call last):
+  File "/tmp/u114-audit.py", line 24, in <module>
+    f='stage1/cohere/lint/helpers/helpers_test.go';weak='if bytes.Equal(got, want) {';assert base[f].count(weak)==1;(p/'W1.diff').write_text(diff(f,base[f].replace(weak,'if bytes.Equal(got, got) {',1)))
+                                                                                             ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+TestHelpersMatchCohere-timing-1.log 0 16.524
+TestHelpersMatchCohere-timing-2.log 0 14.359
+TestHelpersMatchCohere-timing-3.log 0 14.788
+Traceback (most recent call last):
+  File "/tmp/u114-audit.py", line 37, in <module>
+    for i in range(1,4):test([name],name+'-timing-'+str(i)+'.log',expected=0)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/u114-audit.py", line 33, in test
+    def test(rows,log,id='clean',expected=None):return run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./stage1/cohere/lint/helpers/','-run','^('+'|'.join(rows)+')$'],log,id,expected=expected)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/u114-audit.py", line 28, in run
+    with (p/log).open('w') as out:q=subprocess.run(cmd,cwd=cwd,env=env,stdout=out,stderr=subprocess.STDOUT)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1201, in communicate
+    self.wait()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+TestHelperMutants-timing-2.log 0 29.25
+TestHelperMutants-timing-3.log 0 29.108
+TestMessageRefusalsMatchGo-timing-1.log 0 8.213
+TestMessageRefusalsMatchGo-timing-2.log 0 8.76
+TestMessageRefusalsMatchGo-timing-3.log 0 8.123
+TestKnownGapsAreExplicit-timing-1.log 0 3.792
+TestKnownGapsAreExplicit-timing-2.log 0 3.887
+TestKnownGapsAreExplicit-timing-3.log 0 3.568
+compiler-build.log 0 5.996
+oracle-build.log 0 2.835
+oracle-answers.log 0 3.912
+M1-native-build.log 0 1.55
+M1-native-output.log 0 3.696
+M2-native-build.log 0 1.612
+M2-native-output.log 0 3.201
+M3-native-build.log 0 1.628
+M3-native-output.log 0 3.712
+M4-native-build.log 0 1.625
+M4-native-output.log 70 3.291
+P-native-build.log 0 0.211
+W1-vet.log 0 0.148
+switch-build.log 0 6.129
+switch-baseline.log 0 49.11
+M1-matrix.log 1 17.724
+M2-matrix.log 1 15.041
+M3-matrix.log 1 17.07
+M4-matrix.log 1 15.108
+W1.log 1 29.619
+P.log 1 10.964
+final-vet.log 0 0.142

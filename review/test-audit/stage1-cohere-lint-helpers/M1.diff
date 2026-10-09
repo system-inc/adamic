@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/helpers/options_json.ts
++++ b/stage1/cohere/lint/helpers/options_json.ts
+@@ -133,7 +133,7 @@
+     equal(left: number, other: OptionsJson, right: number): boolean {
+         const a = this.node(left); const b = other.node(right);
+         if(a.kind !== b.kind) { return false; }
+-        if(a.kind === 'number') { return Number.isFinite(a.number) && Number.isFinite(b.number) && a.number === b.number; }
++        if(a.kind === 'number') { return Number.isFinite(a.number) && Number.isFinite(b.number) && a.number !== b.number; }
+         if(a.kind === 'string' || a.kind === 'boolean' || a.kind === 'null') { return a.text === b.text; }
+         if(a.children.length !== b.children.length) { return false; }
+         for(let i = 0; i < a.children.length; i++) {

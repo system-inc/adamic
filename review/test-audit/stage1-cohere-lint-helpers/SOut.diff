@@ -1,0 +1,10 @@
+--- a/stage1/cohere/lint/helpers/main.ts
++++ b/stage1/cohere/lint/helpers/main.ts
+@@ -4,6 +4,7 @@
+ import { OptionSchema } from './option_schema.ts';
+ import { PolicyMessage, type MessageChoice } from './policy_message.ts';
+ function read(path: string): string { const value = readTextFile(path); if(value.kind === 'Error') { panic(value.message); } return value.text; }
++console.log('audit unexpected stdout');
+ const args = programArguments();
+ const cases = new OptionsJson(read(args[0] ?? panic('cases path'))); const root = cases.parse();
+ const catalog = new PolicyMessage(read(args[1] ?? panic('catalog path')));

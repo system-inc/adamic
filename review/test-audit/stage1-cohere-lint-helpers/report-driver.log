@@ -1,0 +1,23 @@
+{
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "nproc": 5,
+  "toolchain_setup_seconds": 0,
+  "toolchain": "Warm env.sh worked; setup skipped. API npm ci reported 428 ms. No other node_modules required.",
+  "binary_baseline_seconds": 90.017,
+  "narrowed_baseline_seconds": 35.179,
+  "native_build_wall": {
+    "M1": 1.5497365510000236,
+    "M2": 1.6115707349999866,
+    "M3": 1.6279866530003346,
+    "M4": 1.6254646779998438
+  },
+  "compiler_build_wall": 5.995741160999387,
+  "timing_command_wall_sum": 140.37033806599902,
+  "timing_recovered": "The first witness timing completed after its controller received SIGINT during menu correction. Its binary line is complete and retained; command wall is null.",
+  "audit_command_wall_sum": 334.6943979380012,
+  "supplemental_command_wall_sum": 62.754304115000195,
+  "cases": 23539,
+  "go_output_lines": 23609,
+  "elapsed_note": "Approximately 20 minutes through evidence preparation. Timings were serial, each count=1; no concurrent test workload was launched."
+}
+[('TestHelpersMatchCohere', 'sacred', ['M1', 'M2', 'M3', 'M4']), ('TestHelperMutants', 'witness', []), ('TestMessageRefusalsMatchGo', 'subsumed', ['M4']), ('TestKnownGapsAreExplicit', 'subsumed', ['M2'])]
