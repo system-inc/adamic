@@ -1,0 +1,1155 @@
+diff --git a/internal/flow/callback_widening_test.go b/internal/flow/callback_widening_test.go
+new file mode 100644
+index 00000000..09d31f4c
+--- /dev/null
++++ b/internal/flow/callback_widening_test.go
+@@ -0,0 +1,152 @@
++package flow
++
++import "testing"
++
++func TestCallbackWideningLibraryMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/library-map.a")
++}
++func TestCallbackWideningNumberCapture(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-capture.a")
++}
++func TestCallbackWideningNumberEvery(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-every.a")
++}
++func TestCallbackWideningNumberFilter(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-filter.a")
++}
++func TestCallbackWideningNumberFind(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-find.a")
++}
++func TestCallbackWideningNumberFindIndex(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-findIndex.a")
++}
++func TestCallbackWideningNumberFindLast(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-findLast.a")
++}
++func TestCallbackWideningNumberForEach(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-forEach.a")
++}
++func TestCallbackWideningNumberGeneric(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-generic.a")
++}
++func TestCallbackWideningNumberIndex(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-index.a")
++}
++func TestCallbackWideningNumberMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-map.a")
++}
++func TestCallbackWideningNumberNamedSort(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-named-sort.a")
++}
++func TestCallbackWideningNumberReduceAccumulator(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-reduce-accumulator.a")
++}
++func TestCallbackWideningNumberReduce(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-reduce.a")
++}
++func TestCallbackWideningNumberSome(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-some.a")
++}
++func TestCallbackWideningNumberSort(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-sort.a")
++}
++func TestCallbackWideningNumberThrow(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-throw.a")
++}
++func TestCallbackWideningNumberToSorted(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-toSorted.a")
++}
++func TestCallbackWideningObjectEvery(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-every.a")
++}
++func TestCallbackWideningObjectFilter(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-filter.a")
++}
++func TestCallbackWideningObjectFind(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-find.a")
++}
++func TestCallbackWideningObjectForEach(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-forEach.a")
++}
++func TestCallbackWideningObjectGeneric(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-generic.a")
++}
++func TestCallbackWideningObjectMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-map.a")
++}
++func TestCallbackWideningObjectReduce(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-reduce.a")
++}
++func TestCallbackWideningObjectSome(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-some.a")
++}
++func TestCallbackWideningObjectSort(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-sort.a")
++}
++
++func TestCallbackWideningNumberGenericMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-generic-map.a")
++}
++
++func TestCallbackWideningObjectGenericMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/object-generic-map.a")
++}
++
++func TestCallbackWideningNumberArguments(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/number-arguments.a")
++}
++
++func TestCallbackWideningBooleanMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/boolean-map.a")
++}
++
++func TestCallbackWideningStringMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/string-map.a")
++}
++
++func TestCallbackWideningOptionalNumberMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/optional-number-map.a")
++}
++
++func TestCallbackWideningNullableObjectMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/nullable-object-map.a")
++}
++
++func TestCallbackWideningOptionalObjectMap(t *testing.T) {
++	t.Parallel()
++	checkAllFlowProgram(t, "../oracle/testdata/callback_widening/optional-object-map.a")
++}
+diff --git a/internal/fresh/callback_widening_test.go b/internal/fresh/callback_widening_test.go
+new file mode 100644
+index 00000000..d001ae68
+--- /dev/null
++++ b/internal/fresh/callback_widening_test.go
+@@ -0,0 +1,152 @@
++package fresh_test
++
++import "testing"
++
++func TestCallbackWideningLibraryMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/library-map.a")
++}
++func TestCallbackWideningNumberCapture(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-capture.a")
++}
++func TestCallbackWideningNumberEvery(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-every.a")
++}
++func TestCallbackWideningNumberFilter(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-filter.a")
++}
++func TestCallbackWideningNumberFind(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-find.a")
++}
++func TestCallbackWideningNumberFindIndex(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-findIndex.a")
++}
++func TestCallbackWideningNumberFindLast(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-findLast.a")
++}
++func TestCallbackWideningNumberForEach(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-forEach.a")
++}
++func TestCallbackWideningNumberGeneric(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-generic.a")
++}
++func TestCallbackWideningNumberIndex(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-index.a")
++}
++func TestCallbackWideningNumberMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-map.a")
++}
++func TestCallbackWideningNumberNamedSort(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-named-sort.a")
++}
++func TestCallbackWideningNumberReduceAccumulator(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-reduce-accumulator.a")
++}
++func TestCallbackWideningNumberReduce(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-reduce.a")
++}
++func TestCallbackWideningNumberSome(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-some.a")
++}
++func TestCallbackWideningNumberSort(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-sort.a")
++}
++func TestCallbackWideningNumberThrow(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-throw.a")
++}
++func TestCallbackWideningNumberToSorted(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-toSorted.a")
++}
++func TestCallbackWideningObjectEvery(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-every.a")
++}
++func TestCallbackWideningObjectFilter(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-filter.a")
++}
++func TestCallbackWideningObjectFind(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-find.a")
++}
++func TestCallbackWideningObjectForEach(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-forEach.a")
++}
++func TestCallbackWideningObjectGeneric(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-generic.a")
++}
++func TestCallbackWideningObjectMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-map.a")
++}
++func TestCallbackWideningObjectReduce(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-reduce.a")
++}
++func TestCallbackWideningObjectSome(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-some.a")
++}
++func TestCallbackWideningObjectSort(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-sort.a")
++}
++
++func TestCallbackWideningNumberGenericMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-generic-map.a")
++}
++
++func TestCallbackWideningObjectGenericMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-generic-map.a")
++}
++
++func TestCallbackWideningNumberArguments(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-arguments.a")
++}
++
++func TestCallbackWideningBooleanMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/boolean-map.a")
++}
++
++func TestCallbackWideningStringMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/string-map.a")
++}
++
++func TestCallbackWideningOptionalNumberMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/optional-number-map.a")
++}
++
++func TestCallbackWideningNullableObjectMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/nullable-object-map.a")
++}
++
++func TestCallbackWideningOptionalObjectMap(t *testing.T) {
++	t.Parallel()
++	checkFreshProgram(t, "../oracle/testdata/callback_widening/optional-object-map.a")
++}
+diff --git a/internal/ir/call_targets.go b/internal/ir/call_targets.go
+index 34669f73..7510639c 100644
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -64,6 +64,15 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+ 	default:
+ 		panic("ir: ClosureTargets requires a function-value call")
+ 	}
++	// Effects preserve the identity of their result. In particular an intrinsic
++	// adapter binds its callback before returning a known closure literal.
++	for {
++		effects, ok := value.(Effects)
++		if !ok {
++			break
++		}
++		value = effects.Result
++	}
+ 	switch value := value.(type) {
+ 	case MakeClosure:
+ 		return FunctionTargets{Functions: []int{value.Function}}
+diff --git a/internal/ir/callback_adapter_test.go b/internal/ir/callback_adapter_test.go
+new file mode 100644
+index 00000000..c7cd774f
+--- /dev/null
++++ b/internal/ir/callback_adapter_test.go
+@@ -0,0 +1,19 @@
++package ir
++
++import "testing"
++
++func TestCallbackAdapterTargets(t *testing.T) {
++	t.Parallel()
++	p := Program{Functions: []Function{{}, {Closure: true}}, Locals: []Local{{Type: Closure}}}
++	nested := Effects{Body: []Statement{Declare{Local: 0, Value: MakeClosure{Function: 0}}}, Result: Effects{Result: MakeClosure{Function: 1}}}
++	for _, call := range []Expression{ArrayMap{Callback: nested}, ArrayVisit{Callback: nested}, ArrayReduce{Callback: nested}, ArraySort{Callback: nested}, CallClosure{Closure: nested}} {
++		got := p.ClosureTargets(call)
++		if got.Unknown || len(got.Functions) != 1 || got.Functions[0] != 1 {
++			t.Fatalf("%T: %#v", call, got)
++		}
++	}
++	// Binding a closure does not prove the identity of an arbitrary read result.
++	if got := p.ClosureTargets(CallClosure{Closure: Effects{Result: Read{Local: 0, Of: Closure}}}); !got.Unknown {
++		t.Fatalf("unknown result became bounded: %#v", got)
++	}
++}
+diff --git a/internal/lower/callback_widening.go b/internal/lower/callback_widening.go
+new file mode 100644
+index 00000000..dfdc4aef
+--- /dev/null
++++ b/internal/lower/callback_widening.go
+@@ -0,0 +1,103 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// Intrinsic callers provide element, index and array slots in their own storage.
++// Capture the callback once and adapt those slots before invoking its signature.
++// The adapter is ordinary IR, including every box and its ownership.
++func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, supplied []ir.Type) (ir.Expression, int, error) {
++	kind := int(l.concrete(l.checker.GetTypeAtLocation(node)).Id())
++	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
++	if len(signatures) != 1 {
++		return callback, kind, nil
++	}
++	parameters := signatures[0].Parameters()
++	// A nullable reference uses NULL in its source storage. A boxed union
++	// instead distinguishes the immortal null token from undefined (NULL).
++	var incoming []*ast.Symbol
++	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
++		if source := l.checker.GetSignaturesOfType(l.concrete(contextual), checker.SignatureKindCall); len(source) == 1 {
++			incoming = source[0].Parameters()
++		}
++	}
++	nullable := make([]bool, len(supplied))
++	takes := append([]ir.Type(nil), supplied...)
++	changed := false
++	for index, given := range supplied {
++		if len(parameters) == 0 {
++			break
++		}
++		parameter := parameters[min(index, len(parameters)-1)]
++		rest := len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
++		if !rest && index >= len(parameters) {
++			break
++		}
++		target := l.concrete(l.checker.GetTypeOfSymbol(parameter))
++		if rest {
++			target = l.checker.GetElementTypeOfArrayType(target)
++		}
++		if target == nil {
++			return nil, 0, l.notYet(node, "an intrinsic callback with an unknown rest element representation")
++		}
++		of, known := l.representation(target)
++		if !known {
++			return nil, 0, l.notYet(node, "an intrinsic callback parameter "+parameter.Name+" with an unknown representation")
++		}
++		if !rest && len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().Initializer != nil {
++			of = ir.Maybe(of)
++		}
++		if fit(ir.Read{Of: given}, of).Type() != of {
++			source := typeName(given)
++			if index < len(incoming) {
++				source = l.checker.TypeToString(l.concrete(l.checker.GetTypeOfSymbol(incoming[index])))
++			}
++			return nil, 0, &Refused{Where: l.program.Where(node), What: "an intrinsic callback parameter " + parameter.Name + " of type " + l.checker.TypeToString(target) + " receiving array element type " + source + " without a representation adapter", Fix: "annotate parameter " + parameter.Name + " as the element type " + source}
++		}
++		if given.IsReference() && given != ir.Union && of == ir.Union && index < len(incoming) {
++			source := l.concrete(l.checker.GetTypeOfSymbol(incoming[index]))
++			nullable[index] = l.includesNull(source) && !l.includesUndefined(source)
++		}
++		takes[index] = of
++		changed = changed || given != of
++	}
++	if !changed {
++		return callback, kind, nil
++	}
++	returns, known := l.representation(l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0])))
++	if !known {
++		return nil, 0, l.notYet(node, "an intrinsic callback with an unknown result representation")
++	}
++	captured := len(l.result.Locals)
++	l.result.Locals = append(l.result.Locals, ir.Local{Name: "intrinsic_callback", Type: ir.Closure, Function: l.functionIndex, Captured: true})
++	index := len(l.result.Functions)
++	function := ir.Function{Name: "array_callback_adapter", Closure: true, Environment: []int{captured}, Returns: returns}
++	arguments := []ir.Expression{}
++	for position, of := range supplied {
++		local := len(l.result.Locals)
++		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: of, Function: index})
++		function.Parameters = append(function.Parameters, local)
++		arguments = append(arguments, fitCallbackArgument(ir.Read{Local: local, Of: of}, takes[position], nullable[position]))
++	}
++	call := ir.CallClosure{Closure: ir.Read{Local: captured, Of: ir.Closure}, Arguments: arguments, FunctionType: kind, Returns: returns}
++	if returns == 0 {
++		function.Body = []ir.Statement{ir.Evaluate{Value: call}, ir.Return{}}
++	} else {
++		function.Body = []ir.Statement{ir.Return{Value: call}}
++	}
++	l.result.Functions = append(l.result.Functions, function)
++	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: captured, Value: callback}}, Result: ir.MakeClosure{Function: index}}, 0, nil
++}
++
++// Preserve a source nullable-reference protocol when fitting a boxed parameter.
++// Ordinary optional references still use NULL as undefined.
++func fitCallbackArgument(value ir.Expression, to ir.Type, nullPointer bool) ir.Expression {
++	fitted := fit(value, to)
++	if nullPointer {
++		return ir.Conditional{Condition: ir.Truthy{Value: value}, WhenTrue: fitted, WhenNot: ir.Box{Value: ir.Null{Of: value.Type()}}, Of: ir.Union}
++	}
++	return fitted
++}
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..053fe7ad 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1229,7 +1229,14 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
+ 		if err != nil {
+ 			return nil, true, err
+ 		}
+-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
++		callbackType := int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())
++		if !known {
++			callback, callbackType, err = l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
++			if err != nil {
++				return nil, true, err
++			}
++		}
++		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType}, true, nil
+ 	}
+ 	if _, isVisit := visits[name]; isVisit {
+ 		return l.arrayVisit(node, array, element, name)
+@@ -1431,7 +1438,11 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
+ 	if name != "forEach" && returns != ir.Boolean {
+ 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
+ 	}
+-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
++	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
++	if err != nil {
++		return nil, true, err
++	}
++	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: callbackType}, true, nil
+ }
+ 
+ // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
+@@ -1463,7 +1474,11 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
+ 	if result != initial.Type() || slotless(result) {
+ 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+ 	}
+-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
++	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{result, element, ir.Number, ir.Array})
++	if err != nil {
++		return nil, true, err
++	}
++	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType}, true, nil
+ }
+ 
+ // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
+@@ -1771,9 +1786,24 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
+ 		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
+ 			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
+ 		}
+-		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(comparator)).Id())}, true, nil
++		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
++		if err != nil {
++			return nil, true, err
++		}
++		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
+ 	}
+ 	declared := l.result.Functions[function]
++	if declared.Returns == ir.Number && len(declared.Parameters) == 2 && (l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element) {
++		callback, err := l.expression(comparator)
++		if err != nil {
++			return nil, true, err
++		}
++		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
++		if err != nil {
++			return nil, true, err
++		}
++		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
++	}
+ 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {
+ 		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number")
+ 	}
+diff --git a/internal/lower/testdata/callback_widening/array_structural.a b/internal/lower/testdata/callback_widening/array_structural.a
+new file mode 100644
+index 00000000..e1b082d6
+--- /dev/null
++++ b/internal/lower/testdata/callback_widening/array_structural.a
+@@ -0,0 +1,3 @@
++// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter
++interface Slice {readonly slice:()=>number[];}
++console.log([[1,2],[3,4]].map((x:Slice):string=>x.slice().join(',')).join('|'));
+diff --git a/internal/oracle/callback_widening_test.go b/internal/oracle/callback_widening_test.go
+new file mode 100644
+index 00000000..275c440d
+--- /dev/null
++++ b/internal/oracle/callback_widening_test.go
+@@ -0,0 +1,338 @@
++package oracle
++
++import (
++	"github.com/system-inc/adamic/internal/lower"
++	"path/filepath"
++	"testing"
++)
++
++func checkCallbackWidening(t *testing.T, name, want string) {
++	t.Helper()
++	path, _ := filepath.Abs("testdata/callback_widening/" + name + ".a")
++	node := onNode(t, path)
++	if diff := disagreement(run{stdout: []byte(want)}, node); diff != "" {
++		t.Fatal("Node: " + diff)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	sanitized, binary := nativelyUncached(t, program)
++	for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
++		if diff := disagreement(node, got); diff != "" {
++			t.Fatalf("%s: %s; stdout %q stderr %q exit %d", backend, diff, got.stdout, got.stderr, got.exitCode)
++		}
++	}
++	if report := leaksUncached(t, program, binary); report != "" {
++		t.Fatal(report)
++	}
++}
++func TestCallbackWideningNumberEvery(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-every", "true\n")
++}
++func TestCallbackWideningNumberFilter(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-filter", "1,3\n")
++}
++func TestCallbackWideningNumberFind(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-find", "2\n")
++}
++func TestCallbackWideningNumberForEach(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-forEach", "1\n2\n3\n")
++}
++func TestCallbackWideningNumberGeneric(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-generic", "1,2,3\n")
++}
++func TestCallbackWideningNumberMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-map", "1,2,3\n")
++}
++func TestCallbackWideningNumberReduce(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-reduce", "123\n")
++}
++func TestCallbackWideningNumberSome(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-some", "true\n")
++}
++func TestCallbackWideningNumberSort(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-sort", "1,2,3\n")
++}
++func TestCallbackWideningObjectEvery(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-every", "true\n")
++}
++func TestCallbackWideningObjectFilter(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-filter", "1,3\n")
++}
++func TestCallbackWideningObjectFind(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-find", "2\n")
++}
++func TestCallbackWideningObjectForEach(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-forEach", "1\n2\n3\n")
++}
++func TestCallbackWideningObjectGeneric(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-generic", "1,2,3\n")
++}
++func TestCallbackWideningObjectMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-map", "1,2,3\n")
++}
++func TestCallbackWideningObjectReduce(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-reduce", "123\n")
++}
++func TestCallbackWideningObjectSome(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-some", "true\n")
++}
++func TestCallbackWideningObjectSort(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-sort", "1,2,3\n")
++}
++func TestCallbackWideningNumberNamedSort(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-named-sort", "1,2,3\n")
++}
++func TestCallbackWideningNumberIndex(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-index", "4:0,5:1\n")
++}
++func TestCallbackWideningNumberReduceAccumulator(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-reduce-accumulator", "6\n")
++}
++func TestCallbackWideningNumberCapture(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-capture", "v1,v2\nw3\n2\n")
++}
++
++func TestCallbackWideningNumberThrow(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-throw", "caught\n2\n")
++}
++func TestCallbackWideningLibraryMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "library-map", "1,2,3\n11,NaN,3\n")
++}
++func TestCallbackWideningNumberFindLast(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-findLast", "2\n")
++}
++func TestCallbackWideningNumberFindIndex(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-findIndex", "1\n")
++}
++func TestCallbackWideningNumberToSorted(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-toSorted", "1,2,3\n")
++}
++
++func TestCallbackWideningNumberGenericMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-generic-map", "1,2,3\n")
++}
++
++func TestCallbackWideningObjectGenericMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "object-generic-map", "1,2,3\n")
++}
++
++func TestCallbackWideningNumberArguments(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "number-arguments", "1:3,2:3\n")
++}
++
++func TestCallbackWideningBooleanMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "boolean-map", "true,false\n")
++}
++
++func TestCallbackWideningStringMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "string-map", "a,b\n")
++}
++
++func TestCallbackWideningOptionalNumberMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "optional-number-map", "1,undefined\n")
++}
++
++func TestCallbackWideningNullableObjectMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "nullable-object-map", "1,null\n")
++}
++
++func TestCallbackWideningOptionalObjectMap(t *testing.T) {
++	t.Parallel()
++	checkCallbackWidening(t, "optional-object-map", "1,undefined\n")
++}
++
++func TestCallbackWideningUnrepresentedParameter(t *testing.T) {
++	t.Parallel()
++	path, _ := filepath.Abs("../lower/testdata/callback_widening/array_structural.a")
++	node := onNode(t, path)
++	if diff := disagreement(run{stdout: []byte("1,2|3,4\n")}, node); diff != "" {
++		t.Fatal("Node: " + diff)
++	}
++	_, err := lowered(t, path)
++	refused, ok := err.(*lower.Refused)
++	if !ok {
++		t.Fatalf("expected unrepresented parameter refusal, got %v", err)
++	}
++	if refused.What != "an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter" || refused.Fix != "annotate parameter x as the element type number[]" {
++		t.Fatalf("wrong refusal: %#v", refused)
++	}
++}
++
++func init() {
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/boolean-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/library-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/nullable-object-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-arguments.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-capture.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-every.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-filter.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-find.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-findIndex.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-findLast.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-forEach.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-generic-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-generic.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-index.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-named-sort.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-reduce-accumulator.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-reduce.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-some.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-sort.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-throw.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/number-toSorted.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-every.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-filter.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-find.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-forEach.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-generic-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-generic.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-reduce.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-some.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/object-sort.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/optional-number-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/optional-object-map.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/callback_widening/string-map.a", true, false})
++}
+diff --git a/internal/oracle/testdata/callback_widening/boolean-map.a b/internal/oracle/testdata/callback_widening/boolean-map.a
+new file mode 100644
+index 00000000..6243725a
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/boolean-map.a
+@@ -0,0 +1 @@
++console.log([true,false].map((x:boolean|number):string=>`${x}`).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/library-map.a b/internal/oracle/testdata/callback_widening/library-map.a
+new file mode 100644
+index 00000000..91f3277c
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/library-map.a
+@@ -0,0 +1 @@
++console.log([1,2,3].map(String).join(','));console.log(['11','11','11'].map(parseInt).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/nullable-object-map.a b/internal/oracle/testdata/callback_widening/nullable-object-map.a
+new file mode 100644
+index 00000000..a20dfad7
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/nullable-object-map.a
+@@ -0,0 +1 @@
++interface Item{readonly id:number;}const items:readonly (Item|null)[]=[{id:1},null];console.log(items.map((x:Item|null|number):string=>x===null?'null':typeof x==='number'?`${x}`:`${x.id}`).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/number-arguments.a b/internal/oracle/testdata/callback_widening/number-arguments.a
+new file mode 100644
+index 00000000..ca3e7e72
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-arguments.a
+@@ -0,0 +1 @@
++console.log([1,2].map(function(x:number|string):string{return `${x}:${arguments.length}`;}).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/number-capture.a b/internal/oracle/testdata/callback_widening/number-capture.a
+new file mode 100644
+index 00000000..f1a620cf
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-capture.a
+@@ -0,0 +1 @@
++let calls=0;let prefix='v';function maker():(x:number|string)=>string{calls++;return (x:number|string):string=>prefix+`${x}`;}console.log([1,2].map(maker()).join(','));prefix='w';console.log([3].map(maker()).join(','));console.log(`${calls}`);
+diff --git a/internal/oracle/testdata/callback_widening/number-every.a b/internal/oracle/testdata/callback_widening/number-every.a
+new file mode 100644
+index 00000000..8beacebe
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-every.a
+@@ -0,0 +1 @@
++console.log(`${ [1,2,3].every((x: number | string): boolean => (typeof x === 'number' ? x : 0) > 0) }`);
+diff --git a/internal/oracle/testdata/callback_widening/number-filter.a b/internal/oracle/testdata/callback_widening/number-filter.a
+new file mode 100644
+index 00000000..ec8e8568
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-filter.a
+@@ -0,0 +1 @@
++console.log([1,2,3].filter((x: number | string): boolean => (typeof x === 'number' ? x : 0) !== 2).map(x => `${x}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/number-find.a b/internal/oracle/testdata/callback_widening/number-find.a
+new file mode 100644
+index 00000000..8f466177
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-find.a
+@@ -0,0 +1 @@
++const found=[1,2,3].find((x: number | string): boolean => (typeof x === 'number' ? x : 0) === 2); console.log(`${found ?? -1}`);
+diff --git a/internal/oracle/testdata/callback_widening/number-findIndex.a b/internal/oracle/testdata/callback_widening/number-findIndex.a
+new file mode 100644
+index 00000000..bda4931f
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-findIndex.a
+@@ -0,0 +1 @@
++console.log(`${[1,2,3].findIndex((x:number|string):boolean=>x===2)}`);
+diff --git a/internal/oracle/testdata/callback_widening/number-findLast.a b/internal/oracle/testdata/callback_widening/number-findLast.a
+new file mode 100644
+index 00000000..67270762
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-findLast.a
+@@ -0,0 +1 @@
++console.log(`${[1,2,3].findLast((x:number|string):boolean=>x===2) ?? -1}`);
+diff --git a/internal/oracle/testdata/callback_widening/number-forEach.a b/internal/oracle/testdata/callback_widening/number-forEach.a
+new file mode 100644
+index 00000000..e08ecea1
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-forEach.a
+@@ -0,0 +1 @@
++[1,2,3].forEach((x: number | string): void => {console.log(`${x}`);});
+diff --git a/internal/oracle/testdata/callback_widening/number-generic-map.a b/internal/oracle/testdata/callback_widening/number-generic-map.a
+new file mode 100644
+index 00000000..31b3f47f
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-generic-map.a
+@@ -0,0 +1,2 @@
++function apply<T,U,R>(items:readonly T[], callback:(x:T|U)=>R):R[] {return items.map(callback);}
++console.log(apply<number,string,string>([1,2,3],(x:number | string):string => `${x}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/number-generic.a b/internal/oracle/testdata/callback_widening/number-generic.a
+new file mode 100644
+index 00000000..0d691d11
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-generic.a
+@@ -0,0 +1,2 @@
++function apply<T,U,R>(items:readonly T[], callback:(x:T|U)=>R):R[] {const result:R[]=[];for(const item of items)result.push(callback(item));return result;}
++console.log(apply<number,string,string>([1,2,3],(x:number | string):string => `${x}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/number-index.a b/internal/oracle/testdata/callback_widening/number-index.a
+new file mode 100644
+index 00000000..6edaf323
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-index.a
+@@ -0,0 +1 @@
++console.log([4,5].map((x:number|string,index:number|string):string=>`${x}:${index}`).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/number-map.a b/internal/oracle/testdata/callback_widening/number-map.a
+new file mode 100644
+index 00000000..afdd5a7b
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-map.a
+@@ -0,0 +1 @@
++console.log([1,2,3].map((x: number | string): string => `${x}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/number-named-sort.a b/internal/oracle/testdata/callback_widening/number-named-sort.a
+new file mode 100644
+index 00000000..9243beb4
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-named-sort.a
+@@ -0,0 +1,2 @@
++function compare(a:number|string,b:number|string):number{return (typeof a==='number'?a:0)-(typeof b==='number'?b:0);}
++console.log([3,1,2].sort(compare).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/number-reduce-accumulator.a b/internal/oracle/testdata/callback_widening/number-reduce-accumulator.a
+new file mode 100644
+index 00000000..e5e5574f
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-reduce-accumulator.a
+@@ -0,0 +1 @@
++console.log(`${[1,2,3].reduce((acc:number|string,x:number|string):number=>(typeof acc==='number'?acc:0)+(typeof x==='number'?x:0),0)}`);
+diff --git a/internal/oracle/testdata/callback_widening/number-reduce.a b/internal/oracle/testdata/callback_widening/number-reduce.a
+new file mode 100644
+index 00000000..08c12dd9
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-reduce.a
+@@ -0,0 +1 @@
++console.log([1,2,3].reduce((acc: string, x: number | string): string => acc + (`${x}`), ""));
+diff --git a/internal/oracle/testdata/callback_widening/number-some.a b/internal/oracle/testdata/callback_widening/number-some.a
+new file mode 100644
+index 00000000..c641a7f9
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-some.a
+@@ -0,0 +1 @@
++console.log(`${ [1,2,3].some((x: number | string): boolean => (typeof x === 'number' ? x : 0) === 2) }`);
+diff --git a/internal/oracle/testdata/callback_widening/number-sort.a b/internal/oracle/testdata/callback_widening/number-sort.a
+new file mode 100644
+index 00000000..2f06e887
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-sort.a
+@@ -0,0 +1 @@
++const cells=[1,2,3];cells.reverse();cells.sort((a:number | string,b:number | string):number => (typeof a==='number'?a:0)-(typeof b==='number'?b:0));console.log(cells.map(x => `${x}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/number-throw.a b/internal/oracle/testdata/callback_widening/number-throw.a
+new file mode 100644
+index 00000000..62f6b78f
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-throw.a
+@@ -0,0 +1 @@
++let calls=0;try{[1,2,3].map((x:number|string):string=>{calls++;if(x===2)throw new Error('stop');return `${x}`;});}catch(error){console.log('caught');}console.log(`${calls}`);
+diff --git a/internal/oracle/testdata/callback_widening/number-toSorted.a b/internal/oracle/testdata/callback_widening/number-toSorted.a
+new file mode 100644
+index 00000000..5143ca40
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/number-toSorted.a
+@@ -0,0 +1 @@
++console.log([3,1,2].toSorted((a:number|string,b:number|string):number=>(typeof a==='number'?a:0)-(typeof b==='number'?b:0)).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/object-every.a b/internal/oracle/testdata/callback_widening/object-every.a
+new file mode 100644
+index 00000000..b411a183
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-every.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++console.log(`${ [{id:1},{id:2},{id:3}].every((x: Item | number): boolean => (typeof x === 'number' ? x : x.id) > 0) }`);
+diff --git a/internal/oracle/testdata/callback_widening/object-filter.a b/internal/oracle/testdata/callback_widening/object-filter.a
+new file mode 100644
+index 00000000..dad7f8ca
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-filter.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++console.log([{id:1},{id:2},{id:3}].filter((x: Item | number): boolean => (typeof x === 'number' ? x : x.id) !== 2).map(x => `${x.id}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/object-find.a b/internal/oracle/testdata/callback_widening/object-find.a
+new file mode 100644
+index 00000000..96e8ec77
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-find.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++const found=[{id:1},{id:2},{id:3}].find((x: Item | number): boolean => (typeof x === 'number' ? x : x.id) === 2); console.log(`${found?.id ?? -1}`);
+diff --git a/internal/oracle/testdata/callback_widening/object-forEach.a b/internal/oracle/testdata/callback_widening/object-forEach.a
+new file mode 100644
+index 00000000..c0f707cf
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-forEach.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++[{id:1},{id:2},{id:3}].forEach((x: Item | number): void => {console.log(typeof x === 'number' ? `${x}` : `${x.id}`);});
+diff --git a/internal/oracle/testdata/callback_widening/object-generic-map.a b/internal/oracle/testdata/callback_widening/object-generic-map.a
+new file mode 100644
+index 00000000..6f5fdb5d
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-generic-map.a
+@@ -0,0 +1,3 @@
++interface Item {readonly id:number;}
++function apply<T,U,R>(items:readonly T[], callback:(x:T|U)=>R):R[] {return items.map(callback);}
++console.log(apply<Item,number,string>([{id:1},{id:2},{id:3}],(x:Item | number):string => typeof x === 'number' ? `${x}` : `${x.id}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/object-generic.a b/internal/oracle/testdata/callback_widening/object-generic.a
+new file mode 100644
+index 00000000..47774cab
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-generic.a
+@@ -0,0 +1,3 @@
++interface Item {readonly id:number;}
++function apply<T,U,R>(items:readonly T[], callback:(x:T|U)=>R):R[] {const result:R[]=[];for(const item of items)result.push(callback(item));return result;}
++console.log(apply<Item,number,string>([{id:1},{id:2},{id:3}],(x:Item | number):string => typeof x === 'number' ? `${x}` : `${x.id}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/object-map.a b/internal/oracle/testdata/callback_widening/object-map.a
+new file mode 100644
+index 00000000..32bfb8a4
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-map.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++console.log([{id:1},{id:2},{id:3}].map((x: Item | number): string => typeof x === 'number' ? `${x}` : `${x.id}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/object-reduce.a b/internal/oracle/testdata/callback_widening/object-reduce.a
+new file mode 100644
+index 00000000..880bb064
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-reduce.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++console.log([{id:1},{id:2},{id:3}].reduce((acc: string, x: Item | number): string => acc + (typeof x === 'number' ? `${x}` : `${x.id}`), ""));
+diff --git a/internal/oracle/testdata/callback_widening/object-some.a b/internal/oracle/testdata/callback_widening/object-some.a
+new file mode 100644
+index 00000000..9fdcb697
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-some.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++console.log(`${ [{id:1},{id:2},{id:3}].some((x: Item | number): boolean => (typeof x === 'number' ? x : x.id) === 2) }`);
+diff --git a/internal/oracle/testdata/callback_widening/object-sort.a b/internal/oracle/testdata/callback_widening/object-sort.a
+new file mode 100644
+index 00000000..91187dc1
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/object-sort.a
+@@ -0,0 +1,2 @@
++interface Item {readonly id:number;}
++const cells=[{id:1},{id:2},{id:3}];cells.reverse();cells.sort((a:Item | number,b:Item | number):number => (typeof a==='number'?a:a.id)-(typeof b==='number'?b:b.id));console.log(cells.map(x => `${x.id}`).join(","));
+diff --git a/internal/oracle/testdata/callback_widening/optional-number-map.a b/internal/oracle/testdata/callback_widening/optional-number-map.a
+new file mode 100644
+index 00000000..b7406bff
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/optional-number-map.a
+@@ -0,0 +1 @@
++console.log([1,undefined].map((x:number|string|undefined):string=>`${x}`).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/optional-object-map.a b/internal/oracle/testdata/callback_widening/optional-object-map.a
+new file mode 100644
+index 00000000..7a80d304
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/optional-object-map.a
+@@ -0,0 +1 @@
++interface Item{readonly id:number;}const items:readonly (Item|undefined)[]=[{id:1},undefined];console.log(items.map((x:Item|undefined|number):string=>x===undefined?'undefined':typeof x==='number'?`${x}`:`${x.id}`).join(','));
+diff --git a/internal/oracle/testdata/callback_widening/string-map.a b/internal/oracle/testdata/callback_widening/string-map.a
+new file mode 100644
+index 00000000..8c431846
+--- /dev/null
++++ b/internal/oracle/testdata/callback_widening/string-map.a
+@@ -0,0 +1 @@
++console.log(['a','b'].map((x:string|number):string=>`${x}`).join(','));
