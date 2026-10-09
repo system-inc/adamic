@@ -57,6 +57,11 @@ func runWASIUnit(t *testing.T, unit int) {
 			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
+	// The toolchain is pinned: a clang other than wasi-sdk's fails here, by name, rather than skipping.
+	clang, err := WASIClang()
+	if err != nil {
+		t.Fatal(err)
+	}
 	phase := time.Now()
 	directory := t.TempDir()
 	setupDirectory := directory
@@ -68,7 +73,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls"}
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
-	if output, err := exec.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
+	if output, err := exec.Command(clang, append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
 		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
 	if output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
@@ -121,7 +126,7 @@ func runWASIUnit(t *testing.T, unit int) {
 			}
 			for _, file := range files {
 				if strings.HasSuffix(file.name, ".c") {
-					wasiCommand(t, repository, "clang", append(append([]string{}, compileFlags...), "-c", filepath.Join(destination, file.name), "-o", filepath.Join(destination, file.name+".o"))...)
+					wasiCommand(t, repository, clang, append(append([]string{}, compileFlags...), "-c", filepath.Join(destination, file.name), "-o", filepath.Join(destination, file.name+".o"))...)
 				}
 			}
 			return nil
@@ -163,7 +168,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
-		command := exec.Command("clang", arguments...)
+		command := exec.Command(clang, arguments...)
 		command.Dir = repository
 		includes, err := filepath.Glob(filepath.Join(filepath.Dir(output), "*.c"))
 		if err != nil {
