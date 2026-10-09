@@ -4,6 +4,8 @@ Full lowering, call-target reader guard, selected oracle refusal fixtures, count
 The refusal-bypass mutant failed the refusal assertion and restored p05's native disagreement with source Node, both exiting 0.
 Shared checked member lowering and the remaining P0 syntax routing are not delivered by this commit.
 
+This is historical evidence for the separately pushed refusal commit 339c86b3. Its mutant runner applies to that commit; the routing implementation and its runner are described in ROUTING.md.
+
 This delivers the conservative refusal toward task #1fk58py, item 132. The brief does not identify a numbered roadmap step beyond its task and item, so no other roadmap step is claimed. The amended order is followed: this first authored commit contains only the refusal phase, its fixtures, comment correction and evidence.
 
 The view registration walks all modules for object element reads whose literal key names a checked field. This deliberately follows the existing conservative, whole-program field-name policy: aliases, function boundaries and source order cannot bypass the refusal. An unrelated object read with the same field name can also be refused in a program that registers that field. The fix is `use view.<field>`. The unsupported path never reaches either backend.

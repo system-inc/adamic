@@ -89,7 +89,7 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 	var read ir.Expression
 	for index, name := range names {
 		stored, _ := l.representation(l.checker.GetTypeOfSymbol(fields[index]))
-		read = ir.Property{Object: heldObject, Name: name, Of: stored, Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0}
+		read = l.readViewMember(node, ir.Property{Object: heldObject, Name: name, Of: stored, Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0}, fields[index], receiver)
 		read = fit(read, result)
 		if read.Type() != result {
 			return nil, l.notYet(node, "a computed field with differently represented alternatives")
@@ -129,36 +129,4 @@ func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir
 		}
 	}
 	return ir.Defined{Value: value, Message: message}
-}
-
-// Until finite reads share the checked member boundary, refuse every matching
-// object read in the program, including aliases and reads lowered before the cast.
-func (l *lowering) refuseViewElementReads(fields map[string]bool) error {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		return err
-	}
-	var refused error
-	var visit ast.Visitor
-	visit = func(node *ast.Node) bool {
-		if refused != nil {
-			return true
-		}
-		if node.Kind == ast.KindElementAccessExpression && !ast.IsAssignmentTarget(node) {
-			access := node.AsElementAccessExpression()
-			key := l.checker.GetTypeAtLocation(access.ArgumentExpression)
-			if key.Flags()&checker.TypeFlagsStringLiteral != 0 && fields[key.AsLiteralType().Value().(string)] {
-				if of, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); of == ir.Object {
-					refused = &Refused{Where: l.program.Where(node), What: "view member read by element access is not yet checked", Fix: "use view." + key.AsLiteralType().Value().(string)}
-					return true
-				}
-			}
-		}
-		node.ForEachChild(visit)
-		return refused != nil
-	}
-	for _, module := range modules {
-		module.AsNode().ForEachChild(visit)
-	}
-	return refused
 }

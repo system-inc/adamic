@@ -1,0 +1,46 @@
+=== RUN   TestViewStringElementReadRefused
+=== PAUSE TestViewStringElementReadRefused
+=== RUN   TestViewLiteralTypedElementReadRefused
+=== PAUSE TestViewLiteralTypedElementReadRefused
+=== RUN   TestViewElementFixAgreesWithNode
+=== PAUSE TestViewElementFixAgreesWithNode
+=== RUN   TestViewElementP05Refused
+=== PAUSE TestViewElementP05Refused
+=== RUN   TestViewElementP06Refused
+=== PAUSE TestViewElementP06Refused
+=== RUN   TestViewElementP01Refused
+=== PAUSE TestViewElementP01Refused
+=== RUN   TestViewElementP07Refused
+=== PAUSE TestViewElementP07Refused
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementP06CorrectControl
+=== PAUSE TestViewElementP06CorrectControl
+=== RUN   TestViewElementP01CorrectControl
+=== PAUSE TestViewElementP01CorrectControl
+=== RUN   TestViewElementP07CorrectControl
+=== PAUSE TestViewElementP07CorrectControl
+=== CONT  TestViewStringElementReadRefused
+=== CONT  TestViewElementP01Refused
+=== CONT  TestViewElementP07CorrectControl
+=== CONT  TestViewElementP05Refused
+=== CONT  TestViewElementP06Refused
+--- PASS: TestViewElementP01Refused (0.13s)
+=== CONT  TestViewElementFixAgreesWithNode
+--- PASS: TestViewElementP05Refused (0.16s)
+=== CONT  TestViewLiteralTypedElementReadRefused
+--- PASS: TestViewElementP06Refused (0.16s)
+=== CONT  TestViewElementP06CorrectControl
+--- PASS: TestViewStringElementReadRefused (0.17s)
+=== CONT  TestViewElementP01CorrectControl
+--- PASS: TestViewLiteralTypedElementReadRefused (0.26s)
+=== CONT  TestViewElementP05CorrectControl
+--- PASS: TestViewElementP07CorrectControl (0.46s)
+=== CONT  TestViewElementP07Refused
+--- PASS: TestViewElementP06CorrectControl (0.33s)
+--- PASS: TestViewElementP07Refused (0.06s)
+--- PASS: TestViewElementP01CorrectControl (0.37s)
+--- PASS: TestViewElementFixAgreesWithNode (0.42s)
+--- PASS: TestViewElementP05CorrectControl (0.20s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.657s
