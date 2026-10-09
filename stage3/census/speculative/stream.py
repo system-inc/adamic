@@ -46,6 +46,9 @@ for item in sorted(inventory, key=lambda x: (-x['bytes'], x['file'])):
         assert len(rows) == 2 and rows[1]['file'] == str(root / item['file'])
         print('resume skip ' + item['file'], flush=True)
         continue
+    if (output / 'PAUSE_QUEUE').exists():
+        print('queue paused: not started ' + item['file'], flush=True)
+        continue
     pending = records / (name + '.pending')
     metrics = output / (name + '.metrics.json')
     log = output / (name + '.log')

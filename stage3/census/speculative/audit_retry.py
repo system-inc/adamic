@@ -49,6 +49,23 @@ green=run('four',4,time.time()+25)
 assert green['peak']==4 and green['total']==4 and green['active']==0,green
 resume=run('four',4,time.time()+25)
 assert resume==green,'resume launched completed files'
+record=output/'four/records/0.a.jsonl'
+checksum=record.with_suffix('.sha256');saved=checksum.read_bytes()
+try:
+    checksum.write_text('mutant\n')
+    try:run('four',4,time.time()+25)
+    except subprocess.CalledProcessError:print('corrupted completed checksum mutant caught before resume')
+    else:raise AssertionError('checksum mutant survived')
+finally:checksum.write_bytes(saved)
+backup=record.with_suffix('.backup')
+try:
+    record.rename(backup)
+    try:run('four',4,time.time()+25)
+    except subprocess.CalledProcessError:print('dropped completed record mutant caught before resume')
+    else:raise AssertionError('dropped record mutant survived')
+finally:backup.rename(record)
+paused=output/'paused';paused.mkdir(exist_ok=True);(paused/'PAUSE_QUEUE').touch()
+assert run('paused',4,time.time()+25)['total']==0
 mutant=run('serial-mutant',1,time.time()+25)
 try:assert mutant['peak']==4
 except AssertionError:print('one-worker mutant caught by independent live-process overlap witness')

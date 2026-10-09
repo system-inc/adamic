@@ -61,3 +61,55 @@ Final publication combines verified completed records before finalize_stream.py
 and verify.py. Every source keeps the original adapted bytes and whole-project
 checker context. Older 30-second results remain historical evidence, not extra
 observations added to the new totals.
+
+The first queue was paused after 13 actual measurements to prioritize fresh
+parser/utilities attempts and the 37 not-yet-started files. The second queue
+retains all verified completed records and prior failed metrics. Eight files
+already timed out under their full 600 seconds and are not rerun again. Deferred
+first-queue journal entries are dispatch history, not measurements. The retry
+control also rejects checksum corruption and missing successful records, and
+proves that a paused queue launches no new measurement.
+
+The final checker probe timed out after 1800.151s, peak RSS 1170596KiB. Its last
+checkpoint at 1793.992s was checker.ts:13554:47, 39/51 statements completed,
+9302 walker nodes and 44739 lowerer nodes. Scanner/walker/lowerer union was
+298509/298510 selected-file AST nodes; scanner coverage does not establish a
+completed value walk. The partial checker JSONL has only its project header and
+is archived as incomplete evidence, never included among completed records.
+
+The longer budget exposed a distinct failure in factory/utilities.ts: exit 2
+after 82.782s, peak RSS 1551612KiB, `fatal error: stack overflow` after a goroutine
+stack exceeded 1000000000 bytes. The captured stack repeats lower.inferTypes at
+generic.go:298 and :307. It is not a timeout or an RSS-watchdog kill. Its record
+is incomplete and excluded; no production fix is made by this census unit.
+
+An additional checker probe is scheduled after the four-worker batch ends, if
+a full 1800-second budget remains before the shared measurement deadline. It
+runs exclusively with GOMAXPROCS=4, GOMEMLIMIT=4GiB, 6GiB RSS and 12GiB address
+space. This avoids CPU contention and gives checker the box's four-CPU budget.
+Its progress uses the same instrumentation already proved observation-identical
+on the dependency control. A successful complete record must match the original
+project header and source coverage before joining the cumulative stream. Its
+canonical metrics record the distinct producer binary hash, and PRODUCERS.json
+retains configuration and the earlier 600-second batch metrics. The batch's
+default binary and source identity remain unchanged. An incomplete probe remains
+outside the table. The first 1800-second probe stays archived independently.
+
+The four-worker batch finished at 2026-10-09 23:16:22 UTC. All 50 originally
+incomplete files received actual measurements: 36 completed, 13 timed out after
+a full 600 seconds, and factory/utilities.ts hit the stack overflow described
+above. Parser and utilities had additional fresh attempts after their initial
+resource failures. No file was truncated by the unit deadline. Retaining the
+original 29 complete records yields 65 files and 3760099 TypeScript source bytes.
+
+The exclusive checker probe received its full 1800-second budget and timed out
+after 1800.233s, peak RSS 2985980KiB, below its 6GiB RSS allowance. Its final
+persisted checkpoint at 1792.399s was checker.ts:25576:17 (KindIdentifier, byte
+span 1525684..1525688), with 39/51 statements completed, 14807 walker nodes and
+83862 lowerer nodes. The scanner union remained 298509/298510 nodes. Source
+locations are not monotonic because lowering follows calls, so that byte span
+is a checkpoint location, not a covered prefix. Partial checker findings are
+excluded; the complete-file census remains at 65/79 files and 3760099/10009820
+TypeScript bytes. Both 1800-second probes and the earlier pressure failure keep
+separate logs and metrics. The larger standalone CPU/heap budget reached more
+nodes; no individual causal attribution is established by these two runs.

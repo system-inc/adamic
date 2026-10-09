@@ -38,6 +38,19 @@ for record in (baseline/'records').glob('*.jsonl'):
         shutil.copyfile(record.with_suffix('.sha256'),destination.with_suffix('.sha256'))
         metrics=baseline/(record.stem+'.metrics.json')
         shutil.copyfile(metrics,output/metrics.name)
+for metrics in baseline.glob('*.metrics.json'):
+    value=json.loads(metrics.read_text())
+    if value['exit']==0:
+        assert (baseline/'records'/(metrics.name.removesuffix('.metrics.json')+'.jsonl')).exists(), 'completed baseline record dropped'
+    destination=output/metrics.name
+    if not destination.exists():shutil.copyfile(metrics,destination)
+for record in (output/'records').glob('*.jsonl'):
+    assert record.with_suffix('.sha256').read_text().strip()==hashlib.sha256(record.read_bytes()).hexdigest(), 'completed record checksum differs'
+    rows=[json.loads(line) for line in record.read_text().splitlines()]
+    assert len(rows)==2 and rows[1]['file'].startswith(str(root)+'/')
+for metrics in output.glob('*.metrics.json'):
+    if json.loads(metrics.read_text())['exit']==0:
+        assert (output/'records'/(metrics.name.removesuffix('.metrics.json')+'.jsonl')).exists(), 'completed output record dropped'
 remaining=[x for x in old['files'] if not (output/'records'/(x['file'].replace('/','__')+'.jsonl')).exists()]
 selection=os.environ.get('LATENT_RETRY_FILES')
 if selection:

@@ -35,6 +35,7 @@ for item in identity['files']:
         incomplete.append(dict(item, metrics=metrics,
                                reason='no completed measurement' if metrics is None else
                                'RSS limit' if metrics['rss_limit_killed'] else
+                               'unit deadline' if metrics.get('unit_deadline_limited') and metrics['exit'] == 124 else
                                'wall timeout' if metrics['exit'] == 124 else 'measurement failed'))
         continue
     assert hashlib.sha256(record_path.read_bytes()).hexdigest() == (record_path.with_suffix('.sha256')).read_text().strip()

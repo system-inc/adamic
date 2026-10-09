@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/tmp/pqjagjf/progress-v2-census",
+    "/tmp/b17vtn1/original-adapted/src/compiler",
+    "/tmp/pqjagjf/checker-exclusive/checker.jsonl"
+  ],
+  "wall_seconds": 1800.2329563190006,
+  "peak_rss_kib": 2985980,
+  "exit": 124,
+  "time_limit_seconds": 1800.0,
+  "rss_limit_mib": 6144,
+  "address_space_limit_mib": 12288,
+  "rss_limit_killed": false,
+  "go_env": {
+    "GOMEMLIMIT": "4GiB",
+    "GOGC": "200",
+    "GOMAXPROCS": "4"
+  },
+  "exclusive": true,
+  "producer_binary_sha256": "50ca13d885dec42d02f11311c0550690e413958c9d2b7ffcbc82a1c1dbdc073a"
+}
