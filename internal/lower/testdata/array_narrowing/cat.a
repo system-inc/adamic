@@ -1,0 +1,5 @@
+interface Cat { readonly name: string; }
+function isNumber(value: Cat | number): value is number { return typeof value === 'number'; }
+const items: (Cat | number)[] = [1, 2, { name: 'discard' }];
+items.pop();
+if (items.every(isNumber)) console.log('total ' + items.reduce((a, b) => a + b, 0));

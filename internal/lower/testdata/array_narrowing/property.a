@@ -1,0 +1,4 @@
+function isNumber(value: string | number): value is number { return typeof value === 'number'; }
+const obj: { items: (string | number)[] } = { items: [1, 2, 'discard'] };
+obj.items.pop();
+if (obj.items.every(isNumber)) console.log('total ' + obj.items.reduce((a, b) => a + b, 0));

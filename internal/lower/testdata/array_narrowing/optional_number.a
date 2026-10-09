@@ -1,0 +1,2 @@
+const items: (number | undefined)[] = [1, 2];
+if (items.every(value => value !== undefined)) console.log('total ' + items.reduce((a, b) => a + b, 0));

@@ -1,0 +1,10 @@
+=== RUN   TestArrayNarrowingEveryRefused
+=== PAUSE TestArrayNarrowingEveryRefused
+=== RUN   TestArrayNarrowingBooleanCallbackAgrees
+=== PAUSE TestArrayNarrowingBooleanCallbackAgrees
+=== CONT  TestArrayNarrowingEveryRefused
+=== CONT  TestArrayNarrowingBooleanCallbackAgrees
+--- PASS: TestArrayNarrowingEveryRefused (0.05s)
+--- PASS: TestArrayNarrowingBooleanCallbackAgrees (0.46s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.475s

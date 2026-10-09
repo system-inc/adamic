@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1422,7 +1422,7 @@
+ 		}
+ 		// An undefined result already fits packed optional-number storage.
+ 		// Heap-backed and boxed sources cannot be reused as that result slot.
+-		if (name == "find" || name == "findLast") && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
++		if name == "find" && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
+ 			result, err := l.typeOf(node)
+ 			if err != nil || result != ir.Maybe(element) {
+ 				return nil, true, l.notYet(node, name+" predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
