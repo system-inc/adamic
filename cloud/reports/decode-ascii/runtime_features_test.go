@@ -15,7 +15,7 @@ import (
 )
 
 func TestRuntimeFeaturesMatchNode(t *testing.T) {
-	fixture := "../../../internal/oracle/testdata/closure_convention_plain.a"
+	fixture := "../../../internal/oracle/testdata/closure_convention_nested.a"
 	program, err := load.Load([]string{fixture})
 	if err != nil {
 		t.Fatal(err)

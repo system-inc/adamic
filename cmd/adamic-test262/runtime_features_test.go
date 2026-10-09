@@ -15,11 +15,11 @@ func TestRuntimeFeaturesMatchNode(t *testing.T) {
 	e.cache = nil
 	e.compiler = &compilerWorker{}
 	defer e.compiler.close()
-	source, err := os.ReadFile("../../internal/oracle/testdata/closure_convention_plain.a")
+	source, err := os.ReadFile("../../internal/oracle/testdata/arguments_length_value_count.a")
 	if err != nil {
 		t.Fatal(err)
 	}
-	got := e.attempt(classified{Path: "closure_convention_plain.a", Program: string(source)})
+	got := e.attempt(classified{Path: "arguments_length_value_count.a", Program: string(source)})
 	emitted, err := os.ReadFile(filepath.Join(e.work, "program.c"))
 	if err != nil {
 		t.Fatal(err)
@@ -30,5 +30,5 @@ func TestRuntimeFeaturesMatchNode(t *testing.T) {
 	if got.Kind != outcomePass {
 		t.Fatalf("Node/native comparison: %+v", got)
 	}
-	t.Log("Node/native output agrees for closure_convention_plain.a")
+	t.Log("Node/native output agrees for arguments_length_value_count.a")
 }

@@ -13,7 +13,7 @@ func TestRuntimeFeaturesMatchNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	source, err := os.ReadFile("../oracle/testdata/closure_convention_plain.a")
+	source, err := os.ReadFile("../oracle/testdata/arguments_length_value_count.a")
 	if err != nil {
 		t.Fatal(err)
 	}
