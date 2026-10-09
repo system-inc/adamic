@@ -1,0 +1,87 @@
+[
+  {
+    "test": "TestDefiniteAssignmentSoundNeighbors",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestClassWrongOutputPrivateRepair",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class_inheritance.go:427",
+        "change": "Drop field initializer evaluation, retaining zero value",
+        "rows_failed": [
+          "TestAgreementInheritedFieldWitness",
+          "TestClassFeaturesPrivateStorage",
+          "TestClassFeaturesReadonlyChecker",
+          "TestDefiniteAssignmentSoundNeighbors",
+          "TestInheritanceAllowsSoundOverrides",
+          "TestInheritanceKeepsNominalTupleDestructuring",
+          "TestReadinessElisionRequiresDominatingAssignment",
+          "TestUndecidedCycleReadsUseReadyChecks"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/assignments.go:86",
+        "change": "Drop final local-assignment emission",
+        "rows_failed": [
+          "TestClosedFrameInputRejectsMutation",
+          "TestConstructorCacheOneArgumentRemainsNotYet",
+          "TestDefiniteAssignmentSoundNeighbors",
+          "TestDefiniteAssignmentUsesReadiness",
+          "TestEnumSlotViews",
+          "TestFlagEnumAliasBoundaries",
+          "TestFlagEnumsDomain",
+          "TestFlagEnumsOpen",
+          "TestNestedEnvironmentHasOneAllocationSite",
+          "TestNumericEnumsAreOpen",
+          "TestSwitchConditionalBreakFallsThrough",
+          "TestSwitchEmptyBlockFallsThrough",
+          "TestSwitchEmptyCaseFallsThrough",
+          "TestSwitchEmptyElseFallsThrough"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/class.go:769",
+        "change": "Change allowed constructor property-declaration kind",
+        "rows_failed": [
+          "TestAMethodReadAsAValueIsRefused",
+          "TestAViewThatCantWriteIsNotRefused",
+          "TestClassFeaturesPrivateStorage",
+          "TestClassFeaturesReadonlyChecker",
+          "TestClassWrongOutputPrivateRepair",
+          "TestConstructorCacheOneArgumentRemainsNotYet",
+          "TestDefiniteAssignmentSoundNeighbors",
+          "TestEnumSlotViews",
+          "TestInheritanceGenericMonomorphizations",
+          "TestInheritanceRefusesGrowingGenericClasses",
+          "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-class-key/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; definite_assignment_test.go:64: JavaScript backend stdout = \"1\\n\", source Node = \"3\\n\""
+  },
+  {
+    "test": "TestEmptyLiteralGenericReturnUsesSamePath",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNestedEmptyArrayElementKinds",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/empty_literal.go:12",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/empty_literal.go:12",
+        "change": "Return early for generic contextual empty-array representation",
+        "rows_failed": [
+          "TestEmptyLiteralGenericReturnUsesSamePath"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-class-key/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; empty_literal_test.go:52: /tmp/adamic-gate/TestEmptyLiteralGenericReturnUsesSamePath2694500579/001/main.a:1:35: stage 0 can't lower an array of never yet"
+  }
+]

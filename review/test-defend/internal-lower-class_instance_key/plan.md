@@ -1,0 +1,7 @@
+Code under test: literalArrayElement and elementType generic contextual representation; fieldInitializers, useOfThis and assignment for initialized fields/locals. Oracle: generic row uses self-written exact Number/Object IR-kind multiset. SoundNeighbors now compares lowered JavaScript execution against source Node, an external-run oracle. No oracle or harness edits.
+Coverage: SoundNeighbors has 92 blocks absent from PrivateRepair, including initialized-field evaluation and locals. GenericReturn has 511 blocks absent from NestedEmpty, including generic instantiation. These are leads; shared-line semantic distinction is generic context versus nongeneric nested literal.
+D1: return early from literalArrayElement when a generic mapper is active, removing contextual layout for generic empty returns only.
+D2: drop field-initializer value evaluation, leaving the default zero, targeting initialized public fields absent from the private repair.
+D3: drop local assignment emission, targeting an uninitialized local followed by assignment, absent from private repair.
+D4: change permitted property-declaration kind in useOfThis to parameter kind, targeting constructor assignment permission. Private repair may also catch it, which must be recorded.
+If generic D1 lacks uniqueness, try two further contextual-path mutations before judging it. Full package clean baseline passed in 38.005s. Each mutant gets its own native build cache and standalone vetted diff.

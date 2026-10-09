@@ -1,0 +1,14 @@
+diff --git a/internal/lower/empty_literal.go b/internal/lower/empty_literal.go
+index edb1eeb6..32b46599 100644
+--- a/internal/lower/empty_literal.go
++++ b/internal/lower/empty_literal.go
+@@ -9,6 +9,9 @@ func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {
+ 	if proven == nil {
+ 		return nil
+ 	}
++	if l.typeMapper != nil {
++		return nil
++	}
+ 	proven = l.concrete(proven)
+ 	if l.checker.IsArrayType(proven) {
+ 		return l.checker.GetElementTypeOfArrayType(proven)
