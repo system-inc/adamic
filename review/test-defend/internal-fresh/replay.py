@@ -2,7 +2,7 @@ import pathlib,subprocess,os,time,json,re
 root=pathlib.Path('/workspace/adamic');p=pathlib.Path('/tmp/fresh-defense/evidence')
 base={f:subprocess.check_output(['git','show','HEAD:'+f],cwd=root).decode() for f in ['internal/fresh/fresh.go','internal/fresh/node_fs_file.go']}
 mutants=[('D1','internal/fresh/fresh.go','\t\t\tif !a.proof.direct[target] {\n\t\t\t\t// Its parameters are outside to it, so it may keep them anywhere.\n\t\t\t\ta.call(operands, 0)\n\t\t\t}','','drop the conservative escape statement for non-direct method calls'),('D2','internal/fresh/node_fs_file.go','func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {','func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {\n\tif !mutable(expression.Type()) {\n\t\treturn a.call(a.operands(expression), expression.Type())\n\t}','return early through a retaining, clobbering call for primitive host operations'),('D3','internal/fresh/node_fs_file.go','\tfor _, argument := range expression.Arguments {\n\t\ta.value(argument)\n\t}','','drop the complete filesystem argument-evaluation loop'),('D4','internal/fresh/fresh.go','\tcase ir.NodeFSFile:\n\t\treturn a.nodeFSFile(expression)','\tcase ir.NodeFSFile:','drop the recognized host-return statement, reaching the existing unknown fallback')]
-(p/'planned-mutants.json').write_text(json.dumps([{'mutant':i,'file_line':f+':'+str(base[f][:base[f].index(old)].count('\n')+1),'change':desc} for i,f,old,new,desc in mutants],indent=2))
+(p/'planned-mutants.json').write_text(json.dumps([{'mutant':i,'file_line':f+':'+str(base[f][:base[f].index(old)].count('\n')+1+(1 if i == 'D4' else 0)),'change':desc} for i,f,old,new,desc in mutants],indent=2))
 results=[]
 try:
  for i,f,old,new,desc in mutants:
