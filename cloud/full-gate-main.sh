@@ -66,7 +66,25 @@ reclaim() {
   grep "^${box} " "${slots}" > "${state}/lent-lines.tmp" && mv "${state}/lent-lines.tmp" "${state}/lent-lines"
   rm -f "${state}/lent-lines.tmp"
   grep -v "^${box} " "${slots}" > "${slots}.tmp"; mv "${slots}.tmp" "${slots}"
+  # Nothing new starts on the box now, but a front or ahead tip's fast gate already there finishes first, up to 90
+  # minutes: this reclaim killed the star trio's complete box run 17 minutes in (Oct 9 11:26Z). Side work is stopped.
+  local deadline=$(( $(date -u +%s) + ${ADAMIC_FULL_GATE_RECLAIM_WAIT:-5400} ))
+  while protectedOnBox && [ "$(date -u +%s)" -lt "${deadline}" ]; do sleep "${ADAMIC_FULL_GATE_RECLAIM_POLL:-30}"; done
   ssh "${box}" 'pkill -f "[f]ast-gate/run.py --tree" || true; mkdir -p ~/fast-gate; flock ~/fast-gate/lock true' || true
+}
+# A live fast gate on ${box} whose branch the watcher's front or ahead file names (the first field of each line).
+protectedOnBox() {
+  local watch file branch sha slot running rest glob
+  watch=$(dirname "${slots}")
+  for file in "${watch}"/running/*; do
+    [ -f "${file}" ] && kill -0 "$(basename "${file}")" 2> /dev/null || continue
+    read -r branch sha slot running rest < "${file}"
+    [ "${running:-threadripper}" = "${box}" ] || continue
+    while read -r glob _; do
+      [ -n "${glob}" ] && [[ ${glob} != \#* ]] && [[ ${branch} == ${glob} ]] && return 0
+    done < <(cat "${watch}/front" "${watch}/ahead" 2> /dev/null)
+  done
+  return 1
 }
 
 publish() {

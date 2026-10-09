@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
+import time
 import unittest
 
 script = Path(__file__).with_name('full-gate-main.sh')
@@ -146,6 +147,39 @@ class FullGateLoopTests(unittest.TestCase):
         self.assertEqual((self.state / 'slots').read_text(), 'workshop B\n')
         subprocess.run(['bash', '-c', command % (self.work / 'cloud' / 'full-gate-main.sh', 'lend; lend')], env=environment, check=True)
         self.assertEqual((self.state / 'slots').read_text(), 'workshop B\nthreadripper B\nthreadripper S\nthreadripper S\n')
+
+    def test_a_reclaim_waits_for_a_front_or_ahead_fast_gate_on_its_box_but_not_for_side_work(self):
+        # Oct 9 11:26Z: Home's reclaim killed the star trio's complete box run 17 minutes in.
+        bin = Path(self.tmp.name) / 'bin'
+        bin.mkdir()
+        calls = Path(self.tmp.name) / 'ssh-calls'
+        (bin / 'ssh').write_text('#!/bin/bash\necho "$1" >> %s\n' % calls)
+        (bin / 'ssh').chmod(0o755)
+        (self.state / 'front').write_text('# the star\ncloud/land-stack-trio-* # wave 0\n')
+        (self.state / 'ahead').write_text('')
+        (self.state / 'running').mkdir()
+        environment = dict(os.environ, PATH=str(bin) + ':' + os.environ['PATH'], ADAMIC_FULL_GATE_STATE=str(self.state),
+                           ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), ADAMIC_FULL_GATE_RECLAIM_POLL='0.05')
+        command = 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; box=home; reclaim' % (self.work / 'cloud' / 'full-gate-main.sh')
+        for branch, waits in (('codex/side', False), ('cloud/land-stack-trio-1', True)):
+            with self.subTest(branch=branch):
+                (self.state / 'slots').write_text('home B\nhome S\nworkshop B\n')
+                # The planted gate is a grandchild, so launchd reaps it when it ends (a child would linger as a zombie,
+                # which kill -0 still finds).
+                pid = subprocess.run(['bash', '-c', 'sleep 1 > /dev/null 2>&1 & echo $!'], capture_output=True, text=True).stdout.strip()
+                self.addCleanup(subprocess.run, ['kill', pid], capture_output=True)
+                (self.state / 'running' / pid).write_text('%s %s S home S tools log\n' % (branch, 'a' * 40))
+                started = time.monotonic()
+                subprocess.run(['bash', '-c', command], env=environment, check=True, timeout=20)
+                elapsed = time.monotonic() - started
+                self.assertEqual((self.state / 'slots').read_text(), 'workshop B\n')
+                self.assertEqual(calls.read_text().splitlines()[-1], 'home')
+                if waits:
+                    self.assertGreater(elapsed, 0.7, 'the box was reclaimed while the tier-40 gate ran')
+                else:
+                    self.assertLess(elapsed, 0.7)
+                subprocess.run(['bash', '-c', 'while kill -0 %s 2> /dev/null; do sleep 0.05; done' % pid], timeout=5)
+                (self.state / 'running' / pid).unlink()
 
     def test_a_request_that_left_the_file_is_dropped_and_stopped_by_its_exact_sha(self):
         (self.state / 'requests').write_text(self.code + '\n')
