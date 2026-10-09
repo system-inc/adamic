@@ -320,7 +320,22 @@ func TestProduct_GrainMarkdown_width_release(t *testing.T) {
 	grainProduct(t, "width", "release")
 }
 
+type grainToolPreparation struct {
+	once sync.Once
+	path string
+}
+
+var grainToolPreparations sync.Map
+
 func grainTool(t *testing.T, name string) string {
+	t.Helper()
+	state, _ := grainToolPreparations.LoadOrStore(name, &grainToolPreparation{})
+	prepared := state.(*grainToolPreparation)
+	prepared.once.Do(func() { prepared.path = grainBuildTool(t, name) })
+	return prepared.path
+}
+func grainBuildTool(t *testing.T, name string) string {
+
 	root := markdownLayoutProductRoot(t)
 	files := []string{"go.mod", "stage1/cohere/markdownblocks/tools/generate_" + name}
 	work := root

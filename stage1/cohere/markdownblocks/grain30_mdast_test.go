@@ -51,6 +51,7 @@ func runGrainMdast(t *testing.T, shard int) {
 	root, inputs, files := grainMdastInputs(t)
 	if shard < grainCorpusShards {
 		inputs = grainSelect(inputs, shard)
+		files = (files + grainCorpusShards - 1 - shard) / grainCorpusShards
 		if len(inputs) == 0 {
 			grainPlanted(t)
 			t.Log("empty corpus group")

@@ -57,6 +57,29 @@ func runGrainLayout(t *testing.T, slice string, shard int) {
 				t.Fatalf("original Markdown parser/layout disagreed in %s", input.Name)
 			}
 		}
+
+		// Preserve the optional repeated throughput checks on each child's partition.
+		if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
+			for _, side := range []struct {
+				name, command string
+				args          []string
+			}{
+				{"Go document layout", products.goLayout, []string{fixture.canonicalCases}},
+				{"native block/layout component", products.release, []string{fixture.nativeCases}},
+				{"source Node block/layout component", "node", []string{"--disable-warning=ExperimentalWarning", filepath.Join(products.root, "oracle/node.mjs"), products.main, fixture.nativeCases}},
+				{"original Node document layout", "node", []string{products.script, products.fork, fixture.canonicalCases}},
+			} {
+				started := time.Now()
+				for round := 0; round < 3; round++ {
+					result := grainExecute(t, nil, side.command, side.args...)
+					clean(t, side.name, result)
+					if err := grainDifference(result.stdout, fixture.want); err != nil {
+						t.Fatalf("%s throughput: %v", side.name, err)
+					}
+				}
+				t.Logf("component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded", side.name, float64(3*len(inputs))/time.Since(started).Seconds(), time.Since(started).Seconds())
+			}
+		}
 		t.Logf("cases=%d", len(inputs))
 		return
 	}
