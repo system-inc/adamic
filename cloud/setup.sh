@@ -175,7 +175,7 @@ fi
 # bootstrap failures still warm Go's local cache, so a shared-cache outage never blocks setup.
 unset GOCACHEPROG
 gocacheprog=off
-if [ "${ADAMIC_GOCACHE_OFF:-0}" = 1 ]; then
+if [ "${ADAMIC_GOCACHE_OFF:-1}" = 1 ]; then
 	step "shared cache off (ADAMIC_GOCACHE_OFF=1)"
 elif [ ! -d "$repository/cmd/adamic-gocacheprog" ]; then
 	step "shared cache off (cmd/adamic-gocacheprog absent)"
@@ -199,7 +199,7 @@ ENV
 # Credentials stay in the caller's environment: cloud setup never grants cache write trust.
 printf 'unset GOCACHEPROG\n' >> "$tools/env.sh"
 if [ "$gocacheprog" = on ]; then
-	printf 'if [ "${ADAMIC_GOCACHE_OFF:-0}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
+	printf 'if [ "${ADAMIC_GOCACHE_OFF:-1}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
 		"$repository/cmd/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" >> "$tools/env.sh"
 fi
 if "$wasiSDK"; then
